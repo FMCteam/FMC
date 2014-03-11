@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:drools="http://drools.org/schema/drools-spring"
+	xsi:schemaLocation="   
+          http://www.springframework.org/schema/beans   
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+          http://www.springframework.org/schema/tx   
+          http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
+          http://www.springframework.org/schema/context   
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd   
+          http://www.springframework.org/schema/aop   
+          http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+          http://drools.org/schema/drools-spring
+          http://drools.org/schema/drools-spring.xsd">
+
+	<import resource="spring-transaction.xml" />
+
+	<import resource="spring-jbpm.xml" />
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>WEB-INF/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource"></ref>
+		</property>
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=${hibernate.dialect}
+				hibernate.query.substitutions=true 'Y', false 'N'
+				hibernate.show_sql=true
+				hibernate.hbm2ddl.auto=none
+			</value>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+
+			<value>nju.software.dataobject.Account</value>
+			<value>nju.software.dataobject.Accessory</value>
+			<value>nju.software.dataobject.Order</value>
+			<value>nju.software.dataobject.PackageDetail</value>
+			<value>nju.software.dataobject.Quote</value>
+			<value>nju.software.dataobject.Logistics</value>
+			<value>nju.software.dataobject.FabricCost</value>
+			<value>nju.software.dataobject.Product</value>
+			<value>nju.software.dataobject.DesignCad</value>
+			<value>nju.software.dataobject.Description</value>
+			<value>nju.software.dataobject.Employee</value>
+			<value>nju.software.dataobject.Fabric</value>
+			<value>nju.software.dataobject.Money</value>
+			<value>nju.software.dataobject.Package</value>
+			<value>nju.software.dataobject.Customer</value>
+			<value>nju.software.dataobject.AccessoryCost</value></list>
+		</property>
+	</bean>
+	
+
+	<bean id="AccountDAO" class="nju.software.dao.impl.AccountDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AccessoryDAO"
+		class="nju.software.dao.impl.AccessoryDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="OrderDAO" class="nju.software.dao.impl.OrderDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="PackageDetailDAO"
+		class="nju.software.dao.impl.PackageDetailDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="QuoteDAO" class="nju.software.dao.impl.QuoteDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="LogisticsDAO"
+		class="nju.software.dao.impl.LogisticsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="FabricCostDAO"
+		class="nju.software.dao.impl.FabricCostDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ProductDAO" class="nju.software.dao.impl.ProductDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="DesignCadDAO"
+		class="nju.software.dao.impl.DesignCadDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="DescriptionDAO"
+		class="nju.software.dao.impl.DescriptionDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="EmployeeDAO"
+		class="nju.software.dao.impl.EmployeeDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="FabricDAO" class="nju.software.dao.impl.FabricDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="MoneyDAO" class="nju.software.dao.impl.MoneyDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="PackageDAO" class="nju.software.dao.impl.PackageDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CustomerDAO"
+		class="nju.software.dao.impl.CustomerDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AccessoryCostDAO"
+		class="nju.software.dao.impl.AccessoryCostDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean></beans>

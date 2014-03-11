@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd"
+	default-autowire="byName">
+	<context:annotation-config />
+	<context:component-scan base-package="nju.software" />
+
+
+	<!-- 定义注解URL映射处理器 ，所有的请求映射必须关联本地化拦截器 -->
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+
+	</bean>
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+<!-- 	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean class="nju.software.atmosphere.support.AtmosphereArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven> -->
+
+
+
+
+	<!-- <bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		设置上传文件的最大尺寸为1MB
+		<property name="maxUploadSize">
+			<value>1048576000</value>
+		</property>
+	</bean> -->
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+</beans>

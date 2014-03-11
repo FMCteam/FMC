@@ -1,0 +1,59 @@
+/* CSS Document */
+
+table input{
+	/*border:none;	*/
+}
+
+table {
+	text-align:center;
+	align:center;	
+}
+
+table.table td{
+	text-align: center;
+	vertical-align:middle;
+	width:14%;
+}
+
+table.table td input,select{
+	vertical-align:middle;
+	margin-bottom:0px;
+	text-align:center;
+	margin-right:0px;
+}
+
+
+table.table table.table {
+	vertical-align:middle;
+	margin-bottom:0px;
+	text-align:center;
+	margin-right:0px;
+}
+
+table.table table.table  td{
+	
+}
+
+table.table tr td{
+	padding:5px 5px;
+}
+
+table.table td a:hover{
+	cursor:pointer;	
+}
+
+
+table.table tr td.innertable{
+	padding:0px;
+}
+
+input,select{
+	text-align:center;
+}
+span.required{
+	color:red;
+}
+
+.vertical{
+	resize:vertical;	
+}

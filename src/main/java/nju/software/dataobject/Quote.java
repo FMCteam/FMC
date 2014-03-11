@@ -1,0 +1,165 @@
+package nju.software.dataobject;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * Quote entity. @author MyEclipse Persistence Tools
+ */
+@Entity
+@Table(name = "quote", catalog = "fmc")
+public class Quote implements java.io.Serializable {
+
+	// Fields
+
+	private Integer orderId;
+	private Float designCost;
+	private Float cutCost;
+	private Float manageCost;
+	private Float swingCost;
+	private Float ironingCost;
+	private Float nailCost;
+	private Float packageCost;
+	private Float otherCost;
+	private Float profitPerPiece;
+	private Float innerPrice;
+	private Float outerPrice;
+
+	// Constructors
+
+	/** default constructor */
+	public Quote() {
+	}
+
+	/** full constructor */
+	public Quote(Integer orderId, Float designCost, Float cutCost,
+			Float manageCost, Float swingCost, Float ironingCost,
+			Float nailCost, Float packageCost, Float otherCost,
+			Float profitPerPiece, Float innerPrice, Float outerPrice) {
+		this.orderId = orderId;
+		this.designCost = designCost;
+		this.cutCost = cutCost;
+		this.manageCost = manageCost;
+		this.swingCost = swingCost;
+		this.ironingCost = ironingCost;
+		this.nailCost = nailCost;
+		this.packageCost = packageCost;
+		this.otherCost = otherCost;
+		this.profitPerPiece = profitPerPiece;
+		this.innerPrice = innerPrice;
+		this.outerPrice = outerPrice;
+	}
+
+	// Property accessors
+	@Id
+	@Column(name = "order_id", unique = true, nullable = false)
+	public Integer getOrderId() {
+		return this.orderId;
+	}
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
+	@Column(name = "design_cost", nullable = false, precision = 12, scale = 0)
+	public Float getDesignCost() {
+		return this.designCost;
+	}
+
+	public void setDesignCost(Float designCost) {
+		this.designCost = designCost;
+	}
+
+	@Column(name = "cut_cost", nullable = false, precision = 12, scale = 0)
+	public Float getCutCost() {
+		return this.cutCost;
+	}
+
+	public void setCutCost(Float cutCost) {
+		this.cutCost = cutCost;
+	}
+
+	@Column(name = "manage_cost", nullable = false, precision = 12, scale = 0)
+	public Float getManageCost() {
+		return this.manageCost;
+	}
+
+	public void setManageCost(Float manageCost) {
+		this.manageCost = manageCost;
+	}
+
+	@Column(name = "swing_cost", nullable = false, precision = 12, scale = 0)
+	public Float getSwingCost() {
+		return this.swingCost;
+	}
+
+	public void setSwingCost(Float swingCost) {
+		this.swingCost = swingCost;
+	}
+
+	@Column(name = "ironing_cost", nullable = false, precision = 12, scale = 0)
+	public Float getIroningCost() {
+		return this.ironingCost;
+	}
+
+	public void setIroningCost(Float ironingCost) {
+		this.ironingCost = ironingCost;
+	}
+
+	@Column(name = "nail_cost", nullable = false, precision = 12, scale = 0)
+	public Float getNailCost() {
+		return this.nailCost;
+	}
+
+	public void setNailCost(Float nailCost) {
+		this.nailCost = nailCost;
+	}
+
+	@Column(name = "package_cost", nullable = false, precision = 12, scale = 0)
+	public Float getPackageCost() {
+		return this.packageCost;
+	}
+
+	public void setPackageCost(Float packageCost) {
+		this.packageCost = packageCost;
+	}
+
+	@Column(name = "other_cost", nullable = false, precision = 12, scale = 0)
+	public Float getOtherCost() {
+		return this.otherCost;
+	}
+
+	public void setOtherCost(Float otherCost) {
+		this.otherCost = otherCost;
+	}
+
+	@Column(name = "profit_per_piece", nullable = false, precision = 12, scale = 0)
+	public Float getProfitPerPiece() {
+		return this.profitPerPiece;
+	}
+
+	public void setProfitPerPiece(Float profitPerPiece) {
+		this.profitPerPiece = profitPerPiece;
+	}
+
+	@Column(name = "inner_price", nullable = false, precision = 12, scale = 0)
+	public Float getInnerPrice() {
+		return this.innerPrice;
+	}
+
+	public void setInnerPrice(Float innerPrice) {
+		this.innerPrice = innerPrice;
+	}
+
+	@Column(name = "outer_price", nullable = false, precision = 12, scale = 0)
+	public Float getOuterPrice() {
+		return this.outerPrice;
+	}
+
+	public void setOuterPrice(Float outerPrice) {
+		this.outerPrice = outerPrice;
+	}
+
+}

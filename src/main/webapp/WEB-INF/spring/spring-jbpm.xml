@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:drools="http://drools.org/schema/drools-spring"
+	xsi:schemaLocation="   
+          http://www.springframework.org/schema/beans   
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+          http://www.springframework.org/schema/tx   
+          http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
+          http://www.springframework.org/schema/context   
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd   
+          http://www.springframework.org/schema/aop   
+          http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+          http://drools.org/schema/drools-spring
+          http://drools.org/schema/drools-spring.xsd">
+
+
+	<!-- 整合jbpm5.3 -->
+	<drools:kbase id="kbase1" >
+		<drools:resources>
+			<drools:resource id="resource1" type="BPMN2"
+				source="classpath:fmc.bpmn" />
+		</drools:resources>
+	</drools:kbase>
+
+	<drools:ksession id="ksession1" type="stateful" kbase="kbase1"  >
+		<drools:configuration>
+			<drools:jpa-persistence>
+				<drools:transaction-manager ref="txManager" />
+				<drools:entity-manager-factory ref="entityManagerFactory" />
+			</drools:jpa-persistence>
+		</drools:configuration>
+	</drools:ksession>
+
+	<bean id="jbpmAPIUtil" class="nju.software.util.JbpmAPIUtil" scope = "singleton">
+		<property name="kbase" ref="kbase1"></property>
+		<property name="ksession" ref="ksession1"></property>
+		<property name="processName" value="nju.software.fmc.bpmn"></property>
+	</bean>
+
+</beans>
