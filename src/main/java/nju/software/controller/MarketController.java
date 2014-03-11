@@ -111,7 +111,7 @@ public class MarketController {
 			System.out.println("流程启动失败！");
 			e.printStackTrace();
 		}
-		return "redirect:/market/add.do";
+		return "redirect:/market/customerOrder.do";
 	}
 
 }
