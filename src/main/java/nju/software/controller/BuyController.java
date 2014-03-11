@@ -71,7 +71,7 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/doVerify.do", method= RequestMethod.GET)
+	@RequestMapping(value = "buy/doVerify.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doVerify(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {

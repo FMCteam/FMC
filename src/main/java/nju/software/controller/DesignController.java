@@ -1,4 +1,5 @@
 package nju.software.controller;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -6,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Order;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
@@ -36,10 +38,29 @@ public class DesignController {
 	 */
 	@RequestMapping(value = "design/verify.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String addEmployee(HttpServletRequest request,
+	public String verify(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		  return "design/verify";
+		System.out.println("design verify ================ show task");
+		List<Order> orderList = new ArrayList<Order>();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String actorId = account.getUserRole();
+		System.out.println("actorId: " + actorId);
+		String taskName = "design_verification";
+		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
+		for (TaskSummary task : list) {
+			//需要获取task中的数据	
+			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(task.getProcessInstanceId());
+			int orderId  = (int) process.getVariable("orderId");
+			Order order = orderService.getOrderById(orderId);
+			if (order != null) {
+				System.out.println("orderId: " + order.getOrderId());
+				orderList.add(order);
+			}
+		}
+		model.addAttribute("order_list", orderList);
+		
+		return "design/verify";
 	}
 	/**
 	 * 设计验证
@@ -50,38 +71,41 @@ public class DesignController {
 	 */
 	@RequestMapping(value = "design/doVerify.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String addMarketOrder(HttpServletRequest request,
+	public String doVerify(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		System.out.println("design verify ================");
 		
-		String actorId = (String) request.getSession().getAttribute("actorId");
-		boolean isPassed = (boolean) request.getSession().getAttribute("");
-		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasks(actorId);
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String actorId = account.getUserRole();
+		boolean designVal = Boolean.parseBoolean(request.getParameter("designVal"));
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String taskName = "design_verification";
+		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
 		for (TaskSummary task : list) {
-			if(task.getName().equals("design_verification ")){
-				//需要获取task中的数据	
-				WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(task.getProcessInstanceId());
-				String s_orderId =(String) process.getVariable("orderId");
-				int orderId = Integer.parseInt(s_orderId);
+			//需要获取task中的数据	
+			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(task.getProcessInstanceId());
+			int orderId  = (int) process.getVariable("orderId");
+			System.out.println("orderId: " + orderId);
+			if (orderId_request == orderId) {
 				Order order = orderService.getOrderById(orderId);
 				//修改order内容
-				
+
 				//提交修改
 				orderService.updateOrder(order);
-				
+
 				//修改流程参数
 				Map<String, Object> data = new HashMap<>();
-				
+				data.put("designVal", designVal);
 				//直接进入到下一个流程时
-				
 				try {
-					jbpmAPIUtil.completeTask(task.getId(), null, actorId);
+					jbpmAPIUtil.completeTask(task.getId(), data, actorId);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			
+
 		}
 		
 		return "redirect:/design/verify";

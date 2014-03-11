@@ -43,12 +43,12 @@
 								<td>${order.orderId }</td>
 								<td>${order.orderId }</td>
 								<td>${order.orderId }</td>
-								<td><form action="${ctx }/buy/doVerify.do" method="post">
+								<td><span><form action="${ctx }/buy/doVerify.do" method="post">
 									<input type="hidden" name="buyVal" value="true" /><input type="hidden" name="id" value="${order.orderId }" />
-									<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</button></form>
-									<form action="${ctx }/buy/doVerify.do" method="post">
+									<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</button></form></span>
+									<span><form action="${ctx }/buy/doVerify.do" method="post">
 									<input type="hidden" name="buyVal" value="false" /><input type="hidden" name="id" value="${order.orderId }" />
-									<button class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 拒绝</button></form>
+									<button class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 拒绝</button></form></span>
 								</td>
 								
 	                        </tr>
