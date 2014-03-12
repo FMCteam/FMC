@@ -9,7 +9,7 @@
 				<h4 class="widgettitle">Form Elements</h4>
 				<div class="widgetcontent">
 
-					<form onSubmit="return verify()" method="post"
+					<form onSubmit="return verify()" method="post" 
 						action="${ctx }/market/addMarketOrder.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
@@ -64,7 +64,7 @@
 							<tr>
 								<td>特殊工艺</td>
 								<td colspan="5"><input type="checkbox"
-									name="special_process" value="水洗" /> <span>水洗</span> <input
+									name="special_process" value="水洗" checked="checked" /> <span>水洗</span> <input
 									type="checkbox" name="special_process" value="激光" /> <span>激光</span>
 									<input type="checkbox" name="special_process" value="压皱" /> <span>压皱</span>
 									<input type="checkbox" name="special_process" value="其他" /> <input
@@ -74,7 +74,7 @@
 							<tr>
 								<td>其他说明</td>
 								<td colspan="5"><input type="checkbox"
-									name="other_requirements" value="有主标" /> 有主标 <input
+									name="other_requirements" value="有主标" checked="checked"  /> 有主标 <input
 									type="checkbox" name="other_requirements" value="有吊牌" /> 有吊牌 <input
 									type="checkbox" name="other_requirements" value="有水洗" /> 有水洗 <input
 									type="checkbox" name="other_requirements" value="其他" /> <input
