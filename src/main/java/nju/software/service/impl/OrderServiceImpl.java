@@ -5,8 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.FabricDAO;
+import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dataobject.Accessory;
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
+import nju.software.dataobject.Fabric;
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
@@ -14,12 +21,23 @@ import nju.software.util.JbpmAPIUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author 莫其凡
+ *
+ */
 @Service("orderServiceImpl")
 public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private AccessoryDAO accessoryDAO;
+	@Autowired
+	private FabricDAO fabricDAO;
+	@Autowired
+	private LogisticsDAO logisticsDAO;
+	
 	//新增订单
 	public void addOrder(Order order) {
 		orderDAO.save(order);
@@ -30,15 +48,8 @@ public class OrderServiceImpl implements OrderService {
 		List<Order> order=this.orderDAO.findAll();
 		return order;
 	}
-	private void doTMWorkFlowStart(Map<String, Object> params) {
-		try {
-			jbpmAPIUtil.setParams(params);
-			jbpmAPIUtil.startWorkflowProcess();
-		} catch (Exception ex) {
-			System.out.println("流程启动失败");
-			ex.printStackTrace();
-		}
-	}
+	
+
 
 	
 	public Order getOrderById(int orderId) {
@@ -116,5 +127,57 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return false;
 	}
+	
 
+	/**
+	 * 提交询单，开始流程
+	 */
+	@Override
+	public String addOrder(Order order,List<Fabric>fabrics,List<Accessory>accessorys,Logistics logistics){
+		// TODO Auto-generated method stub
+		
+		//添加订单信息
+		orderDAO.save(order);
+		
+		//添加面料信息
+		for(Fabric fabric:fabrics){
+			fabric.setOrderId(order.getOrderId());
+			fabricDAO.save(fabric);
+		}
+		
+		//添加辅料信息
+		for(Accessory accessory:accessorys){
+			accessory.setOrderId(order.getOrderId());
+			accessoryDAO.save(accessory);
+		}
+		
+		//添加物流信息
+		logistics.setOrderId(order.getOrderId());
+		logisticsDAO.save(logistics);
+		
+		//启动流程
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("orderId", order.getOrderId());
+		params.put("employeeId", order.getEmployeeId());
+		params.put("needclothes", order.getIsNeedSampleClothes());
+		params.put("sendclothes", order.getHasPostedSampleClothes());
+		doTMWorkFlowStart(params);
+		
+		return "下单成功";
+	}
+	
+	
+	/**
+	 * 启动流程
+	 */
+	private void doTMWorkFlowStart(Map<String, Object> params) {
+		try {
+			jbpmAPIUtil.setParams(params);
+			jbpmAPIUtil.startWorkflowProcess();
+			System.out.println("流程启动成功！");
+		} catch (Exception ex) {
+			System.out.println("流程启动失败");
+			ex.printStackTrace();
+		}
+	}
 }
