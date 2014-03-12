@@ -59,4 +59,5 @@
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/logistics/to_receive_sample_list.css">
+<script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>
