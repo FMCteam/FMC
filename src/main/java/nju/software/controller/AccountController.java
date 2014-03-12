@@ -495,11 +495,11 @@ public class AccountController {
 		
 		if(success1&&success2){
 		System.out.println("customer modify successfully");
-		  return "customer/seach.do";
+		  return "redirect:customer/search.do";
 		}else
 		{
 			model.put("customer_id",customerId);
-			return "customer/modify.do";
+			return "redirect:customer/search.do";
 		}
 	}
 
@@ -592,13 +592,13 @@ public class AccountController {
 			
 				model.addAttribute("exist", false);
 				model.addAttribute("success", true);
-				return "redirect:customer/search.do";
+				return "redirect:/customer/search.do";
 
 			} else {
 				
 				model.addAttribute("exist", false);
 				model.addAttribute("success", false);
-				return "redirect:customer/add.do";
+				return "redirect:/customer/add.do";
 			}
 		}
 	}
