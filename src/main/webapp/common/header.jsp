@@ -146,10 +146,10 @@
 						<li class="dropdown"><a href=""><span
 							class="iconfa-th-list"></span> 物流部</a>
 						<ul>
-							<li><a href="#">收取样衣</a></li>
-							<li><a href="#">样衣发货</a></li>
-							<li><a href="#">产品入库</a></li>
-							<li><a href="#">产品发货</a></li>
+							<li><a href="${ctx }/logistics/sampleOrderList.do">收取样衣</a></li>
+							<li><a href="${ctx }/logistics/add.do">样衣发货</a></li>
+							<li><a href="${ctx }/logistics/add.do">产品入库</a></li>
+							<li><a href="${ctx }/logistics/add.do">产品发货</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_quality==true}">

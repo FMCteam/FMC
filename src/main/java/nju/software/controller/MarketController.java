@@ -82,7 +82,7 @@ public class MarketController {
 				"cur_user");
 		params.put("employeeId", curUser.getUserId());
 		params.put("needclothes", true);
-		params.put("sendclothes", false);
+		params.put("sendclothes", true);
 
 		params.put("receivedsample", false);
 		params.put("editOrder", false);

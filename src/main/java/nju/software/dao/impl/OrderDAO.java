@@ -491,7 +491,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		// TODO Auto-generated method stub
 		log.debug("find the order that need sample and that need confirm, while pageing the total count");
 		try {
-			String query = "from Order";
+			String query = "from Order as model where model.isNeedSampleClothes=1 and model.hasPostedSampleClothes=0";
 			
 			List<Order> c= getHibernateTemplate().find(query);
 			
