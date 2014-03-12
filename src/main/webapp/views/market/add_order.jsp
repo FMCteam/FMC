@@ -210,6 +210,7 @@
 								<td colspan="3"><input type="reset" /></td>
 							</tr>
 						</table>
+						<input type="hidden" name="customerId" value="${customer.customerId}" />
 					</form>
 				</div>
 				<!--widgetcontent-->

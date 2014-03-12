@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Order;
 import nju.software.service.OrderService;
@@ -14,6 +15,10 @@ import nju.software.util.JbpmAPIUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author 莫其凡
+ *
+ */
 @Service("orderServiceImpl")
 public class OrderServiceImpl implements OrderService {
 	@Autowired
@@ -30,15 +35,8 @@ public class OrderServiceImpl implements OrderService {
 		List<Order> order=this.orderDAO.findAll();
 		return order;
 	}
-	private void doTMWorkFlowStart(Map<String, Object> params) {
-		try {
-			jbpmAPIUtil.setParams(params);
-			jbpmAPIUtil.startWorkflowProcess();
-		} catch (Exception ex) {
-			System.out.println("流程启动失败");
-			ex.printStackTrace();
-		}
-	}
+	
+
 
 	
 	public Order getOrderById(int orderId) {
@@ -116,5 +114,40 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return false;
 	}
+	
 
+	/**
+	 * 提交询单，开始流程
+	 */
+	@Override
+	public String addOrder(Order order, Integer employeeId) {
+		// TODO Auto-generated method stub
+		orderDAO.save(order);
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("orderId", order.getOrderId());
+		params.put("employeeId", employeeId);
+		params.put("needclothes", order.getIsNeedSampleClothes());
+		params.put("sendclothes", order.getHasPostedSampleClothes());
+		//params.put("receivedsample", false);
+		//params.put("editOrder", false);
+		doTMWorkFlowStart(params);
+		
+		return "下单成功";
+	}
+	
+	
+	/**
+	 * 启动流程
+	 */
+	private void doTMWorkFlowStart(Map<String, Object> params) {
+		try {
+			jbpmAPIUtil.setParams(params);
+			jbpmAPIUtil.startWorkflowProcess();
+			System.out.println("流程启动成功！");
+		} catch (Exception ex) {
+			System.out.println("流程启动失败");
+			ex.printStackTrace();
+		}
+	}
 }

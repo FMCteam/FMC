@@ -23,4 +23,7 @@ public interface OrderService {
 	
 	public boolean updateOrder(Order order);
 	public List<Order> findAll();
+	
+	
+	public String addOrder(Order order,Integer employeeId);
 }

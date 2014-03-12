@@ -89,7 +89,7 @@ public class FileOperateUtil {
 			newfilename = newfilename + "."
 					+ getExtensionName(file.getOriginalFilename());
 		}
-		File tmpfile = new File(filedir, "tmpfile");
+		File tmpfile = new File(filedir, newfilename);
 		tmpfile.mkdirs();
 
 		try {
