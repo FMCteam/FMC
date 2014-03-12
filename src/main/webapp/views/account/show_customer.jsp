@@ -37,8 +37,8 @@
 					<td>${customer.companyAddress }</td>
 					<td>${customer.companyName }</td>
 					<td>${customer.companyPhone }</td>
-					<td><a href="${ctx }/customer/modify.do?id=${customer.customerId }" class="btn btn-info" title="修改"><i class="iconsweets-create iconsweets-white"></i></a>
-						<a href="${ctx }/customer/delete.do?id=${customer.customerId }" class="btn btn-danger" title="删除"><i class="iconsweets-trashcan iconsweets-white"></i></a></td>
+					<td><a href="${ctx }/customer/modify.do?customer_id=${customer.customerId }" class="btn btn-info" title="修改"><i class="iconsweets-create iconsweets-white"></i></a>
+						<a href="${ctx }/customer/delete.do?customer_id=${customer.customerId }" class="btn btn-danger" title="删除"><i class="iconsweets-trashcan iconsweets-white"></i></a></td>
                      </tr>
                 </c:forEach>
             </tbody>

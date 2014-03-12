@@ -10,11 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListResourceBundle;
 import java.util.Map;
-
 import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
@@ -26,7 +24,6 @@ import nju.software.service.OrderService;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
-
 import org.apache.commons.lang.StringUtils;
 import org.drools.runtime.process.WorkflowProcessInstance;
 import org.jbpm.task.query.TaskSummary;
@@ -170,8 +167,8 @@ public class MarketController {
 		order.setOrderSource(orderSource);
 		
 		
-		
 		orderService.addOrder(order);
+
 		return "redirect:/market/customerOrder.do";
 	}
 
