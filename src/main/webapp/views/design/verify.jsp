@@ -9,7 +9,7 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">采购验证</h4>
+                    <h4 class="widgettitle">设计验证</h4>
                 <table id="dyntable" class="table table-bordered responsive">
                     <colgroup>
                         <col class="con1" />
@@ -43,11 +43,11 @@
 								<td>${order.orderId }</td>
 								<td>${order.orderId }</td>
 								<td>${order.orderId }</td>
-								<td><form action="${ctx }/buy/doVerify.do" method="post" style="display: inline;">
-									<input type="hidden" name="buyVal" value="true" /><input type="hidden" name="id" value="${order.orderId }" />
+								<td><form action="${ctx }/design/doVerify.do" method="post" style="display: inline;">
+									<input type="hidden" name="designVal" value="true" /><input type="hidden" name="id" value="${order.orderId }" />
 									<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</button></form>
-									<form action="${ctx }/buy/doVerify.do" method="post" style="display: inline;">
-									<input type="hidden" name="buyVal" value="false" /><input type="hidden" name="id" value="${order.orderId }" />
+									<form action="${ctx }/design/doVerify.do" method="post" style="display: inline;">
+									<input type="hidden" name="designVal" value="false" /><input type="hidden" name="id" value="${order.orderId }" />
 									<button class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 拒绝</button></form>
 								</td>
 								
