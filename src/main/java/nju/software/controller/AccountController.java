@@ -387,7 +387,13 @@ public class AccountController {
 			return "redirect:/employee/search.do";
 		}
 	}
-	
+	/**
+	 * 访问添加客户页面
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 
 	@RequestMapping(value = "customer/add.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
@@ -398,6 +404,13 @@ public class AccountController {
 		  return "account/add_customer";
 
 	}
+	/**
+	 * 访问修改该客户页面
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "customer/modify.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyCustomer(HttpServletRequest request,
@@ -425,6 +438,13 @@ public class AccountController {
 	    
 		return "account/modify_customer";
 	}
+	/**
+	 * 修改客户信息的方法
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "customer/doModify.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doModifyCustomer(HttpServletRequest request,
@@ -495,14 +515,21 @@ public class AccountController {
 		
 		if(success1&&success2){
 		System.out.println("customer modify successfully");
-		  return "redirect:customer/search.do";
+		  return "redirect:/customer/search.do";
 		}else
 		{
 			model.put("customer_id",customerId);
-			return "redirect:customer/search.do";
+			return "redirect:/customer/search.do";
 		}
 	}
 
+	/**
+	 * 查看customer信息
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "customer/viewCustomer.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String viewCustomer(HttpServletRequest request,
@@ -517,6 +544,13 @@ public class AccountController {
 	
 
 
+	/**
+	 * 真实添加客户信息
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "customer/doAdd.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doAddCustomer(HttpServletRequest request,
@@ -558,7 +592,7 @@ public class AccountController {
 				
 			model.addAttribute("exist", true);
 			model.addAttribute("success", false);
-			return "redirct:customer/add.do";
+			return "redirct:/customer/add.do";
 		} else {
 			Customer c = new Customer();
 			
@@ -602,6 +636,13 @@ public class AccountController {
 			}
 		}
 	}
+	/**
+	 * 客户链表
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "customer/search.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String getCustomer(HttpServletRequest request,
@@ -629,4 +670,14 @@ public class AccountController {
 		return "account/show_customer";
 	}
 
+	@RequestMapping(value = "customer/delete.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String deleteCustomer(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		String customer_id=request.getParameter("customer_id");
+		boolean sucess=customerService.deleteCustomerById(Integer.parseInt(customer_id));
+		System.out.println("customer delete successfully"+sucess);
+		return "account/show_customer";
+	}
 }

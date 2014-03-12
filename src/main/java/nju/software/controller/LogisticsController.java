@@ -300,7 +300,7 @@ public class LogisticsController {
 
 		model.put("success", success);
 		System.out.println("successfully");
-		return "/logistics/sampleOrderList.do";
+		return "redirect:/logistics/sampleOrderList.do";
 
 	}
 }
