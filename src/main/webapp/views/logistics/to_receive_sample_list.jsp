@@ -15,34 +15,28 @@
 					<th>询单编号</th>
 					<th>客户编号</th>
 					<th>客户姓名</th>
-					<th>寄件人</th>
+					
 					<th>快递名称</th>
 					<th>快递单号</th>
 					<th>邮寄时间</th>
 					<th>操作</th>
 				</tr>
-				<tr>
-					<td>0000000001</td>
-					<td>0000000001</td>
-					<td>二哥</td>
-					<td>二哥</td>
-					<td>申通</td>
-					<td>XA565466666666</td>
-					<td>2013-12-12</td>
-					<td><a href="">已收货</a>&nbsp&nbsp&nbsp<a href="">未收货</a>&nbsp&nbsp&nbsp<a href="">详情</a></td>
-				</tr>
-				  <tbody>
 				<c:forEach var="order" items="${orderList}" >
-                     <tr class="gradeA">
-                     <td>${order.getOrderId() }</td>
-                   
-                     <td>${order.getCustomerName()}</td>
-					<td>${order.getEmployeeId()}</td>
+                     <tr>
+                     <td>${order.getO().getOrderId() }</td>
+                     <td>${order.getO().getCustomerId() }</td>
+                     <td>${order.getO().getCustomerName()}</td>
+					 <td>${order.getLog().getInPostSampleClothesType() }</td>
+					<td>${order.getLog().getInPostSampleClothesNumber() }</td>
+					<td>${order.getLog().getInPostSampleClothesTime() }</td>
 					<td>
-<a href="${ctx }/logistics/sampleOrderRequest.do?confirm=1&&orderId=${order.orderId }" class="btn btn-info" title="收到"><i class="iconsweets-create iconsweets-white"></i></a>
-<a href="${ctx }/logistics/sampleOrderRequest.do?confirm=0&&orderId=${order.orderId }" class="btn btn-danger" title="未收到"><i class="iconsweets-trashcan iconsweets-white"></i></a></td>
+<a href="${ctx }/logistics/sampleOrderRequest.do?confirm=1&&orderId=${order.getO().getOrderId() }&&taskId=${order.getTaskId() }&&processInstanceId=${order.getProcessId() }"  title="收到">收到</a>
+<a href="${ctx }/logistics/sampleOrderRequest.do?confirm=0&&orderId=${order.getO().getOrderId() }&&taskId=${order.getTaskId() }&&processInstanceId=${order.getProcessId() }"  title="未收到">未收到</a></td>
                      </tr>
                 </c:forEach>
+			
+				  <tbody>
+				
             </tbody>
 			</table>
 		</div>
