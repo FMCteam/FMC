@@ -106,6 +106,7 @@ public class LogisticsController {
 
 	/**
 	 * 得到物流样本列表
+	 * 
 	 * @param request
 	 * @param response
 	 * @param model
@@ -136,23 +137,45 @@ public class LogisticsController {
 		 * 
 		 * return "logistics/to_receive_sample_list";
 		 */
+		String page = request.getParameter("page");
+		String number_per_page = request.getParameter("number_per_page");
+		int s_page = 1;
+		int s_number_per_page = 10;
+		if (!StringUtil.isEmpty(page)) {
+			s_page = Integer.parseInt(page);
+		}
+		if (!StringUtil.isEmpty(number_per_page)) {
+			s_number_per_page = Integer.parseInt(number_per_page);
+		}
+
 		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
 				"WULIUZHUGUAN", "received_sample");
+		int page_number = (int) Math.ceil((double) list.size()
+				/ s_number_per_page);
+		int start = s_number_per_page * (s_page - 1);
 		List<ComposeOrderAndLog> logList = new ArrayList<ComposeOrderAndLog>();
+		int i = 0;
+		int j = 0;
 		for (TaskSummary task : list) {
-			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-					.getKsession().getProcessInstance(
-							task.getProcessInstanceId());
-			String orderId1 = process.getVariable("orderId").toString();
-			Order o = orderService.findByOrderId(orderId1);
+			if (i >= start && j < s_number_per_page) {
+				WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+						.getKsession().getProcessInstance(
+								task.getProcessInstanceId());
+				String orderId1 = process.getVariable("orderId").toString();
+				Order o = orderService.findByOrderId(orderId1);
 
-			Logistics l = logisticsService.findByOrderId(orderId1);
-			ComposeOrderAndLog log = new ComposeOrderAndLog(
-					task.getProcessInstanceId(), task.getId(),o, l);
-			logList.add(log);
+				Logistics l = logisticsService.findByOrderId(orderId1);
+				ComposeOrderAndLog log = new ComposeOrderAndLog(
+						task.getProcessInstanceId(), task.getId(), o, l);
+				logList.add(log);
+				j++;
+			}
+			i++;
 		}
 		model.put("orderList", logList);
 
+		model.put("page", s_page);
+		model.put("page_number", page_number);
 		return "logistics/to_receive_sample_list";
 	}
 
@@ -170,8 +193,9 @@ public class LogisticsController {
 		public Order o;
 		public Logistics log;
 
-		public ComposeOrderAndLog(long processId,long taskId, Order o, Logistics log) {
-			this.taskId=taskId;
+		public ComposeOrderAndLog(long processId, long taskId, Order o,
+				Logistics log) {
+			this.taskId = taskId;
 			this.processId = processId;
 			this.o = o;
 			this.log = log;
@@ -210,7 +234,7 @@ public class LogisticsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "logistics/list.do", method = RequestMethod.GET)
+	@RequestMapping(value = "logistics/list.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String findAll(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -221,12 +245,13 @@ public class LogisticsController {
 
 	/**
 	 * 收到或者未收到样衣
+	 * 
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "logistics/sampleOrderRequest.do", method = RequestMethod.GET)
+	@RequestMapping(value = "logistics/sampleOrderRequest.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String sampleOrderRequest(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -242,7 +267,7 @@ public class LogisticsController {
 
 		String processInstanceId = request.getParameter("processInstanceId");
 
-		String taskId=request.getParameter("taskId");
+		String taskId = request.getParameter("taskId");
 		boolean success = false;
 
 		// 直接进入到下一个流程时
@@ -250,16 +275,18 @@ public class LogisticsController {
 		map.put("receivedsample", receivedSample);
 		// 需要获取task中的数据
 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(Long.parseLong(processInstanceId));
+				.getKsession().getProcessInstance(
+						Long.parseLong(processInstanceId));
 		String orderId1 = process.getVariable("orderId").toString();
-		
+
 		// task orderId is the same as the request's orderId
 		if (orderId.equals(orderId1)) {
 			// complete the workflow
 			System.out.println("found it");
 			try {
-				
-				jbpmAPIUtil.completeTask(Long.parseLong(taskId), map, "WULIUZHUGUAN");
+
+				jbpmAPIUtil.completeTask(Long.parseLong(taskId), map,
+						"WULIUZHUGUAN");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -268,12 +295,12 @@ public class LogisticsController {
 			Order or = orderService.findByOrderId(orderId);
 			or.setHasPostedSampleClothes((short) confirmIntValue);
 			success = orderService.merge(or);
-			
+
 		}
 
 		model.put("success", success);
 		System.out.println("successfully");
-		return "/market/sampleOrderList.do";
+		return "redirect:/logistics/sampleOrderList.do";
 
 	}
 }
