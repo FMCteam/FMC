@@ -80,7 +80,7 @@ public class ProduceController {
 		boolean productVal = Boolean.parseBoolean(request.getParameter("productVal"));
 		String s_orderId_request = (String) request.getParameter("id");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-		String taskName = "verification_purchased";
+		String taskName = "production_verification";
 		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
 		for (TaskSummary task : list) {
 			//需要获取task中的数据	
@@ -108,7 +108,7 @@ public class ProduceController {
 
 		}
 		
-		return "redirect:/produce/verify";
+		return "redirect:/produce/verify.do";
 	}
 
 }

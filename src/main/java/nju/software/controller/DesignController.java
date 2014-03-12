@@ -46,7 +46,7 @@ public class DesignController {
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 		String actorId = account.getUserRole();
 		System.out.println("actorId: " + actorId);
-		String taskName = "design_verification";
+		String taskName = "design_verification ";
 		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
 		for (TaskSummary task : list) {
 			//需要获取task中的数据	
@@ -80,7 +80,7 @@ public class DesignController {
 		boolean designVal = Boolean.parseBoolean(request.getParameter("designVal"));
 		String s_orderId_request = (String) request.getParameter("id");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-		String taskName = "design_verification";
+		String taskName = "design_verification ";
 		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
 		for (TaskSummary task : list) {
 			//需要获取task中的数据	
@@ -108,7 +108,7 @@ public class DesignController {
 
 		}
 		
-		return "redirect:/design/verify";
+		return "redirect:/design/verify.do";
 	}
 
 }

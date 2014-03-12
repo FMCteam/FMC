@@ -3,7 +3,10 @@ package nju.software.service;
 import java.util.List;
 import java.util.Map;
 
+import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Employee;
+import nju.software.dataobject.Fabric;
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 
 public interface OrderService {
@@ -23,4 +26,7 @@ public interface OrderService {
 	
 	public boolean updateOrder(Order order);
 	public List<Order> findAll();
+	
+	
+	public String addOrder(Order order,List<Fabric>fabrics,List<Accessory>accessorys,Logistics logistics);
 }
