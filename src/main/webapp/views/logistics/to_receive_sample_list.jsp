@@ -27,8 +27,9 @@
 						<td>${order.getO().getCustomerId() }</td>
 						<td>${order.getO().getCustomerName()}</td>
 						<td>${order.getLog().getInPostSampleClothesType() }</td>
+						
 						<td>${order.getLog().getInPostSampleClothesNumber() }</td>
-						<td>${order.getLog().getInPostSampleClothesTime() }</td>
+						<td>${fn:substring(order.getLog().getInPostSampleClothesTime(),0,10) }</td>
 					<td>
 						<form action="${ctx }/logistics/sampleOrderRequest.do" method="post" style="display: inline;">
 									<input type="hidden" name="confirm" value="1" /><input type="hidden" name="orderId" value="${order.getO().getOrderId() }" />
