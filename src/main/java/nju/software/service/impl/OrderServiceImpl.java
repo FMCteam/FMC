@@ -5,9 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.FabricDAO;
+import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+<<<<<<< HEAD
+=======
+import nju.software.dataobject.Accessory;
+>>>>>>> 88dee8b3a9778434c366a3acba8bb17e4f763dfd
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
+import nju.software.dataobject.Fabric;
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
@@ -25,6 +34,13 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDAO orderDAO;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private AccessoryDAO accessoryDAO;
+	@Autowired
+	private FabricDAO fabricDAO;
+	@Autowired
+	private LogisticsDAO logisticsDAO;
+	
 	//新增订单
 	public void addOrder(Order order) {
 		orderDAO.save(order);
@@ -120,6 +136,7 @@ public class OrderServiceImpl implements OrderService {
 	 * 提交询单，开始流程
 	 */
 	@Override
+<<<<<<< HEAD
 	public String addOrder(Order order, Integer employeeId) {
 		// TODO Auto-generated method stub
 		orderDAO.save(order);
@@ -131,6 +148,36 @@ public class OrderServiceImpl implements OrderService {
 		params.put("sendclothes", order.getHasPostedSampleClothes());
 		//params.put("receivedsample", false);
 		//params.put("editOrder", false);
+=======
+	public String addOrder(Order order,List<Fabric>fabrics,List<Accessory>accessorys,Logistics logistics){
+		// TODO Auto-generated method stub
+		
+		//添加订单信息
+		orderDAO.save(order);
+		
+		//添加面料信息
+		for(Fabric fabric:fabrics){
+			fabric.setOrderId(order.getOrderId());
+			fabricDAO.save(fabric);
+		}
+		
+		//添加辅料信息
+		for(Accessory accessory:accessorys){
+			accessory.setOrderId(order.getOrderId());
+			accessoryDAO.save(accessory);
+		}
+		
+		//添加物流信息
+		logistics.setOrderId(order.getOrderId());
+		logisticsDAO.save(logistics);
+		
+		//启动流程
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("orderId", order.getOrderId());
+		params.put("employeeId", order.getEmployeeId());
+		params.put("needclothes", order.getIsNeedSampleClothes());
+		params.put("sendclothes", order.getHasPostedSampleClothes());
+>>>>>>> 88dee8b3a9778434c366a3acba8bb17e4f763dfd
 		doTMWorkFlowStart(params);
 		
 		return "下单成功";

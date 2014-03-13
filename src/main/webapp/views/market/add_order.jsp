@@ -111,8 +111,8 @@
 								<td colspan="2">面料名称</td>
 								<td colspan="2">面料克重</td>
 								<td colspan="2">操作</td>
-								<input id="fabric_name" type="hidden" />
-								<input id="fabric_amount" type="hidden" />
+								<input id="fabric_name" name="fabric_name" type="hidden" />
+								<input id="fabric_amount" name="fabric_amount" type="hidden" />
 							</tr>
 							<tr>
 								<td colspan="6" class="innertable"><table
@@ -129,8 +129,8 @@
 								<td colspan="2">辅料名称</td>
 								<td colspan="2">辅料要求</td>
 								<td colspan="2">操作</td>
-								<input id="accessory_name" type="hidden" />
-								<input id="accessory_query" type="hidden" />
+								<input id="accessory_name" name="accessory_name" type="hidden" />
+								<input id="accessory_query" name="accessory_query" type="hidden" />
 							</tr>
 							<tr>
 								<td colspan="6" class="innertable"><table table
