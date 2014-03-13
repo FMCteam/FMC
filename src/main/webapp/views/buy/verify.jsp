@@ -24,31 +24,26 @@
                     <thead>
                         <tr>
                             <th class="head0">订单号</th>
-                            <th class="head1">性别</th>
-                            <th class="head0">年龄</th>
-                            <th class="head1">部门</th>
-                            <th class="head0">入职时间</th>
-                            <th class="head1">地址</th>
-                            <th class="head0">电话</th>
+                            <th class="head1">业务员</th>
+                            <th class="head0">客户姓名</th>
+                            <th class="head1">客户公司</th>
+                            <th class="head0">款式</th>
+                            <th class="head1">件数</th>
+                            <th class="head0">交货时间</th>
                             <th class="head1"></th>
                         </tr>
                     </thead>
                     <tbody>
-	                    <c:forEach var="order" items="${order_list}" >
+	                    <c:forEach var="orderModel" items="${order_list}" >
 	                        <tr class="gradeA">
-	                            <td>${order.order.orderId }</td>
-								<td>${order.order.orderId }</td>
-								<td>${order.order.orderId }</td>
-								<td>${order.order.orderId }</td>
-								<td>${order.order.orderId }</td>
-								<td>${order.order.orderId }</td>
-								<td>${order.order.orderId }</td>
-								<td><form action="${ctx }/buy/doVerify.do" method="post" style="display: inline;">
-									<input type="hidden" name="buyVal" value="true" /><input type="hidden" name="id" value="${order.order.orderId }" />
-									<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</button></form>
-									<form action="${ctx }/buy/doVerify.do" method="post" style="display: inline;">
-									<input type="hidden" name="buyVal" value="false" /><input type="hidden" name="id" value="${order.order.orderId }" />
-									<button class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 拒绝</button></form>
+	                            <td>${orderModel.order.orderId }</td>
+								<td>${orderModel.order.employeeId }</td>
+								<td>${orderModel.order.customerName }</td>
+								<td>${orderModel.order.customerCompany }</td>
+								<td>${orderModel.order.styleName }</td>
+								<td>${orderModel.order.askAmount }</td>
+								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+								<td><a href="${ctx }/buy/verifyDetail.do?id=${orderModel.order.orderId }" >详情</a>
 								</td>
 								
 	                        </tr>

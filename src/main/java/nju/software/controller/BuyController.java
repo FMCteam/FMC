@@ -59,6 +59,7 @@ public class BuyController {
 		
 		return "buy/verify";
 	}
+	
 	/**
 	 * 采购验证
 	 * @param request
@@ -85,6 +86,36 @@ public class BuyController {
 		buyService.verify(account, orderId_request, taskId, processId, buyVal, comment);
 		
 		return "redirect:/buy/verify.do";
+	}
+	
+	/**
+	 * 显示订单详细信息
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "buy/verifyDetail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String verifyDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("buy verify ================ show detail");
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String actorId = "CAIGOUZHUGUAN";
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		
+		model.addAttribute("order", orderList);
+		
+		return "buy/verify_detail";
 	}
 
 }
