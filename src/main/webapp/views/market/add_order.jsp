@@ -9,7 +9,7 @@
 				<h4 class="widgettitle">Form Elements</h4>
 				<div class="widgetcontent">
 
-					<form onSubmit="return verify()" method="post"
+					<form onSubmit="return verify()" method="post" 
 						action="${ctx }/market/addMarketOrder.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
