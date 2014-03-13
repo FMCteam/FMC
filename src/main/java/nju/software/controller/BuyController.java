@@ -78,8 +78,11 @@ public class BuyController {
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("task_id");
 		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		String comment = request.getParameter("comment");
 		String taskName = "verification_purchased";
-		buyService.verify(account, orderId_request, taskName, buyVal);
+		buyService.verify(account, orderId_request, taskId, processId, buyVal, comment);
 		
 		return "redirect:/buy/verify.do";
 	}
