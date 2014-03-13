@@ -18,6 +18,8 @@ import nju.software.dataobject.Order;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
 
+import org.jbpm.task.query.TaskSummary;
+import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -179,5 +181,24 @@ public class OrderServiceImpl implements OrderService {
 			System.out.println("流程启动失败");
 			ex.printStackTrace();
 		}
+	}
+
+	@Override
+	public List<Order> getOrderByActorIdAndTaskname(String actorId,
+			String taskName) {
+		// TODO Auto-generated method stub
+		List<Order> orderList = new ArrayList<Order>();
+		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
+		for (TaskSummary task : list) {
+			//需要获取task中的数据	
+			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(task.getProcessInstanceId());
+			int orderId  = (int) process.getVariable("orderId");
+			Order order = getOrderById(orderId);
+			if (order != null) {
+				System.out.println("orderId: " + order.getOrderId());
+				orderList.add(order);
+			}
+		}
+		return orderList;
 	}
 }
