@@ -4,6 +4,6 @@ import nju.software.dataobject.Account;
 
 public interface BuyService {
 	
-	public boolean verify(Account account, int orderId, String taskName, boolean buyVal);
+	public boolean verify(Account account, int orderId, long taskId, long processId, boolean buyVal, String comment);
 
 }
