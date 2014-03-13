@@ -24,12 +24,12 @@
                     <thead>
                         <tr>
                             <th class="head0">订单号</th>
-                            <th class="head1">性别</th>
-                            <th class="head0">年龄</th>
-                            <th class="head1">部门</th>
-                            <th class="head0">入职时间</th>
-                            <th class="head1">地址</th>
-                            <th class="head0">电话</th>
+                            <th class="head1">业务员</th>
+                            <th class="head0">客户姓名</th>
+                            <th class="head1">客户公司</th>
+                            <th class="head0">款式</th>
+                            <th class="head1">件数</th>
+                            <th class="head0">交货时间</th>
                             <th class="head1"></th>
                         </tr>
                     </thead>
@@ -37,12 +37,12 @@
 	                    <c:forEach var="order" items="${order_list}" >
 	                        <tr class="gradeA">
 	                            <td>${order.orderId }</td>
-								<td>${order.orderId }</td>
-								<td>${order.orderId }</td>
-								<td>${order.orderId }</td>
-								<td>${order.orderId }</td>
-								<td>${order.orderId }</td>
-								<td>${order.orderId }</td>
+								<td>${order.employeeId }</td>
+								<td>${order.customerName }</td>
+								<td>${order.customerCompany }</td>
+								<td>${order.styleName }</td>
+								<td>${order.askAmount }</td>
+								<td>${fn:substring(order.askDeliverDate,0,10) }</td>
 								<td><form action="${ctx }/produce/doVerify.do" method="post" style="display: inline;">
 									<input type="hidden" name="productVal" value="true" /><input type="hidden" name="id" value="${order.orderId }" />
 									<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</button></form>
