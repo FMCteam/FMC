@@ -820,10 +820,6 @@
         <flowNodeRef>_74</flowNodeRef>
         <flowNodeRef>_75</flowNodeRef>
       </lane>
-      <lane name="SHICHANGZHUANYUAN" >
-      </lane>
-      <lane name="SHICHANGZHUANYUAN" >
-      </lane>
       <lane name="CAIGOUZHUGUAN" >
         <flowNodeRef>_10</flowNodeRef>
         <flowNodeRef>_23</flowNodeRef>
@@ -869,7 +865,7 @@
         <terminateEventDefinition />
     </endEvent>
     <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
-    <userTask id="_7" name="???????" >
+    <userTask id="_7" name="??????" >
       <ioSpecification>
         <dataInput id="_7_TaskNameInput" name="TaskName" />
         <dataInput id="_7_PriorityInput" name="Priority" />
@@ -1320,11 +1316,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
     <userTask id="_59" name="???????¡¤???" >
-=======
-    <userTask id="_59" name="???????Â·???" >
->>>>>>> 88dee8b3a9778434c366a3acba8bb17e4f763dfd
       <ioSpecification>
         <dataInput id="_59_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1691,11 +1683,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
     <userTask id="_118" name="¦Â?????" >
-=======
-    <userTask id="_118" name="Î²?????" >
->>>>>>> 88dee8b3a9778434c366a3acba8bb17e4f763dfd
       <ioSpecification>
         <dataInput id="_118_TaskNameInput" name="TaskName" />
         <inputSet>
