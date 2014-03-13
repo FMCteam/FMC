@@ -43,9 +43,12 @@
 								<td>${orderModel.order.styleName }</td>
 								<td>${orderModel.order.askAmount }</td>
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><a href="${ctx }/buy/verifyDetail.do?id=${orderModel.order.orderId }" >详情</a>
+								<td><form action="${ctx }/buy/verifyDetail.do" method="post" >
+									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
+										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
+										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+										<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 详细信息</button></form>
 								</td>
-								
 	                        </tr>
                         </c:forEach>
                     </tbody>
