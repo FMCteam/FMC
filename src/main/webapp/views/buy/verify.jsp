@@ -36,18 +36,18 @@
                     <tbody>
 	                    <c:forEach var="order" items="${order_list}" >
 	                        <tr class="gradeA">
-	                            <td>${order.orderId }</td>
-								<td>${order.orderId }</td>
-								<td>${order.orderId }</td>
-								<td>${order.orderId }</td>
-								<td>${order.orderId }</td>
-								<td>${order.orderId }</td>
-								<td>${order.orderId }</td>
+	                            <td>${order.order.orderId }</td>
+								<td>${order.order.orderId }</td>
+								<td>${order.order.orderId }</td>
+								<td>${order.order.orderId }</td>
+								<td>${order.order.orderId }</td>
+								<td>${order.order.orderId }</td>
+								<td>${order.order.orderId }</td>
 								<td><form action="${ctx }/buy/doVerify.do" method="post" style="display: inline;">
-									<input type="hidden" name="buyVal" value="true" /><input type="hidden" name="id" value="${order.orderId }" />
+									<input type="hidden" name="buyVal" value="true" /><input type="hidden" name="id" value="${order.order.orderId }" />
 									<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</button></form>
 									<form action="${ctx }/buy/doVerify.do" method="post" style="display: inline;">
-									<input type="hidden" name="buyVal" value="false" /><input type="hidden" name="id" value="${order.orderId }" />
+									<input type="hidden" name="buyVal" value="false" /><input type="hidden" name="id" value="${order.order.orderId }" />
 									<button class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 拒绝</button></form>
 								</td>
 								
