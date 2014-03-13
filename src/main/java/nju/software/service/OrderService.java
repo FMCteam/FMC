@@ -32,4 +32,6 @@ public interface OrderService {
 	public String addOrder(Order order,List<Fabric>fabrics,List<Accessory>accessorys,Logistics logistics);
 	
 	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId, String taskName);
+	
+	public OrderModel getOrderDetail(int orderId, long taskId, long processId);
 }

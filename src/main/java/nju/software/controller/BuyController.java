@@ -102,18 +102,17 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("buy verify ================ show detail");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		OrderModel orderModel = null;
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
-		String actorId = "CAIGOUZHUGUAN";
 		String s_orderId_request = (String) request.getParameter("id");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("task_id");
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
-		
-		model.addAttribute("order", orderList);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+		model.addAttribute("orderModel", orderModel);
 		
 		return "buy/verify_detail";
 	}

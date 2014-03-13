@@ -207,4 +207,17 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return orderList;
 	}
+
+	@Override
+	public OrderModel getOrderDetail(int orderId, long taskId, long processId) {
+		// TODO Auto-generated method stub
+		OrderModel orderModel = null;
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		if (orderId == orderId_process) {
+			Order order = orderDAO.findById(orderId);
+			orderModel = new OrderModel(order, taskId, processId);
+		}
+		return orderModel;
+	}
 }
