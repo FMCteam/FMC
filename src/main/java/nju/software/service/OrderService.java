@@ -26,11 +26,5 @@ public interface OrderService {
 	
 	public boolean updateOrder(Order order);
 	public List<Order> findAll();
-	
-	
-<<<<<<< HEAD
-	public String addOrder(Order order,Integer employeeId);
-=======
 	public String addOrder(Order order,List<Fabric>fabrics,List<Accessory>accessorys,Logistics logistics);
->>>>>>> 88dee8b3a9778434c366a3acba8bb17e4f763dfd
 }

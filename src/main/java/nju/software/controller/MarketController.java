@@ -2,10 +2,7 @@ package nju.software.controller;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
->>>>>>> 88dee8b3a9778434c366a3acba8bb17e4f763dfd
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,9 +10,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListResourceBundle;
 import java.util.Map;
+
 import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
@@ -27,10 +26,7 @@ import nju.software.service.OrderService;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
-<<<<<<< HEAD
 
-=======
->>>>>>> 88dee8b3a9778434c366a3acba8bb17e4f763dfd
 import org.apache.commons.lang.StringUtils;
 import org.drools.runtime.process.WorkflowProcessInstance;
 import org.jbpm.task.query.TaskSummary;
@@ -83,12 +79,7 @@ public class MarketController {
 	public String addMarketOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		
-		//表单数据
-<<<<<<< HEAD
-=======
 		//订单数据
->>>>>>> 88dee8b3a9778434c366a3acba8bb17e4f763dfd
 		Integer customerId=Integer.parseInt(request.getParameter("customerId"));
 		Customer customer=customerService.findByCustomerId(customerId);
 		Integer employeeId=6;
@@ -120,9 +111,6 @@ public class MarketController {
 		Short isNeedSampleClothes=Short.parseShort(request.getParameter("is_need_sample_clothes"));
 		String orderSource=request.getParameter("order_source");
 		
-		
-<<<<<<< HEAD
-=======
 		//面料数据
 		String fabric_names=request.getParameter("fabric_name");
 		String fabric_amounts=request.getParameter("fabric_amount");
@@ -146,11 +134,6 @@ public class MarketController {
 		}
 		
 		
-		//Logistics logistics
-		
-		
-		
->>>>>>> 88dee8b3a9778434c366a3acba8bb17e4f763dfd
 		//Order 
 		Order order = new Order();
 		order.setEmployeeId(employeeId);
@@ -180,13 +163,8 @@ public class MarketController {
 		order.setOrderSource(orderSource);
 		
 		
-<<<<<<< HEAD
-		
-		orderService.addOrder(order);
-=======
 		orderService.addOrder(order);
 
->>>>>>> 88dee8b3a9778434c366a3acba8bb17e4f763dfd
 		return "redirect:/market/customerOrder.do";
 	}
 
