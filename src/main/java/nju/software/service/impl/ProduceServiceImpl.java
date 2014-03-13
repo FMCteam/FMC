@@ -27,7 +27,8 @@ public class ProduceServiceImpl implements ProduceService {
 	public boolean verify(Account account, int orderId, String taskName,
 			boolean productVal) {
 		// TODO Auto-generated method stub
-		String actorId = account.getUserRole();
+//		String actorId = account.getUserRole();
+		String actorId = "SHENGCHANZHUGUAN";
 		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
 		for (TaskSummary task : list) {
 			//需要获取task中的数据	

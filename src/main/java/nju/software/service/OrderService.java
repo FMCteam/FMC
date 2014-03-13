@@ -8,6 +8,7 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderModel;
 
 public interface OrderService {
 	
@@ -30,5 +31,5 @@ public interface OrderService {
 	
 	public String addOrder(Order order,List<Fabric>fabrics,List<Accessory>accessorys,Logistics logistics);
 	
-	public List<Order> getOrderByActorIdAndTaskname(String actorId, String taskName);
+	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId, String taskName);
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderModel;
 import nju.software.service.DesignService;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
@@ -45,9 +46,10 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("design verify ================ show task");
-		List<Order> orderList = new ArrayList<Order>();
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-		String actorId = account.getUserRole();
+//		String actorId = account.getUserRole();
+		String actorId = "SHEJIZHUGUAN";
 		System.out.println("actorId: " + actorId);
 		String taskName = "design_verification ";
 		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);

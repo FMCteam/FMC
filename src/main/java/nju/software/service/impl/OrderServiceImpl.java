@@ -15,6 +15,7 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderModel;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
 
@@ -187,19 +188,21 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getOrderByActorIdAndTaskname(String actorId,
+	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId,
 			String taskName) {
 		// TODO Auto-generated method stub
-		List<Order> orderList = new ArrayList<Order>();
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
 		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
 		for (TaskSummary task : list) {
 			//需要获取task中的数据	
-			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(task.getProcessInstanceId());
+			long processId = task.getProcessInstanceId();
+			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
 			int orderId  = (int) process.getVariable("orderId");
 			Order order = getOrderById(orderId);
 			if (order != null) {
 				System.out.println("orderId: " + order.getOrderId());
-				orderList.add(order);
+				OrderModel orderModel = new OrderModel(order, task.getId(), processId);
+				orderList.add(orderModel);
 			}
 		}
 		return orderList;

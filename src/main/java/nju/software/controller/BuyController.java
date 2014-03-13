@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderModel;
 import nju.software.service.BuyService;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
@@ -47,9 +48,10 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("buy verify ================ show task");
-		List<Order> orderList = new ArrayList<Order>();
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-		String actorId = account.getUserRole();
+//		String actorId = account.getUserRole();
+		String actorId = "CAIGOUZHUGUAN";
 		System.out.println("actorId: " + actorId);
 		String taskName = "verification_purchased";
 		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
@@ -74,6 +76,8 @@ public class BuyController {
 		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
 		String s_orderId_request = (String) request.getParameter("id");
 		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
 		String taskName = "verification_purchased";
 		buyService.verify(account, orderId_request, taskName, buyVal);
 		

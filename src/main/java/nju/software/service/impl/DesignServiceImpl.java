@@ -27,7 +27,8 @@ public class DesignServiceImpl implements DesignService {
 	public boolean verify(Account account, int orderId, String taskName,
 			boolean designVal) {
 		// TODO Auto-generated method stub
-		String actorId = account.getUserRole();
+//		String actorId = account.getUserRole();
+		String actorId = "SHEJIZHUGUAN";
 		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
 		for (TaskSummary task : list) {
 			//需要获取task中的数据	
