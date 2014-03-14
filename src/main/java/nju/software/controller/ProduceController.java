@@ -115,7 +115,7 @@ public class ProduceController {
 		model.addAttribute("fabric_list", fabricList);
 		model.addAttribute("accessory_list", accessoryList);
 		
-		return "buy/verify_detail";
+		return "produce/verify_detail";
 	}
 
 }
