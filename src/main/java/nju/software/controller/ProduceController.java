@@ -7,7 +7,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Fabric;
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
 import nju.software.service.OrderService;
@@ -78,6 +81,41 @@ public class ProduceController {
 		produceService.verify(account, orderId_request, taskName, productVal);
 		
 		return "redirect:/produce/verify.do";
+	}
+	
+	/**
+	 * 显示订单详细信息
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "produce/verifyDetail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String verifyDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("produce verify ================ show detail");
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+		Logistics logistics =produceService.getLogisticsByOrderId(orderId_request);
+		List<Fabric> fabricList = produceService.getFabricByOrderId(orderId_request);
+		List<Accessory> accessoryList = produceService.getAccessoryByOrderId(orderId_request);
+		model.addAttribute("orderModel", orderModel);
+		model.addAttribute("logistics", logistics);
+		model.addAttribute("fabric_list", fabricList);
+		model.addAttribute("accessory_list", accessoryList);
+		
+		return "produce/verify_detail";
 	}
 
 }

@@ -6,9 +6,9 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<div class="widget">
-				<h4 class="widgettitle">采购验证</h4>
+				<h4 class="widgettitle">设计验证</h4>
 				<div class="widgetcontent">
-					<form id="verify_form" method="post" action="${ctx }/buy/doVerify.do">
+					<form id="verify_form" method="post" action="${ctx }/design/doVerify.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td rowspan="3">客户信息</td>
@@ -185,7 +185,7 @@
 									<input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
 									<input type="hidden" name="taskId" value="${orderModel.taskId }" />
 									<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />
-									<input id="verify_val" type="hidden" name="buyVal" value="" />
+									<input id="verify_val" type="hidden" name="designVal" value="" />
 									<a id="agree_detail" class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</a>
 									<a id="disagree_detail" class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 拒绝</a>
 								</td>

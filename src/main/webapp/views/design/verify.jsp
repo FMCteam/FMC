@@ -34,23 +34,21 @@
                         </tr>
                     </thead>
                     <tbody>
-	                    <c:forEach var="order" items="${order_list}" >
+	                    <c:forEach var="orderModel" items="${order_list}" >
 	                        <tr class="gradeA">
-	                            <td>${order.orderId }</td>
-								<td>${order.employeeId }</td>
-								<td>${order.customerName }</td>
-								<td>${order.customerCompany }</td>
-								<td>${order.styleName }</td>
-								<td>${order.askAmount }</td>
-								<td>${fn:substring(order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx }/design/doVerify.do" method="post" style="display: inline;">
-									<input type="hidden" name="designVal" value="true" /><input type="hidden" name="id" value="${order.orderId }" />
-									<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</button></form>
-									<form action="${ctx }/design/doVerify.do" method="post" style="display: inline;">
-									<input type="hidden" name="designVal" value="false" /><input type="hidden" name="id" value="${order.orderId }" />
-									<button class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 拒绝</button></form>
+	                            <td>${orderModel.order.orderId }</td>
+								<td>${orderModel.order.employeeId }</td>
+								<td>${orderModel.order.customerName }</td>
+								<td>${orderModel.order.customerCompany }</td>
+								<td>${orderModel.order.styleName }</td>
+								<td>${orderModel.order.askAmount }</td>
+								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+								<td><form action="${ctx }/design/verifyDetail.do" method="post" >
+									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
+										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
+										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 详细信息</button></form>
 								</td>
-								
 	                        </tr>
                         </c:forEach>
                     </tbody>

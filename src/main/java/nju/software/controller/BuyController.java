@@ -9,7 +9,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Fabric;
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
 import nju.software.service.BuyService;
@@ -75,13 +78,13 @@ public class BuyController {
 		
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
-		String s_orderId_request = (String) request.getParameter("id");
+		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
+		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
+		String s_processId = request.getParameter("pinId");
 		long processId = Long.parseLong(s_processId);
-		String comment = request.getParameter("comment");
+		String comment = request.getParameter("suggestion");
 		String taskName = "verification_purchased";
 		buyService.verify(account, orderId_request, taskId, processId, buyVal, comment);
 		
@@ -112,7 +115,13 @@ public class BuyController {
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
 		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+		Logistics logistics = buyService.getLogisticsByOrderId(orderId_request);
+		List<Fabric> fabricList = buyService.getFabricByOrderId(orderId_request);
+		List<Accessory> accessoryList = buyService.getAccessoryByOrderId(orderId_request);
 		model.addAttribute("orderModel", orderModel);
+		model.addAttribute("logistics", logistics);
+		model.addAttribute("fabric_list", fabricList);
+		model.addAttribute("accessory_list", accessoryList);
 		
 		return "buy/verify_detail";
 	}
