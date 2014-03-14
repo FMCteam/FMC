@@ -77,19 +77,20 @@ public class ProduceController {
 		
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 		boolean productVal = Boolean.parseBoolean(request.getParameter("productVal"));
-		String s_orderId_request = (String) request.getParameter("id");
+		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
+
+		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
+		String s_processId = request.getParameter("pinId");
 		long processId = Long.parseLong(s_processId);
-		String comment = request.getParameter("comment");
-		String taskName = "verification_purchased";
-		produceService.verify(account, orderId_request, (int) taskId, processId, productVal, comment);
-		
+		String comment = request.getParameter("suggestion");
+		String taskName = "production_verification";
+		produceService.verify(account, orderId_request, taskId, processId, productVal, comment);
 		
 		return "redirect:/produce/verify.do";
 	}
+
 	/**
 	 * 显示订单详细信息
 	 * 
@@ -103,7 +104,9 @@ public class ProduceController {
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("buy verify ================ show detail");
+
+		System.out.println("produce verify ================ show detail");
+
 		OrderModel orderModel = null;
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
@@ -114,9 +117,11 @@ public class ProduceController {
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
 		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-		Logistics logistics = buyService.getLogisticsByOrderId(orderId_request);
-		List<Fabric> fabricList = buyService.getFabricByOrderId(orderId_request);
-		List<Accessory> accessoryList = buyService.getAccessoryByOrderId(orderId_request);
+
+		Logistics logistics =produceService.getLogisticsByOrderId(orderId_request);
+		List<Fabric> fabricList = produceService.getFabricByOrderId(orderId_request);
+		List<Accessory> accessoryList = produceService.getAccessoryByOrderId(orderId_request);
+
 		model.addAttribute("orderModel", orderModel);
 		model.addAttribute("logistics", logistics);
 		model.addAttribute("fabric_list", fabricList);

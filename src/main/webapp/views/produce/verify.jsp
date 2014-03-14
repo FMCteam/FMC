@@ -47,7 +47,9 @@
 									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
 										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
 										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-										<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 详细信息</button></form>
+
+										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 详细信息</button></form>
+
 								</td>
 	                        </tr>
                         </c:forEach>

@@ -9,7 +9,8 @@ import nju.software.dataobject.Logistics;
 
 public interface BuyService {
 	
-	public boolean verify(Account account, int orderId, long taskId, long processId, boolean buyVal, String comment);
+	public boolean verify(Account account, int orderId, long taskId, 
+			long processId, boolean buyVal, String comment);
 
 	public Logistics getLogisticsByOrderId(int orderId);
 	

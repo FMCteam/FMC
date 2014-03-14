@@ -78,18 +78,22 @@ public class DesignController {
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 		
 		boolean designVal = Boolean.parseBoolean(request.getParameter("designVal"));
-		String s_orderId_request = (String) request.getParameter("id");
+		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
+
+		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
+		String s_processId = request.getParameter("pinId");
 		long processId = Long.parseLong(s_processId);
-		String comment = request.getParameter("comment");
-		String taskName = "verification_purchased";
-		designService.verify(account, orderId_request, (int) taskId, processId, designVal, comment);
+		String comment = request.getParameter("suggestion");
+		String taskName = "design_verification ";
+		designService.verify(account, orderId_request, taskId, processId, designVal, comment);
+
 		
 		return "redirect:/design/verify.do";
 	}
+	
+	
 
 	/**
 	 * 显示订单详细信息
