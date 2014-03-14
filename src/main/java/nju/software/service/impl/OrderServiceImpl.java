@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nju.software.controller.LogisticsController.ComposeOrderAndLog;
+import nju.software.controller.MarketController;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
@@ -17,7 +19,10 @@ import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
+import nju.software.web.vo.OrderALL;
 
+import org.jbpm.task.query.TaskSummary;
+import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -155,12 +160,13 @@ public class OrderServiceImpl implements OrderService {
 		logistics.setOrderId(order.getOrderId());
 		logisticsDAO.save(logistics);
 		
+		
 		//启动流程
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("orderId", order.getOrderId());
 		params.put("employeeId", order.getEmployeeId());
-		params.put("needclothes", order.getIsNeedSampleClothes());
-		params.put("sendclothes", order.getHasPostedSampleClothes());
+		params.put("needclothes", order.getIsNeedSampleClothes()==1);
+		params.put("sendclothes", order.getHasPostedSampleClothes()==1);
 		doTMWorkFlowStart(params);
 		
 		return "下单成功";
@@ -179,5 +185,67 @@ public class OrderServiceImpl implements OrderService {
 			System.out.println("流程启动失败");
 			ex.printStackTrace();
 		}
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public List<OrderALL> findModifyOrderPage(String string, String string2,
+			int s_page, int s_number_per_page) {
+		// TODO Auto-generated method stub
+		try
+		{
+			List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+					string, string2);
+			int page_number = (int) Math.ceil((double) list.size()
+					/ s_number_per_page);
+			int start = s_number_per_page * (s_page - 1);
+			List<OrderALL> logList = new ArrayList<OrderALL>();
+			int i = 0;
+			int j = 0;
+			for (TaskSummary task : list) {
+				if (i >= start && j < s_number_per_page) {
+					WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+							.getKsession().getProcessInstance(
+									task.getProcessInstanceId());
+					String orderId1 = process.getVariable("orderId").toString();
+					//String reason1 = process.getVariable("orderId").toString();
+					//String reason2 = process.getVariable("orderId").toString();
+					//String reason3 = process.getVariable("orderId").toString();
+					Order order= findByOrderId(orderId1);
+					OrderALL test=new OrderALL(order,null,null,null,task.getId(),null,null,null,task.getProcessInstanceId());
+					logList.add(test);
+
+					j++;
+				}
+				i++;
+			}
+			return logList;
+		}catch(Exception e)
+		{
+			
+		}
+		
+		return null;
+	}
+
+	@Override
+	public OrderALL getOrderALLById(int s_orderId, long s_taskId,long processId) {
+		// TODO Auto-generated method stub
+	
+		try
+		{
+			Order order=orderDAO.findById(s_orderId);
+			List<Fabric> fabricList=fabricDAO.findByProperty("orderId",order.getOrderId());
+			List<Accessory> accessoryList=accessoryDAO.findByProperty("orderId",order.getOrderId());
+			List<Logistics> log=logisticsDAO.findByProperty("orderId", order.getOrderId());
+			OrderALL all=new OrderALL(order,fabricList,accessoryList,log.get(0),s_taskId,null,null,null,processId);
+			return all;
+		}catch(Exception e)
+		{
+			
+		}
+		return null;
 	}
 }

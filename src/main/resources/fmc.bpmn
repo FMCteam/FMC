@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <definitions id="Definition"
              targetNamespace="http://www.jboss.org/drools"
              typeLanguage="http://www.java.com/javaTypes"
@@ -808,9 +808,6 @@
     <property id="isworksheetB" itemSubjectRef="_isworksheetBItem"/>
 
     <laneSet>
-      <lane name="SHICHANGZHUGUAN" >
-        <flowNodeRef>_29</flowNodeRef>
-      </lane>
       <lane name="SHICHANGZHUANYUAN" >
         <flowNodeRef>_19</flowNodeRef>
         <flowNodeRef>_28</flowNodeRef>
@@ -820,9 +817,8 @@
         <flowNodeRef>_74</flowNodeRef>
         <flowNodeRef>_75</flowNodeRef>
       </lane>
-      <lane name="SHICHANGZHUANYUAN" >
-      </lane>
-      <lane name="SHICHANGZHUANYUAN" >
+      <lane name="SHICHANGZHUGUAN" >
+        <flowNodeRef>_29</flowNodeRef>
       </lane>
       <lane name="CAIGOUZHUGUAN" >
         <flowNodeRef>_10</flowNodeRef>
@@ -871,11 +867,19 @@
     <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
     <userTask id="_7" name="�յ�����" >
       <ioSpecification>
+        <dataInput id="_7_CommentInput" name="Comment" />
+        <dataInput id="_7_SkippableInput" name="Skippable" />
+        <dataInput id="_7_LocaleInput" name="Locale" />
         <dataInput id="_7_TaskNameInput" name="TaskName" />
+        <dataInput id="_7_GroupIdInput" name="GroupId" />
         <dataInput id="_7_PriorityInput" name="Priority" />
         <dataOutput id="_7_receivedsampleOutput" name="receivedsample" />
         <inputSet>
+          <dataInputRefs>_7_CommentInput</dataInputRefs>
+          <dataInputRefs>_7_SkippableInput</dataInputRefs>
+          <dataInputRefs>_7_LocaleInput</dataInputRefs>
           <dataInputRefs>_7_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_7_GroupIdInput</dataInputRefs>
           <dataInputRefs>_7_PriorityInput</dataInputRefs>
         </inputSet>
         <outputSet>
@@ -883,10 +887,38 @@
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
+        <targetRef>_7_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_7_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_7_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_7_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
         <targetRef>_7_TaskNameInput</targetRef>
         <assignment>
           <from xsi:type="tFormalExpression">received_sample</from>
           <to xsi:type="tFormalExpression">_7_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_GroupIdInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_7_GroupIdInput</to>
         </assignment>
       </dataInputAssociation>
       <dataInputAssociation>

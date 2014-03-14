@@ -11,6 +11,8 @@
 		$("table.accessory_table a").click(function(){
 			table_addrow_onclick("accessory_table","accessory_name","accessory_query");
 		});
+		
+		init();
 	});
 
 
@@ -66,12 +68,11 @@ function verify(){
 	//alert(getTdString("fabric_amount"));
 	//alert(getTdString("accessory_name"));
 	//alert(getTdString("accessory_query"));
-	$("#fabric_name").val(getTdString("fabric_name"));
-	$("#fabric_amount").val(getTdString("fabric_amount"));
-	$("#accessory_name").val(getTdString("accessory_name"));
-	$("#accessory_query").val(getTdString("accessory_query"));
+	//$("#fabric_name").val(getTdString("fabric_name"));
+	//$("#fabric_amount").val(getTdString("fabric_amount"));
+	//$("#accessory_name").val(getTdString("accessory_name"));
+	//$("#accessory_query").val(getTdString("accessory_query"));
 
-	
 	
 /*	var employee_id=jQuery("select[name='employee_id']").val();
 	var order_source=jQuery("input[name='order_source']").val();
@@ -91,4 +92,33 @@ function verify(){
 
 	
 	return true;
+}
+
+function init(){
+	$("#fabric_name").val("name1,name2,name3");
+	$("#fabric_amount").val("11,12,13");
+	$("#accessory_name").val("name1,name2,name3");
+	$("#accessory_query").val("name1,name2,name3");
+	
+	
+	
+	$("input[name='style_name']").val("杀马特3000");
+	$("input[name='order_source']").val("杀马特3000");
+	$("input[name='ask_amount']").val("20");
+	$("input[name='ask_produce_period']").val("10");
+	$("input[name='ask_deliver_date']").val("2012-12-12");
+	
+	
+	$("input[name='in_post_sample_clothes_time']").val("2012-12-12");
+	$("input[name='in_post_sample_clothes_type']").val("顺丰");
+	$("input[name='in_post_sample_clothes_number']").val("435435345435345");
+	
+	
+	$("input[name='sample_clothes_time']").val("2012-12-12");
+	$("input[name='sample_clothes_type']").val("申通");
+	$("input[name='sample_clothes_number']").val("657567567567567567");
+	$("input[name='sample_clothes_name']").val("黑撒旦躬");
+	$("input[name='sample_clothes_phone']").val("1599546546");
+	$("input[name='sample_clothes_address']").val("江苏南京");
+	$("input[name='sample_clothes_remark']").val("ggggggggggggggggggg");
 }
