@@ -36,8 +36,8 @@
 					<td>${order.getOrder().getCustomerName() }</td>
 					<td>${order.getOrder().getOrderTime()}</td>
 					
-					<td><a href="${ctx }/market/modify.do?task_id=${order.getTaskId()}&&order_id=${order.getOrder().getOrderId() }&&process_id=${order.getProcessId() }&&modify=1" class="btn btn-info" title="修改"><i class="iconsweets-create iconsweets-white"></i></a>
-						<a href="${ctx }/market/modify.do?task_id=${order.getTaskId()}&&order_id=${order.getOrder().getOrderId() }&&process_id=${order.getProcessId() }&&modify=0" class="btn btn-danger" title="不通过"><i class="iconsweets-trashcan iconsweets-white"></i></a></td>
+					<td><a href="${ctx }/market/modify.do?task_id=${order.getTaskId()}&&order_id=${order.getOrder().getOrderId() }&&process_id=${order.getProcessId() }&&modify=1" class="btn btn-info" title="修改"><i class="iconsweets-create iconsweets-white"></i>修改</a>
+						<a href="${ctx }/market/modify.do?task_id=${order.getTaskId()}&&order_id=${order.getOrder().getOrderId() }&&process_id=${order.getProcessId() }&&modify=0" class="btn btn-danger" title="不通过"><i class="iconsweets-trashcan iconsweets-white">不通过</i></a></td>
                      </tr>
                 </c:forEach>
             </tbody>

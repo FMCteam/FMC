@@ -24,14 +24,14 @@
 							<tr>
 								<td>${orderALL.getOrder().getCustomerId()}</td>
 								<td>${orderALL.getOrder().getCustomerName()}</td>
-								<td>${orderALL.getOrder().getCompanyName()}</td>
-								<td>${orderALL.getOrder().getComapnyFax()}</td>
-								<td>${orderALL.getOrder().getContactPhone1()}</td>
-								<td>${orderALL.getOrder().getContactPhone2()}</td>
+								<td>${orderALL.getOrder().getCustomerCompany()}</td>
+								<td>${orderALL.getOrder().getCustomerCompanyFax()}</td>
+								<td>${orderALL.getOrder().getCustomerPhone1()}</td>
+								<td>${orderALL.getOrder().getCustomerPhone1()}</td>
 							</tr>
 							<tr>
 								<td>公司地址</td>
-								<td colspan="5">${orderALL.getOrder().getCompanyAddress()}</td>
+								<td colspan="5">${orderALL.getOrder().getCustomerCompanyAddress()}</td>
 							</tr>
 
 							<tr>
@@ -56,7 +56,7 @@
 									${orderALL.getOrder().getStyleSeason() eq '春夏'?'checked="checked"':'' } />
 									<span>春夏</span> <input type="radio" name="style_season"
 									value="秋冬"
-									${orderALL.getOrder().getStypleSeason() eq '秋冬'?'checked="checked"':'' } />
+									${orderALL.getOrder().getStyleSeason() eq '秋冬'?'checked="checked"':'' } />
 									<span>秋冬</span></td>
 								<td><input type="text" class="span12" name="order_source"
 									value=${orderALL.getOrder().getOrderSource() } /></td>
@@ -64,39 +64,39 @@
 							<tr>
 								<td>面料类型</td>
 								<td colspan="5"><input type="radio" name="fabric_type"
-									checked="checked" value="梭织"
-									${orderALL.getOrder().getFbricType() eq '梭织'?'checked="checked"':'' } />
+									 value="梭织"
+									${orderALL.getOrder().getFabricType() eq '梭织'?'checked="checked"':'' } />
 									<span>梭织</span> <input type="radio" name="fabric_type"
 									value="梭织"
-									${orderALL.getOrder().getFbricType() eq '梭织'?'checked="checked"':'' } />
+									${orderALL.getOrder().getFabricType() eq '梭织'?'checked="checked"':'' } />
 									<span>针织</span> <input type="radio" name="fabric_type"
 									value="编织"
-									${orderALL.getOrder().getFbricType() eq '编织'?'checked="checked"':'' } />
+									${orderALL.getOrder().getFabricType() eq '编织'?'checked="checked"':'' } />
 									<span>编织</span> <input type="radio" name="fabric_type"
 									value="梭针混合"
-									${orderALL.getOrder().getFbricType() eq '梭针混合'?'checked="checked"':'' } />
+									${orderALL.getOrder().getFabricType() eq '梭针混合'?'checked="checked"':'' } />
 									<span>梭针混合</span> <input type="radio" name="fabric_type"
 									value="阵编混合"
-									${orderALL.getOrder().getFbricType() eq '阵编混合'?'checked="checked"':'' } />
+									${orderALL.getOrder().getFabricType() eq '阵编混合'?'checked="checked"':'' } />
 									<span>阵编混合</span> <input type="radio" name="fabric_type"
 									value="梭编混合"
-									${orderALL.getOrder().getFbricType() eq '梭编混合'?'checked="checked"':'' } />
+									${orderALL.getOrder().getFabricType() eq '梭编混合'?'checked="checked"':'' } />
 									<span>梭编混合</span></td>
 							</tr>
 							<tr>
 								<td>特殊工艺</td>
 								<td colspan="5"><input type="checkbox"
-									name="special_process" value="水洗" checked="checked"
-									${fn:contains(orderALL.getOrder().getSpeciaProcess(), "水洗")?'checked="checked"':'' } />
+									name="special_process" value="水洗" 
+									${fn:contains(orderALL.getOrder().getSpecialProcess(), "水洗")?'checked="checked"':'' } />
 									<span>水洗</span> <input type="checkbox" name="special_process"
 									value="激光"
-									${fn:contains(orderALL.getOrder().getSpeciaProcess(), "激光")?'checked="checked"':'' } />
+									${fn:contains(orderALL.getOrder().getSpecialProcess(), "激光")?'checked="checked"':'' } />
 									<span>激光</span> <input type="checkbox" name="special_process"
 									value="压皱"
-									${fn:contains(orderALL.getOrder().getSpeciaProcess(), "压皱")?'checked="checked"':'' } />
+									${fn:contains(orderALL.getOrder().getSpecialProcess(), "压皱")?'checked="checked"':'' } />
 									<span>压皱</span> <input type="checkbox" name="special_process"
 									value="其他"
-									${fn:contains(orderALL.getOrder().getSpeciaProcess(), "其他")?'checked="checked"':'' } />
+									${fn:contains(orderALL.getOrder().getSpecialProcess(), "其他")?'checked="checked"':'' } />
 									<input type="text" name="other_special_process" class="span2"
 									placeholder="其他" /></td>
 							</tr>
@@ -132,7 +132,7 @@
 									value=${orderALL.getOrder().getAskAmount() } /></td>
 								<td colspan="2"><input class="span6" type="date"
 									name="ask_deliver_date"
-									value=${orderALL.getOrder().getAskAmount() } "/></td>
+									value=${orderALL.getOrder().getAskAmount() } /></td>
 								<td colspan="2"><input class="span3" type="number"
 									name="ask_produce_period"
 									value=${orderALL.getOrder().getAskProducePeriod() } /></td>
@@ -167,7 +167,7 @@
 										</tr>
 									</table>
 									<c:forEach var="fabric" items="${orderALL.getOrder().getFabricList()}">
-										<table table class="span12 table farbric_table">
+										<table  class="span12 table farbric_table">
 											<tr class="addrow">
 												<td><input class="span12" type="text" value=${fabric.getName() } /></td>
 												<td><input class="span12" type="text" value=${fabric.getAmount() } /></td>
@@ -187,7 +187,7 @@
 								<input id="accessory_query" name="accessory_query" type="hidden" />
 							</tr>
 							<tr>
-								<td colspan="6" class="innertable"><table table
+								<td colspan="6" class="innertable"><table 
 										class="span12 table accessory_table">
 										<tr class="addrow">
 											<td><input class="span12" type="text" /></td>
@@ -196,7 +196,7 @@
 										</tr>
 									</table> 
 									<c:forEach var="accessory" items="${orderALL.getOrder().getAccessoryList()}">
-										<table table class="span12 table accessory_table">
+										<table  class="span12 table accessory_table">
 											<tr class="addrow">
 												<td><input class="span12" type="text" value=${accessory.getName() } /></td>
 												<td><input class="span12" type="text" value=${accessory.getQuery() } /></td>
@@ -236,7 +236,7 @@
 							<tr>
 								<td><input type="radio" name="is_need_sample_clothes"
 									checked="checked" value="1" ${orderALL.getOrder().getIsNeedSampleClothes() eq 1?'checked="checked"':'' }/> 是 <input type="radio"
-									name="is_need_sample_clothes" value="0" ${orderALL.getOrder().getIsNeedSampleCloths() eq 0?'checked'="checked"':'' }/> 否</td>
+									name="is_need_sample_clothes" value=“0” ${orderALL.getOrder().getIsNeedSampleClothes() eq 0?'checked="checked"':'' } /> 否</td>
 								<td colspan="2"><input class="span6" type="date"
 									name="sample_clothes_time" value=${orderALL.getLogistic().getSampleClothesTime() }/></td>
 								<td><input class="span12" type="text"

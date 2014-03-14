@@ -6,7 +6,7 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<div class="widget">
-				<h4 class="widgettitle">采购验证</h4>
+				<h4 class="widgettitle">生产验证</h4>
 				<div class="widgetcontent">
 
 						<table class="table table-striped table-bordered table-hover">
@@ -173,20 +173,20 @@
 							<tr>
 								<td>操作</td>	
 								<td colspan="3">
-									<form method="post" action="${ctx }/buy/doVerify.do">
+									<form method="post" action="${ctx }/produce/doVerify.do">
 										<input type="hidden" name="id" value="${orderModel.order.orderId }" />
 										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
 										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-										<input type="hidden" name="buyVal" value="true" />
+										<input type="hidden" name="productVal" value="true" />
 										<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</button>
 									</form>
 								</td>
 								<td colspan="3">
-									<form method="post" action="${ctx }/buy/doVerify.do">
+									<form method="post" action="${ctx }/produce/doVerify.do">
 										<input type="hidden" name="id" value="${orderModel.order.orderId }" />
 										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
 										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-										<input type="hidden" name="buyVal" value="false" />
+										<input type="hidden" name="productVal" value="false" />
 										<button class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 拒绝</button>
 									</form>
 								</td>

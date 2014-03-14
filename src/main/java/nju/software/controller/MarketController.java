@@ -97,7 +97,7 @@ public class MarketController {
 			s_number_per_page = Integer.parseInt(number_per_page);
 		}
 		List<OrderALL> orderList = orderService.findModifyOrderPage(
-				"SHENGCHANGZHUGUAN", "edit_order", s_page, s_number_per_page);
+				"SHICHANGZHUANYUAN", "edit_order", s_page, s_number_per_page);
 		model.put("orderList", orderList);
 		return "market/show_order_list";
 	}
@@ -134,9 +134,9 @@ public class MarketController {
 				Map<String,Object> map=new HashMap<String,Object>();
 				map.put("editOk",false);
 				jbpmAPIUtil.completeTask(s_taskId, map,
-						"SHENGCHANGZHUGUAN");
+						"SHICHANGZHUANYUAN");
 
-				return "redirct:market/show_order_list";
+				return "redirect:market/show_order_list";
 				
 			}
 		} catch (Exception e) {
