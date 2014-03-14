@@ -9,8 +9,8 @@ import nju.software.dataobject.Logistics;
 
 public interface DesignService {
 	
-	public boolean verify(Account account, int orderId, String taskName,
-			boolean designVal);
+	public boolean verify(Account account, int orderId, long taskId, 
+			long processId, boolean designVal, String comment);
 	
 	public Logistics getLogisticsByOrderId(int orderId);
 	

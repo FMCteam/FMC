@@ -75,10 +75,15 @@ public class ProduceController {
 		
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 		boolean productVal = Boolean.parseBoolean(request.getParameter("productVal"));
-		String s_orderId_request = (String) request.getParameter("id");
+		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+		String comment = request.getParameter("suggestion");
 		String taskName = "production_verification";
-		produceService.verify(account, orderId_request, taskName, productVal);
+		produceService.verify(account, orderId_request, taskId, processId, productVal, comment);
 		
 		return "redirect:/produce/verify.do";
 	}

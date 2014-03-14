@@ -36,38 +36,35 @@ public class ProduceServiceImpl implements ProduceService {
 	private AccessoryDAO accessoryDAO;
 
 	@Override
-	public boolean verify(Account account, int orderId, String taskName,
-			boolean productVal) {
+	public boolean verify(Account account, int orderId, long taskId, 
+			long processId, boolean productVal, String comment) {
 		// TODO Auto-generated method stub
 //		String actorId = account.getUserRole();
 		String actorId = "SHENGCHANZHUGUAN";
-		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
-		for (TaskSummary task : list) {
-			//需要获取task中的数据	
-			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(task.getProcessInstanceId());
-			int orderId_process  = (int) process.getVariable("orderId");
-			System.out.println("orderId: " + orderId);
-			if (orderId == orderId_process) {
-				Order order = orderDAO.findById(orderId);
-				//修改order内容
+		//需要获取task中的数据	
+				WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+				int orderId_process  = (int) process.getVariable("orderId");
+				System.out.println("orderId: " + orderId);
+				if (orderId == orderId_process) {
+					Order order = orderDAO.findById(orderId);
+					//修改order内容
 
-				//提交修改
-				orderDAO.attachDirty(order);
+					//提交修改
+					orderDAO.attachDirty(order);
 
-				//修改流程参数
-				Map<String, Object> data = new HashMap<>();
-				data.put("productVal", productVal);
-				//直接进入到下一个流程时
-				try {
-					jbpmAPIUtil.completeTask(task.getId(), data, actorId);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//修改流程参数
+					Map<String, Object> data = new HashMap<>();
+					data.put("productVal", productVal);
+					data.put("productComment", comment);
+					//直接进入到下一个流程时
+					try {
+						jbpmAPIUtil.completeTask(taskId, data, actorId);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return true;
 				}
-				return true;
-			}
-
-		}
 		return false;
 	}
 	
