@@ -35,6 +35,9 @@
   <itemDefinition id="_designValItem" structureRef="Boolean" />
   <itemDefinition id="_productValItem" structureRef="Boolean" />
   <itemDefinition id="_isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_buyCommentItem" structureRef="String" />
+  <itemDefinition id="_designCommentItem" structureRef="String" />
+  <itemDefinition id="_produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_7-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_7-needclothesItem" structureRef="Boolean" />
@@ -59,6 +62,9 @@
   <itemDefinition id="_7-designValItem" structureRef="Boolean" />
   <itemDefinition id="_7-productValItem" structureRef="Boolean" />
   <itemDefinition id="_7-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_7-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_7-designCommentItem" structureRef="String" />
+  <itemDefinition id="_7-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_10-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_10-needclothesItem" structureRef="Boolean" />
@@ -83,6 +89,9 @@
   <itemDefinition id="_10-designValItem" structureRef="Boolean" />
   <itemDefinition id="_10-productValItem" structureRef="Boolean" />
   <itemDefinition id="_10-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_10-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_10-designCommentItem" structureRef="String" />
+  <itemDefinition id="_10-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_11-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_11-needclothesItem" structureRef="Boolean" />
@@ -107,6 +116,9 @@
   <itemDefinition id="_11-designValItem" structureRef="Boolean" />
   <itemDefinition id="_11-productValItem" structureRef="Boolean" />
   <itemDefinition id="_11-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_11-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_11-designCommentItem" structureRef="String" />
+  <itemDefinition id="_11-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_12-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_12-needclothesItem" structureRef="Boolean" />
@@ -131,6 +143,9 @@
   <itemDefinition id="_12-designValItem" structureRef="Boolean" />
   <itemDefinition id="_12-productValItem" structureRef="Boolean" />
   <itemDefinition id="_12-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_12-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_12-designCommentItem" structureRef="String" />
+  <itemDefinition id="_12-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_19-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_19-needclothesItem" structureRef="Boolean" />
@@ -155,6 +170,9 @@
   <itemDefinition id="_19-designValItem" structureRef="Boolean" />
   <itemDefinition id="_19-productValItem" structureRef="Boolean" />
   <itemDefinition id="_19-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_19-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_19-designCommentItem" structureRef="String" />
+  <itemDefinition id="_19-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_23-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_23-needclothesItem" structureRef="Boolean" />
@@ -179,6 +197,9 @@
   <itemDefinition id="_23-designValItem" structureRef="Boolean" />
   <itemDefinition id="_23-productValItem" structureRef="Boolean" />
   <itemDefinition id="_23-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_23-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_23-designCommentItem" structureRef="String" />
+  <itemDefinition id="_23-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_25-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_25-needclothesItem" structureRef="Boolean" />
@@ -203,6 +224,9 @@
   <itemDefinition id="_25-designValItem" structureRef="Boolean" />
   <itemDefinition id="_25-productValItem" structureRef="Boolean" />
   <itemDefinition id="_25-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_25-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_25-designCommentItem" structureRef="String" />
+  <itemDefinition id="_25-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_24-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_24-needclothesItem" structureRef="Boolean" />
@@ -227,6 +251,9 @@
   <itemDefinition id="_24-designValItem" structureRef="Boolean" />
   <itemDefinition id="_24-productValItem" structureRef="Boolean" />
   <itemDefinition id="_24-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_24-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_24-designCommentItem" structureRef="String" />
+  <itemDefinition id="_24-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_29-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_29-needclothesItem" structureRef="Boolean" />
@@ -251,6 +278,9 @@
   <itemDefinition id="_29-designValItem" structureRef="Boolean" />
   <itemDefinition id="_29-productValItem" structureRef="Boolean" />
   <itemDefinition id="_29-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_29-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_29-designCommentItem" structureRef="String" />
+  <itemDefinition id="_29-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_28-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_28-needclothesItem" structureRef="Boolean" />
@@ -275,6 +305,9 @@
   <itemDefinition id="_28-designValItem" structureRef="Boolean" />
   <itemDefinition id="_28-productValItem" structureRef="Boolean" />
   <itemDefinition id="_28-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_28-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_28-designCommentItem" structureRef="String" />
+  <itemDefinition id="_28-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_34-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_34-needclothesItem" structureRef="Boolean" />
@@ -299,6 +332,9 @@
   <itemDefinition id="_34-designValItem" structureRef="Boolean" />
   <itemDefinition id="_34-productValItem" structureRef="Boolean" />
   <itemDefinition id="_34-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_34-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_34-designCommentItem" structureRef="String" />
+  <itemDefinition id="_34-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_33-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_33-needclothesItem" structureRef="Boolean" />
@@ -323,6 +359,9 @@
   <itemDefinition id="_33-designValItem" structureRef="Boolean" />
   <itemDefinition id="_33-productValItem" structureRef="Boolean" />
   <itemDefinition id="_33-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_33-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_33-designCommentItem" structureRef="String" />
+  <itemDefinition id="_33-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_41-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_41-needclothesItem" structureRef="Boolean" />
@@ -347,6 +386,9 @@
   <itemDefinition id="_41-designValItem" structureRef="Boolean" />
   <itemDefinition id="_41-productValItem" structureRef="Boolean" />
   <itemDefinition id="_41-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_41-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_41-designCommentItem" structureRef="String" />
+  <itemDefinition id="_41-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_47-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_47-needclothesItem" structureRef="Boolean" />
@@ -371,6 +413,9 @@
   <itemDefinition id="_47-designValItem" structureRef="Boolean" />
   <itemDefinition id="_47-productValItem" structureRef="Boolean" />
   <itemDefinition id="_47-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_47-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_47-designCommentItem" structureRef="String" />
+  <itemDefinition id="_47-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_48-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_48-needclothesItem" structureRef="Boolean" />
@@ -395,6 +440,9 @@
   <itemDefinition id="_48-designValItem" structureRef="Boolean" />
   <itemDefinition id="_48-productValItem" structureRef="Boolean" />
   <itemDefinition id="_48-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_48-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_48-designCommentItem" structureRef="String" />
+  <itemDefinition id="_48-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_54-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_54-needclothesItem" structureRef="Boolean" />
@@ -419,6 +467,9 @@
   <itemDefinition id="_54-designValItem" structureRef="Boolean" />
   <itemDefinition id="_54-productValItem" structureRef="Boolean" />
   <itemDefinition id="_54-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_54-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_54-designCommentItem" structureRef="String" />
+  <itemDefinition id="_54-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_59-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_59-needclothesItem" structureRef="Boolean" />
@@ -443,6 +494,9 @@
   <itemDefinition id="_59-designValItem" structureRef="Boolean" />
   <itemDefinition id="_59-productValItem" structureRef="Boolean" />
   <itemDefinition id="_59-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_59-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_59-designCommentItem" structureRef="String" />
+  <itemDefinition id="_59-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_62-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_62-needclothesItem" structureRef="Boolean" />
@@ -467,6 +521,9 @@
   <itemDefinition id="_62-designValItem" structureRef="Boolean" />
   <itemDefinition id="_62-productValItem" structureRef="Boolean" />
   <itemDefinition id="_62-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_62-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_62-designCommentItem" structureRef="String" />
+  <itemDefinition id="_62-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_69-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_69-needclothesItem" structureRef="Boolean" />
@@ -491,6 +548,9 @@
   <itemDefinition id="_69-designValItem" structureRef="Boolean" />
   <itemDefinition id="_69-productValItem" structureRef="Boolean" />
   <itemDefinition id="_69-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_69-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_69-designCommentItem" structureRef="String" />
+  <itemDefinition id="_69-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_70-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_70-needclothesItem" structureRef="Boolean" />
@@ -515,6 +575,9 @@
   <itemDefinition id="_70-designValItem" structureRef="Boolean" />
   <itemDefinition id="_70-productValItem" structureRef="Boolean" />
   <itemDefinition id="_70-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_70-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_70-designCommentItem" structureRef="String" />
+  <itemDefinition id="_70-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_74-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_74-needclothesItem" structureRef="Boolean" />
@@ -539,6 +602,9 @@
   <itemDefinition id="_74-designValItem" structureRef="Boolean" />
   <itemDefinition id="_74-productValItem" structureRef="Boolean" />
   <itemDefinition id="_74-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_74-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_74-designCommentItem" structureRef="String" />
+  <itemDefinition id="_74-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_75-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_75-needclothesItem" structureRef="Boolean" />
@@ -563,6 +629,9 @@
   <itemDefinition id="_75-designValItem" structureRef="Boolean" />
   <itemDefinition id="_75-productValItem" structureRef="Boolean" />
   <itemDefinition id="_75-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_75-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_75-designCommentItem" structureRef="String" />
+  <itemDefinition id="_75-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_87-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_87-needclothesItem" structureRef="Boolean" />
@@ -587,6 +656,9 @@
   <itemDefinition id="_87-designValItem" structureRef="Boolean" />
   <itemDefinition id="_87-productValItem" structureRef="Boolean" />
   <itemDefinition id="_87-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_87-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_87-designCommentItem" structureRef="String" />
+  <itemDefinition id="_87-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_80-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_80-needclothesItem" structureRef="Boolean" />
@@ -611,6 +683,9 @@
   <itemDefinition id="_80-designValItem" structureRef="Boolean" />
   <itemDefinition id="_80-productValItem" structureRef="Boolean" />
   <itemDefinition id="_80-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_80-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_80-designCommentItem" structureRef="String" />
+  <itemDefinition id="_80-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_88-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_88-needclothesItem" structureRef="Boolean" />
@@ -635,6 +710,9 @@
   <itemDefinition id="_88-designValItem" structureRef="Boolean" />
   <itemDefinition id="_88-productValItem" structureRef="Boolean" />
   <itemDefinition id="_88-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_88-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_88-designCommentItem" structureRef="String" />
+  <itemDefinition id="_88-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_103-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_103-needclothesItem" structureRef="Boolean" />
@@ -659,6 +737,9 @@
   <itemDefinition id="_103-designValItem" structureRef="Boolean" />
   <itemDefinition id="_103-productValItem" structureRef="Boolean" />
   <itemDefinition id="_103-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_103-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_103-designCommentItem" structureRef="String" />
+  <itemDefinition id="_103-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_96-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_96-needclothesItem" structureRef="Boolean" />
@@ -683,6 +764,9 @@
   <itemDefinition id="_96-designValItem" structureRef="Boolean" />
   <itemDefinition id="_96-productValItem" structureRef="Boolean" />
   <itemDefinition id="_96-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_96-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_96-designCommentItem" structureRef="String" />
+  <itemDefinition id="_96-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_110-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_110-needclothesItem" structureRef="Boolean" />
@@ -707,6 +791,9 @@
   <itemDefinition id="_110-designValItem" structureRef="Boolean" />
   <itemDefinition id="_110-productValItem" structureRef="Boolean" />
   <itemDefinition id="_110-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_110-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_110-designCommentItem" structureRef="String" />
+  <itemDefinition id="_110-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_107-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_107-needclothesItem" structureRef="Boolean" />
@@ -731,6 +818,9 @@
   <itemDefinition id="_107-designValItem" structureRef="Boolean" />
   <itemDefinition id="_107-productValItem" structureRef="Boolean" />
   <itemDefinition id="_107-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_107-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_107-designCommentItem" structureRef="String" />
+  <itemDefinition id="_107-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_118-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_118-needclothesItem" structureRef="Boolean" />
@@ -755,6 +845,9 @@
   <itemDefinition id="_118-designValItem" structureRef="Boolean" />
   <itemDefinition id="_118-productValItem" structureRef="Boolean" />
   <itemDefinition id="_118-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_118-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_118-designCommentItem" structureRef="String" />
+  <itemDefinition id="_118-produceCommentItem" structureRef="String" />
 
   <itemDefinition id="_115-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_115-needclothesItem" structureRef="Boolean" />
@@ -779,6 +872,9 @@
   <itemDefinition id="_115-designValItem" structureRef="Boolean" />
   <itemDefinition id="_115-productValItem" structureRef="Boolean" />
   <itemDefinition id="_115-isworksheetBItem" structureRef="Boolean" />
+  <itemDefinition id="_115-buyCommentItem" structureRef="String" />
+  <itemDefinition id="_115-designCommentItem" structureRef="String" />
+  <itemDefinition id="_115-produceCommentItem" structureRef="String" />
 
   <process processType="Private" isExecutable="true" id="nju.software.fmc.bpmn" name="Sample Process" tns:packageName="defaultPackage" >
 
@@ -806,6 +902,9 @@
     <property id="designVal" itemSubjectRef="_designValItem"/>
     <property id="productVal" itemSubjectRef="_productValItem"/>
     <property id="isworksheetB" itemSubjectRef="_isworksheetBItem"/>
+    <property id="buyComment" itemSubjectRef="_buyCommentItem"/>
+    <property id="designComment" itemSubjectRef="_designCommentItem"/>
+    <property id="produceComment" itemSubjectRef="_produceCommentItem"/>
 
     <laneSet>
       <lane name="SHICHANGZHUANYUAN" >
@@ -865,7 +964,11 @@
         <terminateEventDefinition />
     </endEvent>
     <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
+<<<<<<< HEAD
     <userTask id="_7" name="ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_7" name="ÊÕÈ¡ÑùÒÂ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_7_CommentInput" name="Comment" />
         <dataInput id="_7_SkippableInput" name="Skippable" />
@@ -939,15 +1042,21 @@
       </potentialOwner>
     </userTask>
     <exclusiveGateway id="_8" name="enterVerification" gatewayDirection="Converging" />
+<<<<<<< HEAD
     <userTask id="_10" name="ï¿½É¹ï¿½ï¿½ï¿½Ö¤" >
+=======
+    <userTask id="_10" name="²É¹ºÑéÖ¤" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_10_TaskNameInput" name="TaskName" />
         <dataOutput id="_10_buyValOutput" name="buyVal" />
+        <dataOutput id="_10_buyCommentOutput" name="buyComment" />
         <inputSet>
           <dataInputRefs>_10_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
           <dataOutputRefs>_10_buyValOutput</dataOutputRefs>
+          <dataOutputRefs>_10_buyCommentOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -961,21 +1070,31 @@
         <sourceRef>_10_buyValOutput</sourceRef>
         <targetRef>buyVal</targetRef>
       </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_10_buyCommentOutput</sourceRef>
+        <targetRef>buyComment</targetRef>
+      </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
           <formalExpression>CAIGOUZHUGUAN</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_11" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤" >
+=======
+    <userTask id="_11" name="Éè¼ÆÑéÖ¤" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_11_TaskNameInput" name="TaskName" />
         <dataOutput id="_11_designValOutput" name="designVal" />
+        <dataOutput id="_11_designCommentOutput" name="designComment" />
         <inputSet>
           <dataInputRefs>_11_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
           <dataOutputRefs>_11_designValOutput</dataOutputRefs>
+          <dataOutputRefs>_11_designCommentOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -989,21 +1108,31 @@
         <sourceRef>_11_designValOutput</sourceRef>
         <targetRef>designVal</targetRef>
       </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_11_designCommentOutput</sourceRef>
+        <targetRef>designComment</targetRef>
+      </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
           <formalExpression>SHEJIZHUGUAN</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_12" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤" >
+=======
+    <userTask id="_12" name="Éú²úÑéÖ¤" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_12_TaskNameInput" name="TaskName" />
         <dataOutput id="_12_productValOutput" name="productVal" />
+        <dataOutput id="_12_productCommentOutput" name="productComment" />
         <inputSet>
           <dataInputRefs>_12_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
           <dataOutputRefs>_12_productValOutput</dataOutputRefs>
+          <dataOutputRefs>_12_productCommentOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -1017,6 +1146,10 @@
         <sourceRef>_12_productValOutput</sourceRef>
         <targetRef>productVal</targetRef>
       </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_12_productCommentOutput</sourceRef>
+        <targetRef>productComment</targetRef>
+      </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
           <formalExpression>SHENGCHANZHUGUAN</formalExpression>
@@ -1027,7 +1160,11 @@
     <parallelGateway id="_135" name="Gateway" gatewayDirection="Converging" />
     <parallelGateway id="_15" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_17" name="editOrder" gatewayDirection="Diverging" />
+<<<<<<< HEAD
     <userTask id="_19" name="ï¿½Þ¸ï¿½Ñ¯ï¿½ï¿½" >
+=======
+    <userTask id="_19" name="ÐÞ¸ÄÑ¯µ¥" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_19_TaskNameInput" name="TaskName" />
         <dataOutput id="_19_editokOutput" name="editok" />
@@ -1058,7 +1195,11 @@
     <endEvent id="_21" name="End" >
         <terminateEventDefinition />
     </endEvent>
+<<<<<<< HEAD
     <userTask id="_23" name="ï¿½É¹ï¿½ï¿½É±ï¿½ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_23" name="²É¹º³É±¾ºËËã" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_23_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1081,7 +1222,11 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_22" name="editok" gatewayDirection="Diverging" />
+<<<<<<< HEAD
     <userTask id="_25" name="ï¿½ï¿½ï¿½ï¿½ï¿½É±ï¿½ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_25" name="Éú²ú³É±¾ºËËã" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_25_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1103,7 +1248,11 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_24" name="ï¿½ï¿½ï¿½Æ³É±ï¿½ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_24" name="Éè¼Æ³É±¾ºËËã" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_24_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1127,7 +1276,11 @@
     </userTask>
     <parallelGateway id="_27" name="Gateway" gatewayDirection="Converging" />
     <parallelGateway id="_26" name="Gateway" gatewayDirection="Diverging" />
+<<<<<<< HEAD
     <userTask id="_29" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë±ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_29" name="Ö÷¹ÜÉóºË±¨¼Û" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_29_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1149,7 +1302,11 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_28" name="×¨Ô±ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_28" name="×¨Ô±ºÏ²¢±¨¼Û" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_28_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1171,7 +1328,11 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_34" name="ï¿½ï¿½ï¿½Ûµï¿½È·ï¿½ï¿½" >
+=======
+    <userTask id="_34" name="±¨¼Ûµ¥È·ÈÏ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_34_TaskNameInput" name="TaskName" />
         <dataOutput id="_34_confirmquoteOutput" name="confirmquote" />
@@ -1212,7 +1373,11 @@
       </potentialOwner>
     </userTask>
     <exclusiveGateway id="_35" name="Gateway" gatewayDirection="Converging" />
+<<<<<<< HEAD
     <userTask id="_33" name="ï¿½Þ¸Ä±ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_33" name="ÐÞ¸Ä±¨¼Û" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_33_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1242,7 +1407,11 @@
     <endEvent id="_40" name="End" >
         <terminateEventDefinition />
     </endEvent>
+<<<<<<< HEAD
     <userTask id="_41" name="È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_41" name="È·ÈÏÑùÒÂÖÆ×÷½ð" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_41_TaskNameInput" name="TaskName" />
         <dataOutput id="_41_receivedsamplejinOutput" name="receivedsamplejin" />
@@ -1270,7 +1439,11 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_47" name="ï¿½É¹ï¿½È·ï¿½ï¿½" >
+=======
+    <userTask id="_47" name="²É¹ºÈ·ÈÏ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_47_TaskNameInput" name="TaskName" />
         <dataOutput id="_47_purchaseerrorOutput" name="purchaseerror" />
@@ -1301,7 +1474,11 @@
     <inclusiveGateway id="_44" name="receivedsamplejin" gatewayDirection="Diverging" />
     <parallelGateway id="_50" name="shengchan" gatewayDirection="Converging" />
     <parallelGateway id="_49" name="Gateway" gatewayDirection="Diverging" />
+<<<<<<< HEAD
     <userTask id="_48" name="Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_48" name="Â¼Èë°æÐÍÊý¾Ý" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_48_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1324,7 +1501,11 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_55" name="producterror" gatewayDirection="Diverging" />
+<<<<<<< HEAD
     <userTask id="_54" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_54" name="Éú²úÑùÒÂ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_54_TaskNameInput" name="TaskName" />
         <dataOutput id="_54_producterrorOutput" name="producterror" />
@@ -1352,7 +1533,11 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_59" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_59" name="ÎïÁ÷ÑùÒÂ·¢»õ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_59_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1381,7 +1566,11 @@
         <terminateEventDefinition />
     </endEvent>
     <inclusiveGateway id="_56" name="purchaseerror" gatewayDirection="Diverging" />
+<<<<<<< HEAD
     <userTask id="_62" name="È·ï¿½Ï¼Ó¹ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_62" name="È·ÈÏÑùÒÂ¼Ó¹¤µ¥" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_62_TaskNameInput" name="TaskName" />
         <dataOutput id="_62_comfirmworksheetOutput" name="comfirmworksheet" />
@@ -1410,7 +1599,11 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_68" name="editworksheetok" gatewayDirection="Diverging" />
+<<<<<<< HEAD
     <userTask id="_69" name="ï¿½É¹ï¿½ï¿½ï¿½È·ï¿½ï¿½" >
+=======
+    <userTask id="_69" name="²É¹º²¿È·ÈÏ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_69_TaskNameInput" name="TaskName" />
         <dataOutput id="_69_isworksheetOutput" name="isworksheet" />
@@ -1438,7 +1631,11 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_70" name="ï¿½ï¿½ï¿½Æ²ï¿½È·ï¿½ï¿½" >
+=======
+    <userTask id="_70" name="Éè¼Æ²¿È·ÈÏ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_70_TaskNameInput" name="TaskName" />
         <dataOutput id="_70_isworksheetBOutput" name="isworksheetB" />
@@ -1477,7 +1674,11 @@
     <parallelGateway id="_67" name="Gateway" gatewayDirection="Diverging" />
     <inclusiveGateway id="_76" name="isworksheet" gatewayDirection="Diverging" />
     <parallelGateway id="_72" name="Gateway" gatewayDirection="Converging" />
+<<<<<<< HEAD
     <userTask id="_74" name="Ç©ï¿½ï¿½ï¿½ï¿½Í¬ï¿½Ó¹ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_74" name="Ç©¶©ºÏÍ¬¼Ó¹¤µ¥" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_74_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1499,7 +1700,11 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_75" name="ï¿½Þ¸Ä¼Ó¹ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_75" name="ÐÞ¸Ä¼Ó¹¤µ¥" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_75_TaskNameInput" name="TaskName" />
         <dataOutput id="_75_editworksheetokOutput" name="editworksheetok" />
@@ -1528,7 +1733,11 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_84" name="epositok" gatewayDirection="Diverging" />
+<<<<<<< HEAD
     <userTask id="_87" name="ï¿½É¹ï¿½ï¿½ï¿½È·ï¿½ï¿½" >
+=======
+    <userTask id="_87" name="²É¹º²¿È·ÈÏ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_87_TaskNameInput" name="TaskName" />
         <dataOutput id="_87_procurementerrorOutput" name="procurementerror" />
@@ -1559,7 +1768,11 @@
     <endEvent id="_86" name="End" >
         <terminateEventDefinition />
     </endEvent>
+<<<<<<< HEAD
     <userTask id="_80" name="30%ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½" >
+=======
+    <userTask id="_80" name="30%¶¨½ðÈ·ÈÏ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_80_TaskNameInput" name="TaskName" />
         <dataOutput id="_80_epositokOutput" name="epositok" />
@@ -1589,7 +1802,11 @@
     </userTask>
     <inclusiveGateway id="_94" name="procurementerror" gatewayDirection="Diverging" />
     <parallelGateway id="_89" name="Gateway" gatewayDirection="Diverging" />
+<<<<<<< HEAD
     <userTask id="_88" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½" >
+=======
+    <userTask id="_88" name="Éè¼ÆÉú²úÈ·ÈÏ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_88_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1613,7 +1830,11 @@
     </userTask>
     <parallelGateway id="_91" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_102" name="volumeproduction" gatewayDirection="Diverging" />
+<<<<<<< HEAD
     <userTask id="_103" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_103" name="ÖÊÁ¿¼ì²â" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_103_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1641,7 +1862,11 @@
     <endEvent id="_99" name="End" >
         <terminateEventDefinition />
     </endEvent>
+<<<<<<< HEAD
     <userTask id="_96" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_96" name="ÅúÁ¿Éú²ú" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_96_TaskNameInput" name="TaskName" />
         <dataOutput id="_96_volumeproductionOutput" name="volumeproduction" />
@@ -1669,7 +1894,11 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_110" name="60%ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½" >
+=======
+    <userTask id="_110" name="60%½ð¶îÈ·ÈÏ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_110_TaskNameInput" name="TaskName" />
         <dataOutput id="_110_paymentokOutput" name="paymentok" />
@@ -1697,7 +1926,11 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_107" name="ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_107" name="Èë¿â" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_107_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1719,7 +1952,11 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+<<<<<<< HEAD
     <userTask id="_118" name="Î²ï¿½ï¿½È·ï¿½ï¿½" >
+=======
+    <userTask id="_118" name="Î²¿îÈ·ÈÏ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_118_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1744,7 +1981,11 @@
     <endEvent id="_116" name="End" >
         <terminateEventDefinition />
     </endEvent>
+<<<<<<< HEAD
     <userTask id="_115" name="ï¿½ï¿½ï¿½ï¿½" >
+=======
+    <userTask id="_115" name="·¢»õ" >
+>>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
       <ioSpecification>
         <dataInput id="_115_TaskNameInput" name="TaskName" />
         <inputSet>

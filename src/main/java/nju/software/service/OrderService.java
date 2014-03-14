@@ -8,7 +8,11 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+
 import nju.software.web.vo.OrderALL;
+
+import nju.software.model.OrderModel;
+
 
 public interface OrderService {
 	
@@ -31,8 +35,15 @@ public interface OrderService {
 	
 	public String addOrder(Order order,List<Fabric>fabrics,List<Accessory>accessorys,Logistics logistics);
 
+
 	public List<OrderALL> findModifyOrderPage(String string, String string2,
 			int s_page, int s_number_per_page);
 
 	public OrderALL getOrderALLById(int s_orderId, long s_taskId,long processId);
+
+	
+	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId, String taskName);
+	
+	public OrderModel getOrderDetail(int orderId, long taskId, long processId);
+
 }

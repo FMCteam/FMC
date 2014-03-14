@@ -17,6 +17,7 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderModel;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.web.vo.OrderALL;
@@ -114,6 +115,8 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return null;
 	}
+	
+	
 	@Override
 	public Order findByOrderId(String orderId) {
 		// TODO Auto-generated method stub
@@ -247,5 +250,40 @@ public class OrderServiceImpl implements OrderService {
 			
 		}
 		return null;
+	}
+
+	@Override
+	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId,
+			String taskName) {
+		// TODO Auto-generated method stub
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
+		for (TaskSummary task : list) {
+			//需要获取task中的数据	
+			long processId = task.getProcessInstanceId();
+			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+			int orderId  = (int) process.getVariable("orderId");
+			Order order = getOrderById(orderId);
+			if (order != null) {
+				System.out.println("orderId: " + order.getOrderId());
+				OrderModel orderModel = new OrderModel(order, task.getId(), processId);
+				orderList.add(orderModel);
+			}
+		}
+		return orderList;
+	}
+
+	@Override
+	public OrderModel getOrderDetail(int orderId, long taskId, long processId) {
+		// TODO Auto-generated method stub
+		OrderModel orderModel = null;
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		if (orderId == orderId_process) {
+			Order order = orderDAO.findById(orderId);
+			orderModel = new OrderModel(order, taskId, processId);
+		}
+		return orderModel;
+
 	}
 }
