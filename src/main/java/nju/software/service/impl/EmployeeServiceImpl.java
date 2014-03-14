@@ -1,13 +1,12 @@
 package nju.software.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dataobject.Employee;
 import nju.software.service.EmployeeService;
+
 
 @Service("employeeServiceImpl")
 public class EmployeeServiceImpl implements EmployeeService {

@@ -85,7 +85,7 @@
 							</tr>
 							<tr>
 								<td>${orderModel.order.askAmount }</td>
-								<td colspan="2">${orderModel.order.askDeliverDate }</td>
+								<td colspan="2">${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
 								<td colspan="2">${orderModel.order.askProducePeriod }</td>
 								<td>${orderModel.order.askCodeNumber }</td>
 							</tr>
@@ -137,7 +137,7 @@
 									${orderModel.order.hasPostedSampleClothes==1?'收到样衣':'' }
 									${orderModel.order.hasPostedSampleClothes==2?'未收到样衣':'' }
 								</td>
-								<td colspan="2">${logistics.inPostSampleClothesTime }</td>
+								<td colspan="2">${fn:substring(logistics.inPostSampleClothesTime,0,10) }</td>
 								<td>${logistics.inPostSampleClothesType }</td>
 								<td colspan="2">${logistics.inPostSampleClothesNumber }</td>
 							</tr>
@@ -150,7 +150,7 @@
 							</tr>
 							<tr>
 								<td>${orderModel.order.isNeedSampleClothes==0?'否':'是' }</td>
-								<td colspan="2">${logistics.sampleClothesTime }</td>
+								<td colspan="2">${fn:substring(logistics.sampleClothesTime,0,10) }</td>
 								<td>${logistics.sampleClothesType }</td>
 								<td colspan="2">${logistics.sampleClothesNumber }</td>
 							</tr>
