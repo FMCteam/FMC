@@ -964,11 +964,9 @@
         <terminateEventDefinition />
     </endEvent>
     <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_7" name="ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_7" name="ÊÕÈ¡ÑùÒÂ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_7_CommentInput" name="Comment" />
         <dataInput id="_7_SkippableInput" name="Skippable" />
@@ -1042,11 +1040,9 @@
       </potentialOwner>
     </userTask>
     <exclusiveGateway id="_8" name="enterVerification" gatewayDirection="Converging" />
-<<<<<<< HEAD
-    <userTask id="_10" name="ï¿½É¹ï¿½ï¿½ï¿½Ö¤" >
-=======
+
     <userTask id="_10" name="²É¹ºÑéÖ¤" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_10_TaskNameInput" name="TaskName" />
         <dataOutput id="_10_buyValOutput" name="buyVal" />
@@ -1080,11 +1076,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_11" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤" >
-=======
+
     <userTask id="_11" name="Éè¼ÆÑéÖ¤" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_11_TaskNameInput" name="TaskName" />
         <dataOutput id="_11_designValOutput" name="designVal" />
@@ -1118,11 +1112,10 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_12" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤" >
-=======
+
+
     <userTask id="_12" name="Éú²úÑéÖ¤" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_12_TaskNameInput" name="TaskName" />
         <dataOutput id="_12_productValOutput" name="productVal" />
@@ -1160,11 +1153,9 @@
     <parallelGateway id="_135" name="Gateway" gatewayDirection="Converging" />
     <parallelGateway id="_15" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_17" name="editOrder" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_19" name="ï¿½Þ¸ï¿½Ñ¯ï¿½ï¿½" >
-=======
+
     <userTask id="_19" name="ÐÞ¸ÄÑ¯µ¥" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_19_TaskNameInput" name="TaskName" />
         <dataOutput id="_19_editokOutput" name="editok" />
@@ -1195,11 +1186,9 @@
     <endEvent id="_21" name="End" >
         <terminateEventDefinition />
     </endEvent>
-<<<<<<< HEAD
-    <userTask id="_23" name="ï¿½É¹ï¿½ï¿½É±ï¿½ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_23" name="²É¹º³É±¾ºËËã" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_23_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1222,11 +1211,9 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_22" name="editok" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_25" name="ï¿½ï¿½ï¿½ï¿½ï¿½É±ï¿½ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_25" name="Éú²ú³É±¾ºËËã" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_25_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1248,11 +1235,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_24" name="ï¿½ï¿½ï¿½Æ³É±ï¿½ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_24" name="Éè¼Æ³É±¾ºËËã" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_24_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1276,11 +1261,9 @@
     </userTask>
     <parallelGateway id="_27" name="Gateway" gatewayDirection="Converging" />
     <parallelGateway id="_26" name="Gateway" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_29" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë±ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_29" name="Ö÷¹ÜÉóºË±¨¼Û" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_29_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1302,11 +1285,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_28" name="×¨Ô±ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_28" name="×¨Ô±ºÏ²¢±¨¼Û" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_28_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1328,11 +1309,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_34" name="ï¿½ï¿½ï¿½Ûµï¿½È·ï¿½ï¿½" >
-=======
+
     <userTask id="_34" name="±¨¼Ûµ¥È·ÈÏ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_34_TaskNameInput" name="TaskName" />
         <dataOutput id="_34_confirmquoteOutput" name="confirmquote" />
@@ -1373,11 +1352,9 @@
       </potentialOwner>
     </userTask>
     <exclusiveGateway id="_35" name="Gateway" gatewayDirection="Converging" />
-<<<<<<< HEAD
-    <userTask id="_33" name="ï¿½Þ¸Ä±ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_33" name="ÐÞ¸Ä±¨¼Û" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_33_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1407,11 +1384,9 @@
     <endEvent id="_40" name="End" >
         <terminateEventDefinition />
     </endEvent>
-<<<<<<< HEAD
-    <userTask id="_41" name="È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_41" name="È·ÈÏÑùÒÂÖÆ×÷½ð" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_41_TaskNameInput" name="TaskName" />
         <dataOutput id="_41_receivedsamplejinOutput" name="receivedsamplejin" />
@@ -1439,11 +1414,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_47" name="ï¿½É¹ï¿½È·ï¿½ï¿½" >
-=======
+
     <userTask id="_47" name="²É¹ºÈ·ÈÏ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_47_TaskNameInput" name="TaskName" />
         <dataOutput id="_47_purchaseerrorOutput" name="purchaseerror" />
@@ -1474,11 +1447,9 @@
     <inclusiveGateway id="_44" name="receivedsamplejin" gatewayDirection="Diverging" />
     <parallelGateway id="_50" name="shengchan" gatewayDirection="Converging" />
     <parallelGateway id="_49" name="Gateway" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_48" name="Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_48" name="Â¼Èë°æÐÍÊý¾Ý" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_48_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1501,11 +1472,9 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_55" name="producterror" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_54" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_54" name="Éú²úÑùÒÂ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_54_TaskNameInput" name="TaskName" />
         <dataOutput id="_54_producterrorOutput" name="producterror" />
@@ -1533,11 +1502,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_59" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_59" name="ÎïÁ÷ÑùÒÂ·¢»õ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_59_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1566,11 +1533,9 @@
         <terminateEventDefinition />
     </endEvent>
     <inclusiveGateway id="_56" name="purchaseerror" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_62" name="È·ï¿½Ï¼Ó¹ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_62" name="È·ÈÏÑùÒÂ¼Ó¹¤µ¥" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_62_TaskNameInput" name="TaskName" />
         <dataOutput id="_62_comfirmworksheetOutput" name="comfirmworksheet" />
@@ -1599,11 +1564,9 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_68" name="editworksheetok" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_69" name="ï¿½É¹ï¿½ï¿½ï¿½È·ï¿½ï¿½" >
-=======
+
     <userTask id="_69" name="²É¹º²¿È·ÈÏ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_69_TaskNameInput" name="TaskName" />
         <dataOutput id="_69_isworksheetOutput" name="isworksheet" />
@@ -1631,11 +1594,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_70" name="ï¿½ï¿½ï¿½Æ²ï¿½È·ï¿½ï¿½" >
-=======
+
     <userTask id="_70" name="Éè¼Æ²¿È·ÈÏ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_70_TaskNameInput" name="TaskName" />
         <dataOutput id="_70_isworksheetBOutput" name="isworksheetB" />
@@ -1674,11 +1635,9 @@
     <parallelGateway id="_67" name="Gateway" gatewayDirection="Diverging" />
     <inclusiveGateway id="_76" name="isworksheet" gatewayDirection="Diverging" />
     <parallelGateway id="_72" name="Gateway" gatewayDirection="Converging" />
-<<<<<<< HEAD
-    <userTask id="_74" name="Ç©ï¿½ï¿½ï¿½ï¿½Í¬ï¿½Ó¹ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_74" name="Ç©¶©ºÏÍ¬¼Ó¹¤µ¥" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_74_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1700,11 +1659,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_75" name="ï¿½Þ¸Ä¼Ó¹ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_75" name="ÐÞ¸Ä¼Ó¹¤µ¥" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_75_TaskNameInput" name="TaskName" />
         <dataOutput id="_75_editworksheetokOutput" name="editworksheetok" />
@@ -1733,11 +1690,9 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_84" name="epositok" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_87" name="ï¿½É¹ï¿½ï¿½ï¿½È·ï¿½ï¿½" >
-=======
+
     <userTask id="_87" name="²É¹º²¿È·ÈÏ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_87_TaskNameInput" name="TaskName" />
         <dataOutput id="_87_procurementerrorOutput" name="procurementerror" />
@@ -1768,11 +1723,9 @@
     <endEvent id="_86" name="End" >
         <terminateEventDefinition />
     </endEvent>
-<<<<<<< HEAD
-    <userTask id="_80" name="30%ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½" >
-=======
+
     <userTask id="_80" name="30%¶¨½ðÈ·ÈÏ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_80_TaskNameInput" name="TaskName" />
         <dataOutput id="_80_epositokOutput" name="epositok" />
@@ -1802,11 +1755,9 @@
     </userTask>
     <inclusiveGateway id="_94" name="procurementerror" gatewayDirection="Diverging" />
     <parallelGateway id="_89" name="Gateway" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_88" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½" >
-=======
+
     <userTask id="_88" name="Éè¼ÆÉú²úÈ·ÈÏ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_88_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1830,11 +1781,9 @@
     </userTask>
     <parallelGateway id="_91" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_102" name="volumeproduction" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_103" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_103" name="ÖÊÁ¿¼ì²â" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_103_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1862,11 +1811,9 @@
     <endEvent id="_99" name="End" >
         <terminateEventDefinition />
     </endEvent>
-<<<<<<< HEAD
-    <userTask id="_96" name="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_96" name="ÅúÁ¿Éú²ú" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_96_TaskNameInput" name="TaskName" />
         <dataOutput id="_96_volumeproductionOutput" name="volumeproduction" />
@@ -1894,11 +1841,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_110" name="60%ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½" >
-=======
+
     <userTask id="_110" name="60%½ð¶îÈ·ÈÏ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_110_TaskNameInput" name="TaskName" />
         <dataOutput id="_110_paymentokOutput" name="paymentok" />
@@ -1926,11 +1871,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_107" name="ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_107" name="Èë¿â" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_107_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1952,11 +1895,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_118" name="Î²ï¿½ï¿½È·ï¿½ï¿½" >
-=======
+
     <userTask id="_118" name="Î²¿îÈ·ÈÏ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_118_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1981,11 +1922,9 @@
     <endEvent id="_116" name="End" >
         <terminateEventDefinition />
     </endEvent>
-<<<<<<< HEAD
-    <userTask id="_115" name="ï¿½ï¿½ï¿½ï¿½" >
-=======
+
     <userTask id="_115" name="·¢»õ" >
->>>>>>> a7e76ce4fb57fb6d7b548e2aa87301ed203a3088
+
       <ioSpecification>
         <dataInput id="_115_TaskNameInput" name="TaskName" />
         <inputSet>
