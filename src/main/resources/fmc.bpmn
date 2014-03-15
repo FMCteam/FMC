@@ -964,23 +964,13 @@
         <terminateEventDefinition />
     </endEvent>
     <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
-
     <userTask id="_7" name="收取样衣" >
-
       <ioSpecification>
-        <dataInput id="_7_CommentInput" name="Comment" />
-        <dataInput id="_7_SkippableInput" name="Skippable" />
-        <dataInput id="_7_LocaleInput" name="Locale" />
         <dataInput id="_7_TaskNameInput" name="TaskName" />
-        <dataInput id="_7_GroupIdInput" name="GroupId" />
         <dataInput id="_7_PriorityInput" name="Priority" />
         <dataOutput id="_7_receivedsampleOutput" name="receivedsample" />
         <inputSet>
-          <dataInputRefs>_7_CommentInput</dataInputRefs>
-          <dataInputRefs>_7_SkippableInput</dataInputRefs>
-          <dataInputRefs>_7_LocaleInput</dataInputRefs>
           <dataInputRefs>_7_TaskNameInput</dataInputRefs>
-          <dataInputRefs>_7_GroupIdInput</dataInputRefs>
           <dataInputRefs>_7_PriorityInput</dataInputRefs>
         </inputSet>
         <outputSet>
@@ -988,38 +978,10 @@
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
-        <targetRef>_7_CommentInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression"></from>
-          <to xsi:type="tFormalExpression">_7_CommentInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_7_SkippableInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">false</from>
-          <to xsi:type="tFormalExpression">_7_SkippableInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_7_LocaleInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">en-UK</from>
-          <to xsi:type="tFormalExpression">_7_LocaleInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
         <targetRef>_7_TaskNameInput</targetRef>
         <assignment>
           <from xsi:type="tFormalExpression">received_sample</from>
           <to xsi:type="tFormalExpression">_7_TaskNameInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_7_GroupIdInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression"></from>
-          <to xsi:type="tFormalExpression">_7_GroupIdInput</to>
         </assignment>
       </dataInputAssociation>
       <dataInputAssociation>
@@ -1040,9 +1002,7 @@
       </potentialOwner>
     </userTask>
     <exclusiveGateway id="_8" name="enterVerification" gatewayDirection="Converging" />
-
     <userTask id="_10" name="采购验证" >
-
       <ioSpecification>
         <dataInput id="_10_TaskNameInput" name="TaskName" />
         <dataOutput id="_10_buyValOutput" name="buyVal" />
@@ -1076,9 +1036,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
     <userTask id="_11" name="设计验证" >
-
       <ioSpecification>
         <dataInput id="_11_TaskNameInput" name="TaskName" />
         <dataOutput id="_11_designValOutput" name="designVal" />
@@ -1112,10 +1070,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
-
     <userTask id="_12" name="生产验证" >
-
       <ioSpecification>
         <dataInput id="_12_TaskNameInput" name="TaskName" />
         <dataOutput id="_12_productValOutput" name="productVal" />
@@ -1153,9 +1108,7 @@
     <parallelGateway id="_135" name="Gateway" gatewayDirection="Converging" />
     <parallelGateway id="_15" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_17" name="editOrder" gatewayDirection="Diverging" />
-
     <userTask id="_19" name="修改询单" >
-
       <ioSpecification>
         <dataInput id="_19_TaskNameInput" name="TaskName" />
         <dataOutput id="_19_editokOutput" name="editok" />
@@ -1186,9 +1139,7 @@
     <endEvent id="_21" name="End" >
         <terminateEventDefinition />
     </endEvent>
-
     <userTask id="_23" name="采购成本核算" >
-
       <ioSpecification>
         <dataInput id="_23_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1211,9 +1162,7 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_22" name="editok" gatewayDirection="Diverging" />
-
     <userTask id="_25" name="生产成本核算" >
-
       <ioSpecification>
         <dataInput id="_25_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1235,9 +1184,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
     <userTask id="_24" name="设计成本核算" >
-
       <ioSpecification>
         <dataInput id="_24_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1261,9 +1208,7 @@
     </userTask>
     <parallelGateway id="_27" name="Gateway" gatewayDirection="Converging" />
     <parallelGateway id="_26" name="Gateway" gatewayDirection="Diverging" />
-
     <userTask id="_29" name="主管审核报价" >
-
       <ioSpecification>
         <dataInput id="_29_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1285,9 +1230,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
     <userTask id="_28" name="专员合并报价" >
-
       <ioSpecification>
         <dataInput id="_28_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1309,9 +1252,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
     <userTask id="_34" name="报价单确认" >
-
       <ioSpecification>
         <dataInput id="_34_TaskNameInput" name="TaskName" />
         <dataOutput id="_34_confirmquoteOutput" name="confirmquote" />
@@ -1352,9 +1293,7 @@
       </potentialOwner>
     </userTask>
     <exclusiveGateway id="_35" name="Gateway" gatewayDirection="Converging" />
-
     <userTask id="_33" name="修改报价" >
-
       <ioSpecification>
         <dataInput id="_33_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1384,9 +1323,7 @@
     <endEvent id="_40" name="End" >
         <terminateEventDefinition />
     </endEvent>
-
     <userTask id="_41" name="确认样衣制作金" >
-
       <ioSpecification>
         <dataInput id="_41_TaskNameInput" name="TaskName" />
         <dataOutput id="_41_receivedsamplejinOutput" name="receivedsamplejin" />
@@ -1414,9 +1351,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
     <userTask id="_47" name="采购确认" >
-
       <ioSpecification>
         <dataInput id="_47_TaskNameInput" name="TaskName" />
         <dataOutput id="_47_purchaseerrorOutput" name="purchaseerror" />
@@ -1447,9 +1382,7 @@
     <inclusiveGateway id="_44" name="receivedsamplejin" gatewayDirection="Diverging" />
     <parallelGateway id="_50" name="shengchan" gatewayDirection="Converging" />
     <parallelGateway id="_49" name="Gateway" gatewayDirection="Diverging" />
-
     <userTask id="_48" name="录入版型数据" >
-
       <ioSpecification>
         <dataInput id="_48_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1472,9 +1405,7 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_55" name="producterror" gatewayDirection="Diverging" />
-
     <userTask id="_54" name="生产样衣" >
-
       <ioSpecification>
         <dataInput id="_54_TaskNameInput" name="TaskName" />
         <dataOutput id="_54_producterrorOutput" name="producterror" />
@@ -1502,9 +1433,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
     <userTask id="_59" name="物流样衣发货" >
-
       <ioSpecification>
         <dataInput id="_59_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1533,9 +1462,7 @@
         <terminateEventDefinition />
     </endEvent>
     <inclusiveGateway id="_56" name="purchaseerror" gatewayDirection="Diverging" />
-
     <userTask id="_62" name="确认样衣加工单" >
-
       <ioSpecification>
         <dataInput id="_62_TaskNameInput" name="TaskName" />
         <dataOutput id="_62_comfirmworksheetOutput" name="comfirmworksheet" />
@@ -1564,9 +1491,7 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_68" name="editworksheetok" gatewayDirection="Diverging" />
-
     <userTask id="_69" name="采购部确认" >
-
       <ioSpecification>
         <dataInput id="_69_TaskNameInput" name="TaskName" />
         <dataOutput id="_69_isworksheetOutput" name="isworksheet" />
@@ -1594,9 +1519,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
     <userTask id="_70" name="设计部确认" >
-
       <ioSpecification>
         <dataInput id="_70_TaskNameInput" name="TaskName" />
         <dataOutput id="_70_isworksheetBOutput" name="isworksheetB" />
@@ -1635,9 +1558,7 @@
     <parallelGateway id="_67" name="Gateway" gatewayDirection="Diverging" />
     <inclusiveGateway id="_76" name="isworksheet" gatewayDirection="Diverging" />
     <parallelGateway id="_72" name="Gateway" gatewayDirection="Converging" />
-
     <userTask id="_74" name="签订合同加工单" >
-
       <ioSpecification>
         <dataInput id="_74_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1659,9 +1580,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
     <userTask id="_75" name="修改加工单" >
-
       <ioSpecification>
         <dataInput id="_75_TaskNameInput" name="TaskName" />
         <dataOutput id="_75_editworksheetokOutput" name="editworksheetok" />
@@ -1690,9 +1609,7 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_84" name="epositok" gatewayDirection="Diverging" />
-
     <userTask id="_87" name="采购部确认" >
-
       <ioSpecification>
         <dataInput id="_87_TaskNameInput" name="TaskName" />
         <dataOutput id="_87_procurementerrorOutput" name="procurementerror" />
@@ -1723,9 +1640,7 @@
     <endEvent id="_86" name="End" >
         <terminateEventDefinition />
     </endEvent>
-
     <userTask id="_80" name="30%定金确认" >
-
       <ioSpecification>
         <dataInput id="_80_TaskNameInput" name="TaskName" />
         <dataOutput id="_80_epositokOutput" name="epositok" />
@@ -1755,9 +1670,7 @@
     </userTask>
     <inclusiveGateway id="_94" name="procurementerror" gatewayDirection="Diverging" />
     <parallelGateway id="_89" name="Gateway" gatewayDirection="Diverging" />
-
     <userTask id="_88" name="设计生产确认" >
-
       <ioSpecification>
         <dataInput id="_88_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1781,9 +1694,7 @@
     </userTask>
     <parallelGateway id="_91" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_102" name="volumeproduction" gatewayDirection="Diverging" />
-
     <userTask id="_103" name="质量检测" >
-
       <ioSpecification>
         <dataInput id="_103_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1811,9 +1722,7 @@
     <endEvent id="_99" name="End" >
         <terminateEventDefinition />
     </endEvent>
-
     <userTask id="_96" name="批量生产" >
-
       <ioSpecification>
         <dataInput id="_96_TaskNameInput" name="TaskName" />
         <dataOutput id="_96_volumeproductionOutput" name="volumeproduction" />
@@ -1841,9 +1750,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
     <userTask id="_110" name="60%金额确认" >
-
       <ioSpecification>
         <dataInput id="_110_TaskNameInput" name="TaskName" />
         <dataOutput id="_110_paymentokOutput" name="paymentok" />
@@ -1871,9 +1778,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
     <userTask id="_107" name="入库" >
-
       <ioSpecification>
         <dataInput id="_107_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1895,9 +1800,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-
     <userTask id="_118" name="尾款确认" >
-
       <ioSpecification>
         <dataInput id="_118_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1922,9 +1825,7 @@
     <endEvent id="_116" name="End" >
         <terminateEventDefinition />
     </endEvent>
-
     <userTask id="_115" name="发货" >
-
       <ioSpecification>
         <dataInput id="_115_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1961,7 +1862,7 @@
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receivedsample;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_136-_6" sourceRef="_136" targetRef="_6" name="needclothes" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return needclothes;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  needclothes;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_6-_7" sourceRef="_6" targetRef="_7" name="sendclothes" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return sendclothes;</conditionExpression>

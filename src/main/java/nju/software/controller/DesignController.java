@@ -13,7 +13,6 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
-import nju.software.service.BuyService;
 import nju.software.service.DesignService;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
@@ -36,8 +35,7 @@ public class DesignController {
 	private OrderService orderService;
 	@Autowired
 	private DesignService designService;
-	@Autowired
-	private BuyService buyService;
+	
 	/**
 	 * 设计验证跳转链接
 	 * @param request
@@ -76,11 +74,9 @@ public class DesignController {
 		System.out.println("design verify ================");
 		
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-		
 		boolean designVal = Boolean.parseBoolean(request.getParameter("designVal"));
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("pinId");
@@ -88,13 +84,10 @@ public class DesignController {
 		String comment = request.getParameter("suggestion");
 		String taskName = "design_verification ";
 		designService.verify(account, orderId_request, taskId, processId, designVal, comment);
-
 		
 		return "redirect:/design/verify.do";
 	}
 	
-	
-
 	/**
 	 * 显示订单详细信息
 	 * 
@@ -108,7 +101,7 @@ public class DesignController {
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("buy verify ================ show detail");
+		System.out.println("design verify ================ show detail");
 		OrderModel orderModel = null;
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
@@ -119,9 +112,9 @@ public class DesignController {
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
 		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-		Logistics logistics = buyService.getLogisticsByOrderId(orderId_request);
-		List<Fabric> fabricList = buyService.getFabricByOrderId(orderId_request);
-		List<Accessory> accessoryList = buyService.getAccessoryByOrderId(orderId_request);
+		Logistics logistics = designService.getLogisticsByOrderId(orderId_request);
+		List<Fabric> fabricList = designService.getFabricByOrderId(orderId_request);
+		List<Accessory> accessoryList = designService.getAccessoryByOrderId(orderId_request);
 		model.addAttribute("orderModel", orderModel);
 		model.addAttribute("logistics", logistics);
 		model.addAttribute("fabric_list", fabricList);
@@ -129,4 +122,5 @@ public class DesignController {
 		
 		return "design/verify_detail";
 	}
+
 }

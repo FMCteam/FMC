@@ -13,7 +13,6 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
-import nju.software.service.BuyService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.util.JbpmAPIUtil;
@@ -36,8 +35,7 @@ public class ProduceController {
 	private OrderService orderService;
 	@Autowired
 	private ProduceService produceService;
-	@Autowired
-	private BuyService buyService;
+	
 	/**
 	 * 生产验证跳转链接
 	 * @param request
@@ -79,7 +77,6 @@ public class ProduceController {
 		boolean productVal = Boolean.parseBoolean(request.getParameter("productVal"));
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("pinId");
@@ -90,7 +87,7 @@ public class ProduceController {
 		
 		return "redirect:/produce/verify.do";
 	}
-
+	
 	/**
 	 * 显示订单详细信息
 	 * 
@@ -104,9 +101,7 @@ public class ProduceController {
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-
 		System.out.println("produce verify ================ show detail");
-
 		OrderModel orderModel = null;
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
@@ -117,11 +112,9 @@ public class ProduceController {
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
 		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-
 		Logistics logistics =produceService.getLogisticsByOrderId(orderId_request);
 		List<Fabric> fabricList = produceService.getFabricByOrderId(orderId_request);
 		List<Accessory> accessoryList = produceService.getAccessoryByOrderId(orderId_request);
-
 		model.addAttribute("orderModel", orderModel);
 		model.addAttribute("logistics", logistics);
 		model.addAttribute("fabric_list", fabricList);

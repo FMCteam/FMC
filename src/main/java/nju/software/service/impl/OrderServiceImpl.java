@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import nju.software.controller.LogisticsController.ComposeOrderAndLog;
-import nju.software.controller.MarketController;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
@@ -20,7 +18,6 @@ import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
-
 
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
@@ -190,54 +187,6 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
-	/**
-	 * 
-	 */
-	@Override
-	public List<OrderModel> findModifyOrderPage(String string, String string2,
-			int s_page, int s_number_per_page) {
-		// TODO Auto-generated method stub
-		try
-		{
-			List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-					string, string2);
-			int page_number = (int) Math.ceil((double) list.size()
-					/ s_number_per_page);
-			int start = s_number_per_page * (s_page - 1);
-			List<OrderModel> logList = new ArrayList<OrderModel>();
-			int i = 0;
-			int j = 0;
-			for (TaskSummary task : list) {
-				if (i >= start && j < s_number_per_page) {
-					WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-							.getKsession().getProcessInstance(
-									task.getProcessInstanceId());
-					String orderId1 = process.getVariable("orderId").toString();
-					//String reason1 = process.getVariable("orderId").toString();
-					//String reason2 = process.getVariable("orderId").toString();
-					//String reason3 = process.getVariable("orderId").toString();
-					Order order= findByOrderId(orderId1);
-					OrderModel model=new OrderModel();
-					model.setOrder(order);
-					model.setTaskId(task.getId());
-					model.setProcessInstanceId(process.getId());
-					logList.add(model);
-
-					j++;
-				}
-				i++;
-			}
-			return logList;
-		}catch(Exception e)
-		{
-			
-		}
-		
-		return null;
-	}
-
-	
-
 	@Override
 	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId,
 			String taskName) {
@@ -273,6 +222,5 @@ public class OrderServiceImpl implements OrderService {
 			orderModel = new OrderModel(order, taskId, processId);
 		}
 		return orderModel;
-
 	}
 }

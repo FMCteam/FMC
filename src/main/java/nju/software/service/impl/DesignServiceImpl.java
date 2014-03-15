@@ -23,7 +23,7 @@ import nju.software.util.JbpmAPIUtil;
 
 @Service("designServiceImpl")
 public class DesignServiceImpl implements DesignService {
-
+	
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
@@ -36,14 +36,11 @@ public class DesignServiceImpl implements DesignService {
 	private AccessoryDAO accessoryDAO;
 
 	@Override
-
 	public boolean verify(Account account, int orderId, long taskId, 
-
 			long processId, boolean designVal, String comment) {
 		// TODO Auto-generated method stub
-		// String actorId = account.getUserRole();
+//		String actorId = account.getUserRole();
 		String actorId = "SHEJIZHUGUAN";
-
 		//需要获取task中的数据	
 		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
 		int orderId_process  = (int) process.getVariable("orderId");
@@ -60,7 +57,6 @@ public class DesignServiceImpl implements DesignService {
 			data.put("designVal", designVal);
 			data.put("designComment", comment);
 			//直接进入到下一个流程时
-
 			try {
 				jbpmAPIUtil.completeTask(taskId, data, actorId);
 			} catch (InterruptedException e) {
@@ -69,7 +65,6 @@ public class DesignServiceImpl implements DesignService {
 			}
 			return true;
 		}
-
 		return false;
 	}
 	

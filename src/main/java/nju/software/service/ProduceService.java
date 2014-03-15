@@ -9,7 +9,6 @@ import nju.software.dataobject.Logistics;
 
 public interface ProduceService {
 
-
 	public boolean verify(Account account, int orderId, long taskId, 
 			long processId, boolean productVal, String comment);
 	
@@ -18,5 +17,4 @@ public interface ProduceService {
 	public List<Fabric> getFabricByOrderId(int orderId);
 	
 	public List<Accessory> getAccessoryByOrderId(int orderId);
-
 }

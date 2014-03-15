@@ -55,7 +55,7 @@ public class ProduceServiceImpl implements ProduceService {
 					//修改流程参数
 					Map<String, Object> data = new HashMap<>();
 					data.put("productVal", productVal);
-					data.put("produceComment", comment);
+					data.put("productComment", comment);
 					//直接进入到下一个流程时
 					try {
 						jbpmAPIUtil.completeTask(taskId, data, actorId);
@@ -65,7 +65,6 @@ public class ProduceServiceImpl implements ProduceService {
 					}
 					return true;
 				}
-
 		return false;
 	}
 	
