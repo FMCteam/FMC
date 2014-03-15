@@ -19,6 +19,7 @@ import nju.software.model.OrderModel;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
 
+import org.drools.runtime.StatefulKnowledgeSession;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -196,10 +197,12 @@ public class OrderServiceImpl implements OrderService {
 		if (list.isEmpty()) {
 			System.out.println("no task list");
 		}
+		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
+		WorkflowProcessInstance process = null;
 		for (TaskSummary task : list) {
 			//需要获取task中的数据	
 			long processId = task.getProcessInstanceId();
-			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+			process = (WorkflowProcessInstance) session.getProcessInstance(processId);
 			int orderId  = (int) process.getVariable("orderId");
 			Order order = getOrderById(orderId);
 			if (order != null) {
