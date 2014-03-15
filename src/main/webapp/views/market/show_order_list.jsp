@@ -47,7 +47,7 @@
 									<input type="hidden" name="order_id" value="${order.getOrder().getOrderId() }" />
 										<input type="hidden" name="task_id" value="${order.getTaskId()}" />
 										<input type="hidden" name="process_id" value="${order.getProcessInstanceId() }" />
-                                     <intput type="hidden" name="modify" value="0"/>
+                                     <input type="hidden" name="modify" value="0"/>
 										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i>不通过</button></form></td>
                      </tr>
                 </c:forEach>

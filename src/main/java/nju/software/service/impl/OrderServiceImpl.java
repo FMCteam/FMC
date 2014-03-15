@@ -236,39 +236,7 @@ public class OrderServiceImpl implements OrderService {
 		return null;
 	}
 
-	@Override
-	public List<Object> getOrderALLById(int s_orderId, long s_taskId,long processId) {
-		// TODO Auto-generated method stub
 	
-		try
-		{
-			List<Object> list=new ArrayList<Object>();
-			Order order=orderDAO.findById(s_orderId);
-			List<Fabric> fabricList=fabricDAO.findByProperty("orderId",order.getOrderId());
-			List<Accessory> accessoryList=accessoryDAO.findByProperty("orderId",order.getOrderId());
-			List<Logistics> log=logisticsDAO.findByProperty("orderId", order.getOrderId());
-			OrderModel model=new OrderModel();
-			model.setOrder(order);
-			model.setTaskId(s_orderId);
-			model.setProcessInstanceId(processId);
-			list.add(model);//0
-			list.add(fabricList);//1
-			list.add(accessoryList);//2
-			list.add(log);//3
-			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-					.getKsession().getProcessInstance(
-							processId);
-			list.add(process.getVariable("buyComment").toString());
-			list.add(process.getVariable("designComment").toString());
-			//list.add(process.getVariable("produceComment").toString());
-			System.out.println(list.size());
-			return list;
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	@Override
 	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId,

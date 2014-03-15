@@ -22,6 +22,7 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
+import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
 import nju.software.service.OrderService;
 import nju.software.util.DateUtil;
@@ -44,6 +45,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MarketController {
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private BuyService buyService;
 	@Autowired
 	private CustomerService customerService;
 	@Autowired
@@ -127,15 +130,21 @@ public class MarketController {
 			if (Integer.parseInt(modify) == 1) {
 				// 修改
 
-				List<Object> all = orderService.getOrderALLById(s_orderId,
-						s_taskId, s_processId);
-				model.addAttribute("orderModel", all.get(0));
-			
-				model.addAttribute("fabric_list", all.get(1));
-				model.addAttribute("accessory_list", all.get(2));
-				model.addAttribute("logistics", all.get(3));
-				model.addAttribute("buyComment", all.get(4));
-				model.addAttribute("designComment", all.get(5));
+				OrderModel orderModel = null;
+				orderModel = orderService.getOrderDetail(s_orderId, s_taskId, s_processId);
+				Logistics logistics = buyService.getLogisticsByOrderId(s_orderId);
+				List<Fabric> fabricList = buyService.getFabricByOrderId(s_orderId);
+				List<Accessory> accessoryList = buyService.getAccessoryByOrderId(s_orderId);
+				model.addAttribute("orderModel", orderModel);
+				model.addAttribute("logistics", logistics);
+				model.addAttribute("fabric_list", fabricList);
+				model.addAttribute("accessory_list", accessoryList);
+				WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+						.getKsession().getProcessInstance(
+								s_processId);
+				model.addAttribute("buyComment",process.getVariable("buyComment").toString());
+				model.addAttribute("desiginComment",process.getVariable("designComment").toString());
+				//model.addAttribute("produceComment",process.getVariable("produceComment").toString());
 				//model.addAttribute("produceComment", all.get(6));
 				System.out.println(modify);
 				System.out.println("market modify order");
@@ -156,11 +165,35 @@ public class MarketController {
 		return "redirect:/market/show_order_list";
 	}
 
+	/**
+	 * 修改询单，现在假设订单不需要修改就通过了
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "market/doModify.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doModifyOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
+		String s_orderId=request.getParameter("orderId");
+		String s_taskId=request.getParameter("taskId");
+		String s_processId=request.getParameter("pinId");
+		try
+		{
+			int orderId=Integer.parseInt(s_orderId);
+			long taskId=Long.parseLong(s_taskId);
+			long processId=Long.parseLong(s_taskId);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("editOk", true);
+			jbpmAPIUtil.completeTask(taskId, map, "SHICHANGZHUANYUAN");
+
+			return "redirect:/market/show_order_list";
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		return "redirct:/market/show_order_list";
 	}
 

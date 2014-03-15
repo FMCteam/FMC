@@ -39,7 +39,7 @@ public interface OrderService {
 	public List<OrderModel> findModifyOrderPage(String string, String string2,
 			int s_page, int s_number_per_page);
 
-	public List<Object> getOrderALLById(int s_orderId, long s_taskId,long processId);
+	
 
 	
 	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId, String taskName);
