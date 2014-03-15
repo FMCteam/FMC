@@ -9,7 +9,7 @@
 				<h4 class="widgettitle">设计验证</h4>
 				<div class="widgetcontent">
 
-					<form id="verify_form" method="post" action="${ctx }/design/doVerify.do">
+					<form id="verify_form" method="post" action="${ctx }/market/doModify.do">
 
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
@@ -193,17 +193,20 @@
 							<tr>
 								<td>意见</td>
 
-								<td colspan="6"><input class="span12" type="text" name="suggestion" /></td>
+								<td colspan="2"><input class="span12" type="text" name="buyComment" /></td>
+								<td colspan="2"><input class="span12" type="text" name="desiginComment" /></td>
+								<td colspan="2"><input class="span12" type="text" name="produceComment" /></td>
 							</tr>
 							<tr>
 								<td>操作</td>	
 								<td colspan="6">
+								
 									<input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
 									<input type="hidden" name="taskId" value="${orderModel.taskId }" />
 									<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />
-									<input id="verify_val" type="hidden" name="designVal" value="" />
+								
 									<a id="agree_detail" class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</a>
-									<a id="disagree_detail" class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 拒绝</a>
+									
 								</td>
 							</tr>
 						</table>
