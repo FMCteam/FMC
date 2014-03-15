@@ -193,6 +193,9 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		List<OrderModel> orderList = new ArrayList<OrderModel>();
 		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
+		if (list.isEmpty()) {
+			System.out.println("no task list");
+		}
 		for (TaskSummary task : list) {
 			//需要获取task中的数据	
 			long processId = task.getProcessInstanceId();

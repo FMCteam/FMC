@@ -58,6 +58,9 @@ public class BuyController {
 		System.out.println("actorId: " + actorId);
 		String taskName = "verification_purchased";
 		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		if (orderList.isEmpty()) {
+			System.out.println("no orderList ");
+		}
 		model.addAttribute("order_list", orderList);
 		
 		return "buy/verify";

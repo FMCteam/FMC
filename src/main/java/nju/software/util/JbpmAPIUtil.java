@@ -200,6 +200,9 @@ public class JbpmAPIUtil {
 	public List<TaskSummary> getAssignedTasksByTaskname(String actorId, String taskName) {
 		List<TaskSummary> tasks = new ArrayList<TaskSummary>();//保存非完成状态的task列表
 		List<TaskSummary> list =getAssignedTasks(actorId);
+		if (list.isEmpty()) {
+			System.out.println("no assigned task");
+		}
 		for (TaskSummary task : list) {
 			if(task.getName().equals(taskName)){
 				tasks.add(task);
