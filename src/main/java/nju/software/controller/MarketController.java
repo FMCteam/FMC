@@ -21,13 +21,13 @@ import nju.software.dataobject.Customer;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderModel;
 import nju.software.service.CustomerService;
 import nju.software.service.OrderService;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
-import nju.software.web.vo.OrderALL;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ntp.TimeStamp;
@@ -96,9 +96,9 @@ public class MarketController {
 		if (!StringUtil.isEmpty(number_per_page)) {
 			s_number_per_page = Integer.parseInt(number_per_page);
 		}
-		List<OrderALL> orderList = orderService.findModifyOrderPage(
+		List<OrderModel> orderList = orderService.findModifyOrderPage(
 				"SHICHANGZHUANYUAN", "edit_order", s_page, s_number_per_page);
-		model.put("orderList", orderList);
+		model.put("order_list", orderList);
 		return "market/show_order_list";
 	}
 
@@ -110,39 +110,50 @@ public class MarketController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "market/modify.do", method = RequestMethod.GET)
+	@RequestMapping(value = "market/modify.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		String modify = request.getParameter("modify");
+		System.out.println(modify);
 		String orderId = request.getParameter("order_id");
 		String taskId = request.getParameter("task_id");
-		String processId=request.getParameter("process_id");
+		String processId = request.getParameter("process_id");
 		try {
-			int s_orderId=Integer.parseInt(orderId);
-			long s_taskId=Long.parseLong(taskId);
-			long s_processId=Long.parseLong(processId);
+			int s_orderId = Integer.parseInt(orderId);
+			long s_taskId = Long.parseLong(taskId);
+			long s_processId = Long.parseLong(processId);
 			if (Integer.parseInt(modify) == 1) {
 				// 修改
-				
-				OrderALL all=orderService.getOrderALLById(s_orderId,s_taskId,s_processId);
-				model.put("orderALL", all);
-				return "market/modify_order";
+
+				List<Object> all = orderService.getOrderALLById(s_orderId,
+						s_taskId, s_processId);
+				model.addAttribute("orderModel", all.get(0));
+			
+				model.addAttribute("fabric_list", all.get(1));
+				model.addAttribute("accessory_list", all.get(2));
+				model.addAttribute("logistics", all.get(3));
+				model.addAttribute("buyComment", all.get(4));
+				model.addAttribute("designComment", all.get(5));
+				//model.addAttribute("produceComment", all.get(6));
+				System.out.println(modify);
+				System.out.println("market modify order");
+				return "market/verify_detail";
 			} else {
 				// 删除
-				Map<String,Object> map=new HashMap<String,Object>();
-				map.put("editOk",false);
-				jbpmAPIUtil.completeTask(s_taskId, map,
-						"SHICHANGZHUANYUAN");
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("editOk", false);
+				jbpmAPIUtil.completeTask(s_taskId, map, "SHICHANGZHUANYUAN");
 
-				return "redirect:market/show_order_list";
-				
+				return "redirect:/market/show_order_list";
+
 			}
 		} catch (Exception e) {
 
+			e.printStackTrace();
 		}
-		return "market/show_order_list";
+		return "redirect:/market/show_order_list";
 	}
 
 	@RequestMapping(value = "market/doModify.do", method = RequestMethod.POST)
@@ -152,6 +163,7 @@ public class MarketController {
 
 		return "redirct:/market/show_order_list";
 	}
+
 	// 提交表单的页面
 	@RequestMapping(value = "market/addMarketOrder.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)

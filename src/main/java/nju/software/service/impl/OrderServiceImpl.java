@@ -20,7 +20,7 @@ import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
-import nju.software.web.vo.OrderALL;
+
 
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
@@ -194,7 +194,7 @@ public class OrderServiceImpl implements OrderService {
 	 * 
 	 */
 	@Override
-	public List<OrderALL> findModifyOrderPage(String string, String string2,
+	public List<OrderModel> findModifyOrderPage(String string, String string2,
 			int s_page, int s_number_per_page) {
 		// TODO Auto-generated method stub
 		try
@@ -204,7 +204,7 @@ public class OrderServiceImpl implements OrderService {
 			int page_number = (int) Math.ceil((double) list.size()
 					/ s_number_per_page);
 			int start = s_number_per_page * (s_page - 1);
-			List<OrderALL> logList = new ArrayList<OrderALL>();
+			List<OrderModel> logList = new ArrayList<OrderModel>();
 			int i = 0;
 			int j = 0;
 			for (TaskSummary task : list) {
@@ -217,8 +217,11 @@ public class OrderServiceImpl implements OrderService {
 					//String reason2 = process.getVariable("orderId").toString();
 					//String reason3 = process.getVariable("orderId").toString();
 					Order order= findByOrderId(orderId1);
-					OrderALL test=new OrderALL(order,null,null,null,task.getId(),null,null,null,task.getProcessInstanceId());
-					logList.add(test);
+					OrderModel model=new OrderModel();
+					model.setOrder(order);
+					model.setTaskId(task.getId());
+					model.setProcessInstanceId(process.getId());
+					logList.add(model);
 
 					j++;
 				}
@@ -234,20 +237,35 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderALL getOrderALLById(int s_orderId, long s_taskId,long processId) {
+	public List<Object> getOrderALLById(int s_orderId, long s_taskId,long processId) {
 		// TODO Auto-generated method stub
 	
 		try
 		{
+			List<Object> list=new ArrayList<Object>();
 			Order order=orderDAO.findById(s_orderId);
 			List<Fabric> fabricList=fabricDAO.findByProperty("orderId",order.getOrderId());
 			List<Accessory> accessoryList=accessoryDAO.findByProperty("orderId",order.getOrderId());
 			List<Logistics> log=logisticsDAO.findByProperty("orderId", order.getOrderId());
-			OrderALL all=new OrderALL(order,fabricList,accessoryList,log.get(0),s_taskId,null,null,null,processId);
-			return all;
+			OrderModel model=new OrderModel();
+			model.setOrder(order);
+			model.setTaskId(s_orderId);
+			model.setProcessInstanceId(processId);
+			list.add(model);//0
+			list.add(fabricList);//1
+			list.add(accessoryList);//2
+			list.add(log);//3
+			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+					.getKsession().getProcessInstance(
+							processId);
+			list.add(process.getVariable("buyComment").toString());
+			list.add(process.getVariable("designComment").toString());
+			//list.add(process.getVariable("produceComment").toString());
+			System.out.println(list.size());
+			return list;
 		}catch(Exception e)
 		{
-			
+			e.printStackTrace();
 		}
 		return null;
 	}

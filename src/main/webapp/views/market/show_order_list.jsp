@@ -29,15 +29,26 @@
             </tr>
             </thead>
             <tbody>
-				<c:forEach var="order" items="${orderList }" >
+				<c:forEach var="order" items="${order_list }" >
                      <tr class="gradeA">
                      <td>${order.getOrder().getOrderId()}</td>
 					<td>${order.getOrder().getCustomerId() }</td>
 					<td>${order.getOrder().getCustomerName() }</td>
 					<td>${order.getOrder().getOrderTime()}</td>
-					
-					<td><a href="${ctx }/market/modify.do?task_id=${order.getTaskId()}&&order_id=${order.getOrder().getOrderId() }&&process_id=${order.getProcessId() }&&modify=1" class="btn btn-info" title="修改"><i class="iconsweets-create iconsweets-white"></i>修改</a>
-						<a href="${ctx }/market/modify.do?task_id=${order.getTaskId()}&&order_id=${order.getOrder().getOrderId() }&&process_id=${order.getProcessId() }&&modify=0" class="btn btn-danger" title="不通过"><i class="iconsweets-trashcan iconsweets-white">不通过</i></a></td>
+						<td><form action="${ctx }/market/modify.do" method="post" >
+									<input type="hidden" name="order_id" value="${order.getOrder().getOrderId() }" />
+										<input type="hidden" name="task_id" value="${order.getTaskId()}" />
+										<input type="hidden" name="process_id" value="${order.getProcessInstanceId() }" />
+                                     <input type="hidden" name="modify" value="1"/>
+										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 修改</button></form>
+
+						
+						<form action="${ctx }/market/modify.do" method="post" >
+									<input type="hidden" name="order_id" value="${order.getOrder().getOrderId() }" />
+										<input type="hidden" name="task_id" value="${order.getTaskId()}" />
+										<input type="hidden" name="process_id" value="${order.getProcessInstanceId() }" />
+                                     <intput type="hidden" name="modify" value="0"/>
+										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i>不通过</button></form></td>
                      </tr>
                 </c:forEach>
             </tbody>
