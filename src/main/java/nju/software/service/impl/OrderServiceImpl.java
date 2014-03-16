@@ -226,4 +226,63 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return orderModel;
 	}
+
+	@Override
+	public boolean verify(int orderId, long taskId, long processId,boolean editOk,
+			String buyComment, String designComment, String productComment) {
+		// TODO Auto-generated method stub
+		String actorId = "SHICHANGZHUANYUAN";
+		//需要获取task中的数据	
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		System.out.println("orderId: " + orderId);
+		if (orderId == orderId_process) {
+			
+
+			//修改流程参数
+			Map<String, Object> data = new HashMap<>();
+			data.put("buyComment", buyComment);
+			data.put("designComment", designComment);
+			data.put("productCommment",productComment);
+			data.put("editok", editOk);
+			//直接进入到下一个流程时
+			try {
+				jbpmAPIUtil.completeTask(taskId, data, actorId);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		return false;
+		
+	}
+
+	@Override
+	public void modifyOrder(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics) {
+		// TODO Auto-generated method stub
+		//添加订单信息
+				orderDAO.merge(order);
+				/*
+				//删除order相关的面料和辅料和物流的信息
+				fabricDAO.deleteByProperty(order.getOrderId());
+				//添加面料信息
+				for(Fabric fabric:fabrics){
+					fabric.setOrderId(order.getOrderId());
+					fabricDAO.save(fabric);
+				}
+				
+				//添加辅料信息
+				for(Accessory accessory:accessorys){
+					accessory.setOrderId(order.getOrderId());
+					accessoryDAO.save(accessory);
+				}
+				
+				//添加物流信息
+				logistics.setOrderId(order.getOrderId());
+				logisticsDAO.save(logistics);
+		*/
+	}
 }

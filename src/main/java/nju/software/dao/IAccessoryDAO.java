@@ -29,5 +29,5 @@ public interface IAccessoryDAO {
 	public abstract void attachDirty(Accessory instance);
 
 	public abstract void attachClean(Accessory instance);
-
+	public void deleteByProperty(String propertyName,Object orderId);
 }

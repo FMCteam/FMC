@@ -66,4 +66,5 @@ public interface ILogisticsDAO {
 
 	public abstract void attachClean(Logistics instance);
 
+	public void deleteByProperty(String propertyName,Object orderId);
 }
