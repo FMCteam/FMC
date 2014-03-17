@@ -30,4 +30,5 @@ public interface IFabricDAO {
 
 	public abstract void attachClean(Fabric instance);
 
+	public void deleteByProperty(String propertyName,Object orderId);
 }

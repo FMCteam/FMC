@@ -27,6 +27,19 @@ jQuery(document).ready(function(){
 		jQuery("#password_block").css("display","block");
 	});
 	
+	jQuery("#agree_detail").click(function(){
+		jQuery("#verify_val").val("true");
+		jQuery("#verify_form").submit();
+	});
+	
+	jQuery("#disagree_detail").click(function(){
+		jQuery("#verify_val").val("false");
+		jQuery("#verify_form").submit();
+	});
+	jQuery("#modify_detail").click(function(){
+		
+		jQuery("#verify_form").submit();
+	});
 	// Dual Box Select
 	var db = jQuery('#dualselect').find('.ds_arrow button');	//get arrows of dual select
 	var sel1 = jQuery('#dualselect select:first-child');		//get first select element

@@ -289,4 +289,10 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	public static ILogisticsDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (ILogisticsDAO) ctx.getBean("LogisticsDAO");
 	}
+
+	@Override
+	public void deleteByProperty(String propertyName, Object orderId) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -13,9 +13,13 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderModel;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
 
+import org.drools.runtime.StatefulKnowledgeSession;
+import org.jbpm.task.query.TaskSummary;
+import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -107,6 +111,8 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return null;
 	}
+	
+	
 	@Override
 	public Order findByOrderId(String orderId) {
 		// TODO Auto-generated method stub
@@ -178,5 +184,103 @@ public class OrderServiceImpl implements OrderService {
 			System.out.println("流程启动失败");
 			ex.printStackTrace();
 		}
+	}
+
+	@Override
+	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId,
+			String taskName) {
+		// TODO Auto-generated method stub
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
+		if (list.isEmpty()) {
+			System.out.println("no task list");
+		}
+		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
+		WorkflowProcessInstance process = null;
+		for (TaskSummary task : list) {
+			//需要获取task中的数据	
+			long processId = task.getProcessInstanceId();
+			process = (WorkflowProcessInstance) session.getProcessInstance(processId);
+			int orderId  = (int) process.getVariable("orderId");
+			Order order = getOrderById(orderId);
+			if (order != null) {
+				System.out.println("orderId: " + order.getOrderId());
+				OrderModel orderModel = new OrderModel(order, task.getId(), processId);
+				orderList.add(orderModel);
+			}
+		}
+		return orderList;
+	}
+
+	@Override
+	public OrderModel getOrderDetail(int orderId, long taskId, long processId) {
+		// TODO Auto-generated method stub
+		OrderModel orderModel = null;
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		if (orderId == orderId_process) {
+			Order order = orderDAO.findById(orderId);
+			orderModel = new OrderModel(order, taskId, processId);
+		}
+		return orderModel;
+	}
+
+	@Override
+	public boolean verify(int orderId, long taskId, long processId,boolean editOk,
+			String buyComment, String designComment, String productComment) {
+		// TODO Auto-generated method stub
+		String actorId = "SHICHANGZHUANYUAN";
+		//需要获取task中的数据	
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		System.out.println("orderId: " + orderId);
+		if (orderId == orderId_process) {
+			
+
+			//修改流程参数
+			Map<String, Object> data = new HashMap<>();
+			data.put("buyComment", buyComment);
+			data.put("designComment", designComment);
+			data.put("productCommment",productComment);
+			data.put("editok", editOk);
+			//直接进入到下一个流程时
+			try {
+				jbpmAPIUtil.completeTask(taskId, data, actorId);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		return false;
+		
+	}
+
+	@Override
+	public void modifyOrder(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics) {
+		// TODO Auto-generated method stub
+		//添加订单信息
+				orderDAO.merge(order);
+				/*
+				//删除order相关的面料和辅料和物流的信息
+				fabricDAO.deleteByProperty(order.getOrderId());
+				//添加面料信息
+				for(Fabric fabric:fabrics){
+					fabric.setOrderId(order.getOrderId());
+					fabricDAO.save(fabric);
+				}
+				
+				//添加辅料信息
+				for(Accessory accessory:accessorys){
+					accessory.setOrderId(order.getOrderId());
+					accessoryDAO.save(accessory);
+				}
+				
+				//添加物流信息
+				logistics.setOrderId(order.getOrderId());
+				logisticsDAO.save(logistics);
+		*/
 	}
 }

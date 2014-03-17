@@ -58,6 +58,13 @@ public class HumanTaskStartupServlet extends HttpServlet {
 			TaskServiceSession taskSession = taskService.createSession();
 			taskSession.addUser(new User("Administrator"));
 			taskSession.addUser(new User("WULIUZHUGUAN"));
+			taskSession.addUser(new User("SHICHANGZHUGUAN"));
+			taskSession.addUser(new User("SHICHANGZHUANYUAN"));
+			taskSession.addUser(new User("CAIGOUZHUGUAN"));
+			taskSession.addUser(new User("ZHIJIANZHUGUAN"));
+			taskSession.addUser(new User("SHENGCHANZHUGUAN"));
+			taskSession.addUser(new User("SHEJIZHUGUAN"));
+			taskSession.addUser(new User("CAIWUZHUGUAN"));
 //			taskSession.addUser(new User("jwy"));
 //			taskSession.addUser(new User("wy"));
 //			taskSession.addUser(new User("gjd"));

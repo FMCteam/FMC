@@ -9,8 +9,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Fabric;
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderModel;
+import nju.software.service.BuyService;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
 
@@ -30,6 +35,8 @@ public class BuyController {
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private BuyService buyService;
 	
 	/**
 	 * 采购验证跳转链接
@@ -44,26 +51,21 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("buy verify ================ show task");
-		List<Order> orderList = new ArrayList<Order>();
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-		String actorId = account.getUserRole();
+//		String actorId = account.getUserRole();
+		String actorId = "CAIGOUZHUGUAN";
 		System.out.println("actorId: " + actorId);
 		String taskName = "verification_purchased";
-		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
-		for (TaskSummary task : list) {
-			//需要获取task中的数据	
-			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(task.getProcessInstanceId());
-			int orderId  = (int) process.getVariable("orderId");
-			Order order = orderService.getOrderById(orderId);
-			if (order != null) {
-				System.out.println("orderId: " + order.getOrderId());
-				orderList.add(order);
-			}
+		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		if (orderList.isEmpty()) {
+			System.out.println("no orderList ");
 		}
 		model.addAttribute("order_list", orderList);
 		
 		return "buy/verify";
 	}
+	
 	/**
 	 * 采购验证
 	 * @param request
@@ -78,39 +80,53 @@ public class BuyController {
 		System.out.println("buy verify ================");
 		
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-		String actorId = account.getUserRole();
 		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
-		String s_orderId_request = (String) request.getParameter("id");
+		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+		String comment = request.getParameter("suggestion");
 		String taskName = "verification_purchased";
-		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
-		for (TaskSummary task : list) {
-			//需要获取task中的数据	
-			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(task.getProcessInstanceId());
-			int orderId  = (int) process.getVariable("orderId");
-			System.out.println("orderId: " + orderId);
-			if (orderId_request == orderId) {
-				Order order = orderService.getOrderById(orderId);
-				//修改order内容
-
-				//提交修改
-				orderService.updateOrder(order);
-
-				//修改流程参数
-				Map<String, Object> data = new HashMap<>();
-				data.put("buyVal", buyVal);
-				//直接进入到下一个流程时
-				try {
-					jbpmAPIUtil.completeTask(task.getId(), data, actorId);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-		}
+		buyService.verify(account, orderId_request, taskId, processId, buyVal, comment);
 		
 		return "redirect:/buy/verify.do";
+	}
+	
+	/**
+	 * 显示订单详细信息
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "buy/verifyDetail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String verifyDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("buy verify ================ show detail");
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+		Logistics logistics = buyService.getLogisticsByOrderId(orderId_request);
+		List<Fabric> fabricList = buyService.getFabricByOrderId(orderId_request);
+		List<Accessory> accessoryList = buyService.getAccessoryByOrderId(orderId_request);
+		model.addAttribute("orderModel", orderModel);
+		model.addAttribute("logistics", logistics);
+		model.addAttribute("fabric_list", fabricList);
+		model.addAttribute("accessory_list", accessoryList);
+		
+		return "buy/verify_detail";
 	}
 
 }

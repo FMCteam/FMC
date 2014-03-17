@@ -7,9 +7,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Fabric;
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderModel;
 import nju.software.service.OrderService;
+import nju.software.service.ProduceService;
 import nju.software.util.JbpmAPIUtil;
 
 import org.jbpm.task.query.TaskSummary;
@@ -28,6 +33,8 @@ public class ProduceController {
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private ProduceService produceService;
 	
 	/**
 	 * 生产验证跳转链接
@@ -42,22 +49,13 @@ public class ProduceController {
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("produce verify ================ show task");
-		List<Order> orderList = new ArrayList<Order>();
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-		String actorId = account.getUserRole();
+//		String actorId = account.getUserRole();
+		String actorId = "SHENGCHANZHUGUAN";
 		System.out.println("actorId: " + actorId);
 		String taskName = "production_verification";
-		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
-		for (TaskSummary task : list) {
-			//需要获取task中的数据	
-			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(task.getProcessInstanceId());
-			int orderId  = (int) process.getVariable("orderId");
-			Order order = orderService.getOrderById(orderId);
-			if (order != null) {
-				System.out.println("orderId: " + order.getOrderId());
-				orderList.add(order);
-			}
-		}
+		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
 		model.addAttribute("order_list", orderList);
 		
 		return "produce/verify";
@@ -76,39 +74,53 @@ public class ProduceController {
 		System.out.println("produce verify ================");
 		
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-		String actorId = account.getUserRole();
 		boolean productVal = Boolean.parseBoolean(request.getParameter("productVal"));
-		String s_orderId_request = (String) request.getParameter("id");
+		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+		String comment = request.getParameter("suggestion");
 		String taskName = "production_verification";
-		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, taskName);
-		for (TaskSummary task : list) {
-			//需要获取task中的数据	
-			WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(task.getProcessInstanceId());
-			int orderId  = (int) process.getVariable("orderId");
-			System.out.println("orderId: " + orderId);
-			if (orderId_request == orderId) {
-				Order order = orderService.getOrderById(orderId);
-				//修改order内容
-
-				//提交修改
-				orderService.updateOrder(order);
-
-				//修改流程参数
-				Map<String, Object> data = new HashMap<>();
-				data.put("productVal", productVal);
-				//直接进入到下一个流程时
-				try {
-					jbpmAPIUtil.completeTask(task.getId(), data, actorId);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-		}
+		produceService.verify(account, orderId_request, taskId, processId, productVal, comment);
 		
 		return "redirect:/produce/verify.do";
+	}
+	
+	/**
+	 * 显示订单详细信息
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "produce/verifyDetail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String verifyDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("produce verify ================ show detail");
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+		Logistics logistics =produceService.getLogisticsByOrderId(orderId_request);
+		List<Fabric> fabricList = produceService.getFabricByOrderId(orderId_request);
+		List<Accessory> accessoryList = produceService.getAccessoryByOrderId(orderId_request);
+		model.addAttribute("orderModel", orderModel);
+		model.addAttribute("logistics", logistics);
+		model.addAttribute("fabric_list", fabricList);
+		model.addAttribute("accessory_list", accessoryList);
+		
+		return "produce/verify_detail";
 	}
 
 }

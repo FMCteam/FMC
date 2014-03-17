@@ -192,4 +192,10 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	public static IAccessoryDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (IAccessoryDAO) ctx.getBean("AccessoryDAO");
 	}
+
+	@Override
+	public void deleteByProperty(String propertyName, Object orderId) {
+		// TODO Auto-generated method stub
+		
+	}
 }
