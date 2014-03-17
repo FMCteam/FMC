@@ -1,7 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 		
 		<%@include file="/common/header.jsp" %>
-        
+	
+    
        <!--  <div class="pageheader">
            
             <div class="pageicon"><span class="iconfa-laptop"></span></div>
@@ -18,11 +19,11 @@
                     <div class="widget">
                     <h4 class="widgettitle">添加客户</h4>
                     <div class="widgetcontent">
-                    <form class="stdform" action="${ctx }/customer/doAdd.do" method="post">
+                    <form id="customerForm" class="stdform" action="${ctx }/customer/doAdd.do" method="post">
 
 
                         <p>
-                            <label>客户登录名：</label>
+                            <label for="user_name">客户登录名：</label>
                             <span class="field"><input type="text" name="user_name"   class="input-medium" placeholder="user_name"></span>
 
                         </p>
@@ -202,7 +203,47 @@
         
         <!-- 这里引入你需要的js文件 -->
         <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-        
-        
+       	<script src="${ctx }/js/messages_cn.js" type="text/javascript"></script>
+       		<script  type="text/javascript">
+        $().ready(function() {
+
+ $("#customerForm").validate({
+
+        rules: {
+
+        	user_name: "required",
+
+        	customer_name:"required",
+        	company_id:"required",
+        	company_name:"required",
+        	province:"required",
+ 
+        	register_date:{
+        		date:true,
+        		required:true
+        	},
+        	
+
+   
+
+  },
+
+        messages: {
+
+        	user_name: "请输入用户登录名称",
+        	customer_name:"请输入用户真实姓名",
+        	company_id:"请输入公司编号",
+        	company_name:"请输入公司姓名",
+        	province:"请输入客户的省份",
+        	register_date:"请输入正确的注册日期"
+
+ 
+
+  }
+
+    });
+
+});
+        </script>
         <%@include file="/common/footer.jsp" %>
     

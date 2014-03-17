@@ -9,7 +9,9 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Quote;
 import nju.software.model.OrderModel;
+import nju.software.model.QuoteModel;
 
 public interface OrderService {
 	
@@ -41,4 +43,5 @@ public interface OrderService {
 
 	public void modifyOrder(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics);
+	public List<QuoteModel> getQuoteByActorAndTask(String actor,String taskName);
 }

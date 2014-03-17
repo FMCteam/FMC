@@ -22,9 +22,11 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
+import nju.software.model.QuoteModel;
 import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
 import nju.software.service.OrderService;
+import nju.software.service.QuoteService;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
@@ -48,6 +50,8 @@ public class MarketController {
 	@Autowired
 	private BuyService buyService;
 	@Autowired
+	private QuoteService quoteService;
+	@Autowired
 	private CustomerService customerService;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
@@ -64,7 +68,108 @@ public class MarketController {
 		model.addAttribute("customer_list", list.get(0));
 		return "market/customer_order";
 	}
-
+	// 专员合并报价
+		@RequestMapping(value = "market/computerOrderSum.do", method = RequestMethod.POST)
+		@Transactional(rollbackFor = Exception.class)
+		public String computerOrderSum(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			Map params = new HashMap();
+			params.put("page", 1);
+			params.put("number_per_page", 100);
+		
+			
+			
+			String innerPrice=request.getParameter("inner_price");
+			String outerPrice=request.getParameter("outer_price");
+			String orderId=request.getParameter("order_id");
+			String s_taskId=request.getParameter("taskId");
+			String s_processId=request.getParameter("processId");
+			
+			try
+			{
+			float inner=Float.parseFloat(innerPrice);
+			float outer=Float.parseFloat(outerPrice);
+			int id=Integer.parseInt(orderId);
+			long taskId=Long.parseLong(s_taskId);
+			long processId=Long.parseLong(s_processId);
+			boolean success=quoteService.updateQuote(inner,outer, id,taskId,processId,"SHICHANGZHUANYUAN");
+			return "market/computerOrderSumList";
+			}catch(Exception e)
+			{
+				
+			}
+			return "market/computerOrderSumList";
+		}
+		// 专员合并报价List
+				@RequestMapping(value = "market/computerOrderSumList.do", method = RequestMethod.GET)
+				@Transactional(rollbackFor = Exception.class)
+				public String computerOrderSumList(HttpServletRequest request,
+						HttpServletResponse response, ModelMap model) {
+					/*
+					Map params = new HashMap();
+					params.put("page", 1);
+					params.put("number_per_page", 100);
+					List list = customerService.listCustomer(params);
+					model.addAttribute("customer_list", list.get(0));
+					*/
+					String actor="SHICHANGZHUANYUAN";
+					String taskName="quote";
+					List<QuoteModel> quoteModelList=orderService.getQuoteByActorAndTask("SHICHANGZHUANYUAN", "quote");
+					
+					model.addAttribute("quote_list", quoteModelList);
+					return "market/quote_order_list";
+				}
+		// 主管审核报价
+		@RequestMapping(value = "market/checkOrderSum.do", method = RequestMethod.POST)
+		@Transactional(rollbackFor = Exception.class)
+		public String checkOrderSum(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			/*
+			Map params = new HashMap();
+			params.put("page", 1);
+			params.put("number_per_page", 100);
+			List list = customerService.listCustomer(params);
+			model.addAttribute("customer_list", list.get(0));
+			*/
+			String innerPrice=request.getParameter("inner_price");
+			String outerPrice=request.getParameter("outer_price");
+			String orderId=request.getParameter("order_id");
+			String s_taskId=request.getParameter("taskId");
+			String s_processId=request.getParameter("processId");
+			
+			try
+			{
+			float inner=Float.parseFloat(innerPrice);
+			float outer=Float.parseFloat(outerPrice);
+			int id=Integer.parseInt(orderId);
+			long taskId=Long.parseLong(s_taskId);
+			long processId=Long.parseLong(s_processId);
+			boolean success=quoteService.updateQuote(inner,outer, id,taskId,processId,"SHICHANGZHUGUAN");
+			return "market/checkOrderSumList";
+			}catch(Exception e)
+			{
+				
+			}
+			return "market/checkOrderSumList";
+		}
+		// 主管审核报价List
+		@RequestMapping(value = "market/checkOrderSumList.do", method = RequestMethod.GET)
+		@Transactional(rollbackFor = Exception.class)
+		public String checkOrderSumList(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			/*Map params = new HashMap();
+			params.put("page", 1);
+			params.put("number_per_page", 100);
+			List list = customerService.listCustomer(params);
+			*/
+			String actor="SHICHANGZHUGUAN";
+			String taskName="check_quote";
+			List<QuoteModel> quoteModelList=orderService.getQuoteByActorAndTask(actor, taskName);
+			
+			model.addAttribute("quote_list", quoteModelList);
+			return "market/check_quote_order_list";
+			
+		}
 	// 修改询单的列表
 	@RequestMapping(value = "market/sampleOrderList.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
@@ -136,13 +241,13 @@ public class MarketController {
 				String designComment=process.getVariable("designComment").toString();
 				//String productComment=process.getVariable("productComment").toString();
 				orderService.verify(id, task_id, process_id, false, buyComment, designComment, null);
-				return "redirect:/market/sample_order_list";
+				return "redirect:/market/sampleOrderList";
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/market/sample_order_list";
+		return "redirect:/market/sampleOrderList";
 	}
 
 	// 询单的修改界面
