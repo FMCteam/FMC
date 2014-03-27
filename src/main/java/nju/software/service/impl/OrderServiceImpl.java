@@ -186,6 +186,9 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
+	/**
+	 * 通过actorId和taskName来查找order列表，返回List<OrderModel>
+	 */
 	@Override
 	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId,
 			String taskName) {
@@ -215,6 +218,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderList;
 	}
 
+	/**
+	 * 通过orderId来获取order详细信息，并将taskId和processId封装，返回orderModel
+	 */
 	@Override
 	public OrderModel getOrderDetail(int orderId, long taskId, long processId) {
 		// TODO Auto-generated method stub
