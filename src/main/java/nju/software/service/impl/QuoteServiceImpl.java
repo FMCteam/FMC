@@ -31,6 +31,13 @@ public class QuoteServiceImpl implements QuoteService {
 	private QuoteDAO quoteDAO;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
+	
+	@Override
+	public Quote findByOrderId(String orderId) {
+		// TODO Auto-generated method stub
+
+		return quoteDAO.findById(Integer.parseInt(orderId));
+	}
 
 	@Override
 	public boolean updateQuote(float innerPrice, float outPrice, int id,

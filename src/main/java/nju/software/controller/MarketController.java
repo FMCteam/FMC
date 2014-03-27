@@ -21,6 +21,7 @@ import nju.software.dataobject.Customer;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Quote;
 import nju.software.model.OrderModel;
 import nju.software.model.QuoteModel;
 import nju.software.service.BuyService;
@@ -56,6 +57,49 @@ public class MarketController {
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 
+	//专员修改报价
+	@RequestMapping(value = "market/modifyOrderSum.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String modifyOrderSum(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+
+		String innerPrice=request.getParameter("inner_price");
+		String outerPrice=request.getParameter("outer_price");
+		String orderId=request.getParameter("order_id");
+		String s_taskId=request.getParameter("taskId");
+		String s_processId=request.getParameter("processId");
+		
+		try
+		{
+			float inner=Float.parseFloat(innerPrice);
+			float outer=Float.parseFloat(outerPrice);
+			int id=Integer.parseInt(orderId);
+			long taskId=Long.parseLong(s_taskId);
+			long processId=Long.parseLong(s_processId);
+			boolean success=quoteService.updateQuote(inner,outer, id,taskId,processId,"SHICHANGZHUANYUAN");
+			return "market/computerOrderSumList";
+		}catch(Exception e)
+		{
+			
+		}
+		return "market/customer_order";
+	}
+	//专员修改报价
+		@RequestMapping(value = "market/modifyOrderSumDetail.do", method = RequestMethod.POST)
+		@Transactional(rollbackFor = Exception.class)
+		public String modifyOrderSumDetail(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			
+			String orderId=request.getParameter("order_id");
+			String s_taskId=request.getParameter("taskId");
+			String s_processId=request.getParameter("processId");
+			long taskId=Long.parseLong(s_taskId);
+			long processId=Long.parseLong(s_processId);
+			Quote quote = quoteService.findByOrderId(orderId);
+			QuoteModel quoteModel = new QuoteModel(quote, taskId, processId);
+			model.addAttribute("quoteModel", quoteModel);
+			return "market/modify_quote_order";
+		}
 	// 顾客下单的列表页面
 	@RequestMapping(value = "market/customerOrder.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)

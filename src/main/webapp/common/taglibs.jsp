@@ -1,3 +1,3 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %> 
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
