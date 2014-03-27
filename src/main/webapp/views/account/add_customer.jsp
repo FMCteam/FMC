@@ -26,9 +26,7 @@
                             <label for="user_name">客户登录名：</label>
                             <span class="field"><input type="text" name="user_name"   class="input-medium" placeholder="user_name"></span>
 
-                        </p>
-
-                        <p>
+                       
                             <label>客户密码：</label>
                             <span class="field"><input type="text" name="user_password" value="123456"  class="input-medium" placeholder="user_password"></span>
 
@@ -39,9 +37,7 @@
                         <label>客户姓名：</label>
                         <span class="field"><input type="text" name="customer_name"   class="input-medium" placeholder="customer_name"></span>
 
-                    </p>
-
-                    <p>
+                  
                         <label>客户电话：</label>
                         <span class="field"><input type="text" name="customer_phone"   class="input-medium" placeholder="customer_phone"></span>
 
@@ -52,9 +48,7 @@
                         <label>客户邮箱：</label>
                         <span class="field"><input type="text" name="email"   class="input-medium" placeholder="email"></span>
 
-                    </p>
-
-                    <p>
+                 
                         <label>客户QQ：</label>
                         <span class="field"><input type="text" name="qq"   class="input-medium" placeholder="qq"></span>
 
@@ -64,9 +58,7 @@
                     <p>
                         <label>省份</label>
                         <span class="field"><input type="text" name="province"  class="input-medium" placeholder="province"></span>
-                    </p>
-
-                    <p>
+                    
                         <label>城市</label>
                         <span class="field"><input type="text" name="city"   class="input-medium"  placeholder="city"></span>
                     </p>
@@ -75,9 +67,7 @@
                     <p>
                         <label>公司编号：</label>
                         <span class="field"><input type="text" name="company_id"  class="input-medium" placeholder="company_id"></span>
-                    </p>
-
-                    <p>
+                  
                         <label>公司名称</label>
                         <span class="field"><input type="text" name="company_name"   class="input-large" placeholder="company_name"></span>
                     </p>
@@ -86,9 +76,7 @@
                         <label>公司电话：</label>
 
                         <span class="field"><input type="text" name="company_phone" class="input-medium" placeholder="company_phone"></span>
-                    </p>
-
-                    <p>
+                  
                         <label>公司传真：</label>
 
                         <span class="field"><input type="text" name="company_fax"  class="input-medium" placeholder="company_fax"></span>
@@ -98,11 +86,7 @@
                     <p>
                         <label>公司地址</label>
                         <span class="field"><input type="text" name="company_address"  class="input-xlarge" placeholder="company_address"></span>
-                    </p>
-
-
-
-                    <p>
+                  
                         <label>采购联系人</label>
                         <span class="field"><input type="text" name="buy_contact"   class="input-medium" placeholder="buy_contact"></span>
                     </p>
@@ -111,10 +95,7 @@
                     <p>
                         <label>采购联系人电话<b>1</b></label>
                         <span class="field"><input type="text" name="contact_phone_1"  class="input-medium" placeholder="contact_phone_1"></span>
-                    </p>
-
-
-                    <p>
+                  
                         <label>采购联系人电话<b>2</b></label>
                         <span class="field"><input type="text" name="contact_phone_2"   class="input-medium" placeholder="contact_phone_2"></span>
                     </p>
@@ -122,9 +103,7 @@
                     <p>
                         <label>老板姓名</label>
                         <span class="field"><input type="text" name="boss_name"  class="input-medium" placeholder="boss_name"></span>
-                    </p>
-
-                    <p>
+                  
                         <label>老板电话</label>
                         <span class="field"><input type="text" name="boss_phone"    class="input-medium" placeholder="boss_phone"></span>
                     </p>
@@ -132,9 +111,7 @@
                     <p>
                         <label>网址</label>
                         <span class="field"><input type="text" name="website_url"  class="input-large" placeholder="website_url"></span>
-                    </p>
-
-                    <p>
+                    
                         <label>网站类型</label>
                             <span class="field">
                             <select name="website_type"   class="uniformselect">
@@ -149,14 +126,14 @@
                     </p>
 
 
-
+ <p>
                     <div class="par">
                         <label>注册日期</label>
                         <span class="field"><input id="datepicker" type="text" name="register_date"  class="input-medium "></span>
                     </div>
 
 
-                        <p>
+                       
                             <label>注册业务员</label>
                             <span class="field"><input type="text" disabled="disabled"  name="register_employee_id"  class="input-large" placeholder="register_employee_id"></span>
                         </p>
