@@ -13,6 +13,9 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
+import nju.software.model.QuoteConfirmTaskSummary;
+import nju.software.model.SampleProduceTask;
+import nju.software.model.SampleProduceTaskSummary;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.util.JbpmAPIUtil;
@@ -122,5 +125,38 @@ public class ProduceController {
 		
 		return "produce/verify_detail";
 	}
-
+	
+	
+	@RequestMapping(value = "produce/sampleProduceList.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String sampleProduceList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<SampleProduceTaskSummary> tasks = produceService.getSampleProduceTaskSummaryList();
+		model.addAttribute("tasks", tasks);
+		return "/produce/sampleProduceList";
+	
+	}
+	
+	
+	@RequestMapping(value = "produce/sampleProduce.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String sampleProduce(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		String taskId = request.getParameter("taskId");
+		SampleProduceTask task=produceService.getSampleProduceTask(Integer.parseInt(orderId), Long.parseLong(taskId));
+		model.addAttribute("task", task);
+		return "/produce/sampleProduce";
+	}
+	
+	
+	@RequestMapping(value = "produce/sampleProduceSubmit.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String sampleProduceSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String result = request.getParameter("result");
+		String taskId = request.getParameter("taskId");
+		produceService.completeSampleProduceTask(Long.parseLong(taskId), result);
+		return "redirect:/produce/sampleProduceList";
+	}
 }
