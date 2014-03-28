@@ -1,9 +1,11 @@
 package nju.software.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.drools.runtime.StatefulKnowledgeSession;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
+import nju.software.model.OrderModel;
+import nju.software.model.QuoteModel;
 import nju.software.service.ProduceService;
 import nju.software.service.QuoteService;
 import nju.software.util.JbpmAPIUtil;
@@ -35,8 +39,11 @@ public class QuoteServiceImpl implements QuoteService {
 	@Override
 	public Quote findByOrderId(String orderId) {
 		// TODO Auto-generated method stub
-
-		return quoteDAO.findById(Integer.parseInt(orderId));
+		List<Quote> quote = quoteDAO.findByProperty("orderId", orderId);
+		if(quote.size()!=0){
+			return quote.get(0);
+		}else
+			return null;
 	}
 
 	@Override

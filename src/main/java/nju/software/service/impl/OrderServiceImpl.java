@@ -319,4 +319,30 @@ public class OrderServiceImpl implements OrderService {
 		return orderList;
 
 	}
+
+	@Override
+	public QuoteModel getQuoteByOrderAndPro(String actor, String taskName,
+			int orderId, long processId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(actor,
+				taskName);
+		if (list.isEmpty()) {
+			System.out.println("no task list");
+		}
+		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
+		WorkflowProcessInstance process = null;
+		for (TaskSummary task : list) {
+			// 需要获取task中的数据
+			long pid = task.getProcessInstanceId();
+			process = (WorkflowProcessInstance) session
+					.getProcessInstance(pid);
+			int oid = (int) process.getVariable("orderId");
+			if(orderId==oid&&processId==pid){
+				List<Quote> quote = quoteDAO.findByProperty("orderId", orderId);
+				return new QuoteModel(quote.get(0),task.getId(),process.getId());
+			}
+		}
+		return null;
+	}
+	
 }
