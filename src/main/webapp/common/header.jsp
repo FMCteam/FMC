@@ -116,7 +116,7 @@
 							class="iconfa-th-list"></span> 采购部</a>
 						<ul>
 							<li><a href="${ctx }/buy/verify.do">样衣验证</a></li>
-							<li><a href="#">成本合算</a></li>
+							<li><a href="${ctx }/buy/costAccounting.do">成本合算</a></li>
 							<li><a href="#">样衣采购</a></li>
 							<li><a href="#">生产验证</a></li>
 							<li><a href="#">生产采购</a></li>

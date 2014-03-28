@@ -123,4 +123,92 @@ public class DesignController {
 		return "design/verify_detail";
 	}
 
+	
+	
+
+
+	/**
+	 * 成本核算跳转链接
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/costAccounting.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String costAccounting(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println(" design cost Accounting ================ show task");
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String actorId = "SHEJIZHUGUAN";
+		System.out.println("actorId: " + actorId);
+		String taskName = "design_accounting";
+		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		if (orderList.isEmpty()) {
+			System.out.println("no orderList ");
+		}
+		model.addAttribute("order_list", orderList);
+		
+		
+		return "design/cost_accounting";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 显示成本核算详细信息
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/costAccountingDetail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String costAccountingDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("buy costAccounting Detail ================ costAccountingDetail");
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+		Logistics logistics = designService.getLogisticsByOrderId(orderId_request);
+		List<Fabric> fabricList = designService.getFabricByOrderId(orderId_request);
+		List<Accessory> accessoryList = designService.getAccessoryByOrderId(orderId_request);
+		model.addAttribute("orderModel", orderModel);
+		model.addAttribute("logistics", logistics);
+		model.addAttribute("fabric_list", fabricList);
+		model.addAttribute("accessory_list", accessoryList);
+		
+		return "design/costAccounting_detail";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
