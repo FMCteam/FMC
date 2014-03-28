@@ -196,7 +196,7 @@ public class FinanceController {
 	}
 	
 	/**
-	 * 为收到样衣制作金，取消订单
+	 * 未收到样衣制作金，取消订单
 	 * 
 	 * @param request
 	 * @param response
@@ -210,11 +210,11 @@ public class FinanceController {
 		
 		System.out.println("cancel sample ===============");
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-		String s_orderId_request = (String) request.getParameter("orderId");
+		String s_orderId_request = (String) request.getParameter("id");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("taskId");
+		String s_taskId = request.getParameter("task_id");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
+		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
 		boolean receivedsamplejin = false;
 		financeService.confirmSample(account, orderId_request, taskId, processId, receivedsamplejin, null);
