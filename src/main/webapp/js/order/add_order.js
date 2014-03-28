@@ -39,18 +39,19 @@
 			//添加行
 			var item="<td class='span12 "+col1_name+"'>"+col1+"</td>";
 			item+="<td class='span12 "+col2_name+"'>"+col2+"</td>";
-			item+="<td class='span12'><a onclick='deleteRow(this,\""+table_name+"\")'>删除</a></td>";
+			item+="<td class='span12'><a onclick=\"deleteRow(this,'"+table_name+"')\">删除</a></td>";
 			item="<tr>"+item+"</tr>";
 			$("table."+table_name+" tr.addrow").after(item);
 	}
 
-	function deleteRow(a,table){
-		$(a).parents('.'+table+' tr').remove();
-	}
+
 	
 })(jQuery);
 
-
+function deleteRow(a,table){
+	alert($(a).parents('.'+table+' tr').length);
+	$(a).parents('.'+table+' tr').remove();
+}
 
 function getTdString(col){
 	var tdString="";

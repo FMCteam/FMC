@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
@@ -23,9 +24,11 @@ import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
 import nju.software.model.OrderModel;
+import nju.software.model.QuoteConfirmTaskSummary;
 import nju.software.model.QuoteModel;
 import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
+import nju.software.service.MarketService;
 import nju.software.service.OrderService;
 import nju.software.service.QuoteService;
 import nju.software.util.DateUtil;
@@ -56,6 +59,7 @@ public class MarketController {
 	private CustomerService customerService;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
+
 
 	// test precondition
 	@RequestMapping(value = "market/precondition.do", method = RequestMethod.GET)
@@ -92,7 +96,13 @@ public class MarketController {
 		return null;
 	}
 
-	// 专员修改报价
+
+	@Autowired
+	private MarketService marketService;
+
+
+	//专员修改报价
+
 	@RequestMapping(value = "market/modifyOrderSum.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyOrderSum(HttpServletRequest request,
@@ -119,22 +129,21 @@ public class MarketController {
 		return "market/computerOrderSumList";
 	}
 
-	// 专员修改报价
-	@RequestMapping(value = "market/modifyOrderSumDetail.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
-	public String modifyOrderSumDetail(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+	//专员修改报价
+		@RequestMapping(value = "market/modifyOrderSumDetail.do", method = RequestMethod.POST)
+		@Transactional(rollbackFor = Exception.class)
+		public String modifyOrderSumDetail(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			
+			String orderId=request.getParameter("order_id");
+			String s_processId=request.getParameter("processId");
+			int id=Integer.parseInt(orderId);
+			long processId=Long.parseLong(s_processId);
+			QuoteModel quoteModel = orderService.getQuoteByOrderAndPro("SHICHANGZHUANYUAN", "edit_quoteorder", id, processId);
+			model.addAttribute("quoteModel", quoteModel);
+			return "market/modify_quote_order";
+		}
 
-		String orderId = request.getParameter("order_id");
-		String s_taskId = request.getParameter("taskId");
-		String s_processId = request.getParameter("processId");
-		long taskId = Long.parseLong(s_taskId);
-		long processId = Long.parseLong(s_processId);
-		Quote quote = quoteService.findByOrderId(orderId);
-		QuoteModel quoteModel = new QuoteModel(quote, taskId, processId);
-		model.addAttribute("quoteModel", quoteModel);
-		return "market/modify_quote_order";
-	}
 
 	// 顾客下单的列表页面
 	@RequestMapping(value = "market/customerOrder.do", method = RequestMethod.GET)
@@ -172,6 +181,7 @@ public class MarketController {
 			long processId = Long.parseLong(s_processId);
 			boolean success = quoteService.updateQuote(inner, outer, id,
 					taskId, processId, "SHICHANGZHUANYUAN");
+
 			return "redirect:/market/computerOrderSumList.do";
 		} catch (Exception e) {
 
@@ -229,7 +239,12 @@ public class MarketController {
 
 		}
 		return "redirect:/market/checkOrderSumList.do";
+
+		
+	
 	}
+
+	
 
 	// 主管审核报价List
 	@RequestMapping(value = "market/checkOrderSumList.do", method = RequestMethod.GET)
@@ -631,5 +646,39 @@ public class MarketController {
 	public static Timestamp getTime(String time) {
 		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
 		return new Timestamp(outDate.getTime());
+	}
+
+	/**
+	 * @author 莫其凡 :报价商定列表
+	 */
+	@RequestMapping(value = "market/quoteConfirmList.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String quoteConfirmList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		List<QuoteConfirmTaskSummary> tasks = marketService
+				.getQuoteConfirmTaskSummaryList(account.getUserId());
+		model.addAttribute("tasks", tasks);
+		return "/market/quoteConfirmList";
+	}
+
+	/**
+	 * @author 莫其凡 :提交报价商定结果
+	 */
+	@RequestMapping(value = "market/quoteConfirm.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String quoteConfirm(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+
+		String result = request.getParameter("result");
+		String taskId = request.getParameter("taskId");
+		marketService.completeQuoteConfirmTaskSummary(Long.parseLong(taskId), result);
+		//2=修改报价
+		if (result.equals("2")) {
+			return "redirect:/market/quoteModifyList.do";
+		} else {
+			return "redirect:/market/quoteConfirmList.do";
+		}
 	}
 }

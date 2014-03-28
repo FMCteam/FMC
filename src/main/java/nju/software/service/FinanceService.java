@@ -2,6 +2,7 @@ package nju.software.service;
 
 import java.util.List;
 
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Money;
 import nju.software.model.SampleMoneyConfirmTaskSummary;
 
@@ -15,5 +16,8 @@ public interface FinanceService {
 	public void sampleMoneyConfirm(long taskId,Money money);
 	
 	public void sampleMoneyNoConfirm(long taskId);
+	
+	public boolean confirmSample(Account account, int orderId, long taskId, 
+			long processId, boolean receivedsamplejin, Money money);
 
 }
