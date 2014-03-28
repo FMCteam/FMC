@@ -86,6 +86,9 @@ public class FinanceController {
 		return money;
 	}
 	
+	/*
+	 * ============================================================
+	 */
 	
 	/**
 	 * 确认样衣制作金跳转链接
@@ -96,7 +99,7 @@ public class FinanceController {
 	 */
 	@RequestMapping(value = "finance/confirmSample.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String verify(HttpServletRequest request,
+	public String confirmSample(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("sample confirm ================ show task");
@@ -125,7 +128,7 @@ public class FinanceController {
 	 */
 	@RequestMapping(value = "finance/doConfirmSample.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String doVerify(HttpServletRequest request,
+	public String doConfirmSample(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		System.out.println("sample confirm ================");
 		
@@ -144,9 +147,21 @@ public class FinanceController {
 		String moneyName = request.getParameter("money_name");
 		String moneyNumber = request.getParameter("money_number");
 		String moneyRemark = request.getParameter("money_remark");
+		boolean receivedsamplejin = true;
 		
-		String taskName = "verification_purchased";
-//		buyService.verify(account, orderId_request, taskId, processId, buyVal, comment);
+		if (!(moneyAmount < 0) && (moneyState != null) && (moneyType != null)) {
+			Money money = new Money();
+			money.setOrderId(orderId_request);
+			money.setMoneyAmount(moneyAmount);
+			money.setMoneyState(moneyState);
+			money.setMoneyType(moneyType);;
+			money.setMoneyBank(moneyBank);
+			money.setMoneyName(moneyName);
+			money.setMoneyNumber(moneyNumber);;
+			money.setMoneyRemark(moneyRemark);
+			financeService.confirmSample(account, orderId_request, taskId, processId, receivedsamplejin, money);
+		}
+		
 		
 		return "redirect:/finance/confirmSample.do";
 	}
@@ -161,7 +176,7 @@ public class FinanceController {
 	 */
 	@RequestMapping(value = "finance/confirmSampleDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String verifyDetail(HttpServletRequest request,
+	public String confirmSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("sample corfirm ================ show detail");
@@ -178,6 +193,33 @@ public class FinanceController {
 		model.addAttribute("orderModel", orderModel);
 		
 		return "finance/confirm_sample_detail";
+	}
+	
+	/**
+	 * 为收到样衣制作金，取消订单
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "finance/cancelSample.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String cancelSample(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("cancel sample ===============");
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+		boolean receivedsamplejin = false;
+		financeService.confirmSample(account, orderId_request, taskId, processId, receivedsamplejin, null);
+		
+		return "redirect:/finance/confirmSample.do";
 	}
 	
 }

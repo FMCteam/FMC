@@ -90,7 +90,7 @@
 									<li><a href="${ctx }/market/sampleOrderList.do">修改询单</a></li>
 									<li><a href="#">合并报价</a></li>
 									<li><a href="#">审核报价</a></li>
-									<li><a href="#">报价商定</a></li>
+									<li><a href="${ctx }/market/quoteConfirmList.do">报价商定</a></li>
 									<li><a href="#">修改报价</a></li>
 									<li><a href="#">商定合同</a></li>
 									<li><a href="#">修改合同</a></li>
@@ -128,7 +128,7 @@
 						<ul>
 							<li><a href="${ctx }/produce/verify.do">样衣验证</a></li>
 							<li><a href="#">成本合算</a></li>
-							<li><a href="#">样衣生产</a></li>
+							<li><a href="${ctx }/produce/sampleProduceList.do">样衣生产</a></li>
 							<li><a href="#">批量生产</a></li>
 						</ul></li>
 						</c:if>
@@ -136,7 +136,7 @@
 						<li class="dropdown"><a href=""><span
 							class="iconfa-th-list"></span> 财务部</a>
 						<ul>
-							<li><a href="#">样衣金确认</a></li>
+							<li><a href="${ctx }/finance/confirmSample.do">样衣金确认</a></li>
 							<li><a href="#">首定金确认</a></li>
 							<li><a href="#">生产金确认</a></li>
 							<li><a href="#">尾金确认</a></li>
