@@ -88,9 +88,12 @@
 								<ul>
 									<li><a href="${ctx }/market/customerOrder.do">客户下单</a></li>
 									<li><a href="${ctx }/market/sampleOrderList.do">修改询单</a></li>
-									<li><a href="#">合并报价</a></li>
-									<li><a href="#">审核报价</a></li>
+
+									<li><a href="${ctx }/market/computerOrderSumList.do">合并报价</a></li>
+									<li><a href="${ctx }/market/checkOrderSumList.do">审核报价</a></li>
+
 									<li><a href="${ctx }/market/quoteConfirmList.do">报价商定</a></li>
+
 									<li><a href="#">修改报价</a></li>
 									<li><a href="#">商定合同</a></li>
 									<li><a href="#">修改合同</a></li>

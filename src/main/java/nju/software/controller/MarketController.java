@@ -62,37 +62,74 @@ public class MarketController {
 	private JbpmAPIUtil jbpmAPIUtil;
 
 
+	// test precondition
+	@RequestMapping(value = "market/precondition.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String precondition(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<TaskSummary> task1 = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"CAIGOUZHUGUAN", "Purchasing_accounting");
+
+		List<TaskSummary> task2 = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"SHEJIZHUGUAN", "design_accounting");
+		List<TaskSummary> task3 = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"SHENGCHANZHUGUAN", "business_accounting");
+		try {
+			for (TaskSummary s1 : task1) {
+
+				jbpmAPIUtil.completeTask(s1.getId(), null, "CAIGOUZHUGUAN");
+			}
+			for (TaskSummary s1 : task2) {
+
+				jbpmAPIUtil.completeTask(s1.getId(), null, "SHEJIZHUGUAN");
+			}
+			for (TaskSummary s1 : task3) {
+
+				jbpmAPIUtil.completeTask(s1.getId(), null, "SHENGCHANZHUGUAN");
+			}
+			System.out.println("precodition satisfied");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+		return null;
+	}
+
+
 	@Autowired
 	private MarketService marketService;
 
 
 	//专员修改报价
+
 	@RequestMapping(value = "market/modifyOrderSum.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyOrderSum(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		String innerPrice=request.getParameter("inner_price");
-		String outerPrice=request.getParameter("outer_price");
-		String orderId=request.getParameter("order_id");
-		String s_taskId=request.getParameter("taskId");
-		String s_processId=request.getParameter("processId");
-		
-		try
-		{
-			float inner=Float.parseFloat(innerPrice);
-			float outer=Float.parseFloat(outerPrice);
-			int id=Integer.parseInt(orderId);
-			long taskId=Long.parseLong(s_taskId);
-			long processId=Long.parseLong(s_processId);
-			boolean success=quoteService.updateQuote(inner,outer, id,taskId,processId,"SHICHANGZHUANYUAN");
+		String innerPrice = request.getParameter("inner_price");
+		String outerPrice = request.getParameter("outer_price");
+		String orderId = request.getParameter("order_id");
+		String s_taskId = request.getParameter("taskId");
+		String s_processId = request.getParameter("processId");
+
+		try {
+			float inner = Float.parseFloat(innerPrice);
+			float outer = Float.parseFloat(outerPrice);
+			int id = Integer.parseInt(orderId);
+			long taskId = Long.parseLong(s_taskId);
+			long processId = Long.parseLong(s_processId);
+			boolean success = quoteService.updateQuote(inner, outer, id,
+					taskId, processId, "SHICHANGZHUANYUAN");
 			return "market/computerOrderSumList";
-		}catch(Exception e)
-		{
-			
+		} catch (Exception e) {
+
 		}
-		return "market/customer_order";
+		return "market/computerOrderSumList";
 	}
+
 	//专员修改报价
 		@RequestMapping(value = "market/modifyOrderSumDetail.do", method = RequestMethod.POST)
 		@Transactional(rollbackFor = Exception.class)
@@ -100,15 +137,14 @@ public class MarketController {
 				HttpServletResponse response, ModelMap model) {
 			
 			String orderId=request.getParameter("order_id");
-			String s_taskId=request.getParameter("taskId");
 			String s_processId=request.getParameter("processId");
-			long taskId=Long.parseLong(s_taskId);
+			int id=Integer.parseInt(orderId);
 			long processId=Long.parseLong(s_processId);
-			Quote quote = quoteService.findByOrderId(orderId);
-			QuoteModel quoteModel = new QuoteModel(quote, taskId, processId);
+			QuoteModel quoteModel = orderService.getQuoteByOrderAndPro("SHICHANGZHUANYUAN", "edit_quoteorder", id, processId);
 			model.addAttribute("quoteModel", quoteModel);
 			return "market/modify_quote_order";
 		}
+
 
 	// 顾客下单的列表页面
 	@RequestMapping(value = "market/customerOrder.do", method = RequestMethod.GET)
@@ -146,11 +182,12 @@ public class MarketController {
 			long processId = Long.parseLong(s_processId);
 			boolean success = quoteService.updateQuote(inner, outer, id,
 					taskId, processId, "SHICHANGZHUANYUAN");
-			return "market/computerOrderSumList";
+
+			return "redirect:/market/computerOrderSumList.do";
 		} catch (Exception e) {
 
 		}
-		return "market/computerOrderSumList";
+		return "redirect:/market/computerOrderSumList.do";
 	}
 
 	// 专员合并报价List
@@ -167,7 +204,7 @@ public class MarketController {
 		String actor = "SHICHANGZHUANYUAN";
 		String taskName = "quote";
 		List<QuoteModel> quoteModelList = orderService.getQuoteByActorAndTask(
-				"SHICHANGZHUANYUAN", "quote");
+				actor, taskName);
 
 		model.addAttribute("quote_list", quoteModelList);
 		return "market/quote_order_list";
@@ -198,12 +235,17 @@ public class MarketController {
 			long processId = Long.parseLong(s_processId);
 			boolean success = quoteService.updateQuote(inner, outer, id,
 					taskId, processId, "SHICHANGZHUGUAN");
-			return "market/checkOrderSumList";
+			return "redirect:/market/checkOrderSumList.do";
 		} catch (Exception e) {
 
 		}
-		return "market/checkOrderSumList";
+		return "redirect:/market/checkOrderSumList.do";
+
+		
+	
 	}
+
+	
 
 	// 主管审核报价List
 	@RequestMapping(value = "market/checkOrderSumList.do", method = RequestMethod.GET)
