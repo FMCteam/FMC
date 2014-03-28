@@ -1,22 +1,35 @@
 package nju.software.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import nju.software.dataobject.Accessory;
+import nju.software.dataobject.Account;
+import nju.software.dataobject.Fabric;
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Money;
+import nju.software.model.OrderModel;
 import nju.software.model.SampleMoneyConfirmTaskSummary;
 import nju.software.service.FinanceService;
+import nju.software.service.OrderService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
 public class FinanceController {
 	@Autowired
 	private FinanceService financeService;
+	@Autowired
+	private OrderService orderService;
 
 	@RequestMapping(value = "finance/sampleMoneyConfirmList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -72,4 +85,99 @@ public class FinanceController {
 				moneyBank, moneyNumber, moneyRemark);
 		return money;
 	}
+	
+	
+	/**
+	 * 确认样衣制作金跳转链接
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "finance/confirmSample.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String verify(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("sample confirm ================ show task");
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String actorId = "CAIWUZHUGUAN";
+		System.out.println("actorId: " + actorId);
+		String taskName = "comfirm_sample";
+		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		if (orderList.isEmpty()) {
+			System.out.println("no orderList ");
+		}
+		model.addAttribute("order_list", orderList);
+		
+		return "finance/confirm_sample";
+	}
+	
+	
+	/**
+	 * 确认样衣制作金
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "finance/doConfirmSample.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String doVerify(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		System.out.println("sample confirm ================");
+		
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+		String s_moneyAmount = request.getParameter("money_amount");
+		double moneyAmount = Double.parseDouble(s_moneyAmount);
+		String moneyState = request.getParameter("money_state");
+		String moneyType = request.getParameter("money_type");
+		String moneyBank = request.getParameter("money_bank");
+		String moneyName = request.getParameter("money_name");
+		String moneyNumber = request.getParameter("money_number");
+		String moneyRemark = request.getParameter("money_remark");
+		
+		String taskName = "verification_purchased";
+//		buyService.verify(account, orderId_request, taskId, processId, buyVal, comment);
+		
+		return "redirect:/finance/confirmSample.do";
+	}
+	
+	/**
+	 * 确认样衣制作金详情
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "finance/confirmSampleDetail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String verifyDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("sample corfirm ================ show detail");
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+		model.addAttribute("orderModel", orderModel);
+		
+		return "finance/confirm_sample_detail";
+	}
+	
 }
