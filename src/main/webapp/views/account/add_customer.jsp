@@ -22,96 +22,122 @@
                     <form id="customerForm" class="stdform" action="${ctx }/customer/doAdd.do" method="post">
 
 
-                        <p>
-                            <label for="user_name">客户登录名：</label>
+                        <table>
+                        <tr>
+                        <td>
+                            <label  for="user_name">客户登录名：</label>
                             <span class="field"><input type="text" name="user_name"   class="input-medium" placeholder="user_name"></span>
-
+</td>
+<td>
                        
                             <label>客户密码：</label>
                             <span class="field"><input type="text" name="user_password" value="123456"  class="input-medium" placeholder="user_password"></span>
+</td>
+                        </tr>
 
-                        </p>
 
-
-                    <p>
+                    <tr>
+                    <td>
                         <label>客户姓名：</label>
                         <span class="field"><input type="text" name="customer_name"   class="input-medium" placeholder="customer_name"></span>
 
-                  
+                  </td>
+                  <td>
                         <label>客户电话：</label>
                         <span class="field"><input type="text" name="customer_phone"   class="input-medium" placeholder="customer_phone"></span>
+</td>
+                   </tr>
 
-                    </p>
 
-
-                    <p>
+                    <tr>
+                    <td>
                         <label>客户邮箱：</label>
                         <span class="field"><input type="text" name="email"   class="input-medium" placeholder="email"></span>
-
+</td>
+<td>
                  
                         <label>客户QQ：</label>
                         <span class="field"><input type="text" name="qq"   class="input-medium" placeholder="qq"></span>
+</td>
+                   </tr>
 
-                    </p>
 
-
-                    <p>
+                  <tr>
+                  <td>
                         <label>省份</label>
                         <span class="field"><input type="text" name="province"  class="input-medium" placeholder="province"></span>
-                    
+                    </td>
+                    <td>
                         <label>城市</label>
                         <span class="field"><input type="text" name="city"   class="input-medium"  placeholder="city"></span>
-                    </p>
+                    </td>
+                    </tr>
 
 
-                    <p>
+                   <tr>
+                   <td>
                         <label>公司编号：</label>
                         <span class="field"><input type="text" name="company_id"  class="input-medium" placeholder="company_id"></span>
-                  
+                  </td>
+                  <td>
                         <label>公司名称</label>
                         <span class="field"><input type="text" name="company_name"   class="input-large" placeholder="company_name"></span>
-                    </p>
+                    </td>
 
-                    <p>
+                   </tr>
+                   <tr>
+                   <td>
                         <label>公司电话：</label>
 
                         <span class="field"><input type="text" name="company_phone" class="input-medium" placeholder="company_phone"></span>
-                  
+                  </td>
+                  <td>
                         <label>公司传真：</label>
 
                         <span class="field"><input type="text" name="company_fax"  class="input-medium" placeholder="company_fax"></span>
-                    </p>
+                    </td>
+                    </tr>
 
 
-                    <p>
+                   <tr>
+                   <td>
                         <label>公司地址</label>
                         <span class="field"><input type="text" name="company_address"  class="input-xlarge" placeholder="company_address"></span>
-                  
+                  </td>
+                  <td>
                         <label>采购联系人</label>
                         <span class="field"><input type="text" name="buy_contact"   class="input-medium" placeholder="buy_contact"></span>
-                    </p>
+                    </td>
+                    </tr>
 
 
-                    <p>
+                    <tr>
+                    <td>
                         <label>采购联系人电话<b>1</b></label>
                         <span class="field"><input type="text" name="contact_phone_1"  class="input-medium" placeholder="contact_phone_1"></span>
-                  
+                  </td>
+                  <td>
                         <label>采购联系人电话<b>2</b></label>
                         <span class="field"><input type="text" name="contact_phone_2"   class="input-medium" placeholder="contact_phone_2"></span>
-                    </p>
-
-                    <p>
+                    </td>
+</tr>
+                   <tr>
+                   <td>
                         <label>老板姓名</label>
                         <span class="field"><input type="text" name="boss_name"  class="input-medium" placeholder="boss_name"></span>
-                  
+                  </td>
+                  <td>
                         <label>老板电话</label>
                         <span class="field"><input type="text" name="boss_phone"    class="input-medium" placeholder="boss_phone"></span>
-                    </p>
+                  </td>
+                  </tr>
 
-                    <p>
+                    <tr>
+                    <td>
                         <label>网址</label>
                         <span class="field"><input type="text" name="website_url"  class="input-large" placeholder="website_url"></span>
-                    
+                    </td>
+                    <td>
                         <label>网站类型</label>
                             <span class="field">
                             <select name="website_type"   class="uniformselect">
@@ -123,25 +149,31 @@
                                 <option value="零号店">零号店</option>
                             </select>
                             </span>
-                    </p>
+                  </td>
+                  </tr>
 
 
- <p>
+ <tr>
+ <td>
                     <div class="par">
                         <label>注册日期</label>
                         <span class="field"><input id="datepicker" type="text" name="register_date"  class="input-medium "></span>
                     </div>
-
+</td>
+<td>
 
                        
                             <label>注册业务员</label>
                             <span class="field"><input type="text" disabled="disabled"  name="register_employee_id"  class="input-large" placeholder="register_employee_id"></span>
-                        </p>
-
-
+</td>
+</tr>
+<tr>
+<td>
                     <p class="stdformbutton">
                         <button class="btn btn-primary">添加</button>
                     </p>
+                    </td>
+</tr>
 
 
 
@@ -154,9 +186,7 @@
 
 
 
-
-
-
+</table>
                     </form>
                     </div><!--widgetcontent-->
                     </div>
