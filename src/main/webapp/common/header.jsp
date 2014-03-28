@@ -136,7 +136,7 @@
 						<li class="dropdown"><a href=""><span
 							class="iconfa-th-list"></span> 财务部</a>
 						<ul>
-							<li><a href="#">样衣金确认</a></li>
+							<li><a href="${ctx }/finance/confirmSample.do">样衣金确认</a></li>
 							<li><a href="#">首定金确认</a></li>
 							<li><a href="#">生产金确认</a></li>
 							<li><a href="#">尾金确认</a></li>
