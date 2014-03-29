@@ -1,3 +1,4 @@
+
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 		
 		<%@include file="/common/header.jsp" %>
@@ -8,7 +9,7 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">询单列表</h4>
+                    <h4 class="widgettitle">确认合同加工单</h4>
                 <table id="dyntable" class="table table-bordered responsive">
                     <colgroup>
                         <col class="con1" />
@@ -33,33 +34,35 @@
                         </tr>
                     </thead>
                     <tbody>
-	                    <c:forEach var="orderModel" items="${order_list}" >
-	                        <tr class="gradeA">
-	                            <td>${orderModel.order.orderId }</td>
-								<td>${orderModel.order.employeeId }</td>
-								<td>${orderModel.order.customerName }</td>
-								<td>${orderModel.order.customerCompany }</td>
-								<td>${orderModel.order.styleName }</td>
-								<td>${orderModel.order.askAmount }</td>
-								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx}/market/modify.do" method="post" >
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
-										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
-										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-<input type="hidden" name="modify" value="1" />
-										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 修改</button></form>
-
-								<form action="${ctx}/market/modify.do" method="post" >
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
-										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
-										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-<input type="hidden" name="modify" value="0" />
-										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i>删除</button></form>
-
-								</td>
-	                        </tr>
-                        </c:forEach>
-                    </tbody>
+					<c:forEach var="orderModel" items="${order_list}">
+						<tr class="gradeA">
+							<td>${orderModel.order.orderId }</td>
+							<td>${orderModel.order.employeeId }</td>
+							<td>${orderModel.order.customerName }</td>
+							<td>${orderModel.order.customerCompany }</td>
+							<td>${orderModel.order.styleName }</td>
+							<td>${orderModel.order.askAmount }</td>
+							<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+							<td><form action="${ctx }/market/confirmProductDetail.do"
+									method="post">
+									<input type="hidden" name="id" value="${orderModel.order.orderId }" /> 
+									<input type="hidden" name="task_id" value="${orderModel.taskId }" /> 
+									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+									<button class="btn btn-primary btn-rounded">
+										<i class="icon-white">填写加工单</i> 
+									</button>
+								</form></td>
+							<td><form action="${ctx }/market/cancelProduct.do" method="post">
+									<input type="hidden" name="id" value="${orderModel.order.orderId }" /> 
+									<input type="hidden" name="task_id" value="${orderModel.taskId }" /> 
+									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+									<button class="btn btn-primary btn-rounded">
+										<i class="icon-white">取消订单</i> 
+									</button>
+								</form></td>
+						</tr>
+					</c:forEach>
+				</tbody>
                 </table>
                 <div class="dataTables_paginate paging_full_numbers" id="dyntable_paginate" style="float:right">
                 	<c:if test="${page==1 }">

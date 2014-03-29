@@ -23,6 +23,7 @@
 				<thead>
 					<tr>
 						<th class="head0">订单号</th>
+						<!--  
 						<th class="head1">设计费用</th>
 						<th class="head0">裁剪费用</th>
 						<th class="head1">管理费用</th>
@@ -32,17 +33,21 @@
 						<th class="head1">packageCost</th>
 						<th class="head0">otherCost</th>
 						<th class="head1">profitPerPiece</th>
+						-->
 						<th class="head0">innerPrice</th>
 						<th class="head0">outerPrice</th>
 						<th class="head0">操作</th>
+						
 					</tr>
 				</thead>
 				<tbody>
 				
 					<c:forEach var="quoteModel" items="${quote_list}">
-						<form action="${ctx}/market/computerOrderSumList.do" method="post">
+						<form action="${ctx}/market/computerOrderSum.do" method="post">
+						
 						<tr class="gradeA">
-							<td><input name="order_id">${quoteModel.quote.orderId }</td>
+							<td><input name="order_id" value=${quoteModel.quote.orderId } readonly ></td>
+							<!-- 
 							<td><input name="design_cost">${quoteModel.quote.designCost }></td>
 							<td><input name="cut_cost">${quoteModel.quote.cutCost}</td>
 							<td><input name="manage_cost">${quoteModel.quote.manageCost }</td>
@@ -52,12 +57,20 @@
 							<td><input name="package_cost">${quoteModel.quote.packageCost }</td>
 							<td><input name="other_cost">${quoteModel.quote.otherCost}</td>
 							<td><input name="profit_per_piece">${quoteModel.quote.profitPerPiece}</td>
-							<td><input name="inner_price">${quoteModel.quote.innerPrice}</td>
-							<td><input name="outer_price">${quoteModel.quote.outerPrice}</td>
+							 -->
+							<td><input name="inner_price" value=${quoteModel.quote.innerPrice }></td>
+							<td><input name="outer_price" value=${quoteModel.quote.outerPrice }></td>
+							<td style="display:none">
+							<input name="taskId" value=${quoteModel.taskId }>
+							</td>
+							<td style="display:none">
+							<input name="processId" value=${quoteModel.processInstanceId }>
+							</td>
 						<td> <p class="stdformbutton">
                         <button class="btn btn-primary">更新</button>
                          </p></td>
 						</tr>
+					
 						</form>
 					</c:forEach>
 				</tbody>

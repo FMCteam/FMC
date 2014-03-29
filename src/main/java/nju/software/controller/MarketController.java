@@ -25,6 +25,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
 import nju.software.model.OrderModel;
@@ -67,37 +68,74 @@ public class MarketController {
 	private JbpmAPIUtil jbpmAPIUtil;
 
 
+	// test precondition
+	@RequestMapping(value = "market/precondition.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String precondition(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<TaskSummary> task1 = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"CAIGOUZHUGUAN", "Purchasing_accounting");
+
+		List<TaskSummary> task2 = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"SHEJIZHUGUAN", "design_accounting");
+		List<TaskSummary> task3 = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"SHENGCHANZHUGUAN", "business_accounting");
+		try {
+			for (TaskSummary s1 : task1) {
+
+				jbpmAPIUtil.completeTask(s1.getId(), null, "CAIGOUZHUGUAN");
+			}
+			for (TaskSummary s1 : task2) {
+
+				jbpmAPIUtil.completeTask(s1.getId(), null, "SHEJIZHUGUAN");
+			}
+			for (TaskSummary s1 : task3) {
+
+				jbpmAPIUtil.completeTask(s1.getId(), null, "SHENGCHANZHUGUAN");
+			}
+			System.out.println("precodition satisfied");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+		return null;
+	}
+
+
 	@Autowired
 	private MarketService marketService;
 
 
 	//专员修改报价
+
 	@RequestMapping(value = "market/modifyOrderSum.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyOrderSum(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		String innerPrice=request.getParameter("inner_price");
-		String outerPrice=request.getParameter("outer_price");
-		String orderId=request.getParameter("order_id");
-		String s_taskId=request.getParameter("taskId");
-		String s_processId=request.getParameter("processId");
-		
-		try
-		{
-			float inner=Float.parseFloat(innerPrice);
-			float outer=Float.parseFloat(outerPrice);
-			int id=Integer.parseInt(orderId);
-			long taskId=Long.parseLong(s_taskId);
-			long processId=Long.parseLong(s_processId);
-			boolean success=quoteService.updateQuote(inner,outer, id,taskId,processId,"SHICHANGZHUANYUAN");
+		String innerPrice = request.getParameter("inner_price");
+		String outerPrice = request.getParameter("outer_price");
+		String orderId = request.getParameter("order_id");
+		String s_taskId = request.getParameter("taskId");
+		String s_processId = request.getParameter("processId");
+
+		try {
+			float inner = Float.parseFloat(innerPrice);
+			float outer = Float.parseFloat(outerPrice);
+			int id = Integer.parseInt(orderId);
+			long taskId = Long.parseLong(s_taskId);
+			long processId = Long.parseLong(s_processId);
+			boolean success = quoteService.updateQuote(inner, outer, id,
+					taskId, processId, "SHICHANGZHUANYUAN");
 			return "market/computerOrderSumList";
-		}catch(Exception e)
-		{
-			
+		} catch (Exception e) {
+
 		}
-		return "market/customer_order";
+		return "market/computerOrderSumList";
 	}
+
 	//专员修改报价
 		@RequestMapping(value = "market/modifyOrderSumDetail.do", method = RequestMethod.POST)
 		@Transactional(rollbackFor = Exception.class)
@@ -105,15 +143,14 @@ public class MarketController {
 				HttpServletResponse response, ModelMap model) {
 			
 			String orderId=request.getParameter("order_id");
-			String s_taskId=request.getParameter("taskId");
 			String s_processId=request.getParameter("processId");
-			long taskId=Long.parseLong(s_taskId);
+			int id=Integer.parseInt(orderId);
 			long processId=Long.parseLong(s_processId);
-			Quote quote = quoteService.findByOrderId(orderId);
-			QuoteModel quoteModel = new QuoteModel(quote, taskId, processId);
+			QuoteModel quoteModel = orderService.getQuoteByOrderAndPro("SHICHANGZHUANYUAN", "edit_quoteorder", id, processId);
 			model.addAttribute("quoteModel", quoteModel);
 			return "market/modify_quote_order";
 		}
+
 
 	// 顾客下单的列表页面
 	@RequestMapping(value = "market/customerOrder.do", method = RequestMethod.GET)
@@ -151,11 +188,12 @@ public class MarketController {
 			long processId = Long.parseLong(s_processId);
 			boolean success = quoteService.updateQuote(inner, outer, id,
 					taskId, processId, "SHICHANGZHUANYUAN");
-			return "market/computerOrderSumList";
+
+			return "redirect:/market/computerOrderSumList.do";
 		} catch (Exception e) {
 
 		}
-		return "market/computerOrderSumList";
+		return "redirect:/market/computerOrderSumList.do";
 	}
 
 	// 专员合并报价List
@@ -172,7 +210,7 @@ public class MarketController {
 		String actor = "SHICHANGZHUANYUAN";
 		String taskName = "quote";
 		List<QuoteModel> quoteModelList = orderService.getQuoteByActorAndTask(
-				"SHICHANGZHUANYUAN", "quote");
+				actor, taskName);
 
 		model.addAttribute("quote_list", quoteModelList);
 		return "market/quote_order_list";
@@ -203,12 +241,17 @@ public class MarketController {
 			long processId = Long.parseLong(s_processId);
 			boolean success = quoteService.updateQuote(inner, outer, id,
 					taskId, processId, "SHICHANGZHUGUAN");
-			return "market/checkOrderSumList";
+			return "redirect:/market/checkOrderSumList.do";
 		} catch (Exception e) {
 
 		}
-		return "market/checkOrderSumList";
+		return "redirect:/market/checkOrderSumList.do";
+
+		
+	
 	}
+
+	
 
 	// 主管审核报价List
 	@RequestMapping(value = "market/checkOrderSumList.do", method = RequestMethod.GET)
@@ -653,6 +696,7 @@ public class MarketController {
 		}
 	}
 	
+
 	
 	
 	/**
@@ -692,5 +736,136 @@ public class MarketController {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * 确认合同加工单跳转链接
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "market/confirmProduct.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmSample(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("product confirm ================ show task");
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String actorId = "SHICHANGZHUANYUAN";
+		System.out.println("actorId: " + actorId);
+		String taskName = "comfirm_worksheet";
+		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		if (orderList.isEmpty()) {
+			System.out.println("no orderList ");
+		}
+		model.addAttribute("order_list", orderList);
+		
+		return "market/confirm_product";
+	}
+	
+	/**
+	 * 确认合同加工单
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "market/doConfirmProduct.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String doConfirmSample(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		System.out.println("product confirm ================");
+		
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+		String s_moneyAmount = request.getParameter("money_amount");
+		double moneyAmount = Double.parseDouble(s_moneyAmount);
+		String moneyState = request.getParameter("money_state");
+		String moneyType = request.getParameter("money_type");
+		String moneyBank = request.getParameter("money_bank");
+		String moneyName = request.getParameter("money_name");
+		String moneyNumber = request.getParameter("money_number");
+		String moneyRemark = request.getParameter("money_remark");
+		boolean comfirmworksheet = true;
+		
+		if (!(moneyAmount < 0) && (moneyState != null) && (moneyType != null)) {
+			Money money = new Money();
+			money.setOrderId(orderId_request);
+			money.setMoneyAmount(moneyAmount);
+			money.setMoneyState(moneyState);
+			money.setMoneyType(moneyType);;
+			money.setMoneyBank(moneyBank);
+			money.setMoneyName(moneyName);
+			money.setMoneyNumber(moneyNumber);;
+			money.setMoneyRemark(moneyRemark);
+//			financeService.confirmSample(account, orderId_request, taskId, processId, receivedsamplejin, money);
+		}
+		
+		
+		return "redirect:/market/confirmProdyct.do";
+	}
+	
+	/**
+	 * 确认合同加工单详情
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "market/confirmProductDetail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmSampleDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("product corfirm ================ show detail");
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+		model.addAttribute("orderModel", orderModel);
+		
+		return "market/confirm_product_detail";
+	}
+	
+	/**
+	 * 取消订单
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "market/cancelProduct.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String cancelSample(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("cancel product ===============");
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		boolean comfirmworksheet = false;
+//		financeService.confirmSample(account, orderId_request, taskId, processId, receivedsamplejin, null);
+		
+		return "redirect:/market/confirmProduct.do";
 	}
 }

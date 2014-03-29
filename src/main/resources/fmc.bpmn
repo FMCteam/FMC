@@ -1407,20 +1407,65 @@
     <inclusiveGateway id="_55" name="producterror" gatewayDirection="Diverging" />
     <userTask id="_54" name="生产样衣" >
       <ioSpecification>
+        <dataInput id="_54_CommentInput" name="Comment" />
+        <dataInput id="_54_SkippableInput" name="Skippable" />
+        <dataInput id="_54_LocaleInput" name="Locale" />
         <dataInput id="_54_TaskNameInput" name="TaskName" />
+        <dataInput id="_54_GroupIdInput" name="GroupId" />
+        <dataInput id="_54_PriorityInput" name="Priority" />
         <dataOutput id="_54_producterrorOutput" name="producterror" />
         <inputSet>
+          <dataInputRefs>_54_CommentInput</dataInputRefs>
+          <dataInputRefs>_54_SkippableInput</dataInputRefs>
+          <dataInputRefs>_54_LocaleInput</dataInputRefs>
           <dataInputRefs>_54_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_54_GroupIdInput</dataInputRefs>
+          <dataInputRefs>_54_PriorityInput</dataInputRefs>
         </inputSet>
         <outputSet>
           <dataOutputRefs>_54_producterrorOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
+        <targetRef>_54_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_54_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_54_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_54_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_54_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_54_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
         <targetRef>_54_TaskNameInput</targetRef>
         <assignment>
           <from xsi:type="tFormalExpression">product_sample</from>
           <to xsi:type="tFormalExpression">_54_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_54_GroupIdInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_54_GroupIdInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_54_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_54_PriorityInput</to>
         </assignment>
       </dataInputAssociation>
       <dataOutputAssociation>
@@ -1493,20 +1538,65 @@
     <inclusiveGateway id="_68" name="editworksheetok" gatewayDirection="Diverging" />
     <userTask id="_69" name="采购部确认" >
       <ioSpecification>
+        <dataInput id="_69_CommentInput" name="Comment" />
+        <dataInput id="_69_SkippableInput" name="Skippable" />
+        <dataInput id="_69_LocaleInput" name="Locale" />
         <dataInput id="_69_TaskNameInput" name="TaskName" />
+        <dataInput id="_69_GroupIdInput" name="GroupId" />
+        <dataInput id="_69_PriorityInput" name="Priority" />
         <dataOutput id="_69_isworksheetOutput" name="isworksheet" />
         <inputSet>
+          <dataInputRefs>_69_CommentInput</dataInputRefs>
+          <dataInputRefs>_69_SkippableInput</dataInputRefs>
+          <dataInputRefs>_69_LocaleInput</dataInputRefs>
           <dataInputRefs>_69_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_69_GroupIdInput</dataInputRefs>
+          <dataInputRefs>_69_PriorityInput</dataInputRefs>
         </inputSet>
         <outputSet>
           <dataOutputRefs>_69_isworksheetOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
+        <targetRef>_69_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_69_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_69_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_69_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_69_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_69_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
         <targetRef>_69_TaskNameInput</targetRef>
         <assignment>
           <from xsi:type="tFormalExpression">purchase_ok</from>
           <to xsi:type="tFormalExpression">_69_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_69_GroupIdInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_69_GroupIdInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_69_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_69_PriorityInput</to>
         </assignment>
       </dataInputAssociation>
       <dataOutputAssociation>

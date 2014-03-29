@@ -12,8 +12,7 @@
 						action="${ctx }/finance/doConfirmSampleDetail.do">
 						<p>
 							<label>订单号</label> <span class="field"><input type="text" name="order_id" 
-							class="input-large" value="${orderModel.order.orderId }" readonly />&nbsp;<span
-								style="color:#ff0000;">*</span>(必填)</span>
+							class="input-large" value="${orderModel.order.orderId }" readonly />
 						</p>
 						<p>
 							<label>汇款金额</label> <span class="field"><input type="text"
