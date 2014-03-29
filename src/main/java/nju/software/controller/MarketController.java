@@ -1,5 +1,8 @@
 package nju.software.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
@@ -46,6 +50,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class MarketController {
@@ -460,9 +466,13 @@ public class MarketController {
 		Customer customer = customerService.findByCustomerId(Integer
 				.parseInt(id));
 		model.addAttribute("customer", customer);
+		HttpSession session = request.getSession();
+		session.setAttribute("sample_clothes_picture", null);
+		session.setAttribute("reference_picture", null);
 		return "market/add_order";
 	}
 
+	
 	// 提交表单的页面
 	@RequestMapping(value = "market/addMarketOrder.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
@@ -473,7 +483,9 @@ public class MarketController {
 		Integer customerId = Integer.parseInt(request
 				.getParameter("customerId"));
 		Customer customer = customerService.findByCustomerId(customerId);
-		Integer employeeId = 6;
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		Integer employeeId = account.getUserId();
 		String orderState = "A";
 		Timestamp orderTime = new Timestamp(new Date().getTime());
 		String customerName = customer.getCustomerName();
@@ -498,6 +510,7 @@ public class MarketController {
 		// sdf.format(calendar.getTime()), "sample_clothes_picture");
 		// FileOperateUtil.Upload(request, "reference_picture",
 		// sdf.format(calendar.getTime()), "reference_picture");
+		System.out.println(session.getAttribute("sample_clothes_picture"));
 		Integer askAmount = Integer
 				.parseInt(request.getParameter("ask_amount"));
 		String askProducePeriod = request.getParameter("ask_produce_period");
@@ -638,5 +651,46 @@ public class MarketController {
 		} else {
 			return "redirect:/market/quoteConfirmList.do";
 		}
+	}
+	
+	
+	
+	/**
+	 * @author 莫其凡 :提交报价商定结果
+	 * 
+	 */
+	@RequestMapping(value = "market/uploadFile.do")
+	@Transactional(rollbackFor = Exception.class)
+	public void uploadFile(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String dir=request.getSession().getServletContext().getRealPath("/upload/temp/"+account.getUserId());
+		String title = request.getParameter("title");
+		File save = FileOperateUtil.Upload(request,dir,title,title);
+		String result_json="";
+		if(save==null){
+			result_json="fail";
+		}else{
+			result_json="success";
+			request.getSession().setAttribute(title, save.getName());
+		}
+		JSONObject jsonobj = new JSONObject();
+		jsonobj.put("result_json", result_json);
+		sendJson(response, jsonobj);
+	}
+	
+	
+	
+	public void sendJson(HttpServletResponse response, JSONObject jsonobj) {
+		try {
+			PrintWriter out = response.getWriter();
+			out.print(jsonobj);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

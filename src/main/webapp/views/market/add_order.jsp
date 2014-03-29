@@ -9,7 +9,7 @@
 				<h4 class="widgettitle">Form Elements</h4>
 				<div class="widgetcontent">
 
-					<form onSubmit="return verify()" method="post" 
+					<form onSubmit="return verify()" method="post"
 						action="${ctx }/market/addMarketOrder.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
@@ -55,8 +55,8 @@
 								<td>面料类型</td>
 								<td colspan="5"><input type="radio" name="fabric_type"
 									checked="checked" value="梭织" /> <span>梭织</span> <input
-									type="radio" name="fabric_type" value="梭织" /> <span>针织</span> <input
-									type="radio" name="fabric_type" /value="编织"> <span>编织</span>
+									type="radio" name="fabric_type" value="梭织" /> <span>针织</span>
+									<input type="radio" name="fabric_type" /value="编织"> <span>编织</span>
 									<input type="radio" name="fabric_type" value="梭针混合" /> <span>梭针混合</span>
 									<input type="radio" name="fabric_type" value="阵编混合" /> <span>阵编混合</span>
 									<input type="radio" name="fabric_type" value="梭编混合" /> <span>梭编混合</span></td>
@@ -64,8 +64,8 @@
 							<tr>
 								<td>特殊工艺</td>
 								<td colspan="5"><input type="checkbox"
-									name="special_process" value="水洗" checked="checked" /> <span>水洗</span> <input
-									type="checkbox" name="special_process" value="激光" /> <span>激光</span>
+									name="special_process" value="水洗" checked="checked" /> <span>水洗</span>
+									<input type="checkbox" name="special_process" value="激光" /> <span>激光</span>
 									<input type="checkbox" name="special_process" value="压皱" /> <span>压皱</span>
 									<input type="checkbox" name="special_process" value="其他" /> <input
 									type="text" name="other_special_process" class="span2"
@@ -74,9 +74,10 @@
 							<tr>
 								<td>其他说明</td>
 								<td colspan="5"><input type="checkbox"
-									name="other_requirements" value="有主标" checked="checked"  /> 有主标 <input
-									type="checkbox" name="other_requirements" value="有吊牌" /> 有吊牌 <input
-									type="checkbox" name="other_requirements" value="有水洗" /> 有水洗 <input
+									name="other_requirements" value="有主标" checked="checked" />
+									有主标 <input type="checkbox" name="other_requirements"
+									value="有吊牌" /> 有吊牌 <input type="checkbox"
+									name="other_requirements" value="有水洗" /> 有水洗 <input
 									type="checkbox" name="other_requirements" value="其他" /> <input
 									type="text" class="span2" name="other_other_requirements"
 									placeholder="其他" /></td>
@@ -199,10 +200,9 @@
 							<tr>
 								<td>样衣信息</td>
 								<td>样衣图片</td>
-								<td colspan="2"><input type="file"
-									name="sample_clothes_picture" /></td>
+								<td colspan="2"><input type="button"  value="选择文件" id="sample_clothes_picture_button"/></td>
 								<td>参考图片</td>
-								<td colspan="2"><input type="file" name="reference_picture" /></td>
+								<td colspan="2"><input type="button"  value="选择文件" id="reference_picture_button"/></td>
 							</tr>
 							<tr>
 								<td>操作</td>
@@ -210,9 +210,15 @@
 								<td colspan="3"><input type="reset" /></td>
 							</tr>
 						</table>
-						<input type="hidden" name="customerId" value="${customer.customerId}" />
+						<input type="hidden" name="customerId"
+							value="${customer.customerId}" />
 					</form>
 				</div>
+				
+					<input type="file"   id="sample_clothes_picture" hidden="hidden"
+						name="sample_clothes_picture" /> <input type="file"
+						name="reference_picture"   id="reference_picture"  hidden="hidden"/>
+				
 				<!--widgetcontent-->
 			</div>
 
@@ -238,6 +244,7 @@
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
+<script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>
