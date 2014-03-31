@@ -546,6 +546,11 @@ public class MarketController {
 		String otherRequirements = StringUtils.join(
 				request.getParameterValues("other_requirements"), "|");
 		Calendar calendar = Calendar.getInstance();
+		
+	
+		String sampleClothesPicture=(String) session.getAttribute("sample_clothes_picture");
+		String referencePicture=(String) session.getAttribute("reference_picture");
+		//session.setAttribute("reference_picture", null);
 		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd mm:ss");
 		// String sampleClothesPicture=sdf.format(calendar.getTime());
 		// String referencePicture=sdf.format(calendar.getTime());
@@ -553,7 +558,9 @@ public class MarketController {
 		// sdf.format(calendar.getTime()), "sample_clothes_picture");
 		// FileOperateUtil.Upload(request, "reference_picture",
 		// sdf.format(calendar.getTime()), "reference_picture");
-		System.out.println(session.getAttribute("sample_clothes_picture"));
+		//System.out.println(session.getAttribute("sample_clothes_picture"));
+		
+		
 		Integer askAmount = Integer
 				.parseInt(request.getParameter("ask_amount"));
 		String askProducePeriod = request.getParameter("ask_produce_period");
@@ -642,8 +649,8 @@ public class MarketController {
 		order.setStyleSeason(styleSeason);
 		order.setSpecialProcess(specialProcess);
 		order.setOtherRequirements(otherRequirements);
-		// order.setSampleClothesPicture(sampleClothesPicture);
-		// order.setReferencePicture(referencePicture);
+	    order.setSampleClothesPicture(sampleClothesPicture);
+		order.setReferencePicture(referencePicture);
 		order.setAskAmount(askAmount);
 		order.setAskProducePeriod(askProducePeriod);
 		order.setAskDeliverDate(askDeliverDate);
@@ -717,7 +724,7 @@ public class MarketController {
 			result_json="fail";
 		}else{
 			result_json="success";
-			request.getSession().setAttribute(title, save.getName());
+			request.getSession().setAttribute(title, save.getAbsolutePath());
 		}
 		JSONObject jsonobj = new JSONObject();
 		jsonobj.put("result_json", result_json);

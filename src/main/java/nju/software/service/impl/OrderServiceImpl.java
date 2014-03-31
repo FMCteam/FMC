@@ -1,5 +1,6 @@
 package nju.software.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -144,6 +145,45 @@ public class OrderServiceImpl implements OrderService {
 
 		// 添加订单信息
 		orderDAO.save(order);
+
+		File temp;
+		File save;
+		String sampleClothesPicture = order.getSampleClothesPicture();
+		if (sampleClothesPicture != null) {
+			temp = new File(sampleClothesPicture);
+			save = new File(temp.getParentFile().getParentFile()
+					.getParentFile().getAbsolutePath()
+					+ "/sampleClothesPicture/"
+					+ order.getOrderId()
+					+ "/"
+					+ temp.getName());
+			System.out.println(save.getAbsolutePath());
+			save.getParentFile().mkdirs();
+			temp.renameTo(save);
+			order.setSampleClothesPicture("/upload/sampleClothesPicture/"
+					+ order.getOrderId() + "/" + save.getName());
+		} else {
+			order.setSampleClothesPicture("");
+		}
+
+		String referencePicture = order.getReferencePicture();
+		if (referencePicture != null) {
+			temp = new File(referencePicture);
+			save = new File(temp.getParentFile().getParentFile()
+					.getParentFile().getAbsolutePath()
+					+ "/referencePicture/"
+					+ order.getOrderId()
+					+ "/"
+					+ temp.getName());
+			save.getParentFile().mkdirs();
+			temp.renameTo(save);
+			order.setSampleClothesPicture("/upload/referencePicture/"
+					+ order.getOrderId() + "/" + save.getName());
+		} else {
+			order.setReferencePicture("");
+		}
+		orderDAO.attachDirty(order);
+		
 
 		// 添加面料信息
 		for (Fabric fabric : fabrics) {
@@ -308,11 +348,12 @@ public class OrderServiceImpl implements OrderService {
 					.getProcessInstance(processId);
 			int orderId = (int) process.getVariable("orderId");
 			List<Quote> quote = quoteDAO.findByProperty("orderId", orderId);
-			if (quote != null&&quote.size()!=0) {
-				
-					System.out.println("quote: " + quote.get(0).getOrderId());
-					QuoteModel model=new QuoteModel(quote.get(0),task.getId(),process.getId());
-					
+			if (quote != null && quote.size() != 0) {
+
+				System.out.println("quote: " + quote.get(0).getOrderId());
+				QuoteModel model = new QuoteModel(quote.get(0), task.getId(),
+						process.getId());
+
 				orderList.add(model);
 			}
 		}
@@ -334,15 +375,15 @@ public class OrderServiceImpl implements OrderService {
 		for (TaskSummary task : list) {
 			// 需要获取task中的数据
 			long pid = task.getProcessInstanceId();
-			process = (WorkflowProcessInstance) session
-					.getProcessInstance(pid);
+			process = (WorkflowProcessInstance) session.getProcessInstance(pid);
 			int oid = (int) process.getVariable("orderId");
-			if(orderId==oid&&processId==pid){
+			if (orderId == oid && processId == pid) {
 				List<Quote> quote = quoteDAO.findByProperty("orderId", orderId);
-				return new QuoteModel(quote.get(0),task.getId(),process.getId());
+				return new QuoteModel(quote.get(0), task.getId(),
+						process.getId());
 			}
 		}
 		return null;
 	}
-	
+
 }
