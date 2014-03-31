@@ -124,8 +124,8 @@ public class MarketServiceImpl implements MarketService {
 		if (orderId == orderId_process) {
 			//如果通过，创建合同加工单
 			if (comfirmworksheet) {
-				for (Product product : productList) {
-					productDAO.save(product);
+				for (int i = 0; i < productList.size(); i++) {
+					productDAO.save(productList.get(i));
 				}
 			}
 			//修改流程参数

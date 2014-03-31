@@ -87,7 +87,7 @@ public class FinanceController {
 	}
 	
 	/*
-	 * ============================================================
+	 * =========================确认样衣制作金=================================
 	 */
 	
 	/**
@@ -154,10 +154,10 @@ public class FinanceController {
 			money.setOrderId(orderId_request);
 			money.setMoneyAmount(moneyAmount);
 			money.setMoneyState(moneyState);
-			money.setMoneyType(moneyType);;
+			money.setMoneyType(moneyType);
 			money.setMoneyBank(moneyBank);
 			money.setMoneyName(moneyName);
-			money.setMoneyNumber(moneyNumber);;
+			money.setMoneyNumber(moneyNumber);
 			money.setMoneyRemark(moneyRemark);
 			financeService.confirmSample(account, orderId_request, taskId, processId, receivedsamplejin, money);
 		}
@@ -220,6 +220,143 @@ public class FinanceController {
 		financeService.confirmSample(account, orderId_request, taskId, processId, receivedsamplejin, null);
 		
 		return "redirect:/finance/confirmSample.do";
+	}
+	
+	
+	/*
+	 * =========================确认30%定金=================================
+	 */
+	
+	/**
+	 * 确认30%定金跳转链接
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "finance/confirmDeposit.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmDeposit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("Deposit confirm ================ show task");
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String actorId = "CAIWUZHUGUAN";
+		System.out.println("actorId: " + actorId);
+		String taskName = "thirtypercent";
+		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		if (orderList.isEmpty()) {
+			System.out.println("no orderList ");
+		}
+		model.addAttribute("order_list", orderList);
+		
+		return "finance/confirm_deposit";
+	}
+	
+	
+	/**
+	 * 确认30%定金
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "finance/doConfirmDeposit.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String doConfirmDeposit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		System.out.println("Deposit confirm ================");
+		
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+		String s_moneyAmount = request.getParameter("money_amount");
+		double moneyAmount = Double.parseDouble(s_moneyAmount);
+		String moneyState = request.getParameter("money_state");
+		String moneyType = request.getParameter("money_type");
+		String moneyBank = request.getParameter("money_bank");
+		String moneyName = request.getParameter("money_name");
+		String moneyNumber = request.getParameter("money_number");
+		String moneyRemark = request.getParameter("money_remark");
+		boolean epositok = true;
+		
+		if (!(moneyAmount < 0) && (moneyState != null) && (moneyType != null)) {
+			Money money = new Money();
+			money.setOrderId(orderId_request);
+			money.setMoneyAmount(moneyAmount);
+			money.setMoneyState(moneyState);
+			money.setMoneyType(moneyType);
+			money.setMoneyBank(moneyBank);
+			money.setMoneyName(moneyName);
+			money.setMoneyNumber(moneyNumber);
+			money.setMoneyRemark(moneyRemark);
+			financeService.confirmSample(account, orderId_request, taskId, processId, epositok, money);
+		}
+		
+		
+		return "redirect:/finance/confirmDeposit.do";
+	}
+	
+	/**
+	 * 确认30%定金详情
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "finance/confirmDepositDetail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmDepositDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("Deposit corfirm ================ show detail");
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+		model.addAttribute("orderModel", orderModel);
+		
+		return "finance/confirm_deposit_detail";
+	}
+	
+	/**
+	 * 未收到30%定金，取消订单
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "finance/cancelDeposit.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String cancelDeposit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("cancel Deposit ===============");
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		boolean epositok = false;
+		financeService.confirmSample(account, orderId_request, taskId, processId, epositok, null);
+		
+		return "redirect:/finance/confirmDeposit.do";
 	}
 	
 }

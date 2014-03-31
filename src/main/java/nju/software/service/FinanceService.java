@@ -19,5 +19,8 @@ public interface FinanceService {
 	
 	public boolean confirmSample(Account account, int orderId, long taskId, 
 			long processId, boolean receivedsamplejin, Money money);
+	
+	public boolean confirmDeposit(Account account, int orderId, long taskId, 
+			long processId, boolean epositok, Money money);
 
 }
