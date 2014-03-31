@@ -102,7 +102,7 @@ public class FileOperateUtil {
 
 		File save = new File(filedir, newfilename);
 		if (save.exists()) {
-			save.delete();
+			//save.delete();
 		}
 		tmpfile.renameTo(save);
 		return save;
