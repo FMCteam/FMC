@@ -44,7 +44,7 @@
 						</table>
 						<input type="hidden" name="orderId" value="${orderModel.order.orderId}" />
 						<input type="hidden" name="taskId" value="${orderModel.taskId}" />
-						<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+						<input type="hidden" name="processId" value="${orderModel.processInstanceId }" />
 					</form>
 				</div>
 				<!--widgetcontent-->
