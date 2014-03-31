@@ -131,7 +131,7 @@ public class MarketController {
 					taskId, processId, "SHICHANGZHUANYUAN");
 			return "market/computerOrderSumList";
 		} catch (Exception e) {
-
+			
 		}
 		return "market/computerOrderSumList";
 	}
