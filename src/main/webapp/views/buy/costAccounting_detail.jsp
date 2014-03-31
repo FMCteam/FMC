@@ -42,9 +42,10 @@
 								 <c:forEach var="fabric" items="${fabric_list}" >
 	                        <tr >
 	                    <td>${fabric.fabricName }</td>
-						<td><input class="span12" name="tear_per_meter" id="tear_per_meter"  placeholder="tear_per_meter"type="text" /></td>
-                        <td><input class="span12" name="cost_per_meter" id="cost_per_meter"  placeholder="cost_per_meter"type="text" /></td>
-                        <td><input class="span12" name="fabric_price" id="fabric_price"  placeholder="fabric_price"type="text" /></td>
+	                      <input type="hidden" name="fabricName" value="${fabric.fabricName}" />
+						<td><input class="span12" name="tear_per_meter"   placeholder="tear_per_meter"type="text" /></td>
+                        <td><input class="span12" name="cost_per_meter"   placeholder="cost_per_meter"type="text" /></td>
+                        <td><input class="span12" name="fabric_price"  placeholder="fabric_price"type="text" /></td>
 						     </tr>
                         </c:forEach>
 							</tr>
@@ -71,9 +72,10 @@
 								 <c:forEach var="accessory" items="${accessory_list}" >
 	                        <tr >
 	                    <td>${accessory.accessoryName }</td>
-						 <td><input class="span12" name="tear_per_piece" id="tear_per_piece"  placeholder="tear_per_piece"type="text" /></td>
-                        <td><input class="span12" name="cost_per_meter" id="cost_per_piece"  placeholder="cost_per_piece"type="text" /></td>
-                        <td><input class="span12" name="accessory_price" id="accessory_price"  placeholder="accessory_price"type="text" /></td>
+	                      <input type="hidden" name="accessoryName" value="${accessory.accessoryName}" />
+						 <td><input class="span12" name="tear_per_piece"   placeholder="tear_per_piece"type="text" /></td>
+                        <td><input class="span12" name="cost_per_meter"   placeholder="cost_per_piece"type="text" /></td>
+                        <td><input class="span12" name="accessory_price"   placeholder="accessory_price"type="text" /></td>
 
 						     </tr>
                         </c:forEach>
@@ -90,6 +92,10 @@
                         <td>面辅总计</td>
                         <td colspan="2"><input class="span12" name="prices" id="prices"  placeholder="prices" type="text" /></td>
                         <td colspan="2"></td>
+                        
+                          <input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
+	                  <input type="hidden" name="taskId" value="${orderModel.taskId }" />
+					<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />
                     </tr>
 							
 							

@@ -230,16 +230,72 @@ public class BuyController {
 		System.out.println("buy  cost Accounting================");
 		
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
+		
+//		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
+		
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("pinId");
 		long processId = Long.parseLong(s_processId);
-		String comment = request.getParameter("suggestion");
-		String taskName = "Purchasing_accounting";
-//		buyService.verify(account, orderId_request, taskId, processId, buyVal, comment);
+		
+		
+		
+		
+		
+		
+		
+//		
+		String[] fabric_names=request.getParameterValues("fabricName");
+		String[] tear_per_meters=request.getParameterValues("tear_per_meter");
+		String[] cost_per_meters=request.getParameterValues("cost_per_meter");
+		String[] fabric_prices=request.getParameterValues("fabric_price");
+		
+		
+		
+		String[] accessory_names=request.getParameterValues("accessoryName");
+		
+		String[] tear_per_piece=request.getParameterValues("tear_per_piece");
+		String[] cost_per_piece=request.getParameterValues("cost_per_piece");
+		String[] accessory_prices=request.getParameterValues("accessory_price");
+		
+		
+//        buyService.updateAccessoryCost(orderId_request, taskId, processId, accessory_names, tear_per_piece, cost_per_piece, accessory_prices);
+		
+		buyService.costAccounting(account, orderId_request, taskId, processId, fabric_names, tear_per_meters,
+				cost_per_meters,fabric_prices);
+//		
+//		String tear_per_meters=null;
+//		StringBuilder fabric_names = new StringBuilder();
+//		StringBuilder tear_per_meters = null;
+//		StringBuilder cost_per_meters = null;
+//		StringBuilder fabric_prices = null;
+//		
+		
+//		for (int i=0;i<fabric_names_temp.length;i++)      
+//		  {      
+		
+			
+			
+//			fabric_names.append(fabric_names_temp[i]);
+//			fabric_names.append(",");
+//			tear_per_meters.append(tear_per_meters_temp[i]);
+//			tear_per_meters.append(",");
+//			cost_per_meters.append(cost_per_meters_temp[i]);
+//			cost_per_meters.append(",");
+//			fabric_prices.append(fabric_prices_temp[i]);
+//			fabric_prices.append(",");
+//			
+//			
+//		  }      
+//		
+//		
+//		System.out.println(fabric_names);
+//		System.out.println(tear_per_meters);
+	
+		
+		
 		
 		return "redirect:/buy/costAccounting.do";
 	}
