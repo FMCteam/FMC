@@ -158,6 +158,18 @@ function init(){
 	
 	
 	
+	
+	$("input[name='tear_per_meter']").val("1");
+	$("input[name='cost_per_meter']").val("2");
+	$("input[name='fabric_price']").val("3");
+	
+	$("input[name='tear_per_piece']").val("4");
+	$("input[name='cost_per_piece']").val("5");
+	$("input[name='accessory_price']").val("6");
+	
+	
+	
+	
 	$("input[name='style_name']").val("杀马特3000");
 	$("input[name='order_source']").val("杀马特3000");
 	$("input[name='ask_amount']").val("20");

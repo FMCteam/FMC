@@ -108,7 +108,7 @@
 							class="iconfa-th-list"></span> 设计部</a>
 						<ul>
 							<li><a href="${ctx }/design/verify.do">样衣验证</a></li>
-							<li><a href="#">成本合算</a></li>
+							<li><a href="${ctx }/design/costAccounting.do">成本合算</a></li>
 							<li><a href="#">样衣版型</a></li>
 							<li><a href="#">生产验证</a></li>
 							<li><a href="#">生产版型</a></li>
@@ -130,7 +130,7 @@
 							class="iconfa-th-list"></span> 生产部</a>
 						<ul>
 							<li><a href="${ctx }/produce/verify.do">样衣验证</a></li>
-							<li><a href="#">成本合算</a></li>
+							<li><a href="${ctx }/produce/costAccounting.do">成本合算</a></li>
 							<li><a href="${ctx }/produce/sampleProduceList.do">样衣生产</a></li>
 							<li><a href="#">批量生产</a></li>
 						</ul></li>

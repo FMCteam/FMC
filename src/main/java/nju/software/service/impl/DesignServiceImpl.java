@@ -13,11 +13,13 @@ import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Quote;
 import nju.software.service.DesignService;
 import nju.software.util.JbpmAPIUtil;
 
@@ -32,6 +34,8 @@ public class DesignServiceImpl implements DesignService {
 	private LogisticsDAO logisticsDAO;
 	@Autowired
 	private FabricDAO fabricDAO;
+	@Autowired
+	private QuoteDAO QuoteDAO;
 	@Autowired
 	private AccessoryDAO accessoryDAO;
 
@@ -68,6 +72,55 @@ public class DesignServiceImpl implements DesignService {
 		return false;
 	}
 	
+	
+	@Override
+	public boolean costAccounting(Account account, int orderId, long taskId,
+			long processId, float design_cost) {
+		// TODO Auto-generated method stub
+		
+		String actorId = "SHEJIZHUGUAN";
+		//需要获取task中的数据	
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		System.out.println("orderId: " + orderId);
+		if (orderId == orderId_process) {
+			Quote quote = QuoteDAO.findById(orderId);
+			
+			
+			//修改QUote内容
+                quote.setDesignCost(design_cost);
+			QuoteDAO.attachDirty(quote);
+
+			//修改流程参数
+			Map<String, Object> data = new HashMap<>();
+//			data.put("designVal", designVal);
+			data.put("designcost", design_cost);
+			//直接进入到下一个流程时
+			try {
+				jbpmAPIUtil.completeTask(taskId, data, actorId);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+		return false;
+		
+		
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public Logistics getLogisticsByOrderId(int orderId) {
 		// TODO Auto-generated method stub
@@ -89,4 +142,5 @@ public class DesignServiceImpl implements DesignService {
 		return list;
 	}
 
+	
 }

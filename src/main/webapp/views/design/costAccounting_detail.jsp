@@ -6,9 +6,9 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<div class="widget">
-				<h4 class="widgettitle">采购成本核算</h4>
+				<h4 class="widgettitle">设计成本核算</h4>
 				<div class="widgetcontent">
-					<form id="costAccounting_form" method="post" action="${ctx }/buy/doCostAccounting.do">
+					<form id="costAccounting_form" method="post" action="${ctx }/design/doCostAccounting.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td rowspan="2">询单信息</td>
@@ -29,8 +29,11 @@
 							
 							<tr>
                         <td>设计费用</td>
-                     <td><input class="span12" name="design_cost" id="design_cost"  placeholder="design_cost" type="text" /></td>
-
+                     <td>
+                     <input class="span12" name="design_cost" id="design_cost"  placeholder="design_cost" type="text" /></td>
+                      <input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
+	                  <input type="hidden" name="taskId" value="${orderModel.taskId }" />
+					<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />
                     </tr>
 							
 							  <tr>
