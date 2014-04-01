@@ -204,11 +204,7 @@
 								<td>参考图片</td>
 								<td colspan="2"><input type="button"  value="选择文件" id="reference_picture_button"/></td>
 							</tr>
-							<tr>
-								<td>操作</td>
-								<td colspan="3"><input name="test" value="test1"/></td>
-								<td colspan="3"><input name="test" value="test2"/></td>
-							</tr>
+							
 							<tr>
 								<td>操作</td>
 								<td colspan="3"><input type="submit" /></td>
