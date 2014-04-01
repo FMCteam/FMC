@@ -303,4 +303,25 @@ public class LogisticsController {
 		return "redirect:/logistics/sampleOrderList.do";
 
 	}
+	
+	//发送样衣信息
+	@RequestMapping(value = "logistics/sendSampleOrderDetail.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String sendSampleOrderDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String id = request.getParameter("orderId");
+		
+		return "logistics/send_sample";
+	}
+	
+	//发送样衣信息
+	@RequestMapping(value = "logistics/sendSampleOrder.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String sendSampleOrder(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String id = request.getParameter("orderId");
+		
+		
+		return "redirect:/logistics/sampleOrderList.do";
+	}
 }

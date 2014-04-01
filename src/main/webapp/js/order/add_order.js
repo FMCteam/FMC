@@ -68,6 +68,7 @@
 		});
 
 		init();
+		
 	});
 
 
@@ -155,6 +156,18 @@ function init(){
 	$("#fabric_amount").val("11,12,13");
 	$("#accessory_name").val("name1,name2,name3");
 	$("#accessory_query").val("name1,name2,name3");
+	
+	
+	
+	
+	$("input[name='tear_per_meter']").val("1");
+	$("input[name='cost_per_meter']").val("2");
+	$("input[name='fabric_price']").val("3");
+	
+	$("input[name='tear_per_piece']").val("4");
+	$("input[name='cost_per_piece']").val("5");
+	$("input[name='accessory_price']").val("6");
+	
 	
 	
 	

@@ -1,28 +1,204 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@include file="/common/header.jsp"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'send_sample.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+<div class="maincontent">
+	<div class="maincontentinner">
+		<div class="row-fluid" style="min-height:300px;">
+			<!--  如果是其它页面，这里是填充具体的内容。 -->
+			<div class="widget">
+				<h4 class="widgettitle">物流发货</h4>
+				<div class="widgetcontent">
 
-  </head>
-  
-  <body>
-    This is my JSP page. <br>
-  </body>
-</html>
+					<form onSubmit="return verify()" method="post"
+						action="${ctx }/market/addMarketOrder.do">
+						<table class="table table-striped table-bordered table-hover">
+							<tr>
+								<td rowspan="2">订单信息</td>
+								<td>单号</td>
+								<td>生成时间</td>
+								<td>该批次质检完成时间</td>
+								<td>入库时间</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+							</tr>
+							<tr>
+								<td rowspan="3">客户信息</td>
+								<td>公司名称</td>
+								<td>1</td>
+								<td>联系电话</td>
+								<td>1</td>
+							</tr>
+							<tr>
+								<td>采购人姓名</td>
+								<td>1</td>
+								<td>固定电话</td>
+								<td>1</td>
+							</tr>
+							<tr>
+								<td>QQ</td>
+								<td>1</td>
+								<td>EMAIL</td>
+								<td>1</td>
+							</tr>
+							<tr>
+								<td rowspan="2">时间要求</td>
+								<td colspan="4">最后发货时间</td>
+							</tr>
+							<tr>
+								<td colspan="4">1</td>
+							</tr>
+							<tr>
+								<td rowspan="2">物流要求</td>
+								<td colspan="2">物流类型</td>
+								<td colspan="2">物流公司</td>
+							</tr>
+							<tr>
+								<td colspan="2">1</td>
+								<td colspan="2">1</td>
+							</tr>
+							<tr>
+								<td rowspan="2">专员信息</td>
+								<td colspan="2">姓名</td>
+								<td colspan="2">电话</td>
+							</tr>
+							<tr>
+								<td colspan="2">1</td>
+								<td colspan="2">1</td>
+							</tr>
+							<tr>
+								<td colspan="5">具体数量表</td>
+							</tr>
+							<tr>
+								<td colspan="5">
+								<table class=" table table-striped table-bordered">
+								<tbody>
+								<tr>
+									<td>颜色</td>
+									<td>XS</td>
+									<td>S</td>
+									<td>M</td>
+									<td>L</td>
+									<td>XL</td>
+									<td>XXL</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								</tbody>
+								</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="5">具体货箱数量及装箱条码表对应物流单号表</td>
+							</tr>
+							<tr>
+								<td>总货箱数</td>
+								<td colspan="4">1</td>
+							</tr>
+							<tr>
+								<td>条码列表</td>
+								<td colspan="2">物流单号</td>
+								<td colspan="2">物流公司</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td colspan="2">1</td>
+								<td colspan="2">1</td>
+							</tr>
+							<tr>
+								<td rowspan="2">发货信息</td>
+								<td>物流部发货人</td>
+								<td>发货时间</td>
+								<td colspan="2">发货备注</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>1</td>
+								<td colspan="2">1</td>
+							</tr>
+							<tr>
+								<td rowspan="4">物流公司信息</td>
+								<td>公司名称</td>
+								<td>网址</td>
+								<td>查询网址</td>
+								<td>客服电话</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+							</tr>
+							<tr>
+								<td>物流取货人</td>
+								<td>承诺到货日期</td>
+								<td colspan="2">运输方式</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>1</td>
+								<td colspan="2">1</td>
+							</tr>
+							<tr>
+								<td>操作</td>
+								<td colspan="2"><input type="submit" /></td>
+								<td colspan="2"><input type="reset" /></td>
+							</tr>
+						</table>
+						<input type="hidden" name="customerId"
+							value="${customer.customerId}" />
+					</form>
+				</div>
+				
+					<input type="file"   id="sample_clothes_picture" hidden="hidden"
+						name="sample_clothes_picture" /> <input type="file"
+						name="reference_picture"   id="reference_picture"  hidden="hidden"/>
+				
+				<!--widgetcontent-->
+			</div>
+
+		</div>
+		<!--row-fluid-->
+
+
+
+		<div class="footer">
+			<div class="footer-left">
+				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
+			</div>
+		</div>
+		<!--footer-->
+
+	</div>
+	<!--maincontentinner-->
+</div>
+<!--maincontent-->
+
+
+<%@include file="/common/js_file.jsp"%>
+<%@include file="/common/js_form_file.jsp"%>
+<link rel="stylesheet" href="${ctx}/css/order/add_order.css">
+<script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
+<script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<%@include file="/common/footer.jsp"%>
+

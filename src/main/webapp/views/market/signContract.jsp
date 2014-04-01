@@ -206,17 +206,19 @@
 							</tr>
 							<tr>
 								<td>操作</td>
-								<td colspan="3"><input name="test" value="test1"/></td>
-								<td colspan="3"><input name="test" value="test2"/></td>
-							</tr>
-							<tr>
-								<td>操作</td>
 								<td colspan="3"><input type="submit" /></td>
 								<td colspan="3"><input type="reset" /></td>
 							</tr>
 						</table>
 						<input type="hidden" name="customerId"
 							value="${customer.customerId}" />
+					</form>
+					
+					<form action="${ctx}/market/signContractSubmit.do" method="post">
+						<label>优惠金额：</label><input name="discount" type="text" />
+						<label>总金额：</label><input name="XXX" type="text" />
+						<input name="orderId" type="text" hidden="hidden" value="${task.order.orderId}"/>
+						<input name="taskId" type="text" hidden="hidden" value="${task.taskId}"/>
 					</form>
 				</div>
 				

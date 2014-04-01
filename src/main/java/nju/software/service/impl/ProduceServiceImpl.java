@@ -39,6 +39,8 @@ public class ProduceServiceImpl implements ProduceService {
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired
+	private QuoteDAO QuoteDAO;
+	@Autowired
 	private FabricDAO fabricDAO;
 	@Autowired
 	private AccessoryDAO accessoryDAO;
@@ -147,6 +149,66 @@ public class ProduceServiceImpl implements ProduceService {
 		WorkflowProcessInstance process = (WorkflowProcessInstance) session
 				.getProcessInstance(processId);
 		return process.getVariable(name);
+	}
+
+	@Override
+	public boolean costAccounting(Account account, int orderId, long taskId,
+			long processId, float cut_cost, float manage_cost, float nali_cost,
+			float ironing_cost, float swing_cost, float package_cost,
+			float other_cost) {
+		// TODO Auto-generated method stub
+		
+				String actorId = "SHENGCHANZHUGUAN";
+				//需要获取task中的数据	
+				WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+				int orderId_process  = (int) process.getVariable("orderId");
+				System.out.println("orderId: " + orderId);
+				if (orderId == orderId_process) {
+					Quote quote = QuoteDAO.findById(orderId);
+					
+					if(quote==null){
+						quote=new Quote();
+						quote.setOrderId(orderId);
+						quote.setCutCost(cut_cost);
+		                quote.setManageCost(manage_cost);
+		                quote.setSwingCost(swing_cost);
+		                quote.setIroningCost(ironing_cost);
+		                quote.setNailCost(nali_cost);
+		                quote.setPackageCost(package_cost);
+		                quote.setOtherCost(other_cost);
+		                QuoteDAO.save(quote);
+					}else{
+						quote.setCutCost(cut_cost);
+		                quote.setManageCost(manage_cost);
+		                quote.setSwingCost(swing_cost);
+		                quote.setIroningCost(ironing_cost);
+		                quote.setNailCost(nali_cost);
+		                quote.setPackageCost(package_cost);
+		                quote.setOtherCost(other_cost);
+		                QuoteDAO.attachDirty(quote);
+					}
+					//修改QUote内容
+		                
+		                
+		                
+					QuoteDAO.attachDirty(quote);
+
+					float producecost=cut_cost+manage_cost+swing_cost+ironing_cost+nali_cost+package_cost+other_cost;
+					//修改流程参数
+					Map<String, Object> data = new HashMap<>();
+//					data.put("designVal", designVal);
+					data.put("producecost", producecost);
+					//直接进入到下一个流程时
+					try {
+						jbpmAPIUtil.completeTask(taskId, data, actorId);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return true;
+				}
+				return false;
+				
 	}
 
 }
