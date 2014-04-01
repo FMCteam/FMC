@@ -42,5 +42,11 @@ public class LogisticsServiceImpl implements LogisticsService{
 		}
 		return false;
 	}
+	
+	@Override
+	public boolean sendSample(long taskId){
+		
+		return false;
+	}
 
 }

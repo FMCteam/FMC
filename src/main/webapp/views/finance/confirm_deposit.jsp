@@ -50,9 +50,7 @@
 										name="task_id" value="${orderModel.taskId }" /> <input
 										type="hidden" name="process_id"
 										value="${orderModel.processInstanceId }" />
-									<button class="btn btn-primary btn-rounded">
-										<i class="icon-white">收款确认</i> 
-									</button>
+									<button class="btn btn-primary btn-rounded">收款确认</button>
 								</form></td>
 							<td><form action="${ctx }/finance/cancelDeposit.do" method="post">
 									<input type="hidden" name="id"
@@ -60,9 +58,7 @@
 										name="task_id" value="${orderModel.taskId }" /> <input
 										type="hidden" name="process_id"
 										value="${orderModel.processInstanceId }" />
-									<button class="btn btn-primary btn-rounded">
-										<i class="icon-white">取消订单</i> 
-									</button>
+									<button class="btn btn-primary btn-rounded">取消订单</button>
 								</form></td>
 						</tr>
 					</c:forEach>
@@ -109,7 +105,7 @@
 	                	<a tabindex="0" class="next paginate_button" id="dyntable_next" href="${ctx }/employee/search.do?page=${page+1 }&number_per_page=1">下一页</a>
 						<a tabindex="0" class="last paginate_button" id="dyntable_last" href="${ctx }/employee/search.do?page=${page_number }&number_per_page=1">尾页</a>
                 	</c:if>
-					<c:if test="${page==page_number }">
+					<c:if test="${page==page_number&&page_number>0 }">
 	                	<a tabindex="0" class="next paginate_button paginate_button_disabled" id="dyntable_next">下一页</a>
 						<a tabindex="0" class="last paginate_button paginate_button_disabled" id="dyntable_last">尾页</a>
                 	</c:if>

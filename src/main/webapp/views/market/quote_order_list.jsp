@@ -151,7 +151,7 @@
 					<a tabindex="0" class="last paginate_button" id="dyntable_last"
 						href="${ctx }/employee/search.do?page=${page_number }&number_per_page=1">尾页</a>
 				</c:if>
-				<c:if test="${page==page_number }">
+				<c:if test="${page==page_number&&page_number>0 }">
 					<a tabindex="0"
 						class="next paginate_button paginate_button_disabled"
 						id="dyntable_next">下一页</a>
