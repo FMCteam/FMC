@@ -689,9 +689,9 @@ public class MarketController {
 				result);
 		// 2=修改报价
 		if (result.equals("2")) {
-			return "redirect:/market/quoteModifyList.do";
+			return "forward:/market/quoteConfirmList.do";
 		} else {
-			return "redirect:/market/quoteConfirmList.do";
+			return "forward:/market/quoteConfirmList.do";
 		}
 	}
 

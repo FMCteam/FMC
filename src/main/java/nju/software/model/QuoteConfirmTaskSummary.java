@@ -5,6 +5,18 @@ import nju.software.dataobject.Quote;
 
 public class QuoteConfirmTaskSummary {
 	
+	public long getTaskId() {
+		return taskId;
+	}
+
+
+
+	public void setTaskId(long taskId) {
+		this.taskId = taskId;
+	}
+
+
+
 	private String customerName;
 	private String customerPhone;
 	private String companyName;
