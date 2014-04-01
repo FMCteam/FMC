@@ -52,7 +52,7 @@
 						<p>
 							<input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
 							<input type="hidden" name="taskId" value="${orderModel.taskId }" />
-							<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />s
+							<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />
 						</p>
 						<p class="stdformbutton">
 							<button class="btn btn-primary">确认</button>
