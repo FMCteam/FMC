@@ -50,9 +50,7 @@
 										name="task_id" value="${orderModel.taskId }" /> <input
 										type="hidden" name="process_id"
 										value="${orderModel.processInstanceId }" />
-									<button class="btn btn-primary btn-rounded">
-										<i class="icon-white">收款确认</i> 
-									</button>
+									<button class="btn btn-primary btn-rounded">收款确认</button>
 								</form></td>
 							<td><form action="${ctx }/finance/cancelDeposit.do" method="post">
 									<input type="hidden" name="id"
@@ -60,9 +58,7 @@
 										name="task_id" value="${orderModel.taskId }" /> <input
 										type="hidden" name="process_id"
 										value="${orderModel.processInstanceId }" />
-									<button class="btn btn-primary btn-rounded">
-										<i class="icon-white">取消订单</i> 
-									</button>
+									<button class="btn btn-primary btn-rounded">取消订单</button>
 								</form></td>
 						</tr>
 					</c:forEach>

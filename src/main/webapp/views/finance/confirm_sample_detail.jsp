@@ -9,7 +9,7 @@
 				<h4 class="widgettitle">确认样衣制作金</h4>
 				<div class="widgetcontent">
 					<form class="stdform" id="verify_form" method="post"
-						action="${ctx }/finance/doConfirmSampleDetail.do">
+						action="${ctx }/finance/doConfirmSample.do">
 						<p>
 							<label>订单号</label> <span class="field"><input type="text" name="order_id" 
 							class="input-large" value="${orderModel.order.orderId }" readonly />
@@ -52,7 +52,7 @@
 						<p>
 							<input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
 							<input type="hidden" name="taskId" value="${orderModel.taskId }" />
-							<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />s
+							<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />
 						</p>
 						<p class="stdformbutton">
 							<button class="btn btn-primary">确认</button>
