@@ -143,10 +143,10 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		
 		String orderId=request.getParameter("id");
-		String s_processId=request.getParameter("pid");
+		//String s_processId=request.getParameter("pid");
 		int id=Integer.parseInt(orderId);
-		long processId=0;//=Long.parseLong(s_processId);
-		QuoteModel quoteModel = orderService.getQuoteByOrderAndPro("SHICHANGZHUANYUAN", "edit_quoteorder", id, processId);
+		//long processId=Long.parseLong(s_processId);
+		QuoteModel quoteModel = orderService.getQuoteByOrderAndPro("SHICHANGZHUANYUAN", "edit_quoteorder", id);
 		model.addAttribute("quoteModel", quoteModel);
 		return "market/modify_quote_order";
 	}
