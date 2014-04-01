@@ -51,8 +51,8 @@ public class MarketServiceImpl implements MarketService {
 				QuoteConfirmTaskSummary summary = QuoteConfirmTaskSummary
 						.getInstance(
 								orderDAO.findById(orderId),
-								(Quote) quoteDAO.findByProperty("order_id",
-										orderId).get(0), task.getId());
+								(Quote) quoteDAO.findById(
+										orderId), task.getId());
 				taskSummarys.add(summary);
 			}
 		}

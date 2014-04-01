@@ -50,6 +50,9 @@ public class DesignServiceImpl implements DesignService {
 		int orderId_process  = (int) process.getVariable("orderId");
 		System.out.println("orderId: " + orderId);
 		if (orderId == orderId_process) {
+			
+			
+			
 			Order order = orderDAO.findById(orderId);
 			//修改order内容
 
@@ -84,12 +87,22 @@ public class DesignServiceImpl implements DesignService {
 		int orderId_process  = (int) process.getVariable("orderId");
 		System.out.println("orderId: " + orderId);
 		if (orderId == orderId_process) {
-			Quote quote = QuoteDAO.findById(orderId);
 			
-			
-			//修改QUote内容
-                quote.setDesignCost(design_cost);
-			QuoteDAO.attachDirty(quote);
+				Quote quote = QuoteDAO.findById(orderId);
+			if(quote==null){
+				//数据库中无quote对象
+				//修改QUote内容
+				quote=new Quote();
+				quote.setOrderId(orderId);
+				 quote.setDesignCost(design_cost);
+				 QuoteDAO.save(quote);
+			}else{
+				//quote已存在于数据库
+				//修改QUote内容
+	                quote.setDesignCost(design_cost);
+				QuoteDAO.attachDirty(quote);
+			}
+		
 
 			//修改流程参数
 			Map<String, Object> data = new HashMap<>();

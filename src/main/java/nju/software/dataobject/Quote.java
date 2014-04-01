@@ -15,17 +15,17 @@ public class Quote implements java.io.Serializable {
 	// Fields
 
 	private Integer orderId;
-	private Float designCost;
-	private Float cutCost;
-	private Float manageCost;
-	private Float swingCost;
-	private Float ironingCost;
-	private Float nailCost;
-	private Float packageCost;
-	private Float otherCost;
-	private Float profitPerPiece;
-	private Float innerPrice;
-	private Float outerPrice;
+	private Float designCost=(float) 0;
+	private Float cutCost=(float) 0;
+	private Float manageCost=(float) 0;
+	private Float swingCost=(float) 0;
+	private Float ironingCost=(float) 0;
+	private Float nailCost=(float) 0;
+	private Float packageCost=(float) 0;
+	private Float otherCost=(float) 0;
+	private Float profitPerPiece=(float) 0;
+	private Float innerPrice=(float) 0;
+	private Float outerPrice=(float) 0;
 
 	// Constructors
 

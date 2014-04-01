@@ -166,15 +166,29 @@ public class ProduceServiceImpl implements ProduceService {
 				if (orderId == orderId_process) {
 					Quote quote = QuoteDAO.findById(orderId);
 					
-					
-					//修改QUote内容
-		                quote.setCutCost(cut_cost);
+					if(quote==null){
+						quote=new Quote();
+						quote.setOrderId(orderId);
+						quote.setCutCost(cut_cost);
 		                quote.setManageCost(manage_cost);
 		                quote.setSwingCost(swing_cost);
 		                quote.setIroningCost(ironing_cost);
 		                quote.setNailCost(nali_cost);
 		                quote.setPackageCost(package_cost);
 		                quote.setOtherCost(other_cost);
+		                QuoteDAO.save(quote);
+					}else{
+						quote.setCutCost(cut_cost);
+		                quote.setManageCost(manage_cost);
+		                quote.setSwingCost(swing_cost);
+		                quote.setIroningCost(ironing_cost);
+		                quote.setNailCost(nali_cost);
+		                quote.setPackageCost(package_cost);
+		                quote.setOtherCost(other_cost);
+		                QuoteDAO.attachDirty(quote);
+					}
+					//修改QUote内容
+		                
 		                
 		                
 					QuoteDAO.attachDirty(quote);
