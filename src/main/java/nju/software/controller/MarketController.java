@@ -150,6 +150,21 @@ public class MarketController {
 		model.addAttribute("quoteModel", quoteModel);
 		return "market/modify_quote_order";
 	}
+	
+	//专员修改报价列表
+	@RequestMapping(value = "market/quoteToModifyList.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String modifyOrderSumList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		List<QuoteConfirmTaskSummary> tasks = marketService
+				.getQuoteModifyTaskSummaryList(account.getUserId());
+		
+		model.addAttribute("tasks", tasks);
+		return "market/modify_quote_list";
+	}
 
 	// 顾客下单的列表页面
 	@RequestMapping(value = "market/customerOrder.do", method = RequestMethod.GET)
@@ -697,7 +712,7 @@ public class MarketController {
 
 		String result = request.getParameter("result");
 		String taskId = request.getParameter("taskId");
-		String orderId= request.getParameter("taskId");
+		String orderId= request.getParameter("orderId");
 		marketService.completeQuoteConfirmTaskSummary(Long.parseLong(taskId),
 				result);
 		// 2=修改报价

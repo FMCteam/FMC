@@ -58,6 +58,27 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return taskSummarys;
 	}
+	
+	@Override
+	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(
+			Integer employeeId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"SHICHANGZHUANYUAN", "edit_quoteorder");
+		List<QuoteConfirmTaskSummary> taskSummarys = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			if (getVariable("employeeId", task).equals(employeeId)) {
+				Integer orderId = (Integer) getVariable("orderId", task);
+				QuoteConfirmTaskSummary summary = QuoteConfirmTaskSummary
+						.getInstance(
+								orderDAO.findById(orderId),
+								(Quote) quoteDAO.findById(
+										orderId), task.getId());
+				taskSummarys.add(summary);
+			}
+		}
+		return taskSummarys;
+	}
 
 	@Override
 	public void completeQuoteConfirmTaskSummary(long taskId, String result) {

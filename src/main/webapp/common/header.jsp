@@ -94,7 +94,7 @@
 
 									<li><a href="${ctx }/market/quoteConfirmList.do">报价商定</a></li>
 
-									<li><a href="#">修改报价</a></li>
+									<li><a href="${ctx }/market/quoteToModifyList.do">修改报价</a></li>
 									<li><a href="#">商定合同</a></li>
 									<li><a href="#">修改合同</a></li>
 									<li><a href="#">签订合同</a></li>
