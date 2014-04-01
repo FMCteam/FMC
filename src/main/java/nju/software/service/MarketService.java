@@ -5,6 +5,7 @@ import java.util.List;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Product;
+import nju.software.model.OrderInfo;
 import nju.software.model.QuoteConfirmTaskSummary;
 
 
@@ -18,5 +19,13 @@ public interface MarketService {
 
 	public boolean confirmProduct(Account account, int orderId, long taskId, 
 			long processId, boolean comfirmworksheet, List<Product> productList);
+	
+	
+	
+	public List<OrderInfo> getOrderInfoList(Integer employeeId);
+	
+	public OrderInfo getOrderInfo(Integer orderId,long taskId);
+	
+	public void completeSignContract(Integer orderId,double discount,long taskId);
 	
 }
