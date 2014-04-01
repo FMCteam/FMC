@@ -109,7 +109,7 @@
 						<ul>
 							<li><a href="${ctx }/design/verify.do">样衣验证</a></li>
 							<li><a href="${ctx }/design/costAccounting.do">成本合算</a></li>
-							<li><a href="#">样衣版型</a></li>
+							<li><a href="${ctx }/design/upload_CAD.do">样衣版型</a></li>
 							<li><a href="#">生产验证</a></li>
 							<li><a href="#">生产版型</a></li>
 						</ul></li>

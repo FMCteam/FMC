@@ -85,12 +85,17 @@ public class DesignServiceImpl implements DesignService {
 		System.out.println("orderId: " + orderId);
 		if (orderId == orderId_process) {
 			Quote quote = QuoteDAO.findById(orderId);
-			
+			if(quote==null){
+				quote=new Quote();
+				  quote.setDesignCost(design_cost);
+				  QuoteDAO.save(quote);
+			}
 			
 			//修改QUote内容
+			else{
                 quote.setDesignCost(design_cost);
 			QuoteDAO.attachDirty(quote);
-
+			}
 			//修改流程参数
 			Map<String, Object> data = new HashMap<>();
 //			data.put("designVal", designVal);

@@ -1,4 +1,7 @@
 package nju.software.controller;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class DesignController {
@@ -177,7 +182,7 @@ public class DesignController {
 	public String costAccountingDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("buy costAccounting Detail ================ costAccountingDetail");
+		System.out.println("design costAccounting Detail ================ costAccountingDetail");
 		OrderModel orderModel = null;
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
@@ -234,6 +239,182 @@ public class DesignController {
 		return "redirect:/design/costAccounting.do";
 	}
 	
+	
+	
+	
+	
+	/**
+	 * 录入版型数据链接
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/upload_CAD.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String upload_CAD(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+
+		System.out.println(" design upload CAD ================ show task");
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String actorId = "SHEJIZHUGUAN";
+		System.out.println("actorId: " + actorId);
+		String taskName = "entering_data";
+		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		if (orderList.isEmpty()) {
+			System.out.println("no orderList ");
+		}
+		model.addAttribute("order_list", orderList);
+		
+		
+		return "design/upload_CAD";
+	}
+	
+	
+	/**
+	 * 录入版型数据 详细页面
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/uploadCAD_detail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String uploadCAD_detail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+
+		System.out.println("design uploadCAD detail ================ costAccountingDetail");
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+//		Logistics logistics = designService.getLogisticsByOrderId(orderId_request);
+//		List<Fabric> fabricList = designService.getFabricByOrderId(orderId_request);
+//		List<Accessory> accessoryList = designService.getAccessoryByOrderId(orderId_request);
+		model.addAttribute("orderModel", orderModel);
+	
+		
+		
+		return "design/uploadCAD_detail";
+	}
+	
+	
+	/**
+	 * 录入版型数据 上传文件处理
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/doUploadCAD.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String doUploadCAD(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+	System.out.println("do  design doUploadCAD ================");
+		
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+	
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+//		String design_cost_temp = request.getParameter("design_cost");
+//		float design_cost=Float.parseFloat(design_cost_temp);
+		String taskName = "entering_data ";
+		
+		
+		  MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
+		
+		  MultipartFile file = multipartRequest.getFile("CADFile");
+		
+		  if (file == null) {
+              try {
+				throw new Exception("上传失败：文件为�空");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}    
+          }
+          if(file.getSize()>10000000)        
+          {
+              try {
+				throw new Exception("上传失败：文件大小不能超过10M");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}            
+          }
+          
+          
+		  String filename=file.getOriginalFilename();     
+		
+		
+		    if(file.getSize()>0){                
+                try {
+                    SaveFileFromInputStream(file.getInputStream(),"D:/",filename);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                    return null;
+                }
+            }
+		
+		    else{
+                try {
+					throw new Exception("上传失败：上传文件不能为�空");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+		
+		
+		
+		
+		
+		
+//		designService.costAccounting(account, orderId_request, taskId, processId, design_cost);
+		
+		return "redirect:/design/costAccounting.do";
+	}
+	
+	
+	
+	
+	
+	 /**保存文件
+     * @param stream
+     * @param path
+     * @param filename
+     * @throws IOException
+     */
+    public void SaveFileFromInputStream(InputStream stream,String path,String filename) throws IOException
+    {      
+        FileOutputStream fs=new FileOutputStream( path + "/"+ filename);
+        byte[] buffer =new byte[1024*1024];
+        int bytesum = 0;
+        int byteread = 0; 
+        while ((byteread=stream.read(buffer))!=-1)
+        {
+           bytesum+=byteread;
+           fs.write(buffer,0,byteread);
+           fs.flush();
+        } 
+        fs.close();
+        stream.close();      
+    }       
+
+
 	
 	
 	
