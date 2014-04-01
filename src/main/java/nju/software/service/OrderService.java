@@ -45,5 +45,5 @@ public interface OrderService {
 			List<Accessory> accessorys, Logistics logistics);
 	public List<QuoteModel> getQuoteByActorAndTask(String actor,String taskName);
 	
-	public QuoteModel getQuoteByOrderAndPro(String actor,String taskName,int orderId,long processId);
+	public QuoteModel getQuoteByOrderAndPro(String actor,String taskName,int orderId);
 }

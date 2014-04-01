@@ -363,7 +363,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public QuoteModel getQuoteByOrderAndPro(String actor, String taskName,
-			int orderId, long processId) {
+			int orderId) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(actor,
 				taskName);
@@ -377,7 +377,7 @@ public class OrderServiceImpl implements OrderService {
 			long pid = task.getProcessInstanceId();
 			process = (WorkflowProcessInstance) session.getProcessInstance(pid);
 			int oid = (int) process.getVariable("orderId");
-			if (orderId == oid && processId == pid) {
+			if (orderId == oid) {
 				List<Quote> quote = quoteDAO.findByProperty("orderId", orderId);
 				return new QuoteModel(quote.get(0), task.getId(),
 						process.getId());
