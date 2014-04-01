@@ -16,6 +16,7 @@ import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProductDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Account;
@@ -23,7 +24,12 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+
+import nju.software.dataobject.Product;
+import nju.software.model.ProductModel;
+
 import nju.software.dataobject.Quote;
+
 import nju.software.service.BuyService;
 import nju.software.util.JbpmAPIUtil;
 
@@ -40,12 +46,16 @@ public class BuyServiceImpl implements BuyService {
 	@Autowired
 	private AccessoryDAO accessoryDAO;
 	@Autowired
+
+	private ProductDAO productDAO;
+
 	private AccessoryCostDAO AccessoryCostDAO;
 	@Autowired
 	private FabricCostDAO FabricCostDAO;
 	
 	
 	
+
 	@Override
 	public boolean verify(Account account, int orderId, long taskId, 
 			long processId, boolean buyVal, String comment) {
@@ -100,6 +110,28 @@ public class BuyServiceImpl implements BuyService {
 		List<Accessory> list = accessoryDAO.findByOrderId(orderId);
 		return list;
 	}
+
+
+	@Override
+	public ProductModel getProductDetail(int int_orderId, int int_taskId,
+			int int_processId) {
+		// TODO Auto-generated method stub
+		ProductModel model=new ProductModel();
+		List<Product> productList=productDAO.findByProperty("orderId", int_orderId);
+		List<Fabric> fabricList=fabricDAO.findByProperty("orderId",int_orderId);
+		List<Accessory> accessoryList=accessoryDAO.findByProperty("orderId",int_orderId);
+		
+		model.setProductList(productList);
+		model.setFabricList(fabricList);
+		model.setAccessoryList(accessoryList);
+		
+		model.setProcessId(int_processId);
+		model.setTaskId(int_taskId);
+		model.setOrderId(int_orderId);
+		
+		return model;
+	}
+
 
 	
 	
@@ -218,4 +250,5 @@ public class BuyServiceImpl implements BuyService {
 	
 	
 	
+
 }

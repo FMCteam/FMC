@@ -5,6 +5,29 @@ import nju.software.dataobject.Quote;
 
 public class QuoteConfirmTaskSummary {
 	
+	public long getTaskId() {
+		return taskId;
+	}
+
+
+
+	public void setTaskId(long taskId) {
+		this.taskId = taskId;
+	}
+
+
+	private Integer orderId;
+	public Integer getOrderId() {
+		return orderId;
+	}
+
+
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
+
 	private String customerName;
 	private String customerPhone;
 	private String companyName;
@@ -24,6 +47,7 @@ public class QuoteConfirmTaskSummary {
 		task.innerPrice=quote.getInnerPrice();
 		task.outerPrice=quote.getOuterPrice();
 		task.taskId=taskId;
+		task.orderId=order.getOrderId();
 		return task;
 	}
 

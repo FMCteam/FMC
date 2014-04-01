@@ -15,6 +15,7 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
+import nju.software.model.ProductModel;
 import nju.software.service.BuyService;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
@@ -38,6 +39,71 @@ public class BuyController {
 	@Autowired
 	private BuyService buyService;
 	
+	/**
+	 * 采购确认1List
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "buy/caigouqueren1List.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String caigouqueren1List(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="CAIGOUZHUGUAN";
+		String action="purchase_comfirm";
+		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
+		model.put("order_model_List", orderModelList);
+		
+		return "buy/product_simple_list";
+	}
+	/**
+	 * 采购确认1的详情
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "buy/caigouqueren1Detail.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String caigouqueren1Detail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("process_id");
+		try
+		{
+			int int_orderId=Integer.parseInt(orderId);
+			int int_taskId=Integer.parseInt(taskId);
+			int int_processId=Integer.parseInt(processId);
+		ProductModel productModel=buyService.getProductDetail(int_orderId,int_taskId,int_processId);
+		
+		model.put("prodcut_model",productModel);
+		return "buy/product_detail";
+		}catch(Exception e)
+		{
+			
+		}
+		return "buy/product_detail";
+	}
+	/**
+	 * 采购确认1的提交
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "buy/caigouqueren1DetailPost.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String caigouqueren1DetailPost(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("processId");
+	//	String productIdList=request.getProductId
+		return "buy/verify";
+	}
 	/**
 	 * 采购验证跳转链接
 	 * @param request

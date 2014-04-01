@@ -14,5 +14,6 @@
 .project
 .springBeans
 
+\src\main\webapp\WEB-INF\jdbc.properties
 
 /target
