@@ -91,7 +91,7 @@
 	                	<a tabindex="0" class="next paginate_button" id="dyntable_next" href="${ctx }/logistics/sampleOrderList.do?page=${page+1 }&number_per_page=10">下一页</a>
 						<a tabindex="0" class="last paginate_button" id="dyntable_last" href="${ctx }/logistics/sampleOrderList.do?page=${page_number }&number_per_page=10">尾页</a>
                 	</c:if>
-					<c:if test="${page==page_number }">
+					<c:if test="${page==page_number&&page_number>0 }">
 	                	<a tabindex="0" class="next paginate_button paginate_button_disabled" id="dyntable_next">下一页</a>
 						<a tabindex="0" class="last paginate_button paginate_button_disabled" id="dyntable_last">尾页</a>
                 	</c:if>
