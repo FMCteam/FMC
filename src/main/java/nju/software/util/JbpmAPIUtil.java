@@ -73,6 +73,8 @@ public class JbpmAPIUtil {
 	 * 流程实例参数
 	 */
 	private Map<String, Object> params;
+	
+	private HornetQHTWorkItemHandler hornetQHTWorkItemHandler;
 
 	/*
 	 * This is similar to 'completeTask' method, but to complete a task that is
@@ -127,10 +129,7 @@ public class JbpmAPIUtil {
 	public void completeTask(long taskId, Map<?, ?> data, String userId)
 			throws InterruptedException {
 		connect();
-		HornetQHTWorkItemHandler hornetQHTWorkItemHandler = new HornetQHTWorkItemHandler(
-				ksession);
-		ksession.getWorkItemManager().registerWorkItemHandler("Human Task",
-				hornetQHTWorkItemHandler);
+		registerWorkItemHandler();
 		BlockingTaskOperationResponseHandler responseHandler = new BlockingTaskOperationResponseHandler();
 		client.start(taskId, userId, responseHandler);
 		responseHandler.waitTillDone(2000);
@@ -301,17 +300,27 @@ public class JbpmAPIUtil {
 	public ProcessInstance startWorkflowProcess() {
 		ProcessInstance pi = null;
 		try {
-			HornetQHTWorkItemHandler hornetQHTWorkItemHandler = new HornetQHTWorkItemHandler(
-					ksession);
-			// 注册人工服务
-			ksession.getWorkItemManager().registerWorkItemHandler("Human Task",
-					hornetQHTWorkItemHandler);
+			
+			
+			registerWorkItemHandler();
 			// 启动流程
 			pi = ksession.startProcess(processName, params);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return pi;
+	}
+	
+	
+	
+	public void registerWorkItemHandler(){
+		if(hornetQHTWorkItemHandler==null){
+			hornetQHTWorkItemHandler = new HornetQHTWorkItemHandler(
+					ksession);
+			// 注册人工服务
+			ksession.getWorkItemManager().registerWorkItemHandler("Human Task",
+					hornetQHTWorkItemHandler);
+		}
 	}
 
 }

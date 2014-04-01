@@ -15,7 +15,10 @@ import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
+import nju.software.dataobject.Account;
+import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.model.QuoteConfirmTaskSummary;
 import nju.software.service.MarketService;
@@ -30,6 +33,8 @@ public class MarketServiceImpl implements MarketService {
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired
 	private QuoteDAO quoteDAO;
+	@Autowired
+	private ProductDAO productDAO;
 
 	@Override
 	public List<QuoteConfirmTaskSummary> getQuoteConfirmTaskSummaryList(
@@ -81,5 +86,62 @@ public class MarketServiceImpl implements MarketService {
 		WorkflowProcessInstance process = (WorkflowProcessInstance) session
 				.getProcessInstance(processId);
 		return process.getVariable(name);
+	}
+	
+	@Override
+	public List<Product> getProduct(int orderId, String productAskAmount,
+			String productColor, String productStyle) {
+		// TODO Auto-generated method stub
+		
+		String[] amountList = productAskAmount.split("，");
+		String[] colorList = productColor.split("，");
+		String[] styleList = productStyle.split("，");
+		List<Product> productList = new ArrayList<Product>();
+		for (int i = 0; i < amountList.length; i++) {
+			Product product = new Product();
+			product.setOrderId(orderId);
+			product.setAskAmount(Integer.parseInt(amountList[i]));
+			product.setColor(colorList[i]);
+			product.setStyle(styleList[i]);
+			product.setProduceAmount(0);
+			product.setQualifiedAmount(0);
+			productList.add(product);
+		}
+		
+		return productList;
+	}
+
+	@Override
+	public boolean confirmProduct(Account account, int orderId, long taskId,
+			long processId, boolean comfirmworksheet, List<Product> productList) {
+		// TODO Auto-generated method stub
+//		String actorId = account.getUserRole();
+		String actorId = "SHICHANGZHUANYUAN";
+		//需要获取task中的数据	
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		System.out.println("orderId: " + orderId);
+		if (orderId == orderId_process) {
+			//如果通过，创建合同加工单
+			if (comfirmworksheet) {
+				for (int i = 0; i < productList.size(); i++) {
+					productDAO.save(productList.get(i));
+				}
+			}
+			//修改流程参数
+			Map<String, Object> data = new HashMap<>();
+			data.put("comfirmworksheet", comfirmworksheet);
+			//直接进入到下一个流程时
+			try {
+				jbpmAPIUtil.completeTask(taskId, data, actorId);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		return false;
+		
 	}
 }

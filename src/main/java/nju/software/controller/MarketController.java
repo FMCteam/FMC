@@ -27,6 +27,7 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.model.OrderModel;
 import nju.software.model.QuoteConfirmTaskSummary;
@@ -131,7 +132,7 @@ public class MarketController {
 					taskId, processId, "SHICHANGZHUANYUAN");
 			return "market/computerOrderSumList";
 		} catch (Exception e) {
-
+			
 		}
 		return "market/computerOrderSumList";
 	}
@@ -546,6 +547,11 @@ public class MarketController {
 		String otherRequirements = StringUtils.join(
 				request.getParameterValues("other_requirements"), "|");
 		Calendar calendar = Calendar.getInstance();
+		
+	
+		String sampleClothesPicture=(String) session.getAttribute("sample_clothes_picture");
+		String referencePicture=(String) session.getAttribute("reference_picture");
+		//session.setAttribute("reference_picture", null);
 		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd mm:ss");
 		// String sampleClothesPicture=sdf.format(calendar.getTime());
 		// String referencePicture=sdf.format(calendar.getTime());
@@ -553,7 +559,9 @@ public class MarketController {
 		// sdf.format(calendar.getTime()), "sample_clothes_picture");
 		// FileOperateUtil.Upload(request, "reference_picture",
 		// sdf.format(calendar.getTime()), "reference_picture");
-		System.out.println(session.getAttribute("sample_clothes_picture"));
+		//System.out.println(session.getAttribute("sample_clothes_picture"));
+		
+		
 		Integer askAmount = Integer
 				.parseInt(request.getParameter("ask_amount"));
 		String askProducePeriod = request.getParameter("ask_produce_period");
@@ -642,8 +650,8 @@ public class MarketController {
 		order.setStyleSeason(styleSeason);
 		order.setSpecialProcess(specialProcess);
 		order.setOtherRequirements(otherRequirements);
-		// order.setSampleClothesPicture(sampleClothesPicture);
-		// order.setReferencePicture(referencePicture);
+	    order.setSampleClothesPicture(sampleClothesPicture);
+		order.setReferencePicture(referencePicture);
 		order.setAskAmount(askAmount);
 		order.setAskProducePeriod(askProducePeriod);
 		order.setAskDeliverDate(askDeliverDate);
@@ -717,7 +725,7 @@ public class MarketController {
 			result_json="fail";
 		}else{
 			result_json="success";
-			request.getSession().setAttribute(title, save.getName());
+			request.getSession().setAttribute(title, save.getAbsolutePath());
 		}
 		JSONObject jsonobj = new JSONObject();
 		jsonobj.put("result_json", result_json);
@@ -784,29 +792,16 @@ public class MarketController {
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
+		String s_processId = request.getParameter("processId");
 		long processId = Long.parseLong(s_processId);
-		String s_moneyAmount = request.getParameter("money_amount");
-		double moneyAmount = Double.parseDouble(s_moneyAmount);
-		String moneyState = request.getParameter("money_state");
-		String moneyType = request.getParameter("money_type");
-		String moneyBank = request.getParameter("money_bank");
-		String moneyName = request.getParameter("money_name");
-		String moneyNumber = request.getParameter("money_number");
-		String moneyRemark = request.getParameter("money_remark");
+		String productAskAmount = request.getParameter("product_amount");
+		String productColor = request.getParameter("product_color");
+		String productStyle = request.getParameter("product_style");
 		boolean comfirmworksheet = true;
 		
-		if (!(moneyAmount < 0) && (moneyState != null) && (moneyType != null)) {
-			Money money = new Money();
-			money.setOrderId(orderId_request);
-			money.setMoneyAmount(moneyAmount);
-			money.setMoneyState(moneyState);
-			money.setMoneyType(moneyType);;
-			money.setMoneyBank(moneyBank);
-			money.setMoneyName(moneyName);
-			money.setMoneyNumber(moneyNumber);;
-			money.setMoneyRemark(moneyRemark);
-//			financeService.confirmSample(account, orderId_request, taskId, processId, receivedsamplejin, money);
+		if ((productAskAmount != null) && (productColor != null) && (productStyle != null)) {
+			List<Product> productList = marketService.getProduct(orderId_request, productAskAmount, productColor, productStyle);
+			marketService.confirmProduct(account, orderId_request, taskId, processId, comfirmworksheet, productList);
 		}
 		
 		
@@ -864,7 +859,7 @@ public class MarketController {
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
 		boolean comfirmworksheet = false;
-//		financeService.confirmSample(account, orderId_request, taskId, processId, receivedsamplejin, null);
+		marketService.confirmProduct(account, orderId_request, taskId, processId, comfirmworksheet, null);
 		
 		return "redirect:/market/confirmProduct.do";
 	}
