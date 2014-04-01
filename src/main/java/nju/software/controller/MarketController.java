@@ -38,6 +38,7 @@ import nju.software.service.CustomerService;
 import nju.software.service.MarketService;
 import nju.software.service.OrderService;
 import nju.software.service.QuoteService;
+import nju.software.service.impl.JbpmTest;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
@@ -68,6 +69,8 @@ public class MarketController {
 	private CustomerService customerService;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private JbpmTest jbpmTest;
 
 	// test precondition
 	@RequestMapping(value = "market/precondition.do", method = RequestMethod.GET)
@@ -142,7 +145,7 @@ public class MarketController {
 		String orderId=request.getParameter("id");
 		String s_processId=request.getParameter("pid");
 		int id=Integer.parseInt(orderId);
-		long processId=Long.parseLong(s_processId);
+		long processId=0;//=Long.parseLong(s_processId);
 		QuoteModel quoteModel = orderService.getQuoteByOrderAndPro("SHICHANGZHUANYUAN", "edit_quoteorder", id, processId);
 		model.addAttribute("quoteModel", quoteModel);
 		return "market/modify_quote_order";
@@ -671,6 +674,15 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		List<QuoteConfirmTaskSummary> tasks = marketService
 				.getQuoteConfirmTaskSummaryList(account.getUserId());
+		
+		
+		if(tasks.size()==0){
+			jbpmTest.addQuoteConfirmTask(account.getUserId());
+			tasks = marketService
+					.getQuoteConfirmTaskSummaryList(account.getUserId());
+		}
+		
+		
 		model.addAttribute("tasks", tasks);
 		return "/market/quoteConfirmList";
 	}
@@ -685,11 +697,12 @@ public class MarketController {
 
 		String result = request.getParameter("result");
 		String taskId = request.getParameter("taskId");
+		String orderId= request.getParameter("taskId");
 		marketService.completeQuoteConfirmTaskSummary(Long.parseLong(taskId),
 				result);
 		// 2=修改报价
 		if (result.equals("2")) {
-			return "forward:/market/quoteConfirmList.do";
+			return "forward:/market/quoteModifyList.do?id="+orderId;
 		} else {
 			return "forward:/market/quoteConfirmList.do";
 		}
