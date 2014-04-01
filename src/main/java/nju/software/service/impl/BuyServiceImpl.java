@@ -14,11 +14,14 @@ import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProductDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Product;
+import nju.software.model.ProductModel;
 import nju.software.service.BuyService;
 import nju.software.util.JbpmAPIUtil;
 
@@ -34,7 +37,8 @@ public class BuyServiceImpl implements BuyService {
 	private FabricDAO fabricDAO;
 	@Autowired
 	private AccessoryDAO accessoryDAO;
-	
+	@Autowired
+	private ProductDAO productDAO;
 	@Override
 	public boolean verify(Account account, int orderId, long taskId, 
 			long processId, boolean buyVal, String comment) {
@@ -88,6 +92,26 @@ public class BuyServiceImpl implements BuyService {
 		// TODO Auto-generated method stub
 		List<Accessory> list = accessoryDAO.findByOrderId(orderId);
 		return list;
+	}
+
+	@Override
+	public ProductModel getProductDetail(int int_orderId, int int_taskId,
+			int int_processId) {
+		// TODO Auto-generated method stub
+		ProductModel model=new ProductModel();
+		List<Product> productList=productDAO.findByProperty("orderId", int_orderId);
+		List<Fabric> fabricList=fabricDAO.findByProperty("orderId",int_orderId);
+		List<Accessory> accessoryList=accessoryDAO.findByProperty("orderId",int_orderId);
+		
+		model.setProductList(productList);
+		model.setFabricList(fabricList);
+		model.setAccessoryList(accessoryList);
+		
+		model.setProcessId(int_processId);
+		model.setTaskId(int_taskId);
+		model.setOrderId(int_orderId);
+		
+		return model;
 	}
 
 }
