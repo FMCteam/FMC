@@ -9,7 +9,7 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">生产成本核算</h4>
+                    <h4 class="widgettitle">确认定金</h4>
                 <table id="dyntable" class="table table-bordered responsive">
                     <colgroup>
                         <col class="con1" />
@@ -34,24 +34,39 @@
                         </tr>
                     </thead>
                     <tbody>
-	                    <c:forEach var="orderModel" items="${order_list}" >
-	                        <tr class="gradeA">
-	                            <td>${orderModel.order.orderId }</td>
-								<td>${orderModel.order.employeeId }</td>
-								<td>${orderModel.order.customerName }</td>
-								<td>${orderModel.order.customerCompany }</td>
-								<td>${orderModel.order.styleName }</td>
-								<td>${orderModel.order.askAmount }</td>
-								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx }/produce/costAccountingDetail.do" method="post" >
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
-										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
-										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 成本核算</button></form>
-								</td>
-	                        </tr>
-                        </c:forEach>
-                    </tbody>
+					<c:forEach var="orderModel" items="${order_list}">
+						<tr class="gradeA">
+							<td>${orderModel.order.orderId }</td>
+							<td>${orderModel.order.employeeId }</td>
+							<td>${orderModel.order.customerName }</td>
+							<td>${orderModel.order.customerCompany }</td>
+							<td>${orderModel.order.styleName }</td>
+							<td>${orderModel.order.askAmount }</td>
+							<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+							<td><form action="${ctx }/finance/confirmDepositDetail.do"
+									method="post">
+									<input type="hidden" name="id"
+										value="${orderModel.order.orderId }" /> <input type="hidden"
+										name="task_id" value="${orderModel.taskId }" /> <input
+										type="hidden" name="process_id"
+										value="${orderModel.processInstanceId }" />
+									<button class="btn btn-primary btn-rounded">
+										<i class="icon-white">收款确认</i> 
+									</button>
+								</form></td>
+							<td><form action="${ctx }/finance/cancelDeposit.do" method="post">
+									<input type="hidden" name="id"
+										value="${orderModel.order.orderId }" /> <input type="hidden"
+										name="task_id" value="${orderModel.taskId }" /> <input
+										type="hidden" name="process_id"
+										value="${orderModel.processInstanceId }" />
+									<button class="btn btn-primary btn-rounded">
+										<i class="icon-white">取消订单</i> 
+									</button>
+								</form></td>
+						</tr>
+					</c:forEach>
+				</tbody>
                 </table>
                 <div class="dataTables_paginate paging_full_numbers" id="dyntable_paginate" style="float:right">
                 	<c:if test="${page==1 }">

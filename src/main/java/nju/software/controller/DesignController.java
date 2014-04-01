@@ -205,7 +205,34 @@ public class DesignController {
 	
 	
 	
+	/**
+	 * 成本核算
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/doCostAccounting.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String doCostAccounting(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		System.out.println("do  design cost Accounting ================");
+		
+		Account account = (Account) request.getSession().getAttribute("cur_user");
 	
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+		String design_cost_temp = request.getParameter("design_cost");
+		float design_cost=Float.parseFloat(design_cost_temp);
+		String taskName = "design_accounting ";
+		designService.costAccounting(account, orderId_request, taskId, processId, design_cost);
+		
+		return "redirect:/design/costAccounting.do";
+	}
 	
 	
 	
