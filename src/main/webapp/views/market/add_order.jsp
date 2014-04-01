@@ -206,6 +206,11 @@
 							</tr>
 							<tr>
 								<td>操作</td>
+								<td colspan="3"><input name="test" value="test1"/></td>
+								<td colspan="3"><input name="test" value="test2"/></td>
+							</tr>
+							<tr>
+								<td>操作</td>
 								<td colspan="3"><input type="submit" /></td>
 								<td colspan="3"><input type="reset" /></td>
 							</tr>
