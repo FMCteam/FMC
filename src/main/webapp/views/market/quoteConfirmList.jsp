@@ -38,11 +38,11 @@
 							<td>${task.innerPrice}</td>
 							<td>${task.outerPrice}</td>
 							<td><a
-								href="${ctx}/market/quoteConfirm.do?taskId=${task.taskId}&result=1">确认报价</a>
+								href="${ctx}/market/quoteConfirm.do?taskId=${task.taskId}&result=1&orderId=${task.orderId}">确认报价</a>
 								<a
-								href="${ctx}/market/quoteConfirm.do?taskId=${task.taskId}&result=2">
+								href="${ctx}/market/quoteConfirm.do?taskId=${task.taskId}&result=2&orderId=${task.orderId}">
 									修改报价</a> <a
-								href="${ctx}/market/quoteConfirm.do?taskId=${task.taskId}&result=3">
+								href="${ctx}/market/quoteConfirm.do?taskId=${task.taskId}&result=3&orderId=${task.orderId}">
 									放弃订单</a></td>
 						</tr>
 					</c:forEach>

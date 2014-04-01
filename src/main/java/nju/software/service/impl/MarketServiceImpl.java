@@ -66,14 +66,17 @@ public class MarketServiceImpl implements MarketService {
 		if (result.equals("1")) {
 			data.put("confirmquote", true);
 			data.put("eidtquote", false);
+			data.put("samplejin", true);
 		}
 		if (result.equals("2")) {
 			data.put("confirmquote", false);
 			data.put("eidtquote", true);
+			data.put("samplejin", true);
 		}
 		if (result.equals("3")) {
 			data.put("confirmquote", false);
 			data.put("eidtquote", false);
+			data.put("samplejin", true);
 		}
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");

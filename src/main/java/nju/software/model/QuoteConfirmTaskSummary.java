@@ -16,6 +16,17 @@ public class QuoteConfirmTaskSummary {
 	}
 
 
+	private Integer orderId;
+	public Integer getOrderId() {
+		return orderId;
+	}
+
+
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
 
 	private String customerName;
 	private String customerPhone;
@@ -36,6 +47,7 @@ public class QuoteConfirmTaskSummary {
 		task.innerPrice=quote.getInnerPrice();
 		task.outerPrice=quote.getOuterPrice();
 		task.taskId=taskId;
+		task.orderId=order.getOrderId();
 		return task;
 	}
 
