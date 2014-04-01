@@ -27,5 +27,7 @@ public interface MarketService {
 	public OrderInfo getOrderInfo(Integer orderId,long taskId);
 	
 	public void completeSignContract(Integer orderId,double discount,long taskId);
+
+	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(Integer employeeId);
 	
 }
