@@ -129,21 +129,20 @@ public class MarketController {
 			long processId = Long.parseLong(s_processId);
 			boolean success = quoteService.updateQuote(inner, outer, id,
 					taskId, processId, "SHICHANGZHUANYUAN");
-			return "market/computerOrderSumList";
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
-		return "market/computerOrderSumList";
+		return "redirect:/market/quoteConfirmList.do";
 	}
 
 	//专员修改报价
-		@RequestMapping(value = "market/modifyOrderSumDetail.do", method = RequestMethod.POST)
+		@RequestMapping(value = "market/quoteModifyList.do", method = RequestMethod.GET)
 		@Transactional(rollbackFor = Exception.class)
 		public String modifyOrderSumDetail(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			
-			String orderId=request.getParameter("order_id");
-			String s_processId=request.getParameter("processId");
+			String orderId=request.getParameter("id");
+			String s_processId=request.getParameter("pid");
 			int id=Integer.parseInt(orderId);
 			long processId=Long.parseLong(s_processId);
 			QuoteModel quoteModel = orderService.getQuoteByOrderAndPro("SHICHANGZHUANYUAN", "edit_quoteorder", id, processId);
