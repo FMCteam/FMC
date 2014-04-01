@@ -134,7 +134,7 @@ public class BuyController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "buy/product_simple_list";
+		return "redirect:/buy/product_simple_list";
 	}
 	/**
 	 * 采购验证跳转链接
