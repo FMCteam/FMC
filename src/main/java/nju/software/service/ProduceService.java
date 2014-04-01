@@ -14,6 +14,10 @@ public interface ProduceService {
 	public boolean verify(Account account, int orderId, long taskId, 
 			long processId, boolean productVal, String comment);
 	
+	public boolean costAccounting(Account account, int orderId, long taskId, 
+			long processId, float cut_cost,float manage_cost,float nali_cost,float ironing_cost,
+			float swing_cost,float package_cost,float other_cost);
+	
 	public Logistics getLogisticsByOrderId(int orderId);
 	
 	public List<Fabric> getFabricByOrderId(int orderId);

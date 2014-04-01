@@ -296,7 +296,7 @@ public class FinanceController {
 			money.setMoneyName(moneyName);
 			money.setMoneyNumber(moneyNumber);
 			money.setMoneyRemark(moneyRemark);
-			financeService.confirmSample(account, orderId_request, taskId, processId, epositok, money);
+			financeService.confirmDeposit(account, orderId_request, taskId, processId, epositok, money);
 		}
 		
 		
@@ -354,7 +354,7 @@ public class FinanceController {
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
 		boolean epositok = false;
-		financeService.confirmSample(account, orderId_request, taskId, processId, epositok, null);
+		financeService.confirmDeposit(account, orderId_request, taskId, processId, epositok, null);
 		
 		return "redirect:/finance/confirmDeposit.do";
 	}
