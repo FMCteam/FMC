@@ -1,14 +1,18 @@
 package nju.software.util;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -118,6 +122,98 @@ public class FileOperateUtil {
 		}
 		return filename;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public static void  Upload ( MultipartFile file){
+		
+		  if (file == null) {
+              try {
+				throw new Exception("上传失败：文件为空");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}    
+          }
+		  
+		  
+		  
+          if(file.getSize()>10000000)        
+          {
+              try {
+				throw new Exception("上传失败：文件大小不能超过10M");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}            
+          }
+          
+          
+          
+		  String filename=file.getOriginalFilename();     
+		
+		
+		    if(file.getSize()>0){                
+                try {
+                    SaveFileFromInputStream(file.getInputStream(),"D:/",filename);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                  
+                }
+            }
+		
+		    
+		    else{
+                try {
+					throw new Exception("上传失败：上传文件不能为空");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+		
+		
+	}
+	
+	
+	
+	
+	 /**保存文件
+     * @param stream
+     * @param path
+     * @param filename
+     * @throws IOException
+     */
+    public static void SaveFileFromInputStream(InputStream stream,String path,String filename) throws IOException
+    {      
+        FileOutputStream fs=new FileOutputStream( path + "/"+ filename);
+        byte[] buffer =new byte[1024*1024];
+        int bytesum = 0;
+        int byteread = 0; 
+        while ((byteread=stream.read(buffer))!=-1)
+        {
+           bytesum+=byteread;
+           fs.write(buffer,0,byteread);
+           fs.flush();
+        } 
+        fs.close();
+        stream.close();      
+    }       
+
+
+	
+	
+	
+	
+	
+	
+	
+	
 
 	// /**
 	// * 下载

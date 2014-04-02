@@ -21,6 +21,7 @@ import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
 import nju.software.service.DesignService;
 import nju.software.service.OrderService;
+import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 
 import org.jbpm.task.query.TaskSummary;
@@ -252,7 +253,7 @@ public class DesignController {
 	
 	
 	/**
-	 * 录入版型数据链接
+	 * 录入版型数据跳转链接
 	 * @param request
 	 * @param response
 	 * @param model
@@ -349,56 +350,56 @@ public class DesignController {
 		
 		  
 		  
-		  if (file == null) {
-              try {
-				throw new Exception("上传失败：文件为�空");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}    
-          }
-		  
-		  
-		  
-          if(file.getSize()>10000000)        
-          {
-              try {
-				throw new Exception("上传失败：文件大小不能超过10M");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}            
-          }
-          
-          
+//		  if (file == null) {
+//              try {
+//				throw new Exception("上传失败：文件为空");
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}    
+//          }
+//		  
+//		  
+//		  
+//          if(file.getSize()>10000000)        
+//          {
+//              try {
+//				throw new Exception("上传失败：文件大小不能超过10M");
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}            
+//          }
+//          
+//          
           
 		  String filename=file.getOriginalFilename();     
 		
+//		
+//		    if(file.getSize()>0){                
+//                try {
+//                    SaveFileFromInputStream(file.getInputStream(),"D:/",filename);
+//                } catch (IOException e) {
+//                    System.out.println(e.getMessage());
+//                    return null;
+//                }
+//            }
+//		
+//		    
+//		    else{
+//                try {
+//					throw new Exception("上传失败：上传文件不能为空");
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//            }
 		
-		    if(file.getSize()>0){                
-                try {
-                    SaveFileFromInputStream(file.getInputStream(),"D:/",filename);
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                    return null;
-                }
-            }
-		
-		    
-		    else{
-                try {
-					throw new Exception("上传失败：上传文件不能为�空");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-		
-		    Calendar calendar = Calendar.getInstance();
+//		    Calendar calendar = Calendar.getInstance();
 		 // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd mm:ss");
-		 // String sampleClothesPicture=sdf.format(calendar.getTime());
+	
 		    
-		    
+		  FileOperateUtil.Upload(file);
 		   
 		    String url="D:/"+"/"+ filename;
 		    Timestamp uploadTime = new Timestamp(new Date().getTime());
@@ -415,29 +416,132 @@ public class DesignController {
 	
 	
 	
-	 /**保存文件
-     * @param stream
-     * @param path
-     * @param filename
-     * @throws IOException
-     */
-    public void SaveFileFromInputStream(InputStream stream,String path,String filename) throws IOException
-    {      
-        FileOutputStream fs=new FileOutputStream( path + "/"+ filename);
-        byte[] buffer =new byte[1024*1024];
-        int bytesum = 0;
-        int byteread = 0; 
-        while ((byteread=stream.read(buffer))!=-1)
-        {
-           bytesum+=byteread;
-           fs.write(buffer,0,byteread);
-           fs.flush();
-        } 
-        fs.close();
-        stream.close();      
-    }       
+	
+	
+	
+	
+	
+	
+	
+	
 
+	/**
+	 * 设计部CAD验证跳转链接
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/designCAD_confirm.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String designCAD_confirm(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
 
+		System.out.println(" design CAD confirm ================ show task");
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String actorId = "SHEJIZHUGUAN";
+		System.out.println("actorId: " + actorId);
+		String taskName = "design_ok";
+		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		if (orderList.isEmpty()) {
+			System.out.println("no orderList ");
+		}
+		model.addAttribute("order_list", orderList);
+		
+		
+		return "design/designCAD_confirm";
+	}
+	
+	
+	/**
+	 * CAD验证 上传 详细页面
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/CadConfirm_detail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String CadConfirm_detail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+
+		System.out.println("design CadConfirm detail ================ CadConfirm detail");
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+//		Logistics logistics = designService.getLogisticsByOrderId(orderId_request);
+//		List<Fabric> fabricList = designService.getFabricByOrderId(orderId_request);
+//		List<Accessory> accessoryList = designService.getAccessoryByOrderId(orderId_request);
+		model.addAttribute("orderModel", orderModel);
+	
+		
+		
+		return "design/CadConfirm_detail";
+	}
+	
+	
+	/**
+	 * 
+	 * CAD设计部验证
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/doCadConfirm.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String doCadConfirm(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+	System.out.println("do  design CadConfirm ================");
+		
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+	
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+//		String design_cost_temp = request.getParameter("design_cost");
+//		float design_cost=Float.parseFloat(design_cost_temp);
+		String taskName = "design_ok ";
+		
+		
+		  MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
+		
+		  MultipartFile file = multipartRequest.getFile("CADFile");
+		
+          
+		  String filename=file.getOriginalFilename();     
+		
+	
+		    
+		  FileOperateUtil.Upload(file);
+		   
+		    String url="D:/"+"/"+ filename;
+		    Timestamp uploadTime = new Timestamp(new Date().getTime());
+		
+		    designService.uploadCAD(account, orderId_request, taskId, processId, url,uploadTime);
+		
+		
+//		designService.costAccounting(account, orderId_request, taskId, processId, design_cost);
+		
+		return "redirect:/design/designCAD_confirm";
+	}
+	
+	
+	
+	
 	
 	
 	
