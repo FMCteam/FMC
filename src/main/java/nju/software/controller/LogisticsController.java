@@ -10,9 +10,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderModel;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
@@ -37,6 +40,60 @@ public class LogisticsController {
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 
+	
+	/**
+	 * 返回一个orderList
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuList.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+		String action="putstorage";
+		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
+		model.put("order_model_list", orderModelList);
+	    return "logistics/ruku_order_list";
+	}
+	
+	/**
+	 * 返回一个order package detail的界面，package列表
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuDetail.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+		String action="putstorage";
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("process_id");
+		model.put("orderId", orderId);
+		
+	    return null;
+	}
+	
+	/**
+	 * order package detail的确认，
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuDetailPost.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuDetailPost(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+	    return null;
+	}
 	/**
 	 * 
 	 * @param request
@@ -360,4 +417,118 @@ public class LogisticsController {
 		model.put("page_number", page_number);
 		return "logistics/to_receive_sample_list";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 发货跳转链接
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/shipments.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String shipments(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		System.out.println("logistics shipments ================ show task");
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String actorId = "WULIUZHUGUAN";
+		System.out.println("actorId: " + actorId);
+		String taskName = "confirm_shipments";
+		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		if (orderList.isEmpty()) {
+			System.out.println("no orderList ");
+		}
+		
+		model.addAttribute("order_list", orderList);
+		
+		return "logistic/shipments";
+	}
+	
+	
+	
+	
+	/**
+	 * 发货页面详细信息
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/shipments_detail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String shipments_detail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		System.out.println("logistics shipments_detail================");
+		
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+//		Logistics logistics = logisticsService.getLogisticsByOrderId(orderId_request);
+
+		model.addAttribute("orderModel", orderModel);
+//		model.addAttribute("logistics", logistics);
+
+		
+		
+		return "logistics/shipments_detail";
+	}
+	
+	
+	
+
+	/**
+	 * 发货
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/doShipments.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String doShipments(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		System.out.println("logistics shipments_detail================");
+		
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+		String comment = request.getParameter("logistics_cost");
+		String taskName = "confirm_shipments ";
+	
+//		logisticsService.shipments(account, orderId_request, taskId, processId, design_cost);
+		
+		return "redirect:/logistics/shipments";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
