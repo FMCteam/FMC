@@ -40,6 +40,60 @@ public class LogisticsController {
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 
+	
+	/**
+	 * 返回一个orderList
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuList.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+		String action="putstorage";
+		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
+		model.put("order_model_list", orderModelList);
+	    return "logistics/ruku_order_list";
+	}
+	
+	/**
+	 * 返回一个order package detail的界面，package列表
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuDetail.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+		String action="putstorage";
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("process_id");
+		model.put("orderId", orderId);
+		
+	    return null;
+	}
+	
+	/**
+	 * order package detail的确认，
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuDetailPost.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuDetailPost(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+	    return null;
+	}
 	/**
 	 * 
 	 * @param request
