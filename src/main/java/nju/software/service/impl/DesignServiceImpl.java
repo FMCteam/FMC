@@ -1,9 +1,11 @@
 package nju.software.service.impl;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.net.ntp.TimeStamp;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,14 @@ import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.QuoteDAO;
+import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.DesignCad;
 import nju.software.service.DesignService;
 import nju.software.util.JbpmAPIUtil;
 
@@ -38,7 +42,12 @@ public class DesignServiceImpl implements DesignService {
 	private QuoteDAO QuoteDAO;
 	@Autowired
 	private AccessoryDAO accessoryDAO;
+	@Autowired
+	private DesignCadDAO DesignCadDAO;
+	
 
+	
+	
 	@Override
 	public boolean verify(Account account, int orderId, long taskId, 
 			long processId, boolean designVal, String comment) {
@@ -126,6 +135,10 @@ public class DesignServiceImpl implements DesignService {
 
 	
 	
+
+
+	
+	
 	
 	
 	
@@ -155,6 +168,62 @@ public class DesignServiceImpl implements DesignService {
 		List<Accessory> list = accessoryDAO.findByOrderId(orderId);
 		return list;
 	}
+
+
+	@Override
+	public boolean uploadCAD(Account account, int orderId, long taskId,
+			long processId, String url, Timestamp uploadTime) {
+		String actorId = "SHEJIZHUGUAN";
+		//需要获取task中的数据	
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		System.out.println("orderId: " + orderId);
+		if (orderId == orderId_process) {
+
+			
+				DesignCad designCad = DesignCadDAO.findById(orderId);
+			if(designCad ==null){
+				//数据库中无quote对象
+				//修改QUote内容
+				designCad =new DesignCad ();
+				designCad .setOrderId(orderId);
+				designCad .setCadUrl(url);
+				designCad.setCadVersion((short) 1);
+				designCad.setUploadTime(uploadTime);
+				 DesignCadDAO.save(designCad );
+			}else{
+				//quote已存在于数据库
+				//修改QUote内容
+				
+				short newVersion=(short) (designCad.getCadVersion()+1);
+				designCad .setCadUrl(url);
+				designCad.setCadVersion(newVersion);
+				designCad.setUploadTime(uploadTime);
+				DesignCadDAO.attachDirty(designCad);
+			}
+		
+
+			//修改流程参数
+			Map<String, Object> data = new HashMap<>();
+//			data.put("designVal", designVal);
+			data.put("OrderId", orderId);
+			//直接进入到下一个流程时
+			try {
+				jbpmAPIUtil.completeTask(taskId, data, actorId);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+		return false;
+	}
+
+
+
+	
+
+
 
 	
 }
