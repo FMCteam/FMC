@@ -16,12 +16,17 @@ import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.PackageDAO;
+import nju.software.dao.impl.PackageDetailDAO;
+import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.model.OrderInfo;
 import nju.software.model.QuoteConfirmTaskSummary;
@@ -48,6 +53,12 @@ public class ProduceServiceImpl implements ProduceService {
 	@Autowired
 	private QuoteDAO quoteDAO;
 
+	@Autowired
+	private ProductDAO productDAO;
+	@Autowired
+	private PackageDAO packageDAO;
+	@Autowired
+	private PackageDetailDAO packageDetailDAO;
 	@Override
 	public boolean verify(Account account, int orderId, long taskId,
 			long processId, boolean productVal, String comment) {
@@ -240,6 +251,37 @@ public class ProduceServiceImpl implements ProduceService {
 			}
 		}
 		return null;
+	}
+
+	
+	@Override
+	public List<Product> getProductByOrderId(int parseInt) {
+		// TODO Auto-generated method stub
+		List<Product> productList=productDAO.findByProperty("orderId", parseInt);
+		return productList;
+	}
+
+	@Override
+	public List<nju.software.dataobject.Package> getPackageByOrderId(int parseInt) {
+		// TODO Auto-generated method stub
+		List<nju.software.dataobject.Package> packageList=packageDAO.findByProperty("orderId",parseInt);
+		return packageList;
+	}
+
+	@Override
+	public List<List<PackageDetail>> getProductDetailByPackage(
+			List<nju.software.dataobject.Package> packageList) {
+		// TODO Auto-generated method stub
+		List<List<PackageDetail>> detail=new ArrayList<List<PackageDetail>>();
+		for(nju.software.dataobject.Package p:packageList)
+		{
+			
+			int packageId=p.getPackageId();
+			List<PackageDetail> l1=packageDetailDAO.findByProperty("packageId", packageId);
+			detail.add(l1);
+			
+		}
+		return detail;
 	}
 	
 	

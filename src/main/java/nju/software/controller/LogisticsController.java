@@ -15,9 +15,13 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Product;
+import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
+import nju.software.service.ProduceService;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
 
@@ -40,9 +44,10 @@ public class LogisticsController {
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 
-	
+	@Autowired
+	private ProduceService produceService;
 	/**
-	 * 返回一个orderList
+	 * 返回一个orderModelList
 	 * @param request
 	 * @param response
 	 * @param model
@@ -66,7 +71,7 @@ public class LogisticsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "logistics/rukuDetail.do", method = RequestMethod.POST)
+	@RequestMapping(value = "logistics/rukuDetail.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String rukuDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -75,9 +80,30 @@ public class LogisticsController {
 		String orderId=request.getParameter("order_id");
 		String taskId=request.getParameter("task_id");
 		String processId=request.getParameter("process_id");
-		model.put("orderId", orderId);
-		
-	    return null;
+		//OrderInfo orderInfo=produceService.getProduceInfo(Integer.parseInt(orderId));
+		List<Product> productList=produceService.getProductByOrderId(Integer.parseInt(orderId));
+		List<nju.software.dataobject.Package> packageList=produceService.getPackageByOrderId(Integer.parseInt(orderId));
+		List<List<PackageDetail>> packageDetailList=produceService.getProductDetailByPackage(packageList);
+		model.put("order_id", orderId);
+		model.put("task_id", taskId);
+		model.put("process_id", processId);
+		model.put("product_list", productList);
+		model.put("package_list", packageList);
+		model.put("package_detail_list", packageDetailList);
+		/*
+		model.put("product_list", orderInfo.getProducts());
+		List<List<PackageDetail>> packagesDetailList=orderInfo.getPackageDetails();
+		List<Package> packagesList=orderInfo.getPackages();
+		int sum=0;
+		for(List<PackageDetail> list:packagesDetailList)
+		{
+			sum+=list.size();
+		}
+		model.put("package_detail_list", packagesDetailList);
+		model.put("package_list",packagesList);
+		model.put("sum",sum);
+		*/
+	    return "logistics/ruku_detail";
 	}
 	
 	/**
@@ -92,7 +118,27 @@ public class LogisticsController {
 	public String rukuDetailPost(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String actor="WULIUZHUGUAN";
-	    return null;
+		String action="putstorage";
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("process_id");
+		String iterator=request.getParameter("iterator");
+		try
+		{
+			int int_iterator=Integer.parseInt(iterator);
+			//保存package信息
+			
+			if(int_iterator==1)
+			{
+				//推进流程
+				
+			}
+			return "redirct:/logistics/rukuList.do";
+		}catch(Exception e)
+		{
+			
+		}
+		return "redirct:/logistics/rukuList.do";
 	}
 	/**
 	 * 
