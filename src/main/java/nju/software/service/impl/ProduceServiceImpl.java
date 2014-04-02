@@ -23,6 +23,7 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
+import nju.software.model.OrderInfo;
 import nju.software.model.QuoteConfirmTaskSummary;
 import nju.software.model.SampleProduceTask;
 import nju.software.model.SampleProduceTaskSummary;
@@ -210,5 +211,37 @@ public class ProduceServiceImpl implements ProduceService {
 				return false;
 				
 	}
+
+	@Override
+	public List<OrderInfo> getProduceList() {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"SHENGCHANZHUGUAN", "volume_production");
+		List<OrderInfo> taskSummarys = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			
+			Integer orderId = (Integer) getVariable("orderId", task);
+			OrderInfo summary =new  OrderInfo(orderDAO.findById(orderId), task.getId());
+			taskSummarys.add(summary);
+
+		}
+		return taskSummarys;
+	}
+
+	@Override
+	public OrderInfo getProduceInfo(Integer orderId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"SHENGCHANZHUGUAN", "volume_production");
+		for (TaskSummary task : tasks) {
+			if(getVariable("orderId", task).equals(orderId)){
+				OrderInfo summary =new  OrderInfo(orderDAO.findById(orderId), task.getId());
+				return summary;
+			}
+		}
+		return null;
+	}
+	
+	
 
 }

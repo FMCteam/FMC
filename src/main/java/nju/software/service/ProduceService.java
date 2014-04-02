@@ -6,6 +6,7 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
+import nju.software.model.OrderInfo;
 import nju.software.model.SampleProduceTask;
 import nju.software.model.SampleProduceTaskSummary;
 
@@ -29,4 +30,9 @@ public interface ProduceService {
 	public SampleProduceTask getSampleProduceTask(Integer orderId,long taskId) ;
 	
 	public void completeSampleProduceTask(long taskId,String result);
+	
+	
+	public List<OrderInfo>getProduceList();
+	
+	public OrderInfo getProduceInfo(Integer orderId);
 }
