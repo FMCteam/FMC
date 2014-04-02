@@ -1,6 +1,9 @@
 package nju.software.service;
 
+import java.sql.Timestamp;
 import java.util.List;
+
+import org.apache.commons.net.ntp.TimeStamp;
 
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
@@ -21,5 +24,7 @@ public interface DesignService {
 	
 	public List<Accessory> getAccessoryByOrderId(int orderId);
 	
-
+	 public boolean uploadCAD(Account account, int orderId, long taskId, 
+				long processId, String url,Timestamp uploadTime);
+	
 }
