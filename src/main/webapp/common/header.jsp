@@ -142,7 +142,7 @@
 						<ul>
 							<li><a href="${ctx }/finance/confirmSample.do">样衣金确认</a></li>
 							<li><a href="${ctx }/finance/confirmDeposit.do">首定金确认</a></li>
-							<li><a href="#">生产金确认</a></li>
+							<li><a href="${ctx }/finance/confirmPayment.do">生产金确认</a></li>
 							<li><a href="#">尾金确认</a></li>
 						</ul></li>
 						</c:if>
@@ -151,7 +151,7 @@
 							class="iconfa-th-list"></span> 物流部</a>
 						<ul>
 							<li><a href="${ctx }/logistics/sampleOrderList.do">收取样衣</a></li>
-							<li><a href="${ctx }/logistics/add.do">样衣发货</a></li>
+							<li><a href="${ctx }/logistics/sendSampleList.do">样衣发货</a></li>
 							<li><a href="${ctx }/logistics/add.do">产品入库</a></li>
 							<li><a href="${ctx }/logistics/add.do">产品发货</a></li>
 						</ul></li>

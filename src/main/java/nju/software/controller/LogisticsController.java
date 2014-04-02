@@ -12,10 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Customer;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
+import nju.software.service.CustomerService;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
@@ -37,6 +39,8 @@ public class LogisticsController {
 	private OrderService orderService;
 	@Autowired
 	private LogisticsService logisticsService;
+	@Autowired
+	private CustomerService customerService;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 
@@ -362,19 +366,28 @@ public class LogisticsController {
 	}
 	
 	//发送样衣信息
-	@RequestMapping(value = "logistics/sendSampleOrderDetail.do", method = RequestMethod.POST)
+	@RequestMapping(value = "logistics/sendSampleOrderDetail.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String sendSampleOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String id = request.getParameter("orderId");
-		
+		String taskId = request.getParameter("taskId");
+		String processId = request.getParameter("pid");
+		long tid = Long.parseLong(taskId);
+		long pid = Long.parseLong(processId);
+		Order o = orderService.findByOrderId(id);
+		Logistics l = logisticsService.findByOrderId(id);
+		Customer c = customerService.findByCustomerId(o.getCustomerId());
+		ComposeOrderAndLog log = new ComposeOrderAndLog(pid, tid, o, l);
+		model.addAttribute("log", log);
+		model.addAttribute("customer", c);
 		return "logistics/send_sample";
 	}
 	
 	//发送样衣list
-	@RequestMapping(value = "logistics/sendSampleOrder.do", method = RequestMethod.POST)
+	@RequestMapping(value = "logistics/sendSampleList.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String sendSampleOrder(HttpServletRequest request,
+	public String sendSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String page = request.getParameter("page");
 		String number_per_page = request.getParameter("number_per_page");
@@ -388,7 +401,7 @@ public class LogisticsController {
 		}
 
 		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"WULIUZHUGUAN", "received_sample");
+				"WULIUZHUGUAN", "deliver_sample");
 		int page_number = (int) Math.ceil((double) list.size()
 				/ s_number_per_page);
 		int start = s_number_per_page * (s_page - 1);
@@ -415,16 +428,25 @@ public class LogisticsController {
 
 		model.put("page", s_page);
 		model.put("page_number", page_number);
-		return "logistics/to_receive_sample_list";
+		return "logistics/to_send_sample_list";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+	//发送样衣list
+	@RequestMapping(value = "logistics/sendSampleOrder.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String sendSampleOrder(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String id = request.getParameter("orderId");
+		String taskId = request.getParameter("taskId");
+		String processId = request.getParameter("pid");
+		long tid = Long.parseLong(taskId);
+		long pid = Long.parseLong(processId);
+		Order o = orderService.findByOrderId(id);
+		Logistics l = logisticsService.findByOrderId(id);
+		
+		logisticsService.sendSample(tid, "WULIUZHUGUAN", pid);
+		return "redirect:/logistics/sendSampleList.do";
+	}
 	
 	
 	/**
