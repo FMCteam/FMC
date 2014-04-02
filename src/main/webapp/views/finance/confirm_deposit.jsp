@@ -30,7 +30,8 @@
                             <th class="head0">款式</th>
                             <th class="head1">件数</th>
                             <th class="head0">交货时间</th>
-                            <th class="head1"></th>
+                            <th class="head1">操作</th>
+                            <th class="head0">操作</th>
                         </tr>
                     </thead>
                     <tbody>
