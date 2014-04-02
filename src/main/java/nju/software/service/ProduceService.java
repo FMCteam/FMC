@@ -35,4 +35,6 @@ public interface ProduceService {
 	public List<OrderInfo>getProduceList();
 	
 	public OrderInfo getProduceInfo(Integer orderId);
+	
+	public void pruduceSubmit(String[] pid,String[] askAmount,long taskId);
 }

@@ -8,5 +8,5 @@ public interface LogisticsService {
 
 	public boolean addLogistics(Logistics log);
 
-	public boolean sendSample(long taskId);
+	public boolean sendSample(long taskId, String actor, long processId);
 }
