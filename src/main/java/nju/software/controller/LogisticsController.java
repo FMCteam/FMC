@@ -40,6 +40,60 @@ public class LogisticsController {
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 
+	
+	/**
+	 * 返回一个orderList
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuList.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+		String action="putstorage";
+		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
+		model.put("order_model_list", orderModelList);
+	    return "logistics/ruku_order_list";
+	}
+	
+	/**
+	 * 返回一个order package detail的界面，package列表
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuDetail.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+		String action="putstorage";
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("process_id");
+		model.put("orderId", orderId);
+		
+	    return null;
+	}
+	
+	/**
+	 * order package detail的确认，
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuDetailPost.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuDetailPost(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+	    return null;
+	}
 	/**
 	 * 
 	 * @param request
@@ -317,15 +371,51 @@ public class LogisticsController {
 		return "logistics/send_sample";
 	}
 	
-	//发送样衣信息
+	//发送样衣list
 	@RequestMapping(value = "logistics/sendSampleOrder.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String sendSampleOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String id = request.getParameter("orderId");
-		
-		
-		return "redirect:/logistics/sampleOrderList.do";
+		String page = request.getParameter("page");
+		String number_per_page = request.getParameter("number_per_page");
+		int s_page = 1;
+		int s_number_per_page = 10;
+		if (!StringUtil.isEmpty(page)) {
+			s_page = Integer.parseInt(page);
+		}
+		if (!StringUtil.isEmpty(number_per_page)) {
+			s_number_per_page = Integer.parseInt(number_per_page);
+		}
+
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"WULIUZHUGUAN", "received_sample");
+		int page_number = (int) Math.ceil((double) list.size()
+				/ s_number_per_page);
+		int start = s_number_per_page * (s_page - 1);
+		List<ComposeOrderAndLog> logList = new ArrayList<ComposeOrderAndLog>();
+		int i = 0;
+		int j = 0;
+		for (TaskSummary task : list) {
+			if (i >= start && j < s_number_per_page) {
+				WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+						.getKsession().getProcessInstance(
+								task.getProcessInstanceId());
+				String orderId1 = process.getVariable("orderId").toString();
+				Order o = orderService.findByOrderId(orderId1);
+
+				Logistics l = logisticsService.findByOrderId(orderId1);
+				ComposeOrderAndLog log = new ComposeOrderAndLog(
+						task.getProcessInstanceId(), task.getId(), o, l);
+				logList.add(log);
+				j++;
+			}
+			i++;
+		}
+		model.put("orderList", logList);
+
+		model.put("page", s_page);
+		model.put("page_number", page_number);
+		return "logistics/to_receive_sample_list";
 	}
 	
 	

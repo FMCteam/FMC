@@ -2,7 +2,10 @@ package nju.software.controller;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +43,11 @@ public class DesignController {
 	private OrderService orderService;
 	@Autowired
 	private DesignService designService;
+	
+	
+	
+	
+	
 	
 	/**
 	 * 设计验证跳转链接
@@ -285,7 +293,7 @@ public class DesignController {
 	public String uploadCAD_detail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		System.out.println("design uploadCAD detail ================ costAccountingDetail");
+		System.out.println("design uploadCAD detail ================ uploadCAD detail");
 		OrderModel orderModel = null;
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
@@ -308,6 +316,7 @@ public class DesignController {
 	
 	
 	/**
+	 * 
 	 * 录入版型数据 上传文件处理
 	 * @param request
 	 * @param response
@@ -338,6 +347,8 @@ public class DesignController {
 		
 		  MultipartFile file = multipartRequest.getFile("CADFile");
 		
+		  
+		  
 		  if (file == null) {
               try {
 				throw new Exception("上传失败：文件为�空");
@@ -346,6 +357,9 @@ public class DesignController {
 				e.printStackTrace();
 			}    
           }
+		  
+		  
+		  
           if(file.getSize()>10000000)        
           {
               try {
@@ -355,6 +369,7 @@ public class DesignController {
 				e.printStackTrace();
 			}            
           }
+          
           
           
 		  String filename=file.getOriginalFilename();     
@@ -369,6 +384,7 @@ public class DesignController {
                 }
             }
 		
+		    
 		    else{
                 try {
 					throw new Exception("上传失败：上传文件不能为�空");
@@ -378,9 +394,16 @@ public class DesignController {
 				}
             }
 		
+		    Calendar calendar = Calendar.getInstance();
+		 // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd mm:ss");
+		 // String sampleClothesPicture=sdf.format(calendar.getTime());
+		    
+		    
+		   
+		    String url="D:/"+"/"+ filename;
+		    Timestamp uploadTime = new Timestamp(new Date().getTime());
 		
-		
-		
+		    designService.uploadCAD(account, orderId_request, taskId, processId, url,uploadTime);
 		
 		
 //		designService.costAccounting(account, orderId_request, taskId, processId, design_cost);
