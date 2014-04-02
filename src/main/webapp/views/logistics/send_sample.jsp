@@ -9,8 +9,8 @@
 				<h4 class="widgettitle">物流发货</h4>
 				<div class="widgetcontent">
 
-					<form onSubmit="return verify()" method="post"
-						action="${ctx }/market/addMarketOrder.do">
+					<form method="post"
+						action="${ctx }/logistics/sendSampleOrder.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td rowspan="2">订单信息</td>
@@ -20,17 +20,17 @@
 								<td>入库时间</td>
 							</tr>
 							<tr>
-								<td>1</td>
-								<td>1</td>
+								<td>log.o.orderId</td>
+								<td>log.o.orderTime</td>
 								<td>1</td>
 								<td>1</td>
 							</tr>
 							<tr>
 								<td rowspan="3">客户信息</td>
 								<td>公司名称</td>
-								<td>1</td>
+								<td>log.o.customerCompany</td>
 								<td>联系电话</td>
-								<td>1</td>
+								<td>log.o.customerPhone1</td>
 							</tr>
 							<tr>
 								<td>采购人姓名</td>
@@ -160,18 +160,17 @@
 							</tr>
 							<tr>
 								<td>操作</td>
-								<td colspan="2"><input type="submit" /></td>
-								<td colspan="2"><input type="reset" /></td>
+								<td colspan="4"><button class="btn btn-primary btn-rounded">确认发货</button></td>
 							</tr>
 						</table>
 						<input type="hidden" name="customerId"
 							value="${customer.customerId}" />
+							<input type="hidden" name="taskId"
+							value="${log.taskId}" />
+							<input type="hidden" name="processId"
+							value="${log.processId}" />
 					</form>
 				</div>
-				
-					<input type="file"   id="sample_clothes_picture" hidden="hidden"
-						name="sample_clothes_picture" /> <input type="file"
-						name="reference_picture"   id="reference_picture"  hidden="hidden"/>
 				
 				<!--widgetcontent-->
 			</div>
