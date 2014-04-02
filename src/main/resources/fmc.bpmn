@@ -907,9 +907,6 @@
     <property id="produceComment" itemSubjectRef="_produceCommentItem"/>
 
     <laneSet>
-      <lane name="SHICHANGZHUGUAN" >
-        <flowNodeRef>_29</flowNodeRef>
-      </lane>
       <lane name="SHICHANGZHUANYUAN" >
         <flowNodeRef>_19</flowNodeRef>
         <flowNodeRef>_28</flowNodeRef>
@@ -918,6 +915,9 @@
         <flowNodeRef>_62</flowNodeRef>
         <flowNodeRef>_74</flowNodeRef>
         <flowNodeRef>_75</flowNodeRef>
+      </lane>
+      <lane name="SHICHANGZHUGUAN" >
+        <flowNodeRef>_29</flowNodeRef>
       </lane>
       <lane name="CAIGOUZHUGUAN" >
         <flowNodeRef>_10</flowNodeRef>
@@ -2026,7 +2026,7 @@ return false;
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return confirmquote;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_44-_43" sourceRef="_44" targetRef="_43" name="receivedsamplejin" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receivedsamplejin;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receivedsamplejin;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_137-_40" sourceRef="_137" targetRef="_40" name="noeidtquote" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !eidtquote;</conditionExpression>
@@ -2041,7 +2041,7 @@ return false;
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !purchaseerror;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_44-_49" sourceRef="_44" targetRef="_49" name="noreceivedsamplejin" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receivedsamplejin;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receivedsamplejin;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_49-_48" sourceRef="_49" targetRef="_48" />
     <sequenceFlow id="_54-_55" sourceRef="_54" targetRef="_55" />

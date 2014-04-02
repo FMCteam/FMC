@@ -120,6 +120,7 @@
 						<ul>
 							<li><a href="${ctx }/buy/verify.do">样衣验证</a></li>
 							<li><a href="${ctx }/buy/costAccounting.do">成本合算</a></li>
+							<li><a href="${ctx }/buy/caigouqueren1List.do">采购确认</a></li>
 							<li><a href="#">样衣采购</a></li>
 							<li><a href="#">生产验证</a></li>
 							<li><a href="#">生产采购</a></li>

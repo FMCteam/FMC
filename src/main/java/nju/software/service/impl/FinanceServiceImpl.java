@@ -115,6 +115,7 @@ public class FinanceServiceImpl implements FinanceService {
 			//修改流程参数
 			Map<String, Object> data = new HashMap<>();
 			data.put("receivedsamplejin", receivedsamplejin);
+			System.out.println("taskId" + taskId);
 			//直接进入到下一个流程时
 			try {
 				jbpmAPIUtil.completeTask(taskId, data, actorId);
