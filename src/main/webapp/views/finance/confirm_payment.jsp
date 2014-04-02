@@ -9,7 +9,7 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">确认合同加工单</h4>
+                    <h4 class="widgettitle">确认70%金额</h4>
                 <table id="dyntable" class="table table-bordered responsive">
                     <colgroup>
                         <col class="con1" />
@@ -45,17 +45,21 @@
 							<td>${orderModel.order.styleName }</td>
 							<td>${orderModel.order.askAmount }</td>
 							<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-							<td><form action="${ctx }/market/confirmProductDetail.do"
+							<td><form action="${ctx }/finance/confirmPaymentDetail.do" style="display:inline"
 									method="post">
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" /> 
-									<input type="hidden" name="task_id" value="${orderModel.taskId }" /> 
-									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-									<button class="btn btn-primary btn-rounded">写加工单</button>
+									<input type="hidden" name="id"
+										value="${orderModel.order.orderId }" /> <input type="hidden"
+										name="task_id" value="${orderModel.taskId }" /> <input
+										type="hidden" name="process_id"
+										value="${orderModel.processInstanceId }" />
+									<button class="btn btn-primary btn-rounded">收款确认</button>
 								</form></td>
-							<td><form action="${ctx }/market/cancelProduct.do" method="post">
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" /> 
-									<input type="hidden" name="task_id" value="${orderModel.taskId }" /> 
-									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+							<td><form action="${ctx }/finance/cancelPayment.do" style="display:inline" method="post">
+									<input type="hidden" name="id"
+										value="${orderModel.order.orderId }" /> <input type="hidden"
+										name="task_id" value="${orderModel.taskId }" /> <input
+										type="hidden" name="process_id"
+										value="${orderModel.processInstanceId }" />
 									<button class="btn btn-primary btn-rounded">取消订单</button>
 								</form></td>
 						</tr>

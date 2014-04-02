@@ -156,9 +156,11 @@ public class ProduceController {
 	public String sampleProduceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String result = request.getParameter("result");
+		
 		String taskId = request.getParameter("taskId");
+		System.out.println(result+":"+taskId);
 		produceService.completeSampleProduceTask(Long.parseLong(taskId), result);
-		return "redirect:/produce/sampleProduceList";
+		return "forward:/produce/sampleProduceList.do";
 	}
 	
 	
@@ -321,6 +323,10 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		
+		String pid=request.getParameter("pid");
+		String askAmount=request.getParameter("askAmount");
+		
 		//String orderId=request.getParameter("orderId");
 		//OrderInfo task=produceService.getProduceInfo(Integer.parseInt(orderId));
 		//model.addAttribute("task", task);

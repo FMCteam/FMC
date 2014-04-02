@@ -44,4 +44,7 @@ public interface ProduceService {
 
 	public List<List<PackageDetail>> getProductDetailByPackage(
 			List<nju.software.dataobject.Package> packageList);
+
+	public void pruduceSubmit(String[] pid,String[] askAmount,long taskId);
+
 }

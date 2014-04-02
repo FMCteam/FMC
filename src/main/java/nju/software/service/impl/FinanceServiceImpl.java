@@ -160,4 +160,35 @@ public class FinanceServiceImpl implements FinanceService {
 
 		return false;
 	}
+
+	@Override
+	public boolean confirmPayment(Account account, int orderId, long taskId,
+			long processId, boolean paymentok, Money money) {
+		// TODO Auto-generated method stub
+//		String actorId = account.getUserRole();
+		String actorId = "CAIWUZHUGUAN";
+		//需要获取task中的数据	
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		System.out.println("orderId: " + orderId);
+		if (orderId == orderId_process) {
+			//如果收到样衣制作金，创建money记录
+			if (paymentok) {
+				moneyDAO.save(money);
+			}
+			//修改流程参数
+			Map<String, Object> data = new HashMap<>();
+			data.put("paymentok", paymentok);
+			//直接进入到下一个流程时
+			try {
+				jbpmAPIUtil.completeTask(taskId, data, actorId);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		return false;
+	}
 }
