@@ -142,7 +142,7 @@
 						<ul>
 							<li><a href="${ctx }/finance/confirmSample.do">样衣金确认</a></li>
 							<li><a href="${ctx }/finance/confirmDeposit.do">首定金确认</a></li>
-							<li><a href="#">生产金确认</a></li>
+							<li><a href="${ctx }/finance/confirmPayment.do">生产金确认</a></li>
 							<li><a href="#">尾金确认</a></li>
 						</ul></li>
 						</c:if>
