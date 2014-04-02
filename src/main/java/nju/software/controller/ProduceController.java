@@ -12,6 +12,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.model.QuoteConfirmTaskSummary;
 import nju.software.model.SampleProduceTask;
@@ -293,21 +294,38 @@ public class ProduceController {
 	
 	
 	
+	@RequestMapping(value = "produce/produceList.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String produceList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<OrderInfo>tasks=produceService.getProduceList();
+		model.addAttribute("tasks", tasks);
+		return "/produce/produceList";
+	}
 	
 	
 	
 	
+	@RequestMapping(value = "produce/produce.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String produce(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId=request.getParameter("orderId");
+		OrderInfo task=produceService.getProduceInfo(Integer.parseInt(orderId));
+		model.addAttribute("task", task);
+		return "/produce/produce";
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@RequestMapping(value = "produce/produceSubmit.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String produceSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		//String orderId=request.getParameter("orderId");
+		//OrderInfo task=produceService.getProduceInfo(Integer.parseInt(orderId));
+		//model.addAttribute("task", task);
+		return "redirect:/produce/produceList.do";
+	}
+
 	
 }
