@@ -16,12 +16,14 @@ import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.model.OrderInfo;
 import nju.software.model.QuoteConfirmTaskSummary;
@@ -47,6 +49,9 @@ public class ProduceServiceImpl implements ProduceService {
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private QuoteDAO quoteDAO;
+	@Autowired
+	private ProductDAO productDAO;
+	
 
 	@Override
 	public boolean verify(Account account, int orderId, long taskId,
@@ -113,7 +118,7 @@ public class ProduceServiceImpl implements ProduceService {
 			Integer orderId = (Integer) getVariable("orderId", task);
 			SampleProduceTaskSummary summary = SampleProduceTaskSummary
 					.getInstance(orderDAO.findById(orderId), (Quote) quoteDAO
-							.findByProperty("order_id", orderId).get(0), task
+							.findById(orderId), task
 							.getId());
 			taskSummarys.add(summary);
 
@@ -240,6 +245,25 @@ public class ProduceServiceImpl implements ProduceService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void pruduceSubmit(String[] pid, String[] askAmount, long taskId) {
+		// TODO Auto-generated method stub
+		
+		for(int i=0;i<pid.length;i++){
+			Product product=productDAO.findById(Integer.parseInt(pid[i]));
+			product.setAskAmount(Integer.parseInt(askAmount[i]));
+			productDAO.attachDirty(product);
+		}
+		Map<String,Object> data=new HashMap<String,Object>();
+		//data.put("producterror", result.equals("0"));
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, "SHENGCHANZHUGUAN");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

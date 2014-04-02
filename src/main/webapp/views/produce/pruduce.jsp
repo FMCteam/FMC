@@ -216,14 +216,24 @@
 							value="${customer.customerId}" />
 					</form>
 				</div>
-				<form method="post" action="${ctx}/produce/produceSubmit.do">
+				<form method="post" action="${ctx}/produce/produceSubmit.do" onsubmit="return deal()">
 					<table>
 						<tr>
 							<th>要求件数</th>
 							<th>要求大小</th>
 							<th>实际件数</th>
 						</tr>
+						<c:forEach var="product" items="${task.products}">
+							
+							<td>${product.askAmount}</td>
+							<td>${product.style}</td>
+							<td><input type="text" class="produceAmount" />
+							<input class="pid" type="text" hidden="hidden" value="${product.id}"></td>
+						</c:forEach>
+						<tr><td colspan="3"><input type="submit"></td></tr>
 					</table>
+					<input id="pid" type="text" name="pid" hidden="hidden"/>
+					<input id="askAmount" type="text" name="askAmount" hidden="hidden"/>
 				</form>
 
 				<input type="file" id="sample_clothes_picture" hidden="hidden"
@@ -258,4 +268,23 @@
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript">
+function deal(){
+	
+	$("#pid").val(getString("pid"));
+	$("#askAmount").val(getString("askAmount"));
+	return true;
+}
+
+function getString(col){
+	var tdString="";
+	var i=0;
+	for(;i<$("."+col).length-1;i++){
+		tdString+=$("."+col).eq(i).val()+",";
+	}
+	tdString+=$("."+col).eq(i).val();
+	return tdString;
+}
+
+</script>
 <%@include file="/common/footer.jsp"%>

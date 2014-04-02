@@ -210,8 +210,8 @@
 								<td colspan="3"><input type="reset" /></td>
 							</tr>
 							<tr>
-								<td><a href="${ctx}/produce/samplePruduceSubmit.do?taskId=${task.taskId}&result=1">加工完成</a></td>
-								<td><a href="${ctx}/produce/samplePruduceSubmit.do?taskId=${task.taskId}&result=0">加工失败</a></td>
+								<td><a href="${ctx}/produce/sampleProduceSubmit.do?taskId=${task.taskId}&result=1">加工完成</a></td>
+								<td><a href="${ctx}/produce/sampleProduceSubmit.do?taskId=${task.taskId}&result=0">加工失败</a></td>
 							</tr>
 						</table>
 						<input type="hidden" name="customerId" value="${customer.customerId}" />

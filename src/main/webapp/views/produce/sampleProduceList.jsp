@@ -37,7 +37,7 @@
 							<td>${task.innerPrice}</td>
 							<td>${task.outerPrice}</td>
 							<td><a
-								href="${ctx}/market/sampleProduce.do?taskId=${task.taskId}&orderId=${task.orderId}">样衣详情</a>
+								href="${ctx}/produce/sampleProduce.do?taskId=${task.taskId}&orderId=${task.orderId}">样衣详情</a>
 							</td>
 						</tr>
 					</c:forEach>
