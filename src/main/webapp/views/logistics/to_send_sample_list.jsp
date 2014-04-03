@@ -21,12 +21,12 @@
 					</tr>
 					<c:forEach var="task" items="${orderList}">
 						<tr class="gradeA">
-							<td>${task.o.customerName}</td>
-							<td>${task.o.customerPhone}</td>
-							<td>${task.o.companyName}</td>
-							<td>${task.o.companyPhone}</td>
-							<td>${task.o.innerPrice}</td>
-							<td>${task.o.outerPrice}</td>
+							<td>1</td>
+							<td>1</td>
+							<td>1</td>
+							<td>1</td>
+							<td>1</td>
+							<td>1</td>
 							<td><a href="${ctx}/logistics/sendSampleOrderDetail.do?taskId=${task.taskId}&pid=${task.processId}&orderId=${task.o.orderId}">发货</a></td>
 						</tr>
 					</c:forEach>

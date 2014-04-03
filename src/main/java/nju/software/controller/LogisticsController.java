@@ -438,7 +438,7 @@ public class LogisticsController {
 			HttpServletResponse response, ModelMap model) {
 		String id = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
-		String processId = request.getParameter("pid");
+		String processId = request.getParameter("processId");
 		long tid = Long.parseLong(taskId);
 		long pid = Long.parseLong(processId);
 		Order o = orderService.findByOrderId(id);

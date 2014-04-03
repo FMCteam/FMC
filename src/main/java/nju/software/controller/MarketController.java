@@ -829,7 +829,7 @@ public class MarketController {
 					processId, comfirmworksheet, productList);
 		}
 
-		return "redirect:/market/confirmProdyct.do";
+		return "redirect:/market/confirmProduct.do";
 	}
 
 	/**
