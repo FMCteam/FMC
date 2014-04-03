@@ -978,7 +978,7 @@ public class MarketController {
 		marketService.completeSignContract(Integer.parseInt(orderId),
 				Double.parseDouble(discount), Long.parseLong(taskId));
 
-		return "redirect:/market/signContractList";
+		return "redirect:/market/signContractList.do";
 	}
 
 	// =================================莫其凡的内容到此结束===========================================

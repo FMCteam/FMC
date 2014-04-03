@@ -219,6 +219,7 @@
 						<label>总金额：</label><input name="XXX" type="text" />
 						<input name="orderId" type="text" hidden="hidden" value="${task.order.orderId}"/>
 						<input name="taskId" type="text" hidden="hidden" value="${task.taskId}"/>
+						<input type="submit"   />
 					</form>
 				</div>
 				
