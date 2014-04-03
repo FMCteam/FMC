@@ -111,7 +111,7 @@
 							<li><a href="${ctx }/design/costAccounting.do">成本合算</a></li>
 							<li><a href="${ctx }/design/upload_CAD.do">样衣版型</a></li>
 							<li><a href="${ctx }/design/designCAD_confirm.do">生产验证</a></li>
-							<li><a href="#">生产版型</a></li>
+							<li><a href="${ctx }/design/productCAD_confirm.do">生产版型</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_buy==true}">

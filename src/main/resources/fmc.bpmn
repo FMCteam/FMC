@@ -907,6 +907,9 @@
     <property id="produceComment" itemSubjectRef="_produceCommentItem"/>
 
     <laneSet>
+      <lane name="SHICHANGZHUGUAN" >
+        <flowNodeRef>_29</flowNodeRef>
+      </lane>
       <lane name="SHICHANGZHUANYUAN" >
         <flowNodeRef>_19</flowNodeRef>
         <flowNodeRef>_28</flowNodeRef>
@@ -915,9 +918,6 @@
         <flowNodeRef>_62</flowNodeRef>
         <flowNodeRef>_74</flowNodeRef>
         <flowNodeRef>_75</flowNodeRef>
-      </lane>
-      <lane name="SHICHANGZHUGUAN" >
-        <flowNodeRef>_29</flowNodeRef>
       </lane>
       <lane name="CAIGOUZHUGUAN" >
         <flowNodeRef>_10</flowNodeRef>
@@ -1778,7 +1778,7 @@
       </dataInputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
-          <formalExpression>SHENGCHANZHUGUAN</formalExpression>
+          <formalExpression>SHEJIZHUGUAN</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
