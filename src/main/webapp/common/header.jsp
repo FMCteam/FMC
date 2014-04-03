@@ -163,7 +163,7 @@
 						<li class="dropdown"><a href=""><span
 							class="iconfa-th-list"></span> 质检部</a>
 						<ul>
-							<li><a href="#">质量检查</a></li>
+							<li><a href="${ctx }/quality/checkList.do">质量检查</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_employee==true}">
