@@ -43,10 +43,11 @@
 								<td>${orderModel.order.styleName }</td>
 								<td>${orderModel.order.askAmount }</td>
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx }/buy/caigouqueren1Detail.do" method="post" >
+								<td><form action="${ctx }/buy/${end_url }.do" method="post" >
 									<input type="hidden" name="order_id" value="${orderModel.order.orderId }" />
 										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
 										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+										
 										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 详细信息</button></form>
 								</td>
 	                        </tr>

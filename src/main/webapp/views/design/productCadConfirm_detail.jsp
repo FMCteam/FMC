@@ -8,7 +8,7 @@
             <div class="maincontentinner">
                 <div class="row-fluid" style="min-height:300px;">
                 
-                <form action="${ctx }/design/doCadConfirm.do" method="post" enctype="multipart/form-data">  
+                <form action="${ctx }/design/doProductCadConfirm.do" method="post" enctype="multipart/form-data">  
   
   <table class="table table-striped table-bordered table-hover">
 							<tr>

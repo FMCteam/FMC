@@ -9,7 +9,7 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<section>
 				<table id="dyntable" class="table responsive">
-					<caption>修改报价</caption>
+					<caption>质量检查</caption>
 					<tr>
 						<th class="head0">客户姓名</th>
 						<th class="head1">客户电话</th>
@@ -19,28 +19,18 @@
 						<th class="head0">外部报价</th>
 						<th class="head1">操作</th>
 					</tr>
-					<tr>
-						<td>(例子)李二宇</td>
-						<td>15996385325</td>
-						<td>南京大学软件学院</td>
-						<td>025-67678989</td>
-						<td>￥200.00</td>
-						<td>￥250.00</td>
-						<td><a href="#">确认报价</a> <a href="#"> 修改报价</a> <a href="#">
-								放弃订单</a></td>
-					</tr>
 					<c:forEach var="task" items="${tasks}">
 						<tr class="gradeA">
-							<td>${task.customerName}</td>
-							<td>${task.customerPhone}</td>
-							<td>${task.companyName}</td>
-							<td>${task.companyPhone}</td>
-							<td>${task.innerPrice}</td>
-							<td>${task.outerPrice}</td>
+							<td>${task.order.customerName}</td>
+							<td>${task.order.customerPhone1}</td>
+							<td>${task.order.customerCompany}</td>
+							<td>${task.order.customerCompanyFax}</td>
+							<td>${task.taskId}</td>
+							<td>${task.processInstanceId}</td>
 							<td>
 								<a
-								href="${ctx}/market/quoteModifyList.do?id=${task.orderId}">
-									修改报价</a> </td>
+								href="${ctx}/quality/checkDetail.do?id=${task.order.orderId}&tid=${task.taskId}&pid=${task.processInstanceId}">
+									检查</a> </td>
 						</tr>
 					</c:forEach>
 				</table>

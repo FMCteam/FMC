@@ -6,6 +6,8 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
+import nju.software.model.OrderModel;
+import nju.software.model.ProductModel;
 import nju.software.model.QuoteConfirmTaskSummary;
 
 
@@ -29,5 +31,10 @@ public interface MarketService {
 	public void completeSignContract(Integer orderId,double discount,long taskId);
 
 	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(Integer employeeId);
+
+	public List<OrderModel> getProductModifyList(Integer userId);
+
+	public boolean modifyProduct(Integer userId, int id, long taskId,
+			long processId, ProductModel productModel);
 	
 }

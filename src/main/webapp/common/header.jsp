@@ -96,7 +96,7 @@
 
 									<li><a href="${ctx }/market/quoteToModifyList.do">修改报价</a></li>
 									<li><a href="${ctx }/market/confirmProduct.do">商定合同</a></li>
-									<li><a href="#">修改合同</a></li>
+									<li><a href="${ctx }/market/productToModifyList.do">修改合同</a></li>
 									<li><a href="#">签订合同</a></li>
 									<li><a href="#">订单回访</a></li>
 									<li><a href="#">提醒缴费</a></li>
@@ -111,7 +111,7 @@
 							<li><a href="${ctx }/design/costAccounting.do">成本合算</a></li>
 							<li><a href="${ctx }/design/upload_CAD.do">样衣版型</a></li>
 							<li><a href="${ctx }/design/designCAD_confirm.do">生产验证</a></li>
-							<li><a href="#">生产版型</a></li>
+							<li><a href="${ctx }/design/productCAD_confirm.do">生产版型</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_buy==true}">
@@ -121,6 +121,9 @@
 							<li><a href="${ctx }/buy/verify.do">采购验证</a></li>
 							<li><a href="${ctx }/buy/costAccounting.do">成本合算</a></li>
 							<li><a href="${ctx }/buy/caigouqueren1List.do">采购确认</a></li>
+							<li><a href="${ctx }/buy/caigouqueren2List.do">采购确认2</a></li>
+							<li><a href="${ctx }/buy/caigouqueren3List.do">采购确认3</a></li>
+							
 							<li><a href="#">样衣采购</a></li>
 							<li><a href="#">生产验证</a></li>
 							<li><a href="#">生产采购</a></li>
@@ -160,7 +163,7 @@
 						<li class="dropdown"><a href=""><span
 							class="iconfa-th-list"></span> 质检部</a>
 						<ul>
-							<li><a href="#">质量检查</a></li>
+							<li><a href="${ctx }/quality/checkList.do">质量检查</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_employee==true}">

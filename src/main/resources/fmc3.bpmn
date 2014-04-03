@@ -14,8 +14,8 @@
 
   <itemDefinition id="_orderIdItem" structureRef="Integer" />
   <itemDefinition id="_needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_editokItem" structureRef="Boolean" />
   <itemDefinition id="_eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_confirmquoteItem" structureRef="Boolean" />
@@ -31,18 +31,19 @@
   <itemDefinition id="_volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_designValItem" structureRef="Boolean" />
-  <itemDefinition id="_productValItem" structureRef="Boolean" />
+  <itemDefinition id="_verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_buyCommentItem" structureRef="String" />
-  <itemDefinition id="_designCommentItem" structureRef="String" />
-  <itemDefinition id="_produceCommentItem" structureRef="String" />
+  <itemDefinition id="_purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_designAdviceItem" structureRef="String" />
+  <itemDefinition id="_produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_7-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_7-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_7-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_7-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_7-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_7-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_7-editokItem" structureRef="Boolean" />
   <itemDefinition id="_7-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_7-confirmquoteItem" structureRef="Boolean" />
@@ -58,18 +59,19 @@
   <itemDefinition id="_7-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_7-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_7-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_7-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_7-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_7-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_7-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_7-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_7-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_7-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_7-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_7-designCommentItem" structureRef="String" />
-  <itemDefinition id="_7-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_7-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_7-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_7-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_7-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_10-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_10-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_10-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_10-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_10-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_10-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_10-editokItem" structureRef="Boolean" />
   <itemDefinition id="_10-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_10-confirmquoteItem" structureRef="Boolean" />
@@ -85,18 +87,19 @@
   <itemDefinition id="_10-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_10-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_10-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_10-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_10-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_10-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_10-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_10-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_10-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_10-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_10-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_10-designCommentItem" structureRef="String" />
-  <itemDefinition id="_10-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_10-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_10-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_10-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_10-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_11-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_11-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_11-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_11-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_11-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_11-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_11-editokItem" structureRef="Boolean" />
   <itemDefinition id="_11-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_11-confirmquoteItem" structureRef="Boolean" />
@@ -112,18 +115,19 @@
   <itemDefinition id="_11-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_11-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_11-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_11-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_11-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_11-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_11-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_11-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_11-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_11-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_11-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_11-designCommentItem" structureRef="String" />
-  <itemDefinition id="_11-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_11-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_11-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_11-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_11-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_12-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_12-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_12-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_12-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_12-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_12-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_12-editokItem" structureRef="Boolean" />
   <itemDefinition id="_12-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_12-confirmquoteItem" structureRef="Boolean" />
@@ -139,18 +143,19 @@
   <itemDefinition id="_12-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_12-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_12-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_12-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_12-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_12-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_12-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_12-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_12-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_12-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_12-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_12-designCommentItem" structureRef="String" />
-  <itemDefinition id="_12-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_12-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_12-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_12-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_12-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_19-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_19-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_19-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_19-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_19-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_19-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_19-editokItem" structureRef="Boolean" />
   <itemDefinition id="_19-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_19-confirmquoteItem" structureRef="Boolean" />
@@ -166,18 +171,19 @@
   <itemDefinition id="_19-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_19-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_19-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_19-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_19-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_19-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_19-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_19-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_19-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_19-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_19-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_19-designCommentItem" structureRef="String" />
-  <itemDefinition id="_19-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_19-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_19-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_19-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_19-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_23-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_23-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_23-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_23-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_23-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_23-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_23-editokItem" structureRef="Boolean" />
   <itemDefinition id="_23-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_23-confirmquoteItem" structureRef="Boolean" />
@@ -193,18 +199,19 @@
   <itemDefinition id="_23-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_23-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_23-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_23-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_23-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_23-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_23-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_23-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_23-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_23-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_23-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_23-designCommentItem" structureRef="String" />
-  <itemDefinition id="_23-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_23-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_23-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_23-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_23-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_25-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_25-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_25-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_25-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_25-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_25-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_25-editokItem" structureRef="Boolean" />
   <itemDefinition id="_25-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_25-confirmquoteItem" structureRef="Boolean" />
@@ -220,18 +227,19 @@
   <itemDefinition id="_25-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_25-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_25-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_25-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_25-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_25-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_25-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_25-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_25-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_25-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_25-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_25-designCommentItem" structureRef="String" />
-  <itemDefinition id="_25-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_25-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_25-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_25-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_25-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_24-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_24-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_24-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_24-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_24-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_24-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_24-editokItem" structureRef="Boolean" />
   <itemDefinition id="_24-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_24-confirmquoteItem" structureRef="Boolean" />
@@ -247,18 +255,19 @@
   <itemDefinition id="_24-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_24-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_24-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_24-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_24-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_24-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_24-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_24-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_24-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_24-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_24-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_24-designCommentItem" structureRef="String" />
-  <itemDefinition id="_24-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_24-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_24-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_24-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_24-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_29-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_29-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_29-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_29-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_29-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_29-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_29-editokItem" structureRef="Boolean" />
   <itemDefinition id="_29-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_29-confirmquoteItem" structureRef="Boolean" />
@@ -274,18 +283,19 @@
   <itemDefinition id="_29-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_29-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_29-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_29-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_29-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_29-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_29-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_29-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_29-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_29-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_29-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_29-designCommentItem" structureRef="String" />
-  <itemDefinition id="_29-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_29-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_29-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_29-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_29-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_28-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_28-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_28-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_28-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_28-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_28-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_28-editokItem" structureRef="Boolean" />
   <itemDefinition id="_28-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_28-confirmquoteItem" structureRef="Boolean" />
@@ -301,18 +311,19 @@
   <itemDefinition id="_28-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_28-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_28-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_28-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_28-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_28-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_28-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_28-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_28-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_28-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_28-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_28-designCommentItem" structureRef="String" />
-  <itemDefinition id="_28-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_28-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_28-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_28-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_28-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_34-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_34-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_34-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_34-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_34-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_34-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_34-editokItem" structureRef="Boolean" />
   <itemDefinition id="_34-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_34-confirmquoteItem" structureRef="Boolean" />
@@ -328,18 +339,19 @@
   <itemDefinition id="_34-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_34-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_34-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_34-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_34-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_34-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_34-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_34-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_34-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_34-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_34-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_34-designCommentItem" structureRef="String" />
-  <itemDefinition id="_34-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_34-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_34-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_34-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_34-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_33-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_33-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_33-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_33-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_33-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_33-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_33-editokItem" structureRef="Boolean" />
   <itemDefinition id="_33-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_33-confirmquoteItem" structureRef="Boolean" />
@@ -355,18 +367,19 @@
   <itemDefinition id="_33-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_33-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_33-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_33-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_33-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_33-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_33-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_33-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_33-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_33-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_33-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_33-designCommentItem" structureRef="String" />
-  <itemDefinition id="_33-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_33-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_33-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_33-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_33-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_41-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_41-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_41-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_41-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_41-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_41-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_41-editokItem" structureRef="Boolean" />
   <itemDefinition id="_41-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_41-confirmquoteItem" structureRef="Boolean" />
@@ -382,18 +395,19 @@
   <itemDefinition id="_41-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_41-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_41-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_41-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_41-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_41-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_41-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_41-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_41-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_41-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_41-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_41-designCommentItem" structureRef="String" />
-  <itemDefinition id="_41-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_41-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_41-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_41-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_41-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_47-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_47-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_47-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_47-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_47-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_47-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_47-editokItem" structureRef="Boolean" />
   <itemDefinition id="_47-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_47-confirmquoteItem" structureRef="Boolean" />
@@ -409,18 +423,19 @@
   <itemDefinition id="_47-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_47-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_47-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_47-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_47-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_47-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_47-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_47-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_47-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_47-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_47-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_47-designCommentItem" structureRef="String" />
-  <itemDefinition id="_47-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_47-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_47-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_47-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_47-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_48-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_48-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_48-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_48-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_48-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_48-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_48-editokItem" structureRef="Boolean" />
   <itemDefinition id="_48-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_48-confirmquoteItem" structureRef="Boolean" />
@@ -436,18 +451,19 @@
   <itemDefinition id="_48-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_48-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_48-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_48-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_48-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_48-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_48-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_48-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_48-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_48-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_48-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_48-designCommentItem" structureRef="String" />
-  <itemDefinition id="_48-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_48-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_48-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_48-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_48-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_54-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_54-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_54-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_54-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_54-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_54-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_54-editokItem" structureRef="Boolean" />
   <itemDefinition id="_54-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_54-confirmquoteItem" structureRef="Boolean" />
@@ -463,18 +479,19 @@
   <itemDefinition id="_54-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_54-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_54-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_54-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_54-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_54-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_54-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_54-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_54-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_54-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_54-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_54-designCommentItem" structureRef="String" />
-  <itemDefinition id="_54-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_54-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_54-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_54-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_54-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_59-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_59-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_59-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_59-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_59-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_59-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_59-editokItem" structureRef="Boolean" />
   <itemDefinition id="_59-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_59-confirmquoteItem" structureRef="Boolean" />
@@ -490,18 +507,19 @@
   <itemDefinition id="_59-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_59-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_59-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_59-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_59-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_59-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_59-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_59-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_59-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_59-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_59-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_59-designCommentItem" structureRef="String" />
-  <itemDefinition id="_59-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_59-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_59-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_59-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_59-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_62-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_62-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_62-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_62-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_62-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_62-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_62-editokItem" structureRef="Boolean" />
   <itemDefinition id="_62-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_62-confirmquoteItem" structureRef="Boolean" />
@@ -517,18 +535,19 @@
   <itemDefinition id="_62-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_62-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_62-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_62-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_62-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_62-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_62-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_62-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_62-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_62-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_62-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_62-designCommentItem" structureRef="String" />
-  <itemDefinition id="_62-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_62-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_62-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_62-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_62-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_69-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_69-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_69-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_69-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_69-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_69-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_69-editokItem" structureRef="Boolean" />
   <itemDefinition id="_69-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_69-confirmquoteItem" structureRef="Boolean" />
@@ -544,18 +563,19 @@
   <itemDefinition id="_69-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_69-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_69-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_69-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_69-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_69-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_69-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_69-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_69-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_69-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_69-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_69-designCommentItem" structureRef="String" />
-  <itemDefinition id="_69-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_69-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_69-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_69-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_69-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_70-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_70-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_70-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_70-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_70-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_70-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_70-editokItem" structureRef="Boolean" />
   <itemDefinition id="_70-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_70-confirmquoteItem" structureRef="Boolean" />
@@ -571,18 +591,19 @@
   <itemDefinition id="_70-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_70-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_70-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_70-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_70-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_70-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_70-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_70-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_70-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_70-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_70-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_70-designCommentItem" structureRef="String" />
-  <itemDefinition id="_70-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_70-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_70-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_70-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_70-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_74-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_74-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_74-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_74-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_74-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_74-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_74-editokItem" structureRef="Boolean" />
   <itemDefinition id="_74-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_74-confirmquoteItem" structureRef="Boolean" />
@@ -598,18 +619,19 @@
   <itemDefinition id="_74-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_74-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_74-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_74-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_74-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_74-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_74-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_74-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_74-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_74-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_74-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_74-designCommentItem" structureRef="String" />
-  <itemDefinition id="_74-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_74-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_74-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_74-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_74-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_75-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_75-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_75-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_75-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_75-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_75-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_75-editokItem" structureRef="Boolean" />
   <itemDefinition id="_75-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_75-confirmquoteItem" structureRef="Boolean" />
@@ -625,18 +647,19 @@
   <itemDefinition id="_75-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_75-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_75-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_75-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_75-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_75-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_75-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_75-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_75-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_75-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_75-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_75-designCommentItem" structureRef="String" />
-  <itemDefinition id="_75-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_75-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_75-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_75-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_75-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_87-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_87-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_87-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_87-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_87-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_87-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_87-editokItem" structureRef="Boolean" />
   <itemDefinition id="_87-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_87-confirmquoteItem" structureRef="Boolean" />
@@ -652,18 +675,19 @@
   <itemDefinition id="_87-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_87-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_87-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_87-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_87-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_87-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_87-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_87-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_87-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_87-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_87-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_87-designCommentItem" structureRef="String" />
-  <itemDefinition id="_87-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_87-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_87-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_87-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_87-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_80-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_80-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_80-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_80-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_80-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_80-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_80-editokItem" structureRef="Boolean" />
   <itemDefinition id="_80-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_80-confirmquoteItem" structureRef="Boolean" />
@@ -679,18 +703,19 @@
   <itemDefinition id="_80-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_80-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_80-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_80-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_80-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_80-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_80-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_80-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_80-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_80-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_80-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_80-designCommentItem" structureRef="String" />
-  <itemDefinition id="_80-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_80-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_80-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_80-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_80-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_88-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_88-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_88-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_88-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_88-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_88-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_88-editokItem" structureRef="Boolean" />
   <itemDefinition id="_88-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_88-confirmquoteItem" structureRef="Boolean" />
@@ -706,18 +731,19 @@
   <itemDefinition id="_88-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_88-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_88-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_88-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_88-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_88-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_88-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_88-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_88-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_88-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_88-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_88-designCommentItem" structureRef="String" />
-  <itemDefinition id="_88-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_88-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_88-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_88-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_88-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_103-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_103-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_103-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_103-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_103-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_103-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_103-editokItem" structureRef="Boolean" />
   <itemDefinition id="_103-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_103-confirmquoteItem" structureRef="Boolean" />
@@ -733,18 +759,19 @@
   <itemDefinition id="_103-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_103-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_103-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_103-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_103-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_103-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_103-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_103-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_103-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_103-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_103-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_103-designCommentItem" structureRef="String" />
-  <itemDefinition id="_103-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_103-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_103-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_103-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_103-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_96-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_96-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_96-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_96-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_96-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_96-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_96-editokItem" structureRef="Boolean" />
   <itemDefinition id="_96-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_96-confirmquoteItem" structureRef="Boolean" />
@@ -760,18 +787,19 @@
   <itemDefinition id="_96-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_96-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_96-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_96-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_96-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_96-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_96-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_96-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_96-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_96-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_96-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_96-designCommentItem" structureRef="String" />
-  <itemDefinition id="_96-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_96-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_96-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_96-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_96-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_110-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_110-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_110-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_110-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_110-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_110-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_110-editokItem" structureRef="Boolean" />
   <itemDefinition id="_110-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_110-confirmquoteItem" structureRef="Boolean" />
@@ -787,18 +815,19 @@
   <itemDefinition id="_110-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_110-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_110-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_110-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_110-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_110-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_110-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_110-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_110-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_110-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_110-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_110-designCommentItem" structureRef="String" />
-  <itemDefinition id="_110-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_110-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_110-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_110-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_110-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_107-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_107-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_107-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_107-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_107-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_107-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_107-editokItem" structureRef="Boolean" />
   <itemDefinition id="_107-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_107-confirmquoteItem" structureRef="Boolean" />
@@ -814,18 +843,19 @@
   <itemDefinition id="_107-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_107-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_107-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_107-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_107-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_107-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_107-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_107-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_107-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_107-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_107-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_107-designCommentItem" structureRef="String" />
-  <itemDefinition id="_107-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_107-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_107-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_107-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_107-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_118-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_118-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_118-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_118-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_118-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_118-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_118-editokItem" structureRef="Boolean" />
   <itemDefinition id="_118-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_118-confirmquoteItem" structureRef="Boolean" />
@@ -841,18 +871,19 @@
   <itemDefinition id="_118-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_118-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_118-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_118-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_118-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_118-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_118-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_118-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_118-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_118-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_118-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_118-designCommentItem" structureRef="String" />
-  <itemDefinition id="_118-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_118-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_118-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_118-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_118-reorderItem" structureRef="Boolean" />
 
   <itemDefinition id="_115-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_115-needclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_115-sendclothesItem" structureRef="Boolean" />
-  <itemDefinition id="_115-receivedsampleItem" structureRef="Boolean" />
+  <itemDefinition id="_115-provideSampleItem" structureRef="Boolean" />
+  <itemDefinition id="_115-receiveSampleItem" structureRef="Boolean" />
   <itemDefinition id="_115-editokItem" structureRef="Boolean" />
   <itemDefinition id="_115-eidtquoteItem" structureRef="Boolean" />
   <itemDefinition id="_115-confirmquoteItem" structureRef="Boolean" />
@@ -868,21 +899,22 @@
   <itemDefinition id="_115-volumeproductionItem" structureRef="Boolean" />
   <itemDefinition id="_115-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_115-employeeIdItem" structureRef="Integer" />
-  <itemDefinition id="_115-buyValItem" structureRef="Boolean" />
-  <itemDefinition id="_115-designValItem" structureRef="Boolean" />
-  <itemDefinition id="_115-productValItem" structureRef="Boolean" />
+  <itemDefinition id="_115-verifyPurchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_115-verifyDesignItem" structureRef="Boolean" />
+  <itemDefinition id="_115-verifyProduceItem" structureRef="Boolean" />
   <itemDefinition id="_115-isworksheetBItem" structureRef="Boolean" />
-  <itemDefinition id="_115-buyCommentItem" structureRef="String" />
-  <itemDefinition id="_115-designCommentItem" structureRef="String" />
-  <itemDefinition id="_115-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_115-purchaseAdviceItem" structureRef="String" />
+  <itemDefinition id="_115-designAdviceItem" structureRef="String" />
+  <itemDefinition id="_115-produceAdviceItem" structureRef="String" />
+  <itemDefinition id="_115-reorderItem" structureRef="Boolean" />
 
   <process processType="Private" isExecutable="true" id="nju.software.fmc.bpmn" name="Sample Process" tns:packageName="defaultPackage" >
 
     <!-- process variables -->
     <property id="orderId" itemSubjectRef="_orderIdItem"/>
     <property id="needclothes" itemSubjectRef="_needclothesItem"/>
-    <property id="sendclothes" itemSubjectRef="_sendclothesItem"/>
-    <property id="receivedsample" itemSubjectRef="_receivedsampleItem"/>
+    <property id="provideSample" itemSubjectRef="_provideSampleItem"/>
+    <property id="receiveSample" itemSubjectRef="_receiveSampleItem"/>
     <property id="editok" itemSubjectRef="_editokItem"/>
     <property id="eidtquote" itemSubjectRef="_eidtquoteItem"/>
     <property id="confirmquote" itemSubjectRef="_confirmquoteItem"/>
@@ -898,13 +930,14 @@
     <property id="volumeproduction" itemSubjectRef="_volumeproductionItem"/>
     <property id="paymentok" itemSubjectRef="_paymentokItem"/>
     <property id="employeeId" itemSubjectRef="_employeeIdItem"/>
-    <property id="buyVal" itemSubjectRef="_buyValItem"/>
-    <property id="designVal" itemSubjectRef="_designValItem"/>
-    <property id="productVal" itemSubjectRef="_productValItem"/>
+    <property id="verifyPurchase" itemSubjectRef="_verifyPurchaseItem"/>
+    <property id="verifyDesign" itemSubjectRef="_verifyDesignItem"/>
+    <property id="verifyProduce" itemSubjectRef="_verifyProduceItem"/>
     <property id="isworksheetB" itemSubjectRef="_isworksheetBItem"/>
-    <property id="buyComment" itemSubjectRef="_buyCommentItem"/>
-    <property id="designComment" itemSubjectRef="_designCommentItem"/>
-    <property id="produceComment" itemSubjectRef="_produceCommentItem"/>
+    <property id="purchaseAdvice" itemSubjectRef="_purchaseAdviceItem"/>
+    <property id="designAdvice" itemSubjectRef="_designAdviceItem"/>
+    <property id="produceAdvice" itemSubjectRef="_produceAdviceItem"/>
+    <property id="reorder" itemSubjectRef="_reorderItem"/>
 
     <laneSet>
       <lane name="SHICHANGZHUGUAN" >
@@ -957,13 +990,13 @@
     </laneSet>
     <!-- nodes -->
     <inclusiveGateway id="_137" name="eidtquote" gatewayDirection="Diverging" />
-    <inclusiveGateway id="_136" name="needclothes" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_136" name="翻单" gatewayDirection="Diverging" />
     <startEvent id="_1" name="StartProcess" />
     <inclusiveGateway id="_139" name="receivedsample" gatewayDirection="Diverging" />
     <endEvent id="_138" name="End" >
         <terminateEventDefinition />
     </endEvent>
-    <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_6" name="提供样衣" gatewayDirection="Diverging" />
     <userTask id="_7" name="收取样衣" >
       <ioSpecification>
         <dataInput id="_7_TaskNameInput" name="TaskName" />
@@ -980,7 +1013,7 @@
       <dataInputAssociation>
         <targetRef>_7_TaskNameInput</targetRef>
         <assignment>
-          <from xsi:type="tFormalExpression">received_sample</from>
+          <from xsi:type="tFormalExpression">receiveSample</from>
           <to xsi:type="tFormalExpression">_7_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
@@ -1001,34 +1034,34 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <exclusiveGateway id="_8" name="enterVerification" gatewayDirection="Converging" />
+    <exclusiveGateway id="_8" name="验证" gatewayDirection="Converging" />
     <userTask id="_10" name="采购验证" >
       <ioSpecification>
         <dataInput id="_10_TaskNameInput" name="TaskName" />
-        <dataOutput id="_10_buyValOutput" name="buyVal" />
-        <dataOutput id="_10_buyCommentOutput" name="buyComment" />
+        <dataOutput id="_10_purchaseAdviceOutput" name="purchaseAdvice" />
+        <dataOutput id="_10_verifyPurchaseOutput" name="verifyPurchase" />
         <inputSet>
           <dataInputRefs>_10_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
-          <dataOutputRefs>_10_buyValOutput</dataOutputRefs>
-          <dataOutputRefs>_10_buyCommentOutput</dataOutputRefs>
+          <dataOutputRefs>_10_purchaseAdviceOutput</dataOutputRefs>
+          <dataOutputRefs>_10_verifyPurchaseOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
         <targetRef>_10_TaskNameInput</targetRef>
         <assignment>
-          <from xsi:type="tFormalExpression">verification_purchased</from>
+          <from xsi:type="tFormalExpression">verifyPurchase</from>
           <to xsi:type="tFormalExpression">_10_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
       <dataOutputAssociation>
-        <sourceRef>_10_buyValOutput</sourceRef>
-        <targetRef>buyVal</targetRef>
+        <sourceRef>_10_purchaseAdviceOutput</sourceRef>
+        <targetRef>purchaseAdvice</targetRef>
       </dataOutputAssociation>
       <dataOutputAssociation>
-        <sourceRef>_10_buyCommentOutput</sourceRef>
-        <targetRef>buyComment</targetRef>
+        <sourceRef>_10_verifyPurchaseOutput</sourceRef>
+        <targetRef>verifyPurchase</targetRef>
       </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
@@ -1039,30 +1072,30 @@
     <userTask id="_11" name="设计验证" >
       <ioSpecification>
         <dataInput id="_11_TaskNameInput" name="TaskName" />
-        <dataOutput id="_11_designValOutput" name="designVal" />
-        <dataOutput id="_11_designCommentOutput" name="designComment" />
+        <dataOutput id="_11_verifyDesignOutput" name="verifyDesign" />
+        <dataOutput id="_11_designAdviceOutput" name="designAdvice" />
         <inputSet>
           <dataInputRefs>_11_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
-          <dataOutputRefs>_11_designValOutput</dataOutputRefs>
-          <dataOutputRefs>_11_designCommentOutput</dataOutputRefs>
+          <dataOutputRefs>_11_verifyDesignOutput</dataOutputRefs>
+          <dataOutputRefs>_11_designAdviceOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
         <targetRef>_11_TaskNameInput</targetRef>
         <assignment>
-          <from xsi:type="tFormalExpression">design_verification </from>
+          <from xsi:type="tFormalExpression">verifyDesign</from>
           <to xsi:type="tFormalExpression">_11_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
       <dataOutputAssociation>
-        <sourceRef>_11_designValOutput</sourceRef>
-        <targetRef>designVal</targetRef>
+        <sourceRef>_11_verifyDesignOutput</sourceRef>
+        <targetRef>verifyDesign</targetRef>
       </dataOutputAssociation>
       <dataOutputAssociation>
-        <sourceRef>_11_designCommentOutput</sourceRef>
-        <targetRef>designComment</targetRef>
+        <sourceRef>_11_designAdviceOutput</sourceRef>
+        <targetRef>designAdvice</targetRef>
       </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
@@ -1073,30 +1106,30 @@
     <userTask id="_12" name="生产验证" >
       <ioSpecification>
         <dataInput id="_12_TaskNameInput" name="TaskName" />
-        <dataOutput id="_12_productValOutput" name="productVal" />
-        <dataOutput id="_12_productCommentOutput" name="productComment" />
+        <dataOutput id="_12_verifyProduceOutput" name="verifyProduce" />
+        <dataOutput id="_12_produceAdviceOutput" name="produceAdvice" />
         <inputSet>
           <dataInputRefs>_12_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
-          <dataOutputRefs>_12_productValOutput</dataOutputRefs>
-          <dataOutputRefs>_12_productCommentOutput</dataOutputRefs>
+          <dataOutputRefs>_12_verifyProduceOutput</dataOutputRefs>
+          <dataOutputRefs>_12_produceAdviceOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
         <targetRef>_12_TaskNameInput</targetRef>
         <assignment>
-          <from xsi:type="tFormalExpression">production_verification</from>
+          <from xsi:type="tFormalExpression">verifyProduce</from>
           <to xsi:type="tFormalExpression">_12_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
       <dataOutputAssociation>
-        <sourceRef>_12_productValOutput</sourceRef>
-        <targetRef>productVal</targetRef>
+        <sourceRef>_12_verifyProduceOutput</sourceRef>
+        <targetRef>verifyProduce</targetRef>
       </dataOutputAssociation>
       <dataOutputAssociation>
-        <sourceRef>_12_productCommentOutput</sourceRef>
-        <targetRef>productComment</targetRef>
+        <sourceRef>_12_produceAdviceOutput</sourceRef>
+        <targetRef>produceAdvice</targetRef>
       </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
@@ -1105,7 +1138,7 @@
       </potentialOwner>
     </userTask>
     <parallelGateway id="_13" name="verify" gatewayDirection="Diverging" />
-    <exclusiveGateway id="_135" name="Gateway" gatewayDirection="Converging" />
+    <parallelGateway id="_135" name="Gateway" gatewayDirection="Converging" />
     <parallelGateway id="_15" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_17" name="editOrder" gatewayDirection="Diverging" />
     <userTask id="_19" name="修改询单" >
@@ -1122,7 +1155,7 @@
       <dataInputAssociation>
         <targetRef>_19_TaskNameInput</targetRef>
         <assignment>
-          <from xsi:type="tFormalExpression">edit_order</from>
+          <from xsi:type="tFormalExpression">modifyOrder</from>
           <to xsi:type="tFormalExpression">_19_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
@@ -1567,7 +1600,7 @@
       <dataInputAssociation>
         <targetRef>_69_SkippableInput</targetRef>
         <assignment>
-          <from xsi:type="tFormalExpression"></from>
+          <from xsi:type="tFormalExpression">false</from>
           <to xsi:type="tFormalExpression">_69_SkippableInput</to>
         </assignment>
       </dataInputAssociation>
@@ -1612,10 +1645,12 @@
     <userTask id="_70" name="设计部确认" >
       <ioSpecification>
         <dataInput id="_70_TaskNameInput" name="TaskName" />
+        <dataOutput id="_70_isworksheetBOutput" name="isworksheetB" />
         <inputSet>
           <dataInputRefs>_70_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
+          <dataOutputRefs>_70_isworksheetBOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -1625,6 +1660,10 @@
           <to xsi:type="tFormalExpression">_70_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_70_isworksheetBOutput</sourceRef>
+        <targetRef>isworksheetB</targetRef>
+      </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
           <formalExpression>SHEJIZHUGUAN</formalExpression>
@@ -1772,7 +1811,7 @@
       </dataInputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
-          <formalExpression>SHEJIZHUGUAN</formalExpression>
+          <formalExpression>SHENGCHANZHUGUAN</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
@@ -1942,23 +1981,23 @@
     </sequenceFlow>
     <sequenceFlow id="_1-_136" sourceRef="_1" targetRef="_136" />
     <sequenceFlow id="_7-_139" sourceRef="_7" targetRef="_139" />
-    <sequenceFlow id="_139-_138" sourceRef="_139" targetRef="_138" name="noreceivedsample" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receivedsample;</conditionExpression>
+    <sequenceFlow id="_139-_138" sourceRef="_139" targetRef="_138" name="未收到样衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receiveSample;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_136-_6" sourceRef="_136" targetRef="_6" name="needclothes" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  needclothes;</conditionExpression>
+    <sequenceFlow id="_136-_6" sourceRef="_136" targetRef="_6" name="不是翻单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  reorder;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_6-_7" sourceRef="_6" targetRef="_7" name="sendclothes" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return sendclothes;</conditionExpression>
+    <sequenceFlow id="_6-_7" sourceRef="_6" targetRef="_7" name="提供样衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return provideSample;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_6-_8" sourceRef="_6" targetRef="_8" name="nosendclothes" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !sendclothes;</conditionExpression>
+    <sequenceFlow id="_6-_8" sourceRef="_6" targetRef="_8" name="不提供样衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !provideSample;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_22-_8" sourceRef="_22" targetRef="_8" name="editok" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return editok;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_139-_8" sourceRef="_139" targetRef="_8" name="receivedsample" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receivedsample;</conditionExpression>
+    <sequenceFlow id="_139-_8" sourceRef="_139" targetRef="_8" name="收到样衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveSample;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_13-_10" sourceRef="_13" targetRef="_10" />
     <sequenceFlow id="_13-_11" sourceRef="_13" targetRef="_11" />
@@ -1968,18 +2007,18 @@
     <sequenceFlow id="_37-_135" sourceRef="_37" targetRef="_135" name="nosamplejin" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !samplejin;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_136-_135" sourceRef="_136" targetRef="_135" name="noneedclothes" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !needclothes;</conditionExpression>
+    <sequenceFlow id="_136-_135" sourceRef="_136" targetRef="_135" name="翻单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !reorder;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_10-_15" sourceRef="_10" targetRef="_15" />
     <sequenceFlow id="_11-_15" sourceRef="_11" targetRef="_15" />
     <sequenceFlow id="_12-_15" sourceRef="_12" targetRef="_15" />
     <sequenceFlow id="_15-_17" sourceRef="_15" targetRef="_17" />
-    <sequenceFlow id="_17-_19" sourceRef="_17" targetRef="_19" name="editOrder" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(buyVal&amp;productVal&amp;designVal){
-return false;
+    <sequenceFlow id="_17-_19" sourceRef="_17" targetRef="_19" name="修改询单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(verifyDesign&amp;verifyPurchase&amp;verifyProduce){
+	return false;
 }else{
-return true;
+	return true;
 }
 
 
@@ -1995,11 +2034,11 @@ return true;
     <sequenceFlow id="_23-_27" sourceRef="_23" targetRef="_27" />
     <sequenceFlow id="_24-_27" sourceRef="_24" targetRef="_27" />
     <sequenceFlow id="_25-_27" sourceRef="_25" targetRef="_27" />
-    <sequenceFlow id="_17-_26" sourceRef="_17" targetRef="_26" name="noeditOrder" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(buyVal&amp;productVal&amp;designVal){
-return true;
+    <sequenceFlow id="_17-_26" sourceRef="_17" targetRef="_26" name="不修改询单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(verifyDesign&amp;verifyPurchase&amp;verifyProduce){
+	return true;
 }else{
-return false;
+	return false;
 }
 
 
@@ -2072,20 +2111,23 @@ return false;
     <sequenceFlow id="_69-_72" sourceRef="_69" targetRef="_72" />
     <sequenceFlow id="_70-_72" sourceRef="_70" targetRef="_72" />
     <sequenceFlow id="_76-_74" sourceRef="_76" targetRef="_74" name="isworksheet" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(isworksheet){
-	return true;
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(isworksheet&amp;isworksheetB){
+return true;
 }else{
-	return false;
+return false;
 }
 
 </conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_76-_75" sourceRef="_76" targetRef="_75" name="noisworksheet" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(isworksheet){
-	return false;
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(isworksheet&amp;isworksheetB){
+return false;
 }else{
-	return true;
-}</conditionExpression>
+return true;
+}
+
+
+</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_80-_84" sourceRef="_80" targetRef="_84" />
     <sequenceFlow id="_89-_87" sourceRef="_89" targetRef="_87" />

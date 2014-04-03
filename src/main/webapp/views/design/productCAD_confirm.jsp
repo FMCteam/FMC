@@ -43,11 +43,11 @@
 								<td>${orderModel.order.styleName }</td>
 								<td>${orderModel.order.askAmount }</td>
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx }/design/designCadConfirm_detail.do" method="post" >
+								<td><form action="${ctx }/design/ProductCadConfirm_detail.do" method="post" >
 									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
 										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
 										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 上传Cad文件</button></form>
+										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 上传生产版型Cad文件</button></form>
 								</td>
 	                        </tr>
                         </c:forEach>
