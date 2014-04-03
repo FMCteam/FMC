@@ -122,9 +122,9 @@ public class MarketServiceImpl implements MarketService {
 			String productColor, String productStyle) {
 		// TODO Auto-generated method stub
 
-		String[] amountList = productAskAmount.split("，");
-		String[] colorList = productColor.split("，");
-		String[] styleList = productStyle.split("，");
+		String[] amountList = productAskAmount.split(",");
+		String[] colorList = productColor.split(",");
+		String[] styleList = productStyle.split(",");
 		List<Product> productList = new ArrayList<Product>();
 		for (int i = 0; i < amountList.length; i++) {
 			Product product = new Product();

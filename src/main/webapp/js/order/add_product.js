@@ -12,7 +12,7 @@
 	});
 
 
-	function table_addrow_onclick(table_name,col1_name,col2_name){
+	function table_addrow_onclick(table_name,col1_name,col2_name,col3_name){
 		    //检查第一列是否为空
 			var col1=$("table."+table_name+" tr.addrow input").eq(0).val();
 			if(col1==""){

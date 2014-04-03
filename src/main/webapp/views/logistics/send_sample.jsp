@@ -163,8 +163,8 @@
 								<td colspan="4"><button class="btn btn-primary btn-rounded">确认发货</button></td>
 							</tr>
 						</table>
-						<input type="hidden" name="customerId"
-							value="${customer.customerId}" />
+						<input type="hidden" name="orderId"
+							value="${log.o.orderId}" />
 							<input type="hidden" name="taskId"
 							value="${log.taskId}" />
 							<input type="hidden" name="processId"

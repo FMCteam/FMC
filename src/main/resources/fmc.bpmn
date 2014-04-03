@@ -907,6 +907,9 @@
     <property id="produceComment" itemSubjectRef="_produceCommentItem"/>
 
     <laneSet>
+      <lane name="SHICHANGZHUGUAN" >
+        <flowNodeRef>_29</flowNodeRef>
+      </lane>
       <lane name="SHICHANGZHUANYUAN" >
         <flowNodeRef>_19</flowNodeRef>
         <flowNodeRef>_28</flowNodeRef>
@@ -915,9 +918,6 @@
         <flowNodeRef>_62</flowNodeRef>
         <flowNodeRef>_74</flowNodeRef>
         <flowNodeRef>_75</flowNodeRef>
-      </lane>
-      <lane name="SHICHANGZHUGUAN" >
-        <flowNodeRef>_29</flowNodeRef>
       </lane>
       <lane name="CAIGOUZHUGUAN" >
         <flowNodeRef>_10</flowNodeRef>
@@ -1105,7 +1105,7 @@
       </potentialOwner>
     </userTask>
     <parallelGateway id="_13" name="verify" gatewayDirection="Diverging" />
-    <parallelGateway id="_135" name="Gateway" gatewayDirection="Converging" />
+    <exclusiveGateway id="_135" name="Gateway" gatewayDirection="Converging" />
     <parallelGateway id="_15" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_17" name="editOrder" gatewayDirection="Diverging" />
     <userTask id="_19" name="ÐÞ¸ÄÑ¯µ¥" >
