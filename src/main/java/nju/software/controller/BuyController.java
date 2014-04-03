@@ -54,7 +54,43 @@ public class BuyController {
 		String action="comfirm_purchase";
 		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
 		model.put("order_model_List", orderModelList);
-		
+		model.put("end_url","caigouqueren1Detail");
+		return "buy/product_simple_list";
+	}
+	/**
+	 * 采购确认2List
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "buy/caigouqueren2List.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String caigouqueren2List(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="CAIGOUZHUGUAN";
+		String action="purchase_ok";
+		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
+		model.put("order_model_List", orderModelList);
+		model.put("end_url","caigouqueren2Detail");
+		return "buy/product_simple_list";
+	}
+	/**
+	 * 采购确认3List
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "buy/caigouqueren3List.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String caigouqueren3List(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="CAIGOUZHUGUAN";
+		String action="purchase_comfirm";
+		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
+		model.put("order_model_List", orderModelList);
+		model.put("end_url","caigouqueren3Detail");
 		return "buy/product_simple_list";
 	}
 	/**
@@ -71,6 +107,7 @@ public class BuyController {
 		String orderId=request.getParameter("order_id");
 		String taskId=request.getParameter("task_id");
 		String processId=request.getParameter("process_id");
+		
 		try
 		{
 			int int_orderId=Integer.parseInt(orderId);
@@ -83,6 +120,75 @@ public class BuyController {
 			orderModel.setProcessInstanceId(int_processId);
 		
 		model.put("orderModel",orderModel);
+		model.put("end_url", "caigouqueren1DetailPost");
+		return "buy/product_detail";
+		}catch(Exception e)
+		{
+			
+		}
+		return "buy/product_detail";
+	}
+	/**
+	 * 采购确认2的详情
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "buy/caigouqueren2Detail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String caigouqueren2Detail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("process_id");
+		try
+		{
+			int int_orderId=Integer.parseInt(orderId);
+			long int_taskId=Long.parseLong(taskId);
+			long int_processId=Long.parseLong(processId);
+			Order order=orderService.findByOrderId(orderId);
+			OrderModel orderModel=new OrderModel();
+			orderModel.setOrder(order);
+			orderModel.setTaskId(int_taskId);
+			orderModel.setProcessInstanceId(int_processId);
+		
+		model.put("orderModel",orderModel);
+		model.put("end_url", "caigouqueren2DetailPost");
+		return "buy/product_detail";
+		}catch(Exception e)
+		{
+			
+		}
+		return "buy/product_detail";
+	}
+	/**
+	 * 采购确认3的详情
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "buy/caigouqueren3Detail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String caigouqueren3Detail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("process_id");
+		try
+		{
+			int int_orderId=Integer.parseInt(orderId);
+			long int_taskId=Long.parseLong(taskId);
+			long int_processId=Long.parseLong(processId);
+			Order order=orderService.findByOrderId(orderId);
+			OrderModel orderModel=new OrderModel();
+			orderModel.setOrder(order);
+			orderModel.setTaskId(int_taskId);
+			orderModel.setProcessInstanceId(int_processId);
+		
+		model.put("orderModel",orderModel);
+		model.put("end_url", "caigouqueren3DetailPost");
 		return "buy/product_detail";
 		}catch(Exception e)
 		{
@@ -135,6 +241,98 @@ public class BuyController {
 			e.printStackTrace();
 		}
 		return "redirect:/buy/caigouqueren1List.do";
+	}
+	/**
+	 * 采购确认2的提交
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "buy/caigouqueren2DetailPost.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String caigouqueren2DetailPost(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("process_id");
+		boolean purchaseerror=request.getParameter("purchaseerror").equals("1")?true:false;
+	//	String productIdList=request.getProductId
+		/*
+		String productId=request.getParameter("product_id");
+		String[] productIdList=productId.split(",");
+		String fabricId=request.getParameter("fabric_id");
+		String[] fabricIdList=fabricId.split(",");
+		String accessoryId=request.getParameter("accessoryId");
+		String[] accessoryIdList=accessoryId.split(",");
+		
+		String ask_amount=request.getParameter("ask_amount");
+		String[] ask_amountList=ask_amount.split(",");
+		String product_amount=request.getParameter("product_amount");
+		String[] product_amountList=product_amount.split(",");
+		String qualified_amount=request.getParameter("qualified_amount");
+		String[] qualified_amountList=qualified_amount.split(",");
+		*/
+		//保存各种数据
+		//推进流程
+		String actor="CAIGOUZHUGUAN";
+		long long_taskId=Long.parseLong(taskId);
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("isworksheet", purchaseerror);
+		try {
+			jbpmAPIUtil.completeTask(long_taskId, map, actor);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "redirect:/buy/caigouqueren2List.do";
+	}
+	/**
+	 * 采购确认2的提交
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "buy/caigouqueren3DetailPost.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String caigouqueren3DetailPost(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("process_id");
+		boolean purchaseerror=request.getParameter("purchaseerror").equals("0")?true:false;
+	//	String productIdList=request.getProductId
+		/*
+		String productId=request.getParameter("product_id");
+		String[] productIdList=productId.split(",");
+		String fabricId=request.getParameter("fabric_id");
+		String[] fabricIdList=fabricId.split(",");
+		String accessoryId=request.getParameter("accessoryId");
+		String[] accessoryIdList=accessoryId.split(",");
+		
+		String ask_amount=request.getParameter("ask_amount");
+		String[] ask_amountList=ask_amount.split(",");
+		String product_amount=request.getParameter("product_amount");
+		String[] product_amountList=product_amount.split(",");
+		String qualified_amount=request.getParameter("qualified_amount");
+		String[] qualified_amountList=qualified_amount.split(",");
+		*/
+		//保存各种数据
+		//推进流程
+		String actor="CAIGOUZHUGUAN";
+		long long_taskId=Long.parseLong(taskId);
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("procurementerror", purchaseerror);
+		try {
+			jbpmAPIUtil.completeTask(long_taskId, map, actor);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "redirect:/buy/caigouqueren3List.do";
 	}
 	/**
 	 * 采购验证跳转链接

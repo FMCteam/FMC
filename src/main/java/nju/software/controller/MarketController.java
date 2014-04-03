@@ -166,6 +166,52 @@ public class MarketController {
 		return "market/modify_quote_list";
 	}
 
+	//专员修改加工单列表
+	@RequestMapping(value = "market/productToModifyList.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String modifyProductList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		List<OrderModel> tasks = marketService.getProductModifyList(account.getUserId());
+		model.addAttribute("tasks", tasks);
+		return "market/modifyProductList";
+	}
+	
+	//专员修改加工单详情
+	@RequestMapping(value = "market/modifyProductDetail.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String modifyProductDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("id");
+		String s_taskId = request.getParameter("tid");
+		String s_processId = request.getParameter("pid");
+		long taskId = Long.parseLong(s_taskId);
+		long processId = Long.parseLong(s_processId);
+		OrderModel om = new OrderModel(orderService.findByOrderId(orderId),taskId,processId);
+		model.addAttribute("orderModel", om);
+		return "market/modifyProductDetail";
+	}
+	
+	//专员修改加工单
+	@RequestMapping(value = "market/modifyProduct.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String modifyProduct(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		String s_taskId = request.getParameter("taskId");
+		String s_processId = request.getParameter("processId");
+		int id = Integer.parseInt(orderId);
+		long taskId = Long.parseLong(s_taskId);
+		long processId = Long.parseLong(s_processId);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		marketService.modifyProduct(account.getUserId(),id,taskId,processId,null);
+
+		return "redirect:/market/productToModifyList.do";
+	}
+	
 	// 顾客下单的列表页面
 	@RequestMapping(value = "market/customerOrder.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
@@ -829,7 +875,7 @@ public class MarketController {
 					processId, comfirmworksheet, productList);
 		}
 
-		return "redirect:/market/confirmProdyct.do";
+		return "redirect:/market/confirmProduct.do";
 	}
 
 	/**

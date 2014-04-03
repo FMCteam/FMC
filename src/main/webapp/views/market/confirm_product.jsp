@@ -50,7 +50,7 @@
 									<input type="hidden" name="id" value="${orderModel.order.orderId }" /> 
 									<input type="hidden" name="task_id" value="${orderModel.taskId }" /> 
 									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-									<button class="btn btn-primary btn-rounded">写加工单</button>
+									<button class="btn btn-primary btn-rounded">填写加工单</button>
 								</form></td>
 							<td><form action="${ctx }/market/cancelProduct.do" method="post">
 									<input type="hidden" name="id" value="${orderModel.order.orderId }" /> 

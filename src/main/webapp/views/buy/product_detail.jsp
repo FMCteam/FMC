@@ -183,7 +183,7 @@
 								<td>操作</td>	
 
 								<td colspan="6">
-								<form id="verify_form" method="post" action="${ctx }/buy/caigouqueren1DetailPost.do">
+								<form id="verify_form" method="post" action="${ctx }/buy/${end_url }.do">
 									<input type="hidden" name="order_id" value="${orderModel.order.orderId }" />
 									<input type="hidden" name="task_id" value="${orderModel.taskId }" />
 									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
@@ -193,7 +193,7 @@
 								
                                  </form>
 
-	                           <form  method="post" action="${ctx }/buy/caigouqueren1DetailPost.do">
+	                           <form  method="post" action="${ctx }/buy/${end_url }.do">
 									<input type="hidden" name="order_id" value="${orderModel.order.orderId }" />
 									<input type="hidden" name="task_id" value="${orderModel.taskId }" />
 									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
