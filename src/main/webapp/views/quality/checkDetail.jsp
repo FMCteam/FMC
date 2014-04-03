@@ -91,7 +91,7 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td rowspan="5">质检合格具体数量表</td>
+								<td colspan="5">质检合格具体数量表</td>
 							</tr>
 							<tr>
 								<td colspan="5">
@@ -127,7 +127,7 @@
 									<td></td>
 							</tr>
 							<tr>
-								<td rowspan="5">质检不合格具体数量表</td>
+								<td colspan="5">质检不合格具体数量表</td>
 							</tr>
 							<tr>
 								<td colspan="5">
@@ -169,7 +169,7 @@
 							<input type="hidden" name="taskId"
 							value="${orderModel.taskId}" />
 							<input type="hidden" name="processId"
-							value="${orderModel.processId}" />
+							value="${orderModel.processInstanceId}" />
 					</form>
 				</div>
 				

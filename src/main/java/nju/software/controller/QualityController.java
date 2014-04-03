@@ -83,7 +83,7 @@ public class QualityController {
 		qualityService.checkQuality(id,taskId,processId,true);
 		//marketService.modifyProduct(account.getUserId(),id,taskId,processId,null);
 
-		return "redirect:/quality/qualityCheckList.do";
+		return "redirect:/quality/checkList.do";
 	}
 		
 }
