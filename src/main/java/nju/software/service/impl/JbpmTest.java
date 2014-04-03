@@ -403,6 +403,107 @@ public class JbpmTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		data=new HashMap<String, Object>();
+		taskId=getTaskId("CAIGOUZHUGUAN",
+				"purchase_ok", order.getOrderId());
+		try {
+			data.put("isworksheet", true);
+			jbpmAPIUtil.completeTask(taskId, data, "CAIGOUZHUGUAN");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		data=new HashMap<String, Object>();
+		taskId=getTaskId("SHEJIZHUGUAN",
+				"design_ok", order.getOrderId());
+		try {
+			//data.put("isworksheet", true);
+			jbpmAPIUtil.completeTask(taskId, data, "SHEJIZHUGUAN");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		data=new HashMap<String, Object>();
+		taskId=getTaskId("SHICHANGZHUANYUAN",
+				"sign_contract", order.getOrderId());
+		try {
+			//data.put("isworksheet", true);
+			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		data=new HashMap<String, Object>();
+		taskId=getTaskId("CAIWUZHUGUAN",
+				"thirtypercent", order.getOrderId());
+		try {
+			data.put("epositok", true);
+			jbpmAPIUtil.completeTask(taskId, data, "CAIWUZHUGUAN");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		data=new HashMap<String, Object>();
+		taskId=getTaskId("CAIGOUZHUGUAN",
+				"purchase_comfirm", order.getOrderId());
+		try {
+			data.put("procurementerror", false);
+			jbpmAPIUtil.completeTask(taskId, data, "CAIGOUZHUGUAN");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		data=new HashMap<String, Object>();
+		taskId=getTaskId("SHEJIZHUGUAN",
+				"product_comfirm", order.getOrderId());
+		try {
+			//data.put("isworksheet", true);
+			jbpmAPIUtil.completeTask(taskId, data, "SHEJIZHUGUAN");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		data=new HashMap<String, Object>();
+		taskId=getTaskId("SHENGCHANZHUGUAN",
+				"volume_production", order.getOrderId());
+		try {
+			data.put("volumeproduction", true);
+			jbpmAPIUtil.completeTask(taskId, data, "SHENGCHANZHUGUAN");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		data=new HashMap<String, Object>();
+		taskId=getTaskId("ZHIJIANZHUGUAN",
+				"quality", order.getOrderId());
+		try {
+			data.put("volumeproduction", true);
+			jbpmAPIUtil.completeTask(taskId, data, "ZHIJIANZHUGUAN");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 	}
 	
 	
