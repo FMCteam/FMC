@@ -74,13 +74,12 @@
 							<tr>
 								<td>其他说明</td>
 								<td colspan="5"><input type="checkbox"
-									name="other_requirements" value="有主标" checked="checked" />
-									有主标 <input type="checkbox" name="other_requirements"
-									value="有吊牌" /> 有吊牌 <input type="checkbox"
-									name="other_requirements" value="有水洗" /> 有水洗 <input
-									type="checkbox" name="other_requirements" value="其他" /> <input
-									type="text" class="span2" name="other_other_requirements"
-									placeholder="其他" /></td>
+									name="other_requirements" value="有主标" checked="checked" /> 有主标
+									<input type="checkbox" name="other_requirements" value="有吊牌" />
+									有吊牌 <input type="checkbox" name="other_requirements"
+									value="有水洗" /> 有水洗 <input type="checkbox"
+									name="other_requirements" value="其他" /> <input type="text"
+									class="span2" name="other_other_requirements" placeholder="其他" /></td>
 							</tr>
 							<tr>
 								<td>参考链接</td>
@@ -200,10 +199,13 @@
 							<tr>
 								<td>样衣信息</td>
 								<td>样衣图片</td>
-								<td colspan="2"><input type="button"  value="选择文件" id="sample_clothes_picture_button"/></td>
+								<td colspan="2"><input type="button" value="选择文件"
+									id="sample_clothes_picture_button" /></td>
 								<td>参考图片</td>
-								<td colspan="2"><input type="button"  value="选择文件" id="reference_picture_button"/></td>
+								<td colspan="2"><input type="button" value="选择文件"
+									id="reference_picture_button" /></td>
 							</tr>
+
 							<tr>
 								<td>操作</td>
 								<td colspan="3"><input type="submit" /></td>
@@ -213,20 +215,33 @@
 						<input type="hidden" name="customerId"
 							value="${customer.customerId}" />
 					</form>
-					
-					<form action="${ctx}/market/signContractSubmit.do" method="post">
-						<label>优惠金额：</label><input name="discount" type="text" />
-						<label>总金额：</label><input name="XXX" type="text" />
-						<input name="orderId" type="text" hidden="hidden" value="${task.order.orderId}"/>
-						<input name="taskId" type="text" hidden="hidden" value="${task.taskId}"/>
-						<input type="submit"   />
-					</form>
 				</div>
-				
-					<input type="file"   id="sample_clothes_picture" hidden="hidden"
-						name="sample_clothes_picture" /> <input type="file"
-						name="reference_picture"   id="reference_picture"  hidden="hidden"/>
-				
+				<form method="post" action="${ctx}/produce/produceSubmit.do" onsubmit="return deal()">
+					<table>
+						<tr>
+							<th>要求件数</th>
+							<th>要求大小</th>
+							<th>实际件数</th>
+						</tr>
+						<c:forEach var="product" items="${task.products}">
+							<tr>
+							<td>${product.askAmount}</td>
+							<td>${product.style}</td>
+							<td><input type="text" class="produceAmount" />
+							<input class="pid" type="hidden" hidden="hidden" value="${product.id}"></td>
+							</tr>
+						</c:forEach>
+						<tr><td colspan="3"><input type="submit"></td></tr>
+					</table>
+					<input id="pid" type="hidden" name="pid" hidden="hidden"/>
+					<input id="produceAmount" type="hidden" name="produceAmount" hidden="hidden"/>
+					<input id="taskId" type="hidden" name="taskId" hidden="hidden" value="${task.taskId}"/>
+				</form>
+
+				<input type="file" id="sample_clothes_picture" hidden="hidden"
+					name="sample_clothes_picture" /> <input type="file"
+					name="reference_picture" id="reference_picture" hidden="hidden" />
+
 				<!--widgetcontent-->
 			</div>
 
@@ -255,4 +270,23 @@
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript">
+function deal(){
+	
+	$("#pid").val(getString("pid"));
+	$("#produceAmount").val(getString("produceAmount"));
+	return true;
+}
+
+function getString(col){
+	var tdString="";
+	var i=0;
+	for(;i<$("."+col).length-1;i++){
+		tdString+=$("."+col).eq(i).val()+",";
+	}
+	tdString+=$("."+col).eq(i).val();
+	return tdString;
+}
+
+</script>
 <%@include file="/common/footer.jsp"%>

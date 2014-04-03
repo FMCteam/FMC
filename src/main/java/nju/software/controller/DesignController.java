@@ -566,7 +566,7 @@ public class DesignController {
 //		String actorId = account.getUserRole();
 		String actorId = "SHEJIZHUGUAN";
 		System.out.println("actorId: " + actorId);
-		String taskName = "design_ok";
+		String taskName = "product_comfirm";
 		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
 		if (orderList.isEmpty()) {
 			System.out.println("no orderList ");

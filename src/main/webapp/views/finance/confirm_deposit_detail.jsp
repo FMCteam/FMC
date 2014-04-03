@@ -9,7 +9,7 @@
 				<h4 class="widgettitle">确认定金</h4>
 				<div class="widgetcontent">
 					<form class="stdform" id="verify_form" method="post"
-						action="${ctx }/finance/doConfirmSampleDetail.do">
+						action="${ctx }/finance/doConfirmDeposit.do">
 						<p>
 							<label>订单号</label> <span class="field"><input type="text" name="order_id" 
 							class="input-large" value="${orderModel.order.orderId }" readonly />

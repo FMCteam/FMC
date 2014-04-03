@@ -224,19 +224,20 @@
 							<th>实际件数</th>
 						</tr>
 						<c:forEach var="product" items="${task.products}">
-							
+							<tr>
 							<td>${product.askAmount}</td>
 							<td>${product.style}</td>
 							<td><input type="text" class="produceAmount" />
 							<input class="pid" type="text" hidden="hidden" value="${product.id}"></td>
+							</tr>
 						</c:forEach>
 						<tr><td colspan="3"><input type="submit"></td></tr>
 					</table>
-					<input id="pid" type="text" name="pid" hidden="hidden"/>
-					<input id="askAmount" type="text" name="askAmount" hidden="hidden"/>
+					<input id="pid" type="hidden" name="pid" />
+					<input id="askAmount" type="hidden" name="askAmount"/>
 				</form>
 
-				<input type="file" id="sample_clothes_picture" hidden="hidden"
+				<input type="file" id="sample_clothes_picture" hidden="hidden" 
 					name="sample_clothes_picture" /> <input type="file"
 					name="reference_picture" id="reference_picture" hidden="hidden" />
 

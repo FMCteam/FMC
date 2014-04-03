@@ -21,13 +21,13 @@
 					</tr>
 					<c:forEach var="task" items="${tasks}">
 						<tr class="gradeA">
-							<td>${task.order.orderId}</td>
 							<td>${task.order.customerName }</td>
 							<td>${task.order.customerCompany }</td>
-							<td>${task.order.customerPhone1 }</td>
-							<td>${task.order.customerPhone2}</td>
+							<td>${task.order.customerCompanyFax }</td>
+							<td>${task.order.customerCompanyFax }</td>
+							<td>${task.order.customerCompanyFax }</td>
 							<td><a 
-								href="${ctx}/market/signContract.do?orderId=${task.order.orderId}&taskId=${task.taskId}">签订合同</a></td>
+								href="${ctx}/produce/produce.do?orderId=${task.order.orderId}">详情</a></td>
 						</tr>
 					</c:forEach>
 				</table>
