@@ -27,7 +27,7 @@
 							<td>${task.order.customerPhone1 }</td>
 							<td>${task.order.customerPhone2}</td>
 							<td><a 
-								href="${ctx}/market/signContract?orderId=${task.order.orderId}&taskId=${task.taskId}">签订合同</a></td>
+								href="${ctx}/market/signContract.do?orderId=${task.order.orderId}&taskId=${task.taskId}">签订合同</a></td>
 						</tr>
 					</c:forEach>
 				</table>
