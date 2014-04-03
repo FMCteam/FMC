@@ -22,6 +22,8 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.model.OrderInfo;
+import nju.software.model.OrderModel;
+import nju.software.model.ProductModel;
 import nju.software.model.QuoteConfirmTaskSummary;
 import nju.software.service.MarketService;
 import nju.software.util.JbpmAPIUtil;
@@ -215,5 +217,42 @@ public class MarketServiceImpl implements MarketService {
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public List<OrderModel> getProductModifyList(Integer userId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"SHICHANGZHUANYUAN", "edit_worksheet");
+		List<OrderModel> taskSummarys = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			if (getVariable("employeeId", task).equals(userId)) {
+				Integer orderId = (Integer) getVariable("orderId", task);
+				OrderModel om = new OrderModel(orderDAO.findById(orderId),task.getId(),task.getProcessInstanceId());
+				taskSummarys.add(om);
+			}
+		}
+		return taskSummarys;
+	}
+
+	@Override
+	public boolean modifyProduct(Integer userId, int id, long taskId,
+			long processId, ProductModel productModel) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"SHICHANGZHUANYUAN", "edit_worksheet");
+		for (TaskSummary task : tasks) {
+			if (getVariable("employeeId", task).equals(userId)&&task.getId()==taskId&&task.getProcessInstanceId()==processId) {
+				try {
+					Map<String,Object> data = new HashMap<>();
+					jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
+					return true;
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
 	}
 }
