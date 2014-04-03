@@ -20,36 +20,36 @@
 								<td>入库时间</td>
 							</tr>
 							<tr>
-								<td>log.o.orderId</td>
-								<td>log.o.orderTime</td>
+								<td>${log.o.orderId }</td>
+								<td>${fn:substring(log.o.orderTime,0,10) }</td>
 								<td>1</td>
 								<td>1</td>
 							</tr>
 							<tr>
 								<td rowspan="3">客户信息</td>
 								<td>公司名称</td>
-								<td>log.o.customerCompany</td>
+								<td>${customer.companyName }</td>
 								<td>联系电话</td>
-								<td>log.o.customerPhone1</td>
+								<td>${customer.companyPhone }</td>
 							</tr>
 							<tr>
 								<td>采购人姓名</td>
-								<td>1</td>
+								<td>${customer.buyContact }</td>
 								<td>固定电话</td>
-								<td>1</td>
+								<td>${customer.contactPhone1 }</td>
 							</tr>
 							<tr>
 								<td>QQ</td>
-								<td>1</td>
+								<td>${customer.qq }</td>
 								<td>EMAIL</td>
-								<td>1</td>
+								<td>${customer.email }</td>
 							</tr>
 							<tr>
 								<td rowspan="2">时间要求</td>
 								<td colspan="4">最后发货时间</td>
 							</tr>
 							<tr>
-								<td colspan="4">1</td>
+								<td colspan="4">${fn:substring(log.o.askDeliverDate,0,10) }</td>
 							</tr>
 							<tr>
 								<td rowspan="2">物流要求</td>
@@ -66,8 +66,8 @@
 								<td colspan="2">电话</td>
 							</tr>
 							<tr>
-								<td colspan="2">1</td>
-								<td colspan="2">1</td>
+								<td colspan="2">${employee.employeeName }</td>
+								<td colspan="2">${employee.phone1 }</td>
 							</tr>
 							<tr>
 								<td colspan="5">具体数量表</td>

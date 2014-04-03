@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
+import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
@@ -21,6 +22,7 @@ import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.service.CustomerService;
+import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
@@ -46,6 +48,8 @@ public class LogisticsController {
 	private LogisticsService logisticsService;
 	@Autowired
 	private CustomerService customerService;
+	@Autowired
+	private EmployeeService employeeService;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 
@@ -441,9 +445,11 @@ public class LogisticsController {
 		Order o = orderService.findByOrderId(id);
 		Logistics l = logisticsService.findByOrderId(id);
 		Customer c = customerService.findByCustomerId(o.getCustomerId());
+		Employee e = employeeService.getEmployeeById(o.getEmployeeId());
 		ComposeOrderAndLog log = new ComposeOrderAndLog(pid, tid, o, l);
 		model.addAttribute("log", log);
 		model.addAttribute("customer", c);
+		model.addAttribute("employee", e);
 		return "logistics/send_sample";
 	}
 	
@@ -494,7 +500,7 @@ public class LogisticsController {
 		return "logistics/to_send_sample_list";
 	}
 	
-	//发送样衣list
+	//发送样衣
 	@RequestMapping(value = "logistics/sendSampleOrder.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String sendSampleOrder(HttpServletRequest request,

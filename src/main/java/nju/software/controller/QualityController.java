@@ -7,7 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Customer;
+import nju.software.dataobject.Employee;
+import nju.software.dataobject.Order;
 import nju.software.model.OrderModel;
+import nju.software.service.CustomerService;
+import nju.software.service.EmployeeService;
 import nju.software.service.OrderService;
 import nju.software.service.QualityService;
 import nju.software.util.JbpmAPIUtil;
@@ -24,6 +29,10 @@ public class QualityController {
 
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private CustomerService customerService;
+	@Autowired
+	private EmployeeService employeeService;
 	@Autowired
 	private QualityService qualityService;
 	@Autowired
@@ -50,8 +59,13 @@ public class QualityController {
 		String s_processId = request.getParameter("pid");
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
-		OrderModel om = new OrderModel(orderService.findByOrderId(orderId),taskId,processId);
+		Order o = orderService.findByOrderId(orderId);
+		OrderModel om = new OrderModel(o,taskId,processId);
+		Customer c = customerService.findByCustomerId(o.getCustomerId());
+		Employee e = employeeService.getEmployeeById(o.getEmployeeId());
 		model.addAttribute("orderModel", om);
+		model.addAttribute("customer", c);
+		model.addAttribute("employee", e);
 		return "quality/checkDetail";
 	}
 	
@@ -69,7 +83,7 @@ public class QualityController {
 		qualityService.checkQuality(id,taskId,processId,true);
 		//marketService.modifyProduct(account.getUserId(),id,taskId,processId,null);
 
-		return "redirect:/quality/qualityCheckList.do";
+		return "redirect:/quality/checkList.do";
 	}
 		
 }
