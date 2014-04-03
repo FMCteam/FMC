@@ -9,7 +9,7 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">确认合同加工单</h4>
+                    <h4 class="widgettitle">设计部确认</h4>
                 <table id="dyntable" class="table table-bordered responsive">
                     <colgroup>
                         <col class="con1" />
@@ -20,7 +20,6 @@
                         <col class="con0" />
                         <col class="con1" />
                         <col class="con0" />
-                        <col class="con1" />
                     </colgroup>
                     <thead>
                         <tr>
@@ -31,36 +30,28 @@
                             <th class="head0">款式</th>
                             <th class="head1">件数</th>
                             <th class="head0">交货时间</th>
-                            <th class="head1">操作</th>
-                            <th class="head0">操作</th>
+                            <th class="head1"></th>
                         </tr>
                     </thead>
                     <tbody>
-					<c:forEach var="orderModel" items="${order_list}">
-						<tr class="gradeA">
-							<td>${orderModel.order.orderId }</td>
-							<td>${orderModel.order.employeeId }</td>
-							<td>${orderModel.order.customerName }</td>
-							<td>${orderModel.order.customerCompany }</td>
-							<td>${orderModel.order.styleName }</td>
-							<td>${orderModel.order.askAmount }</td>
-							<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-							<td><form action="${ctx }/market/confirmProductDetail.do"
-									method="post">
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" /> 
-									<input type="hidden" name="task_id" value="${orderModel.taskId }" /> 
-									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-									<button class="btn btn-primary btn-rounded">填写加工单</button>
-								</form></td>
-							<td><form action="${ctx }/market/cancelProduct.do" method="post">
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" /> 
-									<input type="hidden" name="task_id" value="${orderModel.taskId }" /> 
-									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-									<button class="btn btn-primary btn-rounded">取消订单</button>
-								</form></td>
-						</tr>
-					</c:forEach>
-				</tbody>
+	                    <c:forEach var="orderModel" items="${order_list}" >
+	                        <tr class="gradeA">
+	                            <td>${orderModel.order.orderId }</td>
+								<td>${orderModel.order.employeeId }</td>
+								<td>${orderModel.order.customerName }</td>
+								<td>${orderModel.order.customerCompany }</td>
+								<td>${orderModel.order.styleName }</td>
+								<td>${orderModel.order.askAmount }</td>
+								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+								<td><form action="${ctx }/design/CadConfirm_detail.do" method="post" >
+									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
+										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
+										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 上传Cad文件</button></form>
+								</td>
+	                        </tr>
+                        </c:forEach>
+                    </tbody>
                 </table>
                 <div class="dataTables_paginate paging_full_numbers" id="dyntable_paginate" style="float:right">
                 	<c:if test="${page==1 }">
@@ -103,7 +94,7 @@
 	                	<a tabindex="0" class="next paginate_button" id="dyntable_next" href="${ctx }/employee/search.do?page=${page+1 }&number_per_page=1">下一页</a>
 						<a tabindex="0" class="last paginate_button" id="dyntable_last" href="${ctx }/employee/search.do?page=${page_number }&number_per_page=1">尾页</a>
                 	</c:if>
-					<c:if test="${page==page_number&&page_number>0 }">
+					<c:if test="${page==page_number }">
 	                	<a tabindex="0" class="next paginate_button paginate_button_disabled" id="dyntable_next">下一页</a>
 						<a tabindex="0" class="last paginate_button paginate_button_disabled" id="dyntable_last">尾页</a>
                 	</c:if>

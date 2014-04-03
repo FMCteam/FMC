@@ -6,6 +6,8 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
 import nju.software.model.SampleProduceTask;
 import nju.software.model.SampleProduceTaskSummary;
@@ -32,9 +34,17 @@ public interface ProduceService {
 	public void completeSampleProduceTask(long taskId,String result);
 	
 	
-	public List<OrderInfo>getProduceList();
+	public List<OrderInfo> getProduceList();
 	
 	public OrderInfo getProduceInfo(Integer orderId);
-	
+
+	public List<Product> getProductByOrderId(int parseInt);
+
+	public List<nju.software.dataobject.Package> getPackageByOrderId(int parseInt);
+
+	public List<List<PackageDetail>> getProductDetailByPackage(
+			List<nju.software.dataobject.Package> packageList);
+
 	public void pruduceSubmit(String[] pid,String[] askAmount,long taskId);
+
 }

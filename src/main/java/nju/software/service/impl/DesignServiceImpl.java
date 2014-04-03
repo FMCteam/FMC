@@ -183,8 +183,8 @@ public class DesignServiceImpl implements DesignService {
 			
 				DesignCad designCad = DesignCadDAO.findById(orderId);
 			if(designCad ==null){
-				//数据库中无quote对象
-				//修改QUote内容
+				//数据库中无designCad对象
+				//新建QUote内容
 				designCad =new DesignCad ();
 				designCad .setOrderId(orderId);
 				designCad .setCadUrl(url);
@@ -192,7 +192,7 @@ public class DesignServiceImpl implements DesignService {
 				designCad.setUploadTime(uploadTime);
 				 DesignCadDAO.save(designCad );
 			}else{
-				//quote已存在于数据库
+				//designCad已存在于数据库
 				//修改QUote内容
 				
 				short newVersion=(short) (designCad.getCadVersion()+1);
