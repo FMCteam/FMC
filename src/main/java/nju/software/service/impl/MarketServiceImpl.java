@@ -245,6 +245,7 @@ public class MarketServiceImpl implements MarketService {
 			if (getVariable("employeeId", task).equals(userId)&&task.getId()==taskId&&task.getProcessInstanceId()==processId) {
 				try {
 					Map<String,Object> data = new HashMap<>();
+					data.put("editworksheetok", true);
 					jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
 					return true;
 				} catch (InterruptedException e) {
