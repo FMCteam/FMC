@@ -13,7 +13,7 @@
                 <table id="dyntable" class="table table-bordered responsive">
                 
                   	<tr>
-								<td rowspan="6" }>生产情况</td>
+								<td rowspan=${product_list.size()+1 } >生产情况</td>
 								<td >生产编号</td>
 								<td >订单要求</td>
 								<td >实际生产</td>
@@ -22,11 +22,10 @@
 								<td >款式</td>
 								
 							</tr>
-							<tr>
-								<td class="innertable"><table
-										class="span12 table fabric_table">
-										 <c:forEach var="product" items="${product_list}" >
-										<tr class="addrow">
+							<c:forEach var="product" items="${product_list}" >
+								<tr>
+										 
+										
 											<td><input name="product_id" value=${product.id }></td>
 											<td><input name="ask_amount" value=${product.askAmount }></td>
 											<td><input name="produce_amount" value=${product.produceAmount }></td>
@@ -34,38 +33,28 @@
 											<td><input name="qualified_amount" value=${product.qualifiedAmount }></td>
 											<td><input name="color" value=${product.color }></td>
 											<td><input name="style" value=${product.style }></td>
-										</tr>
-										</c:forEach>
-									</table></td>
+										
+										
+									</tr>
+						  </c:forEach>
+			<tr>
+								<td rowspan="3">包</td>
+								<td colspan="2">面料名称</td>
+								<td colspan="2">面料克重</td>
+								<td colspan="2">操作</td>
+								<input id="fabric_name" name="fabric_name" type="hidden" />
+								<input id="fabric_amount" name="fabric_amount" type="hidden" />
 							</tr>
-	                   	<tr>
-								
-								<td colspan="1">包编号</td>
-								
-								<td colspan="1">衣服件数</td>
-								<td colspan="1">衣服样式</td>
-								<td colspan="1">衣服颜色</td>
-								<td colspan="1">操作</td>
-								
-							</tr>
-							
 							<tr>
 								<td colspan="6" class="innertable"><table
 										class="span12 table fabric_table">
-										 <c:forEach var="packages" items="${package_detail_list}" >
-										   <c:forEach var="package2" items="${packages}" >
 										<tr class="addrow">
-										
-											<td><input name="package_id" value=${package2.packageId }></td>
-												<td><input name="cloths_amount" value=${package2.clothesAmount }></td>
-												<td><input name="clothes_style_name" value=${package2.clothesStyleName }></td>
-													<td><input name="clothes_style_color" value=${package2.clothesStyleColor }></td>
-											<td>操作<td>
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
+											<td><a>添加</a></td>
 										</tr>
-										</c:forEach>
-										</c:forEach>
 									</table></td>
-							</tr>
+			</tr>
 							 
                  
                 </table>
