@@ -566,7 +566,7 @@ public class MarketController {
 		// String referencePicture=sdf.format(calendar.getTime());
 		// FileOperateUtil.Upload(request, "sample_clothes_picture",
 		// sdf.format(calendar.getTime()), "sample_clothes_picture");
-		// FileOperateUtil.Upload(request, "reference_picture",
+//		 FileOperateUtil.Upload(request, "reference_picture",
 		// sdf.format(calendar.getTime()), "reference_picture");
 		// System.out.println(session.getAttribute("sample_clothes_picture"));
 
