@@ -737,8 +737,11 @@ public class MarketController {
 				.getQuoteConfirmTaskSummaryList(account.getUserId());
 		
 		
+		jbpmTest.addTask();
+		
+		
 		if(tasks.size()==0){
-			jbpmTest.addQuoteConfirmTask(account.getUserId());
+			//jbpmTest.addQuoteConfirmTask(account.getUserId());
 			tasks = marketService
 					.getQuoteConfirmTaskSummaryList(account.getUserId());
 		}
