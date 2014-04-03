@@ -737,8 +737,11 @@ public class MarketController {
 				.getQuoteConfirmTaskSummaryList(account.getUserId());
 		
 		
+		jbpmTest.addTask();
+		
+		
 		if(tasks.size()==0){
-			jbpmTest.addQuoteConfirmTask(account.getUserId());
+			//jbpmTest.addQuoteConfirmTask(account.getUserId());
 			tasks = marketService
 					.getQuoteConfirmTaskSummaryList(account.getUserId());
 		}
@@ -975,7 +978,7 @@ public class MarketController {
 		marketService.completeSignContract(Integer.parseInt(orderId),
 				Double.parseDouble(discount), Long.parseLong(taskId));
 
-		return "redirect:/market/signContractList";
+		return "redirect:/market/signContractList.do";
 	}
 
 	// =================================莫其凡的内容到此结束===========================================

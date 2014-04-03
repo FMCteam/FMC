@@ -1567,7 +1567,7 @@
       <dataInputAssociation>
         <targetRef>_69_SkippableInput</targetRef>
         <assignment>
-          <from xsi:type="tFormalExpression">false</from>
+          <from xsi:type="tFormalExpression"></from>
           <to xsi:type="tFormalExpression">_69_SkippableInput</to>
         </assignment>
       </dataInputAssociation>
@@ -1612,12 +1612,10 @@
     <userTask id="_70" name="设计部确认" >
       <ioSpecification>
         <dataInput id="_70_TaskNameInput" name="TaskName" />
-        <dataOutput id="_70_isworksheetBOutput" name="isworksheetB" />
         <inputSet>
           <dataInputRefs>_70_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
-          <dataOutputRefs>_70_isworksheetBOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -1627,10 +1625,6 @@
           <to xsi:type="tFormalExpression">_70_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <dataOutputAssociation>
-        <sourceRef>_70_isworksheetBOutput</sourceRef>
-        <targetRef>isworksheetB</targetRef>
-      </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
           <formalExpression>SHEJIZHUGUAN</formalExpression>
@@ -1778,7 +1772,7 @@
       </dataInputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
-          <formalExpression>SHENGCHANZHUGUAN</formalExpression>
+          <formalExpression>SHEJIZHUGUAN</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
@@ -2078,23 +2072,20 @@ return false;
     <sequenceFlow id="_69-_72" sourceRef="_69" targetRef="_72" />
     <sequenceFlow id="_70-_72" sourceRef="_70" targetRef="_72" />
     <sequenceFlow id="_76-_74" sourceRef="_76" targetRef="_74" name="isworksheet" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(isworksheet&amp;isworksheetB){
-return true;
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(isworksheet){
+	return true;
 }else{
-return false;
+	return false;
 }
 
 </conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_76-_75" sourceRef="_76" targetRef="_75" name="noisworksheet" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(isworksheet&amp;isworksheetB){
-return false;
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(isworksheet){
+	return false;
 }else{
-return true;
-}
-
-
-</conditionExpression>
+	return true;
+}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_80-_84" sourceRef="_80" targetRef="_84" />
     <sequenceFlow id="_89-_87" sourceRef="_89" targetRef="_87" />
