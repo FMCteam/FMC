@@ -15,8 +15,6 @@
 						<th class="head1">客户电话</th>
 						<th class="head1">公司名称</th>
 						<th class="head0">公司电话</th>
-						<th class="head0">内部报价</th>
-						<th class="head0">外部报价</th>
 						<th class="head1">操作</th>
 					</tr>
 					<c:forEach var="task" items="${tasks}">
@@ -25,8 +23,6 @@
 							<td>${task.order.customerPhone1}</td>
 							<td>${task.order.customerCompany}</td>
 							<td>${task.order.customerCompanyFax}</td>
-							<td>${task.taskId}</td>
-							<td>${task.processInstanceId}</td>
 							<td>
 								<a
 								href="${ctx}/quality/checkDetail.do?id=${task.order.orderId}&tid=${task.taskId}&pid=${task.processInstanceId}">

@@ -9,24 +9,24 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<section>
 				<table id="dyntable" class="table responsive">
-					<caption>报价商定</caption>
+					<caption>样衣发货</caption>
 					<tr>
+						<th class="head0">单号</th>
+						<th class="head1">生成时间</th>
 						<th class="head0">客户姓名</th>
 						<th class="head1">客户电话</th>
-						<th class="head1">公司名称</th>
-						<th class="head0">公司电话</th>
-						<th class="head0">内部报价</th>
-						<th class="head0">外部报价</th>
-						<th class="head1">操作</th>
+						<th class="head0">公司名称</th>
+						<th class="head1">公司电话</th>
+						<th class="head0">操作</th>
 					</tr>
 					<c:forEach var="task" items="${orderList}">
 						<tr class="gradeA">
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
+							<td>${task.o.orderId }</td>
+							<td>${fn:substring(task.o.orderTime,0,10) }</td>
+							<td>${task.o.customerName }</td>
+							<td>${task.o.customerPhone1 }</td>
+							<td>${task.o.customerCompany }</td>
+							<td>${task.o.customerCompanyFax }</td>
 							<td><a href="${ctx}/logistics/sendSampleOrderDetail.do?taskId=${task.taskId}&pid=${task.processId}&orderId=${task.o.orderId}">发货</a></td>
 						</tr>
 					</c:forEach>
