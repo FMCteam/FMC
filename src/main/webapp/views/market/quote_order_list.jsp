@@ -34,8 +34,8 @@
 						<th class="head0">otherCost</th>
 						<th class="head1">profitPerPiece</th>
 						-->
-						<th class="head0">innerPrice</th>
-						<th class="head0">outerPrice</th>
+						<th class="head0">内部报价</th>
+						<th class="head0">外部报价</th>
 						<th class="head0">操作</th>
 						
 					</tr>
