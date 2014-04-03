@@ -16,9 +16,11 @@ import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.util.JbpmAPIUtil;
 
@@ -37,6 +39,8 @@ public class JbpmTest {
 	private FabricDAO fabricDAO;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
+	@Autowired
+	private ProductDAO productDAO;
 
 	public void addQuoteConfirmTask(Integer eid) {
 
@@ -371,6 +375,23 @@ public class JbpmTest {
 			e.printStackTrace();
 		}
 		
+		
+		Product p=new Product();
+		p.setOrderId(order.getOrderId());
+		p.setColor("yellow");
+		p.setAskAmount(22);
+		p.setQualifiedAmount(0);
+		p.setProduceAmount(0);
+		p.setStyle("XXS");
+		productDAO.save(p);
+		p=new Product();
+		p.setOrderId(order.getOrderId());
+		p.setColor("Red");
+		p.setAskAmount(12);
+		p.setProduceAmount(0);
+		p.setStyle("XXS");
+		p.setQualifiedAmount(0);
+		productDAO.save(p);
 		
 		data=new HashMap<String, Object>();
 		taskId=getTaskId("SHICHANGZHUANYUAN",

@@ -251,6 +251,7 @@ public class ProduceServiceImpl implements ProduceService {
 		for (TaskSummary task : tasks) {
 			if(getVariable("orderId", task).equals(orderId)){
 				OrderInfo summary =new  OrderInfo(orderDAO.findById(orderId), task.getId());
+				summary.setProducts(productDAO.findByOrderId(orderId));
 				return summary;
 			}
 		}
@@ -301,6 +302,7 @@ public class ProduceServiceImpl implements ProduceService {
 		Map<String,Object> data=new HashMap<String,Object>();
 		//data.put("producterror", result.equals("0"));
 		try {
+			data.put("volumeproduction", true);
 			jbpmAPIUtil.completeTask(taskId, data, "SHENGCHANZHUGUAN");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

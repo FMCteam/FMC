@@ -228,16 +228,17 @@
 							<td>${product.askAmount}</td>
 							<td>${product.style}</td>
 							<td><input type="text" class="produceAmount" />
-							<input class="pid" type="text" hidden="hidden" value="${product.id}"></td>
+							<input class="pid" type="hidden" hidden="hidden" value="${product.id}"></td>
 							</tr>
 						</c:forEach>
 						<tr><td colspan="3"><input type="submit"></td></tr>
 					</table>
-					<input id="pid" type="hidden" name="pid" />
-					<input id="askAmount" type="hidden" name="askAmount"/>
+					<input id="pid" type="hidden" name="pid" hidden="hidden"/>
+					<input id="produceAmount" type="hidden" name="produceAmount" hidden="hidden"/>
+					<input id="taskId" type="hidden" name="taskId" hidden="hidden" value="${task.taskId}"/>
 				</form>
 
-				<input type="file" id="sample_clothes_picture" hidden="hidden" 
+				<input type="file" id="sample_clothes_picture" hidden="hidden"
 					name="sample_clothes_picture" /> <input type="file"
 					name="reference_picture" id="reference_picture" hidden="hidden" />
 
@@ -273,7 +274,7 @@
 function deal(){
 	
 	$("#pid").val(getString("pid"));
-	$("#askAmount").val(getString("askAmount"));
+	$("#produceAmount").val(getString("produceAmount"));
 	return true;
 }
 
