@@ -80,7 +80,7 @@ public class LogisticsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "logistics/rukuDetail.do", method = RequestMethod.GET)
+	@RequestMapping(value = "logistics/rukuDetail.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String rukuDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -158,12 +158,12 @@ public class LogisticsController {
 				//推进流程
 				
 			
-			return "redirct:/logistics/rukuList.do";
+			return "redirect:/logistics/rukuList.do";
 		}catch(Exception e)
 		{
 			
 		}
-		return "redirct:/logistics/rukuList.do";
+		return "redirect:/logistics/rukuList.do";
 	}
 	/**
 	 * 
