@@ -296,7 +296,7 @@ public class ProduceController {
 	
 	
 	
-	@RequestMapping(value = "produce/produceList.do", method= RequestMethod.POST)
+	@RequestMapping(value = "produce/produceList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String produceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -308,7 +308,7 @@ public class ProduceController {
 	
 	
 	
-	@RequestMapping(value = "produce/produce.do", method= RequestMethod.POST)
+	@RequestMapping(value = "produce/produce.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String produce(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -319,14 +319,17 @@ public class ProduceController {
 	}
 	
 	
-	@RequestMapping(value = "produce/produceSubmit.do", method= RequestMethod.POST)
+	@RequestMapping(value = "produce/produceSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
+		String taskId=request.getParameter("taskId");
 		String pid=request.getParameter("pid");
 		String askAmount=request.getParameter("askAmount");
 		
+		
+		produceService.pruduceSubmit(pid.split(","), askAmount.split(","), Long.parseLong(taskId));
 		//String orderId=request.getParameter("orderId");
 		//OrderInfo task=produceService.getProduceInfo(Integer.parseInt(orderId));
 		//model.addAttribute("task", task);

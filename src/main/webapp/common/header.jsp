@@ -138,7 +138,7 @@
 							<li><a href="${ctx }/produce/verify.do">生产验证</a></li>
 							<li><a href="${ctx }/produce/costAccounting.do">成本合算</a></li>
 							<li><a href="${ctx }/produce/sampleProduceList.do">样衣生产</a></li>
-							<li><a href="#">批量生产</a></li>
+							<li><a href="${ctx }/produce/produceList.do">批量生产</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_finance==true}">
