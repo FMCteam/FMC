@@ -96,8 +96,10 @@
 
 									<li><a href="${ctx }/market/quoteToModifyList.do">修改报价</a></li>
 									<li><a href="${ctx }/market/confirmProduct.do">商定合同</a></li>
+
 									<li><a href="${ctx }/market/productToModifyList.do">修改合同</a></li>
 									<li><a href="${ctx }/market/signContractList.do">签订合同</a></li>
+
 									<li><a href="#">订单回访</a></li>
 									<li><a href="#">提醒缴费</a></li>
 								</ul>
@@ -155,7 +157,7 @@
 						<ul>
 							<li><a href="${ctx }/logistics/sampleOrderList.do">收取样衣</a></li>
 							<li><a href="${ctx }/logistics/sendSampleList.do">样衣发货</a></li>
-							<li><a href="${ctx }/logistics/add.do">产品入库</a></li>
+							<li><a href="${ctx }/logistics/rukuList.do">产品入库</a></li>
 							<li><a href="${ctx }/logistics/add.do">产品发货</a></li>
 						</ul></li>
 						</c:if>

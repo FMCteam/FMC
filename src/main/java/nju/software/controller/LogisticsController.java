@@ -24,6 +24,7 @@ import nju.software.service.CustomerService;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
+import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
 
@@ -126,17 +127,33 @@ public class LogisticsController {
 		String orderId=request.getParameter("order_id");
 		String taskId=request.getParameter("task_id");
 		String processId=request.getParameter("process_id");
-		String iterator=request.getParameter("iterator");
+		//String iterator=request.getParameter("iterator");
+		/*
+		<input id="clothes_amount" name="clothes_amount" type="hidden" />
+		<input id="clothes_style_color" name="clothes_style_color" type="hidden" />
+		<input id="clothes_style_name" name="clothes_style_name" type="hidden" />
+		*/
+		String clothes_amount=request.getParameter("clothes_amount");
+		String clothes_style_color=request.getParameter("clothes_style_color");
+		String clothes_style_name=request.getParameter("clothes_style_name");
+		String inTime = request.getParameter("package_date");
+		Timestamp entryTime = null;
+		if (inTime != null && inTime != "") {
+			Date inDate = DateUtil.parse(inTime, DateUtil.newFormat);
+			entryTime = new Timestamp(inDate.getTime());
+		}
 		try
 		{
-			int int_iterator=Integer.parseInt(iterator);
-			//保存package信息
+			String[] array_amount=clothes_amount.split(",");
+			String[] array_color=clothes_style_color.split(",");
+			String[] array_name=clothes_style_name.split(",");
+			produceService.savePackageDetail(Integer.parseInt(orderId),array_amount,array_color,array_name,entryTime);
 			
-			if(int_iterator==1)
-			{
+			//保存package信息
+			jbpmAPIUtil.completeTask(Integer.parseInt(taskId), null, actor);
 				//推进流程
 				
-			}
+			
 			return "redirct:/logistics/rukuList.do";
 		}catch(Exception e)
 		{

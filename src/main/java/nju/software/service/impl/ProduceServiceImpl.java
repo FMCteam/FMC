@@ -1,5 +1,6 @@
 package nju.software.service.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,10 +17,8 @@ import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
-
 import nju.software.dao.impl.PackageDAO;
 import nju.software.dao.impl.PackageDetailDAO;
-
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
@@ -27,7 +26,6 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
-
 import nju.software.dataobject.PackageDetail;
 
 
@@ -309,6 +307,29 @@ public class ProduceServiceImpl implements ProduceService {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void savePackageDetail(int orderId, String[] array_amount,
+			String[] array_color, String[] array_name, Timestamp entryTime) {
+		// TODO Auto-generated method stub
+		//保存package
+		nju.software.dataobject.Package p1=new nju.software.dataobject.Package();
+		p1.setOrderId(orderId);
+		p1.setPackageTime(entryTime);
+		packageDAO.save(p1);
+		//保持packegedetail
+		for(int i=0;i<array_amount.length;i++)
+		{
+			
+		PackageDetail pd1=new PackageDetail();
+		pd1.setClothesAmount(Integer.parseInt(array_amount[i]));
+		pd1.setClothesStyleColor(array_color[i]);
+		pd1.setClothesStyleName(array_name[i]);
+		pd1.setPackageId(p1.getPackageId());
+		packageDetailDAO.save(pd1);
+		}
+		
 	}
 	
 	
