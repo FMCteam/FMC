@@ -426,7 +426,7 @@ public class DesignController {
 	
 
 	/**
-	 * 设计部CAD验证跳转链接
+	 * 设计部设计CAD验证跳转链接
 	 * @param request
 	 * @param response
 	 * @param model
@@ -437,7 +437,7 @@ public class DesignController {
 	public String designCAD_confirm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		System.out.println(" design CAD confirm ================ show task");
+		System.out.println(" design DesignCAD confirm ================ show task");
 		List<OrderModel> orderList = new ArrayList<OrderModel>();
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
@@ -456,18 +456,18 @@ public class DesignController {
 	
 	
 	/**
-	 * CAD验证 上传 详细页面
+	 * 设计CAD验证 上传 详细页面
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/CadConfirm_detail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/designCadConfirm_detail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String CadConfirm_detail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		System.out.println("design CadConfirm detail ================ CadConfirm detail");
+		System.out.println("design DesignCadConfirm detail ================ DesignCadConfirm detail");
 		OrderModel orderModel = null;
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
@@ -485,24 +485,24 @@ public class DesignController {
 	
 		
 		
-		return "design/CadConfirm_detail";
+		return "design/DesignCadConfirm_detail";
 	}
 	
 	
 	/**
 	 * 
-	 * CAD设计部验证
+	 * 设计CAD设计部验证
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/doCadConfirm.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/doDesignCadConfirm.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doCadConfirm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-	System.out.println("do  design CadConfirm ================");
+	System.out.println("do  design designCadConfirm ================");
 		
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 	
@@ -538,6 +538,138 @@ public class DesignController {
 		
 		return "redirect:/design/designCAD_confirm";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	/**
+	 * 设计部生产版型CAD验证跳转链接
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/productCAD_confirm.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String productCAD_confirm(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+
+		System.out.println(" design productCAD confirm ================ show task");
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String actorId = "SHEJIZHUGUAN";
+		System.out.println("actorId: " + actorId);
+		String taskName = "design_ok";
+		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		if (orderList.isEmpty()) {
+			System.out.println("no orderList ");
+		}
+		model.addAttribute("order_list", orderList);
+		
+		
+		return "design/productCAD_confirm";
+	}
+	
+	
+	/**
+	 * 生产版型CAD验证 上传 详细页面
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/ProductCadConfirm_detail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String ProductCadConfirm_detail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+
+		System.out.println("design ProductCadConfirm detail ================ productCadConfirm detail");
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+//		Logistics logistics = designService.getLogisticsByOrderId(orderId_request);
+//		List<Fabric> fabricList = designService.getFabricByOrderId(orderId_request);
+//		List<Accessory> accessoryList = designService.getAccessoryByOrderId(orderId_request);
+		model.addAttribute("orderModel", orderModel);
+	
+		
+		
+		return "design/productCadConfirm_detail";
+	}
+	
+	
+	/**
+	 * 
+	 *生产版型 CAD设计部验证
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "design/doProductCadConfirm.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String doProductCadConfirm(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+	System.out.println("do  design ProductCadConfirm ================");
+		
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+	
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+//		String design_cost_temp = request.getParameter("design_cost");
+//		float design_cost=Float.parseFloat(design_cost_temp);
+		String taskName = "design_ok ";
+		
+		
+		  MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
+		
+		  MultipartFile file = multipartRequest.getFile("CADFile");
+		
+          
+		  String filename=file.getOriginalFilename();     
+		
+	
+		    
+		  FileOperateUtil.Upload(file);
+		   
+		    String url="D:/"+"/"+ filename;
+		    Timestamp uploadTime = new Timestamp(new Date().getTime());
+		
+		    designService.uploadCAD(account, orderId_request, taskId, processId, url,uploadTime);
+		
+		
+//		designService.costAccounting(account, orderId_request, taskId, processId, design_cost);
+		
+		return "redirect:/design/productCAD_confirm";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

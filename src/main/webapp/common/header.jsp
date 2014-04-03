@@ -111,7 +111,7 @@
 							<li><a href="${ctx }/design/costAccounting.do">成本合算</a></li>
 							<li><a href="${ctx }/design/upload_CAD.do">样衣版型</a></li>
 							<li><a href="${ctx }/design/designCAD_confirm.do">生产验证</a></li>
-							<li><a href="#">生产版型</a></li>
+							<li><a href="${ctx }/design/productCAD_confirm.do">生产版型</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_buy==true}">
@@ -121,6 +121,9 @@
 							<li><a href="${ctx }/buy/verify.do">采购验证</a></li>
 							<li><a href="${ctx }/buy/costAccounting.do">成本合算</a></li>
 							<li><a href="${ctx }/buy/caigouqueren1List.do">采购确认</a></li>
+							<li><a href="${ctx }/buy/caigouqueren2List.do">采购确认2</a></li>
+							<li><a href="${ctx }/buy/caigouqueren3List.do">采购确认3</a></li>
+							
 							<li><a href="#">样衣采购</a></li>
 							<li><a href="#">生产验证</a></li>
 							<li><a href="#">生产采购</a></li>
