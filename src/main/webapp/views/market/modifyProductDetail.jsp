@@ -8,7 +8,7 @@
 			<div class="widget">
 				<h4 class="widgettitle">修改加工单</h4>
 				<div class="widgetcontent">
-					<form onSubmit="return verify()" method="post" 
+					<form method="post" 
 						action="${ctx }/market/modifyProduct.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
@@ -17,13 +17,10 @@
 							</tr>
 							<tr>
 								<td rowspan="2">加工单</td>
-								<td>生产数量</td>
-								<td>颜色</td>
-								<td>款式</td>
-								<td>操作</td>
-								<input id="product_amount" name="product_amount" type="hidden" />
-								<input id="product_color" name="product_color" type="hidden" />
-								<input id="product_style" name="product_style" type="hidden" />
+								<td>生产数量<input id="product_amount" name="product_amount" type="hidden" /></td>
+								<td>颜色<input id="product_color" name="product_color" type="hidden" /></td>
+								<td>款式<input id="product_style" name="product_style" type="hidden" /></td>
+								<td>操作</td>	
 							</tr>
 							<tr>
 								<td colspan="4" class="innertable"><table

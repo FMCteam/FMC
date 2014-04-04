@@ -35,6 +35,6 @@ public interface MarketService {
 	public List<OrderModel> getProductModifyList(Integer userId);
 
 	public boolean modifyProduct(Integer userId, int id, long taskId,
-			long processId, ProductModel productModel);
+			long processId, boolean b, List<Product> pList);
 	
 }

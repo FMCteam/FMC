@@ -237,15 +237,21 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public boolean modifyProduct(Integer userId, int id, long taskId,
-			long processId, ProductModel productModel) {
+			long processId, boolean editworksheetok, List<Product> productList) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				"SHICHANGZHUANYUAN", "edit_worksheet");
 		for (TaskSummary task : tasks) {
-			if (getVariable("employeeId", task).equals(userId)&&task.getId()==taskId&&task.getProcessInstanceId()==processId) {
+			if (task.getId()==taskId&&getVariable("employeeId", task).equals(userId)
+					&&task.getProcessInstanceId()==processId&&getVariable("orderId", task).equals(id)) {
+				if(editworksheetok){
+					for (int i = 0; i < productList.size(); i++) {
+						productDAO.save(productList.get(i));
+					}
+				}
 				try {
 					Map<String,Object> data = new HashMap<>();
-					data.put("editworksheetok", true);
+					data.put("editworksheetok", editworksheetok);
 					jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
 					return true;
 				} catch (InterruptedException e) {

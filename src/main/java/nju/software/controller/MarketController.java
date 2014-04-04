@@ -207,8 +207,16 @@ public class MarketController {
 		long processId = Long.parseLong(s_processId);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		marketService.modifyProduct(account.getUserId(),id,taskId,processId,null);
+		
+		String productAskAmount = request.getParameter("product_amount");
+		String productColor = request.getParameter("product_color");
+		String productStyle = request.getParameter("product_style");
+		boolean editworksheet = true;
 
+		if ((productAskAmount != null) && (productColor != null) && (productStyle != null)) {
+			List<Product> productList = marketService.getProduct(id, productAskAmount, productColor, productStyle);
+			marketService.modifyProduct(account.getUserId(),id,taskId,processId,editworksheet,productList);
+		}
 		return "redirect:/market/productToModifyList.do";
 	}
 	
