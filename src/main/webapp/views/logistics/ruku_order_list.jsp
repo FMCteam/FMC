@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-	                    <c:forEach var="orderModel" items="${order_model_List}" >
+	                    <c:forEach var="orderModel" items="${order_model_list}" >
 	                        <tr class="gradeA">
 	                            <td>${orderModel.order.orderId }</td>
 								<td>${orderModel.order.employeeId }</td>
