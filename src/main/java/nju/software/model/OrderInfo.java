@@ -33,6 +33,7 @@ public class OrderInfo {
 	private List<Package>packages=null;
 	private List<List<PackageDetail>>packageDetails=null;
 	private TaskSummary task;
+	private long taskId;
 	
 	
 	public List<Fabric> getFabrics() {
@@ -122,11 +123,13 @@ public class OrderInfo {
 	public void setTask(TaskSummary task) {
 		this.task = task;
 	}
-	private long taskId;
 	
 	
-	
-	
+	public OrderInfo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public OrderInfo(Order order, long taskId) {
 		super();
 		this.order = order;
@@ -145,8 +148,4 @@ public class OrderInfo {
 	public void setTaskId(long taskId) {
 		this.taskId = taskId;
 	}
-	
-	
-	
-
 }
