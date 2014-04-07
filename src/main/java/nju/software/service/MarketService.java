@@ -13,6 +13,15 @@ import nju.software.model.QuoteConfirmTaskSummary;
 
 public interface MarketService {
 	
+	
+	public List<OrderInfo>getConfirmQuoteList(String actorId);
+	
+	public OrderInfo getConfirmQuoteDetail(Integer orderId);
+	
+	public boolean confirmQuoteSubmit(String actorId,long taskId,String result);
+	
+	
+	
 	public List<QuoteConfirmTaskSummary> getQuoteConfirmTaskSummaryList(Integer employeeId);
 	
 	public void completeQuoteConfirmTaskSummary(long taskId,String result);
