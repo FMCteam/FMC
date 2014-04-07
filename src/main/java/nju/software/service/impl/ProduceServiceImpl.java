@@ -234,11 +234,9 @@ public class ProduceServiceImpl implements ProduceService {
 				"SHENGCHANZHUGUAN", "volume_production");
 		List<OrderInfo> taskSummarys = new ArrayList<>();
 		for (TaskSummary task : tasks) {
-			
 			Integer orderId = (Integer) getVariable("orderId", task);
 			OrderInfo summary =new  OrderInfo(orderDAO.findById(orderId), task.getId());
 			taskSummarys.add(summary);
-
 		}
 		return taskSummarys;
 	}
