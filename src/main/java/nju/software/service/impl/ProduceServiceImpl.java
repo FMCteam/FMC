@@ -40,6 +40,13 @@ import nju.software.util.JbpmAPIUtil;
 
 @Service("produceServiceImpl")
 public class ProduceServiceImpl implements ProduceService {
+	
+	public final static String ACTOR_PRODUCE_MANAGER="SHENGCHANZHUGUAN";
+	public final static String TASK_PRODUCE_SAMPLE="product_sample";
+	public final static String TASK_PRODUCE="volume_production";
+	
+
+	
 
 	@Autowired
 	private OrderDAO orderDAO;
@@ -231,7 +238,7 @@ public class ProduceServiceImpl implements ProduceService {
 	public List<OrderInfo> getProduceList() {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"SHENGCHANZHUGUAN", "volume_production");
+				ACTOR_PRODUCE_MANAGER, TASK_PRODUCE);
 		List<OrderInfo> taskSummarys = new ArrayList<>();
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) getVariable("orderId", task);
@@ -245,7 +252,7 @@ public class ProduceServiceImpl implements ProduceService {
 	public OrderInfo getProduceInfo(Integer orderId) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"SHENGCHANZHUGUAN", "volume_production");
+				ACTOR_PRODUCE_MANAGER, TASK_PRODUCE);
 		for (TaskSummary task : tasks) {
 			if(getVariable("orderId", task).equals(orderId)){
 				OrderInfo summary =new  OrderInfo(orderDAO.findById(orderId), task.getId());

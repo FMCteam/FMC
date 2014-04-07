@@ -209,6 +209,15 @@ public class JbpmAPIUtil {
 		}
 		return tasks;
 	}
+	
+	
+	public Object getVariable(TaskSummary task,String name) {
+		StatefulKnowledgeSession session = getKsession();
+		long processId = task.getProcessInstanceId();
+		WorkflowProcessInstance process = (WorkflowProcessInstance) session
+				.getProcessInstance(processId);
+		return process.getVariable(name);
+	}
 
 	/**
 	 * hornetQ客户端

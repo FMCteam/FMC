@@ -31,6 +31,11 @@ import nju.software.util.JbpmAPIUtil;
 @Service("marketServiceImpl")
 public class MarketServiceImpl implements MarketService {
 
+	public final static String ACTOR_MARKET_MANAGER = "SHICHANGZHUGUAN";
+	public final static String ACTOR_MARKET_STAFF = "SHICHANGZHUANYUAN";
+	public final static String TASK_CONFIRM_QUOTE = "confirm_quoteorder";
+	public final static String TASK_PRODUCE = "volume_production";
+
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
@@ -51,16 +56,15 @@ public class MarketServiceImpl implements MarketService {
 			if (getVariable("employeeId", task).equals(employeeId)) {
 				Integer orderId = (Integer) getVariable("orderId", task);
 				QuoteConfirmTaskSummary summary = QuoteConfirmTaskSummary
-						.getInstance(
-								orderDAO.findById(orderId),
-								(Quote) quoteDAO.findById(
-										orderId), task.getId());
+						.getInstance(orderDAO.findById(orderId),
+								(Quote) quoteDAO.findById(orderId),
+								task.getId());
 				taskSummarys.add(summary);
 			}
 		}
 		return taskSummarys;
 	}
-	
+
 	@Override
 	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(
 			Integer employeeId) {
@@ -72,10 +76,9 @@ public class MarketServiceImpl implements MarketService {
 			if (getVariable("employeeId", task).equals(employeeId)) {
 				Integer orderId = (Integer) getVariable("orderId", task);
 				QuoteConfirmTaskSummary summary = QuoteConfirmTaskSummary
-						.getInstance(
-								orderDAO.findById(orderId),
-								(Quote) quoteDAO.findById(
-										orderId), task.getId());
+						.getInstance(orderDAO.findById(orderId),
+								(Quote) quoteDAO.findById(orderId),
+								task.getId());
 				taskSummarys.add(summary);
 			}
 		}
@@ -193,22 +196,21 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public OrderInfo getOrderInfo(Integer orderId,long taskId){
+	public OrderInfo getOrderInfo(Integer orderId, long taskId) {
 		// TODO Auto-generated method stub
 		Order order = orderDAO.findById(orderId);
-		OrderInfo orderInfo=new OrderInfo(order, taskId);
+		OrderInfo orderInfo = new OrderInfo(order, taskId);
 		return orderInfo;
 	}
 
-	
 	@Override
 	public void completeSignContract(Integer orderId, double discount,
 			long taskId) {
 		// TODO Auto-generated method stub
-		Order order=orderDAO.findById(orderId);
+		Order order = orderDAO.findById(orderId);
 		order.setDiscount(discount);
 		orderDAO.attachDirty(order);
-		
+
 		Map<String, Object> data = new HashMap<>();
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
@@ -216,7 +218,7 @@ public class MarketServiceImpl implements MarketService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -228,7 +230,8 @@ public class MarketServiceImpl implements MarketService {
 		for (TaskSummary task : tasks) {
 			if (getVariable("employeeId", task).equals(userId)) {
 				Integer orderId = (Integer) getVariable("orderId", task);
-				OrderModel om = new OrderModel(orderDAO.findById(orderId),task.getId(),task.getProcessInstanceId());
+				OrderModel om = new OrderModel(orderDAO.findById(orderId),
+						task.getId(), task.getProcessInstanceId());
 				taskSummarys.add(om);
 			}
 		}
@@ -242,15 +245,17 @@ public class MarketServiceImpl implements MarketService {
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				"SHICHANGZHUANYUAN", "edit_worksheet");
 		for (TaskSummary task : tasks) {
-			if (task.getId()==taskId&&getVariable("employeeId", task).equals(userId)
-					&&task.getProcessInstanceId()==processId&&getVariable("orderId", task).equals(id)) {
-				if(editworksheetok){
+			if (task.getId() == taskId
+					&& getVariable("employeeId", task).equals(userId)
+					&& task.getProcessInstanceId() == processId
+					&& getVariable("orderId", task).equals(id)) {
+				if (editworksheetok) {
 					for (int i = 0; i < productList.size(); i++) {
 						productDAO.save(productList.get(i));
 					}
 				}
 				try {
-					Map<String,Object> data = new HashMap<>();
+					Map<String, Object> data = new HashMap<>();
 					data.put("editworksheetok", editworksheetok);
 					jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
 					return true;
@@ -262,4 +267,62 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return false;
 	}
+
+	@Override
+	public List<OrderInfo> getConfirmQuoteList(String actorId) {
+		// TODO Auto-generated method stub
+		// List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		// actorId, TASK_CONFIRM_QUOTE);
+
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_MARKET_STAFF, TASK_CONFIRM_QUOTE);
+		List<OrderInfo> models = new ArrayList<OrderInfo>();
+		
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) getVariable("orderId", task);
+			OrderInfo model = new OrderInfo();
+			model.setOrder(orderDAO.findById(orderId));
+			model.setQuote(quoteDAO.findById(orderId));
+			model.setTask(task);
+			models.add(model);
+		}
+		return models;
+	}
+
+	
+	@Override
+	public OrderInfo getConfirmQuoteDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean confirmQuoteSubmit(String actorId, long taskId, String result) {
+		// TODO Auto-generated method stub
+		Map<String, Object> data = new HashMap<String, Object>();
+		if (result.equals("1")) {
+			data.put("confirmquote", true);
+			data.put("eidtquote", false);
+			data.put("samplejin", true);
+		}
+		if (result.equals("2")) {
+			data.put("confirmquote", false);
+			data.put("eidtquote", true);
+			data.put("samplejin", true);
+		}
+		if (result.equals("3")) {
+			data.put("confirmquote", false);
+			data.put("eidtquote", false);
+			data.put("samplejin", true);
+		}
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_MARKET_STAFF);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }
