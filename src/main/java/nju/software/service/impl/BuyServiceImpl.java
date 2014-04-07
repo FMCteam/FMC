@@ -24,17 +24,27 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
-
 import nju.software.dataobject.Product;
 import nju.software.model.ProductModel;
-
 import nju.software.dataobject.Quote;
-
 import nju.software.service.BuyService;
 import nju.software.util.JbpmAPIUtil;
 
 @Service("buyServiceImpl")
 public class BuyServiceImpl implements BuyService {
+	
+	
+	public final static String ACTOR_PURCHASE_MANAGER = "purchaseManager";
+	public final static String TASK_VERIFY_PURCHASE = "verifyPurchase";
+	public final static String TASK_COMPUTE_PURCHASE_COST = "computePurchaseCost";
+	public final static String TASK_PURCHASE_SAMPLE_MATERIAL = "purchaseSampleMaterial";
+	public final static String TASK_CONFIRM_PURCHASE = "confirmPurchase";
+	public final static String TASK_PURCHASE_MATERIAL = "purchaseMaterial";
+	
+	
+
+	
+	
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired

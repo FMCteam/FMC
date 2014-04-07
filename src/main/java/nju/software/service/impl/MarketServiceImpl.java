@@ -31,10 +31,17 @@ import nju.software.util.JbpmAPIUtil;
 @Service("marketServiceImpl")
 public class MarketServiceImpl implements MarketService {
 
-	public final static String ACTOR_MARKET_MANAGER = "SHICHANGZHUGUAN";
-	public final static String ACTOR_MARKET_STAFF = "SHICHANGZHUANYUAN";
-	public final static String TASK_CONFIRM_QUOTE = "confirm_quoteorder";
-	public final static String TASK_PRODUCE = "volume_production";
+	public final static String ACTOR_MARKET_MANAGER = "marketManager";
+	public final static String ACTOR_MARKET_STAFF = "marketStaff";
+	public final static String TASK_MODIFY_ORDER = "modifyOrder";
+	public final static String TASK_MERGE_QUOTE = "mergeQuote";
+	public final static String TASK_VERIFY_ORDER = "verifyQuote";
+	public final static String TASK_CONFIRM_QUOTE = "confirmQuote";
+	public final static String TASK_MODIFY_QUOTE = "modifyQuote";
+	public final static String TASK_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder";
+	public final static String TASK_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
+	public final static String TASK_SIGN_CONTRACT = "signContract";
+	
 
 	@Autowired
 	private OrderDAO orderDAO;

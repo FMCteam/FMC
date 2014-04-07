@@ -26,6 +26,15 @@ import nju.software.util.JbpmAPIUtil;
 @Service("financeServiceImpl")
 public class FinanceServiceImpl implements FinanceService {
 	
+	
+	public final static String ACTOR_FINANCE_MANAGER = "financeManager";
+	public final static String TASK_CONFIRM_SAMPLE_MONEY = "confirmSampleMoney";
+	public final static String TASK_CONFIRM_DEPOSIT = "confirmDeposit";
+	public final static String TASK_CONFIRM_FINAL_PAYMENT = "confirmFinalPayment";
+
+
+	
+	
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired

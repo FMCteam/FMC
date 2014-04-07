@@ -13,6 +13,14 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
 import nju.software.service.AccountService;
 import nju.software.service.EmployeeService;
+import nju.software.service.MarketService;
+import nju.software.service.impl.BuyServiceImpl;
+import nju.software.service.impl.DesignServiceImpl;
+import nju.software.service.impl.FinanceServiceImpl;
+import nju.software.service.impl.LogisticsServiceImpl;
+import nju.software.service.impl.MarketServiceImpl;
+import nju.software.service.impl.ProduceServiceImpl;
+import nju.software.service.impl.QualityServiceImpl;
 
 import org.drools.SystemEventListener;
 import org.drools.SystemEventListenerFactory;
@@ -50,57 +58,20 @@ public class HumanTaskStartupServlet extends HttpServlet {
 		System.out.println("************启动HorentQ服务器*************" + emf);
 		try {
 			System.out.println("task started");
-			SystemEventListener listener = SystemEventListenerFactory
-					.getSystemEventListener();
+			SystemEventListener listener = SystemEventListenerFactory.getSystemEventListener();
 			TaskService taskService = new TaskService(emf, listener);
-			System.out.println("task finished");
+			
 			// 添加必要的用户
 			TaskServiceSession taskSession = taskService.createSession();
 			taskSession.addUser(new User("Administrator"));
-			taskSession.addUser(new User("WULIUZHUGUAN"));
-			taskSession.addUser(new User("SHICHANGZHUGUAN"));
-			taskSession.addUser(new User("SHICHANGZHUANYUAN"));
-			taskSession.addUser(new User("CAIGOUZHUGUAN"));
-			taskSession.addUser(new User("ZHIJIANZHUGUAN"));
-			taskSession.addUser(new User("SHENGCHANZHUGUAN"));
-			taskSession.addUser(new User("SHEJIZHUGUAN"));
-			taskSession.addUser(new User("CAIWUZHUGUAN"));
-//			taskSession.addUser(new User("jwy"));
-//			taskSession.addUser(new User("wy"));
-//			taskSession.addUser(new User("gjd"));
-//			taskSession.addUser(new User("judge1"));
-//			taskSession.addUser(new User("judge2"));
-//			taskSession.addUser(new User("secretary"));
-//			taskSession.addUser(new User("defenseteacher1"));
-//			taskSession.addUser(new User("defenseteacher2"));
-//			taskSession.addUser(new User("defenseteacher3"));
-			System.out.println("user finished");
+			taskSession.addUser(new User(MarketServiceImpl.ACTOR_MARKET_MANAGER));
+			taskSession.addUser(new User(DesignServiceImpl.ACTOR_DESIGN_MANAGER));
+			taskSession.addUser(new User(BuyServiceImpl.ACTOR_PURCHASE_MANAGER));
+			taskSession.addUser(new User(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER));
+			taskSession.addUser(new User(FinanceServiceImpl.ACTOR_FINANCE_MANAGER));
+			taskSession.addUser(new User(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER));
+			taskSession.addUser(new User(QualityServiceImpl.ACTOR_QUALITY_MANAGER));
 
-			// 添加教务员
-//			if(teacherService.getTeacherByTeacherNumber("jwy") == null){
-//				try{
-//					Teacher teacher = new Teacher();
-//					teacher.setTeacherName("教务员");
-//					teacher.setTeacherNumber("jwy");
-//					teacher.setTeacherClasses(Constants.INNERTEACHER);
-//					teacher.setTeacherJobTitle(Constants.INSTRUCTOR);
-//					teacher.setTeacherEducation(Constants.DOCTOR);
-//					teacher.setTeacherEmail("jwy@software.nju.edu.cn");
-//					teacher.setTeacherPhone("15292387443");
-//					teacher.setTeacherQualification(Constants.ENGINEERING_MASTER_TUTOR);
-//					teacherService.addTeacherInfo(teacher);
-//				}catch(Exception e){
-//					e.printStackTrace();
-//				}
-//					
-//				int teacherId = teacherService.getTeacherByTeacherNumber("jwy").getTeacherId();
-//				Account account = new Account();
-//				account.setAccountName("jwy");
-//				account.setAccountPassword("jwy");
-//				account.setAccountLevel(Constants.DEAN);
-//				account.setTeacherId(teacherId);
-//				accountService.updateAccount(account);
-//			}
 			
 			// 添加管理员
 			if (accountService.getAccountByUsername("admin") == null) {

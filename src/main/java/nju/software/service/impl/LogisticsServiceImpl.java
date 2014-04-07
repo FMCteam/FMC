@@ -15,6 +15,19 @@ import nju.software.util.JbpmAPIUtil;
 
 @Service("logisticsServiceImpl")
 public class LogisticsServiceImpl implements LogisticsService{
+	
+	
+	public final static String ACTOR_LOGISTICS_MANAGER = "logisticsManager";
+	public final static String TASK_RECEIVE_SAMPLE = "receiveSample";
+	public final static String TASK_SEND_SAMPLE = "sendSample";
+	public final static String TASK_WAREHOUSE = "warehouse";
+	public final static String TASK_SEND_CLOTHES = "sendClothes";
+	
+	
+	
+	
+	
+	
 
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;

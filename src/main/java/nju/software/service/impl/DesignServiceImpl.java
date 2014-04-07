@@ -29,7 +29,14 @@ import nju.software.util.JbpmAPIUtil;
 
 @Service("designServiceImpl")
 public class DesignServiceImpl implements DesignService {
-	
+
+	public final static String ACTOR_DESIGN_MANAGER = "designManager";
+	public final static String TASK_VERIFY_DESIGN = "verifyDesign";
+	public final static String TASK_COMPUTE_DESIGN_COST = "computeDesignCost";
+	public final static String TASK_UPLOAD_DESIGN = "uploadDegisn";
+	public final static String TASK_MODIFY_DESIGN = "modifyDesign";
+	public final static String TASK_CONFIRM_DESIGN = "confirmDesign";
+
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
@@ -44,35 +51,31 @@ public class DesignServiceImpl implements DesignService {
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private DesignCadDAO DesignCadDAO;
-	
 
-	
-	
 	@Override
-	public boolean verify(Account account, int orderId, long taskId, 
+	public boolean verify(Account account, int orderId, long taskId,
 			long processId, boolean designVal, String comment) {
 		// TODO Auto-generated method stub
-//		String actorId = account.getUserRole();
+		// String actorId = account.getUserRole();
 		String actorId = "SHEJIZHUGUAN";
-		//需要获取task中的数据	
-		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
-		int orderId_process  = (int) process.getVariable("orderId");
+		// 需要获取task中的数据
+		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+				.getKsession().getProcessInstance(processId);
+		int orderId_process = (int) process.getVariable("orderId");
 		System.out.println("orderId: " + orderId);
 		if (orderId == orderId_process) {
-			
-			
-			
-			Order order = orderDAO.findById(orderId);
-			//修改order内容
 
-			//提交修改
+			Order order = orderDAO.findById(orderId);
+			// 修改order内容
+
+			// 提交修改
 			orderDAO.attachDirty(order);
 
-			//修改流程参数
+			// 修改流程参数
 			Map<String, Object> data = new HashMap<>();
 			data.put("designVal", designVal);
 			data.put("designComment", comment);
-			//直接进入到下一个流程时
+			// 直接进入到下一个流程时
 			try {
 				jbpmAPIUtil.completeTask(taskId, data, actorId);
 			} catch (InterruptedException e) {
@@ -83,42 +86,40 @@ public class DesignServiceImpl implements DesignService {
 		}
 		return false;
 	}
-	
-	
+
 	@Override
 	public boolean costAccounting(Account account, int orderId, long taskId,
 			long processId, float design_cost) {
 		// TODO Auto-generated method stub
-		
+
 		String actorId = "SHEJIZHUGUAN";
-		//需要获取task中的数据	
-		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
-		int orderId_process  = (int) process.getVariable("orderId");
+		// 需要获取task中的数据
+		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+				.getKsession().getProcessInstance(processId);
+		int orderId_process = (int) process.getVariable("orderId");
 		System.out.println("orderId: " + orderId);
 		if (orderId == orderId_process) {
 
-			
-				Quote quote = QuoteDAO.findById(orderId);
-			if(quote==null){
-				//数据库中无quote对象
-				//修改QUote内容
-				quote=new Quote();
+			Quote quote = QuoteDAO.findById(orderId);
+			if (quote == null) {
+				// 数据库中无quote对象
+				// 修改QUote内容
+				quote = new Quote();
 				quote.setOrderId(orderId);
-				 quote.setDesignCost(design_cost);
-				 QuoteDAO.save(quote);
-			}else{
-				//quote已存在于数据库
-				//修改QUote内容
-	                quote.setDesignCost(design_cost);
+				quote.setDesignCost(design_cost);
+				QuoteDAO.save(quote);
+			} else {
+				// quote已存在于数据库
+				// 修改QUote内容
+				quote.setDesignCost(design_cost);
 				QuoteDAO.attachDirty(quote);
 			}
-		
 
-			//修改流程参数
+			// 修改流程参数
 			Map<String, Object> data = new HashMap<>();
-//			data.put("designVal", designVal);
+			// data.put("designVal", designVal);
 			data.put("designcost", design_cost);
-			//直接进入到下一个流程时
+			// 直接进入到下一个流程时
 			try {
 				jbpmAPIUtil.completeTask(taskId, data, actorId);
 			} catch (InterruptedException e) {
@@ -128,26 +129,9 @@ public class DesignServiceImpl implements DesignService {
 			return true;
 		}
 		return false;
-		
-		
-		
+
 	}
 
-	
-	
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@Override
 	public Logistics getLogisticsByOrderId(int orderId) {
 		// TODO Auto-generated method stub
@@ -169,45 +153,43 @@ public class DesignServiceImpl implements DesignService {
 		return list;
 	}
 
-
 	@Override
 	public boolean uploadCAD(Account account, int orderId, long taskId,
 			long processId, String url, Timestamp uploadTime) {
 		String actorId = "SHEJIZHUGUAN";
-		//需要获取task中的数据	
-		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
-		int orderId_process  = (int) process.getVariable("orderId");
+		// 需要获取task中的数据
+		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+				.getKsession().getProcessInstance(processId);
+		int orderId_process = (int) process.getVariable("orderId");
 		System.out.println("orderId: " + orderId);
 		if (orderId == orderId_process) {
 
-			
-				DesignCad designCad = DesignCadDAO.findById(orderId);
-			if(designCad ==null){
-				//数据库中无designCad对象
-				//新建QUote内容
-				designCad =new DesignCad ();
-				designCad .setOrderId(orderId);
-				designCad .setCadUrl(url);
+			DesignCad designCad = DesignCadDAO.findById(orderId);
+			if (designCad == null) {
+				// 数据库中无designCad对象
+				// 新建QUote内容
+				designCad = new DesignCad();
+				designCad.setOrderId(orderId);
+				designCad.setCadUrl(url);
 				designCad.setCadVersion((short) 1);
 				designCad.setUploadTime(uploadTime);
-				 DesignCadDAO.save(designCad );
-			}else{
-				//designCad已存在于数据库
-				//修改QUote内容
-				
-				short newVersion=(short) (designCad.getCadVersion()+1);
-				designCad .setCadUrl(url);
+				DesignCadDAO.save(designCad);
+			} else {
+				// designCad已存在于数据库
+				// 修改QUote内容
+
+				short newVersion = (short) (designCad.getCadVersion() + 1);
+				designCad.setCadUrl(url);
 				designCad.setCadVersion(newVersion);
 				designCad.setUploadTime(uploadTime);
 				DesignCadDAO.attachDirty(designCad);
 			}
-		
 
-			//修改流程参数
+			// 修改流程参数
 			Map<String, Object> data = new HashMap<>();
-//			data.put("designVal", designVal);
+			// data.put("designVal", designVal);
 			data.put("OrderId", orderId);
-			//直接进入到下一个流程时
+			// 直接进入到下一个流程时
 			try {
 				jbpmAPIUtil.completeTask(taskId, data, actorId);
 			} catch (InterruptedException e) {
@@ -219,11 +201,4 @@ public class DesignServiceImpl implements DesignService {
 		return false;
 	}
 
-
-
-	
-
-
-
-	
 }

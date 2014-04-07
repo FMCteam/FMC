@@ -18,6 +18,15 @@ import nju.software.util.JbpmAPIUtil;
 
 @Service("qualityServiceImpl")
 public class QualityServiceImpl implements QualityService{
+	
+	
+	public final static String ACTOR_QUALITY_MANAGER = "qualityManager";
+	public final static String TASK_CHECK_QUALITY = "checkQuality";
+	
+	
+	
+	
+	
 
 	@Autowired
 	private OrderDAO orderDAO;

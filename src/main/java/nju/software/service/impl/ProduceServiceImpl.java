@@ -41,11 +41,11 @@ import nju.software.util.JbpmAPIUtil;
 @Service("produceServiceImpl")
 public class ProduceServiceImpl implements ProduceService {
 	
-	public final static String ACTOR_PRODUCE_MANAGER="SHENGCHANZHUGUAN";
-	public final static String TASK_PRODUCE_SAMPLE="product_sample";
-	public final static String TASK_PRODUCE="volume_production";
-	
-
+	public final static String ACTOR_PRODUCE_MANAGER="produceManager";
+	public final static String TASK_VERIFY_PRODUCE="verifyProduce";
+	public final static String TASK_COMPUTE_PRODUCE_COST="computeProduceCost";
+	public final static String TASK_PRODUCE_SAMPLE="produceSample";
+	public final static String TASK_PRODUCE="produce";
 	
 
 	@Autowired
