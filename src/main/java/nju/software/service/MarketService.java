@@ -2,8 +2,15 @@ package nju.software.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Customer;
+import nju.software.dataobject.Fabric;
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Money;
+import nju.software.dataobject.Order;
 import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
@@ -13,8 +20,18 @@ import nju.software.model.QuoteConfirmTaskSummary;
 
 public interface MarketService {
 	
+	public List<Customer>getAddOrderList();
+	
+	public Customer getAddOrderDetail(Integer cid);
+	
+	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,HttpServletRequest request);
+	
+
+	
 	
 	public List<OrderInfo>getConfirmQuoteList(String actorId);
+	
 	
 	public OrderInfo getConfirmQuoteDetail(Integer orderId);
 	

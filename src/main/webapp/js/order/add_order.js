@@ -24,48 +24,6 @@
 		
 		
 
-		
-		
-		
-		$("input[name='sample_clothes_picture']").live('change',function(){
-			//alert("kaishi");
-			$.ajaxFileUpload({
-				url : "./uploadFile.do",
-				secureuri : false,
-				fileElementId : "sample_clothes_picture",
-				dataType : "json",
-				data : {
-					"title" : "sample_clothes_picture" ,
-				},
-				success : function(data, status) {
-					//alert("成功啦");
-				},
-				error : function(data, status, e) {
-					//alert("失败啦");
-				}
-			});
-		});
-		
-		
-		
-		$("input[name='reference_picture']").live('change',function(){
-			//alert("kaishi");
-			$.ajaxFileUpload({
-				url : "./uploadFile.do",
-				secureuri : false,
-				fileElementId : "reference_picture",
-				dataType : "json",
-				data : {
-					"title" : "reference_picture" ,
-				},
-				success : function(data, status) {
-					//alert("成功啦");
-				},
-				error : function(data, status, e) {
-					//alert("失败啦");
-				}
-			});
-		});
 
 		init();
 		

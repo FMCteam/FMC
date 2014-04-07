@@ -86,7 +86,7 @@
 							<li class="dropdown"><a href=""><span
 								class="iconfa-briefcase"></span> 市场部</a>
 								<ul>
-									<li><a href="${ctx }/market/customerOrder.do">客户下单</a></li>
+									<li><a href="${ctx }/market/addOrderList.do">客户下单</a></li>
 									<li><a href="${ctx }/market/sampleOrderList.do">修改询单</a></li>
 
 									<li><a href="${ctx }/market/computerOrderSumList.do">合并报价</a></li>

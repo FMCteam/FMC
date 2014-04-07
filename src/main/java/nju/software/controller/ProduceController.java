@@ -322,20 +322,11 @@ public class ProduceController {
 	@RequestMapping(value = "produce/produceSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSubmit(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		
+			HttpServletResponse response, ModelMap model) {	
 		String taskId=request.getParameter("taskId");
 		String pid=request.getParameter("pid");
 		String askAmount=request.getParameter("produceAmount");
-		System.out.println(taskId);
-		System.out.println(pid);
-		System.out.println(askAmount);
 		produceService.pruduceSubmit(pid.split(","), askAmount.split(","), Long.parseLong(taskId));
-		//String orderId=request.getParameter("orderId");
-		//OrderInfo task=produceService.getProduceInfo(Integer.parseInt(orderId));
-		//model.addAttribute("task", task);
 		return "redirect:/produce/produceList.do";
 	}
-
-	
 }

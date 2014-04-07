@@ -29,10 +29,9 @@ import org.jbpm.task.service.responsehandlers.BlockingTaskOperationResponseHandl
 import org.jbpm.task.service.responsehandlers.BlockingTaskSummaryResponseHandler;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 
-
-
 /**
  * 本类封装jbpm5常用的API
+ * 
  * @author william
  */
 public class JbpmAPIUtil {
@@ -73,7 +72,7 @@ public class JbpmAPIUtil {
 	 * 流程实例参数
 	 */
 	private Map<String, Object> params;
-	
+
 	private HornetQHTWorkItemHandler hornetQHTWorkItemHandler;
 
 	/*
@@ -96,24 +95,25 @@ public class JbpmAPIUtil {
 	 * e.printStackTrace(); } } client.complete(taskId, userId, contentData,
 	 * responseHandler); responseHandler.waitTillDone(5000); }
 	 */
-	
-//	public void assignTask(long taskId, String idRef, String userId) {
-//		connect();
-//		BlockingTaskOperationResponseHandler responseHandler = new BlockingTaskOperationResponseHandler();
-//		if (idRef == null) {
-//			client.release(taskId, userId, responseHandler);
-//		} else if (idRef.equals(userId)) {
-//			List<String> roles = groupListMap.get(userId);
-//			if (roles == null) {
-//				client.claim(taskId, idRef, responseHandler);
-//			} else {
-//				client.claim(taskId, idRef, roles, responseHandler);
-//			}
-//		} else {
-//			client.delegate(taskId, userId, idRef, responseHandler);
-//		}
-//		responseHandler.waitTillDone(5000);
-//	}
+
+	// public void assignTask(long taskId, String idRef, String userId) {
+	// connect();
+	// BlockingTaskOperationResponseHandler responseHandler = new
+	// BlockingTaskOperationResponseHandler();
+	// if (idRef == null) {
+	// client.release(taskId, userId, responseHandler);
+	// } else if (idRef.equals(userId)) {
+	// List<String> roles = groupListMap.get(userId);
+	// if (roles == null) {
+	// client.claim(taskId, idRef, responseHandler);
+	// } else {
+	// client.claim(taskId, idRef, roles, responseHandler);
+	// }
+	// } else {
+	// client.delegate(taskId, userId, idRef, responseHandler);
+	// }
+	// responseHandler.waitTillDone(5000);
+	// }
 
 	/**
 	 * 设置任务状态为完成
@@ -139,7 +139,7 @@ public class JbpmAPIUtil {
 		responseHandlerGetTask.waitTillDone(3000);
 		Task task = responseHandlerGetTask.getTask();
 		responseHandler = new BlockingTaskOperationResponseHandler();
-		
+
 		ContentData contentData = null;
 		if (data != null) {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -155,15 +155,15 @@ public class JbpmAPIUtil {
 				e.printStackTrace();
 			}
 		}
-		
+
 		client.complete(taskId, userId, contentData, responseHandler);
-		
-		//强制把Human Task提交
+
+		// 强制把Human Task提交
 		@SuppressWarnings("unchecked")
 		Map<String, Object> results = (Map<String, Object>) data;
 		ksession.getWorkItemManager().completeWorkItem(
 				task.getTaskData().getWorkItemId(), results);
-		
+
 	}
 
 	/**
@@ -175,20 +175,21 @@ public class JbpmAPIUtil {
 	 */
 	public List<TaskSummary> getAssignedTasks(String idRef) {
 		connect();
-		List<TaskSummary> tasks = null;//保存从数据库拿到的task记录
-		List<TaskSummary> doWithTaskList = new ArrayList<TaskSummary>();//保存非完成状态的task列表
+		List<TaskSummary> tasks = null;// 保存从数据库拿到的task记录
+		List<TaskSummary> doWithTaskList = new ArrayList<TaskSummary>();// 保存非完成状态的task列表
 		try {
 			BlockingTaskSummaryResponseHandler responseHandler = new BlockingTaskSummaryResponseHandler();
 			List<Status> statuses = new ArrayList<Status>();
-            statuses.add(Status.Reserved);
-            client.getTasksOwned(idRef,statuses, "en-UK", responseHandler); 
-            doWithTaskList = responseHandler.getResults();
+			statuses.add(Status.Reserved);
+			client.getTasksOwned(idRef, statuses, "en-UK", responseHandler);
+			doWithTaskList = responseHandler.getResults();
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
-		//最终返回
+		// 最终返回
 		return doWithTaskList;
 	}
+
 	/**
 	 * 根据用户id和taskname,返回对应taskName的任务列表
 	 * 
@@ -196,22 +197,34 @@ public class JbpmAPIUtil {
 	 * @param taskName
 	 * @return
 	 */
-	public List<TaskSummary> getAssignedTasksByTaskname(String actorId, String taskName) {
-		List<TaskSummary> tasks = new ArrayList<TaskSummary>();//保存非完成状态的task列表
-		List<TaskSummary> list =getAssignedTasks(actorId);
+	public List<TaskSummary> getAssignedTasksByTaskname(String actorId,
+			String taskName) {
+		List<TaskSummary> tasks = new ArrayList<TaskSummary>();// 保存非完成状态的task列表
+		List<TaskSummary> list = getAssignedTasks(actorId);
 		if (list.isEmpty()) {
 			System.out.println("no assigned task");
 		}
 		for (TaskSummary task : list) {
-			if(task.getName().equals(taskName)){
+			if (task.getName().equals(taskName)) {
 				tasks.add(task);
 			}
 		}
 		return tasks;
 	}
-	
-	
-	public Object getVariable(TaskSummary task,String name) {
+
+	public TaskSummary getTask(String actorId, String taskName, Integer orderId) {
+		List<TaskSummary> tasks = getAssignedTasks(actorId);
+
+		for (TaskSummary task : tasks) {
+			if (task.getName().equals(taskName)
+					&& getVariable(task, "orderId").equals(orderId)) {
+				return task;
+			}
+		}
+		return null;
+	}
+
+	public Object getVariable(TaskSummary task, String name) {
 		StatefulKnowledgeSession session = getKsession();
 		long processId = task.getProcessInstanceId();
 		WorkflowProcessInstance process = (WorkflowProcessInstance) session
@@ -257,7 +270,7 @@ public class JbpmAPIUtil {
 		 * (Throwable t) { t.printStackTrace(); }
 		 */
 	}
-	
+
 	public KnowledgeBase getKbase() {
 		return kbase;
 	}
@@ -309,8 +322,7 @@ public class JbpmAPIUtil {
 	public ProcessInstance startWorkflowProcess() {
 		ProcessInstance pi = null;
 		try {
-			
-			
+
 			registerWorkItemHandler();
 			// 启动流程
 			pi = ksession.startProcess(processName, params);
@@ -319,13 +331,10 @@ public class JbpmAPIUtil {
 		}
 		return pi;
 	}
-	
-	
-	
-	public void registerWorkItemHandler(){
-		if(hornetQHTWorkItemHandler==null){
-			hornetQHTWorkItemHandler = new HornetQHTWorkItemHandler(
-					ksession);
+
+	public void registerWorkItemHandler() {
+		if (hornetQHTWorkItemHandler == null) {
+			hornetQHTWorkItemHandler = new HornetQHTWorkItemHandler(ksession);
 			// 注册人工服务
 			ksession.getWorkItemManager().registerWorkItemHandler("Human Task",
 					hornetQHTWorkItemHandler);

@@ -10,7 +10,7 @@
 				<div class="widgetcontent">
 
 					<form onSubmit="return verify()" method="post"
-						action="${ctx }/market/addMarketOrder.do">
+						action="${ctx }/market/addOrderSubmit.do" enctype="multipart/form-data"">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td rowspan="3">客户信息</td>
@@ -200,9 +200,10 @@
 							<tr>
 								<td>样衣信息</td>
 								<td>样衣图片</td>
-								<td colspan="2"><input type="button"  value="选择文件" id="sample_clothes_picture_button"/></td>
+								<td colspan="2"><input type="file"  value="选择文件" name="sample_clothes_picture"/>
+								</td>
 								<td>参考图片</td>
-								<td colspan="2"><input type="button"  value="选择文件" id="reference_picture_button"/></td>
+								<td colspan="2"><input type="file"  value="选择文件" name="reference_picture"/></td>
 							</tr>
 							
 							<tr>
@@ -216,9 +217,7 @@
 					</form>
 				</div>
 				
-					<input type="file"   id="sample_clothes_picture" hidden="hidden"
-						name="sample_clothes_picture" /> <input type="file"
-						name="reference_picture"   id="reference_picture"  hidden="hidden"/>
+					
 				
 				<!--widgetcontent-->
 			</div>

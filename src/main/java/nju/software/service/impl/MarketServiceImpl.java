@@ -1,23 +1,32 @@
 package nju.software.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
+import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Customer;
+import nju.software.dataobject.Fabric;
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
@@ -26,6 +35,7 @@ import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
 import nju.software.model.QuoteConfirmTaskSummary;
 import nju.software.service.MarketService;
+import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 
 @Service("marketServiceImpl")
@@ -44,13 +54,106 @@ public class MarketServiceImpl implements MarketService {
 	
 
 	@Autowired
-	private OrderDAO orderDAO;
+	private ProductDAO productDAO;
 	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
+	private CustomerDAO customerDAO;
+	@Autowired
+	private OrderDAO orderDAO;
 	@Autowired
 	private QuoteDAO quoteDAO;
 	@Autowired
-	private ProductDAO productDAO;
+	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private AccessoryDAO accessoryDAO;
+	@Autowired
+	private FabricDAO fabricDAO;
+	@Autowired
+	private LogisticsDAO logisticsDAO;
+	
+
+	
+	@Override
+	public List<Customer> getAddOrderList() {
+		// TODO Auto-generated method stub
+		return customerDAO.findAll();
+	}
+	
+	
+	@Override
+	public Customer getAddOrderDetail(Integer cid) {
+		// TODO Auto-generated method stub
+		return customerDAO.findById(cid);
+	}
+	
+	
+	@Override
+	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+		// 添加订单信息
+		orderDAO.save(order);
+		
+		Integer orderId=order.getOrderId();
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		
+		if(multipartRequest.getFile("sample_clothes_picture")!=null){
+			String filedir=request.getSession().getServletContext().getRealPath("/upload/sampleClothesPicture/"+orderId);
+			FileOperateUtil.Upload(request, filedir, null, "sample_clothes_picture");
+		}
+		if(multipartRequest.getFile("reference_picture")!=null){
+			String filedir=request.getSession().getServletContext().getRealPath("/upload/reference_picture/"+orderId);
+			FileOperateUtil.Upload(request, filedir, null, "reference_picture");
+		}
+
+		orderDAO.attachDirty(order);
+
+		
+		// 添加面料信息
+		for (Fabric fabric : fabrics) {
+			fabric.setOrderId(orderId);
+			fabricDAO.save(fabric);
+		}
+
+		// 添加辅料信息
+		for (Accessory accessory : accessorys) {
+			accessory.setOrderId(orderId);
+			accessoryDAO.save(accessory);
+		}
+
+		// 添加物流信息
+		logistics.setOrderId(orderId);
+		logisticsDAO.save(logistics);
+
+		// 启动流程
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("orderId", orderId);
+		params.put("marketStaff", order.getEmployeeId());
+		params.put("needclothes", order.getIsNeedSampleClothes() == 1);
+		params.put("sendclothes", order.getHasPostedSampleClothes() == 1);
+		doTMWorkFlowStart(params);
+
+		return false;
+	}
+
+	
+	/**
+	 * 启动流程
+	 */
+	private void doTMWorkFlowStart(Map<String, Object> params) {
+		try {
+			jbpmAPIUtil.setParams(params);
+			jbpmAPIUtil.startWorkflowProcess();
+			System.out.println("流程启动成功！");
+		} catch (Exception ex) {
+			System.out.println("流程启动失败");
+			ex.printStackTrace();
+		}
+	}
+	
+	
+	
 
 	@Override
 	public List<QuoteConfirmTaskSummary> getQuoteConfirmTaskSummaryList(
@@ -331,5 +434,6 @@ public class MarketServiceImpl implements MarketService {
 			return false;
 		}
 	}
+
 
 }

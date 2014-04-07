@@ -19,7 +19,7 @@
 						<th class="head0">公司电话</th>
 						<th class="head1">操作</th>
 					</tr>
-					<c:forEach var="customer" items="${customer_list }">
+					<c:forEach var="customer" items="${customers}">
 						<tr class="gradeA">
 							<td>${customer.customerName }</td>
 							<td>${customer.customerPhone }</td>
@@ -27,7 +27,7 @@
 							<td>${customer.companyName }</td>
 							<td>${customer.companyPhone }</td>
 							<td><a 
-								href="${ctx}/market/add.do?cid=${customer.customerId}">下单</a></td>
+								href="${ctx}/market/addOrderDetail.do?cid=${customer.customerId}">下单</a></td>
 						</tr>
 					</c:forEach>
 				</table>
