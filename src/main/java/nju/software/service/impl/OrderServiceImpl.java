@@ -204,7 +204,7 @@ public class OrderServiceImpl implements OrderService {
 		// 启动流程
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("orderId", order.getOrderId());
-		params.put("employeeId", order.getEmployeeId());
+		params.put("marketStaff", order.getEmployeeId());
 		params.put("needclothes", order.getIsNeedSampleClothes() == 1);
 		params.put("sendclothes", order.getHasPostedSampleClothes() == 1);
 		doTMWorkFlowStart(params);

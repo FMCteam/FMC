@@ -880,18 +880,6 @@
     <property id="produceComment" itemSubjectRef="_produceCommentItem"/>
 
     <laneSet>
-      <lane name="marketManager" >
-        <flowNodeRef>_29</flowNodeRef>
-      </lane>
-      <lane name="marketStaff" >
-        <flowNodeRef>_19</flowNodeRef>
-        <flowNodeRef>_28</flowNodeRef>
-        <flowNodeRef>_34</flowNodeRef>
-        <flowNodeRef>_33</flowNodeRef>
-        <flowNodeRef>_62</flowNodeRef>
-        <flowNodeRef>_74</flowNodeRef>
-        <flowNodeRef>_75</flowNodeRef>
-      </lane>
       <lane name="financeManager" >
         <flowNodeRef>_41</flowNodeRef>
         <flowNodeRef>_80</flowNodeRef>
@@ -903,18 +891,26 @@
         <flowNodeRef>_107</flowNodeRef>
         <flowNodeRef>_115</flowNodeRef>
       </lane>
+      <lane name="marketStaff" >
+        <flowNodeRef>_19</flowNodeRef>
+        <flowNodeRef>_28</flowNodeRef>
+        <flowNodeRef>_34</flowNodeRef>
+        <flowNodeRef>_33</flowNodeRef>
+        <flowNodeRef>_62</flowNodeRef>
+        <flowNodeRef>_74</flowNodeRef>
+        <flowNodeRef>_75</flowNodeRef>
+      </lane>
       <lane name="produceManager" >
         <flowNodeRef>_12</flowNodeRef>
         <flowNodeRef>_25</flowNodeRef>
         <flowNodeRef>_54</flowNodeRef>
         <flowNodeRef>_96</flowNodeRef>
       </lane>
-      <lane name="designManager" >
-        <flowNodeRef>_11</flowNodeRef>
-        <flowNodeRef>_24</flowNodeRef>
-        <flowNodeRef>_48</flowNodeRef>
-        <flowNodeRef>_70</flowNodeRef>
-        <flowNodeRef>_88</flowNodeRef>
+      <lane name="marketManager" >
+        <flowNodeRef>_29</flowNodeRef>
+      </lane>
+      <lane name="qualityManager" >
+        <flowNodeRef>_103</flowNodeRef>
       </lane>
       <lane name="purchaseManager" >
         <flowNodeRef>_10</flowNodeRef>
@@ -922,8 +918,12 @@
         <flowNodeRef>_47</flowNodeRef>
         <flowNodeRef>_69</flowNodeRef>
       </lane>
-      <lane name="qualityManager" >
-        <flowNodeRef>_103</flowNodeRef>
+      <lane name="designManager" >
+        <flowNodeRef>_11</flowNodeRef>
+        <flowNodeRef>_24</flowNodeRef>
+        <flowNodeRef>_48</flowNodeRef>
+        <flowNodeRef>_70</flowNodeRef>
+        <flowNodeRef>_88</flowNodeRef>
       </lane>
     </laneSet>
     <!-- nodes -->
@@ -1219,7 +1219,7 @@
       </dataInputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
-          <formalExpression>SHICHANGZHUANYUAN</formalExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
@@ -1259,7 +1259,7 @@
       </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
-          <formalExpression>SHICHANGZHUANYUAN</formalExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
@@ -1282,7 +1282,7 @@
       </dataInputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
-          <formalExpression>SHICHANGZHUANYUAN</formalExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
@@ -1502,7 +1502,7 @@
       </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
-          <formalExpression>SHICHANGZHUANYUAN</formalExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
@@ -1631,7 +1631,7 @@
       </dataInputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
-          <formalExpression>SHICHANGZHUANYUAN</formalExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
@@ -1659,7 +1659,7 @@
       </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
-          <formalExpression>SHICHANGZHUANYUAN</formalExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
