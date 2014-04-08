@@ -10,7 +10,7 @@
 				<div class="widgetcontent">
 
 					<form method="post"
-						action="${ctx }/logistics/sendSampleOrder.do">
+						action="${ctx }/logistics/sendSampleSubmit.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td rowspan="2">订单信息</td>
@@ -20,36 +20,36 @@
 								<td>入库时间</td>
 							</tr>
 							<tr>
-								<td>${log.o.orderId }</td>
-								<td>${fn:substring(log.o.orderTime,0,10) }</td>
+								<td>${log.order.orderId }</td>
+								<td>${fn:substring(log.order.orderTime,0,10) }</td>
 								<td>1</td>
 								<td>1</td>
 							</tr>
 							<tr>
 								<td rowspan="3">客户信息</td>
 								<td>公司名称</td>
-								<td>${customer.companyName }</td>
+								<td>${log.customer.companyName }</td>
 								<td>联系电话</td>
-								<td>${customer.companyPhone }</td>
+								<td>${log.customer.companyPhone }</td>
 							</tr>
 							<tr>
 								<td>采购人姓名</td>
-								<td>${customer.buyContact }</td>
+								<td>${log.customer.buyContact }</td>
 								<td>固定电话</td>
-								<td>${customer.contactPhone1 }</td>
+								<td>${log.customer.contactPhone1 }</td>
 							</tr>
 							<tr>
 								<td>QQ</td>
-								<td>${customer.qq }</td>
+								<td>${log.customer.qq }</td>
 								<td>EMAIL</td>
-								<td>${customer.email }</td>
+								<td>${log.customer.email }</td>
 							</tr>
 							<tr>
 								<td rowspan="2">时间要求</td>
 								<td colspan="4">最后发货时间</td>
 							</tr>
 							<tr>
-								<td colspan="4">${fn:substring(log.o.askDeliverDate,0,10) }</td>
+								<td colspan="4">${fn:substring(log.order.askDeliverDate,0,10) }</td>
 							</tr>
 							<tr>
 								<td rowspan="2">物流要求</td>
@@ -66,8 +66,8 @@
 								<td colspan="2">电话</td>
 							</tr>
 							<tr>
-								<td colspan="2">${employee.employeeName }</td>
-								<td colspan="2">${employee.phone1 }</td>
+								<td colspan="2">${log.employee.employeeName }</td>
+								<td colspan="2">${log.employee.phone1 }</td>
 							</tr>
 							<tr>
 								<td colspan="5">具体数量表</td>
@@ -164,11 +164,11 @@
 							</tr>
 						</table>
 						<input type="hidden" name="orderId"
-							value="${log.o.orderId}" />
+							value="${log.order.orderId}" />
 							<input type="hidden" name="taskId"
-							value="${log.taskId}" />
+							value="${log.task.id}" />
 							<input type="hidden" name="processId"
-							value="${log.processId}" />
+							value="${log.task.processInstanceId}" />
 					</form>
 				</div>
 				

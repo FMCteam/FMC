@@ -10,6 +10,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.service.CustomerService;
 import nju.software.service.EmployeeService;
@@ -39,38 +40,34 @@ public class QualityController {
 	private JbpmAPIUtil jbpmAPIUtil;
 	
 	//质检列表
-	@RequestMapping(value = "quality/checkList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "quality/checkQualityList.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String qualityCheckList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		List<OrderModel> tasks = qualityService.getCheckList();
+		List<OrderInfo> tasks = qualityService.getCheckQualityList();
 		model.addAttribute("tasks", tasks);
-		return "quality/checkList";
+		return "quality/checkQualityList";
 	}
 	
 	//质检详情
-	@RequestMapping(value = "quality/checkDetail.do", method = RequestMethod.GET)
+	@RequestMapping(value = "quality/checkQualityDetail.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyProductDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("id");
 		String s_taskId = request.getParameter("tid");
 		String s_processId = request.getParameter("pid");
+		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
-		Order o = orderService.findByOrderId(orderId);
-		OrderModel om = new OrderModel(o,taskId,processId);
-		Customer c = customerService.findByCustomerId(o.getCustomerId());
-		Employee e = employeeService.getEmployeeById(o.getEmployeeId());
-		model.addAttribute("orderModel", om);
-		model.addAttribute("customer", c);
-		model.addAttribute("employee", e);
-		return "quality/checkDetail";
+		OrderInfo oi = qualityService.getCheckQualityDetail(id,taskId);
+		model.addAttribute("orderInfo", oi);
+		return "quality/checkQualityDetail";
 	}
 	
 	//质量检查
-	@RequestMapping(value = "quality/checkQuality.do", method = RequestMethod.POST)
+	@RequestMapping(value = "quality/checkQualitySubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyProduct(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -80,10 +77,10 @@ public class QualityController {
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
-		qualityService.checkQuality(id,taskId,processId,true);
+		qualityService.checkQualitySubmit(id,taskId,processId,true);
 		//marketService.modifyProduct(account.getUserId(),id,taskId,processId,null);
 
-		return "redirect:/quality/checkList.do";
+		return "redirect:/quality/checkQualityList.do";
 	}
 		
 }

@@ -27,7 +27,6 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.PackageDetail;
-
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.model.OrderInfo;
@@ -338,6 +337,77 @@ public class ProduceServiceImpl implements ProduceService {
 			packageDetailDAO.save(pd1);
 		}
 
+	}
+
+	@Override
+	public List<OrderInfo> getComputeProduceCostList() {
+		
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_PRODUCE_MANAGER, TASK_COMPUTE_PRODUCE_COST );
+		List<OrderInfo> models = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
+			OrderInfo model = new OrderInfo();
+			model.setOrder(orderDAO.findById(orderId));
+			model.setTask(task);
+			models.add(model);
+		}
+		return models;
+	}
+
+	@Override
+	public OrderInfo getComputeProduceCostInfo(Integer orderId) {
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER,
+				TASK_COMPUTE_PRODUCE_COST, orderId);
+		OrderInfo model = new OrderInfo();
+		model.setOrder(orderDAO.findById(orderId));
+		model.setTask(task);
+		return model;
+	}
+
+	@Override
+	public void ComputeProduceCostSubmit(int orderId,
+			long taskId,float cut_cost, float manage_cost, float nali_cost,
+			float ironing_cost, float swing_cost, float package_cost,
+			float other_cost) {
+		
+		
+		Quote quote = QuoteDAO.findById(orderId);
+
+		if (quote == null) {
+			quote = new Quote();
+			quote.setOrderId(orderId);
+			quote.setCutCost(cut_cost);
+			quote.setManageCost(manage_cost);
+			quote.setSwingCost(swing_cost);
+			quote.setIroningCost(ironing_cost);
+			quote.setNailCost(nali_cost);
+			quote.setPackageCost(package_cost);
+			quote.setOtherCost(other_cost);
+			QuoteDAO.save(quote);
+		} else {
+			quote.setCutCost(cut_cost);
+			quote.setManageCost(manage_cost);
+			quote.setSwingCost(swing_cost);
+			quote.setIroningCost(ironing_cost);
+			quote.setNailCost(nali_cost);
+			quote.setPackageCost(package_cost);
+			quote.setOtherCost(other_cost);
+			QuoteDAO.attachDirty(quote);
+		}
+		
+		
+		float producecost = cut_cost + manage_cost + swing_cost
+				+ ironing_cost + nali_cost + package_cost + other_cost;
+		
+				Map<String, Object> data = new HashMap<String, Object>();
+				try {
+					data.put("volumeproduction", true);
+					jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	}
 
 }

@@ -9,7 +9,7 @@
 				<h4 class="widgettitle">修改加工单</h4>
 				<div class="widgetcontent">
 					<form method="post" 
-						action="${ctx }/market/modifyProduct.do">
+						action="${ctx }/market/modifyProductSubmit.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td>订单号</td>
@@ -40,8 +40,8 @@
 							</tr>
 						</table>
 						<input type="hidden" name="orderId" value="${orderModel.order.orderId}" />
-						<input type="hidden" name="taskId" value="${orderModel.taskId}" />
-						<input type="hidden" name="processId" value="${orderModel.processInstanceId }" />
+						<input type="hidden" name="taskId" value="${orderModel.task.id}" />
+						<input type="hidden" name="processId" value="${orderModel.task.processInstanceId }" />
 					</form>
 				</div>
 				<!--widgetcontent-->

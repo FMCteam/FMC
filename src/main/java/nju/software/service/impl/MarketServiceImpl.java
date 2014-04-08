@@ -34,6 +34,7 @@ import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
 import nju.software.model.QuoteConfirmTaskSummary;
+import nju.software.model.QuoteModel;
 import nju.software.service.MarketService;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
@@ -314,17 +315,18 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public List<OrderModel> getProductModifyList(Integer userId) {
+	public List<OrderInfo> getModifyProductList(Integer userId) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"SHICHANGZHUANYUAN", "edit_worksheet");
-		List<OrderModel> taskSummarys = new ArrayList<>();
+				ACTOR_MARKET_STAFF, TASK_MODIFY_PRODUCE_ORDER);
+		List<OrderInfo> taskSummarys = new ArrayList<>();
 		for (TaskSummary task : tasks) {
 			if (getVariable("employeeId", task).equals(userId)) {
 				Integer orderId = (Integer) getVariable("orderId", task);
-				OrderModel om = new OrderModel(orderDAO.findById(orderId),
-						task.getId(), task.getProcessInstanceId());
-				taskSummarys.add(om);
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setTask(task);
+				taskSummarys.add(oi);
 			}
 		}
 		return taskSummarys;
@@ -335,7 +337,7 @@ public class MarketServiceImpl implements MarketService {
 			long processId, boolean editworksheetok, List<Product> productList) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"SHICHANGZHUANYUAN", "edit_worksheet");
+				ACTOR_MARKET_STAFF, TASK_MODIFY_PRODUCE_ORDER);
 		for (TaskSummary task : tasks) {
 			if (task.getId() == taskId
 					&& getVariable("employeeId", task).equals(userId)
@@ -349,7 +351,7 @@ public class MarketServiceImpl implements MarketService {
 				try {
 					Map<String, Object> data = new HashMap<>();
 					data.put("editworksheetok", editworksheetok);
-					jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
+					jbpmAPIUtil.completeTask(taskId, data, ACTOR_MARKET_STAFF);
 					return true;
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -412,6 +414,70 @@ public class MarketServiceImpl implements MarketService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+
+	@Override
+	public List<OrderInfo> getModifyQuoteList(Integer userId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_MARKET_STAFF, TASK_MODIFY_QUOTE);
+		List<OrderInfo> models = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			if (getVariable("employeeId", task).equals(userId)) {
+				Integer orderId = (Integer) getVariable("orderId", task);
+				OrderInfo model = new OrderInfo();
+				model.setOrder(orderDAO.findById(orderId));
+				model.setQuote(quoteDAO.findById(orderId));
+				model.setTask(task);
+				models.add(model);
+			}
+		}
+		return models;
+	}
+
+
+	@Override
+	public OrderInfo getModifyQuoteDetail(int orderId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(ACTOR_MARKET_STAFF, TASK_MODIFY_QUOTE);
+		if (list.isEmpty()) {
+			System.out.println("no task list");
+		}
+		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
+		WorkflowProcessInstance process = null;
+		for (TaskSummary task : list) {
+			// 需要获取task中的数据
+			long pid = task.getProcessInstanceId();
+			process = (WorkflowProcessInstance) session.getProcessInstance(pid);
+			int oid = (int) process.getVariable("orderId");
+			if (orderId == oid) {
+				OrderInfo orderInfo = new OrderInfo();
+				orderInfo.setOrder(orderDAO.findById(orderId));
+				orderInfo.setQuote(quoteDAO.findById(orderId));
+				orderInfo.setTask(task);
+				return orderInfo;
+			}
+		}
+		return null;
+	}
+
+
+	@Override
+	public OrderInfo getModifyProductDetail(int id, long taskId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_MARKET_STAFF, TASK_MODIFY_PRODUCE_ORDER);
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) getVariable("orderId", task);
+			if(id==orderId && taskId==task.getId()){
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
 	}
 
 
