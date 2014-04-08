@@ -156,25 +156,7 @@ public class MarketServiceImpl implements MarketService {
 	
 	
 
-	@Override
-	public List<QuoteConfirmTaskSummary> getQuoteConfirmTaskSummaryList(
-			Integer employeeId) {
-		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"SHICHANGZHUANYUAN", "confirm_quoteorder");
-		List<QuoteConfirmTaskSummary> taskSummarys = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			if (getVariable("employeeId", task).equals(employeeId)) {
-				Integer orderId = (Integer) getVariable("orderId", task);
-				QuoteConfirmTaskSummary summary = QuoteConfirmTaskSummary
-						.getInstance(orderDAO.findById(orderId),
-								(Quote) quoteDAO.findById(orderId),
-								task.getId());
-				taskSummarys.add(summary);
-			}
-		}
-		return taskSummarys;
-	}
+
 
 	@Override
 	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(
@@ -380,25 +362,22 @@ public class MarketServiceImpl implements MarketService {
 		return false;
 	}
 
+	
 	@Override
 	public List<OrderInfo> getConfirmQuoteList(String actorId) {
 		// TODO Auto-generated method stub
-		// List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-		// actorId, TASK_CONFIRM_QUOTE);
-
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_STAFF, TASK_CONFIRM_QUOTE);
-		List<OrderInfo> models = new ArrayList<OrderInfo>();
-		
+		 List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		 actorId, TASK_CONFIRM_QUOTE);
+		List<OrderInfo> list = new ArrayList<OrderInfo>();
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) getVariable("orderId", task);
-			OrderInfo model = new OrderInfo();
-			model.setOrder(orderDAO.findById(orderId));
-			model.setQuote(quoteDAO.findById(orderId));
-			model.setTask(task);
-			models.add(model);
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setQuote(quoteDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
 		}
-		return models;
+		return list;
 	}
 
 	

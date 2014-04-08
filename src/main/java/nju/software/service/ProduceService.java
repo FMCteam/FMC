@@ -28,16 +28,16 @@ public interface ProduceService {
 	
 	public List<Accessory> getAccessoryByOrderId(int orderId);
 	
-	public List<SampleProduceTaskSummary>getSampleProduceTaskSummaryList();
+	public List<OrderInfo>getProduceSampleList();
 	
-	public SampleProduceTask getSampleProduceTask(Integer orderId,long taskId) ;
+	public OrderInfo getProduceSampleDetail(Integer orderId) ;
 	
-	public void completeSampleProduceTask(long taskId,String result);
+	public boolean produceSampleSubmit(long taskId,String result);
 	
 	
 	public List<OrderInfo> getProduceList();
 	
-	public OrderInfo getProduceInfo(Integer orderId);
+	public OrderInfo getProduceDetail(Integer orderId);
 
 	public List<Product> getProductByOrderId(int parseInt);
 
@@ -46,7 +46,7 @@ public interface ProduceService {
 	public List<List<PackageDetail>> getProductDetailByPackage(
 			List<nju.software.dataobject.Package> packageList);
 
-	public void pruduceSubmit(String[] pid,String[] askAmount,long taskId);
+	public boolean pruduceSubmit(String[] pid,String[] askAmount,long taskId);
 
 	public void savePackageDetail(int parseInt, String[] array_amount,
 			String[] array_color, String[] array_name, Timestamp entryTime);

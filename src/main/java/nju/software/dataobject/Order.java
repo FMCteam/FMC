@@ -46,8 +46,18 @@ public class Order implements java.io.Serializable {
 	private String payAccountInfo;
 	private double discount;
 	private double totalMoney;
+	private double sampleMoney;
 	
 	
+	@Column(name = "sampleMoney", nullable = true, precision = 22, scale = 0)
+	public double getSampleMoney() {
+		return sampleMoney;
+	}
+
+	public void setSampleMoney(double sampleMoney) {
+		this.sampleMoney = sampleMoney;
+	}
+
 	@Column(name = "discount", nullable = false, precision = 22, scale = 0)
 	public double getDiscount() {
 		return discount;
