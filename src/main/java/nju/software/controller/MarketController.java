@@ -723,33 +723,24 @@ public class MarketController {
 	}
 
 	/**
-	 * @author 莫其凡 :报价商定列表
+	 * @author 莫其凡 
 	 */
-	@RequestMapping(value = "market/quoteConfirmList.do")
+	@RequestMapping(value = "/market/confirmQuoteList.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String quoteConfirmList(HttpServletRequest request,
+	public String confirmQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<QuoteConfirmTaskSummary> tasks = marketService
-				.getQuoteConfirmTaskSummaryList(account.getUserId());
-
-		// jbpmTest.addTask();
-
-		if (tasks.size() == 0) {
-			// jbpmTest.addQuoteConfirmTask(account.getUserId());
-			tasks = marketService.getQuoteConfirmTaskSummaryList(account
-					.getUserId());
-		}
-
-		model.addAttribute("tasks", tasks);
+		List<OrderInfo> list = marketService
+				.getConfirmQuoteList(account.getUserId()+"");
+		model.addAttribute("list", list);
 		return "/market/quoteConfirmList";
 	}
 
 	/**
 	 * @author 莫其凡 :提交报价商定结果
 	 */
-	@RequestMapping(value = "market/quoteConfirm.do")
+	@RequestMapping(value = "/market/confirmQuoteDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String quoteConfirm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -909,8 +900,8 @@ public class MarketController {
 		return "redirect:/market/confirmProduct.do";
 	}
 
-	// =================================以下为莫其凡的内容============================================
-	@RequestMapping(value = "market/signContractList.do")
+	
+	@RequestMapping(value = "/market/signContractList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String signContractList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -922,16 +913,16 @@ public class MarketController {
 		return "/market/signContractList";
 	}
 
-	@RequestMapping(value = "market/signContract.do")
+	@RequestMapping(value = "/market/signContractDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String signContract(HttpServletRequest request,
+	public String signContractDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
 		OrderInfo orderInfo = marketService.getOrderInfo(
 				Integer.parseInt(orderId), Long.parseLong(taskId));
 		model.addAttribute("task", orderInfo);
-		return "/market/signContract";
+		return "/market/signContractDetail";
 	}
 
 	@RequestMapping(value = "market/signContractSubmit.do")
@@ -946,8 +937,6 @@ public class MarketController {
 		marketService.completeSignContract(Integer.parseInt(orderId),
 				Double.parseDouble(discount), Long.parseLong(taskId));
 
-		return "redirect:/market/signContractList.do";
+		return "forward:/market/signContractList.do";
 	}
-
-	// =================================莫其凡的内容到此结束===========================================
 }

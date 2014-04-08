@@ -39,7 +39,6 @@ public interface MarketService {
 	
 	
 	
-	public List<QuoteConfirmTaskSummary> getQuoteConfirmTaskSummaryList(Integer employeeId);
 	
 	public void completeQuoteConfirmTaskSummary(long taskId,String result);
 	

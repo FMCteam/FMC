@@ -55,6 +55,51 @@ public class LogisticsController {
 
 	@Autowired
 	private ProduceService produceService;
+	
+	
+	
+	
+	//=============================收取样衣=====================================
+	/**
+	 * 收取样衣列表
+	 * @author 莫其凡
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/logistics/receiveSampleList.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String receiveSampleList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<OrderInfo> list = logisticsService.getReceiveSampleList();
+		model.addAttribute("list",list);
+		return "/logistics/receiveSampleList";
+	}
+	
+	
+	/**
+	 * 收取样衣提交
+	 * @author 莫其凡
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/receiveSampleSubmit.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String receiveSampleSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String result = request.getParameter("result");
+		String taskId = request.getParameter("taskId");
+		logisticsService.receiveSampleSubmit(Long.parseLong(taskId), result);
+		return "forward:/logistics/receiveSampleList.do";
+	}
+	
+	
+
+	
+	
 	/**
 	 * 返回一个orderModelList
 	 * @param request
@@ -232,80 +277,9 @@ public class LogisticsController {
 		return "redirect:/market/add.do";
 	}
 
-	/**
-	 * 得到物流样本列表
-	 * 
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "logistics/sampleOrderList.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
-	public String sampleOrderGet(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		// first recieve order list that need sample
-		/*
-		 * String page = request.getParameter("page"); String number =
-		 * request.getParameter("number_per_page"); int s_page = 1; int s_number
-		 * = 10; if (!StringUtil.isEmpty(page)) { s_page =
-		 * Integer.parseInt(page);
-		 * 
-		 * } if (!StringUtil.isEmpty(number)) { s_number =
-		 * Integer.parseInt(number); } Map<String, Object> map = new
-		 * HashMap<String, Object>(); map.put("page", s_page);
-		 * map.put("number_per_page", s_number);
-		 * 
-		 * Map<String, Object> map = new HashMap<String, Object>();
-		 * map.put("page", 1); map.put("number_per_page", 1000); List<Object>
-		 * object = orderService.getOrderWithSample(map); model.put("orderList",
-		 * object.get(0)); // model.put("page", ((Map)
-		 * object.get(1)).get("page")); // model.put("page_number", ((Map)
-		 * object.get(1)).get("page_number"));
-		 * 
-		 * return "logistics/to_receive_sample_list";
-		 */
-		String page = request.getParameter("page");
-		String number_per_page = request.getParameter("number_per_page");
-		int s_page = 1;
-		int s_number_per_page = 10;
-		if (!StringUtil.isEmpty(page)) {
-			s_page = Integer.parseInt(page);
-		}
-		if (!StringUtil.isEmpty(number_per_page)) {
-			s_number_per_page = Integer.parseInt(number_per_page);
-		}
+	
+	
 
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"WULIUZHUGUAN", "received_sample");
-		int page_number = (int) Math.ceil((double) list.size()
-				/ s_number_per_page);
-		int start = s_number_per_page * (s_page - 1);
-		List<ComposeOrderAndLog> logList = new ArrayList<ComposeOrderAndLog>();
-		int i = 0;
-		int j = 0;
-		for (TaskSummary task : list) {
-			if (i >= start && j < s_number_per_page) {
-				WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-						.getKsession().getProcessInstance(
-								task.getProcessInstanceId());
-				String orderId1 = process.getVariable("orderId").toString();
-				Order o = orderService.findByOrderId(orderId1);
-
-				Logistics l = logisticsService.findByOrderId(orderId1);
-				ComposeOrderAndLog log = new ComposeOrderAndLog(
-						task.getProcessInstanceId(), task.getId(), o, l);
-				logList.add(log);
-				j++;
-			}
-			i++;
-		}
-		model.put("orderList", logList);
-
-		model.put("page", s_page);
-		model.put("page_number", page_number);
-		return "logistics/to_receive_sample_list";
-	}
 
 	public class ComposeOrderAndLog {
 		public long getTaskId() {
@@ -371,66 +345,7 @@ public class LogisticsController {
 		return "logistics/to_receive_sample_list";
 	}
 
-	/**
-	 * 收到或者未收到样衣
-	 * 
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "logistics/sampleOrderRequest.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
-	public String sampleOrderRequest(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		// get the orderid and complete the jbpm task
-		int confirm = Integer.parseInt(request.getParameter("confirm"));
-		boolean receivedSample = false;
-		int confirmIntValue = 2;
-		if (confirm == 1) {
-			receivedSample = true;
-			confirmIntValue = 1;
-		}
-		String orderId = request.getParameter("orderId");
 
-		String processInstanceId = request.getParameter("processInstanceId");
-
-		String taskId = request.getParameter("taskId");
-		boolean success = false;
-
-		// 直接进入到下一个流程时
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("receivedsample", receivedSample);
-		// 需要获取task中的数据
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(
-						Long.parseLong(processInstanceId));
-		String orderId1 = process.getVariable("orderId").toString();
-
-		// task orderId is the same as the request's orderId
-		if (orderId.equals(orderId1)) {
-			// complete the workflow
-			System.out.println("found it");
-			try {
-
-				jbpmAPIUtil.completeTask(Long.parseLong(taskId), map,
-						"WULIUZHUGUAN");
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// modify the order state
-			Order or = orderService.findByOrderId(orderId);
-			or.setHasPostedSampleClothes((short) confirmIntValue);
-			success = orderService.merge(or);
-
-		}
-
-		model.put("success", success);
-		System.out.println("successfully");
-		return "redirect:/logistics/sampleOrderList.do";
-
-	}
 	
 	//发送样衣信息
 	@RequestMapping(value = "logistics/sendSampleOrderDetail.do", method = RequestMethod.GET)
