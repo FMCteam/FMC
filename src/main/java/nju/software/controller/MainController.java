@@ -56,6 +56,7 @@ public class MainController {
 
 	}
 	
+	
 	@RequestMapping(value = "doLogin.do", method= RequestMethod.POST)
 	public String doLogin(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {

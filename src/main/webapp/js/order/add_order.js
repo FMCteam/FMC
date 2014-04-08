@@ -12,7 +12,22 @@
 			table_addrow_onclick("accessory_table","accessory_name","accessory_query");
 		});
 		
+		
+		$("#sample_clothes_picture_button").click(function(){
+			$("input[name='sample_clothes_picture']").click();
+		});
+		
+		
+		$("#reference_picture_button").click(function(){
+			$("input[name='reference_picture']").click();
+		});
+		
+		
+
+
 		init();
+		
+		
 	});
 
 
@@ -39,18 +54,19 @@
 			//添加行
 			var item="<td class='span12 "+col1_name+"'>"+col1+"</td>";
 			item+="<td class='span12 "+col2_name+"'>"+col2+"</td>";
-			item+="<td class='span12'><a onclick='deleteRow(this,\""+table_name+"\")'>删除</a></td>";
+			item+="<td class='span12'><a onclick=\"deleteRow(this,'"+table_name+"')\">删除</a></td>";
 			item="<tr>"+item+"</tr>";
 			$("table."+table_name+" tr.addrow").after(item);
 	}
 
-	function deleteRow(a,table){
-		$(a).parents('.'+table+' tr').remove();
-	}
+
 	
 })(jQuery);
 
-
+function deleteRow(a,table){
+	alert($(a).parents('.'+table+' tr').length);
+	$(a).parents('.'+table+' tr').remove();
+}
 
 function getTdString(col){
 	var tdString="";
@@ -99,6 +115,18 @@ function init(){
 	$("#fabric_amount").val("11,12,13");
 	$("#accessory_name").val("name1,name2,name3");
 	$("#accessory_query").val("name1,name2,name3");
+	
+	
+	
+	
+	$("input[name='tear_per_meter']").val("1");
+	$("input[name='cost_per_meter']").val("2");
+	$("input[name='fabric_price']").val("3");
+	
+	$("input[name='tear_per_piece']").val("4");
+	$("input[name='cost_per_piece']").val("5");
+	$("input[name='accessory_price']").val("6");
+	
 	
 	
 	

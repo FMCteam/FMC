@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import nju.software.dao.impl.MoneyDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.QuoteDAO;
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
@@ -24,6 +25,15 @@ import nju.software.util.JbpmAPIUtil;
 
 @Service("financeServiceImpl")
 public class FinanceServiceImpl implements FinanceService {
+	
+	
+	public final static String ACTOR_FINANCE_MANAGER = "financeManager";
+	public final static String TASK_CONFIRM_SAMPLE_MONEY = "confirmSampleMoney";
+	public final static String TASK_CONFIRM_DEPOSIT = "confirmDeposit";
+	public final static String TASK_CONFIRM_FINAL_PAYMENT = "confirmFinalPayment";
+
+
+	
 	
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
@@ -91,5 +101,103 @@ public class FinanceServiceImpl implements FinanceService {
 		long processId = task.getProcessInstanceId();
 		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
 		return process.getVariable("orderId");
+	}
+
+	/**
+	 * 确认样衣制作金
+	 */
+	@Override
+	public boolean confirmSample(Account account, int orderId, long taskId,
+			long processId, boolean receivedsamplejin, Money money) {
+		// TODO Auto-generated method stub
+//		String actorId = account.getUserRole();
+		String actorId = "CAIWUZHUGUAN";
+		//需要获取task中的数据	
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		System.out.println("orderId: " + orderId);
+		if (orderId == orderId_process) {
+			//如果收到样衣制作金，创建money记录
+			if (receivedsamplejin) {
+				moneyDAO.save(money);
+			}
+			//修改流程参数
+			Map<String, Object> data = new HashMap<>();
+			data.put("receivedsamplejin", receivedsamplejin);
+			System.out.println("taskId" + taskId);
+			//直接进入到下一个流程时
+			try {
+				jbpmAPIUtil.completeTask(taskId, data, actorId);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		return false;
+		
+	}
+
+	@Override
+	public boolean confirmDeposit(Account account, int orderId, long taskId,
+			long processId, boolean epositok, Money money) {
+		// TODO Auto-generated method stub
+//		String actorId = account.getUserRole();
+		String actorId = "CAIWUZHUGUAN";
+		//需要获取task中的数据	
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		System.out.println("orderId: " + orderId);
+		if (orderId == orderId_process) {
+			//如果收到样衣制作金，创建money记录
+			if (epositok) {
+				moneyDAO.save(money);
+			}
+			//修改流程参数
+			Map<String, Object> data = new HashMap<>();
+			data.put("epositok", epositok);
+			//直接进入到下一个流程时
+			try {
+				jbpmAPIUtil.completeTask(taskId, data, actorId);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean confirmPayment(Account account, int orderId, long taskId,
+			long processId, boolean paymentok, Money money) {
+		// TODO Auto-generated method stub
+//		String actorId = account.getUserRole();
+		String actorId = "CAIWUZHUGUAN";
+		//需要获取task中的数据	
+		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+		int orderId_process  = (int) process.getVariable("orderId");
+		System.out.println("orderId: " + orderId);
+		if (orderId == orderId_process) {
+			//如果收到样衣制作金，创建money记录
+			if (paymentok) {
+				moneyDAO.save(money);
+			}
+			//修改流程参数
+			Map<String, Object> data = new HashMap<>();
+			data.put("paymentok", paymentok);
+			//直接进入到下一个流程时
+			try {
+				jbpmAPIUtil.completeTask(taskId, data, actorId);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		return false;
 	}
 }

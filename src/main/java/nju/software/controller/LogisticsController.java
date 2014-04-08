@@ -10,11 +10,23 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Customer;
+import nju.software.dataobject.Employee;
+import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Product;
+import nju.software.model.OrderInfo;
+import nju.software.model.OrderModel;
+import nju.software.service.CustomerService;
+import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
+import nju.software.service.ProduceService;
+import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
 
@@ -35,8 +47,169 @@ public class LogisticsController {
 	@Autowired
 	private LogisticsService logisticsService;
 	@Autowired
+	private CustomerService customerService;
+	@Autowired
+	private EmployeeService employeeService;
+	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 
+	@Autowired
+	private ProduceService produceService;
+	
+	
+	
+	
+	//=============================收取样衣=====================================
+	/**
+	 * 收取样衣列表
+	 * @author 莫其凡
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/logistics/receiveSampleList.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String receiveSampleList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<OrderInfo> list = logisticsService.getReceiveSampleList();
+		model.addAttribute("list",list);
+		return "/logistics/receiveSampleList";
+	}
+	
+	
+	/**
+	 * 收取样衣提交
+	 * @author 莫其凡
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/receiveSampleSubmit.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String receiveSampleSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String result = request.getParameter("result");
+		String taskId = request.getParameter("taskId");
+		logisticsService.receiveSampleSubmit(Long.parseLong(taskId), result);
+		return "forward:/logistics/receiveSampleList.do";
+	}
+	
+	
+
+	
+	
+	/**
+	 * 返回一个orderModelList
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuList.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+		String action="putstorage";
+		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
+		model.put("order_model_list", orderModelList);
+	    return "logistics/ruku_order_list";
+	}
+	
+	/**
+	 * 返回一个order package detail的界面，package列表
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuDetail.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+		String action="putstorage";
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("process_id");
+		//OrderInfo orderInfo=produceService.getProduceInfo(Integer.parseInt(orderId));
+		List<Product> productList=produceService.getProductByOrderId(Integer.parseInt(orderId));
+		List<nju.software.dataobject.Package> packageList=produceService.getPackageByOrderId(Integer.parseInt(orderId));
+		List<List<PackageDetail>> packageDetailList=produceService.getProductDetailByPackage(packageList);
+		model.put("order_id", orderId);
+		model.put("task_id", taskId);
+		model.put("process_id", processId);
+		model.put("product_list", productList);
+		model.put("package_list", packageList);
+		model.put("package_detail_list", packageDetailList);
+		/*
+		model.put("product_list", orderInfo.getProducts());
+		List<List<PackageDetail>> packagesDetailList=orderInfo.getPackageDetails();
+		List<Package> packagesList=orderInfo.getPackages();
+		int sum=0;
+		for(List<PackageDetail> list:packagesDetailList)
+		{
+			sum+=list.size();
+		}
+		model.put("package_detail_list", packagesDetailList);
+		model.put("package_list",packagesList);
+		model.put("sum",sum);
+		*/
+	    return "logistics/ruku_detail";
+	}
+	
+	/**
+	 * order package detail的确认，
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/rukuDetailPost.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String rukuDetailPost(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actor="WULIUZHUGUAN";
+		String action="putstorage";
+		String orderId=request.getParameter("order_id");
+		String taskId=request.getParameter("task_id");
+		String processId=request.getParameter("process_id");
+		//String iterator=request.getParameter("iterator");
+		/*
+		<input id="clothes_amount" name="clothes_amount" type="hidden" />
+		<input id="clothes_style_color" name="clothes_style_color" type="hidden" />
+		<input id="clothes_style_name" name="clothes_style_name" type="hidden" />
+		*/
+		String clothes_amount=request.getParameter("clothes_amount");
+		String clothes_style_color=request.getParameter("clothes_style_color");
+		String clothes_style_name=request.getParameter("clothes_style_name");
+		String inTime = request.getParameter("package_date");
+		Timestamp entryTime = null;
+		if (inTime != null && inTime != "") {
+			Date inDate = DateUtil.parse(inTime, DateUtil.newFormat);
+			entryTime = new Timestamp(inDate.getTime());
+		}
+		try
+		{
+			String[] array_amount=clothes_amount.split(",");
+			String[] array_color=clothes_style_color.split(",");
+			String[] array_name=clothes_style_name.split(",");
+			produceService.savePackageDetail(Integer.parseInt(orderId),array_amount,array_color,array_name,entryTime);
+			
+			//保存package信息
+			jbpmAPIUtil.completeTask(Integer.parseInt(taskId), null, actor);
+				//推进流程
+				
+			
+			return "redirect:/logistics/rukuList.do";
+		}catch(Exception e)
+		{
+			
+		}
+		return "redirect:/logistics/rukuList.do";
+	}
 	/**
 	 * 
 	 * @param request
@@ -104,80 +277,9 @@ public class LogisticsController {
 		return "redirect:/market/add.do";
 	}
 
-	/**
-	 * 得到物流样本列表
-	 * 
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "logistics/sampleOrderList.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
-	public String sampleOrderGet(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		// first recieve order list that need sample
-		/*
-		 * String page = request.getParameter("page"); String number =
-		 * request.getParameter("number_per_page"); int s_page = 1; int s_number
-		 * = 10; if (!StringUtil.isEmpty(page)) { s_page =
-		 * Integer.parseInt(page);
-		 * 
-		 * } if (!StringUtil.isEmpty(number)) { s_number =
-		 * Integer.parseInt(number); } Map<String, Object> map = new
-		 * HashMap<String, Object>(); map.put("page", s_page);
-		 * map.put("number_per_page", s_number);
-		 * 
-		 * Map<String, Object> map = new HashMap<String, Object>();
-		 * map.put("page", 1); map.put("number_per_page", 1000); List<Object>
-		 * object = orderService.getOrderWithSample(map); model.put("orderList",
-		 * object.get(0)); // model.put("page", ((Map)
-		 * object.get(1)).get("page")); // model.put("page_number", ((Map)
-		 * object.get(1)).get("page_number"));
-		 * 
-		 * return "logistics/to_receive_sample_list";
-		 */
-		String page = request.getParameter("page");
-		String number_per_page = request.getParameter("number_per_page");
-		int s_page = 1;
-		int s_number_per_page = 10;
-		if (!StringUtil.isEmpty(page)) {
-			s_page = Integer.parseInt(page);
-		}
-		if (!StringUtil.isEmpty(number_per_page)) {
-			s_number_per_page = Integer.parseInt(number_per_page);
-		}
+	
+	
 
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"WULIUZHUGUAN", "received_sample");
-		int page_number = (int) Math.ceil((double) list.size()
-				/ s_number_per_page);
-		int start = s_number_per_page * (s_page - 1);
-		List<ComposeOrderAndLog> logList = new ArrayList<ComposeOrderAndLog>();
-		int i = 0;
-		int j = 0;
-		for (TaskSummary task : list) {
-			if (i >= start && j < s_number_per_page) {
-				WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-						.getKsession().getProcessInstance(
-								task.getProcessInstanceId());
-				String orderId1 = process.getVariable("orderId").toString();
-				Order o = orderService.findByOrderId(orderId1);
-
-				Logistics l = logisticsService.findByOrderId(orderId1);
-				ComposeOrderAndLog log = new ComposeOrderAndLog(
-						task.getProcessInstanceId(), task.getId(), o, l);
-				logList.add(log);
-				j++;
-			}
-			i++;
-		}
-		model.put("orderList", logList);
-
-		model.put("page", s_page);
-		model.put("page_number", page_number);
-		return "logistics/to_receive_sample_list";
-	}
 
 	public class ComposeOrderAndLog {
 		public long getTaskId() {
@@ -243,64 +345,196 @@ public class LogisticsController {
 		return "logistics/to_receive_sample_list";
 	}
 
+
+	
+	//发送样衣信息
+	@RequestMapping(value = "logistics/sendSampleOrderDetail.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String sendSampleOrderDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String id = request.getParameter("orderId");
+		String taskId = request.getParameter("taskId");
+		String processId = request.getParameter("pid");
+		long tid = Long.parseLong(taskId);
+		long pid = Long.parseLong(processId);
+		Order o = orderService.findByOrderId(id);
+		Logistics l = logisticsService.findByOrderId(id);
+		Customer c = customerService.findByCustomerId(o.getCustomerId());
+		Employee e = employeeService.getEmployeeById(o.getEmployeeId());
+		ComposeOrderAndLog log = new ComposeOrderAndLog(pid, tid, o, l);
+		model.addAttribute("log", log);
+		model.addAttribute("customer", c);
+		model.addAttribute("employee", e);
+		return "logistics/send_sample";
+	}
+	
+	//发送样衣list
+	@RequestMapping(value = "logistics/sendSampleList.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String sendSampleList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String page = request.getParameter("page");
+		String number_per_page = request.getParameter("number_per_page");
+		int s_page = 1;
+		int s_number_per_page = 10;
+		if (!StringUtil.isEmpty(page)) {
+			s_page = Integer.parseInt(page);
+		}
+		if (!StringUtil.isEmpty(number_per_page)) {
+			s_number_per_page = Integer.parseInt(number_per_page);
+		}
+
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"WULIUZHUGUAN", "deliver_sample");
+		int page_number = (int) Math.ceil((double) list.size()
+				/ s_number_per_page);
+		int start = s_number_per_page * (s_page - 1);
+		List<ComposeOrderAndLog> logList = new ArrayList<ComposeOrderAndLog>();
+		int i = 0;
+		int j = 0;
+		for (TaskSummary task : list) {
+			if (i >= start && j < s_number_per_page) {
+				WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+						.getKsession().getProcessInstance(
+								task.getProcessInstanceId());
+				String orderId1 = process.getVariable("orderId").toString();
+				Order o = orderService.findByOrderId(orderId1);
+
+				Logistics l = logisticsService.findByOrderId(orderId1);
+				ComposeOrderAndLog log = new ComposeOrderAndLog(
+						task.getProcessInstanceId(), task.getId(), o, l);
+				logList.add(log);
+				j++;
+			}
+			i++;
+		}
+		model.put("orderList", logList);
+
+		model.put("page", s_page);
+		model.put("page_number", page_number);
+		return "logistics/to_send_sample_list";
+	}
+	
+	//发送样衣
+	@RequestMapping(value = "logistics/sendSampleOrder.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String sendSampleOrder(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String id = request.getParameter("orderId");
+		String taskId = request.getParameter("taskId");
+		String processId = request.getParameter("processId");
+		long tid = Long.parseLong(taskId);
+		long pid = Long.parseLong(processId);
+		Order o = orderService.findByOrderId(id);
+		Logistics l = logisticsService.findByOrderId(id);
+		
+		logisticsService.sendSample(tid, "WULIUZHUGUAN", pid);
+		return "redirect:/logistics/sendSampleList.do";
+	}
+	
+	
 	/**
-	 * 收到或者未收到样衣
-	 * 
+	 * 发货跳转链接
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "logistics/sampleOrderRequest.do", method = RequestMethod.POST)
+	@RequestMapping(value = "logistics/shipments.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String sampleOrderRequest(HttpServletRequest request,
+	public String shipments(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		// get the orderid and complete the jbpm task
-		int confirm = Integer.parseInt(request.getParameter("confirm"));
-		boolean receivedSample = false;
-		int confirmIntValue = 2;
-		if (confirm == 1) {
-			receivedSample = true;
-			confirmIntValue = 1;
+		
+		System.out.println("logistics shipments ================ show task");
+		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String actorId = "WULIUZHUGUAN";
+		System.out.println("actorId: " + actorId);
+		String taskName = "confirm_shipments";
+		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		if (orderList.isEmpty()) {
+			System.out.println("no orderList ");
 		}
-		String orderId = request.getParameter("orderId");
-
-		String processInstanceId = request.getParameter("processInstanceId");
-
-		String taskId = request.getParameter("taskId");
-		boolean success = false;
-
-		// 直接进入到下一个流程时
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("receivedsample", receivedSample);
-		// 需要获取task中的数据
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(
-						Long.parseLong(processInstanceId));
-		String orderId1 = process.getVariable("orderId").toString();
-
-		// task orderId is the same as the request's orderId
-		if (orderId.equals(orderId1)) {
-			// complete the workflow
-			System.out.println("found it");
-			try {
-
-				jbpmAPIUtil.completeTask(Long.parseLong(taskId), map,
-						"WULIUZHUGUAN");
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// modify the order state
-			Order or = orderService.findByOrderId(orderId);
-			or.setHasPostedSampleClothes((short) confirmIntValue);
-			success = orderService.merge(or);
-
-		}
-
-		model.put("success", success);
-		System.out.println("successfully");
-		return "redirect:/logistics/sampleOrderList.do";
-
+		
+		model.addAttribute("order_list", orderList);
+		
+		return "logistic/shipments";
 	}
+	
+	
+	
+	
+	/**
+	 * 发货页面详细信息
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/shipments_detail.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String shipments_detail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		System.out.println("logistics shipments_detail================");
+		
+		OrderModel orderModel = null;
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+		String s_orderId_request = (String) request.getParameter("id");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("task_id");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("process_id");
+		long processId = Long.parseLong(s_processId);
+		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
+//		Logistics logistics = logisticsService.getLogisticsByOrderId(orderId_request);
+
+		model.addAttribute("orderModel", orderModel);
+//		model.addAttribute("logistics", logistics);
+
+		
+		
+		return "logistics/shipments_detail";
+	}
+	
+	
+	
+
+	/**
+	 * 发货
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/doShipments.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String doShipments(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		System.out.println("logistics shipments_detail================");
+		
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int orderId_request = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
+		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("pinId");
+		long processId = Long.parseLong(s_processId);
+		String comment = request.getParameter("logistics_cost");
+		String taskName = "confirm_shipments ";
+	
+//		logisticsService.shipments(account, orderId_request, taskId, processId, design_cost);
+		
+		return "redirect:/logistics/shipments";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

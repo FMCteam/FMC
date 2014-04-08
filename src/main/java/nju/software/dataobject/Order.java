@@ -43,7 +43,39 @@ public class Order implements java.io.Serializable {
 	private Short hasPostedSampleClothes;//0 no sample 1 recieved the sample 2 not recieved the sample
 	private Short isNeedSampleClothes;//0 not need sample 1 need sample
 	private String orderSource;
+	private String payAccountInfo;
+	private double discount;
+	private double totalMoney;
+	private double sampleMoney;
 	
+	
+	@Column(name = "sampleMoney", nullable = true, precision = 22, scale = 0)
+	public double getSampleMoney() {
+		return sampleMoney;
+	}
+
+	public void setSampleMoney(double sampleMoney) {
+		this.sampleMoney = sampleMoney;
+	}
+
+	@Column(name = "discount", nullable = false, precision = 22, scale = 0)
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+
+	@Column(name = "total_money", nullable = false, precision = 22, scale = 0)
+	public double getTotalMoney() {
+		return totalMoney;
+	}
+
+	public void setTotalMoney(double totalMoney) {
+		this.totalMoney = totalMoney;
+	}
+
 	//特殊工艺：水洗，激光，压皱。多选，并且不限于这三个预定的工艺。
 	//采用使用“|”符号分隔。比如"shuixi|jiguang|其它",表明使用了水洗和激光的预定工艺，以及添加的“其它”工艺。
 	public static enum SpecialProcessType {
@@ -364,6 +396,14 @@ public class Order implements java.io.Serializable {
 
 	public void setOrderSource(String orderSource) {
 		this.orderSource = orderSource;
+	}
+	@Column(name = "pay_account_info", length = 250)
+	public String getPayAccountInfo() {
+		return payAccountInfo;
+	}
+
+	public void setPayAccountInfo(String payAccountInfo) {
+		this.payAccountInfo = payAccountInfo;
 	}
 
 }
