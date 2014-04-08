@@ -14,6 +14,12 @@ public interface LogisticsService {
 	public boolean receiveSampleSubmit(long taskId,String result);
 	
 	
+	public List<OrderInfo>getWarehouseList();
+	
+	public OrderInfo getWarehouseDetail(Integer orderId);
+	
+	public boolean warehouseSubmit(long taskId,String result);
+	
 	
 	public Logistics findByOrderId(String orderId);
 

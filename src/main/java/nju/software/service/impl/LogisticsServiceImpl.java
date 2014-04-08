@@ -119,4 +119,31 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return true;
 	}
 
+	@Override
+	public List<OrderInfo> getWarehouseList() {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
+		List<OrderInfo> list = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
+	}
+
+	@Override
+	public OrderInfo getWarehouseDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean warehouseSubmit(long taskId, String result) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

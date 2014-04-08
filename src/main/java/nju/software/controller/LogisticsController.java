@@ -99,42 +99,23 @@ public class LogisticsController {
 	
 
 	
-	
-	/**
-	 * 返回一个orderModelList
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "logistics/rukuList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/logistics/warehouseList.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String rukuList(HttpServletRequest request,
+	public String warehouseList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String actor="WULIUZHUGUAN";
-		String action="putstorage";
-		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
-		model.put("order_model_list", orderModelList);
-	    return "logistics/ruku_order_list";
+		List<OrderInfo> list=logisticsService.getWarehouseList();
+		model.put("list", list);
+	    return "/logistics/warehouseList";
 	}
 	
-	/**
-	 * 返回一个order package detail的界面，package列表
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "logistics/rukuDetail.do", method = RequestMethod.POST)
+
+	
+	@RequestMapping(value = "/logistics/warehouseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String rukuDetail(HttpServletRequest request,
+	public String warehouseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String actor="WULIUZHUGUAN";
-		String action="putstorage";
-		String orderId=request.getParameter("order_id");
-		String taskId=request.getParameter("task_id");
-		String processId=request.getParameter("process_id");
-		//OrderInfo orderInfo=produceService.getProduceInfo(Integer.parseInt(orderId));
+		OrderInfo o
+		
 		List<Product> productList=produceService.getProductByOrderId(Integer.parseInt(orderId));
 		List<nju.software.dataobject.Package> packageList=produceService.getPackageByOrderId(Integer.parseInt(orderId));
 		List<List<PackageDetail>> packageDetailList=produceService.getProductDetailByPackage(packageList);
@@ -144,20 +125,7 @@ public class LogisticsController {
 		model.put("product_list", productList);
 		model.put("package_list", packageList);
 		model.put("package_detail_list", packageDetailList);
-		/*
-		model.put("product_list", orderInfo.getProducts());
-		List<List<PackageDetail>> packagesDetailList=orderInfo.getPackageDetails();
-		List<Package> packagesList=orderInfo.getPackages();
-		int sum=0;
-		for(List<PackageDetail> list:packagesDetailList)
-		{
-			sum+=list.size();
-		}
-		model.put("package_detail_list", packagesDetailList);
-		model.put("package_list",packagesList);
-		model.put("sum",sum);
-		*/
-	    return "logistics/ruku_detail";
+	    return "/logistics/warehouseDetail";
 	}
 	
 	/**
@@ -167,9 +135,9 @@ public class LogisticsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "logistics/rukuDetailPost.do", method = RequestMethod.POST)
+	@RequestMapping(value = "logistics/warehouseSubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String rukuDetailPost(HttpServletRequest request,
+	public String warehouseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String actor="WULIUZHUGUAN";
 		String action="putstorage";
@@ -203,7 +171,7 @@ public class LogisticsController {
 				//推进流程
 				
 			
-			return "redirect:/logistics/rukuList.do";
+			return "forward:/logistics/warehouseList.do";
 		}catch(Exception e)
 		{
 			
