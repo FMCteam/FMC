@@ -31,15 +31,15 @@
 					</tr>
 					<c:forEach var="task" items="${tasks}">
 						<tr class="gradeA">
-							<td>${task.customerName}</td>
-							<td>${task.customerPhone}</td>
-							<td>${task.companyName}</td>
-							<td>${task.companyPhone}</td>
-							<td>${task.innerPrice}</td>
-							<td>${task.outerPrice}</td>
+							<td>${task.order.customerName}</td>
+							<td>${task.order.customerPhone1}</td>
+							<td>${task.order.customerCompany}</td>
+							<td>${task.order.customerCompanyFax}</td>
+							<td>${task.quote.innerPrice}</td>
+							<td>${task.quote.outerPrice}</td>
 							<td>
 								<a
-								href="${ctx}/market/quoteModifyList.do?id=${task.orderId}">
+								href="${ctx}/market/modifyQuoteDetail.do?id=${task.order.orderId}">
 									修改报价</a> </td>
 						</tr>
 					</c:forEach>

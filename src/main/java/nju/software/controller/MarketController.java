@@ -267,7 +267,7 @@ public class MarketController {
 	private MarketService marketService;
 
 	// 专员修改报价
-	@RequestMapping(value = "market/modifyOrderSum.do", method = RequestMethod.POST)
+	@RequestMapping(value = "market/modifyQuoteSubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyOrderSum(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -293,7 +293,7 @@ public class MarketController {
 	}
 
 	// 专员修改报价
-	@RequestMapping(value = "market/quoteModifyList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "market/modifyQuoteDetail.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyOrderSumDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -302,37 +302,35 @@ public class MarketController {
 		// String s_processId=request.getParameter("pid");
 		int id = Integer.parseInt(orderId);
 		// long processId=Long.parseLong(s_processId);
-		QuoteModel quoteModel = orderService.getQuoteByOrderAndPro(
-				"SHICHANGZHUANYUAN", "edit_quoteorder", id);
-		model.addAttribute("quoteModel", quoteModel);
-		return "market/modify_quote_order";
+		OrderInfo orderInfo = marketService.getModifyQuoteDetail(id);
+		model.addAttribute("quoteModel", orderInfo);
+		return "market/modifyQuoteDetail";
 	}
 
 	// 专员修改报价列表
-	@RequestMapping(value = "market/quoteToModifyList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "market/modifyQuoteList.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyOrderSumList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<QuoteConfirmTaskSummary> tasks = marketService
-				.getQuoteModifyTaskSummaryList(account.getUserId());
+		List<OrderInfo> tasks = marketService.getModifyQuoteList(account.getUserId());
 
 		model.addAttribute("tasks", tasks);
-		return "market/modify_quote_list";
+		return "market/modifyQuoteList";
 	}
 
 	// 专员修改加工单列表
-	@RequestMapping(value = "market/productToModifyList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "market/modifyProductList.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyProductList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<OrderModel> tasks = marketService.getProductModifyList(account
-				.getUserId());
+		List<OrderInfo> tasks = marketService.getModifyProductList(account.getUserId());
+
 		model.addAttribute("tasks", tasks);
 		return "market/modifyProductList";
 	}
@@ -345,16 +343,16 @@ public class MarketController {
 		String orderId = request.getParameter("id");
 		String s_taskId = request.getParameter("tid");
 		String s_processId = request.getParameter("pid");
+		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
-		OrderModel om = new OrderModel(orderService.findByOrderId(orderId),
-				taskId, processId);
-		model.addAttribute("orderModel", om);
+		OrderInfo oi = marketService.getModifyProductDetail(id,taskId);
+		model.addAttribute("orderModel", oi);
 		return "market/modifyProductDetail";
 	}
 
 	// 专员修改加工单
-	@RequestMapping(value = "market/modifyProduct.do", method = RequestMethod.POST)
+	@RequestMapping(value = "market/modifyProductSubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyProduct(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -379,7 +377,7 @@ public class MarketController {
 			marketService.modifyProduct(account.getUserId(), id, taskId,
 					processId, editworksheet, productList);
 		}
-		return "redirect:/market/productToModifyList.do";
+		return "redirect:/market/modifyProductList.do";
 	}
 
 	// 专员合并报价

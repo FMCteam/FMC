@@ -433,24 +433,20 @@ public class LogisticsController {
 	}
 	
 	//发送样衣信息
-	@RequestMapping(value = "logistics/sendSampleOrderDetail.do", method = RequestMethod.GET)
+	@RequestMapping(value = "logistics/sendSampleDetail.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String sendSampleOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String id = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
 		String processId = request.getParameter("pid");
+		int orderId = Integer.parseInt(id);
 		long tid = Long.parseLong(taskId);
 		long pid = Long.parseLong(processId);
-		Order o = orderService.findByOrderId(id);
-		Logistics l = logisticsService.findByOrderId(id);
-		Customer c = customerService.findByCustomerId(o.getCustomerId());
-		Employee e = employeeService.getEmployeeById(o.getEmployeeId());
-		ComposeOrderAndLog log = new ComposeOrderAndLog(pid, tid, o, l);
-		model.addAttribute("log", log);
-		model.addAttribute("customer", c);
-		model.addAttribute("employee", e);
-		return "logistics/send_sample";
+		
+		OrderInfo oi = logisticsService.getSendSampleDetail(orderId,tid);
+		model.addAttribute("log", oi);
+		return "logistics/sendSampleDetail";
 	}
 	
 	//发送样衣list
@@ -468,40 +464,19 @@ public class LogisticsController {
 		if (!StringUtil.isEmpty(number_per_page)) {
 			s_number_per_page = Integer.parseInt(number_per_page);
 		}
-
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"WULIUZHUGUAN", "deliver_sample");
-		int page_number = (int) Math.ceil((double) list.size()
+		
+		List<OrderInfo> orderList = logisticsService.getSendSampleList(s_page,s_number_per_page);
+		int page_number = (int) Math.ceil((double) orderList.size()
 				/ s_number_per_page);
-		int start = s_number_per_page * (s_page - 1);
-		List<ComposeOrderAndLog> logList = new ArrayList<ComposeOrderAndLog>();
-		int i = 0;
-		int j = 0;
-		for (TaskSummary task : list) {
-			if (i >= start && j < s_number_per_page) {
-				WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-						.getKsession().getProcessInstance(
-								task.getProcessInstanceId());
-				String orderId1 = process.getVariable("orderId").toString();
-				Order o = orderService.findByOrderId(orderId1);
-
-				Logistics l = logisticsService.findByOrderId(orderId1);
-				ComposeOrderAndLog log = new ComposeOrderAndLog(
-						task.getProcessInstanceId(), task.getId(), o, l);
-				logList.add(log);
-				j++;
-			}
-			i++;
-		}
-		model.put("orderList", logList);
+		model.put("orderList", orderList);
 
 		model.put("page", s_page);
 		model.put("page_number", page_number);
-		return "logistics/to_send_sample_list";
+		return "logistics/sendSampleList";
 	}
 	
 	//发送样衣
-	@RequestMapping(value = "logistics/sendSampleOrder.do", method = RequestMethod.POST)
+	@RequestMapping(value = "logistics/sendSampleSubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String sendSampleOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -510,10 +485,8 @@ public class LogisticsController {
 		String processId = request.getParameter("processId");
 		long tid = Long.parseLong(taskId);
 		long pid = Long.parseLong(processId);
-		Order o = orderService.findByOrderId(id);
-		Logistics l = logisticsService.findByOrderId(id);
 		
-		logisticsService.sendSample(tid, "WULIUZHUGUAN", pid);
+		logisticsService.sendSampleSubmit(tid, pid);
 		return "redirect:/logistics/sendSampleList.do";
 	}
 	

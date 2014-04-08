@@ -10,21 +10,21 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<h4 class="widgettitle">市场专员修改报价</h4>
 			<div class="widgetcontent">
-	            <form class="stdform" action="${ctx}/market/modifyOrderSum.do" method="post">
+	            <form class="stdform" action="${ctx}/market/modifyQuoteSubmit.do" method="post">
 	            	<p>
                         <label>订单号</label>
-                        <span class="field"><input type="text" name="order_id" class="input-large" value="${quoteModel.quote.orderId }" readonly />
+                        <span class="field"><input type="text" name="order_id" class="input-large" value="${quoteModel.quote.orderId }" readonly /></span>
                    	</p>
                    	<p>
                         <label>内部报价</label>
-                        <span class="field"><input type="text" name="inner_price" class="input-large" value="${quoteModel.quote.innerPrice}" readonly />
+                        <span class="field"><input type="text" name="inner_price" class="input-large" value="${quoteModel.quote.innerPrice}" readonly /></span>
                    	</p>
                    	<p>
                         <label>外部报价</label>
-                        <span class="field"><input type="text" name="outer_price" class="input-large" value="${quoteModel.quote.outerPrice}" />
+                        <span class="field"><input type="text" name="outer_price" class="input-large" value="${quoteModel.quote.outerPrice}" /></span>
                    	</p>
-                   	<input type="hidden" name="taskId" value="${quoteModel.taskId }" />
-                   	<input type="hidden" name="processId" value="${quoteModel.processInstanceId }" />
+                   	<input type="hidden" name="taskId" value="${quoteModel.task.id }" />
+                   	<input type="hidden" name="processId" value="${quoteModel.task.processInstanceId }" />
                    	<p class="stdformbutton">
 						<button class="btn btn-primary">提交修改</button>
 					</p>
