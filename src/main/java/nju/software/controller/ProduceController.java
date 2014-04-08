@@ -128,39 +128,35 @@ public class ProduceController {
 	}
 	
 	
-	@RequestMapping(value = "produce/sampleProduceList.do")
+	@RequestMapping(value = "/produce/produceSampleList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sampleProduceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<SampleProduceTaskSummary> tasks = produceService.getSampleProduceTaskSummaryList();
-		model.addAttribute("tasks", tasks);
-		return "/produce/sampleProduceList";
-	
+		List<OrderInfo> list = produceService.getProduceSampleList();
+		model.addAttribute("list", list);
+		return "/produce/produceSampleList";
 	}
 	
 	
-	@RequestMapping(value = "produce/sampleProduce.do")
+	@RequestMapping(value = "/produce/produceSampleDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String sampleProduce(HttpServletRequest request,
+	public String produceSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		String taskId = request.getParameter("taskId");
-		SampleProduceTask task=produceService.getSampleProduceTask(Integer.parseInt(orderId), Long.parseLong(taskId));
-		model.addAttribute("task", task);
-		return "/produce/sampleProduce";
+		OrderInfo orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/produce/produceSampleDetail";
 	}
 	
 	
-	@RequestMapping(value = "produce/sampleProduceSubmit.do")
+	@RequestMapping(value = "/produce/produceSampleSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sampleProduceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String result = request.getParameter("result");
-		
 		String taskId = request.getParameter("taskId");
-		System.out.println(result+":"+taskId);
-		produceService.completeSampleProduceTask(Long.parseLong(taskId), result);
-		return "forward:/produce/sampleProduceList.do";
+		produceService.produceSampleSubmit(Long.parseLong(taskId), result);
+		return "forward:/produce/produceSampleList.do";
 	}
 	
 	
@@ -280,26 +276,26 @@ public class ProduceController {
 	
 	
 	
-	@RequestMapping(value = "produce/produceList.do")
+	@RequestMapping(value = "/produce/produceList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String produceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<OrderInfo>tasks=produceService.getProduceList();
-		model.addAttribute("tasks", tasks);
+		List<OrderInfo>list=produceService.getProduceList();
+		model.addAttribute("list", list);
 		return "/produce/produceList";
 	}
 	
 	
 	
 	
-	@RequestMapping(value = "produce/produce.do")
+	@RequestMapping(value = "/produce/produceDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String produce(HttpServletRequest request,
+	public String produceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
-		OrderInfo task=produceService.getProduceInfo(Integer.parseInt(orderId));
-		model.addAttribute("task", task);
-		return "/produce/produce";
+		OrderInfo orderInfo=produceService.getProduceDetail(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/produce/produceDetail";
 	}
 	
 	
@@ -311,6 +307,6 @@ public class ProduceController {
 		String pid=request.getParameter("pid");
 		String askAmount=request.getParameter("produceAmount");
 		produceService.pruduceSubmit(pid.split(","), askAmount.split(","), Long.parseLong(taskId));
-		return "redirect:/produce/produceList.do";
+		return "forward:/produce/produceList.do";
 	}
 }

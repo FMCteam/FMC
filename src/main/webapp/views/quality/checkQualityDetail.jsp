@@ -10,14 +10,14 @@
 				<div class="widgetcontent">
 
 					<form method="post"
-						action="${ctx }/quality/checkQuality.do">
+						action="${ctx }/quality/checkQualitySubmit.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td>订单信息</td>
 								<td>单号</td>
-								<td>${orderModel.order.orderId }</td>
+								<td>${orderInfo.order.orderId }</td>
 								<td>生成时间</td>
-								<td>${fn:substring(orderModel.order.orderTime,0,10) }</td>
+								<td>${fn:substring(orderInfo.order.orderTime,0,10) }</td>
 							</tr>
 							<tr>
 								<td>加工方信息</td>
@@ -27,28 +27,28 @@
 							<tr>
 								<td rowspan="3">客户信息</td>
 								<td>公司名称</td>
-								<td>${customer.companyName }</td>
+								<td>${orderInfo.customer.companyName }</td>
 								<td>联系电话</td>
-								<td>${customer.companyPhone }</td>
+								<td>${orderInfo.customer.companyPhone }</td>
 							</tr>
 							<tr>
 								<td>采购人姓名</td>
-								<td>${customer.buyContact }</td>
+								<td>${orderInfo.customer.buyContact }</td>
 								<td>固定电话</td>
-								<td>${customer.contactPhone1 }</td>
+								<td>${orderInfo.customer.contactPhone1 }</td>
 							</tr>
 							<tr>
 								<td>QQ</td>
-								<td>${customer.qq }</td>
+								<td>${orderInfo.customer.qq }</td>
 								<td>EMAIL</td>
-								<td>${customer.email }</td>
+								<td>${orderInfo.customer.email }</td>
 							</tr>
 							<tr>
 								<td>专员信息</td>
 								<td>姓名</td>
-								<td>${employee.employeeName }</td>
+								<td>${orderInfo.employee.employeeName }</td>
 								<td>电话</td>
-								<td>${employee.phone1 }</td>
+								<td>${orderInfo.employee.phone1 }</td>
 							</tr>
 							<tr>
 								<td rowspan="2">款式信息</td>
@@ -56,8 +56,8 @@
 								<td colspan="2">面料种类</td>
 							</tr>
 							<tr>
-								<td colspan="2">${orderModel.order.styleName }</td>
-								<td colspan="2">${orderModel.order.fabricType }</td>
+								<td colspan="2">${orderInfo.order.styleName }</td>
+								<td colspan="2">${orderInfo.order.fabricType }</td>
 							</tr>
 							<tr>
 								<td rowspan="4">加工要求</td>
@@ -165,11 +165,11 @@
 							</tr>
 						</table>
 						<input type="hidden" name="orderId"
-							value="${orderModel.order.orderId}" />
+							value="${orderInfo.order.orderId}" />
 							<input type="hidden" name="taskId"
-							value="${orderModel.taskId}" />
+							value="${orderInfo.task.id}" />
 							<input type="hidden" name="processId"
-							value="${orderModel.processInstanceId}" />
+							value="${orderInfo.task.processInstanceId}" />
 					</form>
 				</div>
 				

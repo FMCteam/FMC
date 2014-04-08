@@ -123,46 +123,51 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public List<SampleProduceTaskSummary> getSampleProduceTaskSummaryList() {
+	public List<OrderInfo> getProduceSampleList() {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"SHENGCHANZHUGUAN", "product_sample");
-		List<SampleProduceTaskSummary> taskSummarys = new ArrayList<>();
+				ACTOR_PRODUCE_MANAGER, TASK_PRODUCE_SAMPLE);
+		List<OrderInfo> list = new ArrayList<>();
 		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			SampleProduceTaskSummary summary = SampleProduceTaskSummary
-					.getInstance(orderDAO.findById(orderId),
-							(Quote) quoteDAO.findById(orderId), task.getId());
-			taskSummarys.add(summary);
-
+			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
 		}
-		return taskSummarys;
+		return list;
 	}
 
 	@Override
-	public SampleProduceTask getSampleProduceTask(Integer orderId, long taskId) {
+	public OrderInfo getProduceSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		Order order = orderDAO.findById(orderId);
-		List<Fabric> fabrics = fabricDAO.findByOrderId(orderId);
-		List<Accessory> accessorys = accessoryDAO.findByOrderId(orderId);
-		SampleProduceTask task = new SampleProduceTask(taskId, order, fabrics,
-				accessorys);
-		return task;
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER,
+				TASK_PRODUCE_SAMPLE, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
+		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setTask(task);
+		return orderInfo;
 	}
 
+	
 	@Override
-	public void completeSampleProduceTask(long taskId, String result) {
+	public boolean produceSampleSubmit(long taskId, String result) {
 		// TODO Auto-generated method stub
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("producterror", result.equals("0"));
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, "SHENGCHANZHUGUAN");
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 	}
 
+	
 	public Object getVariable(String name, TaskSummary task) {
 		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
 		long processId = task.getProcessInstanceId();
@@ -236,26 +241,26 @@ public class ProduceServiceImpl implements ProduceService {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				ACTOR_PRODUCE_MANAGER, TASK_PRODUCE);
-		List<OrderInfo> models = new ArrayList<>();
+		List<OrderInfo> list = new ArrayList<>();
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
-			OrderInfo model = new OrderInfo();
-			model.setOrder(orderDAO.findById(orderId));
-			model.setTask(task);
-			models.add(model);
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
 		}
-		return models;
+		return list;
 	}
 
 	@Override
-	public OrderInfo getProduceInfo(Integer orderId) {
+	public OrderInfo getProduceDetail(Integer orderId) {
 		// TODO Auto-generated method stub
 		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER,
 				TASK_PRODUCE, orderId);
-		OrderInfo model = new OrderInfo();
-		model.setOrder(orderDAO.findById(orderId));
-		model.setTask(task);
-		return model;
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setTask(task);
+		return orderInfo;
 	}
 
 	@Override
@@ -293,7 +298,7 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public void pruduceSubmit(String[] pid, String[] askAmount, long taskId) {
+	public boolean pruduceSubmit(String[] pid, String[] askAmount, long taskId) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < pid.length; i++) {
 			Product product = productDAO.findById(Integer.parseInt(pid[i]));
@@ -304,9 +309,11 @@ public class ProduceServiceImpl implements ProduceService {
 		try {
 			data.put("volumeproduction", true);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 	}
 

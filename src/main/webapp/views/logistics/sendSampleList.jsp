@@ -9,24 +9,25 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<section>
 				<table id="dyntable" class="table responsive">
-					<caption>质量检查</caption>
+					<caption>样衣发货</caption>
 					<tr>
+						<th class="head0">单号</th>
+						<th class="head1">生成时间</th>
 						<th class="head0">客户姓名</th>
 						<th class="head1">客户电话</th>
-						<th class="head1">公司名称</th>
-						<th class="head0">公司电话</th>
-						<th class="head1">操作</th>
+						<th class="head0">公司名称</th>
+						<th class="head1">公司电话</th>
+						<th class="head0">操作</th>
 					</tr>
-					<c:forEach var="task" items="${tasks}">
+					<c:forEach var="task" items="${orderList}">
 						<tr class="gradeA">
-							<td>${task.order.customerName}</td>
-							<td>${task.order.customerPhone1}</td>
-							<td>${task.order.customerCompany}</td>
-							<td>${task.order.customerCompanyFax}</td>
-							<td>
-								<a
-								href="${ctx}/quality/checkDetail.do?id=${task.order.orderId}&tid=${task.taskId}&pid=${task.processInstanceId}">
-									检查</a> </td>
+							<td>${task.order.orderId }</td>
+							<td>${fn:substring(task.order.orderTime,0,10) }</td>
+							<td>${task.order.customerName }</td>
+							<td>${task.order.customerPhone1 }</td>
+							<td>${task.order.customerCompany }</td>
+							<td>${task.order.customerCompanyFax }</td>
+							<td><a href="${ctx}/logistics/sendSampleDetail.do?taskId=${task.task.id}&pid=${task.task.processInstanceId}&orderId=${task.order.orderId}">发货</a></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -45,4 +46,3 @@
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <link rel="stylesheet" href="../views/market/quoteConfirmList.css">
 <%@include file="/common/footer.jsp"%>
-
