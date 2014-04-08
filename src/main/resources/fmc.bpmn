@@ -916,12 +916,9 @@
         <flowNodeRef>_74</flowNodeRef>
         <flowNodeRef>_75</flowNodeRef>
       </lane>
-<<<<<<< HEAD
-=======
       <lane name="SHICHANGZHUGUAN" >
         <flowNodeRef>_29</flowNodeRef>
       </lane>
->>>>>>> a4f2669179d0b7bdc9f3fc5c6c447f69cb210576
       <lane name="CAIGOUZHUGUAN" >
         <flowNodeRef>_10</flowNodeRef>
         <flowNodeRef>_23</flowNodeRef>
@@ -967,11 +964,7 @@
         <terminateEventDefinition />
     </endEvent>
     <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
-<<<<<<< HEAD
-    <userTask id="_7" name="??????" >
-=======
     <userTask id="_7" name="收取样衣" >
->>>>>>> a4f2669179d0b7bdc9f3fc5c6c447f69cb210576
       <ioSpecification>
         <dataInput id="_7_TaskNameInput" name="TaskName" />
         <dataInput id="_7_PriorityInput" name="Priority" />
@@ -1440,11 +1433,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_59" name="???????·???" >
-=======
     <userTask id="_59" name="物流样衣发货" >
->>>>>>> a4f2669179d0b7bdc9f3fc5c6c447f69cb210576
       <ioSpecification>
         <dataInput id="_59_TaskNameInput" name="TaskName" />
         <inputSet>
@@ -1811,11 +1800,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-<<<<<<< HEAD
-    <userTask id="_118" name="β?????" >
-=======
     <userTask id="_118" name="尾款确认" >
->>>>>>> a4f2669179d0b7bdc9f3fc5c6c447f69cb210576
       <ioSpecification>
         <dataInput id="_118_TaskNameInput" name="TaskName" />
         <inputSet>
