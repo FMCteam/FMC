@@ -168,35 +168,28 @@ public class ProduceController {
 	
 	
 	
+	
+	
+	
+	
 	/**
 	 * 生产成本核算跳转链接
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "produce/costAccounting.do", method= RequestMethod.GET)
+	@RequestMapping(value = "produce/computeProduceCostList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String costAccounting(HttpServletRequest request,
+	public String computeProduceCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println(" produce cost Accounting ================ show task");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String actorId = "SHENGCHANZHUGUAN";
-		System.out.println("actorId: " + actorId);
-		String taskName = "business_accounting";
-		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
-		if (orderList.isEmpty()) {
-			System.out.println("no orderList ");
-		}
-		model.addAttribute("order_list", orderList);
+	List<OrderInfo>tasks=produceService.getComputeProduceCostList();
+		model.addAttribute("tasks", tasks);
 		
-		
-		return "produce/cost_accounting";
+		return "/produce/computeProduceCostList";
 	}
-	
 	
 
 	
@@ -208,31 +201,16 @@ public class ProduceController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "produce/costAccountingDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "produce/computeProduceCostDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String costAccountingDetail(HttpServletRequest request,
+	public String computeProduceCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("produce costAccounting Detail ================ costAccountingDetail");
-		OrderModel orderModel = null;
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-		Logistics logistics = produceService.getLogisticsByOrderId(orderId_request);
-		List<Fabric> fabricList = produceService.getFabricByOrderId(orderId_request);
-		List<Accessory> accessoryList = produceService.getAccessoryByOrderId(orderId_request);
-		model.addAttribute("orderModel", orderModel);
-		model.addAttribute("logistics", logistics);
-		model.addAttribute("fabric_list", fabricList);
-		model.addAttribute("accessory_list", accessoryList);
 		
-		return "produce/costAccounting_detail";
+		String orderId=request.getParameter("orderId");
+		OrderInfo task=produceService.getComputeProduceCostInfo(Integer.parseInt(orderId));
+		model.addAttribute("task", task);
+		return "/produce/computeProduceCostDetail";
 	}
 	
 	
@@ -249,47 +227,53 @@ public class ProduceController {
 	
 	
 	
-	@RequestMapping(value = "produce/doCostAccounting.do", method= RequestMethod.POST)
+	@RequestMapping(value = "produce/computeProduceCostSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doCostAccounting(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-	System.out.println("do  produce cost Accounting ================");
+
 		
-		Account account = (Account) request.getSession().getAttribute("cur_user");
 	
-		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
-		//裁剪费用
-		String cut_cost_temp = request.getParameter("cut_cost");
-		float cut_cost=Float.parseFloat(cut_cost_temp);
+		String orderId = (String) request.getParameter("orderId");
+	
+		String taskId = request.getParameter("taskId");
+		
+	   //裁剪费用
+		String cut_cost = request.getParameter("cut_cost");
+		
 		//管理费用
-		String manage_cost_temp = request.getParameter("manage_cost");
-		float manage_cost=Float.parseFloat(manage_cost_temp);
+		String manage_cost = request.getParameter("manage_cost");
+		
 		//缝制费用
-		String nail_cost_temp = request.getParameter("nail_cost");
-		float nail_cost=Float.parseFloat(nail_cost_temp);
+		String nail_cost = request.getParameter("nail_cost");
+		
 		//整烫费用
-	    String ironing_cost_temp = request.getParameter("ironing_cost");
-		float ironing_cost=Float.parseFloat(ironing_cost_temp);
+	    String ironing_cost = request.getParameter("ironing_cost");
+	
 		//锁订费用
-		String swing_cost_temp = request.getParameter("swing_cost");
-		float swing_cost=Float.parseFloat(swing_cost_temp);
+		String swing_cost = request.getParameter("swing_cost");
+		
 		//包装费用
-		String package_cost_temp = request.getParameter("package_cost");
-		float package_cost=Float.parseFloat(package_cost_temp);
+		String package_cost = request.getParameter("package_cost");
+	
 		//其他费用
-		String other_cost_temp = request.getParameter("other_cost");
-		float other_cost=Float.parseFloat(other_cost_temp);
+		String other_cost = request.getParameter("other_cost");
 		
-		String taskName = "design_accounting ";
-		produceService.costAccounting(account, orderId_request, taskId, processId, cut_cost,
-		manage_cost,nail_cost,ironing_cost,swing_cost,package_cost,other_cost);
 		
-		return "redirect:/produce/costAccounting.do";
+	
+		produceService.ComputeProduceCostSubmit(
+				Integer.parseInt(orderId),
+				 Long.parseLong(taskId), 
+				Float.parseFloat(cut_cost),
+				Float.parseFloat(manage_cost),
+				Float.parseFloat(nail_cost),
+				Float.parseFloat(ironing_cost),
+				Float.parseFloat(swing_cost),
+				Float.parseFloat(package_cost),
+				Float.parseFloat(other_cost)
+						);
+		
+		return "redirect:/produce/computeProduceCostList.do";
 	}
 	
 	
