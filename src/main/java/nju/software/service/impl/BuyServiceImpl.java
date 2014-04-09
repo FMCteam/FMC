@@ -205,6 +205,33 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
+
+	public List<OrderInfo> getPurchaseSampleMaterialList() {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_PURCHASE_MANAGER, TASK_PURCHASE_SAMPLE_MATERIAL);
+		List<OrderInfo> list = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
+		}
+		return list;
+	}
+
+	@Override
+	public OrderInfo getPurchaseSampleMaterialDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PURCHASE_MANAGER,
+				TASK_PURCHASE_SAMPLE_MATERIAL, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setTask(task);
+		return orderInfo;
+
+	}
 	public List<OrderInfo> getVerifyPurchaseList() {
 		// TODO Auto-generated method stub
 		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
@@ -249,65 +276,110 @@ public class BuyServiceImpl implements BuyService {
 			}
 		}
 		return null;
+
 	}
 
 	
-//
-//	@Override
-//	public boolean updateAccessoryCost(int orderId, long taskId,
-//			long processId, String[] accessory_names, String[] tear_per_piece,
-//			String[] cost_per_piece, String[] accessory_prices) {
-//		
-//		
-//		
-//		// TODO Auto-generated method stub
-////		String actorId = account.getUserRole();
-//		String actorId = "CAIGOUZHUGUAN";
-//		//需要获取task中的数据	
-//		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
-//		int orderId_process  = (int) process.getVariable("orderId");
-//		System.out.println("orderId: " + orderId);
-//	
-//		
-//		if (orderId == orderId_process) {
-////			Order order = orderDAO.findById(orderId);
-//			//修改order内容
-//
-//			
-//			
-//			for (int i=0;i< accessory_names.length;i++)      
-//			  {      
-//				
-//		       AccessoryCost accessoryCost =new AccessoryCost();
-//		       accessoryCost.setOrderId(orderId);
-//				
-//				//修改FabricCost内容
-//		       accessoryCost.setAccessoryName(accessory_names[i]);
-//		       accessoryCost.setTearPerPiece(Float.parseFloat(tear_per_piece[i]));
-//		       accessoryCost.setCostPerPiece(Float.parseFloat(cost_per_piece[i]));
-//		       accessoryCost.setPrice(Float.parseFloat(accessory_prices[i]));
-//		       
-//		   	//提交修改
-//		      AccessoryCostDAO.save(accessoryCost);
-//		       return true;
-//			  }
-//		
-//		
-//		}
-//		
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-//
-//	
-//	
-//	
-//	
-//	
-//	
-	
-	
-	
-	
+	@Override
+	public boolean purchaseSampleMaterialSubmit(long taskId, String result) {
+		// TODO Auto-generated method stub
+		boolean purchaseerror=result.equals("0");
+		Map<String,Object> data=new HashMap<String,Object>();
+		data.put("purchaseerror", purchaseerror);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
+	@Override
+	public List<OrderInfo> getConfirmPurchaseList() {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_PURCHASE_MANAGER, TASK_CONFIRM_PURCHASE);
+		List<OrderInfo> list = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
+		}
+		return list;
+	}
+
+	@Override
+	public OrderInfo getConfirmPurchaseDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PURCHASE_MANAGER,
+				TASK_CONFIRM_PURCHASE, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setTask(task);
+		return orderInfo;
+	}
+
+	@Override
+	public boolean confirmPurchaseSubmit(long taskId, String result) {
+		// TODO Auto-generated method stub
+		boolean purchaseerror=result.equals("1");
+		Map<String,Object> data=new HashMap<String,Object>();
+		data.put("purchaseerror", purchaseerror);
+		data.put("isworksheet", purchaseerror);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public List<OrderInfo> getPurchaseMaterialList() {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_PURCHASE_MANAGER, TASK_PURCHASE_MATERIAL);
+		List<OrderInfo> list = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
+		}
+		return list;
+	}
+
+	@Override
+	public OrderInfo getPurchaseMaterialDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PURCHASE_MANAGER,
+				TASK_PURCHASE_MATERIAL, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setTask(task);
+		return orderInfo;
+	}
+
+	@Override
+	public boolean purchaseMaterialSubmit(long taskId, String result) {
+		// TODO Auto-generated method stub
+		boolean purchaseerror=result.equals("0");
+		Map<String,Object> data=new HashMap<String,Object>();
+		data.put("procurementerror", purchaseerror);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

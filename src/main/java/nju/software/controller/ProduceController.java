@@ -117,36 +117,7 @@ public class ProduceController {
 	}
 	
 	
-	@RequestMapping(value = "/produce/produceSampleList.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String sampleProduceList(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		List<OrderInfo> list = produceService.getProduceSampleList();
-		model.addAttribute("list", list);
-		return "/produce/produceSampleList";
-	}
-	
-	
-	@RequestMapping(value = "/produce/produceSampleDetail.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String produceSampleDetail(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
-		model.addAttribute("orderInfo", orderInfo);
-		return "/produce/produceSampleDetail";
-	}
-	
-	
-	@RequestMapping(value = "/produce/produceSampleSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String sampleProduceSubmit(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		String result = request.getParameter("result");
-		String taskId = request.getParameter("taskId");
-		produceService.produceSampleSubmit(Long.parseLong(taskId), result);
-		return "forward:/produce/produceSampleList.do";
-	}
+
 	
 	
 	
@@ -262,9 +233,40 @@ public class ProduceController {
 	}
 	
 	
+	//=======================样衣生产=======================
+	@RequestMapping(value = "/produce/produceSampleList.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String produceSampleList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<OrderInfo> list = produceService.getProduceSampleList();
+		model.addAttribute("list", list);
+		return "/produce/produceSampleList";
+	}
 	
 	
+	@RequestMapping(value = "/produce/produceSampleDetail.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String produceSampleDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		OrderInfo orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/produce/produceSampleDetail";
+	}
 	
+	
+	@RequestMapping(value = "/produce/produceSampleSubmit.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String produceSampleSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String result = request.getParameter("result");
+		String taskId = request.getParameter("taskId");
+		produceService.produceSampleSubmit(Long.parseLong(taskId), result);
+		return "forward:/produce/produceSampleList.do";
+	}
+	
+	
+	//=====================批量生产======================
 	@RequestMapping(value = "/produce/produceList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String produceList(HttpServletRequest request,
@@ -273,8 +275,6 @@ public class ProduceController {
 		model.addAttribute("list", list);
 		return "/produce/produceList";
 	}
-	
-	
 	
 	
 	@RequestMapping(value = "/produce/produceDetail.do")
