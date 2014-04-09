@@ -25,6 +25,7 @@ import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Product;
+import nju.software.model.OrderInfo;
 import nju.software.model.ProductModel;
 import nju.software.dataobject.Quote;
 import nju.software.service.BuyService;
@@ -147,59 +148,137 @@ public class BuyServiceImpl implements BuyService {
 	
 	
 	
+//	@Override
+//	public boolean costAccounting(Account account, int orderId, long taskId,
+//			long processId, String[] fabric_names, String[] tear_per_meters,
+//			String[] cost_per_meters, String[] fabric_prices) {
+//		
+//	
+//		// TODO Auto-generated method stub
+////		String actorId = account.getUserRole();
+//		String actorId = "CAIGOUZHUGUAN";
+//		//需要获取task中的数据	
+//		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
+//		int orderId_process  = (int) process.getVariable("orderId");
+//		System.out.println("orderId: " + orderId);
+//		
+//		if (orderId == orderId_process) {
+////			Order order = orderDAO.findById(orderId);
+//			//修改order内容
+//
+//			
+//			
+//			for (int i=0;i<fabric_names.length;i++)      
+//			  {      
+//				
+//		       FabricCost fabricCost =new FabricCost();
+//				fabricCost.setOrderId(orderId);
+//				
+//				//修改FabricCost内容
+//		       fabricCost.setFabricName(fabric_names[i]);
+//		       fabricCost.setTearPerMeter(Float.parseFloat(tear_per_meters[i]));
+//		       fabricCost.setCostPerMeter(Float.parseFloat(cost_per_meters[i]));
+//		       fabricCost.setPrice(Float.parseFloat(fabric_prices[i]));
+//		       
+//		   	//提交修改
+//		       FabricCostDAO.save(fabricCost);
+//			  }
+//			
+//			
+//			
+//			//修改流程参数
+//			Map<String, Object> data = new HashMap<>();
+//			data.put("buyVal", orderId);
+////			data.put("buyComment", comment);
+//			//直接进入到下一个流程时
+//			try {
+//				jbpmAPIUtil.completeTask(taskId, data, actorId);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			return true;
+//		}
+//
+//		return false;
+//	}
+
+	
+	
 	@Override
-	public boolean costAccounting(Account account, int orderId, long taskId,
-			long processId, String[] fabric_names, String[] tear_per_meters,
+	public List<OrderInfo> getComputePurchaseCostList() {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_PURCHASE_MANAGER, TASK_COMPUTE_PURCHASE_COST );
+		List<OrderInfo> models = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
+			OrderInfo model = new OrderInfo();
+			model.setOrder(orderDAO.findById(orderId));
+			model.setTask(task);
+			models.add(model);
+		}
+		return models;
+	}
+
+	
+	@Override
+	public OrderInfo getComputePurchaseCostInfo(Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(
+				ACTOR_PURCHASE_MANAGER, TASK_COMPUTE_PURCHASE_COST, orderId);
+		OrderInfo model = new OrderInfo();
+		model.setOrder(orderDAO.findById(orderId));
+		model.setTask(task);
+		return model;
+	}
+
+	
+	
+	
+	@Override
+	public void computePurchaseCostSubmit(int orderId, long taskId,
+			String[] fabric_names, String[] tear_per_meters,
 			String[] cost_per_meters, String[] fabric_prices) {
+		// TODO Auto-generated method stub
+		
+		
+		for (int i=0;i<fabric_names.length;i++)      
+		  {      
+			
+	       FabricCost fabricCost =new FabricCost();
+			fabricCost.setOrderId(orderId);
+			
+			//修改FabricCost内容
+	       fabricCost.setFabricName(fabric_names[i]);
+	       fabricCost.setTearPerMeter(Float.parseFloat(tear_per_meters[i]));
+	       fabricCost.setCostPerMeter(Float.parseFloat(cost_per_meters[i]));
+	       fabricCost.setPrice(Float.parseFloat(fabric_prices[i]));
+	       
+	   	//提交修改
+	       FabricCostDAO.save(fabricCost);
+		  }
+		
+		
 		
 	
-		// TODO Auto-generated method stub
-//		String actorId = account.getUserRole();
-		String actorId = "CAIGOUZHUGUAN";
-		//需要获取task中的数据	
-		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
-		int orderId_process  = (int) process.getVariable("orderId");
-		System.out.println("orderId: " + orderId);
 		
-		if (orderId == orderId_process) {
-//			Order order = orderDAO.findById(orderId);
-			//修改order内容
-
-			
-			
-			for (int i=0;i<fabric_names.length;i++)      
-			  {      
-				
-		       FabricCost fabricCost =new FabricCost();
-				fabricCost.setOrderId(orderId);
-				
-				//修改FabricCost内容
-		       fabricCost.setFabricName(fabric_names[i]);
-		       fabricCost.setTearPerMeter(Float.parseFloat(tear_per_meters[i]));
-		       fabricCost.setCostPerMeter(Float.parseFloat(cost_per_meters[i]));
-		       fabricCost.setPrice(Float.parseFloat(fabric_prices[i]));
-		       
-		   	//提交修改
-		       FabricCostDAO.save(fabricCost);
-			  }
-			
-			
-			
-			//修改流程参数
-			Map<String, Object> data = new HashMap<>();
-			data.put("buyVal", orderId);
-//			data.put("buyComment", comment);
-			//直接进入到下一个流程时
-			try {
-				jbpmAPIUtil.completeTask(taskId, data, actorId);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return true;
-		}
-
-		return false;
+				Map<String, Object> data = new HashMap<String, Object>();
+				try {
+					data.put("ComputePurchaseCost", true);
+					jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	

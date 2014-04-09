@@ -339,6 +339,7 @@ public class ProduceServiceImpl implements ProduceService {
 
 	}
 
+	
 	@Override
 	public List<OrderInfo> getComputeProduceCostList() {
 		
@@ -371,7 +372,6 @@ public class ProduceServiceImpl implements ProduceService {
 			float ironing_cost, float swing_cost, float package_cost,
 			float other_cost) {
 		
-		
 		Quote quote = QuoteDAO.findById(orderId);
 
 		if (quote == null) {
@@ -396,8 +396,7 @@ public class ProduceServiceImpl implements ProduceService {
 			QuoteDAO.attachDirty(quote);
 		}
 		
-		
-		float producecost = cut_cost + manage_cost + swing_cost
+		  float producecost = cut_cost + manage_cost + swing_cost
 				+ ironing_cost + nali_cost + package_cost + other_cost;
 		
 				Map<String, Object> data = new HashMap<String, Object>();

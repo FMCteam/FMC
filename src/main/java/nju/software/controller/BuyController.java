@@ -14,6 +14,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
 import nju.software.service.BuyService;
@@ -435,32 +436,21 @@ public class BuyController {
 
 	/**
 	 * 成本核算跳转链接
-	 * 
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/costAccounting.do", method= RequestMethod.GET)
+	@RequestMapping(value = "buy/computeDesignCostList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String costAccounting(HttpServletRequest request,
+	public String computeDesignCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("cost Accounting ================ show task");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String actorId = "CAIGOUZHUGUAN";
-		System.out.println("actorId: " + actorId);
-		String taskName = "Purchasing_accounting";
-		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
-		if (orderList.isEmpty()) {
-			System.out.println("no orderList ");
-		}
-		model.addAttribute("order_list", orderList);
+		List<OrderInfo>list=buyService.getComputePurchaseCostList();
+		model.addAttribute("list", list);		
 		
-		
-		return "buy/cost_accounting";
+		return "design/computeDesignCostList";
 	}
 	
 	
@@ -472,37 +462,23 @@ public class BuyController {
 	
 	/**
 	 * 显示成本核算详细信息
-	 * 
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/costAccountingDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/computeDesignCostDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String costAccountingDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("buy costAccounting Detail ================ costAccountingDetail");
-		OrderModel orderModel = null;
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-		Logistics logistics = buyService.getLogisticsByOrderId(orderId_request);
-		List<Fabric> fabricList = buyService.getFabricByOrderId(orderId_request);
-		List<Accessory> accessoryList = buyService.getAccessoryByOrderId(orderId_request);
-		model.addAttribute("orderModel", orderModel);
-		model.addAttribute("logistics", logistics);
-		model.addAttribute("fabric_list", fabricList);
-		model.addAttribute("accessory_list", accessoryList);
+		String orderId=request.getParameter("orderId");
+		OrderInfo orderInfo=buyService.getComputePurchaseCostInfo(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+	
 		
-		return "buy/costAccounting_detail";
+		return "design/computeDesignCostDetail";
 	}
 	
 	
@@ -510,6 +486,7 @@ public class BuyController {
 	
 	/**
 	 * 成本核算
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
@@ -517,32 +494,15 @@ public class BuyController {
 	 */
 	
 	
-	
-	//还未完成 unfinished
-	@RequestMapping(value = "buy/doCostAccounting.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/computeDesignCostSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doCostAccounting(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		System.out.println("buy  cost Accounting================");
 		
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-		
-//		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
-		
-		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
-		
-		
-		
-		
-		
-		
-		
-//		
+		String orderId = (String) request.getParameter("orderId");
+
+		String taskId = request.getParameter("taskId");
+			
 		String[] fabric_names=request.getParameterValues("fabricName");
 		String[] tear_per_meters=request.getParameterValues("tear_per_meter");
 		String[] cost_per_meters=request.getParameterValues("cost_per_meter");
@@ -551,49 +511,28 @@ public class BuyController {
 		
 		
 		String[] accessory_names=request.getParameterValues("accessoryName");
-		
 		String[] tear_per_piece=request.getParameterValues("tear_per_piece");
 		String[] cost_per_piece=request.getParameterValues("cost_per_piece");
 		String[] accessory_prices=request.getParameterValues("accessory_price");
 		
 		
+		
+		 buyService.computePurchaseCostSubmit( 
+				   Integer.parseInt(orderId),
+				   Long.parseLong(taskId), 
+				   fabric_names,
+					tear_per_meters,
+					cost_per_meters,
+					fabric_prices
+				   );
+		
 //        buyService.updateAccessoryCost(orderId_request, taskId, processId, accessory_names, tear_per_piece, cost_per_piece, accessory_prices);
 		
-		buyService.costAccounting(account, orderId_request, taskId, processId, fabric_names, tear_per_meters,
-				cost_per_meters,fabric_prices);
-//		
-//		String tear_per_meters=null;
-//		StringBuilder fabric_names = new StringBuilder();
-//		StringBuilder tear_per_meters = null;
-//		StringBuilder cost_per_meters = null;
-//		StringBuilder fabric_prices = null;
-//		
-		
-//		for (int i=0;i<fabric_names_temp.length;i++)      
-//		  {      
-		
-			
-			
-//			fabric_names.append(fabric_names_temp[i]);
-//			fabric_names.append(",");
-//			tear_per_meters.append(tear_per_meters_temp[i]);
-//			tear_per_meters.append(",");
-//			cost_per_meters.append(cost_per_meters_temp[i]);
-//			cost_per_meters.append(",");
-//			fabric_prices.append(fabric_prices_temp[i]);
-//			fabric_prices.append(",");
-//			
-//			
-//		  }      
-//		
-//		
-//		System.out.println(fabric_names);
-//		System.out.println(tear_per_meters);
-	
 		
 		
 		
-		return "redirect:/buy/costAccounting.do";
+		return "redirect:/design/computeDesignCostList.do";
+		
 	}
 	
 	
