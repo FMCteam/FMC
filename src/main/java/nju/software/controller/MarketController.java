@@ -383,58 +383,42 @@ public class MarketController {
 	}
 
 	// 专员合并报价
-	@RequestMapping(value = "market/computerOrderSum.do", method = RequestMethod.POST)
+	@RequestMapping(value = "market/mergeQuoteSubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String computerOrderSum(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Map params = new HashMap();
-		params.put("page", 1);
-		params.put("number_per_page", 100);
 
 		String innerPrice = request.getParameter("inner_price");
 		String outerPrice = request.getParameter("outer_price");
 		String orderId = request.getParameter("order_id");
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
+		float inner = Float.parseFloat(innerPrice);
+		float outer = Float.parseFloat(outerPrice);
+		int id = Integer.parseInt(orderId);
+		long taskId = Long.parseLong(s_taskId);
+		long processId = Long.parseLong(s_processId);
 
-		try {
-			float inner = Float.parseFloat(innerPrice);
-			float outer = Float.parseFloat(outerPrice);
-			int id = Integer.parseInt(orderId);
-			long taskId = Long.parseLong(s_taskId);
-			long processId = Long.parseLong(s_processId);
-			boolean success = quoteService.updateQuote(inner, outer, id,
-					taskId, processId, "SHICHANGZHUANYUAN");
-
-			return "redirect:/market/computerOrderSumList.do";
-		} catch (Exception e) {
-
-		}
-		return "redirect:/market/computerOrderSumList.do";
+		marketService.mergeQuoteSubmit(inner, outer, id, taskId, processId);
+		return "redirect:/market/mergeQuoteList.do";
 	}
 
 	// 专员合并报价List
-	@RequestMapping(value = "market/computerOrderSumList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "market/mergeQuoteList.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String computerOrderSumList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		/*
-		 * Map params = new HashMap(); params.put("page", 1);
-		 * params.put("number_per_page", 100); List list =
-		 * customerService.listCustomer(params);
-		 * model.addAttribute("customer_list", list.get(0));
-		 */
-		String actor = "SHICHANGZHUANYUAN";
-		String taskName = "quote";
-		List<QuoteModel> quoteModelList = orderService.getQuoteByActorAndTask(
-				actor, taskName);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		
+		List<OrderInfo> list = marketService.getMergeQuoteList(account.getAccountId());
 
-		model.addAttribute("quote_list", quoteModelList);
-		return "market/quote_order_list";
+		model.addAttribute("quote_list", list);
+		return "market/mergeQuoteList";
 	}
 
 	// 主管审核报价
-	@RequestMapping(value = "market/checkOrderSum.do", method = RequestMethod.POST)
+	@RequestMapping(value = "market/verifyQuoteSubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String checkOrderSum(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -449,40 +433,27 @@ public class MarketController {
 		String orderId = request.getParameter("order_id");
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
-
-		try {
-			float inner = Float.parseFloat(innerPrice);
-			float outer = Float.parseFloat(outerPrice);
-			int id = Integer.parseInt(orderId);
-			long taskId = Long.parseLong(s_taskId);
-			long processId = Long.parseLong(s_processId);
-			boolean success = quoteService.updateQuote(inner, outer, id,
-					taskId, processId, "SHICHANGZHUGUAN");
-			return "redirect:/market/checkOrderSumList.do";
-		} catch (Exception e) {
-
-		}
-		return "redirect:/market/checkOrderSumList.do";
-
+		float inner = Float.parseFloat(innerPrice);
+		float outer = Float.parseFloat(outerPrice);
+		int id = Integer.parseInt(orderId);
+		long taskId = Long.parseLong(s_taskId);
+		long processId = Long.parseLong(s_processId);
+		marketService.verifyQuoteSubmit(inner, outer, id, taskId, processId);
+		return "redirect:/market/verifyQuoteList.do";
 	}
 
 	// 主管审核报价List
-	@RequestMapping(value = "market/checkOrderSumList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "market/verifyQuoteList.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String checkOrderSumList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		/*
-		 * Map params = new HashMap(); params.put("page", 1);
-		 * params.put("number_per_page", 100); List list =
-		 * customerService.listCustomer(params);
-		 */
-		String actor = "SHICHANGZHUGUAN";
-		String taskName = "check_quote";
-		List<QuoteModel> quoteModelList = orderService.getQuoteByActorAndTask(
-				actor, taskName);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		
+		List<OrderInfo> list = marketService.getVerifyQuoteList(account.getAccountId());
 
-		model.addAttribute("quote_list", quoteModelList);
-		return "market/check_quote_order_list";
+		model.addAttribute("quote_list", list);
+		return "market/verifyQuoteList";
 
 	}
 

@@ -167,7 +167,6 @@ public class FinanceController {
 		}
 		financeService.confirmSampleMoneySubmit(account, orderId_request, taskId, processId, receivedsamplejin, money);
 		
-		
 		return "redirect:/finance/confirmSampleMoneyList.do";
 	}
 	

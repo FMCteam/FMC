@@ -67,5 +67,15 @@ public interface MarketService {
 	public OrderInfo getModifyQuoteDetail(int id);
 
 	public OrderInfo getModifyProductDetail(int id, long taskId);
+
+	public List<OrderInfo> getMergeQuoteList(Integer accountId);
+
+	public void mergeQuoteSubmit(float inner, float outer, int id, long taskId,
+			long processId);
+
+	public List<OrderInfo> getVerifyQuoteList(Integer accountId);
+
+	public void verifyQuoteSubmit(float inner, float outer, int id,
+			long taskId, long processId);
 	
 }

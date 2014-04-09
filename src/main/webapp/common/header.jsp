@@ -89,8 +89,8 @@
 									<li><a href="${ctx }/market/addOrderList.do">客户下单</a></li>
 									<li><a href="${ctx }/market/sampleOrderList.do">修改询单</a></li>
 
-									<li><a href="${ctx }/market/computerOrderSumList.do">合并报价</a></li>
-									<li><a href="${ctx }/market/checkOrderSumList.do">审核报价</a></li>
+									<li><a href="${ctx }/market/mergeQuoteList.do">合并报价</a></li>
+									<li><a href="${ctx }/market/verifyQuoteList.do">审核报价</a></li>
 
 									<li><a href="${ctx }/market/quoteConfirmList.do">报价商定</a></li>
 
@@ -176,7 +176,7 @@
 							<li><a href="${ctx }/employee/search.do">查看员工</a></li>
 						</ul></li>
 						</c:if>
-					
+					 
 				</ul>
 			</div>
 			<!--leftmenu-->
