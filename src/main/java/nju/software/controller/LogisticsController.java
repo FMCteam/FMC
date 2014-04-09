@@ -170,75 +170,7 @@ public class LogisticsController {
 		}
 		return "redirect:/logistics/rukuList.do";
 	}
-	/**
-	 * 
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "market/addMarketOrder1.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
-	public String addMarketOrder(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		Order order = new Order();
-		order.setAskAmount(10);
-		order.setCustomerName("张三");
-		Date date = new Date();
-		Timestamp timestamp = new Timestamp(date.getTime());
-		order.setOrderTime(timestamp);
-		order.setOrderState("A");
-		order.setCustomerId(1);
-		order.setEmployeeId(1);
-		order.setHasPostedSampleClothes((short) 0);
-		order.setIsNeedSampleClothes((short) 1);
-		orderService.addOrder(order);
-		Integer orderId = order.getOrderId();
-		Logistics log = new Logistics();
-		log.setOrderId(orderId);
-		log.setInPostSampleClothesNumber("1111");
-		log.setInPostSampleClothesType("shengtong");
-		logisticsService.addLogistics(log);
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("orderId", order.getOrderId());
-		Account curUser = (Account) request.getSession().getAttribute(
-				"cur_user");
-		params.put("employeeId", curUser.getUserId());
-		params.put("needclothes", true);
-		params.put("sendclothes", true);
 
-		params.put("receivedsample", false);
-		params.put("editOrder", false);
-
-		/*
-		 * String actorId=(String) request.getSession().getAttribute("actorId");
-		 * List<TaskSummary> list =jbpmAPIUtil.getAssignedTasks(actorId); for
-		 * (TaskSummary task : list) { if(task.getName().equals("addOrder")){
-		 * //直接进入到下一个流程时 Map<String, Object> map = new HashMap<>(); try {
-		 * jbpmAPIUtil.completeTask(task.getId(), null, actorId); } catch
-		 * (InterruptedException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } //需要获取task中的数据 WorkflowProcessInstance
-		 * process=(WorkflowProcessInstance)
-		 * jbpmAPIUtil.getKsession().getProcessInstance
-		 * (task.getProcessInstanceId()); String orderId =(String)
-		 * process.getVariable("orderId"); process.getVariable(""); }
-		 * 
-		 * }
-		 */
-
-		try {
-			jbpmAPIUtil.setParams(params);
-			jbpmAPIUtil.startWorkflowProcess();
-			System.out.println("流程启动成功！");
-		} catch (Exception e) {
-			System.out.println("流程启动失败！");
-			e.printStackTrace();
-		}
-		return "redirect:/market/add.do";
-	}
-
-	
-	
 
 
 	public class ComposeOrderAndLog {
@@ -366,33 +298,26 @@ public class LogisticsController {
 	}
 	
 	
+	
+	
 	/**
 	 * 发货跳转链接
+	 * @autor Wangjian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "logistics/shipments.do", method= RequestMethod.GET)
+	@RequestMapping(value = "logistics/getSendClothesList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String shipments(HttpServletRequest request,
+	public String getSendClothesList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		List<OrderInfo>list=logisticsService.getSendClothesList();
+		model.addAttribute("list", list);		
+	    
 		
-		System.out.println("logistics shipments ================ show task");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String actorId = "WULIUZHUGUAN";
-		System.out.println("actorId: " + actorId);
-		String taskName = "confirm_shipments";
-		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
-		if (orderList.isEmpty()) {
-			System.out.println("no orderList ");
-		}
 		
-		model.addAttribute("order_list", orderList);
-		
-		return "logistic/shipments";
+		return "logistic/getSendClothesList";
 	}
 	
 	
@@ -405,30 +330,18 @@ public class LogisticsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "logistics/shipments_detail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "logistics/getSendClothesDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String shipments_detail(HttpServletRequest request,
+	public String getSendClothesDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		System.out.println("logistics shipments_detail================");
-		
-		OrderModel orderModel = null;
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-//		Logistics logistics = logisticsService.getLogisticsByOrderId(orderId_request);
-
-		model.addAttribute("orderModel", orderModel);
-//		model.addAttribute("logistics", logistics);
-
+		 
+		 String orderId=request.getParameter("orderId");
+		   OrderInfo orderInfo=logisticsService.getSendClothesDetail(Integer.parseInt(orderId));
+		   model.addAttribute("orderInfo", orderInfo);
+		  
 		
 		
-		return "logistics/shipments_detail";
+		return "logistics/getSendClothesDetail";
 	}
 	
 	
@@ -441,33 +354,27 @@ public class LogisticsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "logistics/doShipments.do", method= RequestMethod.POST)
+	@RequestMapping(value = "logistics/sendClothesSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String doShipments(HttpServletRequest request,
+	public String sendClothesSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		System.out.println("logistics shipments_detail================");
+	
+		String logistics_cost = request.getParameter("logistics_cost");
 		
-		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String orderId = (String) request.getParameter("orderId");
 
-		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
-		String comment = request.getParameter("logistics_cost");
-		String taskName = "confirm_shipments ";
+		String taskId = request.getParameter("taskId");
+		
+	
+	
+	   logisticsService.sendClothesSubmit( 
+			   Integer.parseInt(orderId),
+			   Long.parseLong(taskId), 
+			   Float.parseFloat(logistics_cost)
+			   );
 	
 //		logisticsService.shipments(account, orderId_request, taskId, processId, design_cost);
 		
-		return "redirect:/logistics/shipments";
+		return "redirect:/logistics/getSendClothesList";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

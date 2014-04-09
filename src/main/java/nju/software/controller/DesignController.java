@@ -129,276 +129,154 @@ public class DesignController {
 	
 	
 
+	
 
 	/**
 	 * 成本核算跳转链接
-	 * 
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/costAccounting.do", method= RequestMethod.GET)
+	@RequestMapping(value = "design/getComputeDesignCostList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String costAccounting(HttpServletRequest request,
+	public String computeDesignCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println(" design cost Accounting ================ show task");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String actorId = "SHEJIZHUGUAN";
-		System.out.println("actorId: " + actorId);
-		String taskName = "design_accounting";
-		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
-		if (orderList.isEmpty()) {
-			System.out.println("no orderList ");
-		}
-		model.addAttribute("order_list", orderList);
-		
-		
-		return "design/cost_accounting";
+		List<OrderInfo>list=designService.getComputeDesignCostList();
+		model.addAttribute("list", list);		
+		return "design/computeDesignCostList";
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * 显示成本核算详细信息
-	 * 
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/costAccountingDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getComputeDesignCostDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String costAccountingDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("design costAccounting Detail ================ costAccountingDetail");
-		OrderModel orderModel = null;
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-		Logistics logistics = designService.getLogisticsByOrderId(orderId_request);
-		List<Fabric> fabricList = designService.getFabricByOrderId(orderId_request);
-		List<Accessory> accessoryList = designService.getAccessoryByOrderId(orderId_request);
-		model.addAttribute("orderModel", orderModel);
-		model.addAttribute("logistics", logistics);
-		model.addAttribute("fabric_list", fabricList);
-		model.addAttribute("accessory_list", accessoryList);
+		String orderId=request.getParameter("orderId");
+		OrderInfo orderInfo=designService.getComputeDesignCostDetail(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+	
 		
-		return "design/costAccounting_detail";
+		return "design/computeDesignCostDetail";
 	}
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * 成本核算
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/doCostAccounting.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/computeDesignCostSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String doCostAccounting(HttpServletRequest request,
+	public String computeDesignCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		System.out.println("do  design cost Accounting ================");
 		
-		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String orderId = (String) request.getParameter("orderId");
+
+		String taskId = request.getParameter("taskId");
+		
+		String design_cost = request.getParameter("design_cost");
 	
-		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
-		String design_cost_temp = request.getParameter("design_cost");
-		float design_cost=Float.parseFloat(design_cost_temp);
-		String taskName = "design_accounting ";
-		designService.costAccounting(account, orderId_request, taskId, processId, design_cost);
+	   designService.computeDesignCostSubmit( 
+			   Integer.parseInt(orderId),
+			   Long.parseLong(taskId), 
+			   Float.parseFloat(design_cost)
+			   );
 		
-		return "redirect:/design/costAccounting.do";
+		return "redirect:/design/computeDesignCostList.do";
 	}
 	
 	
 	
 	
 	
-	/**
+	/**uploadDesign
 	 * 录入版型数据跳转链接
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/upload_CAD.do", method= RequestMethod.GET)
+	@RequestMapping(value = "design/getUploadDesignList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String upload_CAD(HttpServletRequest request,
+	public String getUploadDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		System.out.println(" design upload CAD ================ show task");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String actorId = "SHEJIZHUGUAN";
-		System.out.println("actorId: " + actorId);
-		String taskName = "entering_data";
-		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
-		if (orderList.isEmpty()) {
-			System.out.println("no orderList ");
-		}
-		model.addAttribute("order_list", orderList);
-		
-		
-		return "design/upload_CAD";
+		List<OrderInfo>list=designService.getUploadDesignList();
+		model.addAttribute("list", list);		
+	    return "design/getUploadDesignList";
 	}
 	
 	
-	/**
+	/**uploadDesign
 	 * 录入版型数据 详细页面
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/uploadCAD_detail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getUploadDesignDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String uploadCAD_detail(HttpServletRequest request,
+	public String getUploadDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
-		System.out.println("design uploadCAD detail ================ uploadCAD detail");
-		OrderModel orderModel = null;
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-//		Logistics logistics = designService.getLogisticsByOrderId(orderId_request);
-//		List<Fabric> fabricList = designService.getFabricByOrderId(orderId_request);
-//		List<Accessory> accessoryList = designService.getAccessoryByOrderId(orderId_request);
-		model.addAttribute("orderModel", orderModel);
-	
-		
-		
-		return "design/uploadCAD_detail";
+       String orderId=request.getParameter("orderId");
+	   OrderInfo orderInfo=designService.getUploadDesignDetail(Integer.parseInt(orderId));
+	   model.addAttribute("orderInfo", orderInfo);
+	   return "design/getUploadDesignDetail";
 	}
 	
 	
 	/**
-	 * 
+	 * uploadDesign
 	 * 录入版型数据 上传文件处理
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/doUploadCAD.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/uploadDesignSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String doUploadCAD(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		
-	System.out.println("do  design doUploadCAD ================");
-		
-		Account account = (Account) request.getSession().getAttribute("cur_user");
 	
-		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
-//		String design_cost_temp = request.getParameter("design_cost");
-//		float design_cost=Float.parseFloat(design_cost_temp);
-		String taskName = "entering_data ";
-		
-		
-		  MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
+	public String uploadDesignSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+
+		String orderId = (String) request.getParameter("orderId");
+	
+		String taskId = request.getParameter("taskId");
+	
+	 MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
 		
 		  MultipartFile file = multipartRequest.getFile("CADFile");
-		
-		  
-		  
-//		  if (file == null) {
-//              try {
-//				throw new Exception("上传失败：文件为空");
-//			} catch (Exception e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}    
-//          }
-//		  
-//		  
-//		  
-//          if(file.getSize()>10000000)        
-//          {
-//              try {
-//				throw new Exception("上传失败：文件大小不能超过10M");
-//			} catch (Exception e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}            
-//          }
-//          
-//          
-          
-		  String filename=file.getOriginalFilename();     
-		
-//		
-//		    if(file.getSize()>0){                
-//                try {
-//                    SaveFileFromInputStream(file.getInputStream(),"D:/",filename);
-//                } catch (IOException e) {
-//                    System.out.println(e.getMessage());
-//                    return null;
-//                }
-//            }
-//		
-//		    
-//		    else{
-//                try {
-//					throw new Exception("上传失败：上传文件不能为空");
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//            }
-		
-//		    Calendar calendar = Calendar.getInstance();
-		 // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd mm:ss");
-	
-		    
-		  FileOperateUtil.Upload(file);
+		     
+          	  String filename=file.getOriginalFilename();     
+		      FileOperateUtil.Upload(file);
 		   
 		    String url="D:/"+"/"+ filename;
+		    
 		    Timestamp uploadTime = new Timestamp(new Date().getTime());
-		
-		    designService.uploadCAD(account, orderId_request, taskId, processId, url,uploadTime);
-		
-		
-//		designService.costAccounting(account, orderId_request, taskId, processId, design_cost);
-		
-		return "redirect:/design/costAccounting.do";
+		    
+		 designService.uploadDesignSubmit(
+				Integer.parseInt(orderId), 
+				 Long.parseLong(taskId),
+				 url,
+				 uploadTime);
+	
+		return "redirect:/design/getUploadDesignList.do";
 	}
 	
 	
@@ -414,118 +292,87 @@ public class DesignController {
 	
 	
 
-	/**
+	/**MODIFY DESIGN
 	 * 设计部设计CAD验证跳转链接
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/designCAD_confirm.do", method= RequestMethod.GET)
+	@RequestMapping(value = "design/getModifyDesignList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String designCAD_confirm(HttpServletRequest request,
+	public String getModifyDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		System.out.println(" design DesignCAD confirm ================ show task");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String actorId = "SHEJIZHUGUAN";
-		System.out.println("actorId: " + actorId);
-		String taskName = "design_ok";
-		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
-		if (orderList.isEmpty()) {
-			System.out.println("no orderList ");
-		}
-		model.addAttribute("order_list", orderList);
-		
-		
-		return "design/designCAD_confirm";
+       	List<OrderInfo>list=designService.getModifyDesignList();
+		model.addAttribute("list", list);		
+	    
+		return "design/getModifyDesignList";
 	}
 	
 	
-	/**
+	/**MODIFY DESIGN
 	 * 设计CAD验证 上传 详细页面
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/designCadConfirm_detail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getModifyDesignDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String CadConfirm_detail(HttpServletRequest request,
+	public String getModifyDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
-		System.out.println("design DesignCadConfirm detail ================ DesignCadConfirm detail");
-		OrderModel orderModel = null;
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-//		Logistics logistics = designService.getLogisticsByOrderId(orderId_request);
-//		List<Fabric> fabricList = designService.getFabricByOrderId(orderId_request);
-//		List<Accessory> accessoryList = designService.getAccessoryByOrderId(orderId_request);
-		model.addAttribute("orderModel", orderModel);
-	
+		 
+		 String orderId=request.getParameter("orderId");
+		   OrderInfo orderInfo=designService.getModifyDesignDetail(Integer.parseInt(orderId));
+		   model.addAttribute("orderInfo", orderInfo);
+		  
 		
 		
-		return "design/DesignCadConfirm_detail";
+		return "design/getModifyDesignDetail";
 	}
 	
 	
 	/**
-	 * 
+	 * MODIFY DESIGN
 	 * 设计CAD设计部验证
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/doDesignCadConfirm.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/modifyDesignSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doCadConfirm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-	System.out.println("do  design designCadConfirm ================");
+		String orderId = (String) request.getParameter("orderId");
 		
-		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String taskId = request.getParameter("taskId");
 	
-		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
-//		String design_cost_temp = request.getParameter("design_cost");
-//		float design_cost=Float.parseFloat(design_cost_temp);
-		String taskName = "design_ok ";
-		
-		
-		  MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
+	 MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
 		
 		  MultipartFile file = multipartRequest.getFile("CADFile");
-		
-          
-		  String filename=file.getOriginalFilename();     
-		
-	
-		    
-		  FileOperateUtil.Upload(file);
+		     
+          	  String filename=file.getOriginalFilename();     
+		      FileOperateUtil.Upload(file);
 		   
 		    String url="D:/"+"/"+ filename;
+		    
 		    Timestamp uploadTime = new Timestamp(new Date().getTime());
-		
-		    designService.uploadCAD(account, orderId_request, taskId, processId, url,uploadTime);
-		
-		
-//		designService.costAccounting(account, orderId_request, taskId, processId, design_cost);
-		
-		return "redirect:/design/designCAD_confirm";
+		 
+  //上传文件实现一致，公用uploadDesign方法代码		    
+		    
+		 designService.uploadDesignSubmit(
+				Integer.parseInt(orderId), 
+				 Long.parseLong(taskId),
+				 url,
+				 uploadTime);
+	
+		return "redirect:/design/modifyDesignSubmit.do";
 	}
 	
 	
@@ -537,118 +384,91 @@ public class DesignController {
 	
 	
 
-	/**
+	/**CONFIRM DESIGN
 	 * 设计部生产版型CAD验证跳转链接
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/productCAD_confirm.do", method= RequestMethod.GET)
+	@RequestMapping(value = "design/getConfirmDesignList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String productCAD_confirm(HttpServletRequest request,
+	public String getConfirmDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		System.out.println(" design productCAD confirm ================ show task");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String actorId = "SHEJIZHUGUAN";
-		System.out.println("actorId: " + actorId);
-		String taskName = "product_comfirm";
-		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
-		if (orderList.isEmpty()) {
-			System.out.println("no orderList ");
-		}
-		model.addAttribute("order_list", orderList);
-		
-		
-		return "design/productCAD_confirm";
+	  	List<OrderInfo>list=designService.getConfirmDesignList();
+			model.addAttribute("list", list);		
+		    
+			
+		return "design/getConfirmDesignList";
 	}
 	
 	
 	/**
 	 * 生产版型CAD验证 上传 详细页面
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/ProductCadConfirm_detail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getConfirmDesignDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String ProductCadConfirm_detail(HttpServletRequest request,
+	public String getConfirmDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		System.out.println("design ProductCadConfirm detail ================ productCadConfirm detail");
-		OrderModel orderModel = null;
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-//		Logistics logistics = designService.getLogisticsByOrderId(orderId_request);
-//		List<Fabric> fabricList = designService.getFabricByOrderId(orderId_request);
-//		List<Accessory> accessoryList = designService.getAccessoryByOrderId(orderId_request);
-		model.addAttribute("orderModel", orderModel);
+		 
+		 String orderId=request.getParameter("orderId");
+		   OrderInfo orderInfo=designService.getModifyDesignDetail(Integer.parseInt(orderId));
+		   model.addAttribute("orderInfo", orderInfo);
+		  
+		
 	
 		
 		
-		return "design/productCadConfirm_detail";
+		return "design/getConfirmDesignDetail";
 	}
 	
 	
 	/**
 	 * 
 	 *生产版型 CAD设计部验证
+	 *@author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/doProductCadConfirm.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/confirmDesignSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String doProductCadConfirm(HttpServletRequest request,
+	public String confirmDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-	System.out.println("do  design ProductCadConfirm ================");
 		
-		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String orderId = (String) request.getParameter("orderId");
+		
+		String taskId = request.getParameter("taskId");
 	
-		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
-//		String design_cost_temp = request.getParameter("design_cost");
-//		float design_cost=Float.parseFloat(design_cost_temp);
-		String taskName = "design_ok ";
-		
-		
-		  MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
+	 MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
 		
 		  MultipartFile file = multipartRequest.getFile("CADFile");
-		
-          
-		  String filename=file.getOriginalFilename();     
-		
-	
-		    
-		  FileOperateUtil.Upload(file);
+		     
+          	  String filename=file.getOriginalFilename();     
+		      FileOperateUtil.Upload(file);
 		   
 		    String url="D:/"+"/"+ filename;
+		    
 		    Timestamp uploadTime = new Timestamp(new Date().getTime());
-		
-		    designService.uploadCAD(account, orderId_request, taskId, processId, url,uploadTime);
-		
-		
-//		designService.costAccounting(account, orderId_request, taskId, processId, design_cost);
-		
-		return "redirect:/design/productCAD_confirm";
+		 
+  //上传文件实现一致，公用uploadDesign方法代码		    
+		    
+		 designService.uploadDesignSubmit(
+				Integer.parseInt(orderId), 
+				 Long.parseLong(taskId),
+				 url,
+				 uploadTime);
+		return "redirect:/design/getConfirmDesignList";
 	}
 	
 	

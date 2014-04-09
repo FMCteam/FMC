@@ -8,7 +8,7 @@
 			<div class="widget">
 				<h4 class="widgettitle">采购成本核算</h4>
 				<div class="widgetcontent">
-					<form id="costAccounting_form" method="post" action="${ctx }/buy/doCostAccounting.do">
+					<form id="costAccounting_form" method="post" action="${ctx }/buy/computeDesignCostSubmit.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td rowspan="2">询单信息</td>
@@ -19,10 +19,10 @@
 								
 							</tr>
 							<tr>
-								<td>${orderModel.order.orderId }</td>
-								<td>${orderModel.order.employeeId }</td>
-								<td>${orderModel.order.customerName }</td>
-								<td>${orderModel.order.orderTime}</td>
+								<td>${orderInfo.order.orderId }</td>
+								<td>${orderInfo.order.employeeId }</td>
+								<td>${orderInfo.order.customerName }</td>
+								<td>${orderInfo.order.orderTime}</td>
 								
 							</tr>
 							
@@ -93,9 +93,9 @@
                         <td colspan="2"><input class="span12" name="prices" id="prices"  placeholder="prices" type="text" /></td>
                         <td colspan="2"></td>
                         
-                          <input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
-	                  <input type="hidden" name="taskId" value="${orderModel.taskId }" />
-					<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />
+                          <input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
+	                  <input type="hidden" name="taskId" value="${orderInfo.taskId }" />
+					<input type="hidden" name="pinId" value="${orderInfo.processInstanceId }" />
                     </tr>
 							
 							
