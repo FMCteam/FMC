@@ -11,6 +11,7 @@ import nju.software.model.ProductModel;
 
 public interface BuyService {
 	
+
 	public List<OrderInfo> getPurchaseSampleMaterialList();
 	
 	public OrderInfo getPurchaseSampleMaterialDetail(Integer orderId);
@@ -32,7 +33,10 @@ public interface BuyService {
 	
 	
 	
-	public boolean verify(Account account, int orderId, long taskId, 
+	
+
+	public boolean verifyPurchaseSubmit(Account account, int orderId, long taskId, 
+
 			long processId, boolean buyVal, String comment);
 
 	public boolean costAccounting(Account account, int orderId, long taskId, 
@@ -48,5 +52,9 @@ public interface BuyService {
 
 	public ProductModel getProductDetail(int int_orderId, int int_taskId,
 			int int_processId);
+
+	public List<OrderInfo> getVerifyPurchaseList();
+
+	public OrderInfo getVerifyPurchaseDetail(int orderId, long taskId);
 	
 }

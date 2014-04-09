@@ -6,10 +6,10 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<div class="widget">
-				<h4 class="widgettitle">生产验证</h4>
+				<h4 class="widgettitle">设计验证</h4>
 				<div class="widgetcontent">
 
-					<form id="verify_form" method="post" action="${ctx }/produce/doVerify.do">
+					<form id="verify_form" method="post" action="${ctx }/design/verifyDesignSubmit.do">
 
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
@@ -44,14 +44,12 @@
 								<td>${orderModel.order.styleName }</td>
 								<td colspan="2">${orderModel.order.styleSex }</td>
 
-
 								<td colspan="2">${orderModel.order.styleSeason eq 'CHUNXIA'?'春夏':'秋冬' }</td>
 
 								<td>${orderModel.order.orderSource }</td>
 							</tr>
 							<tr>
 								<td>面料类型</td>
-
 
 								<td colspan="5">
 									${fn:contains(orderModel.order.fabricType,'SUOZHI')?'梭织':'' }
@@ -93,6 +91,7 @@
 							</tr>
 							<tr>
 								<td>${orderModel.order.askAmount }</td>
+
 
 								<td colspan="2">${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
 
@@ -144,14 +143,13 @@
 							</tr>
 							<tr>
 
-
 								<td>${orderModel.order.hasPostedSampleClothes==0?'没有样衣':'' }
 									${orderModel.order.hasPostedSampleClothes==1?'收到样衣':'' }
 									${orderModel.order.hasPostedSampleClothes==2?'未收到样衣':'' }
 								</td>
-								<td colspan="2">${fn:substring(logistics.inPostSampleClothesTime,0,10) }</td>
-								<td>${logistics.inPostSampleClothesType }</td>
-								<td colspan="2">${logistics.inPostSampleClothesNumber }</td>
+								<td colspan="2">${fn:substring(orderModel.logistics.inPostSampleClothesTime,0,10) }</td>
+								<td>${orderModel.logistics.inPostSampleClothesType }</td>
+								<td colspan="2">${orderModel.logistics.inPostSampleClothesNumber }</td>
 
 							</tr>
 							<tr>
@@ -164,9 +162,9 @@
 							<tr>
 
 								<td>${orderModel.order.isNeedSampleClothes==0?'否':'是' }</td>
-								<td colspan="2">${fn:substring(logistics.sampleClothesTime,0,10) }</td>
-								<td>${logistics.sampleClothesType }</td>
-								<td colspan="2">${logistics.sampleClothesNumber }</td>
+								<td colspan="2">${fn:substring(orderModel.logistics.sampleClothesTime,0,10) }</td>
+								<td>${orderModel.logistics.sampleClothesType }</td>
+								<td colspan="2">${orderModel.logistics.sampleClothesNumber }</td>
 
 							</tr>
 							<tr>
@@ -176,13 +174,13 @@
 							</tr>
 							<tr>
 
-								<td>${logistics.sampleClothesName }</td>
-								<td>${logistics.sampleClothesPhone }</td>
-								<td colspan="4">${logistics.sampleClothesAddress }</td>
+								<td>${orderModel.logistics.sampleClothesName }</td>
+								<td>${orderModel.logistics.sampleClothesPhone }</td>
+								<td colspan="4">${orderModel.logistics.sampleClothesAddress }</td>
 							</tr>
 							<tr>
 								<td>其他备注</td>
-								<td colspan="5">${logistics.sampleClothesRemark }</td>
+								<td colspan="5">${orderModel.logistics.sampleClothesRemark }</td>
 
 							</tr>
 							<tr>
@@ -201,9 +199,9 @@
 								<td>操作</td>	
 								<td colspan="6">
 									<input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
-									<input type="hidden" name="taskId" value="${orderModel.taskId }" />
-									<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />
-									<input id="verify_val" type="hidden" name="productVal" value="" />
+									<input type="hidden" name="taskId" value="${orderModel.task.id }" />
+									<input type="hidden" name="pinId" value="${orderModel.task.processInstanceId }" />
+									<input id="verify_val" type="hidden" name="designVal" value="" />
 									<a id="agree_detail" class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</a>
 									<a id="disagree_detail" class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 拒绝</a>
 								</td>

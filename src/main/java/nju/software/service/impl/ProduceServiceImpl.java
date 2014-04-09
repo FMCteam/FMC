@@ -68,11 +68,10 @@ public class ProduceServiceImpl implements ProduceService {
 	private PackageDetailDAO packageDetailDAO;
 
 	@Override
-	public boolean verify(Account account, int orderId, long taskId,
+	public boolean verifyProduceSubmit(Account account, int orderId, long taskId,
 			long processId, boolean productVal, String comment) {
 		// TODO Auto-generated method stub
 		// String actorId = account.getUserRole();
-		String actorId = "SHENGCHANZHUGUAN";
 		// 需要获取task中的数据
 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 				.getKsession().getProcessInstance(processId);
@@ -91,7 +90,7 @@ public class ProduceServiceImpl implements ProduceService {
 			data.put("productComment", comment);
 			// 直接进入到下一个流程时
 			try {
-				jbpmAPIUtil.completeTask(taskId, data, actorId);
+				jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -420,6 +419,53 @@ public class ProduceServiceImpl implements ProduceService {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+	}
+
+	@Override
+	public List<OrderInfo> getVerifyProduceList() {
+		// TODO Auto-generated method stub
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_PRODUCE_MANAGER, TASK_VERIFY_PRODUCE);
+		List<OrderInfo> orderList = new ArrayList<OrderInfo>();
+		if (list.isEmpty()) {
+			System.out.println("no task list");
+		}
+		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
+		WorkflowProcessInstance process = null;
+		for (TaskSummary task : list) {
+			// 需要获取task中的数据
+			long processId = task.getProcessInstanceId();
+			process = (WorkflowProcessInstance) session
+					.getProcessInstance(processId);
+			int orderId = (int) process.getVariable("orderId");
+			OrderInfo oi = new OrderInfo();
+			oi.setOrder(orderDAO.findById(orderId));
+			oi.setTask(task);
+			orderList.add(oi);
+		}
+		return orderList;
+	}
+
+	@Override
+	public OrderInfo getVerifyProduceDetail(int orderId, long taskId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_PRODUCE_MANAGER, TASK_VERIFY_PRODUCE);
+		for (TaskSummary task : list) {
+			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+					.getKsession().getProcessInstance(task.getProcessInstanceId());
+			int orderId_process = (int) process.getVariable("orderId");
+			if (orderId == orderId_process && taskId == task.getId() ) {
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setLogistics(logisticsDAO.findById(orderId));
+				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
 	}
 
 }

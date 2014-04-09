@@ -9,7 +9,7 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">生产验证</h4>
+                    <h4 class="widgettitle">采购验证</h4>
                 <table id="dyntable" class="table table-bordered responsive">
                     <colgroup>
                         <col class="con1" />
@@ -43,13 +43,11 @@
 								<td>${orderModel.order.styleName }</td>
 								<td>${orderModel.order.askAmount }</td>
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx }/produce/verifyDetail.do" method="post" >
+								<td><form action="${ctx }/buy/verifyPurchaseDetail.do" method="post" >
 									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
-										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
-										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-
+										<input type="hidden" name="task_id" value="${orderModel.task.id }" />
+										<input type="hidden" name="process_id" value="${orderModel.task.processInstanceId }" />
 										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 详细信息</button></form>
-
 								</td>
 	                        </tr>
                         </c:forEach>

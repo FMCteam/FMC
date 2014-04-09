@@ -151,25 +151,22 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/verify.do", method= RequestMethod.GET)
+	@RequestMapping(value = "buy/verifyPurchaseList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String verify(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("buy verify ================ show task");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
+		List<OrderInfo> orderList = new ArrayList<OrderInfo>();
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String actorId = "CAIGOUZHUGUAN";
-		System.out.println("actorId: " + actorId);
-		String taskName = "verification_purchased";
-		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+
+		orderList = buyService.getVerifyPurchaseList();
 		if (orderList.isEmpty()) {
 			System.out.println("no orderList ");
 		}
 		model.addAttribute("order_list", orderList);
 		
-		return "buy/verify";
+		return "buy/verifyPurchaseList";
 	}
 	
 	/**
@@ -179,7 +176,7 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/doVerify.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/verifyPurchaseSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doVerify(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -194,10 +191,10 @@ public class BuyController {
 		String s_processId = request.getParameter("pinId");
 		long processId = Long.parseLong(s_processId);
 		String comment = request.getParameter("suggestion");
-		String taskName = "verification_purchased";
-		buyService.verify(account, orderId_request, taskId, processId, buyVal, comment);
 		
-		return "redirect:/buy/verify.do";
+		buyService.verifyPurchaseSubmit(account, orderId_request, taskId, processId, buyVal, comment);
+		
+		return "redirect:/buy/verifyPurchaseList.do";
 	}
 	
 	/**
@@ -208,13 +205,12 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/verifyDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/verifyPurchaseDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("buy verify ================ show detail");
-		OrderModel orderModel = null;
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
 		String s_orderId_request = (String) request.getParameter("id");
@@ -223,16 +219,10 @@ public class BuyController {
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-		Logistics logistics = buyService.getLogisticsByOrderId(orderId_request);
-		List<Fabric> fabricList = buyService.getFabricByOrderId(orderId_request);
-		List<Accessory> accessoryList = buyService.getAccessoryByOrderId(orderId_request);
-		model.addAttribute("orderModel", orderModel);
-		model.addAttribute("logistics", logistics);
-		model.addAttribute("fabric_list", fabricList);
-		model.addAttribute("accessory_list", accessoryList);
 		
-		return "buy/verify_detail";
+		OrderInfo orderModel = buyService.getVerifyPurchaseDetail(orderId_request, taskId);	
+		model.addAttribute("orderModel", orderModel);	
+		return "buy/verifyPurchaseDetail";
 	}
 
 	
