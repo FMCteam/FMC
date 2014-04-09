@@ -27,10 +27,9 @@ import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
-<<<<<<< HEAD
-=======
+
 import nju.software.model.OrderModel;
->>>>>>> b4de45b36d6c5b44199f034adb331253ec2152f6
+
 import nju.software.model.ProductModel;
 import nju.software.dataobject.Quote;
 import nju.software.service.BuyService;

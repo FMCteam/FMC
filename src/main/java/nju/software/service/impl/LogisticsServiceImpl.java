@@ -226,4 +226,44 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return false;
 	}
 
+	@Override
+	public List<OrderInfo> getSendClothesList() {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES );
+		List<OrderInfo> models = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
+			OrderInfo model = new OrderInfo();
+			model.setOrder(orderDAO.findById(orderId));
+			model.setTask(task);
+			models.add(model);
+		}
+		return models;
+	}
+
+	@Override
+	public OrderInfo getSendClothesDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
+				TASK_SEND_CLOTHES, orderId);
+		OrderInfo model = new OrderInfo();
+		model.setOrder(orderDAO.findById(orderId));
+		model.setTask(task);
+		return model;
+	}
+
+	@Override
+	public void sendClothesSubmit(int orderId, long taskId, float logistics_cost) {
+		// TODO Auto-generated method stub
+		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 }
