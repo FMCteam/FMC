@@ -82,42 +82,10 @@ public class FinanceController {
 				money.setMoneyRemark(moneyRemark);
 			}
 		}
-		financeService.confirmSampleMoneySubmit(account, orderId_request, taskId, processId, receivedsamplejin, money);
-		
-		return "redirect:/finance/confirmSampleMoneyList.do";
-	}
-	
-	/**
-	 * 确认样衣制作金详情
-	 * 
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "finance/confirmSampleMoneyDetail.do", method= RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
-	public String confirmSampleMoneyDetail(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		
-		System.out.println("sample corfirm ================ show detail");
-		OrderModel orderModel = null;
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("order_id");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-		model.addAttribute("orderModel", orderModel);
-
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
 		financeService.confirmSampleMoneySubmit(actorId, taskId,
 				receivedsamplejin, money);
 		return "forward:/finance/confirmSampleMoneyList.do";
-
 	}
 
 	
