@@ -92,7 +92,7 @@
 									<li><a href="${ctx }/market/computerOrderSumList.do">合并报价</a></li>
 									<li><a href="${ctx }/market/checkOrderSumList.do">审核报价</a></li>
 
-									<li><a href="${ctx }/market/quoteConfirmList.do">报价商定</a></li>
+									<li><a href="${ctx }/market/confirmQuoteList.do">报价商定</a></li>
 
 									<li><a href="${ctx }/market/modifyQuoteList.do">修改报价</a></li>
 									<li><a href="${ctx }/market/confirmProduct.do">商定合同</a></li>
@@ -137,7 +137,7 @@
 						<ul>
 							<li><a href="${ctx }/produce/verify.do">生产验证</a></li>
 							<li><a href="${ctx }/produce/costAccounting.do">成本合算</a></li>
-							<li><a href="${ctx }/produce/sampleProduceList.do">样衣生产</a></li>
+							<li><a href="${ctx }/produce/produceSampleList.do">样衣生产</a></li>
 							<li><a href="${ctx }/produce/produceList.do">批量生产</a></li>
 						</ul></li>
 						</c:if>
