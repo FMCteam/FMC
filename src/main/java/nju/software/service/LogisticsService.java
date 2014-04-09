@@ -14,10 +14,20 @@ public interface LogisticsService {
 	public boolean receiveSampleSubmit(long taskId,String result);
 	
 	
+	public List<OrderInfo>getWarehouseList();
+	
+	public OrderInfo getWarehouseDetail(Integer orderId);
+	
+	public boolean warehouseSubmit(long taskId,String result);
+	
 	
 	public Logistics findByOrderId(String orderId);
 
 	public boolean addLogistics(Logistics log);
 
-	public boolean sendSample(long taskId, String actor, long processId);
+	public boolean sendSampleSubmit(long taskId, long processId);
+
+	public List<OrderInfo> getSendSampleList(int s_page, int s_number_per_page);
+
+	public OrderInfo getSendSampleDetail(int orderId, long tid);
 }

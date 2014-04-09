@@ -94,10 +94,10 @@
 
 									<li><a href="${ctx }/market/quoteConfirmList.do">报价商定</a></li>
 
-									<li><a href="${ctx }/market/quoteToModifyList.do">修改报价</a></li>
+									<li><a href="${ctx }/market/modifyQuoteList.do">修改报价</a></li>
 									<li><a href="${ctx }/market/confirmProduct.do">商定合同</a></li>
 
-									<li><a href="${ctx }/market/productToModifyList.do">修改合同</a></li>
+									<li><a href="${ctx }/market/modifyProductList.do">修改合同</a></li>
 									<li><a href="${ctx }/market/signContractList.do">签订合同</a></li>
 
 									<li><a href="#">订单回访</a></li>
@@ -165,7 +165,7 @@
 						<li class="dropdown"><a href=""><span
 							class="iconfa-th-list"></span> 质检部</a>
 						<ul>
-							<li><a href="${ctx }/quality/checkList.do">质量检查</a></li>
+							<li><a href="${ctx }/quality/checkQualityList.do">质量检查</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_employee==true}">

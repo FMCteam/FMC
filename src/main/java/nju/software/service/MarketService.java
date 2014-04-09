@@ -57,9 +57,15 @@ public interface MarketService {
 
 	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(Integer employeeId);
 
-	public List<OrderModel> getProductModifyList(Integer userId);
+	public List<OrderInfo> getModifyProductList(Integer userId);
 
 	public boolean modifyProduct(Integer userId, int id, long taskId,
 			long processId, boolean b, List<Product> pList);
+
+	public List<OrderInfo> getModifyQuoteList(Integer userId);
+
+	public OrderInfo getModifyQuoteDetail(int id);
+
+	public OrderInfo getModifyProductDetail(int id, long taskId);
 	
 }

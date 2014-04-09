@@ -6,13 +6,22 @@ import java.util.List;
 import java.util.Map;
 
 import org.jbpm.task.query.TaskSummary;
+import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import nju.software.controller.LogisticsController.ComposeOrderAndLog;
 import nju.software.dao.impl.AccountDAO;
+import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.PackageDAO;
+import nju.software.dao.impl.ProductDAO;
+import nju.software.dataobject.Customer;
+import nju.software.dataobject.Employee;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.Order;
 import nju.software.model.OrderInfo;
 import nju.software.service.LogisticsService;
 import nju.software.util.JbpmAPIUtil;
@@ -32,7 +41,14 @@ public class LogisticsServiceImpl implements LogisticsService {
 	private LogisticsDAO logisticsDAO;
 	@Autowired
 	private OrderDAO orderDAO;
-
+	@Autowired
+	private EmployeeDAO employeeDAO;
+	@Autowired
+	private CustomerDAO customerDAO;
+	@Autowired
+	private ProductDAO productDAO;
+	@Autowired
+	private PackageDAO packageDAO;
 	
 	// =========================ReceiveSample======================================
 	@Override
@@ -108,15 +124,106 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	@Override
-	public boolean sendSample(long taskId, String actor, long processId) {
+	public boolean sendSampleSubmit(long taskId, long processId){
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, "WULIUZHUGUAN");
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return true;
+	}
+	@Override
+	public List<OrderInfo> getSendSampleList(int s_page, int s_number_per_page) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_LOGISTICS_MANAGER, TASK_SEND_SAMPLE);
+		int start = s_number_per_page * (s_page - 1);
+		List<OrderInfo> logList = new ArrayList<OrderInfo>();
+		int i = 0;
+		int j = 0;
+		for (TaskSummary task : list) {
+			if (i >= start && j < s_number_per_page) {
+				WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+						.getKsession().getProcessInstance(
+								task.getProcessInstanceId());
+				Integer orderId = (Integer)process.getVariable("orderId"); 
+				Order o = orderDAO.findById(orderId);
+				Logistics l = logisticsDAO.findById(orderId);
+				OrderInfo log = new OrderInfo();
+				log.setOrder(o);
+				log.setLogistics(l);
+				log.setTask(task);
+				logList.add(log);
+				j++;
+			}
+			i++;
+		}
+		return logList;
+	}
+	@Override
+	public OrderInfo getSendSampleDetail(int id, long tid) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_LOGISTICS_MANAGER, TASK_SEND_SAMPLE);
+		for (TaskSummary task : list) {
+			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+					.getKsession().getProcessInstance(
+							task.getProcessInstanceId());
+			Integer orderId = (Integer)process.getVariable("orderId"); 
+			if(id==orderId && tid==task.getId()){
+				Order o = orderDAO.findById(orderId);
+				Logistics l = logisticsDAO.findById(orderId);
+				Employee e = employeeDAO.findById(o.getEmployeeId());
+				Customer c = customerDAO.findById(o.getCustomerId());
+				OrderInfo log = new OrderInfo();
+				log.setOrder(o);
+				log.setLogistics(l);
+				log.setEmployee(e);
+				log.setCustomer(c);
+				log.setTask(task);
+				return log;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<OrderInfo> getWarehouseList() {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
+		List<OrderInfo> list = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
+		}
+		return list;
+	}
+
+	@Override
+	public OrderInfo getWarehouseDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
+				TASK_WAREHOUSE, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setProducts(productDAO.findByOrderId(orderId));
+		orderInfo.setPackages(packageDAO.findByOrderId(orderId));
+		//orderInfo.setpa
+		//orderInfo.setTask(task);
+		return orderInfo;
+	}
+
+	@Override
+	public boolean warehouseSubmit(long taskId, String result) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

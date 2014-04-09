@@ -16,6 +16,7 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.Package;
 
 public class OrderInfo {
 	
@@ -147,5 +148,21 @@ public class OrderInfo {
 	}
 	public void setTaskId(long taskId) {
 		this.taskId = taskId;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 }

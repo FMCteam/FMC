@@ -39,6 +39,15 @@ public interface ProduceService {
 	
 	public OrderInfo getProduceDetail(Integer orderId);
 
+	
+  public List<OrderInfo> getComputeProduceCostList();
+	
+	public OrderInfo getComputeProduceCostInfo(Integer orderId);
+
+	public void ComputeProduceCostSubmit(int orderId,long taskId,float cut_cost, float manage_cost, float nali_cost,
+			float ironing_cost, float swing_cost, float package_cost,
+			float other_cost);
+	
 	public List<Product> getProductByOrderId(int parseInt);
 
 	public List<nju.software.dataobject.Package> getPackageByOrderId(int parseInt);

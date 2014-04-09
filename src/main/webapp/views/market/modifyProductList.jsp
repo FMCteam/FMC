@@ -25,11 +25,11 @@
 							<td>${task.order.customerPhone1}</td>
 							<td>${task.order.customerCompany}</td>
 							<td>${task.order.customerCompanyFax}</td>
-							<td>${task.taskId}</td>
-							<td>${task.processInstanceId}</td>
+							<td>${task.task.id}</td>
+							<td>${task.task.processInstanceId}</td>
 							<td>
 								<a
-								href="${ctx}/market/modifyProductDetail.do?id=${task.order.orderId}&tid=${task.taskId}&pid=${task.processInstanceId}">
+								href="${ctx}/market/modifyProductDetail.do?id=${task.order.orderId}&tid=${task.task.id}&pid=${task.task.processInstanceId}">
 									修改</a> </td>
 						</tr>
 					</c:forEach>
