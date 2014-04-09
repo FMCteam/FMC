@@ -20,6 +20,23 @@ import nju.software.model.QuoteConfirmTaskSummary;
 
 public interface MarketService {
 	
+	//==========================报价商定=======================
+	public List<OrderInfo>getConfirmQuoteList(String actorId);
+	
+	public OrderInfo getConfirmQuoteDetail(String arctorId,Integer orderId);
+	
+	public boolean confirmQuoteSubmit(String actorId,long taskId,String result);
+	
+	
+	//==========================签订合同=======================
+	public List<OrderInfo>getSignContractList(String actorId);
+	
+	public OrderInfo getSignContractDetail(String arctorId,Integer orderId);
+	
+	public boolean signContractSubmit(String actorId,long taskId,String result,Integer orderId,double discount);
+	
+	
+	
 	public List<Customer>getAddOrderList();
 	
 	public Customer getAddOrderDetail(Integer cid);
@@ -28,23 +45,13 @@ public interface MarketService {
 			List<Accessory> accessorys, Logistics logistics,HttpServletRequest request);
 	
 
-	
-	
-	public List<OrderInfo>getConfirmQuoteList(String actorId);
-	
-	
-	public OrderInfo getConfirmQuoteDetail(Integer orderId);
-	
-	public boolean confirmQuoteSubmit(String actorId,long taskId,String result);
-	
-	
-	
+
 	
 	public void completeQuoteConfirmTaskSummary(long taskId,String result);
 	
-	public List<Product> getProduct(int orderId, String productAskAmount, String productColor, String productStyle);
+	public List<Product> getProductList(int orderId, String productAskAmount, String productColor, String productStyle);
 
-	public boolean confirmProduct(Account account, int orderId, long taskId, 
+	public boolean confirmProduceOrderSubmit(Account account, int orderId, long taskId, 
 			long processId, boolean comfirmworksheet, List<Product> productList);
 	
 	

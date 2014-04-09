@@ -6,11 +6,9 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<div class="widget">
-				<h4 class="widgettitle">生产验证</h4>
+				<h4 class="widgettitle">采购确认</h4>
 				<div class="widgetcontent">
-
-					<form id="verify_form" method="post" action="${ctx }/produce/doVerify.do">
-
+					
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td rowspan="3">客户信息</td>
@@ -43,16 +41,11 @@
 							<tr>
 								<td>${orderModel.order.styleName }</td>
 								<td colspan="2">${orderModel.order.styleSex }</td>
-
-
 								<td colspan="2">${orderModel.order.styleSeason eq 'CHUNXIA'?'春夏':'秋冬' }</td>
-
 								<td>${orderModel.order.orderSource }</td>
 							</tr>
 							<tr>
 								<td>面料类型</td>
-
-
 								<td colspan="5">
 									${fn:contains(orderModel.order.fabricType,'SUOZHI')?'梭织':'' }
 									${fn:contains(orderModel.order.fabricType,'ZHENZHI')?'针织':'' }
@@ -78,7 +71,6 @@
 									${fn:contains(orderModel.order.otherRequirements,'DIAOPAI')?'有吊牌&nbsp;':'' }
 									${fn:contains(orderModel.order.otherRequirements,'SHUIXI')?'有水洗&nbsp;':'' }
 								</td>
-
 							</tr>
 							<tr>
 								<td>参考链接</td>
@@ -93,9 +85,7 @@
 							</tr>
 							<tr>
 								<td>${orderModel.order.askAmount }</td>
-
 								<td colspan="2">${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-
 								<td colspan="2">${orderModel.order.askProducePeriod }</td>
 								<td>${orderModel.order.askCodeNumber }</td>
 							</tr>
@@ -143,8 +133,6 @@
 								<td colspan="2">快递单号</td>
 							</tr>
 							<tr>
-
-
 								<td>${orderModel.order.hasPostedSampleClothes==0?'没有样衣':'' }
 									${orderModel.order.hasPostedSampleClothes==1?'收到样衣':'' }
 									${orderModel.order.hasPostedSampleClothes==2?'未收到样衣':'' }
@@ -152,7 +140,6 @@
 								<td colspan="2">${fn:substring(logistics.inPostSampleClothesTime,0,10) }</td>
 								<td>${logistics.inPostSampleClothesType }</td>
 								<td colspan="2">${logistics.inPostSampleClothesNumber }</td>
-
 							</tr>
 							<tr>
 								<td rowspan="5">生产样衣</td>
@@ -162,12 +149,10 @@
 								<td colspan="2">快递单号</td>
 							</tr>
 							<tr>
-
 								<td>${orderModel.order.isNeedSampleClothes==0?'否':'是' }</td>
 								<td colspan="2">${fn:substring(logistics.sampleClothesTime,0,10) }</td>
 								<td>${logistics.sampleClothesType }</td>
 								<td colspan="2">${logistics.sampleClothesNumber }</td>
-
 							</tr>
 							<tr>
 								<td>邮寄人</td>
@@ -175,7 +160,6 @@
 								<td colspan="4">邮寄地址</td>
 							</tr>
 							<tr>
-
 								<td>${logistics.sampleClothesName }</td>
 								<td>${logistics.sampleClothesPhone }</td>
 								<td colspan="4">${logistics.sampleClothesAddress }</td>
@@ -183,7 +167,6 @@
 							<tr>
 								<td>其他备注</td>
 								<td colspan="5">${logistics.sampleClothesRemark }</td>
-
 							</tr>
 							<tr>
 								<td>样衣信息</td>
@@ -194,23 +177,36 @@
 							</tr>
 							<tr>
 								<td>意见</td>
-
 								<td colspan="6"><input class="span12" type="text" name="suggestion" /></td>
 							</tr>
 							<tr>
 								<td>操作</td>	
+
 								<td colspan="6">
-									<input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
-									<input type="hidden" name="taskId" value="${orderModel.taskId }" />
-									<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />
-									<input id="verify_val" type="hidden" name="productVal" value="" />
+								<form id="verify_form" method="post" action="${ctx }/buy/${end_url }.do">
+									<input type="hidden" name="order_id" value="${orderModel.order.orderId }" />
+									<input type="hidden" name="task_id" value="${orderModel.taskId }" />
+									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+									<input type="hidden" name="purchaseerror" value="1"/>
+									
 									<a id="agree_detail" class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</a>
+								
+                                 </form>
+
+	                           <form  method="post" action="${ctx }/buy/${end_url }.do">
+									<input type="hidden" name="order_id" value="${orderModel.order.orderId }" />
+									<input type="hidden" name="task_id" value="${orderModel.taskId }" />
+									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+									<input type="hidden" name="purchaseerror" value="0"/>
+									
+								
 									<a id="disagree_detail" class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 拒绝</a>
+                                 </form>
+
 								</td>
 							</tr>
 						</table>
-					</form>
-
+				
 				</div>
 				<!--widgetcontent-->
 			</div>

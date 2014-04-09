@@ -10,7 +10,7 @@
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
                     <h4 class="widgettitle">入库订单详情</h4>
-                      <form onsubmit="return verify()" action="${ctx }/logistics/rukuDetailPost.do" method="post">
+                      <form onsubmit="return verify()" action="${ctx }/logistics/warehouseSubmit.do" method="post">
                 <table id="dyntable" class="table table-bordered responsive">
                 
                   	<tr>

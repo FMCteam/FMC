@@ -18,6 +18,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.service.DesignService;
 import nju.software.service.OrderService;
@@ -57,22 +58,18 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/verify.do", method= RequestMethod.GET)
+	@RequestMapping(value = "design/verifyDesignList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String verify(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("design verify ================ show task");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
-		String actorId = "SHEJIZHUGUAN";
-		System.out.println("actorId: " + actorId);
-		String taskName = "design_verification ";
-		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+		List<OrderInfo> orderList = designService.getVerifyDesignList();
 		model.addAttribute("order_list", orderList);
 		
-		return "design/verify";
+		return "design/verifyDesignList";
 	}
 	/**
 	 * 设计验证
@@ -81,7 +78,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/doVerify.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/verifyDesignSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doVerify(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -96,10 +93,10 @@ public class DesignController {
 		String s_processId = request.getParameter("pinId");
 		long processId = Long.parseLong(s_processId);
 		String comment = request.getParameter("suggestion");
-		String taskName = "design_verification ";
-		designService.verify(account, orderId_request, taskId, processId, designVal, comment);
+
+		designService.verifyDesignSubmit(account, orderId_request, taskId, processId, designVal, comment);
 		
-		return "redirect:/design/verify.do";
+		return "redirect:/design/verifyDesignList.do";
 	}
 	
 	/**
@@ -110,13 +107,12 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/verifyDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/verifyDesignDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("design verify ================ show detail");
-		OrderModel orderModel = null;
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
 		String s_orderId_request = (String) request.getParameter("id");
@@ -125,16 +121,9 @@ public class DesignController {
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-		Logistics logistics = designService.getLogisticsByOrderId(orderId_request);
-		List<Fabric> fabricList = designService.getFabricByOrderId(orderId_request);
-		List<Accessory> accessoryList = designService.getAccessoryByOrderId(orderId_request);
-		model.addAttribute("orderModel", orderModel);
-		model.addAttribute("logistics", logistics);
-		model.addAttribute("fabric_list", fabricList);
-		model.addAttribute("accessory_list", accessoryList);
-		
-		return "design/verify_detail";
+		OrderInfo orderModel = designService.getVerifyDesignDetail(orderId_request, taskId);
+		model.addAttribute("orderModel", orderModel);	
+		return "design/verifyDesignDetail";
 	}
 
 	

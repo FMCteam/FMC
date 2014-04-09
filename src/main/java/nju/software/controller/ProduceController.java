@@ -47,22 +47,19 @@ public class ProduceController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "produce/verify.do", method= RequestMethod.GET)
+	@RequestMapping(value = "produce/verifyProduceList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String verify(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("produce verify ================ show task");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
-		String actorId = "SHENGCHANZHUGUAN";
-		System.out.println("actorId: " + actorId);
-		String taskName = "production_verification";
-		orderList = orderService.getOrderByActorIdAndTaskname(actorId, taskName);
+
+		List<OrderInfo> orderList = produceService.getVerifyProduceList();
 		model.addAttribute("order_list", orderList);
 		
-		return "produce/verify";
+		return "produce/verifyProduceList";
 	}
 	/**
 	 * 生产验证
@@ -71,7 +68,7 @@ public class ProduceController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "produce/doVerify.do", method= RequestMethod.POST)
+	@RequestMapping(value = "produce/verifyProduceSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doVerify(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -86,10 +83,10 @@ public class ProduceController {
 		String s_processId = request.getParameter("pinId");
 		long processId = Long.parseLong(s_processId);
 		String comment = request.getParameter("suggestion");
-		String taskName = "production_verification";
-		produceService.verify(account, orderId_request, taskId, processId, productVal, comment);
+
+		produceService.verifyProduceSubmit(account, orderId_request, taskId, processId, productVal, comment);
 		
-		return "redirect:/produce/verify.do";
+		return "redirect:/produce/verifyProduceList.do";
 	}
 	
 	/**
@@ -100,13 +97,12 @@ public class ProduceController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "produce/verifyDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "produce/verifyProduceDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("produce verify ================ show detail");
-		OrderModel orderModel = null;
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
 		String s_orderId_request = (String) request.getParameter("id");
@@ -115,49 +111,13 @@ public class ProduceController {
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId, processId);
-		Logistics logistics =produceService.getLogisticsByOrderId(orderId_request);
-		List<Fabric> fabricList = produceService.getFabricByOrderId(orderId_request);
-		List<Accessory> accessoryList = produceService.getAccessoryByOrderId(orderId_request);
+		OrderInfo orderModel = produceService.getVerifyProduceDetail(orderId_request, taskId);
 		model.addAttribute("orderModel", orderModel);
-		model.addAttribute("logistics", logistics);
-		model.addAttribute("fabric_list", fabricList);
-		model.addAttribute("accessory_list", accessoryList);
-		
-		return "produce/verify_detail";
+		return "produce/verifyProduceDetail";
 	}
 	
 	
-	@RequestMapping(value = "/produce/produceSampleList.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String sampleProduceList(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		List<OrderInfo> list = produceService.getProduceSampleList();
-		model.addAttribute("list", list);
-		return "/produce/produceSampleList";
-	}
-	
-	
-	@RequestMapping(value = "/produce/produceSampleDetail.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String produceSampleDetail(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
-		model.addAttribute("orderInfo", orderInfo);
-		return "/produce/produceSampleDetail";
-	}
-	
-	
-	@RequestMapping(value = "/produce/produceSampleSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String sampleProduceSubmit(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		String result = request.getParameter("result");
-		String taskId = request.getParameter("taskId");
-		produceService.produceSampleSubmit(Long.parseLong(taskId), result);
-		return "forward:/produce/produceSampleList.do";
-	}
+
 	
 	
 	
@@ -273,9 +233,40 @@ public class ProduceController {
 	}
 	
 	
+	//=======================样衣生产=======================
+	@RequestMapping(value = "/produce/produceSampleList.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String produceSampleList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<OrderInfo> list = produceService.getProduceSampleList();
+		model.addAttribute("list", list);
+		return "/produce/produceSampleList";
+	}
 	
 	
+	@RequestMapping(value = "/produce/produceSampleDetail.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String produceSampleDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		OrderInfo orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/produce/produceSampleDetail";
+	}
 	
+	
+	@RequestMapping(value = "/produce/produceSampleSubmit.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String produceSampleSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String result = request.getParameter("result");
+		String taskId = request.getParameter("taskId");
+		produceService.produceSampleSubmit(Long.parseLong(taskId), result);
+		return "forward:/produce/produceSampleList.do";
+	}
+	
+	
+	//=====================批量生产======================
 	@RequestMapping(value = "/produce/produceList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String produceList(HttpServletRequest request,
@@ -284,8 +275,6 @@ public class ProduceController {
 		model.addAttribute("list", list);
 		return "/produce/produceList";
 	}
-	
-	
 	
 	
 	@RequestMapping(value = "/produce/produceDetail.do")
