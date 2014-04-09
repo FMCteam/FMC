@@ -15,7 +15,7 @@ import nju.software.model.SampleProduceTaskSummary;
 
 public interface ProduceService {
 
-	public boolean verify(Account account, int orderId, long taskId, 
+	public boolean verifyProduceSubmit(Account account, int orderId, long taskId, 
 			long processId, boolean productVal, String comment);
 	
 	public boolean costAccounting(Account account, int orderId, long taskId, 
@@ -59,5 +59,9 @@ public interface ProduceService {
 
 	public void savePackageDetail(int parseInt, String[] array_amount,
 			String[] array_color, String[] array_name, Timestamp entryTime);
+
+	public List<OrderInfo> getVerifyProduceList();
+
+	public OrderInfo getVerifyProduceDetail(int orderId, long taskId);
 
 }

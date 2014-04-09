@@ -6,11 +6,12 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
+import nju.software.model.OrderInfo;
 import nju.software.model.ProductModel;
 
 public interface BuyService {
 	
-	public boolean verify(Account account, int orderId, long taskId, 
+	public boolean verifyPurchaseSubmit(Account account, int orderId, long taskId, 
 			long processId, boolean buyVal, String comment);
 
 	public boolean costAccounting(Account account, int orderId, long taskId, 
@@ -28,5 +29,9 @@ public interface BuyService {
 
 	public ProductModel getProductDetail(int int_orderId, int int_taskId,
 			int int_processId);
+
+	public List<OrderInfo> getVerifyPurchaseList();
+
+	public OrderInfo getVerifyPurchaseDetail(int orderId, long taskId);
 	
 }

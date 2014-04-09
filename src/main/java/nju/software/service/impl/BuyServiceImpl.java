@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.drools.runtime.StatefulKnowledgeSession;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Product;
+import nju.software.model.OrderInfo;
+import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
 import nju.software.dataobject.Quote;
 import nju.software.service.BuyService;
@@ -67,11 +70,10 @@ public class BuyServiceImpl implements BuyService {
 	
 
 	@Override
-	public boolean verify(Account account, int orderId, long taskId, 
+	public boolean verifyPurchaseSubmit(Account account, int orderId, long taskId, 
 			long processId, boolean buyVal, String comment) {
 		// TODO Auto-generated method stub
-//		String actorId = account.getUserRole();
-		String actorId = "CAIGOUZHUGUAN";
+
 		//需要获取task中的数据	
 		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
 		int orderId_process  = (int) process.getVariable("orderId");
@@ -89,7 +91,7 @@ public class BuyServiceImpl implements BuyService {
 			data.put("buyComment", comment);
 			//直接进入到下一个流程时
 			try {
-				jbpmAPIUtil.completeTask(taskId, data, actorId);
+				jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -200,6 +202,53 @@ public class BuyServiceImpl implements BuyService {
 		}
 
 		return false;
+	}
+
+	@Override
+	public List<OrderInfo> getVerifyPurchaseList() {
+		// TODO Auto-generated method stub
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_PURCHASE_MANAGER, TASK_VERIFY_PURCHASE);
+		List<OrderInfo> orderList = new ArrayList<OrderInfo>();
+		if (list.isEmpty()) {
+			System.out.println("no task list");
+		}
+		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
+		WorkflowProcessInstance process = null;
+		for (TaskSummary task : list) {
+			// 需要获取task中的数据
+			long processId = task.getProcessInstanceId();
+			process = (WorkflowProcessInstance) session
+					.getProcessInstance(processId);
+			int orderId = (int) process.getVariable("orderId");
+			OrderInfo oi = new OrderInfo();
+			oi.setOrder(orderDAO.findById(orderId));
+			oi.setTask(task);
+			orderList.add(oi);
+		}
+		return orderList;
+	}
+
+	@Override
+	public OrderInfo getVerifyPurchaseDetail(int orderId, long taskId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_PURCHASE_MANAGER, TASK_VERIFY_PURCHASE);
+		for (TaskSummary task : list) {
+			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+					.getKsession().getProcessInstance(task.getProcessInstanceId());
+			int orderId_process = (int) process.getVariable("orderId");
+			if (orderId == orderId_process && taskId == task.getId() ) {
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setLogistics(logisticsDAO.findById(orderId));
+				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
 	}
 
 	
