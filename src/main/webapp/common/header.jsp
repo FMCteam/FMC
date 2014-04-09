@@ -95,7 +95,7 @@
 									<li><a href="${ctx }/market/confirmQuoteList.do">报价商定</a></li>
 
 									<li><a href="${ctx }/market/modifyQuoteList.do">修改报价</a></li>
-									<li><a href="${ctx }/market/confirmProduct.do">商定合同</a></li>
+									<li><a href="${ctx }/market/confirmProduceOrderList.do">商定合同</a></li>
 
 									<li><a href="${ctx }/market/modifyProductList.do">修改合同</a></li>
 									<li><a href="${ctx }/market/signContractList.do">签订合同</a></li>
@@ -145,9 +145,9 @@
 						<li class="dropdown"><a href=""><span
 							class="iconfa-th-list"></span> 财务部</a>
 						<ul>
-							<li><a href="${ctx }/finance/confirmSample.do">样衣金确认</a></li>
-							<li><a href="${ctx }/finance/confirmDeposit.do">首定金确认</a></li>
-							<li><a href="${ctx }/finance/confirmPayment.do">生产金确认</a></li>
+							<li><a href="${ctx }/finance/confirmSampleMoneyList.do">样衣金确认</a></li>
+							<li><a href="${ctx }/finance/confirmDepositList.do">首定金确认</a></li>
+							<li><a href="${ctx }/finance/confirmFinalPaymentList.do">生产金确认</a></li>
 							<li><a href="#">尾金确认</a></li>
 						</ul></li>
 						</c:if>
@@ -172,8 +172,8 @@
 						<li class="dropdown"><a href=""><span
 							class="iconfa-th-list"></span> 人事部</a>
 						<ul>
-							<li><a href="${ctx }/employee/add.do">添加员工</a></li>
-							<li><a href="${ctx }/employee/search.do">查看员工</a></li>
+							<li><a href="${ctx }/employee/addEmployee.do">添加员工</a></li>
+							<li><a href="${ctx }/employee/getEmployeeList.do">查看员工</a></li>
 						</ul></li>
 						</c:if>
 					
