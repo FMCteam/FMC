@@ -14,30 +14,19 @@ public interface FinanceService {
 	
 	public OrderInfo getConfirmSampleMoneyDetail(String actorId,Integer orderId);
 	
-	public boolean confirmSampleMoneySubmit();
+	public boolean confirmSampleMoneySubmit(String actorId,long taskId,boolean receivedsamplejin, Money money);
 	
 	//===========================定金确认===================================
 	public List<OrderInfo>getConfirmDepositList(String actorId);
 	
 	public OrderInfo getConfirmDepositDetail(String actorId,Integer orderId);
 	
-	public boolean confirmDepositSubmit();
+	public boolean confirmDepositSubmit(String actorId,long taskId,boolean epositok, Money money);
 	
 	//===========================尾款确认===================================
 	public List<OrderInfo>getConfirmFinalPaymentList(String actorId);
 	
 	public OrderInfo getConfirmFinalPaymentDetail(String actorId,Integer orderId);
 	
-	public boolean confirmFinalPaymentSubmit();
-	
-	
-	public boolean confirmSampleMoneySubmit(Account account, int orderId, long taskId, 
-			long processId, boolean receivedsamplejin, Money money);
-	
-	public boolean confirmDepositSubmit(Account account, int orderId, long taskId, 
-			long processId, boolean epositok, Money money);
-	
-	public boolean confirmFinalPaymentSubmit(Account account, int orderId, long taskId, 
-			long processId, boolean paymentok, Money money);
-
+	public boolean confirmFinalPaymentSubmit(String actorId,long taskId,boolean paymentok, Money money);
 }
