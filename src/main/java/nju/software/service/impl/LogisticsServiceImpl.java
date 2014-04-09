@@ -215,8 +215,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 		orderInfo.setOrder(orderDAO.findById(orderId));
 		orderInfo.setProducts(productDAO.findByOrderId(orderId));
 		orderInfo.setPackages(packageDAO.findByOrderId(orderId));
-		
-		orderInfo.setTask(task);
+		//orderInfo.setpa
+		//orderInfo.setTask(task);
 		return orderInfo;
 	}
 
