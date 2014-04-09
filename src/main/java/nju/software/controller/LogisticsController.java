@@ -114,17 +114,9 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String warehouseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		OrderInfo o
-		
-		List<Product> productList=produceService.getProductByOrderId(Integer.parseInt(orderId));
-		List<nju.software.dataobject.Package> packageList=produceService.getPackageByOrderId(Integer.parseInt(orderId));
-		List<List<PackageDetail>> packageDetailList=produceService.getProductDetailByPackage(packageList);
-		model.put("order_id", orderId);
-		model.put("task_id", taskId);
-		model.put("process_id", processId);
-		model.put("product_list", productList);
-		model.put("package_list", packageList);
-		model.put("package_detail_list", packageDetailList);
+		String orderId=request.getParameter("orderId");
+		OrderInfo orderInfo=logisticsService.getWarehouseDetail(Integer.parseInt(orderId));
+
 	    return "/logistics/warehouseDetail";
 	}
 	

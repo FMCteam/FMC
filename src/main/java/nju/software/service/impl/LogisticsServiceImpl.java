@@ -16,11 +16,12 @@ import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.PackageDAO;
+import nju.software.dao.impl.ProductDAO;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
-
 import nju.software.model.OrderInfo;
 import nju.software.service.LogisticsService;
 import nju.software.util.JbpmAPIUtil;
@@ -44,8 +45,10 @@ public class LogisticsServiceImpl implements LogisticsService {
 	private EmployeeDAO employeeDAO;
 	@Autowired
 	private CustomerDAO customerDAO;
-
-
+	@Autowired
+	private ProductDAO productDAO;
+	@Autowired
+	private PackageDAO packageDAO;
 	
 	// =========================ReceiveSample======================================
 	@Override
@@ -199,12 +202,22 @@ public class LogisticsServiceImpl implements LogisticsService {
 			orderInfo.setOrder(orderDAO.findById(orderId));
 			orderInfo.setTask(task);
 			list.add(orderInfo);
+		}
+		return list;
 	}
 
 	@Override
 	public OrderInfo getWarehouseDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
+				TASK_WAREHOUSE, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setProducts(productDAO.findByOrderId(orderId));
+		orderInfo.setPackages(packageDAO.findByOrderId(orderId));
+		
+		orderInfo.setTask(task);
+		return orderInfo;
 	}
 
 	@Override
