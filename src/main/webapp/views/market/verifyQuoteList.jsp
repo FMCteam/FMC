@@ -8,7 +8,7 @@
 		<div class="row-fluid" style="min-height:300px;">
 
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<h4 class="widgettitle">市场主管合并报价</h4>
+			<h4 class="widgettitle">市场主管审核报价</h4>
 			<table id="dyntable" class="table table-bordered responsive">
 				<colgroup>
 					<col class="con1" />
@@ -42,7 +42,7 @@
 				<tbody>
 				
 					<c:forEach var="quoteModel" items="${quote_list}">
-						<form action="${ctx}/market/checkOrderSum.do" method="post">
+						<form action="${ctx}/market/verifyQuoteSubmit.do" method="post">
 						
 						<tr class="gradeA">
 							<td><input name="order_id" value=${quoteModel.quote.orderId } readonly></td>
@@ -60,10 +60,10 @@
 							<td><input name="inner_price" value=${quoteModel.quote.innerPrice }></td>
 							<td><input name="outer_price" value=${quoteModel.quote.outerPrice }></td>
 						<td style="display:none">
-							<input name="taskId" value=${quoteModel.taskId }>
+							<input name="taskId" value=${quoteModel.task。id }>
 							</td>
 							<td style="display:none">
-							<input name="processId" value=${quoteModel.processInstanceId }>
+							<input name="processId" value=${quoteModel.task.processInstanceId }>
 							</td>
 						<td> <p class="stdformbutton">
                         <button class="btn btn-primary">更新</button>
