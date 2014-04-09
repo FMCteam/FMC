@@ -14,6 +14,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
 import nju.software.service.BuyService;
@@ -39,301 +40,110 @@ public class BuyController {
 	@Autowired
 	private BuyService buyService;
 	
-	/**
-	 * 采购确认1List
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "buy/caigouqueren1List.do", method= RequestMethod.GET)
+
+	
+	//========================样衣采购===========================
+	@RequestMapping(value = "/buy/purchaseSampleMaterialList.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String caigouqueren1List(HttpServletRequest request,
+	public String purchaseSampleMaterialList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String actor="CAIGOUZHUGUAN";
-		String action="comfirm_purchase";
-		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
-		model.put("order_model_List", orderModelList);
-		model.put("end_url","caigouqueren1Detail");
-		return "buy/product_simple_list";
+		List<OrderInfo> list=buyService.getPurchaseSampleMaterialList();
+		model.put("list", list);
+		return "/buy/purchaseSampleMaterialList";
 	}
-	/**
-	 * 采购确认2List
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "buy/caigouqueren2List.do", method= RequestMethod.GET)
+
+	
+	@RequestMapping(value = "/buy/purchaseSampleMaterialDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String caigouqueren2List(HttpServletRequest request,
+	public String purchaseSampleMaterialDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String actor="CAIGOUZHUGUAN";
-		String action="purchase_ok";
-		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
-		model.put("order_model_List", orderModelList);
-		model.put("end_url","caigouqueren2Detail");
-		return "buy/product_simple_list";
+		String orderId=request.getParameter("orderId");
+		OrderInfo orderInfo=buyService.getPurchaseSampleMaterialDetail(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/buy/purchaseSampleMaterialDetail";
 	}
-	/**
-	 * 采购确认3List
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "buy/caigouqueren3List.do", method= RequestMethod.GET)
+	
+	
+	@RequestMapping(value = "/buy/purchaseSampleMaterialSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String caigouqueren3List(HttpServletRequest request,
+	public String purchaseSampleMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String actor="CAIGOUZHUGUAN";
-		String action="purchase_comfirm";
-		List<OrderModel> orderModelList=orderService.getOrderByActorIdAndTaskname(actor, action);
-		model.put("order_model_List", orderModelList);
-		model.put("end_url","caigouqueren3Detail");
-		return "buy/product_simple_list";
-	}
-	/**
-	 * 采购确认1的详情
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "buy/caigouqueren1Detail.do", method= RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
-	public String caigouqueren1Detail(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		String orderId=request.getParameter("order_id");
 		String taskId=request.getParameter("task_id");
-		String processId=request.getParameter("process_id");
-		
-		try
-		{
-			int int_orderId=Integer.parseInt(orderId);
-			long int_taskId=Long.parseLong(taskId);
-			long int_processId=Long.parseLong(processId);
-			Order order=orderService.findByOrderId(orderId);
-			OrderModel orderModel=new OrderModel();
-			orderModel.setOrder(order);
-			orderModel.setTaskId(int_taskId);
-			orderModel.setProcessInstanceId(int_processId);
-		
-		model.put("orderModel",orderModel);
-		model.put("end_url", "caigouqueren1DetailPost");
-		return "buy/product_detail";
-		}catch(Exception e)
-		{
-			
-		}
-		return "buy/product_detail";
+		String result=request.getParameter("purchaseerror");
+		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
+		return "forward:/buy/purchaseSampleMaterialList.do";
 	}
-	/**
-	 * 采购确认2的详情
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "buy/caigouqueren2Detail.do", method= RequestMethod.POST)
+	
+
+	//========================生产验证===========================
+	@RequestMapping(value = "/buy/confirmPurchaseList.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String caigouqueren2Detail(HttpServletRequest request,
+	public String confirmPurchaseList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String orderId=request.getParameter("order_id");
-		String taskId=request.getParameter("task_id");
-		String processId=request.getParameter("process_id");
-		try
-		{
-			int int_orderId=Integer.parseInt(orderId);
-			long int_taskId=Long.parseLong(taskId);
-			long int_processId=Long.parseLong(processId);
-			Order order=orderService.findByOrderId(orderId);
-			OrderModel orderModel=new OrderModel();
-			orderModel.setOrder(order);
-			orderModel.setTaskId(int_taskId);
-			orderModel.setProcessInstanceId(int_processId);
-		
-		model.put("orderModel",orderModel);
-		model.put("end_url", "caigouqueren2DetailPost");
-		return "buy/product_detail";
-		}catch(Exception e)
-		{
-			
-		}
-		return "buy/product_detail";
+		List<OrderInfo> list=buyService.getConfirmPurchaseList();
+		model.put("list", list);
+		return "/buy/confirmPurchaseList";
 	}
-	/**
-	 * 采购确认3的详情
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "buy/caigouqueren3Detail.do", method= RequestMethod.POST)
+
+	@RequestMapping(value = "/buy/confirmPurchaseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String caigouqueren3Detail(HttpServletRequest request,
+	public String confirmPurchaseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String orderId=request.getParameter("order_id");
-		String taskId=request.getParameter("task_id");
-		String processId=request.getParameter("process_id");
-		try
-		{
-			int int_orderId=Integer.parseInt(orderId);
-			long int_taskId=Long.parseLong(taskId);
-			long int_processId=Long.parseLong(processId);
-			Order order=orderService.findByOrderId(orderId);
-			OrderModel orderModel=new OrderModel();
-			orderModel.setOrder(order);
-			orderModel.setTaskId(int_taskId);
-			orderModel.setProcessInstanceId(int_processId);
-		
-		model.put("orderModel",orderModel);
-		model.put("end_url", "caigouqueren3DetailPost");
-		return "buy/product_detail";
-		}catch(Exception e)
-		{
-			
-		}
-		return "buy/product_detail";
+		String orderId=request.getParameter("orderId");
+		OrderInfo orderInfo=buyService.getConfirmPurchaseDetail(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/buy/confirmPurchaseDetail";
 	}
-	/**
-	 * 采购确认1的提交
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "buy/caigouqueren1DetailPost.do", method= RequestMethod.POST)
+	
+	
+	@RequestMapping(value = "/buy/confirmPurchaseSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String caigouqueren1DetailPost(HttpServletRequest request,
+	public String confirmPurchaseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		
-		String orderId=request.getParameter("order_id");
 		String taskId=request.getParameter("task_id");
-		String processId=request.getParameter("process_id");
-		boolean purchaseerror=request.getParameter("purchaseerror").equals("0")?true:false;
-	//	String productIdList=request.getProductId
-		/*
-		String productId=request.getParameter("product_id");
-		String[] productIdList=productId.split(",");
-		String fabricId=request.getParameter("fabric_id");
-		String[] fabricIdList=fabricId.split(",");
-		String accessoryId=request.getParameter("accessoryId");
-		String[] accessoryIdList=accessoryId.split(",");
-		
-		String ask_amount=request.getParameter("ask_amount");
-		String[] ask_amountList=ask_amount.split(",");
-		String product_amount=request.getParameter("product_amount");
-		String[] product_amountList=product_amount.split(",");
-		String qualified_amount=request.getParameter("qualified_amount");
-		String[] qualified_amountList=qualified_amount.split(",");
-		*/
-		//保存各种数据
-		//推进流程
-		String actor="CAIGOUZHUGUAN";
-		long long_taskId=Long.parseLong(taskId);
-		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("purchaseerror", purchaseerror);
-		try {
-			jbpmAPIUtil.completeTask(long_taskId, map, actor);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "redirect:/buy/caigouqueren1List.do";
+		String result=request.getParameter("purchaseerror");
+		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
+		return "forward:/buy/confirmPurchaseList.do";
 	}
-	/**
-	 * 采购确认2的提交
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "buy/caigouqueren2DetailPost.do", method= RequestMethod.POST)
+	
+	
+	//========================生产采购===========================
+	@RequestMapping(value = "/buy/purchaseMaterialList.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String caigouqueren2DetailPost(HttpServletRequest request,
+	public String purchaseMaterialList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		
-		String orderId=request.getParameter("order_id");
-		String taskId=request.getParameter("task_id");
-		String processId=request.getParameter("process_id");
-		boolean purchaseerror=request.getParameter("purchaseerror").equals("1")?true:false;
-	//	String productIdList=request.getProductId
-		/*
-		String productId=request.getParameter("product_id");
-		String[] productIdList=productId.split(",");
-		String fabricId=request.getParameter("fabric_id");
-		String[] fabricIdList=fabricId.split(",");
-		String accessoryId=request.getParameter("accessoryId");
-		String[] accessoryIdList=accessoryId.split(",");
-		
-		String ask_amount=request.getParameter("ask_amount");
-		String[] ask_amountList=ask_amount.split(",");
-		String product_amount=request.getParameter("product_amount");
-		String[] product_amountList=product_amount.split(",");
-		String qualified_amount=request.getParameter("qualified_amount");
-		String[] qualified_amountList=qualified_amount.split(",");
-		*/
-		//保存各种数据
-		//推进流程
-		String actor="CAIGOUZHUGUAN";
-		long long_taskId=Long.parseLong(taskId);
-		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("isworksheet", purchaseerror);
-		try {
-			jbpmAPIUtil.completeTask(long_taskId, map, actor);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "redirect:/buy/caigouqueren2List.do";
+		List<OrderInfo> list=buyService.getPurchaseMaterialList();
+		model.put("list", list);
+		return "/buy/purchaseMaterialList";
 	}
-	/**
-	 * 采购确认2的提交
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "buy/caigouqueren3DetailPost.do", method= RequestMethod.POST)
+
+	
+	@RequestMapping(value = "/buy/purchaseMaterialDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String caigouqueren3DetailPost(HttpServletRequest request,
+	public String purchaseMaterialDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		
-		String orderId=request.getParameter("order_id");
-		String taskId=request.getParameter("task_id");
-		String processId=request.getParameter("process_id");
-		boolean purchaseerror=request.getParameter("purchaseerror").equals("0")?true:false;
-	//	String productIdList=request.getProductId
-		/*
-		String productId=request.getParameter("product_id");
-		String[] productIdList=productId.split(",");
-		String fabricId=request.getParameter("fabric_id");
-		String[] fabricIdList=fabricId.split(",");
-		String accessoryId=request.getParameter("accessoryId");
-		String[] accessoryIdList=accessoryId.split(",");
-		
-		String ask_amount=request.getParameter("ask_amount");
-		String[] ask_amountList=ask_amount.split(",");
-		String product_amount=request.getParameter("product_amount");
-		String[] product_amountList=product_amount.split(",");
-		String qualified_amount=request.getParameter("qualified_amount");
-		String[] qualified_amountList=qualified_amount.split(",");
-		*/
-		//保存各种数据
-		//推进流程
-		String actor="CAIGOUZHUGUAN";
-		long long_taskId=Long.parseLong(taskId);
-		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("procurementerror", purchaseerror);
-		try {
-			jbpmAPIUtil.completeTask(long_taskId, map, actor);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "redirect:/buy/caigouqueren3List.do";
+		String orderId=request.getParameter("orderId");
+		OrderInfo orderInfo=buyService.getPurchaseMaterialDetail(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/buy/purchaseMaterialDetail";
 	}
+		
+
+	@RequestMapping(value = "/buy/purchaseMaterialDetailSubmit.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String purchaseMaterialDetailSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String taskId=request.getParameter("task_id");
+		String result=request.getParameter("purchaseerror");
+		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
+		return "forward:/buy/purchaseMaterialList.do";
+	}
+
+
+	
+	
+
+
 	/**
 	 * 采购验证跳转链接
 	 * @param request

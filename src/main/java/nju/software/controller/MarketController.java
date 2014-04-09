@@ -72,8 +72,6 @@ public class MarketController {
 	@Autowired
 	private JbpmTest jbpmTest;
 
-	
-	
 	// ================================客户下单====================================
 	@RequestMapping(value = "/market/addOrderList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -83,26 +81,26 @@ public class MarketController {
 		model.addAttribute("customers", customers);
 		return "/market/addOrderList";
 	}
-	
-	
+
 	@RequestMapping(value = "/market/addOrderDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String addOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String cid = request.getParameter("cid");
-		Customer customer = marketService.getAddOrderDetail(Integer.parseInt(cid));
+		Customer customer = marketService.getAddOrderDetail(Integer
+				.parseInt(cid));
 		model.addAttribute("customer", customer);
 		return "/market/addOrderDetail";
 	}
-	
-	
+
 	@RequestMapping(value = "/market/addOrderSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String addOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		// 订单数据
-		Integer customerId = Integer.parseInt(request.getParameter("customerId"));
+		Integer customerId = Integer.parseInt(request
+				.getParameter("customerId"));
 		Customer customer = customerService.findByCustomerId(customerId);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
@@ -135,7 +133,6 @@ public class MarketController {
 				.getParameter("is_need_sample_clothes"));
 		String orderSource = request.getParameter("order_source");
 
-		
 		// 面料数据
 		String fabric_names = request.getParameter("fabric_name");
 		String fabric_amounts = request.getParameter("fabric_amount");
@@ -219,14 +216,11 @@ public class MarketController {
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 
-		marketService.addOrderSubmit(order, fabrics, accessorys, logistics,request);
+		marketService.addOrderSubmit(order, fabrics, accessorys, logistics,
+				request);
 
 		return "forward:/market/addOrderList.do";
 	}
-	
-	
-	
-	
 
 	// test precondition
 	@RequestMapping(value = "market/precondition.do", method = RequestMethod.GET)
@@ -315,7 +309,8 @@ public class MarketController {
 
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<OrderInfo> tasks = marketService.getModifyQuoteList(account.getUserId());
+		List<OrderInfo> tasks = marketService.getModifyQuoteList(account
+				.getUserId());
 
 		model.addAttribute("tasks", tasks);
 		return "market/modifyQuoteList";
@@ -329,7 +324,8 @@ public class MarketController {
 
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<OrderInfo> tasks = marketService.getModifyProductList(account.getUserId());
+		List<OrderInfo> tasks = marketService.getModifyProductList(account
+				.getUserId());
 
 		model.addAttribute("tasks", tasks);
 		return "market/modifyProductList";
@@ -346,7 +342,7 @@ public class MarketController {
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
-		OrderInfo oi = marketService.getModifyProductDetail(id,taskId);
+		OrderInfo oi = marketService.getModifyProductDetail(id, taskId);
 		model.addAttribute("orderModel", oi);
 		return "market/modifyProductDetail";
 	}
@@ -711,62 +707,50 @@ public class MarketController {
 		return "market/sample_order_list";
 	}
 
-
-
-
-
 	public static Timestamp getTime(String time) {
 		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
 		return new Timestamp(outDate.getTime());
 	}
 
-	/**
-	 * @author 莫其凡 
-	 */
+
+	
 	@RequestMapping(value = "/market/confirmQuoteList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<OrderInfo> list = marketService
-				.getConfirmQuoteList(account.getUserId()+"");
+		List<OrderInfo> list = marketService.getConfirmQuoteList(account
+				.getUserId() + "");
 		model.addAttribute("list", list);
-		return "/market/quoteConfirmList";
+		return "/market/confirmQuoteList";
 	}
 
-	/**
-	 * @author 莫其凡 :提交报价商定结果
-	 */
-	@RequestMapping(value = "/market/confirmQuoteDetail.do")
+
+	
+	@RequestMapping(value = "/market/confirmQuoteSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String quoteConfirm(HttpServletRequest request,
+	public String confirmQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		String result = request.getParameter("result");
 		String taskId = request.getParameter("taskId");
 		String orderId = request.getParameter("orderId");
-		marketService.completeQuoteConfirmTaskSummary(Long.parseLong(taskId),
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
+		String actorId=account.getUserId()+"";
+		marketService.confirmQuoteSubmit(actorId,Long.parseLong(taskId),
 				result);
+
 		// 2=修改报价
 		if (result.equals("2")) {
 			return "forward:/market/quoteModifyList.do?id=" + orderId;
 		} else {
-			return "forward:/market/quoteConfirmList.do";
+			return "forward:/market/confirmQuoteList.do";
 		}
 	}
 
-	public void sendJson(HttpServletResponse response, JSONObject jsonobj) {
-		try {
-			PrintWriter out = response.getWriter();
-			out.print(jsonobj);
-			out.flush();
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-	}
 
 	/**
 	 * 确认合同加工单跳转链接
@@ -899,15 +883,16 @@ public class MarketController {
 	}
 
 	
+	// ========================签订合同============================
 	@RequestMapping(value = "/market/signContractList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String signContractList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		List<OrderInfo> tasks = marketService.getOrderInfoList(account
-				.getUserId());
-		model.addAttribute("tasks", tasks);
+		List<OrderInfo> list = marketService.getSignContractList(account
+				.getUserId() + "");
+		model.addAttribute("list", list);
 		return "/market/signContractList";
 	}
 
@@ -915,11 +900,12 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String signContractDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
 		String orderId = request.getParameter("orderId");
-		String taskId = request.getParameter("taskId");
-		OrderInfo orderInfo = marketService.getOrderInfo(
-				Integer.parseInt(orderId), Long.parseLong(taskId));
-		model.addAttribute("task", orderInfo);
+		OrderInfo orderInfo = marketService.getSignContractDetail(account
+				.getUserId() + "", Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
 		return "/market/signContractDetail";
 	}
 
@@ -927,14 +913,15 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String signContractSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
 		String discount = request.getParameter("discount");
 		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
-
-		marketService.completeSignContract(Integer.parseInt(orderId),
-				Double.parseDouble(discount), Long.parseLong(taskId));
-
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
+		String actorId=account.getUserId()+"";
+		
+		marketService.signContractSubmit(actorId,Long.parseLong(taskId),null,Integer.parseInt(orderId),
+				Double.parseDouble(discount) );
 		return "forward:/market/signContractList.do";
 	}
 }
