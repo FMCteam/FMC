@@ -21,12 +21,12 @@
 					<th>邮寄时间</th>
 					<th>操作</th>
 				</tr>
-				<c:forEach var="order" items="${orderList}">
+				<c:forEach var="order" items="${List}">
 					<tr>
-						<td>${order.getO().getOrderId() }</td>
-						<td>${order.getO().getCustomerId() }</td>
-						<td>${order.getO().getCustomerName()}</td>
-						<td>${order.getLog().getInPostSampleClothesType() }</td>
+						<td>${order.getgetOrder().getOrderId() }</td>
+						<td>${order.getgetOrder().getCustomerId() }</td>
+						<td>${order.getgetOrder().getCustomerName()}</td>
+						<td>${order.getgetOrder().getInPostSampleClothesType() }</td>
 						
 						<td>${order.getLog().getInPostSampleClothesNumber() }</td>
 						<td>${fn:substring(order.getLog().getInPostSampleClothesTime(),0,10) }</td>
