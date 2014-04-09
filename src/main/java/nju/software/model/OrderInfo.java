@@ -16,6 +16,7 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.Package;
 
 public class OrderInfo {
 	

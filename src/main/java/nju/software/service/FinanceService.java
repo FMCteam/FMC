@@ -17,13 +17,13 @@ public interface FinanceService {
 	
 	public void sampleMoneyNoConfirm(long taskId);
 	
-	public boolean confirmSample(Account account, int orderId, long taskId, 
+	public boolean confirmSampleMoneySubmit(Account account, int orderId, long taskId, 
 			long processId, boolean receivedsamplejin, Money money);
 	
-	public boolean confirmDeposit(Account account, int orderId, long taskId, 
+	public boolean confirmDepositSubmit(Account account, int orderId, long taskId, 
 			long processId, boolean epositok, Money money);
 	
-	public boolean confirmPayment(Account account, int orderId, long taskId, 
+	public boolean confirmFinalPaymentSubmit(Account account, int orderId, long taskId, 
 			long processId, boolean paymentok, Money money);
 
 }

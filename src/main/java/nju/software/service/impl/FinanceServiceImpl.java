@@ -103,15 +103,18 @@ public class FinanceServiceImpl implements FinanceService {
 		return process.getVariable("orderId");
 	}
 
+	
+	//===============================================================================
+	
 	/**
 	 * 确认样衣制作金
 	 */
 	@Override
-	public boolean confirmSample(Account account, int orderId, long taskId,
+	public boolean confirmSampleMoneySubmit(Account account, int orderId, long taskId,
 			long processId, boolean receivedsamplejin, Money money) {
 		// TODO Auto-generated method stub
 //		String actorId = account.getUserRole();
-		String actorId = "CAIWUZHUGUAN";
+		String actorId = ACTOR_FINANCE_MANAGER;
 		//需要获取task中的数据	
 		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
 		int orderId_process  = (int) process.getVariable("orderId");
@@ -140,11 +143,11 @@ public class FinanceServiceImpl implements FinanceService {
 	}
 
 	@Override
-	public boolean confirmDeposit(Account account, int orderId, long taskId,
+	public boolean confirmDepositSubmit(Account account, int orderId, long taskId,
 			long processId, boolean epositok, Money money) {
 		// TODO Auto-generated method stub
 //		String actorId = account.getUserRole();
-		String actorId = "CAIWUZHUGUAN";
+		String actorId = ACTOR_FINANCE_MANAGER;
 		//需要获取task中的数据	
 		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
 		int orderId_process  = (int) process.getVariable("orderId");
@@ -171,11 +174,11 @@ public class FinanceServiceImpl implements FinanceService {
 	}
 
 	@Override
-	public boolean confirmPayment(Account account, int orderId, long taskId,
+	public boolean confirmFinalPaymentSubmit(Account account, int orderId, long taskId,
 			long processId, boolean paymentok, Money money) {
 		// TODO Auto-generated method stub
 //		String actorId = account.getUserRole();
-		String actorId = "CAIWUZHUGUAN";
+		String actorId = ACTOR_FINANCE_MANAGER;
 		//需要获取task中的数据	
 		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
 		int orderId_process  = (int) process.getVariable("orderId");

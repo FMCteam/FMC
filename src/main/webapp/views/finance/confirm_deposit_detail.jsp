@@ -9,7 +9,7 @@
 				<h4 class="widgettitle">确认定金</h4>
 				<div class="widgetcontent">
 					<form class="stdform" id="verify_form" method="post"
-						action="${ctx }/finance/doConfirmDeposit.do">
+						action="${ctx }/finance/confirmDepositSubmit.do">
 						<p>
 							<label>订单号</label> <span class="field"><input type="text" name="order_id" 
 							class="input-large" value="${orderModel.order.orderId }" readonly />
@@ -50,9 +50,10 @@
 								placeholder="备注" /></span>
 						</p>
 						<p>
-							<input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
-							<input type="hidden" name="taskId" value="${orderModel.taskId }" />
-							<input type="hidden" name="pinId" value="${orderModel.processInstanceId }" />
+							<input type="hidden" name="order_id" value="${orderModel.order.orderId }" />
+							<input type="hidden" name="task_id" value="${orderModel.taskId }" />
+							<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+							<input type="hidden" name="epositok" value="true" />
 						</p>
 						<p class="stdformbutton">
 							<button class="btn btn-primary">确认</button>

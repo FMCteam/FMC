@@ -45,21 +45,18 @@
 							<td>${orderModel.order.styleName }</td>
 							<td>${orderModel.order.askAmount }</td>
 							<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-							<td><form action="${ctx }/finance/confirmPaymentDetail.do" style="display:inline"
+							<td><form action="${ctx }/finance/confirmFinalPaymentDetail.do" style="display:inline"
 									method="post">
-									<input type="hidden" name="id"
-										value="${orderModel.order.orderId }" /> <input type="hidden"
-										name="task_id" value="${orderModel.taskId }" /> <input
-										type="hidden" name="process_id"
-										value="${orderModel.processInstanceId }" />
+									<input type="hidden" name="order_id" value="${orderModel.order.orderId }" /> 
+									<input type="hidden" name="task_id" value="${orderModel.taskId }" /> 
+									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
 									<button class="btn btn-primary btn-rounded">收款确认</button>
 								</form></td>
-							<td><form action="${ctx }/finance/cancelPayment.do" style="display:inline" method="post">
-									<input type="hidden" name="id"
-										value="${orderModel.order.orderId }" /> <input type="hidden"
-										name="task_id" value="${orderModel.taskId }" /> <input
-										type="hidden" name="process_id"
-										value="${orderModel.processInstanceId }" />
+							<td><form action="${ctx }/finance/confirmFinalPaymentSubmit.do" style="display:inline" method="post">
+									<input type="hidden" name="order_id" value="${orderModel.order.orderId }" /> 
+									<input type="hidden" name="task_id" value="${orderModel.taskId }" /> 
+									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+									<input type="hidden" name="paymentok" value="false" />
 									<button class="btn btn-primary btn-rounded">取消订单</button>
 								</form></td>
 						</tr>

@@ -13,7 +13,7 @@ import nju.software.model.OrderInfo;
 
 public interface DesignService {
 	
-	public boolean verify(Account account, int orderId, long taskId, 
+	public boolean verifyDesignSubmit(Account account, int orderId, long taskId, 
 			long processId, boolean designVal, String comment);
 	
 	public boolean costAccounting(Account account, int orderId, long taskId, 
@@ -52,5 +52,9 @@ public interface DesignService {
 	
 	 public boolean uploadCAD(Account account, int orderId, long taskId, 
 				long processId, String url,Timestamp uploadTime);
+
+	public List<OrderInfo> getVerifyDesignList();
+
+	public OrderInfo getVerifyDesignDetail(int orderId, long taskId);
 	
 }

@@ -9,7 +9,7 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">查看员工</h4>
+                    <h4 class="widgettitle">生产验证</h4>
                 <table id="dyntable" class="table table-bordered responsive">
                     <colgroup>
                         <col class="con1" />
@@ -23,28 +23,34 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th class="head0">姓名</th>
-                            <th class="head1">性别</th>
-                            <th class="head0">年龄</th>
-                            <th class="head1">部门</th>
-                            <th class="head0">入职时间</th>
-                            <th class="head1">地址</th>
-                            <th class="head0">电话</th>
+                            <th class="head0">订单号</th>
+                            <th class="head1">业务员</th>
+                            <th class="head0">客户姓名</th>
+                            <th class="head1">客户公司</th>
+                            <th class="head0">款式</th>
+                            <th class="head1">件数</th>
+                            <th class="head0">交货时间</th>
                             <th class="head1"></th>
                         </tr>
                     </thead>
                     <tbody>
-	                    <c:forEach var="employee" items="${employee_list}" >
+	                    <c:forEach var="orderModel" items="${order_list}" >
 	                        <tr class="gradeA">
-	                            <td>${employee.employeeName }</td>
-								<td>${employee.sex }</td>
-								<td>${employee.age }</td>
-								<td>${employee.department }</td>
-								<td>${fn:substring(employee.entryTime,0,10) }</td>
-								<td>${employee.address }</td>
-								<td>${employee.phone1 }</td>
-								<td><a href="${ctx }/account/modifyEmployee.do?id=${employee.employeeId }" class="btn btn-info" title="修改"><i class="iconsweets-create iconsweets-white"></i></a>
-									<a href="${ctx }/account/deleteEmployee.do?id=${employee.employeeId }" class="btn btn-danger" title="删除"><i class="iconsweets-trashcan iconsweets-white"></i></a></td>
+	                            <td>${orderModel.order.orderId }</td>
+								<td>${orderModel.order.employeeId }</td>
+								<td>${orderModel.order.customerName }</td>
+								<td>${orderModel.order.customerCompany }</td>
+								<td>${orderModel.order.styleName }</td>
+								<td>${orderModel.order.askAmount }</td>
+								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+								<td><form action="${ctx }/produce/verifyProduceDetail.do" method="post" >
+									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
+										<input type="hidden" name="task_id" value="${orderModel.task.id }" />
+										<input type="hidden" name="process_id" value="${orderModel.task.processInstanceId }" />
+
+										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 详细信息</button></form>
+
+								</td>
 	                        </tr>
                         </c:forEach>
                     </tbody>

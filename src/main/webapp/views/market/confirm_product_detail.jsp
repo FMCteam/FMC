@@ -9,7 +9,7 @@
 				<h4 class="widgettitle">确认合同加工单</h4>
 				<div class="widgetcontent">
 					<form onSubmit="return verify()" method="post" 
-						action="${ctx }/market/doConfirmProduct.do">
+						action="${ctx }/market/confirmProduceOrderSubmit.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td>订单号</td>
@@ -42,9 +42,10 @@
 								<td colspan="2"><input type="reset" /></td>
 							</tr>
 						</table>
-						<input type="hidden" name="orderId" value="${orderModel.order.orderId}" />
-						<input type="hidden" name="taskId" value="${orderModel.taskId}" />
-						<input type="hidden" name="processId" value="${orderModel.processInstanceId }" />
+						<input type="hidden" name="order_id" value="${orderModel.order.orderId}" />
+						<input type="hidden" name="task_id" value="${orderModel.taskId}" />
+						<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+						<input type="hidden" name="comfirmworksheet" value="true" />
 					</form>
 				</div>
 				<!--widgetcontent-->

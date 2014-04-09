@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.net.ntp.TimeStamp;
+import org.drools.runtime.StatefulKnowledgeSession;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,11 +56,10 @@ public class DesignServiceImpl implements DesignService {
 	private DesignCadDAO DesignCadDAO;
 
 	@Override
-	public boolean verify(Account account, int orderId, long taskId,
+	public boolean verifyDesignSubmit(Account account, int orderId, long taskId,
 			long processId, boolean designVal, String comment) {
 		// TODO Auto-generated method stub
 		// String actorId = account.getUserRole();
-		String actorId = "SHEJIZHUGUAN";
 		// 需要获取task中的数据
 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 				.getKsession().getProcessInstance(processId);
@@ -79,7 +79,7 @@ public class DesignServiceImpl implements DesignService {
 			data.put("designComment", comment);
 			// 直接进入到下一个流程时
 			try {
-				jbpmAPIUtil.completeTask(taskId, data, actorId);
+				jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -202,6 +202,7 @@ public class DesignServiceImpl implements DesignService {
 		}
 		return false;
 	}
+
 
 	
 	
@@ -383,5 +384,53 @@ public class DesignServiceImpl implements DesignService {
 	
 		
 	
+
+	@Override
+	public List<OrderInfo> getVerifyDesignList() {
+		// TODO Auto-generated method stub
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_DESIGN_MANAGER, TASK_VERIFY_DESIGN);
+		List<OrderInfo> orderList = new ArrayList<OrderInfo>();
+		if (list.isEmpty()) {
+			System.out.println("no task list");
+		}
+		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
+		WorkflowProcessInstance process = null;
+		for (TaskSummary task : list) {
+			// 需要获取task中的数据
+			long processId = task.getProcessInstanceId();
+			process = (WorkflowProcessInstance) session
+					.getProcessInstance(processId);
+			int orderId = (int) process.getVariable("orderId");
+			OrderInfo oi = new OrderInfo();
+			oi.setOrder(orderDAO.findById(orderId));
+			oi.setTask(task);
+			orderList.add(oi);
+		}
+		return orderList;
+	}
+
+	@Override
+	public OrderInfo getVerifyDesignDetail(int orderId, long taskId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_DESIGN_MANAGER, TASK_VERIFY_DESIGN);
+		for (TaskSummary task : list) {
+			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+					.getKsession().getProcessInstance(task.getProcessInstanceId());
+			int orderId_process = (int) process.getVariable("orderId");
+			if (orderId == orderId_process && taskId == task.getId() ) {
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setLogistics(logisticsDAO.findById(orderId));
+				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
+	}
+
 
 }
