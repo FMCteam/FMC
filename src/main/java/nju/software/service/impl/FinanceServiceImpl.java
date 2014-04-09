@@ -18,6 +18,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
+import nju.software.model.OrderInfo;
 import nju.software.model.SampleMoneyConfirmTaskSummary;
 import nju.software.service.FinanceService;
 import nju.software.util.JbpmAPIUtil;
@@ -26,13 +27,10 @@ import nju.software.util.JbpmAPIUtil;
 @Service("financeServiceImpl")
 public class FinanceServiceImpl implements FinanceService {
 	
-	
 	public final static String ACTOR_FINANCE_MANAGER = "financeManager";
 	public final static String TASK_CONFIRM_SAMPLE_MONEY = "confirmSampleMoney";
 	public final static String TASK_CONFIRM_DEPOSIT = "confirmDeposit";
 	public final static String TASK_CONFIRM_FINAL_PAYMENT = "confirmFinalPayment";
-
-
 	
 	
 	@Autowired
@@ -46,69 +44,17 @@ public class FinanceServiceImpl implements FinanceService {
 	
 	private String actorId="CAIWUZHUGUAN";
 	
-	@Override
-	public List<SampleMoneyConfirmTaskSummary> getSampleMoneyConfirmTaskSummaryList() {
-		// TODO Auto-generated method stub
-		
-		List<TaskSummary> list =jbpmAPIUtil.getAssignedTasksByTaskname(actorId, "comfirm_sample");
-		List<SampleMoneyConfirmTaskSummary>taskList=new ArrayList<>();
-		
-		for(TaskSummary task:list){
-			Integer orderId=(Integer) getVariable(task, "orderId");
-			Order order=orderDAO.findById(orderId);
-			Quote quote=(Quote) quoteDAO.findByProperty("orderId", orderId).get(0);
-			taskList.add(SampleMoneyConfirmTaskSummary.getInstance(order, quote));
-		}
-		return taskList;
-	}
-
-	@Override
-	public SampleMoneyConfirmTaskSummary getSampleMoneyConfirmTask(long taskId,Integer orderId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
 
 	
-	@Override
-	public void sampleMoneyConfirm(long taskId, Money money) {
-		// TODO Auto-generated method stub
-		moneyDAO.save(money);
-		Map<String,Object>data=new HashMap<String,Object>();
-		data.put("receivedsamplejin", true);
-		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
-	@Override
-	public void sampleMoneyNoConfirm(long taskId) {
-		// TODO Auto-generated method stub
-		Map<String,Object>data=new HashMap<String,Object>();
-		data.put("receivedsamplejin", false);
-		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	
-	private Object getVariable(TaskSummary task,String name){
-		long processId = task.getProcessInstanceId();
-		WorkflowProcessInstance process=(WorkflowProcessInstance) jbpmAPIUtil.getKsession().getProcessInstance(processId);
-		return process.getVariable("orderId");
-	}
 
 	
-	//===============================================================================
+
 	
-	/**
-	 * 确认样衣制作金
-	 */
+	
+	
 	@Override
 	public boolean confirmSampleMoneySubmit(Account account, int orderId, long taskId,
 			long processId, boolean receivedsamplejin, Money money) {
@@ -200,7 +146,109 @@ public class FinanceServiceImpl implements FinanceService {
 			}
 			return true;
 		}
+		return false;
+	}
 
+	@Override
+	public List<OrderInfo> getConfirmSampleMoneyList(String actorId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				actorId, TASK_CONFIRM_SAMPLE_MONEY);
+		List<OrderInfo> list = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
+		}
+		return list;
+	}
+
+	@Override
+	public OrderInfo getConfirmSampleMoneyDetail(String actorId, Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(actorId,
+				TASK_CONFIRM_SAMPLE_MONEY, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setTask(task);
+		return orderInfo;
+	}
+
+	@Override
+	public boolean confirmSampleMoneySubmit() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<OrderInfo> getConfirmDepositList(String actorId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				actorId, TASK_CONFIRM_DEPOSIT);
+		List<OrderInfo> list = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
+		}
+		return list;
+	}
+
+	@Override
+	public OrderInfo getConfirmDepositDetail(String actorId, Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(actorId,
+				TASK_CONFIRM_DEPOSIT, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setTask(task);
+		return orderInfo;
+	}
+
+	@Override
+	public boolean confirmDepositSubmit() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<OrderInfo> getConfirmFinalPaymentList(String actorId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				actorId, TASK_CONFIRM_FINAL_PAYMENT);
+		List<OrderInfo> list = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
+		}
+		return list;
+	}
+
+	@Override
+	public OrderInfo getConfirmFinalPaymentDetail(String actorId,
+			Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(actorId,
+				TASK_CONFIRM_FINAL_PAYMENT, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setTask(task);
+		return orderInfo;
+	}
+
+	@Override
+	public boolean confirmFinalPaymentSubmit() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 }

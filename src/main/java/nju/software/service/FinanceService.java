@@ -4,18 +4,32 @@ import java.util.List;
 
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Money;
+import nju.software.model.OrderInfo;
 import nju.software.model.SampleMoneyConfirmTaskSummary;
 
 public interface FinanceService {
 	
+	//===========================样衣金确认=================================
+	public List<OrderInfo>getConfirmSampleMoneyList(String actorId);
 	
-	public List<SampleMoneyConfirmTaskSummary> getSampleMoneyConfirmTaskSummaryList();
+	public OrderInfo getConfirmSampleMoneyDetail(String actorId,Integer orderId);
 	
-	public SampleMoneyConfirmTaskSummary getSampleMoneyConfirmTask(long taskId,Integer orderId);
+	public boolean confirmSampleMoneySubmit();
 	
-	public void sampleMoneyConfirm(long taskId,Money money);
+	//===========================定金确认===================================
+	public List<OrderInfo>getConfirmDepositList(String actorId);
 	
-	public void sampleMoneyNoConfirm(long taskId);
+	public OrderInfo getConfirmDepositDetail(String actorId,Integer orderId);
+	
+	public boolean confirmDepositSubmit();
+	
+	//===========================尾款确认===================================
+	public List<OrderInfo>getConfirmFinalPaymentList(String actorId);
+	
+	public OrderInfo getConfirmFinalPaymentDetail(String actorId,Integer orderId);
+	
+	public boolean confirmFinalPaymentSubmit();
+	
 	
 	public boolean confirmSampleMoneySubmit(Account account, int orderId, long taskId, 
 			long processId, boolean receivedsamplejin, Money money);
