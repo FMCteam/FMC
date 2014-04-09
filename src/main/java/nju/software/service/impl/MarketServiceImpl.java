@@ -205,7 +205,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public List<Product> getProduct(int orderId, String productAskAmount,
+	public List<Product> getProductList(int orderId, String productAskAmount,
 			String productColor, String productStyle) {
 		// TODO Auto-generated method stub
 
@@ -228,11 +228,11 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public boolean confirmProduct(Account account, int orderId, long taskId,
+	public boolean confirmProduceOrderSubmit(Account account, int orderId, long taskId,
 			long processId, boolean comfirmworksheet, List<Product> productList) {
 		// TODO Auto-generated method stub
 		// String actorId = account.getUserRole();
-		String actorId = "SHICHANGZHUANYUAN";
+		String actorId = ACTOR_MARKET_STAFF;
 		// 需要获取task中的数据
 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 				.getKsession().getProcessInstance(processId);
