@@ -43,8 +43,8 @@
 								<td>${fn:substring(employee.entryTime,0,10) }</td>
 								<td>${employee.address }</td>
 								<td>${employee.phone1 }</td>
-								<td><a href="${ctx }/account/modify.do?id=${employee.employeeId }" class="btn btn-info" title="修改"><i class="iconsweets-create iconsweets-white"></i></a>
-									<a href="${ctx }/account/delete.do?id=${employee.employeeId }" class="btn btn-danger" title="删除"><i class="iconsweets-trashcan iconsweets-white"></i></a></td>
+								<td><a href="${ctx }/account/modifyEmployee.do?id=${employee.employeeId }" class="btn btn-info" title="修改"><i class="iconsweets-create iconsweets-white"></i></a>
+									<a href="${ctx }/account/deleteEmployee.do?id=${employee.employeeId }" class="btn btn-danger" title="删除"><i class="iconsweets-trashcan iconsweets-white"></i></a></td>
 	                        </tr>
                         </c:forEach>
                     </tbody>
