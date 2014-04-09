@@ -18,7 +18,7 @@
                     <div class="widget">
 			            <h4 class="widgettitle">添加员工</h4>
 			            <div class="widgetcontent">
-				            <form class="stdform" action="${ctx }/employee/doAdd.do" method="post">
+				            <form class="stdform" action="${ctx }/employee/addEmployeeSubmit.do" method="post">
 								<p>
 		                            <label>用户名</label>
 		                            <span class="field"><input type="text" name="employee_id" class="input-large" placeholder="用户名" />&nbsp;<span style="color:#ff0000;">*</span>(必填)</span>

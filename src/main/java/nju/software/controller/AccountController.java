@@ -47,7 +47,7 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "employee/add.do", method= RequestMethod.GET)
+	@RequestMapping(value = "employee/addEmployee.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String addEmployee(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -63,9 +63,9 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "employee/doAdd.do", method= RequestMethod.POST)
+	@RequestMapping(value = "employee/addEmployeeSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String doAddEmployee(HttpServletRequest request,
+	public String addEmployeeSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String username = request.getParameter("employee_id");
 		String employeeName = request.getParameter("employee_name");
@@ -140,9 +140,9 @@ public class AccountController {
 		}
 		
 		if (success) {
-			return "redirect:/employee/search.do";
+			return "redirect:/employee/getEmployeeList.do";
 		} else {
-			return "redirect:/employee/add.do";
+			return "redirect:/employee/addEmployee.do";
 		}
 
 	}
@@ -153,9 +153,9 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "employee/search.do", method= RequestMethod.GET)
+	@RequestMapping(value = "employee/getEmloyeeList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String getEmployee(HttpServletRequest request,
+	public String getEmployeeList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int page;
 		int numberPerPage;
@@ -189,7 +189,7 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "account/modify.do", method= RequestMethod.GET)
+	@RequestMapping(value = "account/modifyEmployee.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyEmployee(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -228,9 +228,9 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "account/doModify.do", method= RequestMethod.POST)
+	@RequestMapping(value = "account/modifyEmployeeSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String doModifyEmployee(HttpServletRequest request,
+	public String modifyEmployeeSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		String username = request.getParameter("employee_id");
@@ -273,7 +273,7 @@ public class AccountController {
 			request.setAttribute("msg", "两次输入密码不相同！");
 //			session.setAttribute("msg", "两次输入密码不相同！");
 			System.out.println("password");
-			return "redirect:/account/modify.do";
+			return "redirect:/account/modifyEmployee.do";
 		}
 		
 		boolean success = false;
@@ -342,9 +342,9 @@ public class AccountController {
 		}
 		
 		if (success) {
-			return "redirect:/employee/search.do";
+			return "redirect:/employee/getEmployeeList.do";
 		} else {
-			return "redirect:/account/modify.do";
+			return "redirect:/account/modifyEmployee.do";
 		}
 	}
 	
@@ -355,7 +355,7 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "account/delete.do", method= RequestMethod.GET)
+	@RequestMapping(value = "account/deleteEmployee.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String deleteEmployee(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -381,10 +381,10 @@ public class AccountController {
 		
 		if (success) {
 			System.out.println("employee delete success");
-			return "redirect:/employee/search.do";
+			return "redirect:/employee/getEmployeeList.do";
 		} else {
 			System.out.println("employee delete failed");
-			return "redirect:/employee/search.do";
+			return "redirect:/employee/getEmployeeList.do";
 		}
 	}
 	/**

@@ -31,12 +31,12 @@
 						<td>${order.getLog().getInPostSampleClothesNumber() }</td>
 						<td>${fn:substring(order.getLog().getInPostSampleClothesTime(),0,10) }</td>
 					<td>
-						<form action="${ctx }/logistics/sampleOrderRequest.do" method="post" style="display: inline;">
+						<form action="${ctx }/logistics/receiveSampleSubmit.do" method="post" style="display: inline;">
 									<input type="hidden" name="confirm" value="1" /><input type="hidden" name="orderId" value="${order.getO().getOrderId() }" />
 									<input type="hidden" name="taskId" value="${order.getTaskId() }" />
 									<input type="hidden" name="processInstanceId" value="${order.getProcessId() }" />
 									<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 收到</button></form>
-									<form action="${ctx }/logistics/sampleOrderRequest.do" method="post" style="display: inline;">
+									<form action="${ctx }/logistics/receiveSampleSubmit.do" method="post" style="display: inline;">
 									<input type="hidden" name="confirm" value="0" /><input type="hidden" name="orderId" value="${order.getO().getOrderId() }" />
 									<input type="hidden" name="taskId" value="${order.getTaskId() }" />
 									<input type="hidden" name="processInstanceId" value="${order.getProcessId() }" />

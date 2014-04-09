@@ -1,4 +1,4 @@
-package nju.software.service.impl;
+﻿package nju.software.service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -52,7 +52,6 @@ public class MarketServiceImpl implements MarketService {
 	public final static String TASK_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder";
 	public final static String TASK_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
 	public final static String TASK_SIGN_CONTRACT = "signContract";
-	
 
 	@Autowired
 	private ProductDAO productDAO;
@@ -70,47 +69,45 @@ public class MarketServiceImpl implements MarketService {
 	private FabricDAO fabricDAO;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
-	
 
-	
 	@Override
 	public List<Customer> getAddOrderList() {
 		// TODO Auto-generated method stub
 		return customerDAO.findAll();
 	}
-	
-	
+
 	@Override
 	public Customer getAddOrderDetail(Integer cid) {
 		// TODO Auto-generated method stub
 		return customerDAO.findById(cid);
 	}
-	
-	
+
 	@Override
 	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		
+
 		// 添加订单信息
 		orderDAO.save(order);
-		
-		Integer orderId=order.getOrderId();
+
+		Integer orderId = order.getOrderId();
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		
-		if(multipartRequest.getFile("sample_clothes_picture")!=null){
-			String filedir=request.getSession().getServletContext().getRealPath("/upload/sampleClothesPicture/"+orderId);
-			FileOperateUtil.Upload(request, filedir, null, "sample_clothes_picture");
+
+		if (multipartRequest.getFile("sample_clothes_picture") != null) {
+			String filedir = request.getSession().getServletContext()
+					.getRealPath("/upload/sampleClothesPicture/" + orderId);
+			FileOperateUtil.Upload(request, filedir, null,
+					"sample_clothes_picture");
 		}
-		if(multipartRequest.getFile("reference_picture")!=null){
-			String filedir=request.getSession().getServletContext().getRealPath("/upload/reference_picture/"+orderId);
+		if (multipartRequest.getFile("reference_picture") != null) {
+			String filedir = request.getSession().getServletContext()
+					.getRealPath("/upload/reference_picture/" + orderId);
 			FileOperateUtil.Upload(request, filedir, null, "reference_picture");
 		}
 
 		orderDAO.attachDirty(order);
 
-		
 		// 添加面料信息
 		for (Fabric fabric : fabrics) {
 			fabric.setOrderId(orderId);
@@ -138,7 +135,6 @@ public class MarketServiceImpl implements MarketService {
 		return false;
 	}
 
-	
 	/**
 	 * 启动流程
 	 */
@@ -152,11 +148,6 @@ public class MarketServiceImpl implements MarketService {
 			ex.printStackTrace();
 		}
 	}
-	
-	
-	
-
-
 
 	@Override
 	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(
@@ -363,11 +354,12 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	
+	//==========================报价商定=======================
 	@Override
 	public List<OrderInfo> getConfirmQuoteList(String actorId) {
 		// TODO Auto-generated method stub
-		 List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-		 actorId, TASK_CONFIRM_QUOTE);
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				actorId, TASK_CONFIRM_QUOTE);
 		List<OrderInfo> list = new ArrayList<OrderInfo>();
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) getVariable("orderId", task);
@@ -380,11 +372,15 @@ public class MarketServiceImpl implements MarketService {
 		return list;
 	}
 
-	
 	@Override
-	public OrderInfo getConfirmQuoteDetail(Integer orderId) {
+	public OrderInfo getConfirmQuoteDetail(String arctorId, Integer orderId) {
 		// TODO Auto-generated method stub
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(arctorId,
+				TASK_CONFIRM_QUOTE, orderId);
+		OrderInfo model = new OrderInfo();
+		model.setOrder(orderDAO.findById(orderId));
+		model.setTask(task);
+		return model;
 	}
 
 	@Override
@@ -416,7 +412,6 @@ public class MarketServiceImpl implements MarketService {
 		}
 	}
 
-
 	@Override
 	public List<OrderInfo> getModifyQuoteList(Integer userId) {
 		// TODO Auto-generated method stub
@@ -436,11 +431,11 @@ public class MarketServiceImpl implements MarketService {
 		return models;
 	}
 
-
 	@Override
 	public OrderInfo getModifyQuoteDetail(int orderId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(ACTOR_MARKET_STAFF, TASK_MODIFY_QUOTE);
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_MARKET_STAFF, TASK_MODIFY_QUOTE);
 		if (list.isEmpty()) {
 			System.out.println("no task list");
 		}
@@ -462,7 +457,6 @@ public class MarketServiceImpl implements MarketService {
 		return null;
 	}
 
-
 	@Override
 	public OrderInfo getModifyProductDetail(int id, long taskId) {
 		// TODO Auto-generated method stub
@@ -470,7 +464,7 @@ public class MarketServiceImpl implements MarketService {
 				ACTOR_MARKET_STAFF, TASK_MODIFY_PRODUCE_ORDER);
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) getVariable("orderId", task);
-			if(id==orderId && taskId==task.getId()){
+			if (id == orderId && taskId == task.getId()) {
 				OrderInfo oi = new OrderInfo();
 				oi.setOrder(orderDAO.findById(orderId));
 				oi.setTask(task);
@@ -480,6 +474,34 @@ public class MarketServiceImpl implements MarketService {
 		return null;
 	}
 
+	//==========================签订合同=======================
+	@Override
+	public List<OrderInfo> getSignContractList(String actorId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				actorId, TASK_SIGN_CONTRACT);
+		List<OrderInfo> list = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
+		}
+		return list;
+	}
+
+	@Override
+	public OrderInfo getSignContractDetail(String arctorId, Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(arctorId,
+				TASK_SIGN_CONTRACT, orderId);
+		OrderInfo model = new OrderInfo();
+		model.setOrder(orderDAO.findById(orderId));
+		model.setTask(task);
+		return model;
+	}
 
 	@Override
 	public List<OrderInfo> getMergeQuoteList(Integer accountId) {
@@ -568,5 +590,20 @@ public class MarketServiceImpl implements MarketService {
 		}
 	}
 
+	public boolean signContractSubmit(String actorId, long taskId, String result,Integer orderId,double discount) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(orderId);
+		order.setDiscount(discount);
+		orderDAO.attachDirty(order);
+		Map<String, Object> data = new HashMap<>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }

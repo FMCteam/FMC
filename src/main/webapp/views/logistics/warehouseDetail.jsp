@@ -9,46 +9,71 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">查看员工</h4>
+                    <h4 class="widgettitle">入库订单详情</h4>
+                      <form onsubmit="return verify()" action="${ctx }/logistics/warehouseSubmit.do" method="post">
                 <table id="dyntable" class="table table-bordered responsive">
-                    <colgroup>
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th class="head0">姓名</th>
-                            <th class="head1">性别</th>
-                            <th class="head0">年龄</th>
-                            <th class="head1">部门</th>
-                            <th class="head0">入职时间</th>
-                            <th class="head1">地址</th>
-                            <th class="head0">电话</th>
-                            <th class="head1"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-	                    <c:forEach var="employee" items="${employee_list}" >
-	                        <tr class="gradeA">
-	                            <td>${employee.employeeName }</td>
-								<td>${employee.sex }</td>
-								<td>${employee.age }</td>
-								<td>${employee.department }</td>
-								<td>${fn:substring(employee.entryTime,0,10) }</td>
-								<td>${employee.address }</td>
-								<td>${employee.phone1 }</td>
-								<td><a href="${ctx }/account/modifyEmployee.do?id=${employee.employeeId }" class="btn btn-info" title="修改"><i class="iconsweets-create iconsweets-white"></i></a>
-									<a href="${ctx }/account/deleteEmployee.do?id=${employee.employeeId }" class="btn btn-danger" title="删除"><i class="iconsweets-trashcan iconsweets-white"></i></a></td>
-	                        </tr>
-                        </c:forEach>
-                    </tbody>
+                
+                  	<tr>
+								<td rowspan=${product_list.size()+1 } >生产情况</td>
+								<td >生产编号</td>
+								<td >订单要求</td>
+								<td >实际生产</td>
+								<td >自检合格</td>
+								<td >颜色</td>
+								<td >款式</td>
+								
+							</tr>
+							<c:forEach var="product" items="${product_list}" >
+								<tr>
+										 
+										
+											<td>${product.id }</td>
+											<td>${product.askAmount }</td>
+											<td>${product.produceAmount }</td>
+											
+											<td>${product.qualifiedAmount }</td>
+											<td>${product.color }</td>
+											<td>${product.style }</td>
+										
+										
+									</tr>
+						  </c:forEach>
+			<tr>
+								<td rowspan="3">包</td>
+								<td >衣服款式</td>
+								<td >衣服颜色</td>
+								<td >衣服数量</td>
+								<td>操作</td>
+								<input id="clothes_amount" name="clothes_amount" type="hidden" />
+								<input id="clothes_style_color" name="clothes_style_color" type="hidden" />
+								<input id="clothes_style_name" name="clothes_style_name" type="hidden" />
+							</tr>
+							
+							<tr>
+								<td colspan="6" class="innertable"><table
+										class="span12 table package_table">
+										<tr class="addrow">
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
+											<td><a>添加</a></td>
+										</tr>
+									</table></td>
+			</tr>
+			<tr>
+							<td>打包时间</td>
+							<td><input id="datepicker" type="text" name="package_date"  class="input-medium "></td>
+							</tr>
+							<tr> <td><a id="addpackage" >添加包</a></td></tr>
+                 
                 </table>
+                <input  name="task_id" type="hidden" value=${task_id }>
+                <input name="order_id" type="hidden" value=${order_id }>
+                <input name="process_id" type="hidden" value=${process_id }>
+                  <p class="stdformbutton">
+                        <button class="btn btn-primary">添加</button>
+                    </p>
+                </form>
                 <div class="dataTables_paginate paging_full_numbers" id="dyntable_paginate" style="float:right">
                 	<c:if test="${page==1 }">
 	                	<a tabindex="0" class="first paginate_button paginate_button_disabled" id="dyntable_first">首页</a>
@@ -90,7 +115,7 @@
 	                	<a tabindex="0" class="next paginate_button" id="dyntable_next" href="${ctx }/employee/search.do?page=${page+1 }&number_per_page=1">下一页</a>
 						<a tabindex="0" class="last paginate_button" id="dyntable_last" href="${ctx }/employee/search.do?page=${page_number }&number_per_page=1">尾页</a>
                 	</c:if>
-					<c:if test="${page==page_number&&page_number>0 }">
+					<c:if test="${page==page_number }">
 	                	<a tabindex="0" class="next paginate_button paginate_button_disabled" id="dyntable_next">下一页</a>
 						<a tabindex="0" class="last paginate_button paginate_button_disabled" id="dyntable_last">尾页</a>
                 	</c:if>
@@ -114,7 +139,7 @@
         
         <!-- 这里引入你需要的js文件 -->
         <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-        
-        
+        <script type="text/javascript" src="${ctx}/js/order/add_package.js"></script>
+         <script type="text/javascript" src="${ctx}/js/form.js"></script>
         <%@include file="/common/footer.jsp" %>
     

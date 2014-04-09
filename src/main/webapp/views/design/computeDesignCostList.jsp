@@ -9,71 +9,50 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">入库订单详情</h4>
-                      <form onsubmit="return verify()" action="${ctx }/logistics/rukuDetailPost.do" method="post">
+                    <h4 class="widgettitle">设计成本核算</h4>
                 <table id="dyntable" class="table table-bordered responsive">
-                
-                  	<tr>
-								<td rowspan=${product_list.size()+1 } >生产情况</td>
-								<td >生产编号</td>
-								<td >订单要求</td>
-								<td >实际生产</td>
-								<td >自检合格</td>
-								<td >颜色</td>
-								<td >款式</td>
-								
-							</tr>
-							<c:forEach var="product" items="${product_list}" >
-								<tr>
-										 
-										
-											<td>${product.id }</td>
-											<td>${product.askAmount }</td>
-											<td>${product.produceAmount }</td>
-											
-											<td>${product.qualifiedAmount }</td>
-											<td>${product.color }</td>
-											<td>${product.style }</td>
-										
-										
-									</tr>
-						  </c:forEach>
-			<tr>
-								<td rowspan="3">包</td>
-								<td >衣服款式</td>
-								<td >衣服颜色</td>
-								<td >衣服数量</td>
-								<td>操作</td>
-								<input id="clothes_amount" name="clothes_amount" type="hidden" />
-								<input id="clothes_style_color" name="clothes_style_color" type="hidden" />
-								<input id="clothes_style_name" name="clothes_style_name" type="hidden" />
-							</tr>
-							
-							<tr>
-								<td colspan="6" class="innertable"><table
-										class="span12 table package_table">
-										<tr class="addrow">
-											<td><input class="span12" type="text" /></td>
-											<td><input class="span12" type="text" /></td>
-											<td><input class="span12" type="text" /></td>
-											<td><a>添加</a></td>
-										</tr>
-									</table></td>
-			</tr>
-			<tr>
-							<td>打包时间</td>
-							<td><input id="datepicker" type="text" name="package_date"  class="input-medium "></td>
-							</tr>
-							<tr> <td><a id="addpackage" >添加包</a></td></tr>
-                 
+                    <colgroup>
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                        <col class="con0" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="head0">订单号</th>
+                            <th class="head1">业务员</th>
+                            <th class="head0">客户姓名</th>
+                            <th class="head1">客户公司</th>
+                            <th class="head0">款式</th>
+                            <th class="head1">件数</th>
+                            <th class="head0">交货时间</th>
+                            <th class="head1"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+	                    <c:forEach var="orderModel" items="${list}" >
+	                        <tr class="gradeA">
+	                            <td>${orderModel.order.orderId }</td>
+								<td>${orderModel.order.employeeId }</td>
+								<td>${orderModel.order.customerName }</td>
+								<td>${orderModel.order.customerCompany }</td>
+								<td>${orderModel.order.styleName }</td>
+								<td>${orderModel.order.askAmount }</td>
+								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+								<td><form action="${ctx }/design/computeDesignCostDetail.do" method="post" >
+									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
+										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
+										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 成本核算</button></form>
+								</td>
+	                        </tr>
+                        </c:forEach>
+                    </tbody>
                 </table>
-                <input  name="task_id" type="hidden" value=${task_id }>
-                <input name="order_id" type="hidden" value=${order_id }>
-                <input name="process_id" type="hidden" value=${process_id }>
-                  <p class="stdformbutton">
-                        <button class="btn btn-primary">添加</button>
-                    </p>
-                </form>
                 <div class="dataTables_paginate paging_full_numbers" id="dyntable_paginate" style="float:right">
                 	<c:if test="${page==1 }">
 	                	<a tabindex="0" class="first paginate_button paginate_button_disabled" id="dyntable_first">首页</a>
@@ -115,7 +94,7 @@
 	                	<a tabindex="0" class="next paginate_button" id="dyntable_next" href="${ctx }/employee/search.do?page=${page+1 }&number_per_page=1">下一页</a>
 						<a tabindex="0" class="last paginate_button" id="dyntable_last" href="${ctx }/employee/search.do?page=${page_number }&number_per_page=1">尾页</a>
                 	</c:if>
-					<c:if test="${page==page_number }">
+					<c:if test="${page==page_number&&page_number>0 }">
 	                	<a tabindex="0" class="next paginate_button paginate_button_disabled" id="dyntable_next">下一页</a>
 						<a tabindex="0" class="last paginate_button paginate_button_disabled" id="dyntable_last">尾页</a>
                 	</c:if>
@@ -139,7 +118,7 @@
         
         <!-- 这里引入你需要的js文件 -->
         <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-        <script type="text/javascript" src="${ctx}/js/order/add_package.js"></script>
-         <script type="text/javascript" src="${ctx}/js/form.js"></script>
+        
+        
         <%@include file="/common/footer.jsp" %>
     

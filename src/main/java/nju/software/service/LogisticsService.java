@@ -14,6 +14,14 @@ public interface LogisticsService {
 	public boolean receiveSampleSubmit(long taskId,String result);
 	
 	
+	 public List<OrderInfo> getSendClothesList();
+		
+		public OrderInfo getSendClothesDetail(Integer orderId);
+
+		public void sendClothesSubmit(int orderId,long taskId,float logistics_cost);
+	
+	
+	
 	public List<OrderInfo>getWarehouseList();
 	
 	public OrderInfo getWarehouseDetail(Integer orderId);

@@ -9,7 +9,7 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">入库订单列表</h4>
+                    <h4 class="widgettitle">设计部确认</h4>
                 <table id="dyntable" class="table table-bordered responsive">
                     <colgroup>
                         <col class="con1" />
@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-	                    <c:forEach var="orderModel" items="${order_model_list}" >
+	                    <c:forEach var="orderModel" items="${list}" >
 	                        <tr class="gradeA">
 	                            <td>${orderModel.order.orderId }</td>
 								<td>${orderModel.order.employeeId }</td>
@@ -43,11 +43,11 @@
 								<td>${orderModel.order.styleName }</td>
 								<td>${orderModel.order.askAmount }</td>
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx }/logistics/rukuDetail.do" method="post" >
-									<input type="hidden" name="order_id" value="${orderModel.order.orderId }" />
+								<td><form action="${ctx }/design/getModifyDesignDetail.do" method="post" >
+									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
 										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
 										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 详细信息</button></form>
+										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 上传Cad文件</button></form>
 								</td>
 	                        </tr>
                         </c:forEach>

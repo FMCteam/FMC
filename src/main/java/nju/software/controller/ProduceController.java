@@ -117,36 +117,7 @@ public class ProduceController {
 	}
 	
 	
-	@RequestMapping(value = "/produce/produceSampleList.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String sampleProduceList(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		List<OrderInfo> list = produceService.getProduceSampleList();
-		model.addAttribute("list", list);
-		return "/produce/produceSampleList";
-	}
-	
-	
-	@RequestMapping(value = "/produce/produceSampleDetail.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String produceSampleDetail(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
-		model.addAttribute("orderInfo", orderInfo);
-		return "/produce/produceSampleDetail";
-	}
-	
-	
-	@RequestMapping(value = "/produce/produceSampleSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String sampleProduceSubmit(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		String result = request.getParameter("result");
-		String taskId = request.getParameter("taskId");
-		produceService.produceSampleSubmit(Long.parseLong(taskId), result);
-		return "forward:/produce/produceSampleList.do";
-	}
+
 	
 	
 	
@@ -170,8 +141,8 @@ public class ProduceController {
 	public String computeProduceCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-	List<OrderInfo>tasks=produceService.getComputeProduceCostList();
-		model.addAttribute("tasks", tasks);
+	List<OrderInfo>list=produceService.getComputeProduceCostList();
+		model.addAttribute("list", list);
 		
 		return "/produce/computeProduceCostList";
 	}
@@ -193,8 +164,8 @@ public class ProduceController {
 		
 		
 		String orderId=request.getParameter("orderId");
-		OrderInfo task=produceService.getComputeProduceCostInfo(Integer.parseInt(orderId));
-		model.addAttribute("task", task);
+		OrderInfo orderInfo=produceService.getComputeProduceCostInfo(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
 		return "/produce/computeProduceCostDetail";
 	}
 	
@@ -217,35 +188,23 @@ public class ProduceController {
 	public String doCostAccounting(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		
-	
 		String orderId = (String) request.getParameter("orderId");
-	
-		String taskId = request.getParameter("taskId");
-		
-	   //裁剪费用
+	    String taskId = request.getParameter("taskId");
+		//裁剪费用
 		String cut_cost = request.getParameter("cut_cost");
-		
 		//管理费用
 		String manage_cost = request.getParameter("manage_cost");
-		
 		//缝制费用
 		String nail_cost = request.getParameter("nail_cost");
-		
 		//整烫费用
 	    String ironing_cost = request.getParameter("ironing_cost");
-	
-		//锁订费用
+	  //锁订费用
 		String swing_cost = request.getParameter("swing_cost");
-		
 		//包装费用
 		String package_cost = request.getParameter("package_cost");
-	
 		//其他费用
 		String other_cost = request.getParameter("other_cost");
-		
-		
-	
+	    
 		produceService.ComputeProduceCostSubmit(
 				Integer.parseInt(orderId),
 				 Long.parseLong(taskId), 
@@ -262,9 +221,40 @@ public class ProduceController {
 	}
 	
 	
+	//=======================样衣生产=======================
+	@RequestMapping(value = "/produce/produceSampleList.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String produceSampleList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<OrderInfo> list = produceService.getProduceSampleList();
+		model.addAttribute("list", list);
+		return "/produce/produceSampleList";
+	}
 	
 	
+	@RequestMapping(value = "/produce/produceSampleDetail.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String produceSampleDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		OrderInfo orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/produce/produceSampleDetail";
+	}
 	
+	
+	@RequestMapping(value = "/produce/produceSampleSubmit.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String produceSampleSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String result = request.getParameter("result");
+		String taskId = request.getParameter("taskId");
+		produceService.produceSampleSubmit(Long.parseLong(taskId), result);
+		return "forward:/produce/produceSampleList.do";
+	}
+	
+	
+	//=====================批量生产======================
 	@RequestMapping(value = "/produce/produceList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String produceList(HttpServletRequest request,
@@ -273,8 +263,6 @@ public class ProduceController {
 		model.addAttribute("list", list);
 		return "/produce/produceList";
 	}
-	
-	
 	
 	
 	@RequestMapping(value = "/produce/produceDetail.do")
