@@ -60,14 +60,6 @@ public class LogisticsController {
 	
 	
 	//=============================收取样衣=====================================
-	/**
-	 * 收取样衣列表
-	 * @author 莫其凡
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
 	@RequestMapping(value = "/logistics/receiveSampleList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String receiveSampleList(HttpServletRequest request,
@@ -77,16 +69,19 @@ public class LogisticsController {
 		return "/logistics/receiveSampleList";
 	}
 	
+	@RequestMapping(value = "/logistics/receiveSampleDetail.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String receiveSampleDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		OrderInfo orderInfo=logisticsService.getReceiveSampleDetail(orderId);
+		model.addAttribute("orderInfo",orderInfo);
+		return "/logistics/receiveSampleDetail";
+	}
 	
-	/**
-	 * 收取样衣提交
-	 * @author 莫其凡
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "logistics/receiveSampleSubmit.do")
+	
+
+	@RequestMapping(value = "/logistics/receiveSampleSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String receiveSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {

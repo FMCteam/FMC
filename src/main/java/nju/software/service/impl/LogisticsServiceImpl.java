@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nju.software.controller.LogisticsController.ComposeOrderAndLog;
+import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.AccountDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.EmployeeDAO;
+import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.PackageDAO;
@@ -42,6 +44,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 					.getVariable(task, "orderId");
 			OrderInfo orderInfo = new OrderInfo();
 			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setLogistics(logisticsDAO.findById(orderId));
 			orderInfo.setTask(task);
 			list.add(orderInfo);
 		}
@@ -56,6 +59,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 				TASK_RECEIVE_SAMPLE, orderId);
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setLogistics(logisticsDAO.findById(orderId));
+		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
 		orderInfo.setTask(task);
 		return orderInfo;
 	}
@@ -228,6 +234,10 @@ public class LogisticsServiceImpl implements LogisticsService {
 	private ProductDAO productDAO;
 	@Autowired
 	private PackageDAO packageDAO;
+	@Autowired
+	private AccessoryDAO accessoryDAO;
+	@Autowired
+	private FabricDAO fabricDAO;
 	
 	public final static String ACTOR_LOGISTICS_MANAGER = "logisticsManager";
 	public final static String TASK_RECEIVE_SAMPLE = "receiveSample";

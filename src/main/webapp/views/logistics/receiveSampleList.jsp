@@ -2,20 +2,16 @@
 <%@include file="/common/header.jsp"%>
 
 
-
-
-
-
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<table class="table table-stripe">
+			<section>
+			<table class="table">
+				<caption>客户下单</caption>
 				<tr>
 					<th>询单编号</th>
-					<th>客户编号</th>
 					<th>客户姓名</th>
-
 					<th>快递名称</th>
 					<th>快递单号</th>
 					<th>邮寄时间</th>
@@ -23,34 +19,21 @@
 				</tr>
 				<c:forEach var="task" items="${list}">
 					<tr>
-						<td>${task.id}</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						
-						<td></td>
-						<td></td>
-					<td>
-						<form action="${ctx }/logistics/receiveSampleSubmit.do" method="post" style="display: inline;">
-									<input type="hidden" name="confirm" value="1" /><input type="hidden" name="orderId" value="${order.getO().getOrderId() }" />
-									<input type="hidden" name="taskId" value="${order.getTaskId() }" />
-									<input type="hidden" name="processInstanceId" value="${order.getProcessId() }" />
-									<button class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 收到</button></form>
-									<form action="${ctx }/logistics/receiveSampleSubmit.do" method="post" style="display: inline;">
-									<input type="hidden" name="confirm" value="0" /><input type="hidden" name="orderId" value="${order.getO().getOrderId() }" />
-									<input type="hidden" name="taskId" value="${order.getTaskId() }" />
-									<input type="hidden" name="processInstanceId" value="${order.getProcessId() }" />
-									<button class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i> 未收到</button></form>
-									</td>
+						<td>${task.order.orderId}</td>
+						<td>${task.order.customerName}</td>
+						<td>${task.logistics.inPostSampleClothesType}</td>
+						<td>${task.logistics.inPostSampleClothesNumber}</td>
+						<td>${task.logistics.inPostSampleClothesTime}</td>
+						<td><a
+							href="${ctx}/logistics/receiveSampleDetail.do?orderId=${task.order.orderId}">详情
+						</a> 
+						</td>
 					</tr>
 				</c:forEach>
-
-				<tbody>
-
-				</tbody>
 			</table>
+			</section>
 		</div>
-		  
+
 
 		<!--row-fluid-->
 		<div class="footer">
@@ -68,7 +51,6 @@
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
-<link rel="stylesheet"
-	href="${ctx}/css/logistics/to_receive_sample_list.css">
+<link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>
