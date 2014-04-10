@@ -20,8 +20,41 @@ public class Package implements java.io.Serializable {
 	private Integer packageId;
 	private Integer orderId;
 	private Timestamp packageTime;
+	private String warehouseId;
+	private String shelfId;
+	private String location;
 
+	
+	
+	
 	// Constructors
+
+	@Column(name = "warehouse_id", nullable = true, length = 250)
+	public String getWarehouseId() {
+		return warehouseId;
+	}
+
+	public void setWarehouseId(String warehouseId) {
+		this.warehouseId = warehouseId;
+	}
+
+	@Column(name = "shelf_id", nullable = true, length = 250)
+	public String getShelfId() {
+		return shelfId;
+	}
+
+	public void setShelfId(String shelfId) {
+		this.shelfId = shelfId;
+	}
+
+	@Column(name = "location", nullable = true, length = 250)
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
 
 	/** default constructor */
 	public Package() {

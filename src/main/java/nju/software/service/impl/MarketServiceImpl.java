@@ -94,17 +94,20 @@ public class MarketServiceImpl implements MarketService {
 		Integer orderId = order.getOrderId();
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
-		if (multipartRequest.getFile("sample_clothes_picture") != null) {
+		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/sampleClothesPicture/" + orderId);
-			FileOperateUtil.Upload(request, filedir, null,
+			File file=FileOperateUtil.Upload(request, filedir, null,
 					"sample_clothes_picture");
+			order.setSampleClothesPicture("/upload/sampleClothesPicture/"+orderId+"/"+file.getName());
 		}
-		if (multipartRequest.getFile("reference_picture") != null) {
+		if (!multipartRequest.getFile("reference_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/reference_picture/" + orderId);
-			FileOperateUtil.Upload(request, filedir, null, "reference_picture");
+			File file=FileOperateUtil.Upload(request, filedir, null, "reference_picture");
+			order.setReferencePicture("/upload/reference_picture/"+orderId+"/"+file.getName());
 		}
+		
 
 		orderDAO.attachDirty(order);
 
@@ -604,6 +607,77 @@ public class MarketServiceImpl implements MarketService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public List<OrderInfo> getModifyOrderList(Integer accountId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_MARKET_STAFF, TASK_MODIFY_ORDER);
+		List<OrderInfo> taskSummarys = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			if (getVariable("employeeId", task).equals(accountId)) {
+				Integer orderId = (Integer) getVariable("orderId", task);
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setTask(task);
+				taskSummarys.add(oi);
+			}
+		}
+		return taskSummarys;
+	}
+
+	@Override
+	public OrderInfo getModifyOrderDetail(int id, long task_id) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_MARKET_STAFF, TASK_MODIFY_ORDER);
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) getVariable("orderId", task);
+			if (id == orderId && task_id == task.getId()) {
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics, long taskId) {
+		// TODO Auto-generated method stub
+		// 添加订单信息
+		orderDAO.save(order);
+		Integer orderId = order.getOrderId();
+		orderDAO.attachDirty(order);
+		// 添加面料信息
+		fabricDAO.deleteByProperty("orderId", orderId);
+		for (Fabric fabric : fabrics) {
+			fabric.setOrderId(orderId);
+			fabricDAO.save(fabric);
+		}
+		// 添加辅料信息
+		accessoryDAO.deleteByProperty("orderId", orderId);
+		for (Accessory accessory : accessorys) {
+			accessory.setOrderId(orderId);
+			accessoryDAO.save(accessory);
+		}
+		// 添加物流信息
+		logistics.setOrderId(orderId);
+		logisticsDAO.save(logistics);
+
+		// 启动流程
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("editok", true);
+		try {
+			jbpmAPIUtil.completeTask(taskId, params, ACTOR_MARKET_STAFF);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }
