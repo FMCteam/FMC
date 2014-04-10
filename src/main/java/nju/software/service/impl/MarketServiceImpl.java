@@ -94,14 +94,14 @@ public class MarketServiceImpl implements MarketService {
 		Integer orderId = order.getOrderId();
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
-		if (multipartRequest.getFile("sample_clothes_picture") != null) {
+		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/sampleClothesPicture/" + orderId);
 			File file=FileOperateUtil.Upload(request, filedir, null,
 					"sample_clothes_picture");
 			order.setSampleClothesPicture("/upload/sampleClothesPicture/"+orderId+"/"+file.getName());
 		}
-		if (multipartRequest.getFile("reference_picture") != null) {
+		if (!multipartRequest.getFile("reference_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/reference_picture/" + orderId);
 			File file=FileOperateUtil.Upload(request, filedir, null, "reference_picture");
