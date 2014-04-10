@@ -4,100 +4,41 @@
 		<%@include file="/common/header.jsp" %>
 
         
-        <div class="maincontent">
-            <div class="maincontentinner">
-                <div class="row-fluid" style="min-height:300px;">
+<div class="maincontent">
+	<div class="maincontentinner">
+		<div class="row-fluid" style="min-height:300px;">
                 
-                    <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">生产成本核算</h4>
-                <table id="dyntable" class="table table-bordered responsive">
-                    <colgroup>
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                    </colgroup>
-                    <thead>
+			<!--  如果是其它页面，这里是填充具体的内容。 -->
+			<section class="list">
+            <table class="list">
+                <caption><span class="text-vertical">生产成本核算列表:${fn:length(list)}件任务</span><input type="text" class="search-query float-right" placeholder="输入检索条件"></caption>
+					<thead>
                         <tr>
-                            <th class="head0">订单号</th>
-                            <th class="head1">业务员</th>
-                            <th class="head0">客户姓名</th>
-                            <th class="head1">客户公司</th>
-                            <th class="head0">款式</th>
-                            <th class="head1">件数</th>
-                            <th class="head0">交货时间</th>
-                            <th class="head1"></th>
+                            <th>订单号</th>
+                            <th>业务员</th>
+                            <th>客户姓名</th>
+                            <th>客户公司</th>
+                            <th>款式</th>
+                            <th>件数</th>
+                            <th>交货时间</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
-                    <tbody>
-	                    <c:forEach var="task" items="${list}" >
+	                    <c:forEach var="orderModel" items="${list}" >
 	                        <tr class="gradeA">
-	                            <td>${task.order.orderId }</td>
-								<td>${task.order.employeeId }</td>
-								<td>${task.order.customerName }</td>
-								<td>${task.order.customerCompany }</td>
-								<td>${task.order.styleName }</td>
-								<td>${task.order.askAmount }</td>
-								<td>${fn:substring(task.order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx }/produce/computeProduceCostDetail.do" method="post" >
-									<input type="hidden" name="orderId" value="${task.order.orderId }" />
-										<input type="hidden" name="task_id" value="${task.taskId }" />
-										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 成本核算</button></form>
-								</td>
+	                            <td>${orderModel.order.orderId }</td>
+								<td>${orderModel.order.employeeId }</td>
+								<td>${orderModel.order.customerName }</td>
+								<td>${orderModel.order.customerCompany }</td>
+								<td>${orderModel.order.styleName }</td>
+								<td>${orderModel.order.askAmount }</td>
+								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+								<td><a href="${ctx }/produce/computeProduceCostDetail.do?orderId=${orderModel.order.orderId}&task_id=${orderModel.task.id}">详情
+									</a></td>								
 	                        </tr>
                         </c:forEach>
-                    </tbody>
                 </table>
-                <div class="dataTables_paginate paging_full_numbers" id="dyntable_paginate" style="float:right">
-                	<c:if test="${page==1 }">
-	                	<a tabindex="0" class="first paginate_button paginate_button_disabled" id="dyntable_first">首页</a>
-						<a tabindex="0" class="previous paginate_button paginate_button_disabled" id="dyntable_previous">上一页</a>
-                	</c:if>
-					<c:if test="${page>1 }">
-	                	<a tabindex="0" class="first paginate_button" id="dyntable_first" href="${ctx }/employee/search.do?page=1&number_per_page=1">首页</a>
-						<a tabindex="0" class="previous paginate_button" id="dyntable_previous" href="${ctx }/employee/search.do?page=${page-1 }&number_per_page=1">上一页</a>
-                	</c:if>
-					<c:if test="${page_number<6&&page_number>0}">
-						<c:forEach var ="i" begin="1" end="${page_number }">
-							<c:if test="${page!=i }"><a tabindex="0" class="paginate_button" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-							<c:if test="${page==i }"><a tabindex="0" class="paginate_active" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-						</c:forEach>
-					</c:if>
-					<c:if test="${page_number>5}">
-						<c:choose>
-							<c:when test="${page<3 }">
-								<c:forEach var ="i" begin="1" end="5">
-									<c:if test="${page!=i }"><a tabindex="0" class="paginate_button" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-									<c:if test="${page==i }"><a tabindex="0" class="paginate_active" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-								</c:forEach>
-							</c:when>
-							<c:when test="${page>page_number-3 }">
-								<c:forEach var ="i" begin="${page_number-4 }" end="${page_number }">
-									<c:if test="${page!=i }"><a tabindex="0" class="paginate_button" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-									<c:if test="${page==i }"><a tabindex="0" class="paginate_active" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<c:forEach var ="i" begin="${page-2 }" end="${page+2 }">
-									<c:if test="${page!=i }"><a tabindex="0" class="paginate_button" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-					 				<c:if test="${page==i }"><a tabindex="0" class="paginate_active" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
-					</c:if>
-					<c:if test="${page<page_number }">
-	                	<a tabindex="0" class="next paginate_button" id="dyntable_next" href="${ctx }/employee/search.do?page=${page+1 }&number_per_page=1">下一页</a>
-						<a tabindex="0" class="last paginate_button" id="dyntable_last" href="${ctx }/employee/search.do?page=${page_number }&number_per_page=1">尾页</a>
-                	</c:if>
-					<c:if test="${page==page_number&&page_number>0 }">
-	                	<a tabindex="0" class="next paginate_button paginate_button_disabled" id="dyntable_next">下一页</a>
-						<a tabindex="0" class="last paginate_button paginate_button_disabled" id="dyntable_last">尾页</a>
-                	</c:if>
-				</div>
+                </section>
 				
 				
                       </div><!--row-fluid-->
@@ -117,7 +58,8 @@
         
         <!-- 这里引入你需要的js文件 -->
         <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-        
+        <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+		<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
         
         <%@include file="/common/footer.jsp" %>
     

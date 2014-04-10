@@ -80,11 +80,9 @@ public class ProduceController {
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
 		String comment = request.getParameter("suggestion");
 
-		produceService.verifyProduceSubmit(account, orderId_request, taskId, processId, productVal, comment);
+		produceService.verifyProduceSubmit(account, orderId_request, taskId, productVal, comment);
 		
 		return "redirect:/produce/verifyProduceList.do";
 	}
@@ -97,7 +95,7 @@ public class ProduceController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "produce/verifyProduceDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "produce/verifyProduceDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -109,8 +107,6 @@ public class ProduceController {
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("task_id");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
 		OrderInfo orderInfo = produceService.getVerifyProduceDetail(orderId_request, taskId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "produce/verifyProduceDetail";
@@ -157,7 +153,7 @@ public class ProduceController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "produce/computeProduceCostDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "produce/computeProduceCostDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String computeProduceCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {

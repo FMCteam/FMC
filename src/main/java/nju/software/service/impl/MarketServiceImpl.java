@@ -20,16 +20,20 @@ import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
+import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
@@ -68,6 +72,10 @@ public class MarketServiceImpl implements MarketService {
 	@Autowired
 	private FabricDAO fabricDAO;
 	@Autowired
+	private ProduceDAO produceDAO;
+	@Autowired
+	private VersionDataDAO versionDataDAO;
+	@Autowired
 	private LogisticsDAO logisticsDAO;
 
 	@Override
@@ -84,7 +92,7 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
-			List<Accessory> accessorys, Logistics logistics,
+			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<VersionData> versions,
 			HttpServletRequest request) {
 		// TODO Auto-generated method stub
 
@@ -123,6 +131,18 @@ public class MarketServiceImpl implements MarketService {
 			accessoryDAO.save(accessory);
 		}
 
+		//添加加工单信息
+		for (Produce produce : produces) {
+			produce.setOid(orderId);
+			produceDAO.save(produce);
+		}
+		
+		//添加版型信息
+		for (VersionData versionData : versions) {
+			versionData.setOrderId(orderId);
+			versionDataDAO.save(versionData);
+		}
+		
 		// 添加物流信息
 		logistics.setOrderId(orderId);
 		logisticsDAO.save(logistics);

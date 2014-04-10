@@ -16,7 +16,7 @@ import nju.software.model.SampleProduceTaskSummary;
 public interface ProduceService {
 
 	public boolean verifyProduceSubmit(Account account, int orderId, long taskId, 
-			long processId, boolean productVal, String comment);
+			boolean productVal, String comment);
 	
 	public boolean costAccounting(Account account, int orderId, long taskId, 
 			long processId, float cut_cost,float manage_cost,float nali_cost,float ironing_cost,

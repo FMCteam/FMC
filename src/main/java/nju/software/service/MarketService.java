@@ -11,7 +11,9 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
+import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
@@ -42,7 +44,7 @@ public interface MarketService {
 	public Customer getAddOrderDetail(Integer cid);
 	
 	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
-			List<Accessory> accessorys, Logistics logistics,HttpServletRequest request);
+			List<Accessory> accessorys, Logistics logistics,List<Produce> produces, List<VersionData> versions, HttpServletRequest request);
 	
 
 
