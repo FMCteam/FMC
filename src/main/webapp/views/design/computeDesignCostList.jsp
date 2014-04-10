@@ -43,10 +43,9 @@
 								<td>${orderModel.order.styleName }</td>
 								<td>${orderModel.order.askAmount }</td>
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx }/design/computeDesignCostDetail.do" method="post" >
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
+								<td><form action="${ctx }/design/getComputeDesignCostDetail.do" method="post" >
+									<input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
 										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
-										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
 										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 成本核算</button></form>
 								</td>
 	                        </tr>

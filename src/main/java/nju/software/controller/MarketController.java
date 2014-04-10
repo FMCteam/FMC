@@ -92,6 +92,9 @@ public class MarketController {
 		Customer customer = marketService.getAddOrderDetail(Integer
 				.parseInt(cid));
 		model.addAttribute("customer", customer);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		model.addAttribute("employee_name", account.getNickName());
 		return "/market/addOrderDetail";
 	}
 
@@ -445,103 +448,65 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		
 		List<OrderInfo> list = marketService.getVerifyQuoteList(account.getAccountId());
-
 		model.addAttribute("quote_list", list);
 		return "market/verifyQuoteList";
 
 	}
 
 	// 修改询单的列表
-	@RequestMapping(value = "market/sampleOrderList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "market/modifyOrderList.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String orderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		// Map params = new HashMap();
-		// params.put("page", 1);
-		// params.put("number_per_page", 100);
-		List<OrderModel> orderModelList = orderService
-				.getOrderByActorIdAndTaskname("SHICHANGZHUANYUAN", "edit_order");
-		// Logistics logistics =
-		// buyService.getLogisticsByOrderId(orderId_request);
-		// List<Fabric> fabricList =
-		// buyService.getFabricByOrderId(orderId_request);
-		// List<Accessory> accessoryList =
-		// buyService.getAccessoryByOrderId(orderId_request);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		List<OrderInfo> orderModelList = marketService.getModifyOrderList(account.getAccountId());
 		model.put("order_list", orderModelList);
-		return "market/sample_order_list";
+		return "market/modifyOrderList";
 	}
 
 	// 询单的修改界面
-	@RequestMapping(value = "market/modify.do", method = RequestMethod.POST)
+	@RequestMapping(value = "market/modifyOrderDetail.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		String s_id = request.getParameter("id");
 		String s_task_id = request.getParameter("task_id");
-		String s_process_id = request.getParameter("process_id");
 		String modify = request.getParameter("modify");
-		try {
-			int id = Integer.parseInt(s_id);
-			long task_id = Long.parseLong(s_task_id);
-			long process_id = Long.parseLong(s_process_id);
-			if (Integer.parseInt(modify) == 1) {
-
-				// 修改
-				OrderModel orderModel = orderService.getOrderDetail(
-						Integer.parseInt(s_id), Long.parseLong(s_task_id),
-						Long.parseLong(s_process_id));
-				Logistics logistics = buyService.getLogisticsByOrderId(Integer
-						.parseInt(s_id));
-				List<Fabric> fabricList = buyService.getFabricByOrderId(Integer
-						.parseInt(s_id));
-				List<Accessory> accessoryList = buyService
-						.getAccessoryByOrderId(Integer.parseInt(s_process_id));
-				model.addAttribute("orderModel", orderModel);
-				model.addAttribute("logistics", logistics);
-				model.addAttribute("fabric_list", fabricList);
-				model.addAttribute("accessory_list", accessoryList);
-
-				WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-						.getKsession().getProcessInstance(
-								Long.parseLong(s_process_id));
-				String buyComment = process.getVariable("buyComment")
-						.toString();
-				String designComment = process.getVariable("designComment")
-						.toString();
-				// String
-				// productComment=process.getVariable("productComment").toString();
-				model.addAttribute("buyComment", buyComment);
-				model.addAttribute("designComment", designComment);
-				// model.addAttribute("productComment",productComment);
-				return "market/modify_order";
-			} else {
-
-				// 删除
-				WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-						.getKsession().getProcessInstance(
-								Long.parseLong(s_process_id));
-				String buyComment = process.getVariable("buyComment")
-						.toString();
-				String designComment = process.getVariable("designComment")
-						.toString();
-				// String
-				// productComment=process.getVariable("productComment").toString();
-				orderService.verify(id, task_id, process_id, false, buyComment,
-						designComment, null);
-				return "redirect:/market/sampleOrderList";
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		int id = Integer.parseInt(s_id);
+		long task_id = Long.parseLong(s_task_id);
+		if (Integer.parseInt(modify) == 1) {
+			// 修改
+			OrderInfo orderModel = marketService.getModifyOrderDetail(id, task_id);
+			model.addAttribute("orderModel", orderModel);
+			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+					.getKsession().getProcessInstance(orderModel.getTask().getProcessInstanceId());
+			String buyComment = process.getVariable("buyComment")
+					.toString();
+			String designComment = process.getVariable("designComment")
+					.toString();
+			model.addAttribute("buyComment", buyComment);
+			model.addAttribute("designComment", designComment);
+			return "market/modifyOrderDetail";
+		} else {
+			// 删除
+//			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+//					.getKsession().getProcessInstance(
+//							Long.parseLong(s_process_id));
+//			String buyComment = process.getVariable("buyComment")
+//					.toString();
+//			String designComment = process.getVariable("designComment")
+//					.toString();
+//			orderService.verify(id, task_id, process_id, false, buyComment,
+//					designComment, null);
+			return "redirect:/market/sampleOrderList.do";
 		}
-		return "redirect:/market/sampleOrderList";
 	}
 
 	// 询单的修改界面
-	@RequestMapping(value = "market/doModify.do", method = RequestMethod.POST)
+	@RequestMapping(value = "market/modifyOrderSubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doModifyOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -677,7 +642,7 @@ public class MarketController {
 		// productComment=process.getVariable("productComment").toString();
 		orderService.verify(id, task_id, process_id, true, buyComment,
 				designComment, null);
-		return "market/sample_order_list";
+		return "direct:/market/modifyOrderList.do";
 	}
 
 	public static Timestamp getTime(String time) {
