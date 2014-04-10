@@ -644,4 +644,40 @@ public class MarketServiceImpl implements MarketService {
 		return null;
 	}
 
+	@Override
+	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics, long taskId) {
+		// TODO Auto-generated method stub
+		// 添加订单信息
+		orderDAO.save(order);
+		Integer orderId = order.getOrderId();
+		orderDAO.attachDirty(order);
+		// 添加面料信息
+		fabricDAO.deleteByProperty("orderId", orderId);
+		for (Fabric fabric : fabrics) {
+			fabric.setOrderId(orderId);
+			fabricDAO.save(fabric);
+		}
+		// 添加辅料信息
+		accessoryDAO.deleteByProperty("orderId", orderId);
+		for (Accessory accessory : accessorys) {
+			accessory.setOrderId(orderId);
+			accessoryDAO.save(accessory);
+		}
+		// 添加物流信息
+		logistics.setOrderId(orderId);
+		logisticsDAO.save(logistics);
+
+		// 启动流程
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("editok", true);
+		try {
+			jbpmAPIUtil.completeTask(taskId, params, ACTOR_MARKET_STAFF);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 }
