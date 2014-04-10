@@ -90,11 +90,9 @@ public class DesignController {
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
 		String comment = request.getParameter("suggestion");
 
-		designService.verifyDesignSubmit(account, orderId_request, taskId, processId, designVal, comment);
+		designService.verifyDesignSubmit(account, orderId_request, taskId, designVal, comment);
 		
 		return "redirect:/design/verifyDesignList.do";
 	}
@@ -107,7 +105,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/verifyDesignDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/verifyDesignDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
