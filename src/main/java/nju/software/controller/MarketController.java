@@ -513,7 +513,8 @@ public class MarketController {
 
 		String s_id = request.getParameter("id");
 		String s_task_id = request.getParameter("task_id");
-		String s_process_id = request.getParameter("process_id");
+		int id = Integer.parseInt(s_id);
+		long task_id = Long.parseLong(s_task_id);
 		// 保存修改该的order数据，accessory，fabric，logistics
 		// 订单数据
 
@@ -603,7 +604,7 @@ public class MarketController {
 
 		// Order
 		Order order = orderService.findByOrderId(s_id);
-		order.setEmployeeId(employeeId);
+		//order.setEmployeeId(employeeId);
 		// order.setCustomerId(customerId);
 		order.setOrderState(orderState);
 		order.setOrderTime(orderTime);
@@ -628,20 +629,16 @@ public class MarketController {
 		order.setHasPostedSampleClothes(hasPostedSampleClothes);
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
-
-		orderService.modifyOrder(order, fabrics, accessorys, logistics);
-		// 推进流程
-		int id = Integer.parseInt(s_id);
-		long task_id = Long.parseLong(s_task_id);
-		long process_id = Long.parseLong(s_process_id);
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(Long.parseLong(s_process_id));
-		String buyComment = process.getVariable("buyComment").toString();
-		String designComment = process.getVariable("designComment").toString();
-		// String
-		// productComment=process.getVariable("productComment").toString();
-		orderService.verify(id, task_id, process_id, true, buyComment,
-				designComment, null);
+		
+		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics, task_id);
+//		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+//				.getKsession().getProcessInstance(Long.parseLong(s_process_id));
+//		String buyComment = process.getVariable("buyComment").toString();
+//		String designComment = process.getVariable("designComment").toString();
+//		// String
+//		// productComment=process.getVariable("productComment").toString();
+//		orderService.verify(id, task_id, process_id, true, buyComment,
+//				designComment, null);
 		return "direct:/market/modifyOrderList.do";
 	}
 
