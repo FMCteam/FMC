@@ -17,18 +17,6 @@ import nju.software.util.JbpmAPIUtil;
 @Service("financeServiceImpl")
 public class FinanceServiceImpl implements FinanceService {
 
-	public final static String ACTOR_FINANCE_MANAGER = "financeManager";
-	public final static String TASK_CONFIRM_SAMPLE_MONEY = "confirmSampleMoney";
-	public final static String TASK_CONFIRM_DEPOSIT = "confirmDeposit";
-	public final static String TASK_CONFIRM_FINAL_PAYMENT = "confirmFinalPayment";
-
-	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
-	private OrderDAO orderDAO;
-	@Autowired
-	private MoneyDAO moneyDAO;
-
 	
 	//===========================样衣金确认=================================
 	@Override
@@ -125,6 +113,8 @@ public class FinanceServiceImpl implements FinanceService {
 			return false;
 		}
 	}
+	
+	
 	//===========================尾款确认===================================
 	@Override
 	public List<OrderInfo> getConfirmFinalPaymentList(String actorId) {
@@ -143,6 +133,7 @@ public class FinanceServiceImpl implements FinanceService {
 		return list;
 	}
 
+	
 	@Override
 	public OrderInfo getConfirmFinalPaymentDetail(String actorId,
 			Integer orderId) {
@@ -155,6 +146,7 @@ public class FinanceServiceImpl implements FinanceService {
 		return orderInfo;
 	}
 
+	
 	@Override
 	public boolean confirmFinalPaymentSubmit(String actorId,long taskId,boolean paymentok, Money money) {
 		// TODO Auto-generated method stub
@@ -172,4 +164,17 @@ public class FinanceServiceImpl implements FinanceService {
 			return false;
 		}
 	}
+
+	
+	@Autowired
+	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private OrderDAO orderDAO;
+	@Autowired
+	private MoneyDAO moneyDAO;
+	
+	public final static String ACTOR_FINANCE_MANAGER = "financeManager";
+	public final static String TASK_CONFIRM_SAMPLE_MONEY = "confirmSampleMoney";
+	public final static String TASK_CONFIRM_DEPOSIT = "confirmDeposit";
+	public final static String TASK_CONFIRM_FINAL_PAYMENT = "confirmFinalPayment";
 }

@@ -3,20 +3,17 @@ package nju.software.dataobject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-
 import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.GenerationType.SEQUENCE;
-
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * VersionDataCm entity. @author MyEclipse Persistence Tools
+ * VersionData entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "version_data_cm", catalog = "fmc")
-public class VersionDataCm implements java.io.Serializable {
+@Table(name = "version_data", catalog = "fmc")
+public class VersionData implements java.io.Serializable {
 
 	// Fields
 
@@ -36,16 +33,16 @@ public class VersionDataCm implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public VersionDataCm() {
+	public VersionData() {
 	}
 
 	/** minimal constructor */
-	public VersionDataCm(Integer orderId) {
+	public VersionData(Integer orderId) {
 		this.orderId = orderId;
 	}
 
 	/** full constructor */
-	public VersionDataCm(Integer orderId, String size, String centerBackLength,
+	public VersionData(Integer orderId, String size, String centerBackLength,
 			String bust, String waistline, String shoulder, String buttock,
 			String hem, String trousers, String skirt, String sleeves) {
 		this.orderId = orderId;
@@ -62,7 +59,6 @@ public class VersionDataCm implements java.io.Serializable {
 	}
 
 	// Property accessors
-	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "vid", unique = true, nullable = false)
@@ -74,7 +70,7 @@ public class VersionDataCm implements java.io.Serializable {
 		this.vid = vid;
 	}
 
-	@Column(name = "orderId", nullable = false)
+	@Column(name = "order_id", nullable = false)
 	public Integer getOrderId() {
 		return this.orderId;
 	}
@@ -83,7 +79,7 @@ public class VersionDataCm implements java.io.Serializable {
 		this.orderId = orderId;
 	}
 
-	@Column(name = "size", length = 45)
+	@Column(name = "size", length = 250)
 	public String getSize() {
 		return this.size;
 	}
@@ -92,7 +88,7 @@ public class VersionDataCm implements java.io.Serializable {
 		this.size = size;
 	}
 
-	@Column(name = "center_back_length", length = 45)
+	@Column(name = " center_back_length", length = 250)
 	public String getCenterBackLength() {
 		return this.centerBackLength;
 	}
@@ -101,7 +97,7 @@ public class VersionDataCm implements java.io.Serializable {
 		this.centerBackLength = centerBackLength;
 	}
 
-	@Column(name = "bust", length = 45)
+	@Column(name = "bust", length = 250)
 	public String getBust() {
 		return this.bust;
 	}
@@ -110,7 +106,7 @@ public class VersionDataCm implements java.io.Serializable {
 		this.bust = bust;
 	}
 
-	@Column(name = "waistline", length = 45)
+	@Column(name = "waistline", length = 250)
 	public String getWaistline() {
 		return this.waistline;
 	}
@@ -119,7 +115,7 @@ public class VersionDataCm implements java.io.Serializable {
 		this.waistline = waistline;
 	}
 
-	@Column(name = "shoulder", length = 45)
+	@Column(name = "shoulder", length = 250)
 	public String getShoulder() {
 		return this.shoulder;
 	}
@@ -128,7 +124,7 @@ public class VersionDataCm implements java.io.Serializable {
 		this.shoulder = shoulder;
 	}
 
-	@Column(name = "buttock", length = 45)
+	@Column(name = "buttock", length = 250)
 	public String getButtock() {
 		return this.buttock;
 	}
@@ -137,7 +133,7 @@ public class VersionDataCm implements java.io.Serializable {
 		this.buttock = buttock;
 	}
 
-	@Column(name = "hem", length = 45)
+	@Column(name = "hem", length = 250)
 	public String getHem() {
 		return this.hem;
 	}
@@ -146,7 +142,7 @@ public class VersionDataCm implements java.io.Serializable {
 		this.hem = hem;
 	}
 
-	@Column(name = "trousers", length = 45)
+	@Column(name = "trousers", length = 250)
 	public String getTrousers() {
 		return this.trousers;
 	}
@@ -155,7 +151,7 @@ public class VersionDataCm implements java.io.Serializable {
 		this.trousers = trousers;
 	}
 
-	@Column(name = "skirt", length = 45)
+	@Column(name = "skirt", length = 250)
 	public String getSkirt() {
 		return this.skirt;
 	}
@@ -164,7 +160,7 @@ public class VersionDataCm implements java.io.Serializable {
 		this.skirt = skirt;
 	}
 
-	@Column(name = "sleeves", length = 45)
+	@Column(name = "sleeves", length = 250)
 	public String getSleeves() {
 		return this.sleeves;
 	}

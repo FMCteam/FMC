@@ -1,4 +1,4 @@
-package nju.software.service.impl;
+﻿package nju.software.service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -504,6 +504,92 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
+	public List<OrderInfo> getMergeQuoteList(Integer accountId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_MARKET_STAFF, TASK_MERGE_QUOTE);
+		List<OrderInfo> taskSummarys = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			if (getVariable("employeeId", task).equals(accountId)) {
+				Integer orderId = (Integer) getVariable("orderId", task);
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setQuote(quoteDAO.findById(orderId));
+				oi.setTask(task);
+				taskSummarys.add(oi);
+			}
+		}
+		return taskSummarys;
+	}
+
+
+	@Override
+	public void mergeQuoteSubmit(float inner, float outer, int id, long taskId,
+			long processId) {
+		// TODO Auto-generated method stub
+		// 需要获取task中的数据
+		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+				.getKsession().getProcessInstance(processId);
+		int orderId_process = (int) process.getVariable("orderId");
+		if (id == orderId_process) {
+			Map<String, Object> data = new HashMap<>();
+			Quote q = quoteDAO.findById(id);
+			q.setInnerPrice(inner);
+			q.setOuterPrice(outer);
+			quoteDAO.merge(q);
+			try {
+				jbpmAPIUtil.completeTask(taskId, null, ACTOR_MARKET_STAFF);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+
+	@Override
+	public List<OrderInfo> getVerifyQuoteList(Integer accountId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_MARKET_MANAGER, TASK_VERIFY_ORDER);
+		List<OrderInfo> taskSummarys = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			if (getVariable("employeeId", task).equals(accountId)) {
+				Integer orderId = (Integer) getVariable("orderId", task);
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setQuote(quoteDAO.findById(orderId));
+				oi.setTask(task);
+				taskSummarys.add(oi);
+			}
+		}
+		return taskSummarys;
+	}
+
+
+	@Override
+	public void verifyQuoteSubmit(float inner, float outer, int id,
+			long taskId, long processId) {
+		// TODO Auto-generated method stub
+		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+				.getKsession().getProcessInstance(processId);
+		int orderId_process = (int) process.getVariable("orderId");
+		if (id == orderId_process) {
+			Quote q = quoteDAO.findById(id);
+			q.setInnerPrice(inner);
+			q.setOuterPrice(outer);
+			quoteDAO.merge(q);
+			Map<String, Object> data = new HashMap<>();
+			try {
+				jbpmAPIUtil.completeTask(taskId, null, ACTOR_MARKET_MANAGER);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public boolean signContractSubmit(String actorId, long taskId, String result,Integer orderId,double discount) {
 		// TODO Auto-generated method stub
 		Order order = orderDAO.findById(orderId);
@@ -519,4 +605,5 @@ public class MarketServiceImpl implements MarketService {
 			return false;
 		}
 	}
+
 }

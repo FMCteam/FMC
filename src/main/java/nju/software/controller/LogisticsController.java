@@ -170,75 +170,7 @@ public class LogisticsController {
 		}
 		return "redirect:/logistics/rukuList.do";
 	}
-	/**
-	 * 
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "market/addMarketOrder1.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
-	public String addMarketOrder(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		Order order = new Order();
-		order.setAskAmount(10);
-		order.setCustomerName("张三");
-		Date date = new Date();
-		Timestamp timestamp = new Timestamp(date.getTime());
-		order.setOrderTime(timestamp);
-		order.setOrderState("A");
-		order.setCustomerId(1);
-		order.setEmployeeId(1);
-		order.setHasPostedSampleClothes((short) 0);
-		order.setIsNeedSampleClothes((short) 1);
-		orderService.addOrder(order);
-		Integer orderId = order.getOrderId();
-		Logistics log = new Logistics();
-		log.setOrderId(orderId);
-		log.setInPostSampleClothesNumber("1111");
-		log.setInPostSampleClothesType("shengtong");
-		logisticsService.addLogistics(log);
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("orderId", order.getOrderId());
-		Account curUser = (Account) request.getSession().getAttribute(
-				"cur_user");
-		params.put("employeeId", curUser.getUserId());
-		params.put("needclothes", true);
-		params.put("sendclothes", true);
 
-		params.put("receivedsample", false);
-		params.put("editOrder", false);
-
-		/*
-		 * String actorId=(String) request.getSession().getAttribute("actorId");
-		 * List<TaskSummary> list =jbpmAPIUtil.getAssignedTasks(actorId); for
-		 * (TaskSummary task : list) { if(task.getName().equals("addOrder")){
-		 * //直接进入到下一个流程时 Map<String, Object> map = new HashMap<>(); try {
-		 * jbpmAPIUtil.completeTask(task.getId(), null, actorId); } catch
-		 * (InterruptedException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } //需要获取task中的数据 WorkflowProcessInstance
-		 * process=(WorkflowProcessInstance)
-		 * jbpmAPIUtil.getKsession().getProcessInstance
-		 * (task.getProcessInstanceId()); String orderId =(String)
-		 * process.getVariable("orderId"); process.getVariable(""); }
-		 * 
-		 * }
-		 */
-
-		try {
-			jbpmAPIUtil.setParams(params);
-			jbpmAPIUtil.startWorkflowProcess();
-			System.out.println("流程启动成功！");
-		} catch (Exception e) {
-			System.out.println("流程启动失败！");
-			e.printStackTrace();
-		}
-		return "redirect:/market/add.do";
-	}
-
-	
-	
 
 
 	public class ComposeOrderAndLog {
@@ -445,12 +377,4 @@ public class LogisticsController {
 		
 		return "redirect:/logistics/getSendClothesList";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }
