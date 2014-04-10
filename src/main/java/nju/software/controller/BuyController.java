@@ -241,15 +241,15 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/computeDesignCostList.do", method= RequestMethod.GET)
+	@RequestMapping(value = "buy/computePurchaseCostList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String computeDesignCostList(HttpServletRequest request,
+	public String computePurchaseCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		List<OrderInfo>list=buyService.getComputePurchaseCostList();
 		model.addAttribute("list", list);		
 		
-		return "design/computeDesignCostList";
+		return "buy/computePurchaseCostList";
 	}
 	
 	
@@ -267,17 +267,19 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/computeDesignCostDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/computePurchaseCostDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String costAccountingDetail(HttpServletRequest request,
+	public String computePurchaseCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		String orderId=request.getParameter("orderId");
 		OrderInfo orderInfo=buyService.getComputePurchaseCostInfo(Integer.parseInt(orderId));
-		model.addAttribute("orderInfo", orderInfo);
-	
 		
-		return "design/computeDesignCostDetail";
+		model.addAttribute("orderInfo", orderInfo);
+	model.addAttribute("fabric_list", orderInfo.getFabrics());
+	model.addAttribute("accessory_list", orderInfo.getAccessorys());
+		
+		return "buy/computePurchaseCostDetail";
 	}
 	
 	
@@ -293,7 +295,7 @@ public class BuyController {
 	 */
 	
 	
-	@RequestMapping(value = "buy/computeDesignCostSubmit.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/computePurchaseCostSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String doCostAccounting(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -330,7 +332,7 @@ public class BuyController {
 		
 		
 		
-		return "redirect:/design/computeDesignCostList.do";
+		return "redirect:/Purchase/computePurchaseCostList.do";
 		
 	}
 	

@@ -121,7 +121,7 @@
 							class="iconfa-th-list"></span> 采购部</a>
 						<ul>
 							<li><a href="${ctx }/buy/verifyPurchaseList.do">采购验证</a></li>
-							<li><a href="${ctx }/buy/costAccounting.do">成本合算</a></li>
+							<li><a href="${ctx }/buy/computePurchaseCostList.do">成本合算</a></li>
 							<li><a href="${ctx }/buy/caigouqueren1List.do">采购确认</a></li>
 							<li><a href="${ctx }/buy/caigouqueren2List.do">采购确认2</a></li>
 							<li><a href="${ctx }/buy/caigouqueren3List.do">采购确认3</a></li>
