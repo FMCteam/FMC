@@ -97,14 +97,17 @@ public class MarketServiceImpl implements MarketService {
 		if (multipartRequest.getFile("sample_clothes_picture") != null) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/sampleClothesPicture/" + orderId);
-			FileOperateUtil.Upload(request, filedir, null,
+			File file=FileOperateUtil.Upload(request, filedir, null,
 					"sample_clothes_picture");
+			order.setSampleClothesPicture("/upload/sampleClothesPicture/"+orderId+"/"+file.getName());
 		}
 		if (multipartRequest.getFile("reference_picture") != null) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/reference_picture/" + orderId);
-			FileOperateUtil.Upload(request, filedir, null, "reference_picture");
+			File file=FileOperateUtil.Upload(request, filedir, null, "reference_picture");
+			order.setReferencePicture("/upload/reference_picture/"+orderId+"/"+file.getName());
 		}
+		
 
 		orderDAO.attachDirty(order);
 
