@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import nju.software.controller.LogisticsController.ComposeOrderAndLog;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.AccountDAO;
@@ -59,6 +57,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 				TASK_RECEIVE_SAMPLE, orderId);
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setEmployee(employeeDAO.findById(orderInfo.getOrder().getEmployeeId()));
 		orderInfo.setLogistics(logisticsDAO.findById(orderId));
 		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));

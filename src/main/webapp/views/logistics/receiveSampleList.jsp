@@ -5,10 +5,10 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
-			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<section>
-			<table class="table">
-				<caption>客户下单</caption>
+			<section class="list">
+			<table class="list">
+				<caption><span class="text-vertical">样衣待收取列表:${fn:length(list)}件任务</span><input type="text" class="search-query float-right" placeholder="输入检索条件"></caption>
+				<thead>
 				<tr>
 					<th>询单编号</th>
 					<th>客户姓名</th>
@@ -17,13 +17,14 @@
 					<th>邮寄时间</th>
 					<th>操作</th>
 				</tr>
+				</thead>
 				<c:forEach var="task" items="${list}">
 					<tr>
 						<td>${task.order.orderId}</td>
 						<td>${task.order.customerName}</td>
 						<td>${task.logistics.inPostSampleClothesType}</td>
 						<td>${task.logistics.inPostSampleClothesNumber}</td>
-						<td>${task.logistics.inPostSampleClothesTime}</td>
+						<td>${fn:substring(task.logistics.inPostSampleClothesTime,0,10)}</td>
 						<td><a
 							href="${ctx}/logistics/receiveSampleDetail.do?orderId=${task.order.orderId}">详情
 						</a> 
@@ -52,5 +53,6 @@
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>

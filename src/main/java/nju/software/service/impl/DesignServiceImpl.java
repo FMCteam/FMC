@@ -416,10 +416,6 @@ public class DesignServiceImpl implements DesignService {
 		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
 				ACTOR_DESIGN_MANAGER, TASK_VERIFY_DESIGN);
 		for (TaskSummary task : list) {
-			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-					.getKsession().getProcessInstance(task.getProcessInstanceId());
-			int orderId_process = (int) process.getVariable("orderId");
-			if (orderId == orderId_process && taskId == task.getId() ) {
 				OrderInfo oi = new OrderInfo();
 				oi.setOrder(orderDAO.findById(orderId));
 				oi.setLogistics(logisticsDAO.findById(orderId));
@@ -427,7 +423,7 @@ public class DesignServiceImpl implements DesignService {
 				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
 				oi.setTask(task);
 				return oi;
-			}
+			
 		}
 		return null;
 	}
