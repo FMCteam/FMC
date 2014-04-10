@@ -46,7 +46,6 @@
 								<td><form action="${ctx }/design/computeDesignCostDetail.do" method="post" >
 									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
 										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
-										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
 										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 成本核算</button></form>
 								</td>
 	                        </tr>

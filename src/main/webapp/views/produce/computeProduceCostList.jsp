@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-	                    <c:forEach var="task" items="${tasks}" >
+	                    <c:forEach var="task" items="${list}" >
 	                        <tr class="gradeA">
 	                            <td>${task.order.orderId }</td>
 								<td>${task.order.employeeId }</td>
@@ -46,7 +46,6 @@
 								<td><form action="${ctx }/produce/computeProduceCostDetail.do" method="post" >
 									<input type="hidden" name="id" value="${task.order.orderId }" />
 										<input type="hidden" name="task_id" value="${task.taskId }" />
-										<input type="hidden" name="process_id" value="${task.processInstanceId }" />
 										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 成本核算</button></form>
 								</td>
 	                        </tr>
