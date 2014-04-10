@@ -2,6 +2,7 @@ package nju.software.dao.impl;
 
 import java.util.List;
 
+import nju.software.dao.IProduceDAO;
 import nju.software.dataobject.Produce;
 
 import org.hibernate.LockMode;
@@ -20,7 +21,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * @see nju.software.dataobject.Produce
  * @author MyEclipse Persistence Tools
  */
-public class ProduceDAO extends HibernateDaoSupport {
+public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 	private static final Logger log = LoggerFactory.getLogger(ProduceDAO.class);
 	// property constants
 	public static final String OID = "oid";
@@ -182,5 +183,26 @@ public class ProduceDAO extends HibernateDaoSupport {
 
 	public static ProduceDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (ProduceDAO) ctx.getBean("ProduceDAO");
+	}
+
+	@Override
+	public List<Produce> findByOrderId(Object orderId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteByProperty(String propertyName, Object orderId) {
+		// TODO Auto-generated method stub
+		log.debug("deleting Produce instance with property: " + propertyName
+				+ ", value: " + orderId);
+		try {
+			String queryString = "delete from Produce as model where model."
+					+ propertyName + "= ?";
+			 getHibernateTemplate().bulkUpdate(queryString, orderId);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
 	}
 }

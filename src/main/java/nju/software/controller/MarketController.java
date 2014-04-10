@@ -27,8 +27,10 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.model.QuoteConfirmTaskSummary;
@@ -159,6 +161,56 @@ public class MarketController {
 					accessory_query[i]));
 		}
 
+		//加工要求
+		String produce_colors = request.getParameter("produce_color");
+		String produce_xss = request.getParameter("produce_xs");
+		String produce_ss = request.getParameter("produce_s");
+		String produce_ms = request.getParameter("produce_m");
+		String produce_ls = request.getParameter("produce_l");
+		String produce_xls = request.getParameter("produce_xl");
+		String produce_xxls = request.getParameter("produce_xxl");
+		String produce_color[] = produce_colors.split(",");
+		String produce_xs[] = produce_xss.split(",");
+		String produce_s[] = produce_ss.split(",");
+		String produce_m[] = produce_ms.split(",");
+		String produce_l[] = produce_ls.split(",");
+		String produce_xl[] = produce_xls.split(",");
+		String produce_xxl[] = produce_xxls.split(",");
+		List<Produce> produces = new ArrayList<Produce>();
+		for (int i = 0; i < produce_color.length; i++) {
+			produces.add(new Produce(0,0,produce_color[i],
+			Integer.parseInt(produce_xs[i]),Integer.parseInt(produce_s[i]),
+			Integer.parseInt(produce_m[i]),Integer.parseInt(produce_l[i]),
+			Integer.parseInt(produce_xl[i]),Integer.parseInt(produce_xxl[i]),""));
+		}
+		
+		//版型数据
+		String version_sizes = request.getParameter("version_size");
+		String version_centerBackLengths = request.getParameter("version_centerBackLength");
+		String version_busts = request.getParameter("version_bust");
+		String version_waistLines = request.getParameter("version_waistLine");
+		String version_shoulders = request.getParameter("version_shoulder");
+		String version_buttocks = request.getParameter("version_buttock");
+		String version_hems = request.getParameter("version_hem");
+		String version_trouserss = request.getParameter("version_trousers");
+		String version_skirts = request.getParameter("version_skirt");
+		String version_sleevess = request.getParameter("version_sleeves");
+		String version_size[] = version_sizes.split(",");
+		String version_centerBackLength[] = version_centerBackLengths.split(",");
+		String version_bust[] = version_busts.split(",");
+		String version_waistLine[] = version_waistLines.split(",");
+		String version_shoulder[] = version_shoulders.split(",");
+		String version_buttock[] = version_buttocks.split(",");
+		String version_hem[] = version_hems.split(",");
+		String version_trousers[] = version_trouserss.split(",");
+		String version_skirt[] = version_skirts.split(",");
+		String version_sleeves[] = version_sleevess.split(",");
+		List<VersionData> versions = new ArrayList<VersionData>();
+		for (int i = 0; i < version_size.length; i++) {
+			versions.add(new VersionData(0,version_size[i],version_centerBackLength[i],version_bust[i],version_waistLine[i]
+					,version_shoulder[i],version_buttock[i],version_hem[i],version_trousers[i],version_skirt[i],version_sleeves[i]));
+		}
+		
 		// 物流数据
 		Logistics logistics = new Logistics();
 		String in_post_sample_clothes_time = request
@@ -221,7 +273,7 @@ public class MarketController {
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 
-		marketService.addOrderSubmit(order, fabrics, accessorys, logistics,
+		marketService.addOrderSubmit(order, fabrics, accessorys, logistics, produces, versions,
 				request);
 
 		return "forward:/market/addOrderList.do";
