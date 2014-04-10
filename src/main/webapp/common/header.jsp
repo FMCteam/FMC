@@ -87,7 +87,7 @@
 								class="iconfa-briefcase"></span> 市场部</a>
 								<ul>
 									<li><a href="${ctx }/market/addOrderList.do">客户下单</a></li>
-									<li><a href="${ctx }/market/sampleOrderList.do">修改询单</a></li>
+									<li><a href="${ctx }/market/modifyOrderList.do">修改询单</a></li>
 
 									<li><a href="${ctx }/market/mergeQuoteList.do">合并报价</a></li>
 									<li><a href="${ctx }/market/verifyQuoteList.do">审核报价</a></li>

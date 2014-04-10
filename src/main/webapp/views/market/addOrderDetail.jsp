@@ -6,12 +6,21 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<div class="widget">
-				<h4 class="widgettitle">Form Elements</h4>
+				<h4 class="widgettitle">客户下单</h4>
 				<div class="widgetcontent">
 
 					<form onSubmit="return verify()" method="post"
 						action="${ctx }/market/addOrderSubmit.do" enctype="multipart/form-data"">
 						<table class="table table-striped table-bordered table-hover">
+							<tr>
+								<td>业务信息</td>
+								<td>业务编号</td>
+								<td><input class="span12" type="text" value="" readonly /></td>
+								<td>接单时间</td>
+								<td><input class="span12" type="date" /></td>
+								<td>接单业务员</td>
+								<td>${employee_name }</td>
+							</tr>
 							<tr>
 								<td rowspan="3">客户信息</td>
 								<td>客户编号</td>
@@ -95,7 +104,7 @@
 							</tr>
 							<tr>
 								<td><input class="span6" type="number" name="ask_amount" /></td>
-								<td colspan="2"><input class="span6" type="date"
+								<td colspan="2"><input class="span12" type="date"
 									name="ask_deliver_date" /></td>
 								<td colspan="2"><input class="span3" type="number"
 									name="ask_produce_period" /></td>
@@ -154,12 +163,95 @@
 								<td><input type="radio" name="has_posted_sample_clothes"
 									checked="checked" value="1" /> 是 <input type="radio"
 									name="has_posted_sample_clothes" value="0" /> 否</td>
-								<td colspan="2"><input class="span6" type="date"
+								<td colspan="2"><input class="span12" type="date"
 									name="in_post_sample_clothes_time" /></td>
 								<td><input class="span12" type="text"
 									name="in_post_sample_clothes_type" /></td>
 								<td colspan="2"><input class="span12" type="text"
 									name="in_post_sample_clothes_number" /></td>
+							</tr>
+							<tr>
+								<td colspan="7">
+									<table class="table table-striped table-bordered">
+										<tbody>
+											<tr>
+												<td colspan="7">大货加工具体要求</td>
+											</tr>
+											<tr>
+												<td>颜色</td>
+												<td>XS</td>
+												<td>S</td>
+												<td>M</td>
+												<td>L</td>
+												<td>XL</td>
+												<td>XXL</td>
+											</tr>
+											<tr>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="7">
+									<table class="table table-striped table-bordered">
+										<tbody>
+											<tr>
+												<td colspan="10">版型数据信息</td>
+											</tr>
+											<tr>
+												<td>尺寸表/部位 </td>
+												<td>后中长</td>
+												<td>胸围</td>
+												<td>腰围</td>
+												<td>肩宽</td>
+												<td>臀围</td>
+												<td>下摆</td>
+												<td>裤长</td>
+												<td>裙长</td>
+												<td>袖长</td>
+											</tr>
+											<tr>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+												<td><input type="text" class="span12"/></td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="7">版型数据信息</td>
+							</tr>
+							<tr>
+								<td>面料</td>
+								<td colspan="3"><input type="text" class="span12"/></td>
+								<td>包装</td>
+								<td colspan="2"><input type="text" class="span12"/></td>
+							</tr>
+							<tr>
+								<td>版型</td>
+								<td colspan="3"><input type="text" class="span12"/></td>
+								<td>装箱</td>
+								<td colspan="2"><input type="text" class="span12"/></td>
+							</tr>
+							<tr>
+								<td>工艺</td>
+								<td colspan="6"><input type="text" class="span12"/></td>
 							</tr>
 							<tr>
 								<td rowspan="5">生产样衣</td>
@@ -172,7 +264,7 @@
 								<td><input type="radio" name="is_need_sample_clothes"
 									checked="checked" value="1" /> 是 <input type="radio"
 									name="is_need_sample_clothes" value="0" /> 否</td>
-								<td colspan="2"><input class="span6" type="date"
+								<td colspan="2"><input class="span12" type="date"
 									name="sample_clothes_time" /></td>
 								<td><input class="span12" type="text"
 									name="sample_clothes_type" /></td>
