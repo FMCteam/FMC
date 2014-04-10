@@ -153,7 +153,7 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "employee/getEmloyeeList.do", method= RequestMethod.GET)
+	@RequestMapping(value = "employee/getEmployeeList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String getEmployeeList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
