@@ -77,7 +77,7 @@
 					</tr>
 					<tr>
 						<td>${orderInfo.order.askAmount}</td>
-						<td colspan="2">${fn:substring(orderInfo.order.askDeliverDate,0,10) }</td>
+						<td colspan="2">${fn:substring(orderInfo.order.askDeliverDate,0,10)}</td>
 						<td colspan="2">${orderInfo.order.askProducePeriod }</td>
 						<td>${orderInfo.order.askCodeNumber }</td>
 					</tr>

@@ -6,9 +6,9 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<section>
-			<table class="table">
-				<caption>样衣待收取列表</caption>
+			<section class="list">
+			<table class="list">
+				<caption>样衣待收取列表<span class="text-right">共有${fn:length(list)}件任务</span></caption>
 				<tr>
 					<th>询单编号</th>
 					<th>客户姓名</th>
@@ -23,7 +23,7 @@
 						<td>${task.order.customerName}</td>
 						<td>${task.logistics.inPostSampleClothesType}</td>
 						<td>${task.logistics.inPostSampleClothesNumber}</td>
-						<td>${task.logistics.inPostSampleClothesTime}</td>
+						<td>${fn:substring(task.logistics.inPostSampleClothesTime,0,10)}</td>
 						<td><a
 							href="${ctx}/logistics/receiveSampleDetail.do?orderId=${task.order.orderId}">详情
 						</a> 
