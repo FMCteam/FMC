@@ -5,10 +5,10 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
-			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<section class="list">
 			<table class="list">
-				<caption>样衣待收取列表<span class="text-right">共有${fn:length(list)}件任务</span></caption>
+				<caption><span class="text-vertical">样衣待收取列表:${fn:length(list)}件任务</span><input type="text" class="search-query float-right" placeholder="输入检索条件"></caption>
+				<thead>
 				<tr>
 					<th>询单编号</th>
 					<th>客户姓名</th>
@@ -17,6 +17,7 @@
 					<th>邮寄时间</th>
 					<th>操作</th>
 				</tr>
+				</thead>
 				<c:forEach var="task" items="${list}">
 					<tr>
 						<td>${task.order.orderId}</td>
@@ -52,5 +53,6 @@
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>

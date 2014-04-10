@@ -25,6 +25,7 @@ table.list caption {
 	background: #003366;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
+	font-size: 16px;
 }
 
 table.list th:first-child,table.list td:first-child {
@@ -64,6 +65,17 @@ table.list tr:hover td{
 	background: #FFFFCC;
 }
 
-table.list .text-right{
+table.list .float-right{
 	float:right;
+}
+
+table.list .text-vertical{
+	position:absolute;
+	vertical-align:middle;
+	line-height:20px;
+	margin-top: 5px;
+}
+
+table.list input.search-query{
+	width: 100px;
 }
