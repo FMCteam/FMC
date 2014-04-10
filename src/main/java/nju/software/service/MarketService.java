@@ -84,5 +84,9 @@ public interface MarketService {
 
 	public void verifyQuoteSubmit(float inner, float outer, int id,
 			long taskId, long processId);
+
+	public List<OrderInfo> getModifyOrderList(Integer accountId);
+
+	public OrderInfo getModifyOrderDetail(int id, long task_id);
 	
 }

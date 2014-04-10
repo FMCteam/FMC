@@ -87,7 +87,7 @@
 								class="iconfa-briefcase"></span> 市场部</a>
 								<ul>
 									<li><a href="${ctx }/market/addOrderList.do">客户下单</a></li>
-									<li><a href="${ctx }/market/sampleOrderList.do">修改询单</a></li>
+									<li><a href="${ctx }/market/modifyOrderList.do">修改询单</a></li>
 
 									<li><a href="${ctx }/market/mergeQuoteList.do">合并报价</a></li>
 									<li><a href="${ctx }/market/verifyQuoteList.do">审核报价</a></li>
@@ -110,10 +110,10 @@
 							class="iconfa-th-list"></span> 设计部</a>
 						<ul>
 							<li><a href="${ctx }/design/verifyDesignList.do">设计验证</a></li>
-							<li><a href="${ctx }/design/costAccounting.do">成本合算</a></li>
-							<li><a href="${ctx }/design/upload_CAD.do">样衣版型</a></li>
-							<li><a href="${ctx }/design/designCAD_confirm.do">生产验证</a></li>
-							<li><a href="${ctx }/design/productCAD_confirm.do">生产版型</a></li>
+							<li><a href="${ctx }/design/getComputeDesignCostList.do">成本合算</a></li>
+							<li><a href="${ctx }/design/getUploadDesignList.do">样衣版型</a></li>
+							<li><a href="${ctx }/design/getModifyDesignList.do">生产验证</a></li>
+							<li><a href="${ctx }/design/getConfirmDesignList.do">生产版型</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_buy==true}">
@@ -121,7 +121,7 @@
 							class="iconfa-th-list"></span> 采购部</a>
 						<ul>
 							<li><a href="${ctx }/buy/verifyPurchaseList.do">采购验证</a></li>
-							<li><a href="${ctx }/buy/costAccounting.do">成本合算</a></li>
+							<li><a href="${ctx }/buy/computePurchaseCostList.do">成本合算</a></li>
 							<li><a href="${ctx }/buy/caigouqueren1List.do">采购确认</a></li>
 							<li><a href="${ctx }/buy/caigouqueren2List.do">采购确认2</a></li>
 							<li><a href="${ctx }/buy/caigouqueren3List.do">采购确认3</a></li>
@@ -136,7 +136,7 @@
 							class="iconfa-th-list"></span> 生产部</a>
 						<ul>
 							<li><a href="${ctx }/produce/verifyProduceList.do">生产验证</a></li>
-							<li><a href="${ctx }/produce/costAccounting.do">成本合算</a></li>
+							<li><a href="${ctx }/produce/computeProduceCostList.do">成本合算</a></li>
 							<li><a href="${ctx }/produce/produceSampleList.do">样衣生产</a></li>
 							<li><a href="${ctx }/produce/produceList.do">批量生产</a></li>
 						</ul></li>

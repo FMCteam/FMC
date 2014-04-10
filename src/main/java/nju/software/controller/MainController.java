@@ -8,10 +8,12 @@ import nju.software.dataobject.Account;
 import nju.software.service.AccountService;
 
 import org.apache.log4j.Logger;
+import org.jboss.netty.handler.codec.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -36,11 +38,18 @@ public class MainController {
 //		model.addAttribute("teacherList", t_list);
 		HttpSession session = request.getSession();
 		Account cur_user = (Account) session.getAttribute("cur_user");
-		
+		 
 		if(cur_user != null) {
 			return "redirect:default.do";
 		} else {
-			return "login";
+			String user_agent = request.getHeader("user-agent");
+			System.out.println(user_agent.contains("Windows Phone 6.5"));
+			if(user_agent.contains("Windows Phone 6.5")) {
+				return "login2";
+			} else {
+				return "login";
+			}
+			
 		}
 	}
 	
@@ -67,12 +76,23 @@ public class MainController {
 		String user_password = request.getParameter("user_password");
 		HttpSession session = request.getSession();
 		Account account = accountService.vertifyAccount(user_name, user_password);
+		String user_agent = request.getHeader("user-agent");
+		boolean is_wm = user_agent.contains("Windows Phone 6.5");
 		if (account != null) {
 			session.setAttribute("cur_user", account);
+			if(account.getUserRole().equals("") && is_wm) {
+				return "redirect:logistics/getSendClothesList.do";
+			}
 			return "redirect:default.do";
 		} else {
 			model.addAttribute("state", "wrong");
-			return "login";
+			
+			if(is_wm) {
+				return "login2";
+			} else {
+				return "login";
+			}
+			 
 		}
 	}
 	

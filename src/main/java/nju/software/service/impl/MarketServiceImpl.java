@@ -606,4 +606,39 @@ public class MarketServiceImpl implements MarketService {
 		}
 	}
 
+	@Override
+	public List<OrderInfo> getModifyOrderList(Integer accountId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_MARKET_STAFF, TASK_MODIFY_ORDER);
+		List<OrderInfo> taskSummarys = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			if (getVariable("employeeId", task).equals(accountId)) {
+				Integer orderId = (Integer) getVariable("orderId", task);
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setTask(task);
+				taskSummarys.add(oi);
+			}
+		}
+		return taskSummarys;
+	}
+
+	@Override
+	public OrderInfo getModifyOrderDetail(int id, long task_id) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_MARKET_STAFF, TASK_MODIFY_ORDER);
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) getVariable("orderId", task);
+			if (id == orderId && task_id == task.getId()) {
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
+	}
+
 }

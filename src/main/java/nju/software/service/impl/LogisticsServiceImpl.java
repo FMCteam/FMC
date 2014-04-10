@@ -244,4 +244,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 	public final static String TASK_SEND_SAMPLE = "sendSample";
 	public final static String TASK_WAREHOUSE = "warehouse";
 	public final static String TASK_SEND_CLOTHES = "sendClothes";
+	@Override
+	public List<OrderInfo> getSendClothesUncheckedList() {
+		// TODO Auto-generated method stub
+		return new ArrayList<OrderInfo>();
+	}
 }
