@@ -9,7 +9,7 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">生产成本核算</h4>
+                    <h4 class="widgettitle">采购成本核算</h4>
                 <table id="dyntable" class="table table-bordered responsive">
                     <colgroup>
                         <col class="con1" />
@@ -34,18 +34,18 @@
                         </tr>
                     </thead>
                     <tbody>
-	                    <c:forEach var="task" items="${list}" >
+	                    <c:forEach var="orderModel" items="${list}" >
 	                        <tr class="gradeA">
-	                            <td>${task.order.orderId }</td>
-								<td>${task.order.employeeId }</td>
-								<td>${task.order.customerName }</td>
-								<td>${task.order.customerCompany }</td>
-								<td>${task.order.styleName }</td>
-								<td>${task.order.askAmount }</td>
-								<td>${fn:substring(task.order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx }/produce/computeProduceCostDetail.do" method="post" >
-									<input type="hidden" name="orderId" value="${task.order.orderId }" />
-										<input type="hidden" name="task_id" value="${task.taskId }" />
+	                            <td>${orderModel.order.orderId }</td>
+								<td>${orderModel.order.employeeId }</td>
+								<td>${orderModel.order.customerName }</td>
+								<td>${orderModel.order.customerCompany }</td>
+								<td>${orderModel.order.styleName }</td>
+								<td>${orderModel.order.askAmount }</td>
+								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+								<td><form action="${ctx }/buy/computePurchaseCostDetail.do" method="post" >
+									<input type="hidden" name="orderId" value="${orderModel.order.orderId }" />
+										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
 									
 										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 成本核算</button></form>
 								</td>
