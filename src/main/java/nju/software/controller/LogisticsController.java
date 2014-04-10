@@ -312,15 +312,42 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String getSendClothesList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<OrderInfo>list=logisticsService.getSendClothesList();
-		model.addAttribute("list", list);		
-	    
 		
+		String user_agent = request.getHeader("user-agent");
+		boolean is_wm = user_agent.contains("Windows Phone 6.5");
 		
-		return "logistic/getSendClothesList";
+		if(is_wm) {
+			List<OrderInfo>list=logisticsService.getSendClothesUncheckedList();
+			model.addAttribute("list", list);		
+			return "logistic/getSendClothesList2";
+		} else {
+			List<OrderInfo>list=logisticsService.getSendClothesList();
+			model.addAttribute("list", list);		
+			return "logistic/getSendClothesList";
+		}
+		
 	}
 	
 	
+	/**
+	 * 扫描确认发货
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "logistics/checkSendClothes.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String checkSendClothes(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		 
+		// String orderId=request.getParameter("orderId");
+		//  OrderInfo orderInfo=logisticsService.getSendClothesDetail(Integer.parseInt(orderId));
+		//
+		 // model.addAttribute("orderInfo", orderInfo);
+		
+		return "logistics/checkSendClothes";
+	}
 	
 	
 	/**
