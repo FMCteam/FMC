@@ -3,7 +3,10 @@ package nju.software.dataobject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.GenerationType.SEQUENCE;
+
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -59,9 +62,9 @@ public class VersionDataCm implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@SequenceGenerator(name = "generator")
+	
 	@Id
-	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "vid", unique = true, nullable = false)
 	public Integer getVid() {
 		return this.vid;
