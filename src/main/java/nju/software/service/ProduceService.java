@@ -46,7 +46,7 @@ public interface ProduceService {
 
 	public void ComputeProduceCostSubmit(int orderId,long taskId,float cut_cost, float manage_cost, float nali_cost,
 			float ironing_cost, float swing_cost, float package_cost,
-			float other_cost);
+			float other_cost, float design_cost);
 	
 	public List<Product> getProductByOrderId(int parseInt);
 

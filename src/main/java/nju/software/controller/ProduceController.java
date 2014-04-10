@@ -111,8 +111,8 @@ public class ProduceController {
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
-		OrderInfo orderModel = produceService.getVerifyProduceDetail(orderId_request, taskId);
-		model.addAttribute("orderModel", orderModel);
+		OrderInfo orderInfo = produceService.getVerifyProduceDetail(orderId_request, taskId);
+		model.addAttribute("orderInfo", orderInfo);
 		return "produce/verifyProduceDetail";
 	}
 	
@@ -204,17 +204,20 @@ public class ProduceController {
 		String package_cost = request.getParameter("package_cost");
 		//其他费用
 		String other_cost = request.getParameter("other_cost");
-	    
+	    //设计费用
+		String design_cost = request.getParameter("design_cost");
+		
 		produceService.ComputeProduceCostSubmit(
 				Integer.parseInt(orderId),
-				 Long.parseLong(taskId), 
+				Long.parseLong(taskId), 
 				Float.parseFloat(cut_cost),
 				Float.parseFloat(manage_cost),
 				Float.parseFloat(nail_cost),
 				Float.parseFloat(ironing_cost),
 				Float.parseFloat(swing_cost),
 				Float.parseFloat(package_cost),
-				Float.parseFloat(other_cost)
+				Float.parseFloat(other_cost),
+				Float.parseFloat(design_cost)
 						);
 		
 		return "redirect:/produce/computeProduceCostList.do";

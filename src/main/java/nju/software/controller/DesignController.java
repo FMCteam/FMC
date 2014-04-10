@@ -111,18 +111,13 @@ public class DesignController {
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		
-		System.out.println("design verify ================ show detail");
-		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
 		String s_orderId_request = (String) request.getParameter("id");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("task_id");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		OrderInfo orderModel = designService.getVerifyDesignDetail(orderId_request, taskId);
-		model.addAttribute("orderModel", orderModel);	
+		OrderInfo orderInfo = designService.getVerifyDesignDetail(orderId_request, taskId);
+		model.addAttribute("orderInfo", orderInfo);	
 		return "design/verifyDesignDetail";
 	}
 

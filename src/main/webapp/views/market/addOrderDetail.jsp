@@ -117,16 +117,15 @@
 								</select></td>
 							</tr>
 							<tr>
-								<td rowspan="2">面料</td>
-								<td colspan="2">面料名称</td>
-								<td colspan="2">面料克重</td>
-								<td colspan="2">操作</td>
-								<input id="fabric_name" name="fabric_name" type="hidden" />
-								<input id="fabric_amount" name="fabric_amount" type="hidden" />
-							</tr>
-							<tr>
+								<td>面料<input id="fabric_name" type="hidden" name="fabric_name" />
+									<input id="fabric_amount" type="hidden" name="fabric_amount" /></td>
 								<td colspan="6" class="innertable"><table
 										class="span12 table fabric_table">
+										<tr>
+											<td>面料名称</td>
+											<td>面料克重</td>
+											<td>操作</td>
+										</tr>
 										<tr class="addrow">
 											<td><input class="span12" type="text" /></td>
 											<td><input class="span12" type="text" /></td>
@@ -135,16 +134,15 @@
 									</table></td>
 							</tr>
 							<tr>
-								<td rowspan="2">辅料</td>
-								<td colspan="2">辅料名称</td>
-								<td colspan="2">辅料要求</td>
-								<td colspan="2">操作</td>
-								<input id="accessory_name" name="accessory_name" type="hidden" />
-								<input id="accessory_query" name="accessory_query" type="hidden" />
-							</tr>
-							<tr>
-								<td colspan="6" class="innertable"><table table
+								<td>辅料<input id="accessory_name" type="hidden" name="accessory_name" />
+									<input id="accessory_query" type="hidden" name="accessory_query" /></td>
+								<td colspan="6" class="innertable"><table 
 										class="span12 table accessory_table">
+										<tr>
+											<td>辅料名称</td>
+											<td>辅料要求</td>
+											<td>操作</td>
+										</tr>
 										<tr class="addrow">
 											<td><input class="span12" type="text" /></td>
 											<td><input class="span12" type="text" /></td>
@@ -171,11 +169,18 @@
 									name="in_post_sample_clothes_number" /></td>
 							</tr>
 							<tr>
-								<td colspan="7">
-									<table class="table table-striped table-bordered">
+								<td colspan="7" class="innertable">
+									<table class="span12 table produce_table">
 										<tbody>
 											<tr>
-												<td colspan="7">大货加工具体要求</td>
+												<td colspan="8">大货加工具体要求
+													<input id="produce_color" type="hidden" name="produce_color" />
+													<input id="produce_xs" type="hidden" name="produce_xs" />
+													<input id="produce_s" type="hidden" name="produce_s" />
+													<input id="produce_m" type="hidden" name="produce_m" />
+													<input id="produce_l" type="hidden" name="produce_l" />
+													<input id="produce_xl" type="hidden" name="produce_xl" />
+													<input id="produce_xxl" type="hidden" name="produce_xxl" /></td>
 											</tr>
 											<tr>
 												<td>颜色</td>
@@ -185,8 +190,9 @@
 												<td>L</td>
 												<td>XL</td>
 												<td>XXL</td>
+												<td>操作</td>
 											</tr>
-											<tr>
+											<tr class="addrow">
 												<td><input type="text" class="span12"/></td>
 												<td><input type="text" class="span12"/></td>
 												<td><input type="text" class="span12"/></td>
@@ -194,17 +200,28 @@
 												<td><input type="text" class="span12"/></td>
 												<td><input type="text" class="span12"/></td>
 												<td><input type="text" class="span12"/></td>
+												<td><a>添加</a></td>
 											</tr>
 										</tbody>
 									</table>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="7">
-									<table class="table table-striped table-bordered">
+								<td colspan="7" class="innertable">
+									<table class="span12 table version_table">
 										<tbody>
 											<tr>
-												<td colspan="10">版型数据信息</td>
+												<td colspan="11">版型数据信息
+													<input id="version_size" type="hidden" name="version_size" />
+													<input id="version_centerBackLength" type="hidden" name="version_centerBackLength" />
+													<input id="version_bust" type="hidden" name="version_bust" />
+													<input id="version_waistLine" type="hidden" name="version_waistLine" />
+													<input id="version_shoulder" type="hidden" name="version_shoulder" />
+													<input id="version_buttock" type="hidden" name="version_buttock" />
+													<input id="version_hem" type="hidden" name="version_hem" />
+													<input id="version_trousers" type="hidden" name="version_trousers" />
+													<input id="version_skirt" type="hidden" name="version_skirt" />
+													<input id="version_sleeves" type="hidden" name="version_sleeves" /></td>
 											</tr>
 											<tr>
 												<td>尺寸表/部位 </td>
@@ -217,8 +234,9 @@
 												<td>裤长</td>
 												<td>裙长</td>
 												<td>袖长</td>
+												<td>操作</td>
 											</tr>
-											<tr>
+											<tr class="addrow">
 												<td><input type="text" class="span12"/></td>
 												<td><input type="text" class="span12"/></td>
 												<td><input type="text" class="span12"/></td>
@@ -229,6 +247,7 @@
 												<td><input type="text" class="span12"/></td>
 												<td><input type="text" class="span12"/></td>
 												<td><input type="text" class="span12"/></td>
+												<td><a>添加</a></td>
 											</tr>
 										</tbody>
 									</table>

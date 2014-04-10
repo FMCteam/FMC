@@ -1,8 +1,17 @@
 package nju.software.service.impl;
 
 import java.util.List;
+
+import javax.persistence.EntityManagerFactory;
+
+import org.drools.SystemEventListener;
+import org.drools.SystemEventListenerFactory;
+import org.jbpm.task.User;
+import org.jbpm.task.service.TaskService;
+import org.jbpm.task.service.TaskServiceSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dataobject.Employee;
 import nju.software.service.EmployeeService;
@@ -13,6 +22,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeDAO employeeDAO;
+	@Autowired
+	private EntityManagerFactory emf;
 	
 	public Employee getEmployeeById(int employeeId) {
 		// TODO Auto-generated method stub
@@ -30,6 +41,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// TODO Auto-generated method stub
 		try {
 			employeeDAO.save(employee);
+			SystemEventListener listener = SystemEventListenerFactory
+					.getSystemEventListener();
+			TaskService taskService = new TaskService(emf, listener);
+			TaskServiceSession taskSession = taskService.createSession();
+			taskSession.addUser(new User(employee.getEmployeeId()+""));
 			return employee.getEmployeeId();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

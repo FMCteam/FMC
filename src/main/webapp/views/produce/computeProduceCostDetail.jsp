@@ -10,7 +10,16 @@
 				<div class="widgetcontent">
 				<form id="costAccounting_form" method="post" action="${ctx }/produce/computeProduceCostSubmit.do">
 						<table class="table table-striped table-bordered table-hover">
-									<tr>
+							<tr>
+								<td>业务信息</td>
+								<td>业务编号</td>
+								<td>${orderInfo.order.orderId}</td>
+								<td>接单时间</td>
+								<td></td>
+								<td>接单业务员</td>
+								<td>${orderInfo.employee.employeeName}</td>
+							</tr>
+							<tr>
 								<td rowspan="3">客户信息</td>
 								<td>客户编号</td>
 								<td>姓名</td>
@@ -33,44 +42,28 @@
 							</tr>
 							<tr>
 								<td rowspan="6">款式信息</td>
-								<td><label>款式名称<span class="required">*</span></label></td>
-								<td colspan="2">款式性别<span class="required">*</span></td>
-								<td colspan="2">款式季节<span class="required">*</span></td>
-								<td>订单来源<span class="required">*</span></td>
+								<td><label>款式名称</label></td>
+								<td colspan="2">款式性别</td>
+								<td colspan="2">款式季节</td>
+								<td>订单来源</td>
 							</tr>
 							<tr>
 								<td>${orderInfo.order.styleName }</td>
 								<td colspan="2">${orderInfo.order.styleSex }</td>
-								<td colspan="2">${orderInfo.order.styleSeason eq 'CHUNXIA'?'春夏':'秋冬' }</td>
+								<td colspan="2">${orderInfo.order.styleSeason}</td>
 								<td>${orderInfo.order.orderSource }</td>
 							</tr>
 							<tr>
 								<td>面料类型</td>
-								<td colspan="5">
-									${fn:contains(orderInfo.order.fabricType,'SUOZHI')?'梭织':'' }
-									${fn:contains(orderInfo.order.fabricType,'ZHENZHI')?'针织':'' }
-									${fn:contains(orderInfo.order.fabricType,'BIANZHI')?'编织':'' }
-									${fn:contains(orderInfo.order.fabricType,'SUOZHENHUNHE')?'梭针混合':'' }
-									${fn:contains(orderInfo.order.fabricType,'ZHENBIANHUNHE')?'针编混合':'' }
-									${fn:contains(orderInfo.order.fabricType,'SUOBIANHUNHE')?'梭编混合':'' }
-								</td>
+								<td colspan="5">${orderInfo.order.fabricType}</td>
 							</tr>
 							<tr>
 								<td>特殊工艺</td>
-								<td colspan="5">
-									${fn:contains(orderInfo.order.specialProcess,'SHUIXI')?'水洗&nbsp;':'' } 
-									${fn:contains(orderInfo.order.specialProcess,'JIGUANG')?'激光&nbsp;':'' } 
-									${fn:contains(orderInfo.order.specialProcess,'YAZHOU')?'压皱&nbsp;':'' } 
-									${fn:contains(orderInfo.order.specialProcess,'其他')?'其他&nbsp;':'' } 
-								</td>
+								<td colspan="5">${orderInfo.order.specialProcess}</td>
 							</tr>
 							<tr>
 								<td>其他说明</td>
-								<td colspan="5">
-									${fn:contains(orderInfo.order.otherRequirements,'ZHUBIAO')?'有主标&nbsp;':'' }
-									${fn:contains(orderInfo.order.otherRequirements,'DIAOPAI')?'有吊牌&nbsp;':'' }
-									${fn:contains(orderInfo.order.otherRequirements,'SHUIXI')?'有水洗&nbsp;':'' }
-								</td>
+								<td colspan="5">${orderInfo.order.otherRequirements}</td>
 							</tr>
 							<tr>
 								<td>参考链接</td>
@@ -84,47 +77,36 @@
 								<td>码数</td>
 							</tr>
 							<tr>
-								<td>${orderInfo.order.askAmount }</td>
+								<td>${orderInfo.order.askAmount}</td>
 								<td colspan="2">${fn:substring(orderInfo.order.askDeliverDate,0,10) }</td>
 								<td colspan="2">${orderInfo.order.askProducePeriod }</td>
 								<td>${orderInfo.order.askCodeNumber }</td>
 							</tr>
 							<tr>
-								<td rowspan="2">面料</td>
-								<td colspan="2">面料名称</td>
-								<td colspan="2">面料克重</td>
-								<td colspan="2">操作</td>
-								<input id="fabric_name" name="fabric_name" type="hidden" />
-								<input id="fabric_amount" name="fabric_amount" type="hidden" />
+								<td rowspan="${fn:length(orderInfo.fabrics)+1}">面料</td>
+								<td colspan="3">面料名称</td>
+								<td colspan="3">面料克重</td>
 							</tr>
+							<c:forEach var="fabric" items="${orderInfo.fabrics}">
+								<tr>
+									<td colspan="3">${fabric.fabricName}</td>
+									<td colspan="3">${fabric.fabricAmount}</td>
+								</tr>
+							</c:forEach>
 							<tr>
-								<td colspan="6" class="innertable"><table
-										class="span12 table fabric_table">
-										<tr class="addrow">
-											<td><input class="span12" type="text" /></td>
-											<td><input class="span12" type="text" /></td>
-											<td><a>添加</a></td>
-										</tr>
-									</table></td>
+								<td rowspan="${fn:length(orderInfo.accessorys)+1}">辅料</td>
+								<td colspan="3">辅料名称</td>
+								<td colspan="3">辅料要求</td>
 							</tr>
-							<tr>
-								<td rowspan="2">辅料</td>
-								<td colspan="2">辅料名称</td>
-								<td colspan="2">辅料要求</td>
-								<td colspan="2">操作</td>
-								<input id="accessory_name" name="accessory_name" type="hidden" />
-								<input id="accessory_query" name="accessory_query" type="hidden" />
-							</tr>
-							<tr>
-								<td colspan="6" class="innertable"><table table
-										class="span12 table accessory_table">
-										<tr class="addrow">
-											<td><input class="span12" type="text" /></td>
-											<td><input class="span12" type="text" /></td>
-											<td><a>添加</a></td>
-										</tr>
-									</table></td>
-							</tr>
+		
+		
+							<c:forEach var="accessory" items="${orderInfo.accessorys}">
+								<tr>
+									<td colspan="3">${accessory.accessoryName}</td>
+									<td colspan="3">${accessory.accessoryQuery}</td>
+								</tr>
+							</c:forEach>
+		
 							<tr>
 								<td rowspan="2">客户样衣</td>
 								<td>提供样衣</td>
@@ -134,9 +116,8 @@
 							</tr>
 							<tr>
 								<td>${orderInfo.order.hasPostedSampleClothes==0?'没有样衣':'' }
-									${orderInfo.order.hasPostedSampleClothes==1?'收到样衣':'' }
-									${orderInfo.order.hasPostedSampleClothes==2?'未收到样衣':'' }
-								</td>
+									${orderInfo.order.hasPostedSampleClothes==1?'未收到样衣':'' }
+									${orderInfo.order.hasPostedSampleClothes==2?'收到样衣':'' }</td>
 								<td colspan="2">${fn:substring(orderInfo.logistics.inPostSampleClothesTime,0,10) }</td>
 								<td>${orderInfo.logistics.inPostSampleClothesType }</td>
 								<td colspan="2">${orderInfo.logistics.inPostSampleClothesNumber }</td>
@@ -167,70 +148,55 @@
 							<tr>
 								<td>其他备注</td>
 								<td colspan="5">${orderInfo.logistics.sampleClothesRemark }</td>
+		
 							</tr>
 							<tr>
 								<td>样衣信息</td>
 								<td>样衣图片</td>
-								<td colspan="2">${orderInfo.order.sampleClothesPicture }</td>
+								<td colspan="2">
+								<img src="${ctx}/${orderInfo.order.sampleClothesPicture}" alt="没有图片"></img></td>
 								<td>参考图片</td>
-								<td colspan="2">${orderInfo.order.referencePicture }</td>
+								<td colspan="2">
+								<img src="${ctx}/${orderInfo.order.referencePicture}" alt="没有图片"></img></td>
 							</tr>
 							<tr>
 								<td>意见</td>
 								<td colspan="6"><input class="span12" type="text" name="suggestion" /></td>
 							</tr>
 							
-					
-			
-							
-							
-						
-							
-						
                             <tr>
-                             <td rowspan="4">其他成本</td>
-                             <td>裁剪费用</td>
-                             <td>管理费用</td>
-                             <td>缝制费用</td>
-                              <td>整烫费用</td>
-                            
+	                            <td rowspan="4">其他成本</td>
+	                            <td>裁剪费用</td>
+	                            <td>管理费用</td>
+	                            <td>缝制费用</td>
+	                            <td>整烫费用</td>
                             </tr>
 							
 							<tr>
-				<td><input class="span12" name="cut_cost" id="cut_cost" placeholder="cut_cost"type="text"></td>
-				<td><input class="span12" name="manage_cost" id="manage_cost" placeholder="manage_cost"type="text"></td>
-				<td><input class="span12" name="nail_cost" id="nail_cost" placeholder="nail_cost"type="text"></td>
-				<td><input class="span12" name="ironing_cost" id="ironing_cost" placeholder="ironing_cost"type="text"></td>		
-				 <input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
-	              <input type="hidden" name="orderInfoId" value="${orderInfo.taskId }" />
-					
+								<td><input class="span12" name="cut_cost" id="cut_cost" type="text"></td>
+								<td><input class="span12" name="manage_cost" id="manage_cost" type="text"></td>
+								<td><input class="span12" name="nail_cost" id="nail_cost" type="text"></td>
+								<td><input class="span12" name="ironing_cost" id="ironing_cost" type="text"></td>		
+				 				<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
+	              				<input type="hidden" name="orderInfoId" value="${orderInfo.taskId }" />
 							</tr>
 							
-								
                             <tr>
-                             
-                             <td>锁订费用</td>
-                             <td>包装费用</td>
-                             <td>其他费用</td>
-                            
+                             	<td>锁订费用</td>
+                             	<td>包装费用</td>
+                             	<td>其他费用</td>
+                             	<td>设计费用</td>
                             </tr>
 					
 							<tr>
-		<td><input class="span12" name="swing_cost" id="swing_cost" placeholder="swing_cost"type="text"></td>
-		<td><input class="span12" name="package_cost" id="package_cost" placeholder="package_cost"type="text"></td>
-		<td><input class="span12" name="other_cost" id="other_cost" placeholder="other_cost"type="text"></td>
-					
-							</tr>	
-							
-							
-							  <tr>
-
-                        <td colspan="3"><input type="submit" style="float: right;"/></td>
-                    </tr>
-
-							
-							
-							
+								<td><input class="span12" name="swing_cost" id="swing_cost" type="text"></td>
+								<td><input class="span12" name="package_cost" id="package_cost" type="text"></td>
+								<td><input class="span12" name="other_cost" id="other_cost" type="text"></td>
+								<td><input class="span12" name="design_cost" id="design_cost" type="text"></td>
+							</tr>
+							<tr>
+								<td colspan="3"><input type="submit" style="float: right;"/></td>
+                    		</tr>
 						</table>
 					</form>
 				</div>

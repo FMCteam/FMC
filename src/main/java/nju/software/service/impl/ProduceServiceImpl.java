@@ -373,6 +373,9 @@ public class ProduceServiceImpl implements ProduceService {
 				TASK_COMPUTE_PRODUCE_COST, orderId);
 		OrderInfo model = new OrderInfo();
 		model.setOrder(orderDAO.findById(orderId));
+		model.setLogistics(logisticsDAO.findById(orderId));
+		model.setFabrics(fabricDAO.findByOrderId(orderId));
+		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		model.setTask(task);
 		return model;
 	}
@@ -381,7 +384,7 @@ public class ProduceServiceImpl implements ProduceService {
 	public void ComputeProduceCostSubmit(int orderId,
 			long taskId,float cut_cost, float manage_cost, float nali_cost,
 			float ironing_cost, float swing_cost, float package_cost,
-			float other_cost) {
+			float other_cost, float design_cost) {
 		
 		Quote quote = QuoteDAO.findById(orderId);
 
@@ -395,6 +398,7 @@ public class ProduceServiceImpl implements ProduceService {
 			quote.setNailCost(nali_cost);
 			quote.setPackageCost(package_cost);
 			quote.setOtherCost(other_cost);
+			quote.setDesignCost(design_cost);
 			QuoteDAO.save(quote);
 		} else {
 			quote.setCutCost(cut_cost);
@@ -404,11 +408,12 @@ public class ProduceServiceImpl implements ProduceService {
 			quote.setNailCost(nali_cost);
 			quote.setPackageCost(package_cost);
 			quote.setOtherCost(other_cost);
+			quote.setDesignCost(design_cost);
 			QuoteDAO.attachDirty(quote);
 		}
 		
 		  float producecost = cut_cost + manage_cost + swing_cost
-				+ ironing_cost + nali_cost + package_cost + other_cost;
+				+ ironing_cost + nali_cost + package_cost + other_cost + design_cost;
 		
 				Map<String, Object> data = new HashMap<String, Object>();
 				try {
