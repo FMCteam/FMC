@@ -11,7 +11,11 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
             <section class="list">
             <table class="list">
-                <caption><span class="text-vertical">设计验证列表:${fn:length(order_list)}件任务</span><input type="text" class="search-query float-right" placeholder="输入检索条件"></caption>
+                <caption>
+					<span class="text-vertical">设计验证列表:<span class="number">${fn:length(order_list)}</span>件任务
+					</span><input type="text" class="search-query float-right"
+						placeholder="输入检索条件">
+				</caption>
 					<thead>
                         <tr>
                             <th>订单号</th>
