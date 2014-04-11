@@ -8,56 +8,45 @@
 			<div class="widget">
 				<h4 class="widgettitle">确认样衣制作金</h4>
 				<div class="widgetcontent">
-					<form class="stdform" id="verify_form" method="post"
-						action="${ctx }/finance/confirmSampleMoneySubmit.do">
-						<p>
-							<label>订单号</label> <span class="field"><input type="text" name="order_id" 
-							class="input-large" value="${orderModel.order.orderId }" readonly />
-						</p>
-						<p>
-							<label>汇款金额</label> <span class="field"><input type="text"
-								name="money_amount" class="input-large" placeholder="汇款金额" />&nbsp;<span
-								style="color:#ff0000;">*</span>(必填)</span>
-						</p>
-						<p>
-							<label>汇款状态</label> <span class="field"> <select name="money_state"
-								class="uniformselect">
-									<option value="已收到">已收到</option>
-									<option value="未收到">未收到</option>
-							</select> &nbsp;<span style="color:#ff0000;">*</span>(必填)
-							</span>
-						</p>
-						<p>
-							<label>汇款类型</label> <span class="field"><input type="text"
-								name="money_type" class="input-large" placeholder="汇款类型" />&nbsp;<span
-								style="color:#ff0000;">*</span>(必填)</span>
-						</p>
-						<p>
-							<label>汇款银行</label> <span class="field"><input type="text"
-								name="money_bank" class="input-large" placeholder="汇款银行" /></span>
-						</p>
-						<p>
-							<label>汇款人姓名</label> <span class="field"><input type="text"
-								name="money_name" class="input-large" placeholder="汇款人姓名" /></span>
-						</p>
-						<p>
-							<label>汇款人卡号</label> <span class="field"><input type="text"
-								name="money_number" class="input-large" placeholder="汇款人卡号" /></span>
-						</p>
-						<p>
-							<label>备注</label> <span class="field"><input
-								type="text" name="money_remark" class="input-large"
-								placeholder="备注" /></span>
-						</p>
-						<p>
-							<input type="hidden" name="order_id" value="${orderModel.order.orderId }" />
-							<input type="hidden" name="task_id" value="${orderModel.taskId }" />
-							<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-							<input type="hidden" name="receivedsamplejin" value="true" />
-						</p>
-						<p class="stdformbutton">
-							<button class="btn btn-primary">确认</button>
-						</p>
+					<form>
+						<table class="table table-bordered">
+							<tr>
+								<td rowspan="2">样衣信息</td>
+								<td>样衣件数</td>
+								<td>样衣单价</td>
+								<td>应收金额</td>
+								<td>金额类型</td>
+							</tr>
+							<tr>
+								<td>10</td>
+								<td>10</td>
+								<td>100</td>
+								<td>样衣制作金</td>
+							</tr>
+							<tr>
+								<td rowspan="3">汇款信息</td>
+								<td>汇款人</td>
+								<td>汇款卡号</td>
+								<td>汇款银行</td>
+								<td>汇款金额</td>
+							</tr>
+							<tr>
+								<td><input type="text" name="money_name" /></td>
+								<td><input type="text" name="money_number" /></td>
+								<td><input type="text" name="money_bank" /></td>
+								<td><input type="text" name="money_amount" /></td>
+							</tr>
+							<tr>
+								<td>备注</td>
+								<td colspan="3"><input type="text" name="money_remark"
+									class="span12" /></td>
+							</tr>
+							<tr>
+								<td>操作</td>
+								<td colspan="4"><input type="submit" value="确认收款" /> <input
+									type="submit" value="款项未收到" /></td>
+							</tr>
+						</table>
 					</form>
 				</div>
 				<!--widgetcontent-->

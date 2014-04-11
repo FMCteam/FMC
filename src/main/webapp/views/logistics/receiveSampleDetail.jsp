@@ -5,7 +5,7 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-
+			<h4 class="widgettitle" style="float:right;">确认样衣制作金</h4>
 			<ul class="nav nav-tabs" id="tab">
 				<li><a class="tab-pane active" href="#basic" data-toggle="tab">基本信息</a></li>
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
@@ -13,11 +13,11 @@
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 			</ul>
-			
+
 			<div class="tab-content">
 				<div class="tab-pane active" id="basic">
 					<table class="table table-striped table-bordered ">
-					
+
 						<tr>
 							<td>业务信息</td>
 							<td>业务编号</td>
