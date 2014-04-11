@@ -186,6 +186,17 @@ function init(){
 	$("input[name='accessory_price']").val("6");
 	
 	
+	$("input[name='cut_cost']").val("0");
+	$("input[name='manage_cost']").val("0");
+	$("input[name='nail_cost']").val("0");
+	$("input[name='ironing_cost']").val("0");
+	
+	
+	$("input[name='swing_cost']").val("0");
+	$("input[name='package_cost']").val("0");
+	$("input[name='other_cost']").val("0");
+	$("input[name='design_cost']").val("0");
+	
 	
 	
 	$("input[name='style_name']").val("杀马特3000");

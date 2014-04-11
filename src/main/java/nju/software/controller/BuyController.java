@@ -184,16 +184,16 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/verifyPurchaseSubmit.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/verifyPurchaseSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String doVerify(HttpServletRequest request,
+	public String verifyPurchaseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		
 		
 //		String s_orderId_request = (String) request.getParameter("orderId");
 		
-		String taskId=request.getParameter("task_id");
+		String taskId=request.getParameter("taskId");
 //		String result=request.getParameter("purchaseerror");
 		String comment = request.getParameter("suggestion");
 		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
@@ -226,7 +226,7 @@ public class BuyController {
 	 * @return
 	 */
 	
-	@RequestMapping(value = "buy/verifyPurchaseDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/verifyPurchaseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyPurchaseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -296,7 +296,7 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/computePurchaseCostDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/computePurchaseCostDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String computePurchaseCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -324,9 +324,9 @@ public class BuyController {
 	 */
 	
 	
-	@RequestMapping(value = "buy/computePurchaseCostSubmit.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/computePurchaseCostSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String doCostAccounting(HttpServletRequest request,
+	public String computePurchaseCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		String orderId = (String) request.getParameter("orderId");
@@ -361,7 +361,7 @@ public class BuyController {
 		
 		
 		
-		return "redirect:/Purchase/computePurchaseCostList.do";
+		return "redirect:/buy/computePurchaseCostList.do";
 		
 	}
 	

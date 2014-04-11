@@ -49,7 +49,7 @@
 								
 	                        </tr>
                         </c:forEach>
-                    </tbody>
+                   
                 </table>
                 </section>
                 <div class="dataTables_paginate paging_full_numbers" id="dyntable_paginate" style="float:right">
