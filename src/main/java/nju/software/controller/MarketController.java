@@ -45,6 +45,7 @@ import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
+import nju.software.util.JavaMailUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
 
@@ -73,6 +74,9 @@ public class MarketController {
 	private CustomerService customerService;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
+	
+	@Autowired
+	private JavaMailUtil javaMailUtil;
 	@Autowired
 	private JbpmTest jbpmTest;
 
@@ -281,6 +285,12 @@ public class MarketController {
 
 		marketService.addOrderSubmit(order, fabrics, accessorys, logistics, produces, versions,
 				request);
+		
+		
+		
+		JavaMailUtil.send();
+		
+		
 
 		return "forward:/market/addOrderList.do";
 	}

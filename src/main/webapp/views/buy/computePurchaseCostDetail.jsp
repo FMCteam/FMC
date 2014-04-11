@@ -254,8 +254,8 @@
                         <td colspan="2"><input class="span12" name="prices" id="prices"  placeholder="prices" type="text" /></td>
                         <td colspan="2"></td>
                         
-                          <input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
-	                  <input type="hidden" name="taskId" value="${orderInfo.taskId }" />
+                       <input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
+	                  <input type="hidden" name="taskId" value="${orderInfo.task.id }" />   
 					
                     </tr>
 							
