@@ -26,41 +26,8 @@ import nju.software.util.JbpmAPIUtil;
 @Service("test")
 public class JbpmTest {
 
-	@Autowired
-	private OrderDAO orderDAO;
-	@Autowired
-	private QuoteDAO quoteDAO;
-	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
-	private AccessoryDAO accessoryDAO;
-	@Autowired
-	private FabricDAO fabricDAO;
-	@Autowired
-	private LogisticsDAO logisticsDAO;
-	@Autowired
-	private ProductDAO productDAO;
-
-	private static Integer orderId=0;
 	
-	
-	
-	
-	public void addOrder(String actorId) {
-		orderId = 0;
-	}
-
-	
-	
-	// 莫其凡：完成
-	public void receiveSample(String actorId) {
-		addOrder(actorId);
-		
-	}
-
-	
-	//市场专员需要传入自己的account.getUserId,其他角色传入"1"
-	public void modifyOrder(String actorId,boolean modify) {
+	public void completeVerify(String actorId,boolean result) {
 		Order order=new Order();
 		
 		order.setEmployeeId(1);
@@ -136,7 +103,7 @@ public class JbpmTest {
 		taskId = getTaskId(BuyServiceImpl.ACTOR_PURCHASE_MANAGER,
 				BuyServiceImpl.TASK_VERIFY_PURCHASE, orderId);
 		data=new HashMap <String,Object> ();
-		data.put("buyVal", modify);
+		data.put("buyVal", result);
 		data.put("buyComment", "Test Buy Verify");
 		completeTask(taskId, data, BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
 		
@@ -145,7 +112,7 @@ public class JbpmTest {
 		taskId = getTaskId(DesignServiceImpl.ACTOR_DESIGN_MANAGER,
 				DesignServiceImpl.TASK_VERIFY_DESIGN, orderId);
 		data=new HashMap <String,Object> ();
-		data.put("designVal", modify);
+		data.put("designVal", result);
 		data.put("designComment", "Test Design Verify");
 		completeTask(taskId, data, DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 		
@@ -154,13 +121,64 @@ public class JbpmTest {
 		taskId = getTaskId(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER,
 				ProduceServiceImpl.TASK_VERIFY_PRODUCE, orderId);
 		data=new HashMap <String,Object> ();
-		data.put("productVal", modify);
+		data.put("productVal", result);
 		data.put("productComment", "Test Produce Verify");
 		completeTask(taskId, data, ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
 	}
-
 	
 	
+	
+	public void completeComputeCost(String actorId){
+		completeVerify(actorId, true);
+		
+		//采购成本核算
+		long taskId = getTaskId(BuyServiceImpl.ACTOR_PURCHASE_MANAGER,
+				BuyServiceImpl.TASK_COMPUTE_PURCHASE_COST, orderId);
+		Map <String,Object> data=new HashMap <String,Object> ();
+		completeTask(taskId, data, BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
+		
+		
+		//设计成本核算
+		taskId = getTaskId(DesignServiceImpl.ACTOR_DESIGN_MANAGER,
+				DesignServiceImpl.TASK_COMPUTE_DESIGN_COST, orderId);
+		data=new HashMap <String,Object> ();
+		completeTask(taskId, data, DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+		
+		
+		//生产成本核算
+		taskId = getTaskId(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER,
+				ProduceServiceImpl.TASK_COMPUTE_PRODUCE_COST, orderId);
+		data=new HashMap <String,Object> ();
+		completeTask(taskId, data, ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
+	}
+	
+	
+	public void completeConfirmQuote(String actorId){
+		completeComputeCost(actorId);
+		
+		//合并报价
+		long taskId = getTaskId(actorId,
+				MarketServiceImpl.TASK_MERGE_QUOTE, orderId);
+		Map <String,Object> data=new HashMap <String,Object> ();
+		completeTask(taskId, data, actorId);
+		
+		
+		//审核报价
+		taskId = getTaskId(MarketServiceImpl.ACTOR_MARKET_MANAGER,
+				MarketServiceImpl.TASK_VERIFY_QUOTE, orderId);
+		data=new HashMap <String,Object> ();
+		completeTask(taskId, data, MarketServiceImpl.ACTOR_MARKET_MANAGER);
+		
+		
+		//确认报价
+		taskId = getTaskId(actorId,
+				MarketServiceImpl.TASK_CONFIRM_QUOTE, orderId);
+		data=new HashMap <String,Object> ();
+		data.put("confirmquote", true);
+		data.put("eidtquote", false);
+		data.put("samplejin", true);
+		completeTask(taskId, data, actorId);
+	}
 	
 	
 	public void completeTask(long taskId, Map<?, ?> data, String actorId) {
@@ -193,4 +211,24 @@ public class JbpmTest {
 		}
 		return 0;
 	}
+	
+	
+	
+
+	@Autowired
+	private OrderDAO orderDAO;
+	@Autowired
+	private QuoteDAO quoteDAO;
+	@Autowired
+	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private AccessoryDAO accessoryDAO;
+	@Autowired
+	private FabricDAO fabricDAO;
+	@Autowired
+	private LogisticsDAO logisticsDAO;
+	@Autowired
+	private ProductDAO productDAO;
+
+	private static Integer orderId=0;
 }

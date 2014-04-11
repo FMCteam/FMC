@@ -47,7 +47,7 @@ public class MarketServiceImpl implements MarketService {
 	public final static String ACTOR_MARKET_STAFF = "marketStaff";
 	public final static String TASK_MODIFY_ORDER = "modifyOrder";
 	public final static String TASK_MERGE_QUOTE = "mergeQuote";
-	public final static String TASK_VERIFY_ORDER = "verifyQuote";
+	public final static String TASK_VERIFY_QUOTE = "verifyQuote";
 	public final static String TASK_CONFIRM_QUOTE = "confirmQuote";
 	public final static String TASK_MODIFY_QUOTE = "modifyQuote";
 	public final static String TASK_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder";
@@ -572,7 +572,7 @@ public class MarketServiceImpl implements MarketService {
 	public List<OrderInfo> getVerifyQuoteList(Integer accountId) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_MANAGER, TASK_VERIFY_ORDER);
+				ACTOR_MARKET_MANAGER, TASK_VERIFY_QUOTE);
 		List<OrderInfo> taskSummarys = new ArrayList<>();
 		for (TaskSummary task : tasks) {
 			if (getVariable("employeeId", task).equals(accountId)) {
