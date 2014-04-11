@@ -207,7 +207,7 @@ public class BuyController {
 	 * @return
 	 */
 	
-	@RequestMapping(value = "buy/verifyPurchaseDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/verifyPurchaseDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
