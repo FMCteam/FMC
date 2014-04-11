@@ -45,15 +45,7 @@
 								<td><form action="${ctx}/market/modifyOrderDetail.do" method="post" >
 									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
 										<input type="hidden" name="task_id" value="${orderModel.task。id }" />
-<input type="hidden" name="modify" value="1" />
 										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i>修改</button></form>
-
-								<form action="${ctx}/market/modifyOrderDetail.do" method="post" >
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
-										<input type="hidden" name="task_id" value="${orderModel.task.id }" />
-<input type="hidden" name="modify" value="0" />
-										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i>删除</button></form>
-
 								</td>
 	                        </tr>
                         </c:forEach>
