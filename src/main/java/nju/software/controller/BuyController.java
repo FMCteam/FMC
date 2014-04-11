@@ -42,6 +42,7 @@ public class BuyController {
 	
 
 	
+	
 	//========================样衣采购===========================
 	@RequestMapping(value = "/buy/purchaseSampleMaterialList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -205,6 +206,7 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
+	
 	@RequestMapping(value = "buy/verifyPurchaseDetail.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDetail(HttpServletRequest request,
