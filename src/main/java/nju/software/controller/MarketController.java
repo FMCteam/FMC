@@ -532,35 +532,21 @@ public class MarketController {
 
 		String s_id = request.getParameter("id");
 		String s_task_id = request.getParameter("task_id");
-		String modify = request.getParameter("modify");
 		int id = Integer.parseInt(s_id);
 		long task_id = Long.parseLong(s_task_id);
-		if (Integer.parseInt(modify) == 1) {
-			// 修改
-			OrderInfo orderModel = marketService.getModifyOrderDetail(id, task_id);
-			model.addAttribute("orderModel", orderModel);
-			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-					.getKsession().getProcessInstance(orderModel.getTask().getProcessInstanceId());
-			String buyComment = process.getVariable("buyComment")
-					.toString();
-			String designComment = process.getVariable("designComment")
-					.toString();
-			model.addAttribute("buyComment", buyComment);
-			model.addAttribute("designComment", designComment);
-			return "market/modifyOrderDetail";
-		} else {
-			// 删除
-//			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-//					.getKsession().getProcessInstance(
-//							Long.parseLong(s_process_id));
-//			String buyComment = process.getVariable("buyComment")
-//					.toString();
-//			String designComment = process.getVariable("designComment")
-//					.toString();
-//			orderService.verify(id, task_id, process_id, false, buyComment,
-//					designComment, null);
-			return "redirect:/market/sampleOrderList.do";
-		}
+		// 修改
+		OrderInfo orderModel = marketService.getModifyOrderDetail(id, task_id);
+		model.addAttribute("orderModel", orderModel);
+		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+				.getKsession().getProcessInstance(orderModel.getTask().getProcessInstanceId());
+		String buyComment = process.getVariable("buyComment")
+				.toString();
+		String designComment = process.getVariable("designComment")
+				.toString();
+		model.addAttribute("buyComment", buyComment);
+		model.addAttribute("designComment", designComment);
+		return "market/modifyOrderDetail";
+
 	}
 
 	// 询单的修改界面
@@ -621,6 +607,62 @@ public class MarketController {
 		for (int i = 0; i < fabric_name.length; i++) {
 			accessorys.add(new Accessory(0, accessory_name[i],
 					accessory_query[i]));
+		}
+		
+		//加工要求
+		String produce_colors = request.getParameter("produce_color");
+		String produce_xss = request.getParameter("produce_xs");
+		String produce_ss = request.getParameter("produce_s");
+		String produce_ms = request.getParameter("produce_m");
+		String produce_ls = request.getParameter("produce_l");
+		String produce_xls = request.getParameter("produce_xl");
+		String produce_xxls = request.getParameter("produce_xxl");
+		String produce_color[] = produce_colors.split(",");
+		String produce_xs[] = produce_xss.split(",");
+		String produce_s[] = produce_ss.split(",");
+		String produce_m[] = produce_ms.split(",");
+		String produce_l[] = produce_ls.split(",");
+		String produce_xl[] = produce_xls.split(",");
+		String produce_xxl[] = produce_xxls.split(",");
+		List<Produce> produces = new ArrayList<Produce>();
+		for (int i = 0; i < produce_color.length; i++) {
+			Produce p = new Produce();
+			p.setColor(produce_color[i]);
+			p.setOid(0);
+			p.setL(Integer.parseInt(produce_l[i]));
+			p.setM(Integer.parseInt(produce_m[i]));
+			p.setS(Integer.parseInt(produce_s[i]));
+			p.setXl(Integer.parseInt(produce_xl[i]));
+			p.setXs(Integer.parseInt(produce_xs[i]));
+			p.setXxl(Integer.parseInt(produce_xxl[i]));
+			produces.add(p);
+		}
+		
+		//版型数据
+		String version_sizes = request.getParameter("version_size");
+		String version_centerBackLengths = request.getParameter("version_centerBackLength");
+		String version_busts = request.getParameter("version_bust");
+		String version_waistLines = request.getParameter("version_waistLine");
+		String version_shoulders = request.getParameter("version_shoulder");
+		String version_buttocks = request.getParameter("version_buttock");
+		String version_hems = request.getParameter("version_hem");
+		String version_trouserss = request.getParameter("version_trousers");
+		String version_skirts = request.getParameter("version_skirt");
+		String version_sleevess = request.getParameter("version_sleeves");
+		String version_size[] = version_sizes.split(",");
+		String version_centerBackLength[] = version_centerBackLengths.split(",");
+		String version_bust[] = version_busts.split(",");
+		String version_waistLine[] = version_waistLines.split(",");
+		String version_shoulder[] = version_shoulders.split(",");
+		String version_buttock[] = version_buttocks.split(",");
+		String version_hem[] = version_hems.split(",");
+		String version_trousers[] = version_trouserss.split(",");
+		String version_skirt[] = version_skirts.split(",");
+		String version_sleeves[] = version_sleevess.split(",");
+		List<VersionData> versions = new ArrayList<VersionData>();
+		for (int i = 0; i < version_size.length; i++) {
+			versions.add(new VersionData(0,version_size[i],version_centerBackLength[i],version_bust[i],version_waistLine[i]
+					,version_shoulder[i],version_buttock[i],version_hem[i],version_trousers[i],version_skirt[i],version_sleeves[i]));
 		}
 
 		// 物流数据
@@ -688,7 +730,8 @@ public class MarketController {
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 		
-		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics, task_id);
+		boolean editok = request.getParameter("editok").equals("true")?true:false;
+		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics, produces, versions, editok, task_id);
 //		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 //				.getKsession().getProcessInstance(Long.parseLong(s_process_id));
 //		String buyComment = process.getVariable("buyComment").toString();

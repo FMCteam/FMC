@@ -352,4 +352,20 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 			ApplicationContext ctx) {
 		return (IVersionDataDAO) ctx.getBean("VersionDataDAO");
 	}
+	
+	@Override
+	public void deleteByProperty(String propertyName, Object orderId) {
+		// TODO Auto-generated method stub
+		log.debug("deleting VersionData instance with property: " + propertyName
+				+ ", value: " + orderId);
+		try {
+			String queryString = "delete from VersionData as model where model."
+					+ propertyName + "= ?";
+			 getHibernateTemplate().bulkUpdate(queryString, orderId);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	
 }
