@@ -32,6 +32,7 @@ public interface LogisticsService {
 	public OrderInfo getSendClothesDetail(Integer orderId);
 
 	public void sendClothesSubmit(int orderId, long taskId, float logistics_cost);
-	//得到未扫描确认的列表
+	
+	// ======================得到未扫描确认的列表=============================
 	public List<OrderInfo> getSendClothesUncheckedList();
 }

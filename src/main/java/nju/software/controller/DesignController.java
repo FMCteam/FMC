@@ -143,7 +143,7 @@ public class DesignController {
 		List<OrderInfo>list=designService.getComputeDesignCostList();
 		
 		if(list.size()==0){
-			jbpmTest.modifyOrder("1", true);
+			jbpmTest.completeVerify("1", true);
 			list=designService.getComputeDesignCostList();
 		}
 		

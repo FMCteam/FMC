@@ -28,6 +28,14 @@
 		</property>
 	</bean>
 
+<bean id="javaMailUtil" class="nju.software.util.JavaMailUtil">
+       
+    </bean>
+	
+
+
+
+
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />

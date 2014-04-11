@@ -1,12 +1,17 @@
 ﻿package nju.software.controller;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Money;
 import nju.software.model.OrderInfo;
 import nju.software.service.FinanceService;
 import nju.software.service.impl.FinanceServiceImpl;
+import nju.software.service.impl.JbpmTest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +19,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * @author 莫其凡
+ * @date 2014/04/11
+ */
 @Controller
 public class FinanceController {
-	
-	@Autowired
-	private FinanceService financeService;
-	
+		
 
 	// ===========================样衣金确认=================================
 	@RequestMapping(value = "/finance/confirmSampleMoneyList.do")
@@ -29,6 +35,11 @@ public class FinanceController {
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
 		List<OrderInfo> list = financeService
 				.getConfirmSampleMoneyList(actorId);
+		if(list.size()==0){
+			jbpmTest.completeConfirmQuote(getActorId(request));
+			list = financeService
+					.getConfirmSampleMoneyList(actorId);
+		}
 		model.addAttribute("list", list);
 		return "/finance/confirmSampleMoneyList";
 	}
@@ -101,7 +112,7 @@ public class FinanceController {
 	}
 
 	
-	@RequestMapping(value = "/finance/confirmDepositDetail.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/finance/confirmDepositDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -114,7 +125,7 @@ public class FinanceController {
 	}
 
 	
-	@RequestMapping(value = "/finance/confirmDepositSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/finance/confirmDepositSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -157,7 +168,7 @@ public class FinanceController {
 
 	
 	// ===========================尾款确认===================================
-	@RequestMapping(value = "finance/confirmFinalPaymentList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "finance/confirmFinalPaymentList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -171,7 +182,7 @@ public class FinanceController {
 	}
 
 	
-	@RequestMapping(value = "/finance/confirmFinalPaymentDetail.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/finance/confirmFinalPaymentDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -183,7 +194,7 @@ public class FinanceController {
 		return "/finance/confirmFinalPaymentDetail";
 	}
 
-	@RequestMapping(value = "/finance/confirmFinalPaymentSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/finance/confirmFinalPaymentSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -223,4 +234,16 @@ public class FinanceController {
 				money);
 		return "forward:/finance/confirmFinalPaymentList.do";
 	}
+	
+	
+	private String getActorId(HttpServletRequest request){
+		Account account=(Account) request.getSession().getAttribute("cur_user");
+		System.out.println(account.getUserId());
+		return account.getUserId()+"";
+	}
+	
+	@Autowired
+	private FinanceService financeService;
+	@Autowired
+	private JbpmTest jbpmTest;
 }

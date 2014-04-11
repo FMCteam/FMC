@@ -47,4 +47,6 @@ public interface IVersionDataDAO {
 
 	public abstract void attachClean(VersionData instance);
 
+	void deleteByProperty(String propertyName, Object orderId);
+
 }

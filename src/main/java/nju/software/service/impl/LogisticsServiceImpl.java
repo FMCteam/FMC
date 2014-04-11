@@ -178,6 +178,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	
+	// ===========================产品发货=================================
 	@Override
 	public List<OrderInfo> getSendClothesList() {
 		// TODO Auto-generated method stub
