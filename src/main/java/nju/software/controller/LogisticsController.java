@@ -1,26 +1,12 @@
 package nju.software.controller;
-
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import nju.software.dataobject.Accessory;
-import nju.software.dataobject.Account;
-import nju.software.dataobject.Customer;
-import nju.software.dataobject.Employee;
-import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
-import nju.software.dataobject.PackageDetail;
-import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
-import nju.software.model.OrderModel;
 import nju.software.service.CustomerService;
 import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
@@ -29,35 +15,19 @@ import nju.software.service.ProduceService;
 import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
-
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+/**
+ * @author 莫其凡
+ * @date 2014/04/11
+ */
 @Controller
 public class LogisticsController {
 
-	@Autowired
-	private OrderService orderService;
-	@Autowired
-	private LogisticsService logisticsService;
-	@Autowired
-	private CustomerService customerService;
-	@Autowired
-	private EmployeeService employeeService;
-	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-
-	@Autowired
-	private ProduceService produceService;
-	
-	
-	
 	
 	//=============================收取样衣=====================================
 	@RequestMapping(value = "/logistics/receiveSampleList.do")
@@ -399,4 +369,18 @@ public class LogisticsController {
 		
 		return "redirect:/logistics/getSendClothesList";
 	}
+	
+	
+	@Autowired
+	private OrderService orderService;
+	@Autowired
+	private LogisticsService logisticsService;
+	@Autowired
+	private CustomerService customerService;
+	@Autowired
+	private EmployeeService employeeService;
+	@Autowired
+	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private ProduceService produceService;
 }
