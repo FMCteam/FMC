@@ -53,7 +53,7 @@ public class JavaMailUtil {
                
                public static void send(){  
             	 String subject = "测试邮件";//标题
-            	 String ReceiverMail = "460761132@qq.com";//接收者邮件
+            	 String ReceiverMail = "380635547@qq.com";//接收者邮件
             	 String fromMail = "zhizaolianFMC@163.com";//发送者邮件
             	 String user = "zhizaolianFMC@163.com";//发送者用户
             	 String password = "nanjingdaxue";//发送者邮件密码

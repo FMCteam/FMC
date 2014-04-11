@@ -194,7 +194,7 @@ public class BuyController {
 //		String s_orderId_request = (String) request.getParameter("orderId");
 		
 		String taskId=request.getParameter("taskId");
-//		String result=request.getParameter("purchaseerror");
+
 		String comment = request.getParameter("suggestion");
 		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
 		
