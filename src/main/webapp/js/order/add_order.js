@@ -159,9 +159,23 @@ function init(){
 	$("#fabric_amount").val("11,12,13");
 	$("#accessory_name").val("name1,name2,name3");
 	$("#accessory_query").val("name1,name2,name3");
-	
-	
-	
+	$("#produce_color").val("红,黄,绿");
+	$("#produce_xs").val("1,2,3");
+	$("#produce_s").val("1,2,3");
+	$("#produce_m").val("1,2,3");
+	$("#produce_l").val("1,2,3");
+	$("#produce_xl").val("1,2,3");
+	$("#produce_xxl").val("1,2,3");
+	$("#version_size").val("21,22,23");
+	$("#version_centerBackLength").val("21,22,23");
+	$("#version_bust").val("21,22,23");
+	$("#version_waistLine").val("21,22,23");
+	$("#version_shoulder").val("21,22,23");
+	$("#version_buttock").val("21,22,23");
+	$("#version_hem").val("21,22,23");
+	$("#version_trousers").val("21,22,23");
+	$("#version_skirt").val("21,22,23");
+	$("#version_sleeves").val("21,22,23");
 	
 	$("input[name='tear_per_meter']").val("1");
 	$("input[name='cost_per_meter']").val("2");
@@ -193,4 +207,5 @@ function init(){
 	$("input[name='sample_clothes_phone']").val("1599546546");
 	$("input[name='sample_clothes_address']").val("江苏南京");
 	$("input[name='sample_clothes_remark']").val("ggggggggggggggggggg");
+	
 }
