@@ -222,6 +222,7 @@ public class DesignServiceImpl implements DesignService {
 		OrderInfo model = new OrderInfo();
 		model.setOrder(orderDAO.findById(orderId));
 		model.setTask(task);
+		model.setTaskId(task.getId());
 		return model;
 	}
 

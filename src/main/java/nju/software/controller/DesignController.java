@@ -188,7 +188,7 @@ public class DesignController {
 			   Float.parseFloat(design_cost)
 			   );
 		
-		return "redirect:/design/computeDesignCostList.do";
+		return "redirect:/design/getComputeDesignCostList.do";
 	}
 	
 	
