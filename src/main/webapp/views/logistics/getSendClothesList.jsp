@@ -27,27 +27,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="orderModel" items="${list}">
+						<c:forEach var="task" items="${list}">
 							<tr class="gradeA">
-								<td>${orderModel.order.orderId }</td>
-								<td>${orderModel.order.employeeId }</td>
-								<td>${orderModel.order.customerName }</td>
-								<td>${orderModel.order.customerCompany }</td>
-								<td>${orderModel.order.styleName }</td>
-								<td>${orderModel.order.askAmount }</td>
-								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><form
-										action="${ctx }/logistics/getSendClothesDetail.do"
-										method="post">
-										<input type="hidden" name="id"
-											value="${orderModel.order.orderId }" /> <input type="hidden"
-											name="task_id" value="${orderModel.taskId }" /> <input
-											type="hidden" name="process_id"
-											value="${orderModel.processInstanceId }" />
-										<button class="btn btn-primary btn-rounded">
-											<i class="icon-white"></i> 发货
-										</button>
-									</form></td>
+								<td>${task.order.orderId}</td>
+								<td>${task.order.employeeId}</td>
+								<td>${task.order.customerName}</td>
+								<td>${task.order.customerCompany}</td>
+								<td>${task.order.styleName}</td>
+								<td>${task.order.askAmount}</td>
+								<td>${fn:substring(task.order.askDeliverDate,0,10)}</td>
+								<td><a href="${ctx }/logistics/getSendClothesDetail.do?orderId=${task.order.orderId}">详情</a>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>

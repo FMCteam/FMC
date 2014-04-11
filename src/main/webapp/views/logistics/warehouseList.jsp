@@ -39,7 +39,7 @@
 								<td>${orderModel.order.askAmount }</td>
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
 								<td><a
-									href="${ctx}/logistics/warehouseDetail.do?orderId=${orderModel.order.orderId}"></a>
+									href="${ctx}/logistics/warehouseDetail.do?orderId=${orderModel.order.orderId}">详情</a>
 								</td>
 							</tr>
 						</c:forEach>

@@ -34,7 +34,7 @@
 							<td>${task.order.customerCompany }</td>
 							<td>${task.order.customerCompanyFax }</td>
 							<td><a
-								href="${ctx}/logistics/sendSampleDetail.do?orderId=${task.order.orderId}">发货</a></td>
+								href="${ctx}/logistics/sendSampleDetail.do?orderId=${task.order.orderId}">详情</a></td>
 						</tr>
 					</c:forEach>
 				</table>

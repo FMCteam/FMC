@@ -38,7 +38,7 @@
 								<td>${orderInfo.order.askAmount}</td>
 								<td>${fn:substring(orderInfo.order.askDeliverDate,0,10) }</td>
 								<td><a
-									href="${ctx}/finance/confirmSampleMoneyDetail.do?orderId=${orderInfo.order.orderId}"></a>
+									href="${ctx}/finance/confirmSampleMoneyDetail.do?orderId=${orderInfo.order.orderId}">详情</a>
 								</td>
 							</tr>
 						</c:forEach>
@@ -52,7 +52,6 @@
 			<div class="footer-left">
 				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
 			</div>
-
 		</div>
 		<!--footer-->
 
@@ -61,12 +60,12 @@
 </div>
 <!--maincontent-->
 
+
+
 <%@include file="/common/js_file.jsp"%>
-
-
 <!-- 这里引入你需要的js文件 -->
+<link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-
-
 <%@include file="/common/footer.jsp"%>
 
