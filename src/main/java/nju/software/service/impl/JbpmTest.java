@@ -1,6 +1,7 @@
 package nju.software.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,8 @@ import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
+import nju.software.dataobject.Accessory;
+import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Order;
 import nju.software.util.JbpmAPIUtil;
 
@@ -83,8 +86,34 @@ public class JbpmTest {
 		order.setHasPostedSampleClothes((short) 1);
 		order.setIsNeedSampleClothes((short) 1);
 		order.setOrderSource("Test");
+	
 		
 		orderDAO.save(order);
+		
+		
+		// 面料数据
+		String fabric_names = "fabric1,fabric2,fabric3";
+		String fabric_amounts = "1,2,3";
+		String fabric_name[] = fabric_names.split(",");
+		String fabric_amount[] = fabric_amounts.split(",");
+		List<Fabric> fabrics = new ArrayList<Fabric>();
+		for (int i = 0; i < fabric_name.length; i++) {
+			fabrics.add(new Fabric(0, fabric_name[i], fabric_amount[i]));
+		}
+
+		// 辅料数据
+		String accessory_names = "accessory1,accessory2,accessory3";
+		String accessory_querys = "accessory1,accessory2,accessory3";
+		String accessory_name[] = accessory_names.split(",");
+		String accessory_query[] = accessory_querys.split(",");
+		List<Accessory> accessorys = new ArrayList<Accessory>();
+		for (int i = 0; i < fabric_name.length; i++) {
+			accessorys.add(new Accessory(0, accessory_name[i],
+					accessory_query[i]));
+		}
+		
+		
+		
 		orderId=order.getOrderId();
 		
 		Map<String, Object> params = new HashMap<String, Object>();

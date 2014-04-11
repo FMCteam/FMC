@@ -178,10 +178,16 @@ public class MarketController {
 		String produce_xxl[] = produce_xxls.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
-			produces.add(new Produce(0,0,produce_color[i],
-			Integer.parseInt(produce_xs[i]),Integer.parseInt(produce_s[i]),
-			Integer.parseInt(produce_m[i]),Integer.parseInt(produce_l[i]),
-			Integer.parseInt(produce_xl[i]),Integer.parseInt(produce_xxl[i]),""));
+			Produce p = new Produce();
+			p.setColor(produce_color[i]);
+			p.setOid(0);
+			p.setL(Integer.parseInt(produce_l[i]));
+			p.setM(Integer.parseInt(produce_m[i]));
+			p.setS(Integer.parseInt(produce_s[i]));
+			p.setXl(Integer.parseInt(produce_xl[i]));
+			p.setXs(Integer.parseInt(produce_xs[i]));
+			p.setXxl(Integer.parseInt(produce_xxl[i]));
+			produces.add(p);
 		}
 		
 		//版型数据
