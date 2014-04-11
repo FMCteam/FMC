@@ -226,6 +226,7 @@ public class BuyController {
 	 * @return
 	 */
 	
+
 	@RequestMapping(value = "buy/verifyPurchaseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyPurchaseDetail(HttpServletRequest request,
