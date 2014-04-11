@@ -231,6 +231,8 @@ public class BuyServiceImpl implements BuyService {
 		TaskSummary task = jbpmAPIUtil.getTask(
 				ACTOR_PURCHASE_MANAGER, TASK_COMPUTE_PURCHASE_COST, orderId);
 		OrderInfo model = new OrderInfo();
+		model.setFabrics(fabricDAO.findByOrderId(orderId));
+		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		model.setOrder(orderDAO.findById(orderId));
 		model.setTask(task);
 		return model;
