@@ -14,6 +14,7 @@ import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.Package;
@@ -35,8 +36,18 @@ public class OrderInfo {
 	private List<List<PackageDetail>>packageDetails=null;
 	private TaskSummary task;
 	private long taskId;
+	private List<Produce> produces;
 	
 	
+
+	public List<Produce> getProduces() {
+		return produces;
+	}
+
+	public void setProduces(List<Produce> produces) {
+		this.produces = produces;
+	}
+
 	public List<Fabric> getFabrics() {
 		return fabrics;
 	}

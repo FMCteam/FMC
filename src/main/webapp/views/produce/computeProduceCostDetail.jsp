@@ -8,7 +8,7 @@
 			<div class="widget">
 				<h4 class="widgettitle">采购成本核算</h4>
 				<div class="widgetcontent">
-				<form id="costAccounting_form" method="post" action="${ctx }/produce/computeProduceCostSubmit.do">
+					<form id="costAccounting_form" method="post" action="${ctx }/produce/computeProduceCostSubmit.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td>业务信息</td>
