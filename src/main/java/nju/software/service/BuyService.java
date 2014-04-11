@@ -35,9 +35,7 @@ public interface BuyService {
 	
 	
 
-	public boolean verifyPurchaseSubmit(Account account, int orderId, long taskId, 
-
-			long processId, boolean buyVal, String comment);
+	public boolean verifyPurchaseSubmit(long taskId,boolean buyVal, String comment);
 
 //	public boolean costAccounting(Account account, int orderId, long taskId, 
 //			long processId, String[] fabric_names,String[] tear_per_meters,String[] cost_per_meters
@@ -70,6 +68,6 @@ public interface BuyService {
 
 	public List<OrderInfo> getVerifyPurchaseList();
 
-	public OrderInfo getVerifyPurchaseDetail(int orderId, long taskId);
+	public OrderInfo getVerifyPurchaseDetail(Integer orderId);
 	
 }
