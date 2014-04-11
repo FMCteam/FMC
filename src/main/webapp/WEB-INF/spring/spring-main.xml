@@ -156,6 +156,12 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
+	<bean id="ProduceDAO"
+		class="nju.software.dao.impl.ProduceDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
 	<bean id="AccessoryCostDAO"
 		class="nju.software.dao.impl.AccessoryCostDAO">
 		<property name="sessionFactory">

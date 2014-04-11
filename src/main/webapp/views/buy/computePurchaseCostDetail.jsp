@@ -185,10 +185,10 @@
 							
 					
 			
+			
 							
 							
-							
-							<tr>
+					<tr>
 								 <td rowspan="6">面料报价</td>
                         <td>面料名</td>
                         <td>单件米耗</td>
@@ -218,7 +218,7 @@
                         <td><input class="span12" name="all_fabric_prices" id="all_fabric_prices"  placeholder="all_fabric_prices" type="text" /></td>
 							</tr>
 							
-							
+			
 							
 							<tr>
 								  <td rowspan="6">辅料报价</td>
