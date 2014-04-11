@@ -7,7 +7,7 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<section class="list">
 			<table class="list">
-				<caption><span class="text-vertical">样衣待收取列表:${fn:length(list)}件任务</span><input type="text" class="search-query float-right" placeholder="输入检索条件"></caption>
+				<caption><span class="text-vertical">样衣待收取列表:<span class="number">${fn:length(list)}</span>件任务</span><input type="text" class="search-query float-right" placeholder="输入检索条件"></caption>
 				<thead>
 				<tr>
 					<th>询单编号</th>

@@ -178,7 +178,7 @@
 								<td><input class="span12" name="nail_cost" id="nail_cost" type="text"></td>
 								<td><input class="span12" name="ironing_cost" id="ironing_cost" type="text"></td>		
 				 				<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
-	              				<input type="hidden" name="orderInfoId" value="${orderInfo.taskId }" />
+	              				<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
 							</tr>
 							
                             <tr>

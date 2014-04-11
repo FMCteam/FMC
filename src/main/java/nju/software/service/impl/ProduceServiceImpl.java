@@ -69,15 +69,9 @@ public class ProduceServiceImpl implements ProduceService {
 
 	@Override
 	public boolean verifyProduceSubmit(Account account, int orderId, long taskId,
-			long processId, boolean productVal, String comment) {
+			boolean productVal, String comment) {
 		// TODO Auto-generated method stub
 		// String actorId = account.getUserRole();
-		// 需要获取task中的数据
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(processId);
-		int orderId_process = (int) process.getVariable("orderId");
-		System.out.println("orderId: " + orderId);
-		if (orderId == orderId_process) {
 			Order order = orderDAO.findById(orderId);
 			// 修改order内容
 
@@ -96,8 +90,6 @@ public class ProduceServiceImpl implements ProduceService {
 				e.printStackTrace();
 			}
 			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -377,6 +369,7 @@ public class ProduceServiceImpl implements ProduceService {
 		model.setFabrics(fabricDAO.findByOrderId(orderId));
 		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		model.setTask(task);
+		model.setTaskId(task.getId());
 		return model;
 	}
 

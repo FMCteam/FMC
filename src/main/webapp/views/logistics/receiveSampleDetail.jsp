@@ -7,7 +7,6 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<div class="widget">
 				<h4 class="widgettitle">样衣待收取详情</h4>
-
 				<table class="table table-striped table-bordered table-hover">
 					<tr>
 						<td>业务信息</td>

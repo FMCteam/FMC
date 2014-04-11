@@ -57,16 +57,9 @@ public class DesignServiceImpl implements DesignService {
 
 	@Override
 	public boolean verifyDesignSubmit(Account account, int orderId, long taskId,
-			long processId, boolean designVal, String comment) {
+			boolean designVal, String comment) {
 		// TODO Auto-generated method stub
 		// String actorId = account.getUserRole();
-		// 需要获取task中的数据
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(processId);
-		int orderId_process = (int) process.getVariable("orderId");
-		System.out.println("orderId: " + orderId);
-		if (orderId == orderId_process) {
-
 			Order order = orderDAO.findById(orderId);
 			// 修改order内容
 
@@ -85,8 +78,6 @@ public class DesignServiceImpl implements DesignService {
 				e.printStackTrace();
 			}
 			return true;
-		}
-		return false;
 	}
 
 	@Override

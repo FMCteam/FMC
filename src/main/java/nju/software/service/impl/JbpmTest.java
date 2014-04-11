@@ -42,324 +42,45 @@ public class JbpmTest {
 	@Autowired
 	private ProductDAO productDAO;
 
-
-	public void addTask(){
-		Order order = new Order();
-		order.setEmployeeId(1);
-		order.setCustomerId(1);
-		order.setOrderState("A");
-		order.setOrderTime(new Timestamp(new Date().getTime()));
-		order.setCustomerName("Test");
-		order.setCustomerCompany("Test");
-		order.setCustomerCompanyFax("Test");
-		order.setCustomerPhone1("Test");
-		order.setCustomerPhone2("Test");
-		order.setCustomerCompanyAddress("Test");
-		order.setStyleName("Test");
-		order.setFabricType("Test");
-		order.setStyleSex("Test");
-		order.setStyleSeason("Test");
-		order.setSpecialProcess("Test");
-		order.setOtherRequirements("Test");
-		order.setSampleClothesPicture("Test");
-		order.setReferencePicture("Test");
-		order.setAskAmount(12);
-		order.setAskProducePeriod("Test");
-		order.setAskDeliverDate(new Timestamp(new Date().getTime()));
-		order.setAskCodeNumber("Test");
-		order.setHasPostedSampleClothes((short) 0);
-		order.setIsNeedSampleClothes((short) 1);
-		order.setOrderSource("Test");
-		orderDAO.save(order);
-		
-		
-		
-		
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("orderId", order.getOrderId());
-		params.put("employeeId", order.getEmployeeId());
-		params.put("needclothes", order.getIsNeedSampleClothes() == 1);
-		params.put("sendclothes", false);
-		doTMWorkFlowStart(params);
-		
-		Map<String, Object> data=new HashMap<String, Object>();
-		long taskId=getTaskId("CAIGOUZHUGUAN", "verification_purchased", order.getOrderId());
-		try {
-			data.put("buyVal", true);
-			data.put("buyComment", "");
-			jbpmAPIUtil.completeTask(taskId, data, "CAIGOUZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHEJIZHUGUAN",
-				"design_verification ", order.getOrderId());
-		try {
-			data.put("designVal", true);
-			data.put("designComment", "");
-			jbpmAPIUtil.completeTask(taskId, data, "SHEJIZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHENGCHANZHUGUAN",
-				"production_verification", order.getOrderId());
-		try {
-			data.put("productVal", true);
-			data.put("productComment", "");
-			jbpmAPIUtil.completeTask(taskId, data, "SHENGCHANZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("CAIGOUZHUGUAN",
-				"Purchasing_accounting", order.getOrderId());
-		try {
-			data.put("productVal", true);
-			data.put("productComment", "");
-			jbpmAPIUtil.completeTask(taskId, data, "CAIGOUZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHEJIZHUGUAN",
-				"design_accounting", order.getOrderId());
-		try {
-			data.put("productVal", true);
-			data.put("productComment", "");
-			jbpmAPIUtil.completeTask(taskId, data, "SHEJIZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHENGCHANZHUGUAN",
-				"business_accounting", order.getOrderId());
-		try {
-			data.put("productVal", true);
-			data.put("productComment", "");
-			jbpmAPIUtil.completeTask(taskId, data, "SHENGCHANZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHICHANGZHUANYUAN",
-				"quote", order.getOrderId());
-		try {
-			data.put("productVal", true);
-			data.put("productComment", "");
-			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHICHANGZHUGUAN",
-				"check_quote", order.getOrderId());
-		try {
-			data.put("productVal", true);
-			data.put("productComment", "");
-			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHICHANGZHUANYUAN",
-				"confirm_quoteorder", order.getOrderId());
-		try {
-			data.put("confirmquote", true);
-			data.put("eidtquote", false);
-			data.put("samplejin", false);
-			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		Product p=new Product();
-		p.setOrderId(order.getOrderId());
-		p.setColor("yellow");
-		p.setAskAmount(22);
-		p.setQualifiedAmount(0);
-		p.setProduceAmount(0);
-		p.setStyle("XXS");
-		productDAO.save(p);
-		p=new Product();
-		p.setOrderId(order.getOrderId());
-		p.setColor("Red");
-		p.setAskAmount(12);
-		p.setProduceAmount(0);
-		p.setStyle("XXS");
-		p.setQualifiedAmount(0);
-		productDAO.save(p);
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHICHANGZHUANYUAN",
-				"comfirm_worksheet", order.getOrderId());
-		try {
-			data.put("comfirmworksheet", true);
-			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("CAIGOUZHUGUAN",
-				"purchase_ok", order.getOrderId());
-		try {
-			data.put("isworksheet", true);
-			jbpmAPIUtil.completeTask(taskId, data, "CAIGOUZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHEJIZHUGUAN",
-				"design_ok", order.getOrderId());
-		try {
-			//data.put("isworksheet", true);
-			jbpmAPIUtil.completeTask(taskId, data, "SHEJIZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHICHANGZHUANYUAN",
-				"sign_contract", order.getOrderId());
-		try {
-			//data.put("isworksheet", true);
-			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("CAIWUZHUGUAN",
-				"thirtypercent", order.getOrderId());
-		try {
-			data.put("epositok", true);
-			jbpmAPIUtil.completeTask(taskId, data, "CAIWUZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("CAIGOUZHUGUAN",
-				"purchase_comfirm", order.getOrderId());
-		try {
-			data.put("procurementerror", false);
-			jbpmAPIUtil.completeTask(taskId, data, "CAIGOUZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHEJIZHUGUAN",
-				"product_comfirm", order.getOrderId());
-		try {
-			//data.put("isworksheet", true);
-			jbpmAPIUtil.completeTask(taskId, data, "SHEJIZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("SHENGCHANZHUGUAN",
-				"volume_production", order.getOrderId());
-		try {
-			data.put("volumeproduction", true);
-			jbpmAPIUtil.completeTask(taskId, data, "SHENGCHANZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		data=new HashMap<String, Object>();
-		taskId=getTaskId("ZHIJIANZHUGUAN",
-				"quality", order.getOrderId());
-		try {
-			data.put("volumeproduction", true);
-			jbpmAPIUtil.completeTask(taskId, data, "ZHIJIANZHUGUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-	}
+	private static Integer orderId=0;
 	
 	
 	
-	
-	
-
-	public long getTaskId(String actorId, String taskName, Integer orderId) {
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				actorId, taskName);
-		for(TaskSummary task:list){
-			if(getVariable("orderId", task).equals(orderId)){
-				return task.getId();
-			}
-		}
-		return 0;
+	//市场专员需要传入自己的account.getUserId,其他角色传入"1"
+	public void addOrder(String actorId) {
+		orderId = 0;
 	}
 
 	
-	public Object getVariable(String name, TaskSummary task) {
-		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
-		long processId = task.getProcessInstanceId();
-		WorkflowProcessInstance process = (WorkflowProcessInstance) session
-				.getProcessInstance(processId);
-		return process.getVariable(name);
-	}
 	
-	/**
-	 * 启动流程
-	 */
+	// 莫其凡：完成
+	public void receiveSample(String actorId) {
+		addOrder(actorId);
+		long taskId = getTaskId(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER,
+				LogisticsServiceImpl.TASK_RECEIVE_SAMPLE, orderId);
+		Map <String,Object> data=new HashMap <String,Object> ();
+		data.put("receivedsample", true);
+		completeTask(taskId, data, LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
+	}
+
+	
+	public void verifyDesign(String actorId) {
+
+	}
+
+	
+	
+	
+	
+	public void completeTask(long taskId, Map<?, ?> data, String actorId) {
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private void doTMWorkFlowStart(Map<String, Object> params) {
 		try {
 			jbpmAPIUtil.setParams(params);
@@ -371,4 +92,14 @@ public class JbpmTest {
 		}
 	}
 
+	public long getTaskId(String actorId, String taskName, Integer orderId) {
+		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+				actorId, taskName);
+		for (TaskSummary task : list) {
+			if (jbpmAPIUtil.getVariable(task, "orderId").equals(orderId)) {
+				return task.getId();
+			}
+		}
+		return 0;
+	}
 }

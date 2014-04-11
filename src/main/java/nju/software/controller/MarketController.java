@@ -273,7 +273,7 @@ public class MarketController {
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 
-		marketService.addOrderSubmit(order, fabrics, accessorys, logistics,
+		marketService.addOrderSubmit(order, fabrics, accessorys, logistics, produces, versions,
 				request);
 
 		return "forward:/market/addOrderList.do";
