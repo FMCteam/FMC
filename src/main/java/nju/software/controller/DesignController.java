@@ -22,6 +22,8 @@ import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.service.DesignService;
 import nju.software.service.OrderService;
+import nju.software.service.impl.DesignServiceImpl;
+import nju.software.service.impl.JbpmTest;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 
@@ -45,7 +47,8 @@ public class DesignController {
 	private OrderService orderService;
 	@Autowired
 	private DesignService designService;
-	
+	@Autowired
+	private JbpmTest jbpmTest;
 	
 	
 	
@@ -138,6 +141,12 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		
 		List<OrderInfo>list=designService.getComputeDesignCostList();
+		
+		if(list.size()==0){
+			jbpmTest.modifyOrder("1", true);
+			list=designService.getComputeDesignCostList();
+		}
+		
 		model.addAttribute("list", list);		
 		return "design/computeDesignCostList";
 	}
