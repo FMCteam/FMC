@@ -549,7 +549,9 @@ public class MarketController {
 		int id = Integer.parseInt(s_id);
 		long task_id = Long.parseLong(s_task_id);
 		// 修改
-		OrderInfo orderModel = marketService.getModifyOrderDetail(id, task_id);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		OrderInfo orderModel = marketService.getModifyOrderDetail(account.getUserId(), id, task_id);
 		model.addAttribute("orderModel", orderModel);
 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 				.getKsession().getProcessInstance(orderModel.getTask().getProcessInstanceId());
@@ -576,7 +578,6 @@ public class MarketController {
 		// 保存修改该的order数据，accessory，fabric，logistics
 		// 订单数据
 
-		Integer employeeId = 6;
 		String orderState = "A";
 		Timestamp orderTime = new Timestamp(new Date().getTime());
 
@@ -744,8 +745,10 @@ public class MarketController {
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 		
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
 		boolean editok = request.getParameter("editok").equals("true")?true:false;
-		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics, produces, versions, editok, task_id);
+		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics, produces, versions, editok, task_id, account.getUserId());
 //		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 //				.getKsession().getProcessInstance(Long.parseLong(s_process_id));
 //		String buyComment = process.getVariable("buyComment").toString();
@@ -754,7 +757,7 @@ public class MarketController {
 //		// productComment=process.getVariable("productComment").toString();
 //		orderService.verify(id, task_id, process_id, true, buyComment,
 //				designComment, null);
-		return "direct:/market/modifyOrderList.do";
+		return "redirect:/market/modifyOrderList.do";
 	}
 
 	public static Timestamp getTime(String time) {

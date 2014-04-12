@@ -1,4 +1,4 @@
- <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@include file="/common/header.jsp"%>
 
 <div class="maincontent">
@@ -9,7 +9,7 @@
 				<h4 class="widgettitle">修改询单</h4>
 				<div class="widgetcontent">
 
-					<form onSubmit="return verify()" method="post" 
+					<form id="verify_form" method="post" 
 						action="${ctx }/market/modifyOrderSubmit.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>

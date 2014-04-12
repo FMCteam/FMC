@@ -18,14 +18,16 @@ import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.Package;
+import nju.software.dataobject.VersionData;
 
 public class OrderInfo {
 	
 	private Order order=null;
 	private Customer customer=null;
 	private Employee employee=null;
-	private List<Fabric>fabrics=null;
-	private List<Accessory>accessorys=null;
+	private List<Fabric> fabrics=null;
+	private List<Accessory> accessorys=null;
+	private List<VersionData> versions=null;
 	private Logistics logistics=null;
 	private List<FabricCost>fabricCosts=null;
 	private List<AccessoryCost>sccessoryCosts=null;
@@ -175,5 +177,13 @@ public class OrderInfo {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+
+	public List<VersionData> getVersions() {
+		return versions;
+	}
+
+	public void setVersions(List<VersionData> versions) {
+		this.versions = versions;
 	}
 }
