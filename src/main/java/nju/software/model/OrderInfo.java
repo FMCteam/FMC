@@ -1,6 +1,8 @@
 package nju.software.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jbpm.task.query.TaskSummary;
 
@@ -37,8 +39,17 @@ public class OrderInfo {
 	private TaskSummary task;
 	private long taskId;
 	private List<Produce> produces;
+	private Map<String,Object> data=new HashMap<String,Object>();
 	
 	
+
+	public Map<String, Object> getData() {
+		return data;
+	}
+
+	public void setData(Map<String, Object> data) {
+		this.data = data;
+	}
 
 	public List<Produce> getProduces() {
 		return produces;
