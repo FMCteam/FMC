@@ -188,7 +188,7 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 	@Override
 	public List<Produce> findByOrderId(Object orderId) {
 		// TODO Auto-generated method stub
-		return null;
+		return findByOid(orderId);
 	}
 
 	@Override
