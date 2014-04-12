@@ -9,7 +9,8 @@
 				<h4 class="widgettitle">生产样衣</h4>
 				<div class="widgetcontent">
 
-					<form id="verify_form" method="post" action="${ctx }/produce/produceSampleSubmit.do">
+					<form id="verify_form" onSubmit="return verify()" method="post" 
+						action="${ctx }/produce/produceSampleSubmit.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td rowspan="${fn:length(orderInfo.produces)+1}">计划生产样衣数量</td>
