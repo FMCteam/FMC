@@ -27,6 +27,9 @@ public class Produce implements java.io.Serializable {
 	private Integer xl;
 	private Integer xxl;
 	private String type;
+	
+	public static final String TYPE_SAMPLE_PRODUCE = "sampleProduce";
+	public static final String TYPE_SAMPLE_PRODUCED = "sampleProduced";
 
 	// Constructors
 
