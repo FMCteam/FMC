@@ -60,7 +60,10 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
 		OrderInfo orderInfo=buyService.getPurchaseSampleMaterialDetail(Integer.parseInt(orderId));
+		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
+		model.addAttribute("logistics", logistics);
+		
 		return "/buy/purchaseSampleMaterialDetail";
 	}
 	
@@ -69,7 +72,7 @@ public class BuyController {
 	@Transactional(rollbackFor = Exception.class)
 	public String purchaseSampleMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String taskId=request.getParameter("task_id");
+		String taskId=request.getParameter("taskId");
 		String result=request.getParameter("purchaseerror");
 		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/purchaseSampleMaterialList.do";
@@ -92,7 +95,11 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
 		OrderInfo orderInfo=buyService.getConfirmPurchaseDetail(Integer.parseInt(orderId));
+		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
+		model.addAttribute("logistics", logistics);
 		model.addAttribute("orderInfo", orderInfo);
+		
+		
 		return "/buy/confirmPurchaseDetail";
 	}
 	
@@ -101,11 +108,14 @@ public class BuyController {
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmPurchaseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String taskId=request.getParameter("task_id");
+		String taskId=request.getParameter("taskId");
 		String result=request.getParameter("purchaseerror");
 		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/confirmPurchaseList.do";
 	}
+	
+	
+	
 	
 	
 	//========================生产采购===========================
@@ -125,6 +135,8 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
 		OrderInfo orderInfo=buyService.getPurchaseMaterialDetail(Integer.parseInt(orderId));
+		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
+		model.addAttribute("logistics", logistics);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/buy/purchaseMaterialDetail";
 	}
@@ -134,7 +146,7 @@ public class BuyController {
 	@Transactional(rollbackFor = Exception.class)
 	public String purchaseMaterialDetailSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String taskId=request.getParameter("task_id");
+		String taskId=request.getParameter("taskId");
 		String result=request.getParameter("purchaseerror");
 		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/purchaseMaterialList.do";
@@ -235,6 +247,8 @@ public class BuyController {
 		
 		String orderId=request.getParameter("orderId");
 		OrderInfo orderInfo=buyService.getVerifyPurchaseDetail(Integer.parseInt(orderId));
+		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
+		model.addAttribute("logistics", logistics);
 		model.addAttribute("orderInfo", orderInfo);
 		
 		
@@ -304,6 +318,8 @@ public class BuyController {
 		
 		String orderId=request.getParameter("orderId");
 		OrderInfo orderInfo=buyService.getComputePurchaseCostInfo(Integer.parseInt(orderId));
+		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
+		model.addAttribute("logistics", logistics);
 		
 		model.addAttribute("orderInfo", orderInfo);
 	model.addAttribute("fabric_list", orderInfo.getFabrics());

@@ -4,11 +4,14 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
+		
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<div class="widget">
 				<h4 class="widgettitle">采购确认</h4>
 				<div class="widgetcontent">
 					
+					
+				
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td rowspan="3">客户信息</td>
@@ -19,17 +22,18 @@
 								<td>手机1</td>
 								<td>手机2</td>
 							</tr>
+							 
 							<tr>
-								<td>${orderModel.order.customerId }</td>
-								<td>${orderModel.order.customerName }</td>
-								<td>${orderModel.order.customerCompany }</td>
-								<td>${orderModel.order.customerCompanyFax}</td>
-								<td>${orderModel.order.customerPhone1}</td>
-								<td>${orderModel.order.customerPhone2}</td>
+								<td>${orderInfo.order.customerId }</td>
+								<td>${orderInfo.order.customerName }</td>
+								<td>${orderInfo.order.customerCompany }</td>
+								<td>${orderInfo.order.customerCompanyFax}</td>
+								<td>${orderInfo.order.customerPhone1}</td>
+								<td>${orderInfo.order.customerPhone2}</td>
 							</tr>
 							<tr>
 								<td>公司地址</td>
-								<td colspan="5">${orderModel.order.customerCompanyAddress}</td>
+								<td colspan="5">${orderInfo.order.customerCompanyAddress}</td>
 							</tr>
 							<tr>
 								<td rowspan="6">款式信息</td>
@@ -39,37 +43,37 @@
 								<td>订单来源<span class="required">*</span></td>
 							</tr>
 							<tr>
-								<td>${orderModel.order.styleName }</td>
-								<td colspan="2">${orderModel.order.styleSex }</td>
-								<td colspan="2">${orderModel.order.styleSeason eq 'CHUNXIA'?'春夏':'秋冬' }</td>
-								<td>${orderModel.order.orderSource }</td>
+								<td>${orderInfo.order.styleName }</td>
+								<td colspan="2">${orderInfo.order.styleSex }</td>
+								<td colspan="2">${orderInfo.order.styleSeason eq 'CHUNXIA'?'春夏':'秋冬' }</td>
+								<td>${orderInfo.order.orderSource }</td>
 							</tr>
 							<tr>
 								<td>面料类型</td>
 								<td colspan="5">
-									${fn:contains(orderModel.order.fabricType,'SUOZHI')?'梭织':'' }
-									${fn:contains(orderModel.order.fabricType,'ZHENZHI')?'针织':'' }
-									${fn:contains(orderModel.order.fabricType,'BIANZHI')?'编织':'' }
-									${fn:contains(orderModel.order.fabricType,'SUOZHENHUNHE')?'梭针混合':'' }
-									${fn:contains(orderModel.order.fabricType,'ZHENBIANHUNHE')?'针编混合':'' }
-									${fn:contains(orderModel.order.fabricType,'SUOBIANHUNHE')?'梭编混合':'' }
+									${fn:contains(orderInfo.order.fabricType,'SUOZHI')?'梭织':'' }
+									${fn:contains(orderInfo.order.fabricType,'ZHENZHI')?'针织':'' }
+									${fn:contains(orderInfo.order.fabricType,'BIANZHI')?'编织':'' }
+									${fn:contains(orderInfo.order.fabricType,'SUOZHENHUNHE')?'梭针混合':'' }
+									${fn:contains(orderInfo.order.fabricType,'ZHENBIANHUNHE')?'针编混合':'' }
+									${fn:contains(orderInfo.order.fabricType,'SUOBIANHUNHE')?'梭编混合':'' }
 								</td>
 							</tr>
 							<tr>
 								<td>特殊工艺</td>
 								<td colspan="5">
-									${fn:contains(orderModel.order.specialProcess,'SHUIXI')?'水洗&nbsp;':'' } 
-									${fn:contains(orderModel.order.specialProcess,'JIGUANG')?'激光&nbsp;':'' } 
-									${fn:contains(orderModel.order.specialProcess,'YAZHOU')?'压皱&nbsp;':'' } 
-									${fn:contains(orderModel.order.specialProcess,'其他')?'其他&nbsp;':'' } 
+									${fn:contains(orderInfo.order.specialProcess,'SHUIXI')?'水洗&nbsp;':'' } 
+									${fn:contains(orderInfo.order.specialProcess,'JIGUANG')?'激光&nbsp;':'' } 
+									${fn:contains(orderInfo.order.specialProcess,'YAZHOU')?'压皱&nbsp;':'' } 
+									${fn:contains(orderInfo.order.specialProcess,'其他')?'其他&nbsp;':'' } 
 								</td>
 							</tr>
 							<tr>
 								<td>其他说明</td>
 								<td colspan="5">
-									${fn:contains(orderModel.order.otherRequirements,'ZHUBIAO')?'有主标&nbsp;':'' }
-									${fn:contains(orderModel.order.otherRequirements,'DIAOPAI')?'有吊牌&nbsp;':'' }
-									${fn:contains(orderModel.order.otherRequirements,'SHUIXI')?'有水洗&nbsp;':'' }
+									${fn:contains(orderInfo.order.otherRequirements,'ZHUBIAO')?'有主标&nbsp;':'' }
+									${fn:contains(orderInfo.order.otherRequirements,'DIAOPAI')?'有吊牌&nbsp;':'' }
+									${fn:contains(orderInfo.order.otherRequirements,'SHUIXI')?'有水洗&nbsp;':'' }
 								</td>
 							</tr>
 							<tr>
@@ -84,10 +88,10 @@
 								<td>码数</td>
 							</tr>
 							<tr>
-								<td>${orderModel.order.askAmount }</td>
-								<td colspan="2">${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td colspan="2">${orderModel.order.askProducePeriod }</td>
-								<td>${orderModel.order.askCodeNumber }</td>
+								<td>${orderInfo.order.askAmount }</td>
+								<td colspan="2">${fn:substring(orderInfo.order.askDeliverDate,0,10) }</td>
+								<td colspan="2">${orderInfo.order.askProducePeriod }</td>
+								<td>${orderInfo.order.askCodeNumber }</td>
 							</tr>
 							<tr>
 								<td rowspan="2">面料</td>
@@ -133,9 +137,9 @@
 								<td colspan="2">快递单号</td>
 							</tr>
 							<tr>
-								<td>${orderModel.order.hasPostedSampleClothes==0?'没有样衣':'' }
-									${orderModel.order.hasPostedSampleClothes==1?'收到样衣':'' }
-									${orderModel.order.hasPostedSampleClothes==2?'未收到样衣':'' }
+								<td>${orderInfo.order.hasPostedSampleClothes==0?'没有样衣':'' }
+									${orderInfo.order.hasPostedSampleClothes==1?'收到样衣':'' }
+									${orderInfo.order.hasPostedSampleClothes==2?'未收到样衣':'' }
 								</td>
 								<td colspan="2">${fn:substring(logistics.inPostSampleClothesTime,0,10) }</td>
 								<td>${logistics.inPostSampleClothesType }</td>
@@ -149,7 +153,7 @@
 								<td colspan="2">快递单号</td>
 							</tr>
 							<tr>
-								<td>${orderModel.order.isNeedSampleClothes==0?'否':'是' }</td>
+								<td>${orderInfo.order.isNeedSampleClothes==0?'否':'是' }</td>
 								<td colspan="2">${fn:substring(logistics.sampleClothesTime,0,10) }</td>
 								<td>${logistics.sampleClothesType }</td>
 								<td colspan="2">${logistics.sampleClothesNumber }</td>
@@ -171,9 +175,9 @@
 							<tr>
 								<td>样衣信息</td>
 								<td>样衣图片</td>
-								<td colspan="2">${orderModel.order.sampleClothesPicture }</td>
+								<td colspan="2">${orderInfo.order.sampleClothesPicture }</td>
 								<td>参考图片</td>
-								<td colspan="2">${orderModel.order.referencePicture }</td>
+								<td colspan="2">${orderInfo.order.referencePicture }</td>
 							</tr>
 							<tr>
 								<td>意见</td>
@@ -183,20 +187,20 @@
 								<td>操作</td>	
 
 								<td colspan="6">
-								<form id="verify_form" method="post" action="${ctx }/buy/${end_url }.do">
-									<input type="hidden" name="order_id" value="${orderModel.order.orderId }" />
-									<input type="hidden" name="task_id" value="${orderModel.taskId }" />
-									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+								<form id="verify_form" method="post" action="${ctx }/buy/purchaseMaterialDetailSubmit.do">
+									<input type="hidden" name="order_id" value="${orderInfo.order.orderId }" />
+									<input type="hidden" name="task_id" value="${orderInfo.task.id }" />
+									
 									<input type="hidden" name="purchaseerror" value="1"/>
 									
 									<a id="agree_detail" class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</a>
 								
                                  </form>
 
-	                           <form  method="post" action="${ctx }/buy/${end_url }.do">
-									<input type="hidden" name="order_id" value="${orderModel.order.orderId }" />
-									<input type="hidden" name="task_id" value="${orderModel.taskId }" />
-									<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+	                           <form  method="post" action="${ctx }/buy/purchaseMaterialDetailSubmit.do.do">
+									<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
+									<input type="hidden" name="taskId" value="${orderInfo.task.id }" />
+									<!-- <input type="hidden" name="process_id" value="${orderInfo.processInstanceId }" /> -->
 									<input type="hidden" name="purchaseerror" value="0"/>
 									
 								
@@ -205,7 +209,8 @@
 
 								</td>
 							</tr>
-						</table>
+						 </table>
+               
 				
 				</div>
 				<!--widgetcontent-->
@@ -235,4 +240,7 @@
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+   <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+        <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
+        
 <%@include file="/common/footer.jsp"%>

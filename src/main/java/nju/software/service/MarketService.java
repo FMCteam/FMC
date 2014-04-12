@@ -23,7 +23,7 @@ import nju.software.model.QuoteConfirmTaskSummary;
 public interface MarketService {
 	
 	//==========================报价商定=======================
-	public List<OrderInfo>getConfirmQuoteList(String actorId);
+	public List<OrderInfo> getConfirmQuoteList(String actorId);
 	
 	public OrderInfo getConfirmQuoteDetail(String arctorId,Integer orderId);
 	
@@ -31,7 +31,7 @@ public interface MarketService {
 	
 	
 	//==========================签订合同=======================
-	public List<OrderInfo>getSignContractList(String actorId);
+	public List<OrderInfo> getSignContractList(String actorId);
 	
 	public OrderInfo getSignContractDetail(String arctorId,Integer orderId);
 	
@@ -39,7 +39,7 @@ public interface MarketService {
 	
 	
 	
-	public List<Customer>getAddOrderList();
+	public List<Customer> getAddOrderList();
 	
 	public Customer getAddOrderDetail(Integer cid);
 	
@@ -49,7 +49,7 @@ public interface MarketService {
 
 
 	
-	public void completeQuoteConfirmTaskSummary(long taskId,String result);
+	//public void completeQuoteConfirmTaskSummary(long taskId,String result);
 	
 	public List<Product> getProductList(int orderId, String productAskAmount, String productColor, String productStyle);
 
@@ -62,9 +62,9 @@ public interface MarketService {
 	
 	public OrderInfo getOrderInfo(Integer orderId,long taskId);
 	
-	public void completeSignContract(Integer orderId,double discount,long taskId);
+	//public void completeSignContract(Integer orderId,double discount,long taskId);
 
-	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(Integer employeeId);
+	//public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(Integer employeeId);
 
 	public List<OrderInfo> getModifyProductList(Integer userId);
 
@@ -73,13 +73,13 @@ public interface MarketService {
 
 	public List<OrderInfo> getModifyQuoteList(Integer userId);
 
-	public OrderInfo getModifyQuoteDetail(int id);
+	public OrderInfo getModifyQuoteDetail(int id, int accountId);
 
-	public OrderInfo getModifyProductDetail(int id, long taskId);
+	public OrderInfo getModifyProductDetail(int id, long taskId, Integer integer);
 
 	public List<OrderInfo> getMergeQuoteList(Integer accountId);
 
-	public void mergeQuoteSubmit(float inner, float outer, int id, long taskId,
+	public void mergeQuoteSubmit(int accountId, float inner, float outer, int id, long taskId,
 			long processId);
 
 	public List<OrderInfo> getVerifyQuoteList(Integer accountId);

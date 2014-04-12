@@ -8,8 +8,10 @@
 		<div class="row-fluid" style="min-height:300px;">
 
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<h4 class="widgettitle">市场专员合并报价</h4>
+			<section>
+			
 			<table id="dyntable" class="table table-bordered responsive">
+			<caption>市场专员合并报价</caption>
 				<colgroup>
 					<col class="con1" />
 					<col class="con0" />
@@ -74,7 +76,7 @@
 						</form>
 					</c:forEach>
 				</tbody>
-			</table>
+			</table></section>
 			<div class="dataTables_paginate paging_full_numbers"
 				id="dyntable_paginate" style="float:right">
 				<c:if test="${page==1 }">
@@ -183,7 +185,7 @@
 
 <!-- 这里引入你需要的js文件 -->
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-
+<link rel="stylesheet" href="../views/market/quoteConfirmList.css">
 
 <%@include file="/common/footer.jsp"%>
 
