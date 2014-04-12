@@ -26,7 +26,7 @@
                             <th ></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    
 	                    <c:forEach var="orderModel" items="${list}" >
 	                        <tr >
 	                            <td>${orderModel.order.orderId }</td>
@@ -38,62 +38,16 @@
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
 									
 										
-										<!--<input type="hidden" name="order_id" value="${orderModel.order.orderId }" />  
-										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-										-->
+									
 								<td><a
 							href="${ctx}/buy/purchaseSampleMaterialDetail.do?orderId=${orderModel.order.orderId}">详情
 						</a> 
 						</td>
 	                        </tr>
                         </c:forEach>
-                    </tbody>
+                   
                 </table>
-                <div class="dataTables_paginate paging_full_numbers" id="dyntable_paginate" style="float:right">
-                	<c:if test="${page==1 }">
-	                	<a tabindex="0" class="first paginate_button paginate_button_disabled" id="dyntable_first">首页</a>
-						<a tabindex="0" class="previous paginate_button paginate_button_disabled" id="dyntable_previous">上一页</a>
-                	</c:if>
-					<c:if test="${page>1 }">
-	                	<a tabindex="0" class="first paginate_button" id="dyntable_first" href="${ctx }/employee/search.do?page=1&number_per_page=1">首页</a>
-						<a tabindex="0" class="previous paginate_button" id="dyntable_previous" href="${ctx }/employee/search.do?page=${page-1 }&number_per_page=1">上一页</a>
-                	</c:if>
-					<c:if test="${page_number<6&&page_number>0}">
-						<c:forEach var ="i" begin="1" end="${page_number }">
-							<c:if test="${page!=i }"><a tabindex="0" class="paginate_button" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-							<c:if test="${page==i }"><a tabindex="0" class="paginate_active" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-						</c:forEach>
-					</c:if>
-					<c:if test="${page_number>5}">
-						<c:choose>
-							<c:when test="${page<3 }">
-								<c:forEach var ="i" begin="1" end="5">
-									<c:if test="${page!=i }"><a tabindex="0" class="paginate_button" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-									<c:if test="${page==i }"><a tabindex="0" class="paginate_active" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-								</c:forEach>
-							</c:when>
-							<c:when test="${page>page_number-3 }">
-								<c:forEach var ="i" begin="${page_number-4 }" end="${page_number }">
-									<c:if test="${page!=i }"><a tabindex="0" class="paginate_button" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-									<c:if test="${page==i }"><a tabindex="0" class="paginate_active" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<c:forEach var ="i" begin="${page-2 }" end="${page+2 }">
-									<c:if test="${page!=i }"><a tabindex="0" class="paginate_button" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-					 				<c:if test="${page==i }"><a tabindex="0" class="paginate_active" href="${ctx }/employee/search.do?page=${i }&number_per_page=1">${i }</a></c:if>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
-					</c:if>
-					<c:if test="${page<page_number }">
-	                	<a tabindex="0" class="next paginate_button" id="dyntable_next" href="${ctx }/employee/search.do?page=${page+1 }&number_per_page=1">下一页</a>
-						<a tabindex="0" class="last paginate_button" id="dyntable_last" href="${ctx }/employee/search.do?page=${page_number }&number_per_page=1">尾页</a>
-                	</c:if>
-					<c:if test="${page==page_number }">
-	                	<a tabindex="0" class="next paginate_button paginate_button_disabled" id="dyntable_next">下一页</a>
-						<a tabindex="0" class="last paginate_button paginate_button_disabled" id="dyntable_last">尾页</a>
-                	</c:if>
+             </section>
 				</div>
 				
 				
