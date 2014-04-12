@@ -57,16 +57,9 @@ public class DesignServiceImpl implements DesignService {
 
 	@Override
 	public boolean verifyDesignSubmit(Account account, int orderId, long taskId,
-			long processId, boolean designVal, String comment) {
+			boolean designVal, String comment) {
 		// TODO Auto-generated method stub
 		// String actorId = account.getUserRole();
-		// 需要获取task中的数据
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(processId);
-		int orderId_process = (int) process.getVariable("orderId");
-		System.out.println("orderId: " + orderId);
-		if (orderId == orderId_process) {
-
 			Order order = orderDAO.findById(orderId);
 			// 修改order内容
 
@@ -85,8 +78,6 @@ public class DesignServiceImpl implements DesignService {
 				e.printStackTrace();
 			}
 			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -231,6 +222,7 @@ public class DesignServiceImpl implements DesignService {
 		OrderInfo model = new OrderInfo();
 		model.setOrder(orderDAO.findById(orderId));
 		model.setTask(task);
+		model.setTaskId(task.getId());
 		return model;
 	}
 
@@ -274,6 +266,7 @@ public class DesignServiceImpl implements DesignService {
 			OrderInfo model = new OrderInfo();
 			model.setOrder(orderDAO.findById(orderId));
 			model.setTask(task);
+			model.setTaskId(task.getId());
 			models.add(model);
 		}
 		return models;
@@ -286,7 +279,11 @@ public class DesignServiceImpl implements DesignService {
 				TASK_UPLOAD_DESIGN, orderId);
 		OrderInfo model = new OrderInfo();
 		model.setOrder(orderDAO.findById(orderId));
+		model.setLogistics(logisticsDAO.findById(orderId));
+		model.setFabrics(fabricDAO.findByOrderId(orderId));
+		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		model.setTask(task);
+		model.setTaskId(task.getId());
 		return model;
 	}
 
@@ -416,10 +413,6 @@ public class DesignServiceImpl implements DesignService {
 		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
 				ACTOR_DESIGN_MANAGER, TASK_VERIFY_DESIGN);
 		for (TaskSummary task : list) {
-			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-					.getKsession().getProcessInstance(task.getProcessInstanceId());
-			int orderId_process = (int) process.getVariable("orderId");
-			if (orderId == orderId_process && taskId == task.getId() ) {
 				OrderInfo oi = new OrderInfo();
 				oi.setOrder(orderDAO.findById(orderId));
 				oi.setLogistics(logisticsDAO.findById(orderId));
@@ -427,7 +420,7 @@ public class DesignServiceImpl implements DesignService {
 				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
 				oi.setTask(task);
 				return oi;
-			}
+			
 		}
 		return null;
 	}

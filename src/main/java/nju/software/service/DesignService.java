@@ -14,7 +14,7 @@ import nju.software.model.OrderInfo;
 public interface DesignService {
 	
 	public boolean verifyDesignSubmit(Account account, int orderId, long taskId, 
-			long processId, boolean designVal, String comment);
+			boolean designVal, String comment);
 	
 	public boolean costAccounting(Account account, int orderId, long taskId, 
 			long processId, float design_cost);

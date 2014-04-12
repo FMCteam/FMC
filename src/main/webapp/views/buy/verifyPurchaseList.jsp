@@ -9,33 +9,27 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">采购验证</h4>
-                <table id="dyntable" class="table table-bordered responsive">
-                    <colgroup>
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th class="head0">订单号</th>
-                            <th class="head1">业务员</th>
-                            <th class="head0">客户姓名</th>
-                            <th class="head1">客户公司</th>
-                            <th class="head0">款式</th>
-                            <th class="head1">件数</th>
-                            <th class="head0">交货时间</th>
-                            <th class="head1"></th>
+                    
+                    <section class="list">
+                <table class="list">
+                
+                <caption><span class="text-vertical">待采购确认:${fn:length(list)}件任务</span>
+                <input type="text" class="search-query float-right" placeholder="输入检索条件"></caption>
+				<thead>
+                      <tr>
+                            <th >订单号</th>
+                            <th >业务员</th>
+                            <th >客户姓名</th>
+                            <th >客户公司</th>
+                            <th >款式</th>
+                            <th >件数</th>
+                            <th >交货时间</th>
+                            <th ></th>
                         </tr>
                     </thead>
-                    <tbody>
-	                    <c:forEach var="orderModel" items="${order_list}" >
-	                        <tr class="gradeA">
+                   
+	                    <c:forEach var="orderModel" items="${list}" >
+	                        <tr>
 	                            <td>${orderModel.order.orderId }</td>
 								<td>${orderModel.order.employeeId }</td>
 								<td>${orderModel.order.customerName }</td>
@@ -43,16 +37,18 @@
 								<td>${orderModel.order.styleName }</td>
 								<td>${orderModel.order.askAmount }</td>
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx }/buy/verifyPurchaseDetail.do" method="post" >
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
-										<input type="hidden" name="task_id" value="${orderModel.task.id }" />
-										<input type="hidden" name="process_id" value="${orderModel.task.processInstanceId }" />
-										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 详细信息</button></form>
-								</td>
+									<td><a
+							href="${ctx}/buy/verifyPurchaseDetail.do?orderId=${orderModel.order.orderId}">详情
+						</a> 
+						</td>
+								
+									
+								
 	                        </tr>
                         </c:forEach>
-                    </tbody>
+                   
                 </table>
+                </section>
                 <div class="dataTables_paginate paging_full_numbers" id="dyntable_paginate" style="float:right">
                 	<c:if test="${page==1 }">
 	                	<a tabindex="0" class="first paginate_button paginate_button_disabled" id="dyntable_first">首页</a>
@@ -118,7 +114,8 @@
         
         <!-- 这里引入你需要的js文件 -->
         <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-        
+        <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+        <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
         
         <%@include file="/common/footer.jsp" %>
     

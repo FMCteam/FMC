@@ -12,6 +12,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.model.QuoteConfirmTaskSummary;
@@ -80,11 +81,9 @@ public class ProduceController {
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
 		String comment = request.getParameter("suggestion");
 
-		produceService.verifyProduceSubmit(account, orderId_request, taskId, processId, productVal, comment);
+		produceService.verifyProduceSubmit(account, orderId_request, taskId, productVal, comment);
 		
 		return "redirect:/produce/verifyProduceList.do";
 	}
@@ -97,7 +96,7 @@ public class ProduceController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "produce/verifyProduceDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "produce/verifyProduceDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -109,10 +108,8 @@ public class ProduceController {
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("task_id");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		OrderInfo orderModel = produceService.getVerifyProduceDetail(orderId_request, taskId);
-		model.addAttribute("orderModel", orderModel);
+		OrderInfo orderInfo = produceService.getVerifyProduceDetail(orderId_request, taskId);
+		model.addAttribute("orderInfo", orderInfo);
 		return "produce/verifyProduceDetail";
 	}
 	
@@ -157,7 +154,7 @@ public class ProduceController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "produce/computeProduceCostDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "produce/computeProduceCostDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String computeProduceCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -204,17 +201,20 @@ public class ProduceController {
 		String package_cost = request.getParameter("package_cost");
 		//其他费用
 		String other_cost = request.getParameter("other_cost");
-	    
+	    //设计费用
+		String design_cost = request.getParameter("design_cost");
+		
 		produceService.ComputeProduceCostSubmit(
 				Integer.parseInt(orderId),
-				 Long.parseLong(taskId), 
+				Long.parseLong(taskId), 
 				Float.parseFloat(cut_cost),
 				Float.parseFloat(manage_cost),
 				Float.parseFloat(nail_cost),
 				Float.parseFloat(ironing_cost),
 				Float.parseFloat(swing_cost),
 				Float.parseFloat(package_cost),
-				Float.parseFloat(other_cost)
+				Float.parseFloat(other_cost),
+				Float.parseFloat(design_cost)
 						);
 		
 		return "redirect:/produce/computeProduceCostList.do";
@@ -247,9 +247,22 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String result = request.getParameter("result");
+		
+		boolean result = Boolean.parseBoolean(request.getParameter("result"));
 		String taskId = request.getParameter("taskId");
-		produceService.produceSampleSubmit(Long.parseLong(taskId), result);
+		List<Produce> produceList = null;
+		if (!result) {
+			String produceColor = request.getParameter("produce_color");
+			String produceXS = request.getParameter("produce_xs");
+			String produceS = request.getParameter("produce_s");
+			String produceM = request.getParameter("produce_m");
+			String produceL = request.getParameter("produce_l");
+			String produceXL = request.getParameter("produce_xl");
+			String produceXXL = request.getParameter("produce_xxl");
+			produceList = produceService.getProduceList(produceColor, 
+					produceXS, produceS, produceM, produceL, produceXL, produceXXL);
+		}
+		produceService.produceSampleSubmit(Long.parseLong(taskId), result, produceList);
 		return "forward:/produce/produceSampleList.do";
 	}
 	

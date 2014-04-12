@@ -17,24 +17,26 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
+import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
-import nju.software.model.OrderModel;
-import nju.software.model.ProductModel;
 import nju.software.model.QuoteConfirmTaskSummary;
-import nju.software.model.QuoteModel;
 import nju.software.service.MarketService;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
@@ -46,7 +48,7 @@ public class MarketServiceImpl implements MarketService {
 	public final static String ACTOR_MARKET_STAFF = "marketStaff";
 	public final static String TASK_MODIFY_ORDER = "modifyOrder";
 	public final static String TASK_MERGE_QUOTE = "mergeQuote";
-	public final static String TASK_VERIFY_ORDER = "verifyQuote";
+	public final static String TASK_VERIFY_QUOTE = "verifyQuote";
 	public final static String TASK_CONFIRM_QUOTE = "confirmQuote";
 	public final static String TASK_MODIFY_QUOTE = "modifyQuote";
 	public final static String TASK_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder";
@@ -58,6 +60,8 @@ public class MarketServiceImpl implements MarketService {
 	@Autowired
 	private CustomerDAO customerDAO;
 	@Autowired
+	private EmployeeDAO employeeDAO;
+	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
 	private QuoteDAO quoteDAO;
@@ -67,6 +71,10 @@ public class MarketServiceImpl implements MarketService {
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private FabricDAO fabricDAO;
+	@Autowired
+	private ProduceDAO produceDAO;
+	@Autowired
+	private VersionDataDAO versionDataDAO;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 
@@ -84,7 +92,7 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
-			List<Accessory> accessorys, Logistics logistics,
+			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<VersionData> versions,
 			HttpServletRequest request) {
 		// TODO Auto-generated method stub
 
@@ -94,17 +102,20 @@ public class MarketServiceImpl implements MarketService {
 		Integer orderId = order.getOrderId();
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
-		if (multipartRequest.getFile("sample_clothes_picture") != null) {
+		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/sampleClothesPicture/" + orderId);
-			FileOperateUtil.Upload(request, filedir, null,
+			File file=FileOperateUtil.Upload(request, filedir, null,
 					"sample_clothes_picture");
+			order.setSampleClothesPicture("/upload/sampleClothesPicture/"+orderId+"/"+file.getName());
 		}
-		if (multipartRequest.getFile("reference_picture") != null) {
+		if (!multipartRequest.getFile("reference_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/reference_picture/" + orderId);
-			FileOperateUtil.Upload(request, filedir, null, "reference_picture");
+			File file=FileOperateUtil.Upload(request, filedir, null, "reference_picture");
+			order.setReferencePicture("/upload/reference_picture/"+orderId+"/"+file.getName());
 		}
+		
 
 		orderDAO.attachDirty(order);
 
@@ -120,6 +131,18 @@ public class MarketServiceImpl implements MarketService {
 			accessoryDAO.save(accessory);
 		}
 
+		//添加加工单信息
+		for (Produce produce : produces) {
+			produce.setOid(orderId);
+			produceDAO.save(produce);
+		}
+		
+		//添加版型信息
+		for (VersionData versionData : versions) {
+			versionData.setOrderId(orderId);
+			versionDataDAO.save(versionData);
+		}
+		
 		// 添加物流信息
 		logistics.setOrderId(orderId);
 		logisticsDAO.save(logistics);
@@ -147,6 +170,93 @@ public class MarketServiceImpl implements MarketService {
 			System.out.println("流程启动失败");
 			ex.printStackTrace();
 		}
+	}
+
+	@Override
+	public List<OrderInfo> getModifyOrderList(Integer accountId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				accountId+"", TASK_MODIFY_ORDER);
+		List<OrderInfo> taskSummarys = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+				Integer orderId = (Integer) getVariable("orderId", task);
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setTask(task);
+				taskSummarys.add(oi);
+		}
+		return taskSummarys;
+	}
+
+	@Override
+	public OrderInfo getModifyOrderDetail(int accountId, int id, long task_id) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				accountId+"", TASK_MODIFY_ORDER);
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) getVariable("orderId", task);
+			if (id == orderId && task_id == task.getId()) {
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setEmployee(employeeDAO.findById(orderId));
+				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setProduces(produceDAO.findByOrderId(orderId));
+				oi.setVersions(versionDataDAO.findByOrderId(orderId));
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, 
+			List<VersionData> versions, boolean editok, long taskId, Integer accountId) {
+		// TODO Auto-generated method stub
+		// 添加订单信息
+		orderDAO.save(order);
+		Integer orderId = order.getOrderId();
+		orderDAO.attachDirty(order);
+		// 添加面料信息
+		fabricDAO.deleteByProperty("orderId", orderId);
+		for (Fabric fabric : fabrics) {
+			fabric.setOrderId(orderId);
+			fabricDAO.save(fabric);
+		}
+		// 添加辅料信息
+		accessoryDAO.deleteByProperty("orderId", orderId);
+		for (Accessory accessory : accessorys) {
+			accessory.setOrderId(orderId);
+			accessoryDAO.save(accessory);
+		}
+		//添加加工单信息
+		produceDAO.deleteByProperty("oid", orderId);
+		for (Produce produce : produces) {
+			produce.setOid(orderId);
+			produceDAO.save(produce);
+		}
+		//添加版型数据
+		versionDataDAO.deleteByProperty("orderId", orderId);
+		for (VersionData version : versions) {
+			version.setOrderId(orderId);
+			versionDataDAO.save(version);
+		}
+		// 添加物流信息
+		logistics.setOrderId(orderId);
+		logisticsDAO.save(logistics);
+
+		// 启动流程
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("editok", editok);
+		try {
+			jbpmAPIUtil.completeTask(taskId, params, accountId+"");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override
@@ -552,7 +662,7 @@ public class MarketServiceImpl implements MarketService {
 	public List<OrderInfo> getVerifyQuoteList(Integer accountId) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_MANAGER, TASK_VERIFY_ORDER);
+				ACTOR_MARKET_MANAGER, TASK_VERIFY_QUOTE);
 		List<OrderInfo> taskSummarys = new ArrayList<>();
 		for (TaskSummary task : tasks) {
 			if (getVariable("employeeId", task).equals(accountId)) {

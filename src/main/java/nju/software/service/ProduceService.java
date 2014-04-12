@@ -8,6 +8,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
 import nju.software.model.SampleProduceTask;
@@ -16,7 +17,7 @@ import nju.software.model.SampleProduceTaskSummary;
 public interface ProduceService {
 
 	public boolean verifyProduceSubmit(Account account, int orderId, long taskId, 
-			long processId, boolean productVal, String comment);
+			boolean productVal, String comment);
 	
 	public boolean costAccounting(Account account, int orderId, long taskId, 
 			long processId, float cut_cost,float manage_cost,float nali_cost,float ironing_cost,
@@ -32,8 +33,10 @@ public interface ProduceService {
 	
 	public OrderInfo getProduceSampleDetail(Integer orderId) ;
 	
-	public boolean produceSampleSubmit(long taskId,String result);
+	public boolean produceSampleSubmit(long taskId, boolean result, List<Produce> produceList);
 	
+	public List<Produce> getProduceList(String produceColor, String produceXS, String produceS, 
+			String produceM, String produceL, String produceXL, String produceXXL);
 	
 	public List<OrderInfo> getProduceList();
 	
@@ -46,7 +49,7 @@ public interface ProduceService {
 
 	public void ComputeProduceCostSubmit(int orderId,long taskId,float cut_cost, float manage_cost, float nali_cost,
 			float ironing_cost, float swing_cost, float package_cost,
-			float other_cost);
+			float other_cost, float design_cost);
 	
 	public List<Product> getProductByOrderId(int parseInt);
 

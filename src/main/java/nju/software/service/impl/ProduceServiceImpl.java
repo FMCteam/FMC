@@ -19,6 +19,7 @@ import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.PackageDAO;
 import nju.software.dao.impl.PackageDetailDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
@@ -27,6 +28,7 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.model.OrderInfo;
@@ -61,6 +63,8 @@ public class ProduceServiceImpl implements ProduceService {
 	private QuoteDAO quoteDAO;
 	@Autowired
 	private ProductDAO productDAO;
+	@Autowired
+	private ProduceDAO produceDAO;
 
 	@Autowired
 	private PackageDAO packageDAO;
@@ -69,15 +73,9 @@ public class ProduceServiceImpl implements ProduceService {
 
 	@Override
 	public boolean verifyProduceSubmit(Account account, int orderId, long taskId,
-			long processId, boolean productVal, String comment) {
+			boolean productVal, String comment) {
 		// TODO Auto-generated method stub
 		// String actorId = account.getUserRole();
-		// 需要获取task中的数据
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(processId);
-		int orderId_process = (int) process.getVariable("orderId");
-		System.out.println("orderId: " + orderId);
-		if (orderId == orderId_process) {
 			Order order = orderDAO.findById(orderId);
 			// 修改order内容
 
@@ -96,8 +94,6 @@ public class ProduceServiceImpl implements ProduceService {
 				e.printStackTrace();
 			}
 			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -205,6 +201,7 @@ public class ProduceServiceImpl implements ProduceService {
 			OrderInfo orderInfo = new OrderInfo();
 			orderInfo.setOrder(orderDAO.findById(orderId));
 			orderInfo.setTask(task);
+			orderInfo.setTaskId(task.getId());
 			list.add(orderInfo);
 		}
 		return list;
@@ -219,16 +216,24 @@ public class ProduceServiceImpl implements ProduceService {
 		orderInfo.setOrder(orderDAO.findById(orderId));
 		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
 		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setLogistics(logisticsDAO.findById(orderId));
+		orderInfo.setProduces(produceDAO.findByOrderId(orderId));
 		orderInfo.setTask(task);
+		orderInfo.setTaskId(task.getId());
 		return orderInfo;
 	}
 
 	
 	@Override
-	public boolean produceSampleSubmit(long taskId, String result) {
+	public boolean produceSampleSubmit(long taskId, boolean producterror, List<Produce> produceList) {
 		// TODO Auto-generated method stub
+		if (!producterror) {
+			for (int i = 0; i < produceList.size(); i++) {
+				produceDAO.save(produceList.get(i));
+			}
+		}
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("producterror", result.equals("0"));
+		data.put("producterror", producterror);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			return true;
@@ -237,6 +242,31 @@ public class ProduceServiceImpl implements ProduceService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public List<Produce> getProduceList(String produceColor, String produceXS, String produceS, 
+			String produceM, String produceL, String produceXL, String produceXXL) {
+		String[] color = produceColor.split(",");
+		String[] xs = produceXS.split(",");
+		String[] s = produceS.split(",");
+		String[] m = produceM.split(",");
+		String[] l = produceL.split(",");
+		String[] xl = produceXL.split(",");
+		String[] xxl = produceXXL.split(",");
+		List<Produce> produceList = new ArrayList<Produce>();
+		for (int i = 0; i < color.length; i++) {
+			Produce produce = new Produce();
+			produce.setColor(color[i]);
+			produce.setXs(Integer.parseInt(xs[i]));
+			produce.setS(Integer.parseInt(s[i]));
+			produce.setM(Integer.parseInt(m[i]));
+			produce.setL(Integer.parseInt(l[i]));
+			produce.setXl(Integer.parseInt(xl[i]));
+			produce.setXxl(Integer.parseInt(xxl[i]));
+			produce.setType(Produce.TYPE_SAMPLE_PRODUCED);
+			produceList.add(produce);
+		}
+		return produceList;
 	}
 	
 
@@ -373,7 +403,11 @@ public class ProduceServiceImpl implements ProduceService {
 				TASK_COMPUTE_PRODUCE_COST, orderId);
 		OrderInfo model = new OrderInfo();
 		model.setOrder(orderDAO.findById(orderId));
+		model.setLogistics(logisticsDAO.findById(orderId));
+		model.setFabrics(fabricDAO.findByOrderId(orderId));
+		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		model.setTask(task);
+		model.setTaskId(task.getId());
 		return model;
 	}
 
@@ -381,7 +415,7 @@ public class ProduceServiceImpl implements ProduceService {
 	public void ComputeProduceCostSubmit(int orderId,
 			long taskId,float cut_cost, float manage_cost, float nali_cost,
 			float ironing_cost, float swing_cost, float package_cost,
-			float other_cost) {
+			float other_cost, float design_cost) {
 		
 		Quote quote = QuoteDAO.findById(orderId);
 
@@ -395,6 +429,7 @@ public class ProduceServiceImpl implements ProduceService {
 			quote.setNailCost(nali_cost);
 			quote.setPackageCost(package_cost);
 			quote.setOtherCost(other_cost);
+			quote.setDesignCost(design_cost);
 			QuoteDAO.save(quote);
 		} else {
 			quote.setCutCost(cut_cost);
@@ -404,11 +439,12 @@ public class ProduceServiceImpl implements ProduceService {
 			quote.setNailCost(nali_cost);
 			quote.setPackageCost(package_cost);
 			quote.setOtherCost(other_cost);
+			quote.setDesignCost(design_cost);
 			QuoteDAO.attachDirty(quote);
 		}
 		
 		  float producecost = cut_cost + manage_cost + swing_cost
-				+ ironing_cost + nali_cost + package_cost + other_cost;
+				+ ironing_cost + nali_cost + package_cost + other_cost + design_cost;
 		
 				Map<String, Object> data = new HashMap<String, Object>();
 				try {

@@ -1,3 +1,4 @@
+
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 		
 		<%@include file="/common/header.jsp" %>
@@ -8,18 +9,13 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">询单列表</h4>
-                <table id="dyntable" class="table table-bordered responsive">
-                    <colgroup>
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                        <col class="con1" />
-                        <col class="con0" />
-                    </colgroup>
+                   
+                   
+                  <section class="list">
+                <table class="list"">
+                
+                <caption><span class="text-vertical">待采购成本核算:${fn:length(list)}件任务</span>
+                  <input type="text" class="search-query float-right" placeholder="输入检索条件"></caption>
                     <thead>
                         <tr>
                             <th class="head0">订单号</th>
@@ -32,8 +28,8 @@
                             <th class="head1"></th>
                         </tr>
                     </thead>
-                    <tbody>
-	                    <c:forEach var="orderModel" items="${order_list}" >
+                   
+	                    <c:forEach var="orderModel" items="${list}" >
 	                        <tr class="gradeA">
 	                            <td>${orderModel.order.orderId }</td>
 								<td>${orderModel.order.employeeId }</td>
@@ -42,25 +38,21 @@
 								<td>${orderModel.order.styleName }</td>
 								<td>${orderModel.order.askAmount }</td>
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><form action="${ctx}/market/modify.do" method="post" >
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
-										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
-										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-<input type="hidden" name="modify" value="1" />
-										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i> 修改</button></form>
-
-								<form action="${ctx}/market/modify.do" method="post" >
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
-										<input type="hidden" name="task_id" value="${orderModel.taskId }" />
-										<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
-<input type="hidden" name="modify" value="0" />
-										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i>删除</button></form>
-
-								</td>
+								<td>
+								
+								<a
+							href="${ctx}/buy/computePurchaseCostDetail.do?orderId=${orderModel.order.orderId}">成本核算
+						</a> 
+						</td>
+									
+									
+									
+								
 	                        </tr>
                         </c:forEach>
-                    </tbody>
+                    
                 </table>
+                 </section>
                 <div class="dataTables_paginate paging_full_numbers" id="dyntable_paginate" style="float:right">
                 	<c:if test="${page==1 }">
 	                	<a tabindex="0" class="first paginate_button paginate_button_disabled" id="dyntable_first">首页</a>
@@ -127,6 +119,8 @@
         <!-- 这里引入你需要的js文件 -->
         <script type="text/javascript" src="${ctx }/js/custom.js"></script>
         
+         <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+        <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
         
         <%@include file="/common/footer.jsp" %>
     

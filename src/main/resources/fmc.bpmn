@@ -1478,7 +1478,7 @@
         <terminateEventDefinition />
     </endEvent>
     <inclusiveGateway id="_56" name="purchaseerror" gatewayDirection="Diverging" />
-    <userTask id="_62" name="确认样衣加工单" >
+    <userTask id="_62" name="确认生产加工单" >
       <ioSpecification>
         <dataInput id="_62_TaskNameInput" name="TaskName" />
         <dataOutput id="_62_comfirmworksheetOutput" name="comfirmworksheet" />
@@ -1664,7 +1664,7 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_84" name="epositok" gatewayDirection="Diverging" />
-    <userTask id="_87" name="采购部确认" >
+    <userTask id="_87" name="生产原料采购" >
       <ioSpecification>
         <dataInput id="_87_TaskNameInput" name="TaskName" />
         <dataOutput id="_87_procurementerrorOutput" name="procurementerror" />
@@ -1925,11 +1925,16 @@
     <sequenceFlow id="_12-_15" sourceRef="_12" targetRef="_15" />
     <sequenceFlow id="_15-_17" sourceRef="_15" targetRef="_17" />
     <sequenceFlow id="_17-_19" sourceRef="_17" targetRef="_19" name="editOrder" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(buyVal&amp;productVal&amp;designVal){
-return false;
-}else{
-return true;
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!buyVal){
+	return true;
 }
+if(!designVal){
+	return true;
+}
+if(!productVal){
+	return true;
+}
+return false;
 
 
 </conditionExpression>
@@ -1945,12 +1950,16 @@ return true;
     <sequenceFlow id="_24-_27" sourceRef="_24" targetRef="_27" />
     <sequenceFlow id="_25-_27" sourceRef="_25" targetRef="_27" />
     <sequenceFlow id="_17-_26" sourceRef="_17" targetRef="_26" name="noeditOrder" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(buyVal&amp;productVal&amp;designVal){
-return true;
-}else{
-return false;
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!buyVal){
+	return false;
 }
-
+if(!designVal){
+	return false;
+}
+if(!productVal){
+	return false;
+}
+return true;
 
 
 

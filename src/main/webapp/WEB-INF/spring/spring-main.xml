@@ -28,6 +28,14 @@
 		</property>
 	</bean>
 
+<bean id="javaMailUtil" class="nju.software.util.JavaMailUtil">
+       
+    </bean>
+	
+
+
+
+
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
@@ -67,7 +75,9 @@
 			<value>nju.software.dataobject.Fabric</value>
 			<value>nju.software.dataobject.Money</value>
 			<value>nju.software.dataobject.Package</value>
+			<value>nju.software.dataobject.Produce</value>
 			<value>nju.software.dataobject.Customer</value>
+			<value>nju.software.dataobject.VersionData</value>
 			<value>nju.software.dataobject.AccessoryCost</value></list>
 		</property>
 	</bean>
@@ -152,6 +162,18 @@
 	</bean>
 	<bean id="CustomerDAO"
 		class="nju.software.dao.impl.CustomerDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ProduceDAO"
+		class="nju.software.dao.impl.ProduceDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="VersionDataDAO"
+		class="nju.software.dao.impl.VersionDataDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

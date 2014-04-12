@@ -12,7 +12,7 @@ table {
 table.table td{
 	text-align: center;
 	vertical-align:middle;
-	width:14%;
+	width:9%;
 }
 
 table.table td input,select{
@@ -45,6 +45,8 @@ table.table td a:hover{
 
 table.table tr td.innertable{
 	padding:0px;
+	border-left:0px;
+	border-right:0px;
 }
 
 input,select{

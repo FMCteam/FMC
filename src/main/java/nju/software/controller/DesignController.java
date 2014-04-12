@@ -22,6 +22,8 @@ import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.service.DesignService;
 import nju.software.service.OrderService;
+import nju.software.service.impl.DesignServiceImpl;
+import nju.software.service.impl.JbpmTest;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 
@@ -45,7 +47,8 @@ public class DesignController {
 	private OrderService orderService;
 	@Autowired
 	private DesignService designService;
-	
+	@Autowired
+	private JbpmTest jbpmTest;
 	
 	
 	
@@ -78,7 +81,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/verifyDesignSubmit.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/verifyDesignSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String doVerify(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -90,11 +93,9 @@ public class DesignController {
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
 		String comment = request.getParameter("suggestion");
 
-		designService.verifyDesignSubmit(account, orderId_request, taskId, processId, designVal, comment);
+		designService.verifyDesignSubmit(account, orderId_request, taskId, designVal, comment);
 		
 		return "redirect:/design/verifyDesignList.do";
 	}
@@ -107,22 +108,17 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/verifyDesignDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/verifyDesignDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		
-		System.out.println("design verify ================ show detail");
-		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
 		String s_orderId_request = (String) request.getParameter("id");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("task_id");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		OrderInfo orderModel = designService.getVerifyDesignDetail(orderId_request, taskId);
-		model.addAttribute("orderModel", orderModel);	
+		OrderInfo orderInfo = designService.getVerifyDesignDetail(orderId_request, taskId);
+		model.addAttribute("orderInfo", orderInfo);	
 		return "design/verifyDesignDetail";
 	}
 
@@ -145,6 +141,12 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		
 		List<OrderInfo>list=designService.getComputeDesignCostList();
+		
+		if(list.size()==0){
+			jbpmTest.completeVerify("1", true);
+			list=designService.getComputeDesignCostList();
+		}
+		
 		model.addAttribute("list", list);		
 		return "design/computeDesignCostList";
 	}
@@ -195,7 +197,7 @@ public class DesignController {
 			   Float.parseFloat(design_cost)
 			   );
 		
-		return "redirect:/design/computeDesignCostList.do";
+		return "redirect:/design/getComputeDesignCostList.do";
 	}
 	
 	
@@ -229,7 +231,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/getUploadDesignDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getUploadDesignDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String getUploadDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {

@@ -42,6 +42,7 @@ public class BuyController {
 	
 
 	
+	
 	//========================样衣采购===========================
 	@RequestMapping(value = "/buy/purchaseSampleMaterialList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -59,7 +60,10 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
 		OrderInfo orderInfo=buyService.getPurchaseSampleMaterialDetail(Integer.parseInt(orderId));
+		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
+		model.addAttribute("logistics", logistics);
+		
 		return "/buy/purchaseSampleMaterialDetail";
 	}
 	
@@ -68,7 +72,7 @@ public class BuyController {
 	@Transactional(rollbackFor = Exception.class)
 	public String purchaseSampleMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String taskId=request.getParameter("task_id");
+		String taskId=request.getParameter("taskId");
 		String result=request.getParameter("purchaseerror");
 		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/purchaseSampleMaterialList.do";
@@ -91,7 +95,11 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
 		OrderInfo orderInfo=buyService.getConfirmPurchaseDetail(Integer.parseInt(orderId));
+		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
+		model.addAttribute("logistics", logistics);
 		model.addAttribute("orderInfo", orderInfo);
+		
+		
 		return "/buy/confirmPurchaseDetail";
 	}
 	
@@ -100,11 +108,14 @@ public class BuyController {
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmPurchaseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String taskId=request.getParameter("task_id");
+		String taskId=request.getParameter("taskId");
 		String result=request.getParameter("purchaseerror");
 		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/confirmPurchaseList.do";
 	}
+	
+	
+	
 	
 	
 	//========================生产采购===========================
@@ -124,6 +135,8 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
 		OrderInfo orderInfo=buyService.getPurchaseMaterialDetail(Integer.parseInt(orderId));
+		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
+		model.addAttribute("logistics", logistics);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/buy/purchaseMaterialDetail";
 	}
@@ -133,7 +146,7 @@ public class BuyController {
 	@Transactional(rollbackFor = Exception.class)
 	public String purchaseMaterialDetailSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String taskId=request.getParameter("task_id");
+		String taskId=request.getParameter("taskId");
 		String result=request.getParameter("purchaseerror");
 		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/purchaseMaterialList.do";
@@ -144,8 +157,10 @@ public class BuyController {
 	
 
 
+	
 	/**
 	 * 采购验证跳转链接
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
@@ -153,47 +168,64 @@ public class BuyController {
 	 */
 	@RequestMapping(value = "buy/verifyPurchaseList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String verify(HttpServletRequest request,
+	public String verifyPurchaseList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("buy verify ================ show task");
-		List<OrderInfo> orderList = new ArrayList<OrderInfo>();
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-
-		orderList = buyService.getVerifyPurchaseList();
-		if (orderList.isEmpty()) {
-			System.out.println("no orderList ");
-		}
-		model.addAttribute("order_list", orderList);
+		List<OrderInfo> list=buyService.getVerifyPurchaseList();
+		model.put("list", list);
+		
+		
+//		System.out.println("buy verify ================ show task");
+//		List<OrderInfo> orderList = new ArrayList<OrderInfo>();
+//		Account account = (Account) request.getSession().getAttribute("cur_user");
+//
+//		orderList = buyService.getVerifyPurchaseList();
+//		if (orderList.isEmpty()) {
+//			System.out.println("no orderList ");
+//		}
+//		model.addAttribute("order_list", orderList);
 		
 		return "buy/verifyPurchaseList";
 	}
 	
 	/**
 	 * 采购验证
+	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/verifyPurchaseSubmit.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/verifyPurchaseSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String doVerify(HttpServletRequest request,
+	public String verifyPurchaseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		System.out.println("buy verify ================");
 		
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
-		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("pinId");
-		long processId = Long.parseLong(s_processId);
+		
+		
+//		String s_orderId_request = (String) request.getParameter("orderId");
+		
+		String taskId=request.getParameter("taskId");
+
 		String comment = request.getParameter("suggestion");
+		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
 		
-		buyService.verifyPurchaseSubmit(account, orderId_request, taskId, processId, buyVal, comment);
+		buyService.verifyPurchaseSubmit(Long.parseLong(taskId), buyVal, comment);
 		
+//		System.out.println("buy verify ================");
+//		
+//		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
+//		String s_orderId_request = (String) request.getParameter("orderId");
+//		int orderId_request = Integer.parseInt(s_orderId_request);
+//		String s_taskId = request.getParameter("taskId");
+//		long taskId = Long.parseLong(s_taskId);
+//		String s_processId = request.getParameter("pinId");
+//		long processId = Long.parseLong(s_processId);
+//		String comment = request.getParameter("suggestion");
+//		
+//		buyService.verifyPurchaseSubmit(account, orderId_request, taskId, processId, buyVal, comment);
+//		
 		return "redirect:/buy/verifyPurchaseList.do";
 	}
 	
@@ -205,23 +237,35 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/verifyPurchaseDetail.do", method= RequestMethod.POST)
+	
+
+	@RequestMapping(value = "buy/verifyPurchaseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String verifyDetail(HttpServletRequest request,
+	public String verifyPurchaseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("buy verify ================ show detail");
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
 		
-		OrderInfo orderModel = buyService.getVerifyPurchaseDetail(orderId_request, taskId);	
-		model.addAttribute("orderModel", orderModel);	
+		String orderId=request.getParameter("orderId");
+		OrderInfo orderInfo=buyService.getVerifyPurchaseDetail(Integer.parseInt(orderId));
+		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
+		model.addAttribute("logistics", logistics);
+		model.addAttribute("orderInfo", orderInfo);
+		
+		
+		
+		
+//		System.out.println("buy verify ================ show detail");
+//		Account account = (Account) request.getSession().getAttribute("cur_user");
+////		String actorId = account.getUserRole();
+//		String s_orderId_request = (String) request.getParameter("id");
+//		int orderId_request = Integer.parseInt(s_orderId_request);
+//		String s_taskId = request.getParameter("task_id");
+//		long taskId = Long.parseLong(s_taskId);
+//		String s_processId = request.getParameter("process_id");
+//		long processId = Long.parseLong(s_processId);
+//		
+//		OrderInfo orderModel = buyService.getVerifyPurchaseDetail(orderId_request, taskId);	
+//		model.addAttribute("orderModel", orderModel);	
 		return "buy/verifyPurchaseDetail";
 	}
 
@@ -241,15 +285,15 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/computeDesignCostList.do", method= RequestMethod.GET)
+	@RequestMapping(value = "buy/computePurchaseCostList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String computeDesignCostList(HttpServletRequest request,
+	public String computePurchaseCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		List<OrderInfo>list=buyService.getComputePurchaseCostList();
 		model.addAttribute("list", list);		
 		
-		return "design/computeDesignCostList";
+		return "buy/computePurchaseCostList";
 	}
 	
 	
@@ -267,17 +311,21 @@ public class BuyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "buy/computeDesignCostDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/computePurchaseCostDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String costAccountingDetail(HttpServletRequest request,
+	public String computePurchaseCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		String orderId=request.getParameter("orderId");
 		OrderInfo orderInfo=buyService.getComputePurchaseCostInfo(Integer.parseInt(orderId));
-		model.addAttribute("orderInfo", orderInfo);
-	
+		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
+		model.addAttribute("logistics", logistics);
 		
-		return "design/computeDesignCostDetail";
+		model.addAttribute("orderInfo", orderInfo);
+	model.addAttribute("fabric_list", orderInfo.getFabrics());
+	model.addAttribute("accessory_list", orderInfo.getAccessorys());
+		
+		return "buy/computePurchaseCostDetail";
 	}
 	
 	
@@ -293,9 +341,9 @@ public class BuyController {
 	 */
 	
 	
-	@RequestMapping(value = "buy/computeDesignCostSubmit.do", method= RequestMethod.POST)
+	@RequestMapping(value = "buy/computePurchaseCostSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String doCostAccounting(HttpServletRequest request,
+	public String computePurchaseCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		String orderId = (String) request.getParameter("orderId");
@@ -330,7 +378,7 @@ public class BuyController {
 		
 		
 		
-		return "redirect:/design/computeDesignCostList.do";
+		return "redirect:/buy/computePurchaseCostList.do";
 		
 	}
 	
