@@ -777,7 +777,7 @@ public class MarketController {
 		List<OrderInfo> list = marketService.getConfirmQuoteList(account
 				.getUserId() + "");
 		model.addAttribute("list", list);
-		return "/market/confirmQuoteList";
+		return "market/quoteConfirmList";
 	}
 
 
