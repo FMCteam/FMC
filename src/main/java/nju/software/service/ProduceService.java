@@ -8,6 +8,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
 import nju.software.model.SampleProduceTask;
@@ -32,8 +33,10 @@ public interface ProduceService {
 	
 	public OrderInfo getProduceSampleDetail(Integer orderId) ;
 	
-	public boolean produceSampleSubmit(long taskId,String result);
+	public boolean produceSampleSubmit(long taskId, boolean result, List<Produce> produceList);
 	
+	public List<Produce> getProduceList(String produceColor, String produceXS, String produceS, 
+			String produceM, String produceL, String produceXL, String produceXXL);
 	
 	public List<OrderInfo> getProduceList();
 	
