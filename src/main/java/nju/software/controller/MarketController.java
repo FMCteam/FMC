@@ -286,12 +286,8 @@ public class MarketController {
 		marketService.addOrderSubmit(order, fabrics, accessorys, logistics, produces, versions,
 				request);
 		
-		
-		
 		JavaMailUtil.send();
 		
-		
-
 		return "forward:/market/addOrderList.do";
 	}
 
@@ -369,7 +365,9 @@ public class MarketController {
 		// String s_processId=request.getParameter("pid");
 		int id = Integer.parseInt(orderId);
 		// long processId=Long.parseLong(s_processId);
-		OrderInfo orderInfo = marketService.getModifyQuoteDetail(id);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		OrderInfo orderInfo = marketService.getModifyQuoteDetail(id, account.getUserId());
 		model.addAttribute("quoteModel", orderInfo);
 		return "market/modifyQuoteDetail";
 	}
@@ -415,7 +413,9 @@ public class MarketController {
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
-		OrderInfo oi = marketService.getModifyProductDetail(id, taskId);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		OrderInfo oi = marketService.getModifyProductDetail(id, taskId, account.getUserId());
 		model.addAttribute("orderModel", oi);
 		return "market/modifyProductDetail";
 	}
@@ -466,7 +466,9 @@ public class MarketController {
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
 
-		marketService.mergeQuoteSubmit(inner, outer, id, taskId, processId);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		marketService.mergeQuoteSubmit(account.getUserId(), inner, outer, id, taskId, processId);
 		return "redirect:/market/mergeQuoteList.do";
 	}
 

@@ -259,53 +259,6 @@ public class MarketServiceImpl implements MarketService {
 
 	}
 
-	@Override
-	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(
-			Integer employeeId) {
-		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"SHICHANGZHUANYUAN", "edit_quoteorder");
-		List<QuoteConfirmTaskSummary> taskSummarys = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			if (getVariable("employeeId", task).equals(employeeId)) {
-				Integer orderId = (Integer) getVariable("orderId", task);
-				QuoteConfirmTaskSummary summary = QuoteConfirmTaskSummary
-						.getInstance(orderDAO.findById(orderId),
-								(Quote) quoteDAO.findById(orderId),
-								task.getId());
-				taskSummarys.add(summary);
-			}
-		}
-		return taskSummarys;
-	}
-
-	@Override
-	public void completeQuoteConfirmTaskSummary(long taskId, String result) {
-		// TODO Auto-generated method stub
-		Map<String, Object> data = new HashMap<String, Object>();
-		if (result.equals("1")) {
-			data.put("confirmquote", true);
-			data.put("eidtquote", false);
-			data.put("samplejin", true);
-		}
-		if (result.equals("2")) {
-			data.put("confirmquote", false);
-			data.put("eidtquote", true);
-			data.put("samplejin", true);
-		}
-		if (result.equals("3")) {
-			data.put("confirmquote", false);
-			data.put("eidtquote", false);
-			data.put("samplejin", true);
-		}
-		try {
-			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public Object getVariable(String name, TaskSummary task) {
 		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
 		long processId = task.getProcessInstanceId();
@@ -397,38 +350,19 @@ public class MarketServiceImpl implements MarketService {
 		return orderInfo;
 	}
 
-	@Override
-	public void completeSignContract(Integer orderId, double discount,
-			long taskId) {
-		// TODO Auto-generated method stub
-		Order order = orderDAO.findById(orderId);
-		order.setDiscount(discount);
-		orderDAO.attachDirty(order);
-
-		Map<String, Object> data = new HashMap<>();
-		try {
-			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
+	
 	@Override
 	public List<OrderInfo> getModifyProductList(Integer userId) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_STAFF, TASK_MODIFY_PRODUCE_ORDER);
+				userId+"", TASK_MODIFY_PRODUCE_ORDER);
 		List<OrderInfo> taskSummarys = new ArrayList<>();
 		for (TaskSummary task : tasks) {
-			if (getVariable("employeeId", task).equals(userId)) {
-				Integer orderId = (Integer) getVariable("orderId", task);
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setTask(task);
-				taskSummarys.add(oi);
-			}
+			Integer orderId = (Integer) getVariable("orderId", task);
+			OrderInfo oi = new OrderInfo();
+			oi.setOrder(orderDAO.findById(orderId));
+			oi.setTask(task);
+			taskSummarys.add(oi);
 		}
 		return taskSummarys;
 	}
@@ -438,11 +372,9 @@ public class MarketServiceImpl implements MarketService {
 			long processId, boolean editworksheetok, List<Product> productList) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_STAFF, TASK_MODIFY_PRODUCE_ORDER);
+				userId+"", TASK_MODIFY_PRODUCE_ORDER);
 		for (TaskSummary task : tasks) {
 			if (task.getId() == taskId
-					&& getVariable("employeeId", task).equals(userId)
-					&& task.getProcessInstanceId() == processId
 					&& getVariable("orderId", task).equals(id)) {
 				if (editworksheetok) {
 					for (int i = 0; i < productList.size(); i++) {
@@ -452,7 +384,7 @@ public class MarketServiceImpl implements MarketService {
 				try {
 					Map<String, Object> data = new HashMap<>();
 					data.put("editworksheetok", editworksheetok);
-					jbpmAPIUtil.completeTask(taskId, data, ACTOR_MARKET_STAFF);
+					jbpmAPIUtil.completeTask(taskId, data, userId+"");
 					return true;
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -513,7 +445,7 @@ public class MarketServiceImpl implements MarketService {
 			data.put("samplejin", true);
 		}
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_MARKET_STAFF);
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -526,26 +458,24 @@ public class MarketServiceImpl implements MarketService {
 	public List<OrderInfo> getModifyQuoteList(Integer userId) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_STAFF, TASK_MODIFY_QUOTE);
+				userId+"", TASK_MODIFY_QUOTE);
 		List<OrderInfo> models = new ArrayList<>();
 		for (TaskSummary task : tasks) {
-			if (getVariable("employeeId", task).equals(userId)) {
-				Integer orderId = (Integer) getVariable("orderId", task);
-				OrderInfo model = new OrderInfo();
-				model.setOrder(orderDAO.findById(orderId));
-				model.setQuote(quoteDAO.findById(orderId));
-				model.setTask(task);
-				models.add(model);
-			}
+			Integer orderId = (Integer) getVariable("orderId", task);
+			OrderInfo model = new OrderInfo();
+			model.setOrder(orderDAO.findById(orderId));
+			model.setQuote(quoteDAO.findById(orderId));
+			model.setTask(task);
+			models.add(model);
 		}
 		return models;
 	}
 
 	@Override
-	public OrderInfo getModifyQuoteDetail(int orderId) {
+	public OrderInfo getModifyQuoteDetail(int orderId, int accountId) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_STAFF, TASK_MODIFY_QUOTE);
+				accountId+"", TASK_MODIFY_QUOTE);
 		if (list.isEmpty()) {
 			System.out.println("no task list");
 		}
@@ -568,10 +498,10 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public OrderInfo getModifyProductDetail(int id, long taskId) {
+	public OrderInfo getModifyProductDetail(int id, long taskId, Integer accountId) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_STAFF, TASK_MODIFY_PRODUCE_ORDER);
+				accountId+"", TASK_MODIFY_PRODUCE_ORDER);
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) getVariable("orderId", task);
 			if (id == orderId && taskId == task.getId()) {
@@ -617,24 +547,22 @@ public class MarketServiceImpl implements MarketService {
 	public List<OrderInfo> getMergeQuoteList(Integer accountId) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_STAFF, TASK_MERGE_QUOTE);
+				accountId+"", TASK_MERGE_QUOTE);
 		List<OrderInfo> taskSummarys = new ArrayList<>();
 		for (TaskSummary task : tasks) {
-			if (getVariable("employeeId", task).equals(accountId)) {
-				Integer orderId = (Integer) getVariable("orderId", task);
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setQuote(quoteDAO.findById(orderId));
-				oi.setTask(task);
-				taskSummarys.add(oi);
-			}
+			Integer orderId = (Integer) getVariable("orderId", task);
+			OrderInfo oi = new OrderInfo();
+			oi.setOrder(orderDAO.findById(orderId));
+			oi.setQuote(quoteDAO.findById(orderId));
+			oi.setTask(task);
+			taskSummarys.add(oi);
 		}
 		return taskSummarys;
 	}
 
 
 	@Override
-	public void mergeQuoteSubmit(float inner, float outer, int id, long taskId,
+	public void mergeQuoteSubmit(int accountId, float inner, float outer, int id, long taskId,
 			long processId) {
 		// TODO Auto-generated method stub
 		// 需要获取task中的数据
@@ -648,7 +576,7 @@ public class MarketServiceImpl implements MarketService {
 			q.setOuterPrice(outer);
 			quoteDAO.merge(q);
 			try {
-				jbpmAPIUtil.completeTask(taskId, null, ACTOR_MARKET_STAFF);
+				jbpmAPIUtil.completeTask(taskId, null, accountId+"");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -715,5 +643,71 @@ public class MarketServiceImpl implements MarketService {
 			return false;
 		}
 	}
+	
+	/*@Override
+	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(
+			Integer employeeId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				"SHICHANGZHUANYUAN", "edit_quoteorder");
+		List<QuoteConfirmTaskSummary> taskSummarys = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			if (getVariable("employeeId", task).equals(employeeId)) {
+				Integer orderId = (Integer) getVariable("orderId", task);
+				QuoteConfirmTaskSummary summary = QuoteConfirmTaskSummary
+						.getInstance(orderDAO.findById(orderId),
+								(Quote) quoteDAO.findById(orderId),
+								task.getId());
+				taskSummarys.add(summary);
+			}
+		}
+		return taskSummarys;
+	}*/
+
+/*	@Override
+	public void completeQuoteConfirmTaskSummary(long taskId, String result) {
+		// TODO Auto-generated method stub
+		Map<String, Object> data = new HashMap<String, Object>();
+		if (result.equals("1")) {
+			data.put("confirmquote", true);
+			data.put("eidtquote", false);
+			data.put("samplejin", true);
+		}
+		if (result.equals("2")) {
+			data.put("confirmquote", false);
+			data.put("eidtquote", true);
+			data.put("samplejin", true);
+		}
+		if (result.equals("3")) {
+			data.put("confirmquote", false);
+			data.put("eidtquote", false);
+			data.put("samplejin", true);
+		}
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
+
+	/*@Override
+	public void completeSignContract(Integer orderId, double discount,
+			long taskId) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(orderId);
+		order.setDiscount(discount);
+		orderDAO.attachDirty(order);
+
+		Map<String, Object> data = new HashMap<>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, "SHICHANGZHUANYUAN");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}*/
+
 
 }
