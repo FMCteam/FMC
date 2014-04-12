@@ -77,8 +77,8 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String sendSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String id = request.getParameter("orderId");
-		int orderId = Integer.parseInt(id);
+		String orderId_string = request.getParameter("orderId");
+		int orderId = Integer.parseInt(orderId_string);
 		OrderInfo orderInfo = logisticsService.getSendSampleDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/sendSampleDetail";
