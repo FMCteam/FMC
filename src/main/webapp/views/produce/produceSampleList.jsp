@@ -7,42 +7,40 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<section>
-				<table id="dyntable" class="table responsive">
-					<caption>待生产样衣列表</caption>
-					<tr>
-						<th class="head0">客户姓名</th>
-						<th class="head1">客户电话</th>
-						<th class="head1">公司名称</th>
-						<th class="head0">公司电话</th>
-						<th class="head0">内部报价</th>
-						<th class="head0">外部报价</th>
-						<th class="head1">操作</th>
-					</tr>
-					<tr>
-						<td>(例子)李二宇</td>
-						<td>15996385325</td>
-						<td>南京大学软件学院</td>
-						<td>025-67678989</td>
-						<td>￥200.00</td>
-						<td>￥250.00</td>
-						<td><a href="#">样衣详情</a></td>
-					</tr>
-					<c:forEach var="task" items="${tasks}">
-						<tr class="gradeA">
-							<td>${task.customerName}</td>
-							<td>${task.customerPhone}</td>
-							<td>${task.companyName}</td>
-							<td>${task.companyPhone}</td>
-							<td>${task.innerPrice}</td>
-							<td>${task.outerPrice}</td>
-							<td><a
-								href="${ctx}/produce/sampleProduce.do?taskId=${task.taskId}&orderId=${task.orderId}">样衣详情</a>
-							</td>
-						</tr>
-					</c:forEach>
-				</table>
-			</section>
+			<section class="list">
+            <table class="list">
+                <caption>
+					<span class="text-vertical">生产样衣列表:<span class="number">${fn:length(list)}</span>件任务
+					</span><input type="text" class="search-query float-right"
+						placeholder="输入检索条件">
+				</caption>
+					<thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>业务员</th>
+                            <th>客户姓名</th>
+                            <th>客户公司</th>
+                            <th>款式</th>
+                            <th>件数</th>
+                            <th>交货时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+	                    <c:forEach var="orderModel" items="${list}" >
+	                        <tr class="gradeA">
+	                            <td>${orderModel.order.orderId }</td>
+								<td>${orderModel.order.employeeId }</td>
+								<td>${orderModel.order.customerName }</td>
+								<td>${orderModel.order.customerCompany }</td>
+								<td>${orderModel.order.styleName }</td>
+								<td>${orderModel.order.askAmount }</td>
+								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+								<td><a href="${ctx }/produce/produceSampleDetail.do?orderId=${orderModel.order.orderId}&task_id=${orderModel.task.id}">详情
+									</a></td>								
+	                        </tr>
+                        </c:forEach>
+                </table>
+                </section>
 
 		</div>
 		<!--row-fluid-->
@@ -55,5 +53,7 @@
 <%@include file="/common/js_file.jsp"%>
 <!-- 这里引入你需要的js文件 -->
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="../views/market/quoteConfirmList.css">
 <%@include file="/common/footer.jsp"%>
