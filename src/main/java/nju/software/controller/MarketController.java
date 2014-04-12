@@ -341,17 +341,16 @@ public class MarketController {
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
 
-		try {
-			float inner = Float.parseFloat(innerPrice);
-			float outer = Float.parseFloat(outerPrice);
-			int id = Integer.parseInt(orderId);
-			long taskId = Long.parseLong(s_taskId);
-			long processId = Long.parseLong(s_processId);
-			boolean success = quoteService.updateQuote(inner, outer, id,
-					taskId, processId, "SHICHANGZHUANYUAN");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		float inner = Float.parseFloat(innerPrice);
+		float outer = Float.parseFloat(outerPrice);
+		int id = Integer.parseInt(orderId);
+		long taskId = Long.parseLong(s_taskId);
+		long processId = Long.parseLong(s_processId);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		boolean success = quoteService.updateQuote(inner, outer, id,
+				taskId, processId, account.getUserId()+"");
+
 		return "redirect:/market/quoteConfirmList.do";
 	}
 
@@ -828,7 +827,7 @@ public class MarketController {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
 		// String actorId = account.getUserRole();
-		String actorId = MarketServiceImpl.ACTOR_MARKET_STAFF;
+		String actorId = account.getUserId()+"";
 		System.out.println("actorId: " + actorId);
 		String taskName = MarketServiceImpl.TASK_CONFIRM_PRODUCE_ORDER;
 		orderList = orderService
