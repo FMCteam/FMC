@@ -5,13 +5,14 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<h4 class="widgettitle" style="float:right;">确认样衣制作金</h4>
+
 			<ul class="nav nav-tabs" id="tab">
 				<li class="active"><a href="#basic" data-toggle="tab">基本信息</a></li>
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
+				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 			</ul>
 
 			<div class="tab-content">
@@ -30,6 +31,9 @@
 				<div class="tab-pane" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
+				<div class="tab-pane" id="quote">
+					<%@include file="/views/common/quote.jsp"%>
+				</div>
 			</div>
 		</div>
 		<div class="action">
@@ -37,7 +41,7 @@
 				href="${ctx}/logistics/receiveSampleSubmit.do?result=1&taskId=${orderInfo.task.id}"><i
 				class="icon-ok icon-white"></i>已收到样衣</a> <a
 				class="btn btn-primary btn-rounded"
-				href="${ctx}/logistics/receiveSampleSubmit.do?result=2&taskId=${orderInfo.task.id}"><i
+				href="${ctx}/logistics/receiveSampleSubmit.do?result=0&taskId=${orderInfo.task.id}"><i
 				class="icon-remove icon-white"></i>未收到样衣</a>
 		</div>
 	</div>
@@ -58,7 +62,6 @@
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
-<link rel="stylesheet" href="${ctx}/css/order/add_order.css">
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
