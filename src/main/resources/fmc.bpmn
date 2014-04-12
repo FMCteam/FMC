@@ -885,6 +885,12 @@
         <flowNodeRef>_80</flowNodeRef>
         <flowNodeRef>_110</flowNodeRef>
       </lane>
+      <lane name="logisticsManager" >
+        <flowNodeRef>_7</flowNodeRef>
+        <flowNodeRef>_59</flowNodeRef>
+        <flowNodeRef>_107</flowNodeRef>
+        <flowNodeRef>_115</flowNodeRef>
+      </lane>
       <lane name="marketStaff" >
         <flowNodeRef>_19</flowNodeRef>
         <flowNodeRef>_28</flowNodeRef>
@@ -893,12 +899,6 @@
         <flowNodeRef>_62</flowNodeRef>
         <flowNodeRef>_74</flowNodeRef>
         <flowNodeRef>_75</flowNodeRef>
-      </lane>
-      <lane name="logisticsManager" >
-        <flowNodeRef>_7</flowNodeRef>
-        <flowNodeRef>_59</flowNodeRef>
-        <flowNodeRef>_107</flowNodeRef>
-        <flowNodeRef>_115</flowNodeRef>
       </lane>
       <lane name="produceManager" >
         <flowNodeRef>_12</flowNodeRef>
@@ -909,12 +909,8 @@
       <lane name="marketManager" >
         <flowNodeRef>_29</flowNodeRef>
       </lane>
-      <lane name="designManager" >
-        <flowNodeRef>_11</flowNodeRef>
-        <flowNodeRef>_24</flowNodeRef>
-        <flowNodeRef>_48</flowNodeRef>
-        <flowNodeRef>_70</flowNodeRef>
-        <flowNodeRef>_88</flowNodeRef>
+      <lane name="qualityManager" >
+        <flowNodeRef>_103</flowNodeRef>
       </lane>
       <lane name="purchaseManager" >
         <flowNodeRef>_10</flowNodeRef>
@@ -922,8 +918,12 @@
         <flowNodeRef>_47</flowNodeRef>
         <flowNodeRef>_69</flowNodeRef>
       </lane>
-      <lane name="qualityManager" >
-        <flowNodeRef>_103</flowNodeRef>
+      <lane name="designManager" >
+        <flowNodeRef>_11</flowNodeRef>
+        <flowNodeRef>_24</flowNodeRef>
+        <flowNodeRef>_48</flowNodeRef>
+        <flowNodeRef>_70</flowNodeRef>
+        <flowNodeRef>_88</flowNodeRef>
       </lane>
     </laneSet>
     <!-- nodes -->
@@ -1478,7 +1478,7 @@
         <terminateEventDefinition />
     </endEvent>
     <inclusiveGateway id="_56" name="purchaseerror" gatewayDirection="Diverging" />
-    <userTask id="_62" name="确认生产加工单" >
+    <userTask id="_62" name="确认样衣加工单" >
       <ioSpecification>
         <dataInput id="_62_TaskNameInput" name="TaskName" />
         <dataOutput id="_62_comfirmworksheetOutput" name="comfirmworksheet" />
@@ -1664,7 +1664,7 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_84" name="epositok" gatewayDirection="Diverging" />
-    <userTask id="_87" name="生产原料采购" >
+    <userTask id="_87" name="采购部确认" >
       <ioSpecification>
         <dataInput id="_87_TaskNameInput" name="TaskName" />
         <dataOutput id="_87_procurementerrorOutput" name="procurementerror" />
@@ -1925,12 +1925,16 @@
     <sequenceFlow id="_12-_15" sourceRef="_12" targetRef="_15" />
     <sequenceFlow id="_15-_17" sourceRef="_15" targetRef="_17" />
     <sequenceFlow id="_17-_19" sourceRef="_17" targetRef="_19" name="editOrder" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(buyVal&amp;productVal&amp;designVal){
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(buyVal){
 return false;
-}else{
-return true;
 }
-
+if(productVal){
+return false;
+}
+if(designVal){
+return false;
+}
+return true;
 
 </conditionExpression>
     </sequenceFlow>
@@ -1945,11 +1949,16 @@ return true;
     <sequenceFlow id="_24-_27" sourceRef="_24" targetRef="_27" />
     <sequenceFlow id="_25-_27" sourceRef="_25" targetRef="_27" />
     <sequenceFlow id="_17-_26" sourceRef="_17" targetRef="_26" name="noeditOrder" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(buyVal&amp;productVal&amp;designVal){
-return true;
-}else{
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!buyVal){
 return false;
 }
+if(!productVal){
+return false;
+}
+if(!designVal){
+return false;
+}
+return true;
 
 
 

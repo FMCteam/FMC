@@ -529,7 +529,11 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<OrderInfo> orderModelList = marketService.getModifyOrderList(account.getAccountId());
+		List<OrderInfo> orderModelList = marketService.getModifyOrderList(account.getUserId());
+		if(orderModelList.size()==0){
+			jbpmTest.completeVerify(account.getUserId()+"", false);
+			orderModelList = marketService.getModifyOrderList(account.getUserId());
+		}
 		model.put("order_list", orderModelList);
 		return "market/modifyOrderList";
 	}
