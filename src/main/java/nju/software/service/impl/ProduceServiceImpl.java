@@ -19,6 +19,7 @@ import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.PackageDAO;
 import nju.software.dao.impl.PackageDetailDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
@@ -61,6 +62,8 @@ public class ProduceServiceImpl implements ProduceService {
 	private QuoteDAO quoteDAO;
 	@Autowired
 	private ProductDAO productDAO;
+	@Autowired
+	private ProduceDAO produceDAO;
 
 	@Autowired
 	private PackageDAO packageDAO;
@@ -197,6 +200,7 @@ public class ProduceServiceImpl implements ProduceService {
 			OrderInfo orderInfo = new OrderInfo();
 			orderInfo.setOrder(orderDAO.findById(orderId));
 			orderInfo.setTask(task);
+			orderInfo.setTaskId(task.getId());
 			list.add(orderInfo);
 		}
 		return list;
@@ -211,7 +215,10 @@ public class ProduceServiceImpl implements ProduceService {
 		orderInfo.setOrder(orderDAO.findById(orderId));
 		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
 		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setLogistics(logisticsDAO.findById(orderId));
+		orderInfo.setProduces(produceDAO.findByOrderId(orderId));
 		orderInfo.setTask(task);
+		orderInfo.setTaskId(task.getId());
 		return orderInfo;
 	}
 

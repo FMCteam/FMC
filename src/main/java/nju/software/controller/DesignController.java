@@ -81,7 +81,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/verifyDesignSubmit.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/verifyDesignSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String doVerify(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -108,7 +108,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/verifyDesignDetail.do", method= RequestMethod.GET)
+	@RequestMapping(value = "design/verifyDesignDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -231,7 +231,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/getUploadDesignDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getUploadDesignDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String getUploadDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
