@@ -26,8 +26,7 @@
 						<td>025-67678989</td>
 						<td>￥200.00</td>
 						<td>￥250.00</td>
-						<td><a href="#">确认报价</a> <a href="#"> 修改报价</a> <a href="#">
-								放弃订单</a></td>
+						<td><a href="#">修改报价</a></td>
 					</tr>
 					<c:forEach var="task" items="${tasks}">
 						<tr class="gradeA">

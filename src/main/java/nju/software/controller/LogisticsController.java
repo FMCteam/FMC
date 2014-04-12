@@ -121,7 +121,7 @@ public class LogisticsController {
 	}
 
 	
-	@RequestMapping(value = "/logistics/warehouseSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/logistics/warehouseSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String warehouseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -158,7 +158,7 @@ public class LogisticsController {
 
 
 	// ===========================产品发货=================================
-	@RequestMapping(value = "/logistics/sendClothesList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/logistics/sendClothesList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sendClothesList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -187,7 +187,7 @@ public class LogisticsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "logistics/checkSendClothes.do", method = RequestMethod.GET)
+	@RequestMapping(value = "logistics/checkSendClothes.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String checkSendClothes(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -202,7 +202,7 @@ public class LogisticsController {
 	}
 
 	
-	@RequestMapping(value = "/logistics/sendClothesDetail.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/logistics/sendClothesDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sendClothesDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -216,7 +216,7 @@ public class LogisticsController {
 	}
 
 	
-	@RequestMapping(value = "/logistics/sendClothesSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/logistics/sendClothesSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sendClothesSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
