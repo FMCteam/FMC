@@ -643,6 +643,25 @@ public class MarketServiceImpl implements MarketService {
 			return false;
 		}
 	}
+
+	@Override
+	public OrderInfo getMergeQuoteDetail(Integer userId, int id, long task_id) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				userId+"", TASK_MERGE_QUOTE);
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) getVariable("orderId", task);
+			if (id == orderId && task_id == task.getId()) {
+				OrderInfo oi = new OrderInfo();
+				oi.setQuote(quoteDAO.findById(orderId));
+				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
+	}
 	
 	/*@Override
 	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(

@@ -45,8 +45,6 @@
 				<tbody>
 				
 					<c:forEach var="quoteModel" items="${quote_list}">
-						<form action="${ctx}/market/mergeQuoteSubmit.do" method="post">
-						
 						<tr class="gradeA">
 							<td><input name="order_id" value=${quoteModel.quote.orderId } readonly ></td>
 							<!-- 
@@ -62,18 +60,8 @@
 							 -->
 							<td><input name="inner_price" value=${quoteModel.quote.innerPrice }></td>
 							<td><input name="outer_price" value=${quoteModel.quote.outerPrice }></td>
-							<td style="display:none">
-							<input name="taskId" value=${quoteModel.task.id }>
-							</td>
-							<td style="display:none">
-							<input name="processId" value=${quoteModel.task.processInstanceId }>
-							</td>
-						<td> <p class="stdformbutton">
-                        <button class="btn btn-primary">更新</button>
-                         </p></td>
+						<td> <a href="${ctx}/market/mergeQuoteDetail.do?orderId=${quoteModel.quote.orderId }&taskId=${quoteModel.task.id }">合并</a></td>
 						</tr>
-					
-						</form>
 					</c:forEach>
 				</tbody>
 			</table></section>
