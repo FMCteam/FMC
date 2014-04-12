@@ -12,6 +12,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.model.QuoteConfirmTaskSummary;
@@ -246,9 +247,22 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String result = request.getParameter("result");
+		
+		boolean result = Boolean.parseBoolean(request.getParameter("result"));
 		String taskId = request.getParameter("taskId");
-		produceService.produceSampleSubmit(Long.parseLong(taskId), result);
+		List<Produce> produceList = null;
+		if (!result) {
+			String produceColor = request.getParameter("produce_color");
+			String produceXS = request.getParameter("produce_xs");
+			String produceS = request.getParameter("produce_s");
+			String produceM = request.getParameter("produce_m");
+			String produceL = request.getParameter("produce_l");
+			String produceXL = request.getParameter("produce_xl");
+			String produceXXL = request.getParameter("produce_xxl");
+			produceList = produceService.getProduceList(produceColor, 
+					produceXS, produceS, produceM, produceL, produceXL, produceXXL);
+		}
+		produceService.produceSampleSubmit(Long.parseLong(taskId), result, produceList);
 		return "forward:/produce/produceSampleList.do";
 	}
 	

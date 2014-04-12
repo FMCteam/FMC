@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import nju.software.controller.LogisticsController.ComposeOrderAndLog;
+
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.AccountDAO;
 import nju.software.dao.impl.CustomerDAO;
@@ -28,8 +29,7 @@ import nju.software.util.JbpmAPIUtil;
 
 @Service("logisticsServiceImpl")
 public class LogisticsServiceImpl implements LogisticsService {
-		
-	
+
 	// ===========================收取样衣=================================
 	@Override
 	public List<OrderInfo> getReceiveSampleList() {
@@ -48,8 +48,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		}
 		return list;
 	}
-	
-	
+
 	@Override
 	public OrderInfo getReceiveSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
@@ -57,7 +56,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 				TASK_RECEIVE_SAMPLE, orderId);
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setOrder(orderDAO.findById(orderId));
-		orderInfo.setEmployee(employeeDAO.findById(orderInfo.getOrder().getEmployeeId()));
+		orderInfo.setEmployee(employeeDAO.findById(orderInfo.getOrder()
+				.getEmployeeId()));
 		orderInfo.setLogistics(logisticsDAO.findById(orderId));
 		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
@@ -65,9 +65,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return orderInfo;
 	}
 
-	
 	@Override
-	public boolean receiveSampleSubmit(long taskId,String result) {
+	public boolean receiveSampleSubmit(long taskId, String result) {
 		// TODO Auto-generated method stub
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
@@ -78,56 +77,46 @@ public class LogisticsServiceImpl implements LogisticsService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
-		}	
+		}
 	}
 
-	
 	// ===========================样衣发货=================================
 	@Override
-	public List<OrderInfo> getSendSampleList(int s_page, int s_number_per_page) {
+	public List<OrderInfo> getSendSampleList() {
 		// TODO Auto-generated method stub
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				ACTOR_LOGISTICS_MANAGER, TASK_SEND_SAMPLE);
-		List<OrderInfo> logList = new ArrayList<OrderInfo>();
-		for (TaskSummary task : list) {
-				Integer orderId = (Integer)jbpmAPIUtil.getVariable(task,"orderId"); 
-				Order o = orderDAO.findById(orderId);
-				Logistics l = logisticsDAO.findById(orderId);
-				OrderInfo log = new OrderInfo();
-				log.setOrder(o);
-				log.setLogistics(l);
-				log.setTask(task);
-				logList.add(log);
+		List<OrderInfo> list = new ArrayList<OrderInfo>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setOrder(orderDAO.findById(orderId));
+			orderInfo.setLogistics(logisticsDAO.findById(orderId));
+			orderInfo.setTask(task);
+			list.add(orderInfo);
 		}
-		return logList;
+		return list;
 	}
-	
-	
+
 	@Override
-	public OrderInfo getSendSampleDetail(int id, long tid) {
+	public OrderInfo getSendSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_LOGISTICS_MANAGER, TASK_SEND_SAMPLE);
-		for (TaskSummary task : list) {
-			Integer orderId = (Integer)jbpmAPIUtil.getVariable(task,"orderId"); 
-				Order o = orderDAO.findById(orderId);
-				Logistics l = logisticsDAO.findById(orderId);
-				Employee e = employeeDAO.findById(o.getEmployeeId());
-				Customer c = customerDAO.findById(o.getCustomerId());
-				OrderInfo log = new OrderInfo();
-				log.setOrder(o);
-				log.setLogistics(l);
-				log.setEmployee(e);
-				log.setCustomer(c);
-				log.setTask(task);
-				return log;
-		}
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
+				TASK_SEND_SAMPLE, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setEmployee(employeeDAO.findById(orderInfo.getOrder()
+				.getEmployeeId()));
+		orderInfo.setLogistics(logisticsDAO.findById(orderId));
+		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
+		orderInfo.setTask(task);
+		return orderInfo;
 	}
-	
-	
+
 	@Override
-	public boolean sendSampleSubmit(long taskId, long processId){
+	public boolean sendSampleSubmit(long taskId, long processId) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
@@ -137,7 +126,6 @@ public class LogisticsServiceImpl implements LogisticsService {
 		}
 		return true;
 	}
-	
 
 	// ===========================产品入库=================================
 	@Override
@@ -166,8 +154,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 		orderInfo.setOrder(orderDAO.findById(orderId));
 		orderInfo.setProducts(productDAO.findByOrderId(orderId));
 		orderInfo.setPackages(packageDAO.findByOrderId(orderId));
-		//orderInfo.setpa
-		//orderInfo.setTask(task);
+		// orderInfo.setpa
+		// orderInfo.setTask(task);
 		return orderInfo;
 	}
 
@@ -177,16 +165,16 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return false;
 	}
 
-	
 	// ===========================产品发货=================================
 	@Override
 	public List<OrderInfo> getSendClothesList() {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES );
+				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES);
 		List<OrderInfo> models = new ArrayList<>();
 		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
 			OrderInfo model = new OrderInfo();
 			model.setOrder(orderDAO.findById(orderId));
 			model.setTask(task);
@@ -216,9 +204,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-
 
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
@@ -238,12 +224,13 @@ public class LogisticsServiceImpl implements LogisticsService {
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private FabricDAO fabricDAO;
-	
+
 	public final static String ACTOR_LOGISTICS_MANAGER = "logisticsManager";
 	public final static String TASK_RECEIVE_SAMPLE = "receiveSample";
 	public final static String TASK_SEND_SAMPLE = "sendSample";
 	public final static String TASK_WAREHOUSE = "warehouse";
 	public final static String TASK_SEND_CLOTHES = "sendClothes";
+
 	@Override
 	public List<OrderInfo> getSendClothesUncheckedList() {
 		// TODO Auto-generated method stub

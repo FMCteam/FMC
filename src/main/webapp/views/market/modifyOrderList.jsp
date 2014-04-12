@@ -44,7 +44,7 @@
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
 								<td><form action="${ctx}/market/modifyOrderDetail.do" method="post" >
 									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
-										<input type="hidden" name="task_id" value="${orderModel.task。id }" />
+										<input type="hidden" name="task_id" value="${orderModel.task.id }" />
 										<button class="btn btn-primary btn-rounded"><i class="icon-white"></i>修改</button></form>
 								</td>
 	                        </tr>

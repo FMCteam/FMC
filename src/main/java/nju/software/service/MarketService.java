@@ -89,9 +89,9 @@ public interface MarketService {
 
 	public List<OrderInfo> getModifyOrderList(Integer accountId);
 
-	public OrderInfo getModifyOrderDetail(int id, long task_id);
+	public OrderInfo getModifyOrderDetail(int accountId, int id, long task_id);
 
 	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
-			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<VersionData> versions, boolean editok, long taskId);
+			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<VersionData> versions, boolean editok, long taskId, Integer accountId);
 	
 }

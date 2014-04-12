@@ -8,20 +8,27 @@
 			<div class="widget">
 				<h4 class="widgettitle">确认样衣制作金</h4>
 				<div class="widgetcontent">
-					<form>
+					<form action="${ctx}/finance/confirmSampleMoneySubmit.do"
+						method="post" onSubmit="return verify()">
+						<input type="hidden" name="money_state" value="已收到" /> <input
+							type="hidden" name="money_type" value="样衣制作金" /> <input
+							type="hidden" name="orderId" value="${orderInfo.order.orderId}" />
+						<input type="hidden" name="taskId" value="${orderInfo.task.id}" /><input
+							type="hidden" name="result" value="1" />
+
 						<table class="table table-bordered">
 							<tr>
 								<td rowspan="2">样衣信息</td>
-								<td>样衣件数</td>
-								<td>样衣单价</td>
-								<td>应收金额</td>
 								<td>金额类型</td>
+								<td>样衣件数</td>
+								<td>制版单价</td>
+								<td>应收金额</td>
 							</tr>
 							<tr>
+								<td>样衣制作金</td>
 								<td>10</td>
 								<td>10</td>
 								<td>100</td>
-								<td>样衣制作金</td>
 							</tr>
 							<tr>
 								<td rowspan="3">汇款信息</td>
@@ -43,8 +50,9 @@
 							</tr>
 							<tr>
 								<td>操作</td>
-								<td colspan="4"><input type="submit" value="确认收款" /> <input
-									type="submit" value="款项未收到" /></td>
+								<td colspan="4"><input type="submit" value="确认收款" /> <a
+									href="${ctx}/finance/confirmSampleMoneySubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
+									onclick="return actionConfirm()">未收到汇款</a></td>
 							</tr>
 						</table>
 					</form>
@@ -68,12 +76,27 @@
 	<!--maincontentinner-->
 </div>
 <!--maincontent-->
+<script>
+	function actionConfirm() {
+		return confirm("确认操作？");
+	}
 
-
-
+	function verify() {
+		var money_name = $("input[name='money_name']").val();
+		var money_number = $("input[name='money_number']").val();
+		var money_bank = $("input[name='money_bank']").val();
+		var money_amount = $("input[name='money_amount']").val();
+		var money_remark = $("input[name='money_remark']").val();
+		if (money_name == "" || money_number == "" || money_bank == ""
+				|| money_amount == "" || money_remark == "") {
+			alert("数据不能为空");
+			return false;
+		}
+		return actionConfirm();
+	}
+</script>
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
-<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>

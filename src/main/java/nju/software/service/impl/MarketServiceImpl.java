@@ -173,6 +173,93 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
+	public List<OrderInfo> getModifyOrderList(Integer accountId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				accountId+"", TASK_MODIFY_ORDER);
+		List<OrderInfo> taskSummarys = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+				Integer orderId = (Integer) getVariable("orderId", task);
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setTask(task);
+				taskSummarys.add(oi);
+		}
+		return taskSummarys;
+	}
+
+	@Override
+	public OrderInfo getModifyOrderDetail(int accountId, int id, long task_id) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				accountId+"", TASK_MODIFY_ORDER);
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) getVariable("orderId", task);
+			if (id == orderId && task_id == task.getId()) {
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setEmployee(employeeDAO.findById(orderId));
+				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setProduces(produceDAO.findByOrderId(orderId));
+				oi.setVersions(versionDataDAO.findByOrderId(orderId));
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, 
+			List<VersionData> versions, boolean editok, long taskId, Integer accountId) {
+		// TODO Auto-generated method stub
+		// 添加订单信息
+		orderDAO.save(order);
+		Integer orderId = order.getOrderId();
+		orderDAO.attachDirty(order);
+		// 添加面料信息
+		fabricDAO.deleteByProperty("orderId", orderId);
+		for (Fabric fabric : fabrics) {
+			fabric.setOrderId(orderId);
+			fabricDAO.save(fabric);
+		}
+		// 添加辅料信息
+		accessoryDAO.deleteByProperty("orderId", orderId);
+		for (Accessory accessory : accessorys) {
+			accessory.setOrderId(orderId);
+			accessoryDAO.save(accessory);
+		}
+		//添加加工单信息
+		produceDAO.deleteByProperty("oid", orderId);
+		for (Produce produce : produces) {
+			produce.setOid(orderId);
+			produceDAO.save(produce);
+		}
+		//添加版型数据
+		versionDataDAO.deleteByProperty("orderId", orderId);
+		for (VersionData version : versions) {
+			version.setOrderId(orderId);
+			versionDataDAO.save(version);
+		}
+		// 添加物流信息
+		logistics.setOrderId(orderId);
+		logisticsDAO.save(logistics);
+
+		// 启动流程
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("editok", editok);
+		try {
+			jbpmAPIUtil.completeTask(taskId, params, accountId+"");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
 	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(
 			Integer employeeId) {
 		// TODO Auto-generated method stub
@@ -627,94 +714,6 @@ public class MarketServiceImpl implements MarketService {
 			e.printStackTrace();
 			return false;
 		}
-	}
-
-	@Override
-	public List<OrderInfo> getModifyOrderList(Integer accountId) {
-		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_STAFF, TASK_MODIFY_ORDER);
-		List<OrderInfo> taskSummarys = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			if (getVariable("employeeId", task).equals(accountId)) {
-				Integer orderId = (Integer) getVariable("orderId", task);
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setTask(task);
-				taskSummarys.add(oi);
-			}
-		}
-		return taskSummarys;
-	}
-
-	@Override
-	public OrderInfo getModifyOrderDetail(int id, long task_id) {
-		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_STAFF, TASK_MODIFY_ORDER);
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			if (id == orderId && task_id == task.getId()) {
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setEmployee(employeeDAO.findById(orderId));
-				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				oi.setFabrics(fabricDAO.findByOrderId(orderId));
-				
-				oi.setTask(task);
-				return oi;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
-			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, 
-			List<VersionData> versions, boolean editok, long taskId) {
-		// TODO Auto-generated method stub
-		// 添加订单信息
-		orderDAO.save(order);
-		Integer orderId = order.getOrderId();
-		orderDAO.attachDirty(order);
-		// 添加面料信息
-		fabricDAO.deleteByProperty("orderId", orderId);
-		for (Fabric fabric : fabrics) {
-			fabric.setOrderId(orderId);
-			fabricDAO.save(fabric);
-		}
-		// 添加辅料信息
-		accessoryDAO.deleteByProperty("orderId", orderId);
-		for (Accessory accessory : accessorys) {
-			accessory.setOrderId(orderId);
-			accessoryDAO.save(accessory);
-		}
-		//添加加工单信息
-		produceDAO.deleteByProperty("oid", orderId);
-		for (Produce produce : produces) {
-			produce.setOid(orderId);
-			produceDAO.save(produce);
-		}
-		//添加版型数据
-		versionDataDAO.deleteByProperty("orderId", orderId);
-		for (VersionData version : versions) {
-			version.setOrderId(orderId);
-			versionDataDAO.save(version);
-		}
-		// 添加物流信息
-		logistics.setOrderId(orderId);
-		logisticsDAO.save(logistics);
-
-		// 启动流程
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("editok", editok);
-		try {
-			jbpmAPIUtil.completeTask(taskId, params, ACTOR_MARKET_STAFF);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 
 }

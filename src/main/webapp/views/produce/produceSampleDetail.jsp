@@ -9,7 +9,8 @@
 				<h4 class="widgettitle">生产样衣</h4>
 				<div class="widgetcontent">
 
-					<form method="post" action="${ctx }/produce/produceSampleSubmit.do">
+					<form id="verify_form" onSubmit="return verify()" method="post" 
+						action="${ctx }/produce/produceSampleSubmit.do">
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td rowspan="${fn:length(orderInfo.produces)+1}">计划生产样衣数量</td>
@@ -60,9 +61,9 @@
 								<td colspan="7">
 									<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
 									<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
-									<input id="result" type="hidden" name="result" value="" />
-									<a id="agree_detail" class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i>加工完成</a>
-									<a id="disagree_detail" class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i>加工失败</a>
+									<input id="verify_val" type="hidden" name="result" value="" />
+									<a id="disagree_detail" class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i>加工完成</a>
+									<a id="agree_detail" class="btn btn-danger btn-rounded"><i class="icon-remove icon-white"></i>加工失败</a>
 								</td>
 							</tr>
 						</table>

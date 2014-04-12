@@ -28,6 +28,7 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.model.OrderInfo;
@@ -224,10 +225,15 @@ public class ProduceServiceImpl implements ProduceService {
 
 	
 	@Override
-	public boolean produceSampleSubmit(long taskId, String result) {
+	public boolean produceSampleSubmit(long taskId, boolean producterror, List<Produce> produceList) {
 		// TODO Auto-generated method stub
+		if (!producterror) {
+			for (int i = 0; i < produceList.size(); i++) {
+				produceDAO.save(produceList.get(i));
+			}
+		}
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("producterror", result.equals("0"));
+		data.put("producterror", producterror);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			return true;
@@ -236,6 +242,31 @@ public class ProduceServiceImpl implements ProduceService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public List<Produce> getProduceList(String produceColor, String produceXS, String produceS, 
+			String produceM, String produceL, String produceXL, String produceXXL) {
+		String[] color = produceColor.split(",");
+		String[] xs = produceXS.split(",");
+		String[] s = produceS.split(",");
+		String[] m = produceM.split(",");
+		String[] l = produceL.split(",");
+		String[] xl = produceXL.split(",");
+		String[] xxl = produceXXL.split(",");
+		List<Produce> produceList = new ArrayList<Produce>();
+		for (int i = 0; i < color.length; i++) {
+			Produce produce = new Produce();
+			produce.setColor(color[i]);
+			produce.setXs(Integer.parseInt(xs[i]));
+			produce.setS(Integer.parseInt(s[i]));
+			produce.setM(Integer.parseInt(m[i]));
+			produce.setL(Integer.parseInt(l[i]));
+			produce.setXl(Integer.parseInt(xl[i]));
+			produce.setXxl(Integer.parseInt(xxl[i]));
+			produce.setType(Produce.TYPE_SAMPLE_PRODUCED);
+			produceList.add(produce);
+		}
+		return produceList;
 	}
 	
 

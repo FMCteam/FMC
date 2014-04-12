@@ -10,7 +10,7 @@
 			<section class="list">
 				<table class="list">
 					<caption>
-						<span class="text-vertical">样衣待发货列表:<span class="number">${fn:length(list)}</span>件任务
+						<span class="text-vertical">待发货样衣:<span class="number">${fn:length(list)}</span>件任务
 						</span><input type="text" class="search-query float-right"
 							placeholder="输入检索条件">
 					</caption>
@@ -29,17 +29,16 @@
 						<tr>
 							<td>${task.order.orderId }</td>
 							<td>${fn:substring(task.order.orderTime,0,10) }</td>
-							<td>${task.order.customerName }</td>
-							<td>${task.order.customerPhone1 }</td>
-							<td>${task.order.customerCompany }</td>
-							<td>${task.order.customerCompanyFax }</td>
+							<td>${task.order.customerName}</td>
+							<td>${task.order.customerPhone1}</td>
+							<td>${task.order.customerCompany}</td>
+							<td>${task.order.customerCompanyFax}</td>
 							<td><a
 								href="${ctx}/logistics/sendSampleDetail.do?orderId=${task.order.orderId}">详情</a></td>
 						</tr>
 					</c:forEach>
 				</table>
 			</section>
-
 		</div>
 		<!--row-fluid-->
 	</div>
