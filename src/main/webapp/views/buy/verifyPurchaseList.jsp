@@ -11,7 +11,7 @@
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
                     
                     <section class="list">
-                <table class="list"">
+                <table class="list">
                 
                 <caption><span class="text-vertical">待采购确认:${fn:length(list)}件任务</span>
                 <input type="text" class="search-query float-right" placeholder="输入检索条件"></caption>
@@ -42,10 +42,7 @@
 						</a> 
 						</td>
 								
-									<input type="hidden" name="id" value="${orderModel.order.orderId }" />
-										<input type="hidden" name="task_id" value="${orderModel.task.id }" />
-								<!--  <input type="hidden" name="process_id" value="${orderModel.task.processInstanceId }" />
-								-->
+									
 								
 	                        </tr>
                         </c:forEach>
