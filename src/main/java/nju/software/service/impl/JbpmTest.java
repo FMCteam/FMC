@@ -15,11 +15,13 @@ import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.util.JbpmAPIUtil;
 
 
@@ -56,6 +58,14 @@ public class JbpmTest {
 	
 		
 		orderDAO.save(order);
+		
+		Produce produce=new Produce();
+	    produce.setType("sampleProduce");
+		produce.setColor("lv");
+		produce.setL(5);
+		produce.setM(1);
+		produce.setOid(order.getOrderId());
+		produceDAO.save(produce);
 		
 		
 		// 面料数据
@@ -229,6 +239,7 @@ public class JbpmTest {
 	private LogisticsDAO logisticsDAO;
 	@Autowired
 	private ProductDAO productDAO;
-
+	@Autowired
+	private ProduceDAO produceDAO;
 	private static Integer orderId=0;
 }

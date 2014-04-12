@@ -18,6 +18,7 @@ import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.ProductDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Account;
@@ -66,6 +67,8 @@ public class BuyServiceImpl implements BuyService {
 	@Autowired
 	private FabricCostDAO FabricCostDAO;
 	
+	@Autowired
+	private ProduceDAO ProduceDAO;
 	
 	
 
@@ -322,6 +325,11 @@ public class BuyServiceImpl implements BuyService {
 				TASK_PURCHASE_SAMPLE_MATERIAL, orderId);
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setOrder(orderDAO.findById(orderId));
+		
+		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
+		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setFabricCosts(FabricCostDAO.findByOrderId(orderId));
+		orderInfo.setProduces(ProduceDAO.findByOrderId(orderId));
 		orderInfo.setTask(task);
 		return orderInfo;
 

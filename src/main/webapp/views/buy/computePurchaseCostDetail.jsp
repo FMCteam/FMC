@@ -188,8 +188,10 @@
 			
 							
 							
+							
+							
 					<tr>
-								 <td rowspan="6">面料报价</td>
+								 <td rowspan="${orderInfo.data.fabricSize }">面料报价</td>
                         <td>面料名</td>
                         <td>单件米耗</td>
                         <td>价格</td>
@@ -221,7 +223,7 @@
 			
 							
 							<tr>
-								  <td rowspan="6">辅料报价</td>
+								  <td rowspan= "${orderInfo.data.accessorySize }">辅料报价</td>
                         <td>辅料名</td>
                         <td>单件耗数</td>
                         <td>价格</td>
