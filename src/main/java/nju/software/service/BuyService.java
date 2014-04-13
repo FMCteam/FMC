@@ -42,9 +42,9 @@ public interface BuyService {
 //			,String[] fabric_prices);
 	
 
-//	public boolean updateAccessoryCost(int orderId, long taskId, 
-//			long processId,String[] accessory_names,String[] tear_per_piece,String[] cost_per_piece,String[] accessory_prices);
-	
+	public void updateAccessoryCost(int orderId,  
+		String[] accessory_names,String[] tear_per_piece,String[] cost_per_piece,String[] accessory_prices);
+//	
 	
 	 public List<OrderInfo> getComputePurchaseCostList();
 		

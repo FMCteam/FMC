@@ -118,11 +118,11 @@ public class OrderInfo {
 		this.fabricCosts = fabricCosts;
 	}
 
-	public List<AccessoryCost> getSccessoryCosts() {
+	public List<AccessoryCost> getAccessoryCosts() {
 		return sccessoryCosts;
 	}
 
-	public void setSccessoryCosts(List<AccessoryCost> sccessoryCosts) {
+	public void setAccessoryCosts(List<AccessoryCost> sccessoryCosts) {
 		this.sccessoryCosts = sccessoryCosts;
 	}
 
