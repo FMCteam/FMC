@@ -55,9 +55,9 @@ public class JbpmTest {
 		order.setHasPostedSampleClothes((short) 1);
 		order.setIsNeedSampleClothes((short) 1);
 		order.setOrderSource("Test");
-	
 		
 		orderDAO.save(order);
+		orderId=order.getOrderId();
 		
 		Produce produce=new Produce();
 	    produce.setType("sampleProduce");
@@ -68,14 +68,42 @@ public class JbpmTest {
 		produceDAO.save(produce);
 		
 		
+		for(int i=0;i<3;i++){
+			Produce p=new Produce();
+		    p.setType(Produce.TYPE_PRODUCE);
+			p.setColor(i+"");
+			p.setXs(1);
+			p.setS(2);
+			p.setM(3);
+			p.setL(4);
+			p.setXl(5);
+			p.setXxl(6);
+			p.setOid(order.getOrderId());
+			produceDAO.save(produce);
+		}
+		
+		for(int i=0;i<3;i++){
+			Produce p=new Produce();
+		    p.setType(Produce.TYPE_SAMPLE_PRODUCE);
+			p.setColor(i+"");
+			p.setXs(1);
+			p.setS(2);
+			p.setM(3);
+			p.setL(4);
+			p.setXl(5);
+			p.setXxl(6);
+			p.setOid(order.getOrderId());
+			produceDAO.save(produce);
+		}
+		
+		
 		// 面料数据
 		String fabric_names = "fabric1,fabric2,fabric3";
 		String fabric_amounts = "1,2,3";
 		String fabric_name[] = fabric_names.split(",");
 		String fabric_amount[] = fabric_amounts.split(",");
-		List<Fabric> fabrics = new ArrayList<Fabric>();
 		for (int i = 0; i < fabric_name.length; i++) {
-			fabrics.add(new Fabric(0, fabric_name[i], fabric_amount[i]));
+			fabricDAO.save(new Fabric(orderId, fabric_name[i], fabric_amount[i]));
 		}
 
 		// 辅料数据
@@ -83,9 +111,8 @@ public class JbpmTest {
 		String accessory_querys = "accessory1,accessory2,accessory3";
 		String accessory_name[] = accessory_names.split(",");
 		String accessory_query[] = accessory_querys.split(",");
-		List<Accessory> accessorys = new ArrayList<Accessory>();
 		for (int i = 0; i < fabric_name.length; i++) {
-			accessorys.add(new Accessory(0, accessory_name[i],
+			accessoryDAO.save(new Accessory(orderId, accessory_name[i],
 					accessory_query[i]));
 		}
 		
@@ -241,5 +268,5 @@ public class JbpmTest {
 	private ProductDAO productDAO;
 	@Autowired
 	private ProduceDAO produceDAO;
-	private static Integer orderId=0;
+	private Integer orderId=0;
 }

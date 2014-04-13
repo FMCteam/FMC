@@ -42,8 +42,33 @@ public class OrderInfo {
 	private long taskId;
 	private List<Produce> produces;
 	private Map<String,Object> data=new HashMap<String,Object>();
-	
-	
+	private List<Produce> sample;
+	private List<Produce> produce;
+	private List<Produce> produced;
+
+	public List<Produce> getSample() {
+		return sample;
+	}
+
+	public void setSample(List<Produce> sample) {
+		this.sample = sample;
+	}
+
+	public List<Produce> getProduce() {
+		return produce;
+	}
+
+	public void setProduce(List<Produce> produce) {
+		this.produce = produce;
+	}
+
+	public List<Produce> getProduced() {
+		return produced;
+	}
+
+	public void setProduced(List<Produce> produced) {
+		this.produced = produced;
+	}
 
 	public Map<String, Object> getData() {
 		return data;

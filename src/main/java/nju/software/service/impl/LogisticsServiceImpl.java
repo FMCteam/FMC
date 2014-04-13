@@ -18,11 +18,13 @@ import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.PackageDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
 import nju.software.service.LogisticsService;
 import nju.software.util.JbpmAPIUtil;
@@ -61,6 +63,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 		orderInfo.setLogistics(logisticsDAO.findById(orderId));
 		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
+		Produce produce=new Produce();
+		produce.setType(Produce.TYPE_PRODUCE);
+		produce.setOid(orderId);
+		orderInfo.setProduce(produceDAO.findByExample(produce));
+		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
+		orderInfo.setSample(produceDAO.findByExample(produce));
 		orderInfo.setTask(task);
 		return orderInfo;
 	}
@@ -224,6 +232,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private FabricDAO fabricDAO;
+	@Autowired
+	private ProduceDAO produceDAO;
 
 	public final static String ACTOR_LOGISTICS_MANAGER = "logisticsManager";
 	public final static String TASK_RECEIVE_SAMPLE = "receiveSample";

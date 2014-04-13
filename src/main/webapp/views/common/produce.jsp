@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <table class="table table-striped table-bordered table-hover detail">
 	<tr>
-		<td class="span1" rowspan="2">样衣加工</td>
+		<td class="span1" rowspan="${fn:length(orderInfo.sample)+1}">样衣加工</td>
 		<td class="span1">颜色</td>
 		<td class="span1">XS</td>
 		<td class="span1">S</td>
@@ -11,7 +11,7 @@
 		<td class="span1">XXL</td>
 	</tr>
 	<tr>
-		<td class="span1" rowspan="2">大货加工</td>
+		<td class="span1" rowspan="${fn:length(orderInfo.produce)+1}">大货加工</td>
 		<td class="span1">颜色</td>
 		<td class="span1">XS</td>
 		<td class="span1">S</td>
