@@ -334,22 +334,25 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
+		String s_profit = request.getParameter("profitPerPiece");
 		String innerPrice = request.getParameter("inner_price");
 		String outerPrice = request.getParameter("outer_price");
 		String orderId = request.getParameter("order_id");
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
-
+		float profit = Float.parseFloat(s_profit);
 		float inner = Float.parseFloat(innerPrice);
 		float outer = Float.parseFloat(outerPrice);
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
+		Quote quote = quoteService.findByOrderId(orderId);
+		quote.setProfitPerPiece(profit);
+		quote.setInnerPrice(inner);
+		quote.setOuterPrice(outer);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		boolean success = quoteService.updateQuote(inner, outer, id,
-				taskId, processId, account.getUserId()+"");
+		marketService.modifyQuoteSubmit(quote, id, taskId, processId, account.getUserId());
 
 		return "redirect:/market/quoteConfirmList.do";
 	}
@@ -367,7 +370,7 @@ public class MarketController {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		OrderInfo orderInfo = marketService.getModifyQuoteDetail(id, account.getUserId());
-		model.addAttribute("quoteModel", orderInfo);
+		model.addAttribute("orderInfo", orderInfo);
 		return "market/modifyQuoteDetail";
 	}
 
@@ -454,20 +457,26 @@ public class MarketController {
 	public String mergeQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
+		String s_profit = request.getParameter("profitPerPiece");
 		String innerPrice = request.getParameter("inner_price");
 		String outerPrice = request.getParameter("outer_price");
 		String orderId = request.getParameter("order_id");
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
+		float profit = Float.parseFloat(s_profit);
 		float inner = Float.parseFloat(innerPrice);
 		float outer = Float.parseFloat(outerPrice);
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
 
+		Quote quote = quoteService.findByOrderId(orderId);
+		quote.setProfitPerPiece(profit);
+		quote.setInnerPrice(inner);
+		quote.setOuterPrice(outer);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		marketService.mergeQuoteSubmit(account.getUserId(), inner, outer, id, taskId, processId);
+		marketService.mergeQuoteSubmit(account.getUserId(), quote, id, taskId, processId);
 		return "redirect:/market/mergeQuoteList.do";
 	}
 	
@@ -484,8 +493,8 @@ public class MarketController {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		OrderInfo orderModel = marketService.getMergeQuoteDetail(account.getUserId(), id, task_id);
-		model.addAttribute("orderModel", orderModel);
-		
+		model.addAttribute("orderInfo", orderModel);
+		model.addAttribute("merge_w", true);
 		return "market/mergeQuoteDetail";
 	}
 
@@ -514,18 +523,42 @@ public class MarketController {
 		 * customerService.listCustomer(params);
 		 * model.addAttribute("customer_list", list.get(0));
 		 */
+		String s_profit = request.getParameter("profitPerPiece");
 		String innerPrice = request.getParameter("inner_price");
 		String outerPrice = request.getParameter("outer_price");
 		String orderId = request.getParameter("order_id");
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
+		float profit = Float.parseFloat(s_profit);
 		float inner = Float.parseFloat(innerPrice);
 		float outer = Float.parseFloat(outerPrice);
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
-		marketService.verifyQuoteSubmit(inner, outer, id, taskId, processId);
+		Quote quote = quoteService.findByOrderId(orderId);
+		quote.setProfitPerPiece(profit);
+		quote.setInnerPrice(inner);
+		quote.setOuterPrice(outer);
+		marketService.verifyQuoteSubmit(quote, id, taskId, processId);
 		return "redirect:/market/verifyQuoteList.do";
+	}
+	
+	// 主管审核报价detail
+	@RequestMapping(value = "market/verifyQuoteDetail.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String verifyQuoteDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String s_id = request.getParameter("orderId");
+		String s_task_id = request.getParameter("taskId");
+		int id = Integer.parseInt(s_id);
+		long task_id = Long.parseLong(s_task_id);
+
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		OrderInfo orderModel = marketService.getVerifyQuoteDetail(account.getUserId(), id, task_id);
+		model.addAttribute("orderInfo", orderModel);
+		return "market/verifyQuoteDetail";
+
 	}
 
 	// 主管审核报价List
@@ -535,7 +568,7 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<OrderInfo> list = marketService.getVerifyQuoteList(account.getAccountId());
+		List<OrderInfo> list = marketService.getVerifyQuoteList(account.getUserId());
 		model.addAttribute("quote_list", list);
 		return "market/verifyQuoteList";
 
@@ -795,9 +828,24 @@ public class MarketController {
 		List<OrderInfo> list = marketService.getConfirmQuoteList(account
 				.getUserId() + "");
 		model.addAttribute("list", list);
-		return "market/quoteConfirmList";
+		return "market/confirmQuoteList";
 	}
 
+	@RequestMapping(value = "/market/confirmQuoteDetail.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmQuoteDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String s_id = request.getParameter("orderId");
+		String s_task_id = request.getParameter("taskId");
+		int id = Integer.parseInt(s_id);
+		long task_id = Long.parseLong(s_task_id);
+
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		OrderInfo orderModel = marketService.getConfirmQuoteDetail(account.getUserId(), id, task_id);
+		model.addAttribute("orderInfo", orderModel);
+		return "market/confirmQuoteDetail";
+	}
 
 	
 	@RequestMapping(value = "/market/confirmQuoteSubmit.do")
@@ -813,10 +861,10 @@ public class MarketController {
 		String actorId=account.getUserId()+"";
 		marketService.confirmQuoteSubmit(actorId,Long.parseLong(taskId),
 				result);
-
+		
 		// 2=修改报价
 		if (result.equals("2")) {
-			return "forward:/market/quoteModifyList.do?id=" + orderId;
+			return "forward:/market/modifyQuoteList.do?id=" + orderId;
 		} else {
 			return "forward:/market/confirmQuoteList.do";
 		}

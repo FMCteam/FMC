@@ -7,9 +7,9 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<section>
+			<section class="list">
 				<table id="dyntable"
-					class="table responsive">
+					class="list">
 					<caption>客户下单</caption>
 					<tr>
 						<th class="head0">客户姓名</th>

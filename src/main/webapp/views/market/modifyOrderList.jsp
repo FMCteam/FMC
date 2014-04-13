@@ -8,8 +8,13 @@
                 <div class="row-fluid" style="min-height:300px;">
                 
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
-                    <h4 class="widgettitle">询单列表</h4>
-                <table id="dyntable" class="table table-bordered responsive">
+                    <section class="list">
+                <table id="dyntable" class="list">
+                <caption>
+						<span class="text-vertical">询单列表:<span class="number">${fn:length(order_list)}</span>件任务
+						</span><input type="text" class="search-query float-right"
+							placeholder="输入检索条件">
+					</caption>
                     <colgroup>
                         <col class="con1" />
                         <col class="con0" />
@@ -50,7 +55,7 @@
 	                        </tr>
                         </c:forEach>
                     </tbody>
-                </table>
+                </table></section>
                 <div class="dataTables_paginate paging_full_numbers" id="dyntable_paginate" style="float:right">
                 	<c:if test="${page==1 }">
 	                	<a tabindex="0" class="first paginate_button paginate_button_disabled" id="dyntable_first">首页</a>
@@ -116,7 +121,8 @@
         
         <!-- 这里引入你需要的js文件 -->
         <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-        
+        <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
         
         <%@include file="/common/footer.jsp" %>
     
