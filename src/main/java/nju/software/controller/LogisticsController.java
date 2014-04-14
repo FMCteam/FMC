@@ -25,7 +25,9 @@ import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Package;
+import nju.software.dataobject.PackageDetail;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -295,8 +297,6 @@ public class LogisticsController {
 	public String updateStoreInfo(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = (String) request.getParameter("orderId");
-		Order order = orderService.getOrderById(Integer.parseInt(orderId));
-		List<Package> packageList = logisticsService.getPackageListByOrderId(Integer.parseInt(orderId));
 		
 		String packageId = (String) request.getParameter("packageId");
 		if(packageId != null && !StringUtil.isEmpty(packageId)) {
@@ -306,8 +306,18 @@ public class LogisticsController {
 			logisticsService.updateSendClothesStoreInfo(Integer.parseInt(packageId), warehouse, shelf, location);
 		}
 		
+		OrderInfo orderInfo = logisticsService.getStoreClothesDetail(Integer.parseInt(orderId));
+		List<Package> packageList = logisticsService.getPackageListByOrderId(Integer.parseInt(orderId));
+		
+		ArrayList<String> parr = new ArrayList<String>();
+		for(int i=0;i<packageList.size();i++) {
+			parr.add(packageList.get(i).getPackageId().toString());
+		}
+		model.addAttribute("pidArray", StringUtils.join(parr.toArray(), ","));
 		model.addAttribute("packageList", packageList);
-		model.addAttribute("order", order);
+		model.addAttribute("order", orderInfo.getOrder());
+		model.addAttribute("task", orderInfo.getTask());
+		
 		return "logistics/mobileUpdateStore";
 	}
 	
@@ -316,9 +326,22 @@ public class LogisticsController {
 	public String finishUpdateStore(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = (String) request.getParameter("orderId");
-		logisticsService.setOrderStored(Integer.parseInt(orderId));
+		String taskId = (String) request.getParameter("taskId");
 		
-		return "redirect: logistics/mobileStoreList.do";
+		
+		String actor = "WULIUZHUGUAN";
+		try {
+			logisticsService.setOrderStored(Integer.parseInt(orderId));
+			// 保存package信息
+			jbpmAPIUtil.completeTask(Integer.parseInt(taskId), null, actor);
+			// 推进流程
+
+			
+		} catch (Exception e) {
+			
+		}
+
+		return "redirect:/logistics/mobileStoreList.do";
 	}
 	/**
 	 * 扫描确认发货
@@ -328,10 +351,10 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String checkSendClothes(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
 		List<OrderInfo> orderList = logisticsService.getSendClothesUncheckedList();
 		model.addAttribute("orderList", orderList);
-		return "logistics/mobileGetUnscanList";
+		return "logistics/mobileGetUnsanList";
+
 	}
 
 	@RequestMapping(value = "/logistics/scanClothes.do")
@@ -339,12 +362,53 @@ public class LogisticsController {
 	public String scanClothes(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = (String) request.getParameter("orderId");
-		Order order = orderService.getOrderById(Integer.parseInt(orderId));
+		OrderInfo orderInfo = logisticsService.getStoreClothesDetail(Integer.parseInt(orderId));
 		List<Package> packageList = logisticsService.getPackageListByOrderId(Integer.parseInt(orderId));
 		
 		model.addAttribute("packageList", packageList);
-		model.addAttribute("order", order);
+		model.addAttribute("order", orderInfo.getOrder());
+		model.addAttribute("task", orderInfo.getTask());
+		
 		return "logistics/mobileCheckSendClothes";
 	}
 
+	@RequestMapping(value = "/logistics/finishScanClothes.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String finishScanClothes(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = (String) request.getParameter("orderId");
+		String taskId = (String) request.getParameter("taskId");
+		
+		String actor = "WULIUZHUGUAN";
+		try {
+			logisticsService.setOrderScanChecked(Integer.parseInt(orderId));
+			// 保存package信息
+			jbpmAPIUtil.completeTask(Integer.parseInt(taskId), null, actor);
+			// 推进流程
+
+			
+		} catch (Exception e) {
+			
+		}
+
+		return "redirect:/logistics/mobileScanList.do";
+	}
+	
+	@RequestMapping(value = "/logistics/printPackage.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String printPackage(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = (String) request.getParameter("order_id");
+		String packageId = (String) request.getParameter("package_id");
+		
+		Package packageInfo = logisticsService.getPackageByPackageId(Integer.parseInt(packageId));
+		Order order = orderService.findByOrderId(orderId);
+		List<PackageDetail> pdList = logisticsService.getPackageDetailList(Integer.parseInt(packageId));
+		
+		model.addAttribute("order", order);
+		model.addAttribute("packageInfo", packageInfo);
+		model.addAttribute("packageDetailList", pdList);
+		
+		return "logistics/printPackage";
+	}
 }

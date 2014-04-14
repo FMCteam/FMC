@@ -5,7 +5,9 @@ import java.util.Map;
 
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
+
 import nju.software.model.OrderInfo;
+
 
 public interface LogisticsService {
 
@@ -61,6 +63,12 @@ public interface LogisticsService {
 
 
 	public List<Package> getPackageListByOrderId(int orderId);
-	 
+
+	
+	public OrderInfo getStoreClothesDetail(int orderId);
+	
+	public List<PackageDetail> getPackageDetailList(int packageId);
+	
+	public Package getPackageByPackageId(int packageId);
 
 }

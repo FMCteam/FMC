@@ -7,6 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script type="text/javascript" src="${ctx }/js/jquery-1.9.1.min.js"></script>
 <title>登录</title>
+<style>
+body {
+	padding-top: 80px;
+}
+</style>
 </head>
 <body>
 <h3>智造链-登录</h3>
