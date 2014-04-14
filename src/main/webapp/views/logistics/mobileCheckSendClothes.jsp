@@ -32,7 +32,7 @@ $(function() {
 				$tw.val($p.find("tr:eq(0) td:eq(1)").text());
 				$ts.val($p.find("tr:eq(1) td:eq(1)").text());
 				$tl.val($p.find("tr:eq(1) td:eq(1)").text());
-				
+				$("#status_" + pid).css("color": "green").text("已确认");
 				break;
 			}
 		}
@@ -94,7 +94,7 @@ $(function() {
 </ul>
 <div>
 
-<form action="${ctx }/logistics/finishUpdateStore.do" method="post" onsubmit="return check();">
+<form action="${ctx }/logistics/finishScanClothes.do" method="post" onsubmit="return check();">
 <input type="hidden" value="${order.orderId }" name="orderId" />
 <input type="submit" value="完成入库" name="submit" />
 </form>
