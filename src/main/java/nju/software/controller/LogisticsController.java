@@ -278,8 +278,8 @@ public class LogisticsController {
 		
 		String packageId = (String) request.getParameter("packageId");
 		if(packageId != null && !StringUtil.isEmpty(packageId)) {
-			String warehouse = (String) request.getParameter("warehouse");
-			String shelf = (String) request.getParameter("shelf");
+			String warehouse = (String) request.getParameter("warehouseId");
+			String shelf = (String) request.getParameter("shelfId");
 			String location = (String) request.getParameter("location");
 			logisticsService.updateSendClothesStoreInfo(Integer.parseInt(packageId), warehouse, shelf, location);
 		}
