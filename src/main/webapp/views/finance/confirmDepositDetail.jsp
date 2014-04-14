@@ -5,30 +5,59 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<div class="widget">
-				<h4 class="widgettitle">定金确认</h4>
-				<div class="widgetcontent">
+
+			<ul class="nav nav-tabs detail" id="tab">
+				<li class="task-name">大货生产定金确认</li>
+				<li><a href="#sampleMoney" data-toggle="tab">大货定金</a></li>
+				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
+				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
+				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
+				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
+				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
+				<li class="active"><a href="#basic" data-toggle="tab">基本信息</a></li>
+			</ul>
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="basic">
+					<%@include file="/views/common/basic.jsp"%>
+				</div>
+				<div class="tab-pane" id="material">
+					<%@include file="/views/common/material.jsp"%>
+				</div>
+				<div class="tab-pane" id="sample">
+					<%@include file="/views/common/sample.jsp"%>
+				</div>
+				<div class="tab-pane" id="produce">
+					<%@include file="/views/common/produce.jsp"%>
+				</div>
+				<div class="tab-pane" id="cad">
+					<%@include file="/views/common/cad.jsp"%>
+				</div>
+				<div class="tab-pane" id="quote">
+					<%@include file="/views/common/quote.jsp"%>
+				</div>
+				<div class="tab-pane" id="sampleMoney">
 					<form action="${ctx}/finance/confirmDepositSubmit.do"
 						method="post" onSubmit="return verify()">
 						<input type="hidden" name="money_state" value="已收到" /> <input
-							type="hidden" name="money_type" value="样衣制作金" /> <input
+							type="hidden" name="money_type" value="大货定金" /> <input
 							type="hidden" name="orderId" value="${orderInfo.order.orderId}" />
 						<input type="hidden" name="taskId" value="${orderInfo.task.id}" /><input
 							type="hidden" name="result" value="1" />
 
-						<table class="table table-bordered">
+						<table class="table table-bordered detail">
 							<tr>
 								<td rowspan="2">样衣信息</td>
 								<td>金额类型</td>
-								<td>生产件数</td>
-								<td>单件报价</td>
+								<td>样衣件数</td>
+								<td>制版单价</td>
 								<td>应收金额</td>
 							</tr>
 							<tr>
 								<td>30%定金</td>
-								<td>100</td>
 								<td>10</td>
-							    <td>300</td>
+								<td>100</td>
+								<td>300</td>
 							</tr>
 							<tr>
 								<td rowspan="3">汇款信息</td>
@@ -50,30 +79,26 @@
 							</tr>
 							<tr>
 								<td>操作</td>
-								<td colspan="4"><input type="submit" value="确认收款" /> <a
+								<td colspan="4"><input class="btn btn-primary" type="submit" value="确认收款" /> <a class="btn btn-primary"
 									href="${ctx}/finance/confirmDepositSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
 									onclick="return actionConfirm()">未收到汇款</a></td>
 							</tr>
 						</table>
 					</form>
 				</div>
-				<!--widgetcontent-->
-			</div>
-
-		</div>
-		<!--row-fluid-->
-
-
-
-		<div class="footer">
-			<div class="footer-left">
-				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
 			</div>
 		</div>
-		<!--footer-->
-
 	</div>
-	<!--maincontentinner-->
+	<!--row-fluid-->
+	<div class="footer">
+		<div class="footer-left">
+			<span>&copy; 2014. 江苏南通智造链有限公司.</span>
+		</div>
+	</div>
+	<!--footer-->
+
+</div>
+<!--maincontentinner-->
 </div>
 <!--maincontent-->
 <script>
@@ -98,5 +123,6 @@
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
+<link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>
