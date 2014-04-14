@@ -354,7 +354,7 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		marketService.modifyQuoteSubmit(quote, id, taskId, processId, account.getUserId());
 
-		return "redirect:/market/quoteConfirmList.do";
+		return "redirect:/market/confirmQuoteList.do";
 	}
 
 	// 专员修改报价
@@ -848,7 +848,7 @@ public class MarketController {
 	}
 
 	
-	@RequestMapping(value = "/market/confirmQuoteSubmit.do")
+	@RequestMapping(value = "/market/confirmQuoteSubmit.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -864,9 +864,9 @@ public class MarketController {
 		
 		// 2=修改报价
 		if (result.equals("2")) {
-			return "forward:/market/modifyQuoteList.do?id=" + orderId;
+			return "redirect:/market/modifyQuoteList.do?id=" + orderId;
 		} else {
-			return "forward:/market/confirmQuoteList.do";
+			return "redirect:/market/confirmQuoteList.do";
 		}
 	}
 
