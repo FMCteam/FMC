@@ -76,7 +76,7 @@ public class LogisticsController {
 			HttpServletResponse response, ModelMap model) {
 		List<OrderInfo> list = logisticsService.getSendSampleList();
 		if(list.size()==0){
-			jbpmTest.completeProduceSample(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
+			jbpmTest.completeProduceSample("1");
 			list = logisticsService.getSendSampleList();
 		}
 		model.put("list", list);
@@ -124,6 +124,10 @@ public class LogisticsController {
 	public String warehouseList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<OrderInfo> list = logisticsService.getWarehouseList();
+		if(list.size()==0){
+			jbpmTest.completeCheckQuality("1");
+			list = logisticsService.getWarehouseList();
+		}
 		model.put("list", list);
 		return "/logistics/warehouseList";
 	}

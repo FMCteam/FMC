@@ -20,6 +20,7 @@ import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Fabric;
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.util.JbpmAPIUtil;
@@ -110,6 +111,9 @@ public class JbpmTest {
 					accessory_query[i]));
 		}
 		
+		
+		Logistics logistics=new Logistics(order.getOrderId());
+		logisticsDAO.save(logistics);
 		
 		
 		orderId=order.getOrderId();
@@ -253,6 +257,111 @@ public class JbpmTest {
 	}
 	
 	
+	public void completeCheckQuality(String actorId){
+		completeProduceSample(actorId);
+		
+		
+		//样衣发货
+		long taskId = getTaskId(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER,
+				LogisticsServiceImpl.TASK_SEND_SAMPLE, orderId);
+		Map data=new HashMap <String,Object> ();
+		//data.put("receivedsamplejin", true);
+		completeTask(taskId, data, LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
+		
+		
+		//确认加工单
+		taskId = getTaskId(actorId,
+				MarketServiceImpl.TASK_CONFIRM_PRODUCE_ORDER, orderId);
+		data=new HashMap <String,Object> ();
+		data.put("comfirmworksheet", true);
+		completeTask(taskId, data, actorId);
+		
+		
+		//采购部确认
+		taskId = getTaskId(BuyServiceImpl.ACTOR_PURCHASE_MANAGER,
+				BuyServiceImpl.TASK_CONFIRM_PURCHASE, orderId);
+		data=new HashMap <String,Object> ();
+		data.put("isworksheet", true);
+		completeTask(taskId, data, BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
+		
+		
+		//设计部确认
+		taskId = getTaskId(DesignServiceImpl.ACTOR_DESIGN_MANAGER,
+				DesignServiceImpl.TASK_MODIFY_DESIGN, orderId);
+		data=new HashMap <String,Object> ();
+		//data.put("comfirmworksheet", true);
+		completeTask(taskId, data, DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+		
+		
+		//签订合同加工单
+		taskId = getTaskId(actorId,
+				MarketServiceImpl.TASK_SIGN_CONTRACT, orderId);
+		data=new HashMap <String,Object> ();
+		//data.put("comfirmworksheet", true);
+		completeTask(taskId, data, actorId);
+		
+		
+		//30%
+		taskId = getTaskId(FinanceServiceImpl.ACTOR_FINANCE_MANAGER,
+				FinanceServiceImpl.TASK_CONFIRM_DEPOSIT, orderId);
+		data=new HashMap <String,Object> ();
+		data.put("epositok", true);
+		completeTask(taskId, data, FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
+		
+		
+		//采购部确认
+		taskId = getTaskId(BuyServiceImpl.ACTOR_PURCHASE_MANAGER,
+				BuyServiceImpl.TASK_PURCHASE_MATERIAL, orderId);
+		data=new HashMap <String,Object> ();
+		data.put("procurementerror", false);
+		completeTask(taskId, data, BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
+		
+		
+		//设计部确认
+		taskId = getTaskId(DesignServiceImpl.ACTOR_DESIGN_MANAGER,
+				DesignServiceImpl.TASK_CONFIRM_DESIGN, orderId);
+		data=new HashMap <String,Object> ();
+		//data.put("comfirmworksheet", true);
+		completeTask(taskId, data, DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+		
+		
+		for(int i=0;i<3;i++){
+			Produce p=new Produce();
+		    p.setType(Produce.TYPE_PRODUCED);
+			p.setColor(i+"");
+			p.setXs(1);
+			p.setS(2);
+			p.setM(3);
+			p.setL(4);
+			p.setXl(5);
+			p.setXxl(6);
+			p.setOid(orderId);
+			produceDAO.save(p);
+		}
+		
+		
+		
+		//生产
+		taskId = getTaskId(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER,
+				ProduceServiceImpl.TASK_PRODUCE, orderId);
+		data=new HashMap <String,Object> ();
+		data.put("volumeproduction", true);
+		completeTask(taskId, data, ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
+		
+		
+		
+		
+		
+		
+		//质检
+		taskId = getTaskId(QualityServiceImpl.ACTOR_QUALITY_MANAGER,
+				QualityServiceImpl.TASK_CHECK_QUALITY, orderId);
+		data=new HashMap <String,Object> ();
+		//data.put("comfirmworksheet", true);
+		completeTask(taskId, data, QualityServiceImpl.ACTOR_QUALITY_MANAGER);
+	}
+	
+		
 	public void completeTask(long taskId, Map<?, ?> data, String actorId) {
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
