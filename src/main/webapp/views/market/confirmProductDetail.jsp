@@ -13,7 +13,7 @@
 						<table class="table table-striped table-bordered table-hover">
 							<tr>
 								<td>订单号</td>
-								<td colspan="4">${orderModel.order.orderId}</td>
+								<td colspan="4">${orderInfo.order.orderId}</td>
 							</tr>
 							<tr>
 								<td rowspan="2">加工单</td>
@@ -42,9 +42,9 @@
 								<td colspan="2"><input type="reset" /></td>
 							</tr>
 						</table>
-						<input type="hidden" name="order_id" value="${orderModel.order.orderId}" />
-						<input type="hidden" name="task_id" value="${orderModel.taskId}" />
-						<input type="hidden" name="process_id" value="${orderModel.processInstanceId }" />
+						<input type="hidden" name="order_id" value="${orderInfo.order.orderId}" />
+						<input type="hidden" name="task_id" value="${orderInfo.task.id}" />
+						<input type="hidden" name="process_id" value="${orderInfo..task.processInstanceId }" />
 						<input type="hidden" name="comfirmworksheet" value="true" />
 					</form>
 				</div>

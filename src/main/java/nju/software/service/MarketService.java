@@ -103,5 +103,9 @@ public interface MarketService {
 
 	public void modifyQuoteSubmit(Quote quote, int id, long taskId,
 			long processId, Integer userId);
+
+	public List<OrderInfo> getConfirmProductList(String actorId);
+
+	public OrderInfo getConfirmProductDetail(Integer userId, int id, long taskId);
 	
 }

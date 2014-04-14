@@ -888,22 +888,11 @@ public class MarketController {
 	public String confirmProduceOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		System.out.println("product confirm ================ show task");
-		List<OrderModel> orderList = new ArrayList<OrderModel>();
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
-		// String actorId = account.getUserRole();
+		Account account = (Account) request.getSession().getAttribute("cur_user");
 		String actorId = account.getUserId()+"";
-		System.out.println("actorId: " + actorId);
-		String taskName = MarketServiceImpl.TASK_CONFIRM_PRODUCE_ORDER;
-		orderList = orderService
-				.getOrderByActorIdAndTaskname(actorId, taskName);
-		if (orderList.isEmpty()) {
-			System.out.println("no orderList ");
-		}
+		List<OrderInfo> orderList = marketService.getConfirmProductList(actorId);
 		model.addAttribute("order_list", orderList);
-
-		return "market/confirm_product";
+		return "market/confirmProductList";
 	}
 
 	/**
@@ -957,27 +946,20 @@ public class MarketController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "market/confirmProduceOrderDetail.do", method = RequestMethod.POST)
+	@RequestMapping(value = "market/confirmProduceOrderDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmProduceOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		System.out.println("product corfirm ================ show detail");
-		OrderModel orderModel = null;
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
-		// String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("order_id");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int id = Integer.parseInt(s_orderId_request);
+		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
-		orderModel = orderService.getOrderDetail(orderId_request, taskId,
-				processId);
-		model.addAttribute("orderModel", orderModel);
+		OrderInfo orderInfo = marketService.getConfirmProductDetail(account.getUserId(), id, taskId);
+		model.addAttribute("orderInfo", orderInfo);
 
-		return "market/confirm_product_detail";
+		return "market/confirmProductDetail";
 	}
 
 	/**

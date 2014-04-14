@@ -712,6 +712,40 @@ public class MarketServiceImpl implements MarketService {
 			}
 		}
 	}
+
+	@Override
+	public List<OrderInfo> getConfirmProductList(String actorId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				actorId, TASK_CONFIRM_PRODUCE_ORDER);
+		List<OrderInfo> taskSummarys = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) getVariable("orderId", task);
+			OrderInfo oi = new OrderInfo();
+			oi.setOrder(orderDAO.findById(orderId));
+			oi.setTask(task);
+			taskSummarys.add(oi);
+		}
+		return taskSummarys;
+	}
+
+	@Override
+	public OrderInfo getConfirmProductDetail(Integer userId, int id, long taskId) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				userId+"", TASK_CONFIRM_PRODUCE_ORDER);
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) getVariable("orderId", task);
+			if (id == orderId && taskId == task.getId()) {
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
+	}
 	
 	/*@Override
 	public List<QuoteConfirmTaskSummary> getQuoteModifyTaskSummaryList(
