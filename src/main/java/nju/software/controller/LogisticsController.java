@@ -312,6 +312,17 @@ public class LogisticsController {
 		return "logistics/mobileGetUnscanList";
 	}
 
-
+	@RequestMapping(value = "/logistics/scanClothes.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String scanClothes(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = (String) request.getParameter("orderId");
+		Order order = orderService.getOrderById(Integer.parseInt(orderId));
+		List<Package> packageList = logisticsService.getPackageListByOrderId(Integer.parseInt(orderId));
+		
+		model.addAttribute("packageList", packageList);
+		model.addAttribute("order", order);
+		return "logistics/mobileCheckSendClothes";
+	}
 
 }
