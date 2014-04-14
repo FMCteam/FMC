@@ -26,6 +26,7 @@ import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
@@ -34,6 +35,54 @@ import nju.software.dataobject.Quote;
 import nju.software.service.BuyService;
 import nju.software.util.JbpmAPIUtil;
 
+/**
+ * @author Administrator
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
 @Service("buyServiceImpl")
 public class BuyServiceImpl implements BuyService {
 	
@@ -60,10 +109,10 @@ public class BuyServiceImpl implements BuyService {
 	@Autowired
 	private AccessoryDAO accessoryDAO;
 	@Autowired
-
-	private ProductDAO productDAO;
-
+private ProductDAO productDAO;
+    @Autowired
 	private AccessoryCostDAO AccessoryCostDAO;
+	
 	@Autowired
 	private FabricCostDAO FabricCostDAO;
 	
@@ -329,7 +378,20 @@ public class BuyServiceImpl implements BuyService {
 		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
 		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		orderInfo.setFabricCosts(FabricCostDAO.findByOrderId(orderId));
-		orderInfo.setProduces(ProduceDAO.findByOrderId(orderId));
+		orderInfo.setAccessoryCosts(AccessoryCostDAO.findByOrderId(orderId));
+		
+      int SampleAmount=0;
+		//样衣总数量
+		List<Produce> produces=ProduceDAO.findByOrderId(orderId);
+		    for (Produce produce :produces){
+		    	if(produce.getType().equals("sampleProduce")){
+		    		SampleAmount=produce.getL()+produce.getM()+produce.getS()+produce.getXl()+produce.getXs()+produce.getXxl();
+		}
+		    	 }
+		    	orderInfo.getData().put("SampleAmount", new Integer(SampleAmount));
+		
+		
+		
 		orderInfo.setTask(task);
 		return orderInfo;
 
@@ -527,5 +589,39 @@ public class BuyServiceImpl implements BuyService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	
+	
+	
+ /* save AccessoryCost
+  * @Author WangJian
+ */
+@Override
+	public void updateAccessoryCost(int orderId, String[] accessory_names,
+			String[] tear_per_piece, String[] cost_per_piece,
+			String[] accessory_prices) {
+		
+		
+		
+		for (int i=0;i<accessory_names.length;i++)      
+		  {      
+			
+			AccessoryCost accessoryCost =new AccessoryCost();
+			accessoryCost.setOrderId(orderId);
+			
+			//修改FabricCost内容
+			accessoryCost.setAccessoryName(accessory_names[i]);
+			accessoryCost.setTearPerPiece(Float.parseFloat(tear_per_piece[i]));
+			accessoryCost.setCostPerPiece(Float.parseFloat(cost_per_piece[i]));
+			accessoryCost.setPrice(Float.parseFloat(accessory_prices[i]));
+	       
+	   	//提交修改
+			AccessoryCostDAO.save(accessoryCost);
+		  }
+
+		
+		// TODO Auto-generated method stub
+		
 	}
 }

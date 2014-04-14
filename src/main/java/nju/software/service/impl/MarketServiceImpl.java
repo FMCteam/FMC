@@ -562,7 +562,7 @@ public class MarketServiceImpl implements MarketService {
 
 
 	@Override
-	public void mergeQuoteSubmit(int accountId, float inner, float outer, int id, long taskId,
+	public void mergeQuoteSubmit(int accountId, Quote q, int id, long taskId,
 			long processId) {
 		// TODO Auto-generated method stub
 		// 需要获取task中的数据
@@ -571,9 +571,6 @@ public class MarketServiceImpl implements MarketService {
 		int orderId_process = (int) process.getVariable("orderId");
 		if (id == orderId_process) {
 			Map<String, Object> data = new HashMap<>();
-			Quote q = quoteDAO.findById(id);
-			q.setInnerPrice(inner);
-			q.setOuterPrice(outer);
 			quoteDAO.merge(q);
 			try {
 				jbpmAPIUtil.completeTask(taskId, null, accountId+"");
@@ -593,30 +590,25 @@ public class MarketServiceImpl implements MarketService {
 				ACTOR_MARKET_MANAGER, TASK_VERIFY_QUOTE);
 		List<OrderInfo> taskSummarys = new ArrayList<>();
 		for (TaskSummary task : tasks) {
-			if (getVariable("employeeId", task).equals(accountId)) {
-				Integer orderId = (Integer) getVariable("orderId", task);
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setQuote(quoteDAO.findById(orderId));
-				oi.setTask(task);
-				taskSummarys.add(oi);
-			}
+			Integer orderId = (Integer) getVariable("orderId", task);
+			OrderInfo oi = new OrderInfo();
+			oi.setOrder(orderDAO.findById(orderId));
+			oi.setQuote(quoteDAO.findById(orderId));
+			oi.setTask(task);
+			taskSummarys.add(oi);
 		}
 		return taskSummarys;
 	}
 
 
 	@Override
-	public void verifyQuoteSubmit(float inner, float outer, int id,
+	public void verifyQuoteSubmit(Quote q, int id,
 			long taskId, long processId) {
 		// TODO Auto-generated method stub
 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 				.getKsession().getProcessInstance(processId);
 		int orderId_process = (int) process.getVariable("orderId");
 		if (id == orderId_process) {
-			Quote q = quoteDAO.findById(id);
-			q.setInnerPrice(inner);
-			q.setOuterPrice(outer);
 			quoteDAO.merge(q);
 			Map<String, Object> data = new HashMap<>();
 			try {
@@ -661,6 +653,64 @@ public class MarketServiceImpl implements MarketService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public OrderInfo getVerifyQuoteDetail(Integer userId, int id, long task_id) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_MARKET_MANAGER, TASK_VERIFY_QUOTE);
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) getVariable("orderId", task);
+			if (id == orderId && task_id == task.getId()) {
+				OrderInfo oi = new OrderInfo();
+				oi.setQuote(quoteDAO.findById(orderId));
+				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public OrderInfo getConfirmQuoteDetail(Integer userId, int id, long task_id) {
+		// TODO Auto-generated method stub
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				userId+"", TASK_CONFIRM_QUOTE);
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) getVariable("orderId", task);
+			if (id == orderId && task_id == task.getId()) {
+				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setQuote(quoteDAO.findById(orderId));
+				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setTask(task);
+				return oi;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void modifyQuoteSubmit(Quote q, int id, long taskId,
+			long processId, Integer userId) {
+		// TODO Auto-generated method stub
+		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+				.getKsession().getProcessInstance(processId);
+		int orderId_process = (int) process.getVariable("orderId");
+		if (id == orderId_process) {
+			quoteDAO.merge(q);
+			Map<String, Object> data = new HashMap<>();
+			try {
+				jbpmAPIUtil.completeTask(taskId, null, userId+"");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/*@Override

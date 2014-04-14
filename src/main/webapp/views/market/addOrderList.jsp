@@ -8,9 +8,12 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<section class="list">
-				<table id="dyntable"
-					class="table responsive list">
-					<caption>客户下单</caption>
+				<table id="dyntable" class="list">
+					<caption>
+						<span class="text-vertical">客户列表:<span class="number">${fn:length(customers)}</span>个客户
+						</span><input type="text" class="search-query float-right"
+							placeholder="输入检索条件">
+					</caption>
 					<tr>
 						<th class="head0">客户姓名</th>
 						<th class="head1">客户电话</th>
@@ -43,6 +46,8 @@
 
 <%@include file="/common/js_file.jsp"%>
 <!-- 这里引入你需要的js文件 -->
+<link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <style type="text/css">
 .table th,.table td {

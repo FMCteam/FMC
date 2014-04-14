@@ -7,9 +7,13 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<section>
-				<table id="dyntable" class="table responsive">
-					<caption>修改加工单</caption>
+			<section class="list">
+				<table id="dyntable" class="list">
+					<caption>
+						<span class="text-vertical">修改加工单列表:<span class="number">${fn:length(tasks)}</span>件任务
+						</span><input type="text" class="search-query float-right"
+							placeholder="输入检索条件">
+					</caption>
 					<tr>
 						<th class="head0">客户姓名</th>
 						<th class="head1">客户电话</th>
@@ -48,5 +52,7 @@
 <!-- 这里引入你需要的js文件 -->
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <link rel="stylesheet" href="../views/market/quoteConfirmList.css">
+<link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <%@include file="/common/footer.jsp"%>
 

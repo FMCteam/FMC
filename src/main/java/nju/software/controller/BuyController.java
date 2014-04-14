@@ -66,28 +66,10 @@ public class BuyController {
 		model.addAttribute("orderInfo", orderInfo);
 		model.addAttribute("logistics", logistics);
 		
-		model.addAttribute("fabricCostlist", orderInfo.getFabricCosts()); //面料报价详细信息
-		int amount=0;
-		
-		List<Produce> produces=orderInfo.getProduces();
-		    for (Produce produce :produces){
-		    	if(produce.getType().equals("sampleProduce")){
-		    		System.out.print("INNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
-		    		amount=produce.getL()+produce.getM()+produce.getS()+produce.getXl()+produce.getXs()+
-		    				produce.getXxl();
-		    	}
-		    	
-		    	
-		    }
-		System.out.print(amount);
-		    
-		orderInfo.getData().put("amount", new Integer(amount));
-		
+		model.addAttribute("fabricCostlist", orderInfo.getFabricCosts()); 
+		model.addAttribute("accessoryCostlist", orderInfo.getAccessoryCosts());//面料报价详细信息
 		
 	
-		
-		
-			
 		
 		return "/buy/purchaseSampleMaterialDetail";
 	}
@@ -402,6 +384,15 @@ public class BuyController {
 		
 		
 		
+		 buyService.updateAccessoryCost(
+				  Integer.parseInt(orderId),
+				 
+				 accessory_names,
+				 tear_per_piece,
+				 cost_per_piece,
+				 accessory_prices);
+			
+		
 		 buyService.computePurchaseCostSubmit( 
 				   Integer.parseInt(orderId),
 				   Long.parseLong(taskId), 
@@ -411,8 +402,7 @@ public class BuyController {
 					fabric_prices
 				   );
 		
-//        buyService.updateAccessoryCost(orderId_request, taskId, processId, accessory_names, tear_per_piece, cost_per_piece, accessory_prices);
-		
+       
 		
 		
 		

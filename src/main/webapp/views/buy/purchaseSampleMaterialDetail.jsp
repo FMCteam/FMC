@@ -209,8 +209,30 @@
 	                    <td colspan="2">${fabricCost.fabricName }</td>
 	                     
 						<td colspan="1">${fabricCost.tearPerMeter }</td>
-                        <td colspan="1">${fabricCost.tearPerMeter +1}</td>
-                        <td colspan="2">${orderInfo.data.amount}</td>
+                        <td colspan="1">${orderInfo.data.SampleAmount}</td>
+                        <td colspan="2">${fabricCost.tearPerMeter*orderInfo.data.SampleAmount}</td>
+						     </tr>
+                        </c:forEach>
+							</tr>
+							
+							
+								
+							<tr>
+								  <td rowspan= "5">辅料采购</td>
+                        <td colspan="2">辅料名</td>
+                        <td colspan="1">单件耗数</td>
+                        <td colspan="1">件数</td>
+                        <td colspan="2">总采购个数</td>
+
+							</tr>
+							
+							<tr>
+								 <c:forEach var="accessoryCost" items="${accessoryCostlist}" >
+	                        <tr >
+	                    <td colspan="2">${accessoryCost.accessoryName }</td>
+       					<td colspan="1">${accessoryCost.tearPerPiece }</td>
+                        <td colspan="1">${orderInfo.data.SampleAmount}</td>
+                        <td colspan="2">${accessoryCost.tearPerPiece*orderInfo.data.SampleAmount}</td>
 						     </tr>
                         </c:forEach>
 							</tr>

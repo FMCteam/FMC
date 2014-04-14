@@ -3,7 +3,6 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form method="post" action="${ctx}/market/modifyQuoteSubmit.do" >
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
@@ -40,10 +39,13 @@
 			<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
 			<input type="hidden" name="order_id" value="${orderInfo.quote.orderId }" />
 			<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
-			<button class="btn btn-primary btn-rounded"><i
-				class="icon-ok icon-white"></i>确定</button> 
+			<a href="${ctx}/market/confirmQuoteSubmit.do?result=1$taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
+			class="btn btn-primary btn-rounded"><i class="icon-white"></i>确认</a> 
+				<a href="${ctx}/market/confirmQuoteSubmit.do?result=2$taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
+				class="btn btn-primary btn-rounded"><i class="icon-white"></i>修改</a>
+				<a href="${ctx}/market/confirmQuoteSubmit.do?result=3$taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
+				class="btn btn-danger btn-rounded"><i class="icon-white"></i>取消订单</a>
 		</div>
-		</form>
 	</div>
 
 

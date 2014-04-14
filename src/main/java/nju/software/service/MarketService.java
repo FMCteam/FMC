@@ -13,6 +13,7 @@ import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
+import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
@@ -79,12 +80,12 @@ public interface MarketService {
 
 	public List<OrderInfo> getMergeQuoteList(Integer accountId);
 
-	public void mergeQuoteSubmit(int accountId, float inner, float outer, int id, long taskId,
+	public void mergeQuoteSubmit(int accountId, Quote quote, int id, long taskId,
 			long processId);
 
 	public List<OrderInfo> getVerifyQuoteList(Integer accountId);
 
-	public void verifyQuoteSubmit(float inner, float outer, int id,
+	public void verifyQuoteSubmit(Quote quote, int id,
 			long taskId, long processId);
 
 	public List<OrderInfo> getModifyOrderList(Integer accountId);
@@ -95,5 +96,12 @@ public interface MarketService {
 			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<VersionData> versions, boolean editok, long taskId, Integer accountId);
 
 	public OrderInfo getMergeQuoteDetail(Integer userId, int id, long task_id);
+
+	public OrderInfo getVerifyQuoteDetail(Integer userId, int id, long task_id);
+
+	public OrderInfo getConfirmQuoteDetail(Integer userId, int id, long task_id);
+
+	public void modifyQuoteSubmit(Quote quote, int id, long taskId,
+			long processId, Integer userId);
 	
 }

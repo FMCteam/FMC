@@ -59,13 +59,7 @@ public class JbpmTest {
 		orderDAO.save(order);
 		orderId=order.getOrderId();
 		
-		Produce produce=new Produce();
-	    produce.setType("sampleProduce");
-		produce.setColor("lv");
-		produce.setL(5);
-		produce.setM(1);
-		produce.setOid(order.getOrderId());
-		produceDAO.save(produce);
+	
 		
 		
 		for(int i=0;i<3;i++){
