@@ -1,6 +1,8 @@
 package nju.software.service;
 
 import java.util.List;
+import java.util.Map;
+
 import nju.software.model.OrderInfo;
 
 public interface LogisticsService {
@@ -17,7 +19,7 @@ public interface LogisticsService {
 
 	public OrderInfo getSendSampleDetail(Integer orderId);
 	
-	public boolean sendSampleSubmit(long taskId, long processId);
+	public boolean sendSampleSubmit(Map<String,Object>map);
 	
 	// ===========================产品入库=================================
 	public List<OrderInfo> getWarehouseList();

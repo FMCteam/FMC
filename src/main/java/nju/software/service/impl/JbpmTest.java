@@ -79,7 +79,7 @@ public class JbpmTest {
 			p.setXl(5);
 			p.setXxl(6);
 			p.setOid(order.getOrderId());
-			produceDAO.save(produce);
+			produceDAO.save(p);
 		}
 		
 		for(int i=0;i<3;i++){
@@ -93,7 +93,7 @@ public class JbpmTest {
 			p.setXl(5);
 			p.setXxl(6);
 			p.setOid(order.getOrderId());
-			produceDAO.save(produce);
+			produceDAO.save(p);
 		}
 		
 		
@@ -215,6 +215,47 @@ public class JbpmTest {
 		data.put("eidtquote", false);
 		data.put("samplejin", true);
 		completeTask(taskId, data, actorId);
+	}
+	
+	
+	public void completeProduceSample(String actorId){
+		completeConfirmQuote(actorId);
+		
+		
+		
+		
+		
+		//样衣制作金确认
+		long taskId = getTaskId(FinanceServiceImpl.ACTOR_FINANCE_MANAGER,
+				FinanceServiceImpl.TASK_CONFIRM_SAMPLE_MONEY, orderId);
+		Map data=new HashMap <String,Object> ();
+		data.put("receivedsamplejin", true);
+		completeTask(taskId, data, FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
+		
+		
+		//采购样衣
+		 taskId = getTaskId(BuyServiceImpl.ACTOR_PURCHASE_MANAGER,
+				BuyServiceImpl.TASK_PURCHASE_SAMPLE_MATERIAL, orderId);
+		 data=new HashMap <String,Object> ();
+		data.put("purchaseerror", false);
+		completeTask(taskId, data, BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
+		
+		
+		
+		//上传CAD
+		taskId = getTaskId(DesignServiceImpl.ACTOR_DESIGN_MANAGER,
+				DesignServiceImpl.TASK_UPLOAD_DESIGN, orderId);
+		data=new HashMap <String,Object> ();
+		//data.put("purchaseerror", false);
+		completeTask(taskId, data, DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+		
+		
+		//生产样衣
+		taskId = getTaskId(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER,
+				ProduceServiceImpl.TASK_PRODUCE_SAMPLE, orderId);
+		data=new HashMap <String,Object> ();
+		data.put("producterror", false);
+		completeTask(taskId, data, ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
 	}
 	
 	
