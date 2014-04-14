@@ -15,6 +15,8 @@ import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.PackageDAO;
+import nju.software.dao.impl.PackageDetailDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
@@ -22,7 +24,10 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Package;
+import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Produce;
+import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 
 
@@ -56,7 +61,7 @@ public class JbpmTest {
 		order.setHasPostedSampleClothes((short) 1);
 		order.setIsNeedSampleClothes((short) 1);
 		order.setOrderSource("Test");
-		
+		order.setLogisticsState(1);
 		orderDAO.save(order);
 		orderId=order.getOrderId();
 		
@@ -364,7 +369,20 @@ public class JbpmTest {
 	
 	public void completeTaskLogistics(String actionId){
 		completeCheckQuality(actionId);
-		
+		Package packages = new Package();
+		packages.setOrderId(orderId);
+		Date inDate = new Date();
+		Timestamp entryTime = new Timestamp(inDate.getTime());
+		packages.setPackageTime(entryTime);
+		packages.setWarehouseId("1号");
+		packages.setShelfId("3层");
+		packageDAO.save(packages);
+		PackageDetail packageDetail =new PackageDetail();
+		packageDetail.setClothesAmount(100);
+		packageDetail.setClothesStyleColor("红色");
+		packageDetail.setClothesStyleName("雪纺连衣裙");
+		packageDetail.setPackageId(packages.getPackageId());
+		packageDetailDAO.save(packageDetail);
 		 long taskId = getTaskId("logisticsManager",
 				"warehouse", orderId);
 		Map data=new HashMap <String,Object> ();
@@ -373,6 +391,7 @@ public class JbpmTest {
 		 taskId = getTaskId("financeManager",
 					"confirmFinalPayment", orderId);
 			data=new HashMap <String,Object> ();
+			data.put("paymentok", true);
 			completeTask(taskId, data, "financeManager");
 	}
 		
@@ -428,5 +447,9 @@ public class JbpmTest {
 	private ProductDAO productDAO;
 	@Autowired
 	private ProduceDAO produceDAO;
+	@Autowired
+	private PackageDAO packageDAO;
+	@Autowired
+	private PackageDetailDAO packageDetailDAO;
 	private Integer orderId=0;
 }
