@@ -73,13 +73,13 @@
 	</tr>
 	<tr>
 		<td></td>
-		<td><input class="span12" type="text" name="profitPerPiece" value="${merge_w eq null ? 'orderInfo.quote.profitPerPiece' : '' }" />
+		<td><input class="span12" type="text" name="profitPerPiece" value="${merge_w eq null ? orderInfo.quote.profitPerPiece : '' }" />
 			
 		</td>
-		<td><input class="span12" type="text" name="inner_price" value="${merge_w eq null ? 'orderInfo.quote.innerPrice' : '' }" />
+		<td><input class="span12" type="text" name="inner_price" value="${merge_w eq null ? orderInfo.quote.innerPrice : '' }" />
 			
 		</td>
-		<td><input class="span12" type="text" name="outer_price" value="${merge_w eq null ? 'orderInfo.quote.outerPrice' : '' }" />
+		<td><input class="span12" type="text" name="outer_price" value="${merge_w eq null ? orderInfo.quote.outerPrice : '' }" />
 			
 		</td>
 	</tr>

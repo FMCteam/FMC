@@ -202,27 +202,7 @@ public class LogisticsController {
 
 	}
 
-	/**
-	 * 扫描确认发货
-	 * 
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "logistics/checkSendClothes.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String checkSendClothes(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-
-		// String orderId=request.getParameter("orderId");
-		// OrderInfo
-		// orderInfo=logisticsService.getSendClothesDetail(Integer.parseInt(orderId));
-		//
-		// model.addAttribute("orderInfo", orderInfo);
-
-		return "logistics/checkSendClothes";
-	}
+	
 
 	
 	@RequestMapping(value = "/logistics/sendClothesDetail.do")
@@ -267,4 +247,40 @@ public class LogisticsController {
 	private ProduceService produceService;
 	@Autowired
 	private JbpmTest jbpmTest;
+
+	@RequestMapping(value = "/logistics/mobile.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String showMobilePage(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		 
+		return "logistics/mobile";
+	}
+	
+	@RequestMapping(value = "/logistics/mobileStore.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String mobileStore(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		 
+		return "logistics/mobileUpdateStore";
+	}
+	/**
+	 * 扫描确认发货
+	 * 
+	 */
+	@RequestMapping(value = "logistics/mobileScan.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String checkSendClothes(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+
+		// String orderId=request.getParameter("orderId");
+		// OrderInfo
+		// orderInfo=logisticsService.getSendClothesDetail(Integer.parseInt(orderId));
+		//
+		// model.addAttribute("orderInfo", orderInfo);
+
+		return "logistics/mobileCheckSendClothes";
+	}
+
+
+
 }

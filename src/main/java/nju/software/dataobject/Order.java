@@ -47,7 +47,8 @@ public class Order implements java.io.Serializable {
 	private double discount;
 	private double totalMoney;
 	private double sampleMoney;
-	
+	private boolean isScanChecked; //是否已经扫描
+	private boolean isStored; //是否已经入库
 	
 	@Column(name = "sampleMoney", nullable = true, precision = 22, scale = 0)
 	public double getSampleMoney() {
@@ -404,6 +405,24 @@ public class Order implements java.io.Serializable {
 
 	public void setPayAccountInfo(String payAccountInfo) {
 		this.payAccountInfo = payAccountInfo;
+	}
+	
+	@Column(name = "is_scan_checked", columnDefinition = "boolean default false")
+	public boolean isScanChecked() {
+		return isScanChecked;
+	}
+
+	public void setScanChecked(boolean isScanChecked) {
+		this.isScanChecked = isScanChecked;
+	}
+	
+	@Column(name = "is_stored", columnDefinition = "boolean default false")
+	public boolean isStored() {
+		return isStored;
+	}
+
+	public void setStored(boolean isStored) {
+		this.isStored = isStored;
 	}
 
 }
