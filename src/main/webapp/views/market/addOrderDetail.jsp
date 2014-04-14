@@ -4,7 +4,7 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 	<form onSubmit="return verify()" method="post"
-				action="${ctx }/market/addOrderSubmit.do" enctype="multipart/form-data"">
+				action="${ctx }/market/addOrderSubmit.do" enctype="multipart/form-data">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs" id="tab">
@@ -73,7 +73,7 @@
 								type="radio" name="fabric_type" value="梭织" /> <span>针织</span> <input
 								type="radio" name="fabric_type" value="编织"> <span>编织</span>
 								<input type="radio" name="fabric_type" value="梭针混合" /> <span>梭针混合</span>
-								<input type="radio" name="fabric_type" value="阵编混合" /> <span>阵编混合</span>
+								<input type="radio" name="fabric_type" value="阵编混合" /> <span>针编混合</span>
 								<input type="radio" name="fabric_type" value="梭编混合" /> <span>梭编混合</span></td>
 						</tr>
 						<tr>
@@ -369,4 +369,9 @@
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script>
+	$(function() {
+		$('#tab a:first').tab('show');
+	});
+</script>
 <%@include file="/common/footer.jsp"%>
