@@ -320,6 +320,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		}
 		try {
 			order.setLogisticsState(3);
+			orderDAO.attachDirty(order);
 			return true;
 		} catch(Exception ex) {
 			return false;
@@ -389,6 +390,27 @@ public class LogisticsServiceImpl implements LogisticsService {
 	public List<Package> getPackageListByOrderId(int orderId) {
 		// TODO Auto-generated method stub
 		return packageDAO.findByOrderId(orderId);
+	}
+
+	@Override
+	public OrderInfo getStoreClothesDetail(int orderId) {
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
+				TASK_WAREHOUSE, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		  
+		orderInfo.setTask(task);
+		return orderInfo;
+	}
+
+	@Override
+	public List<PackageDetail> getPackageDetailList(int packageId) {
+		return packageDetailDAO.findByPackageId(packageId);
+	}
+
+	@Override
+	public Package getPackageByPackageId(int packageId) {
+		return packageDAO.findById(packageId);
 	}
 
 	

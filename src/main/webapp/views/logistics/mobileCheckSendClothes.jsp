@@ -9,9 +9,10 @@
 <script type="text/javascript" src="${ctx }/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
 
-var has_checked = false;
+ 
 function check() {
-	if(has_checked) {
+	 
+	if($("#package_list").find("table[sc='unchecked']").length===0) {
 		return true;
 	} else {
 		alert("还未扫描确认所有包！");
@@ -29,10 +30,11 @@ $(function() {
 			var $p = $(pl[i]), _pid = $p.attr("id").split("_")[1];
 			if(_pid===pid) {
 				found = true;
-				$tw.val($p.find("tr:eq(0) td:eq(1)").text());
-				$ts.val($p.find("tr:eq(1) td:eq(1)").text());
-				$tl.val($p.find("tr:eq(1) td:eq(1)").text());
-				$("#status_" + pid).css("color": "green").text("已确认");
+				$tw.val($p.find("tr:eq(1) td:eq(1)").text());
+				$ts.val($p.find("tr:eq(2) td:eq(1)").text());
+				$tl.val($p.find("tr:eq(3) td:eq(1)").text());
+				$("#status_" + pid).css("color", "green").text("已确认");
+				$p.attr("sc", "checked");
 				break;
 			}
 		}
@@ -43,6 +45,7 @@ $(function() {
 	$("#txtScan").keydown(function(e) {
 		if(e.keyCode === 13) {
 			checkPackageId($(this).val().trim());
+			$(this).select();
 		}
 	});
 });
@@ -51,6 +54,9 @@ $(function() {
 	* {
 		padding: 0;
 		margin: 0;
+	}
+	h3, h4 {
+		margin-bottom: 10px;
 	}
 	ul li {
 		list-style: none;
@@ -63,31 +69,28 @@ $(function() {
 <body>
 <h3>智造链-入库</h3>
 <div>
-<h3>订单号：${order.orderId}</h3>
+<h4>订单号：${order.orderId}</h4>
 </div>
-<div>
-<form method="post">
+<div style="margin-bottom: 10px;">
 
 <table>
-<tr><td>包号：</td><td><input type="text" id="txtScan" name="packageId"/></td></tr>
-<tr><td>仓库：</td><td><input disabled="true" type="text" id="txtWare" name="warehouseId"/></td></tr>
-<tr><td>货架：</td><td><input disabled="true" type="text" id="txtShelf" name="shelfId"/></td></tr>
-<tr><td>位置：：</td><td><input disabled="true" type="text" id="txtLocation" name="location"/></td></tr>
+<tr><td>包号：</td><td><input autocomplete="off" type="text" id="txtScan" name="packageId"/></td></tr>
+<tr><td>仓库：</td><td><input autocomplete="off" disabled="true" type="text" id="txtWare" name="warehouseId"/></td></tr>
+<tr><td>货架：</td><td><input autocomplete="off" disabled="true" type="text" id="txtShelf" name="shelfId"/></td></tr>
+<tr><td>位置：</td><td><input autocomplete="off" disabled="true" type="text" id="txtLocation" name="location"/></td></tr>
 </table>
-<p><input type="submit" value="提交"/></p>
 
-</form>
 </div>
 
 <ul id="package_list">
-<c:forEach var="package" items="${packageList}">
+<c:forEach var="packageInfo" items="${packageList}">
 <li>
-<table id="package_${package.packageId }">
-<tr><td>包号：</td><td>${package.packageId }</td></tr>
-<tr><td>仓库：</td><td>${package.warehouseId }</td></tr>
-<tr><td>货架：</td><td>${package.shelfId }</td></tr>
-<tr><td>位置：</td><td>${package.location }</td></tr>
-<tr><td>状态：</td><td><span id="status_${package.packageId }" style="color: red;">未确认</span></td></tr>
+<table id="package_${packageInfo.packageId }" sc="unchecked">
+<tr><td>包号：</td><td>${packageInfo.packageId }</td></tr>
+<tr><td>仓库：</td><td>${packageInfo.warehouseId }</td></tr>
+<tr><td>货架：</td><td>${packageInfo.shelfId }</td></tr>
+<tr><td>位置：</td><td>${packageInfo.location }</td></tr>
+<tr><td>状态：</td><td><span id="status_${packageInfo.packageId }" style="color: red;">未确认</span></td></tr>
 </table>
 </li>
 </c:forEach>
@@ -96,6 +99,7 @@ $(function() {
 
 <form action="${ctx }/logistics/finishScanClothes.do" method="post" onsubmit="return check();">
 <input type="hidden" value="${order.orderId }" name="orderId" />
+<input type="hidden" value="${task.taskId }" name="taskId"/>
 <input type="submit" value="完成入库" name="submit" />
 </form>
 </div>

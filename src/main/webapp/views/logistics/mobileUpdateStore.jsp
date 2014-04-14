@@ -12,6 +12,7 @@ $(function() {
 	var $tw = $("#txtWare");
 	var $ts = $("#txtShelf");
 	var $tl = $("#txtLocation");
+	
 	function checkPackageId(pid) {
 		var found = false;
 		var pl = $("#package_list").find("table");
@@ -19,9 +20,9 @@ $(function() {
 			var $p = $(pl[i]), _pid = $p.attr("id").split("_")[1];
 			if(_pid===pid) {
 				found = true;
-				$tw.val($p.find("tr:eq(0) td:eq(1)").text());
-				$ts.val($p.find("tr:eq(1) td:eq(1)").text());
-				$tl.val($p.find("tr:eq(1) td:eq(1)").text());
+				$tw.val($p.find("tr:eq(1) td:eq(1)").text());
+				$ts.val($p.find("tr:eq(2) td:eq(1)").text());
+				$tl.val($p.find("tr:eq(3) td:eq(1)").text());
 				break;
 			}
 		}
@@ -36,9 +37,13 @@ $(function() {
 	$("#txtScan").keydown(function(e) {
 		if(e.keyCode === 13) {
 			checkPackageId($(this).val().trim());
-			e.preventDefault();
+			 
 		}
 	});
+	$("#submit_btn").click(function() {
+		$("#updateForm").submit();
+	});
+	
 });
 </script>
 <style type="text/css">
@@ -60,15 +65,15 @@ $(function() {
 <h3>订单号：${order.orderId}</h3>
 </div>
 <div>
-<form method="post">
+<form method="post" id="updateForm">
 
 <table>
-<tr><td>包号：</td><td><input type="text" id="txtScan" name="packageId"/></td></tr>
-<tr><td>仓库：</td><td><input disabled="true" type="text" id="txtWare" name="warehouseId"/></td></tr>
-<tr><td>货架：</td><td><input disabled="true" type="text" id="txtShelf" name="shelfId"/></td></tr>
-<tr><td>位置：：</td><td><input disabled="true" type="text" id="txtLocation" name="location"/></td></tr>
+<tr><td>包号：</td><td><input autocomplete="off" type="text" id="txtScan" name="packageId"/></td></tr>
+<tr><td>仓库：</td><td><input autocomplete="off" disabled="true" type="text" id="txtWare" name="warehouseId"/></td></tr>
+<tr><td>货架：</td><td><input autocomplete="off" disabled="true" type="text" id="txtShelf" name="shelfId"/></td></tr>
+<tr><td>位置：</td><td><input autocomplete="off" disabled="true" type="text" id="txtLocation" name="location"/></td></tr>
 </table>
-<p><input type="submit" value="提交"/></p>
+<p><input type="button" id="submit_btn" value="提交"/></p>
 
 </form>
 </div>
@@ -80,7 +85,7 @@ $(function() {
 <tr><td>包号：</td><td>${packageInfo.packageId }</td></tr>
 <tr><td>仓库：</td><td>${packageInfo.warehouseId }</td></tr>
 <tr><td>货架：</td><td>${packageInfo.shelfId }</td></tr>
-<tr><td>位置：：</td><td>${packageInfo.location }</td></tr>
+<tr><td>位置：</td><td>${packageInfo.location }</td></tr>
 </table>
 </li>
 </c:forEach>
@@ -88,6 +93,7 @@ $(function() {
 <div>
 
 <form action="${ctx }/logistics/finishUpdateStore.do" method="post">
+<input type="hidden" value="${task.taskId }" name="taskId" />
 <input type="hidden" value="${order.orderId }" name="orderId" />
 <input type="submit" value="完成入库" name="submit" />
 </form>

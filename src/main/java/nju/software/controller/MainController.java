@@ -43,6 +43,7 @@ public class MainController {
 			return "redirect:default.do";
 		} else {
 			String user_agent = request.getHeader("user-agent");
+			System.out.println(user_agent);
 			System.out.println(user_agent.contains("Windows Phone 6.5"));
 			if(user_agent.contains("Windows Phone 6.5")) {
 				return "login2";
@@ -77,6 +78,7 @@ public class MainController {
 		HttpSession session = request.getSession();
 		Account account = accountService.vertifyAccount(user_name, user_password);
 		String user_agent = request.getHeader("user-agent");
+		
 		boolean is_wm = user_agent.contains("Windows Phone 6.5");
 		if (account != null) {
 			session.setAttribute("cur_user", account);
