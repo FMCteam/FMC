@@ -123,18 +123,25 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return orderInfo;
 	}
 
+	
 	@Override
-	public boolean sendSampleSubmit(long taskId, long processId) {
+	public boolean sendSampleSubmit(Map<String,Object>map) {
+		Integer orderId=(Integer) map.get("orderId");
+		Logistics logistics=logisticsDAO.findById(orderId);
+		//logistics.set
+		long taskId=(long) map.get("taskId");
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
-		return true;
 	}
 
+	
 	// ===========================产品入库=================================
 	@Override
 	public List<OrderInfo> getWarehouseList() {

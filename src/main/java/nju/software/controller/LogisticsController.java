@@ -2,18 +2,25 @@ package nju.software.controller;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import nju.software.model.OrderInfo;
 import nju.software.service.CustomerService;
 import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
+import nju.software.service.impl.JbpmTest;
+import nju.software.service.impl.LogisticsServiceImpl;
 import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +65,7 @@ public class LogisticsController {
 		String result = request.getParameter("result");
 		String taskId = request.getParameter("taskId");
 		logisticsService.receiveSampleSubmit(Long.parseLong(taskId), result);
-		return "forward:/logistics/receiveSampleSubmit.do";
+		return "forward:/logistics/receiveSampleList.do";
 	}
 
 	
@@ -68,6 +75,10 @@ public class LogisticsController {
 	public String sendSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<OrderInfo> list = logisticsService.getSendSampleList();
+		if(list.size()==0){
+			jbpmTest.completeProduceSample(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
+			list = logisticsService.getSendSampleList();
+		}
 		model.put("list", list);
 		return "/logistics/sendSampleList";
 	}
@@ -89,12 +100,20 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String sendSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String id = request.getParameter("orderId");
-		String taskId = request.getParameter("taskId");
-		String processId = request.getParameter("processId");
-		long tid = Long.parseLong(taskId);
-		long pid = Long.parseLong(processId);
-		logisticsService.sendSampleSubmit(tid, pid);
+		String orderId_string = request.getParameter("orderId");
+		Integer orderId=Integer.parseInt(orderId_string);
+		String taskId_string = request.getParameter("taskId");
+		long taskId=Long.parseLong(taskId_string);
+		String time=request.getParameter("time");
+		String name=request.getParameter("name");
+		String number=request.getParameter("number");
+		Map<String,Object>map=new HashMap<String,Object>();
+		map.put("orderId", orderId);
+		map.put("taskId", taskId);
+		map.put("time", time);
+		map.put("name", name);
+		map.put("number", number);
+		logisticsService.sendSampleSubmit(map);
 		return "forward:/logistics/sendSampleList.do";
 	}
 
@@ -222,7 +241,9 @@ public class LogisticsController {
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired
 	private ProduceService produceService;
-	
+	@Autowired
+	private JbpmTest jbpmTest;
+
 	@RequestMapping(value = "/logistics/mobile.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String showMobilePage(HttpServletRequest request,
@@ -255,4 +276,7 @@ public class LogisticsController {
 
 		return "logistics/mobileCheckSendClothes";
 	}
+
+
+
 }

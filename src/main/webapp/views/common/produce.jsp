@@ -9,7 +9,20 @@
 		<td class="span1">L</td>
 		<td class="span1">XL</td>
 		<td class="span1">XXL</td>
+		<td class="span1">总计</td>
 	</tr>
+	<c:forEach var="sample" items="${orderInfo.sample}">
+		<tr>
+			<td>${sample.color}</td>
+			<td>${sample.xs}</td>
+			<td>${sample.s}</td>
+			<td>${sample.m}</td>
+			<td>${sample.l}</td>
+			<td>${sample.xl}</td>
+			<td>${sample.xxl}</td>
+			<td class="span1"></td>
+		</tr>
+	</c:forEach>
 	<tr>
 		<td class="span1" rowspan="${fn:length(orderInfo.produce)+1}">大货加工</td>
 		<td class="span1">颜色</td>
@@ -19,7 +32,20 @@
 		<td class="span1">L</td>
 		<td class="span1">XL</td>
 		<td class="span1">XXL</td>
+		<td class="span1">总计</td>
 	</tr>
+		<c:forEach var="produce" items="${orderInfo.produce}">
+		<tr>
+			<td>${produce.color}</td>
+			<td>${produce.xs}</td>
+			<td>${produce.s}</td>
+			<td>${produce.m}</td>
+			<td>${produce.l}</td>
+			<td>${produce.xl}</td>
+			<td>${produce.xxl}</td>
+			<td class="span1"></td>
+		</tr>
+	</c:forEach>
 	<tr>
 		<td class="span1">大货总件数</td>
 		<td class="span1">${orderInfo.order.askAmount}</td>

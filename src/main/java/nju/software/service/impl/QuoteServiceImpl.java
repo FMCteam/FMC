@@ -39,7 +39,7 @@ public class QuoteServiceImpl implements QuoteService {
 	@Override
 	public Quote findByOrderId(String orderId) {
 		// TODO Auto-generated method stub
-		List<Quote> quote = quoteDAO.findByProperty("orderId", orderId);
+		List<Quote> quote = quoteDAO.findByProperty("orderId", Integer.parseInt(orderId));
 		if(quote.size()!=0){
 			return quote.get(0);
 		}else
