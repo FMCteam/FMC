@@ -15,11 +15,13 @@ import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.util.JbpmAPIUtil;
 
 
@@ -53,9 +55,40 @@ public class JbpmTest {
 		order.setHasPostedSampleClothes((short) 1);
 		order.setIsNeedSampleClothes((short) 1);
 		order.setOrderSource("Test");
-	
 		
 		orderDAO.save(order);
+		orderId=order.getOrderId();
+		
+	
+		
+		
+		for(int i=0;i<3;i++){
+			Produce p=new Produce();
+		    p.setType(Produce.TYPE_PRODUCE);
+			p.setColor(i+"");
+			p.setXs(1);
+			p.setS(2);
+			p.setM(3);
+			p.setL(4);
+			p.setXl(5);
+			p.setXxl(6);
+			p.setOid(order.getOrderId());
+			produceDAO.save(p);
+		}
+		
+		for(int i=0;i<3;i++){
+			Produce p=new Produce();
+		    p.setType(Produce.TYPE_SAMPLE_PRODUCE);
+			p.setColor(i+"");
+			p.setXs(1);
+			p.setS(2);
+			p.setM(3);
+			p.setL(4);
+			p.setXl(5);
+			p.setXxl(6);
+			p.setOid(order.getOrderId());
+			produceDAO.save(p);
+		}
 		
 		
 		// 面料数据
@@ -63,9 +96,8 @@ public class JbpmTest {
 		String fabric_amounts = "1,2,3";
 		String fabric_name[] = fabric_names.split(",");
 		String fabric_amount[] = fabric_amounts.split(",");
-		List<Fabric> fabrics = new ArrayList<Fabric>();
 		for (int i = 0; i < fabric_name.length; i++) {
-			fabrics.add(new Fabric(0, fabric_name[i], fabric_amount[i]));
+			fabricDAO.save(new Fabric(orderId, fabric_name[i], fabric_amount[i]));
 		}
 
 		// 辅料数据
@@ -73,9 +105,8 @@ public class JbpmTest {
 		String accessory_querys = "accessory1,accessory2,accessory3";
 		String accessory_name[] = accessory_names.split(",");
 		String accessory_query[] = accessory_querys.split(",");
-		List<Accessory> accessorys = new ArrayList<Accessory>();
 		for (int i = 0; i < fabric_name.length; i++) {
-			accessorys.add(new Accessory(0, accessory_name[i],
+			accessoryDAO.save(new Accessory(orderId, accessory_name[i],
 					accessory_query[i]));
 		}
 		
@@ -181,6 +212,47 @@ public class JbpmTest {
 	}
 	
 	
+	public void completeProduceSample(String actorId){
+		completeConfirmQuote(actorId);
+		
+		
+		
+		
+		
+		//样衣制作金确认
+		long taskId = getTaskId(FinanceServiceImpl.ACTOR_FINANCE_MANAGER,
+				FinanceServiceImpl.TASK_CONFIRM_SAMPLE_MONEY, orderId);
+		Map data=new HashMap <String,Object> ();
+		data.put("receivedsamplejin", true);
+		completeTask(taskId, data, FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
+		
+		
+		//采购样衣
+		 taskId = getTaskId(BuyServiceImpl.ACTOR_PURCHASE_MANAGER,
+				BuyServiceImpl.TASK_PURCHASE_SAMPLE_MATERIAL, orderId);
+		 data=new HashMap <String,Object> ();
+		data.put("purchaseerror", false);
+		completeTask(taskId, data, BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
+		
+		
+		
+		//上传CAD
+		taskId = getTaskId(DesignServiceImpl.ACTOR_DESIGN_MANAGER,
+				DesignServiceImpl.TASK_UPLOAD_DESIGN, orderId);
+		data=new HashMap <String,Object> ();
+		//data.put("purchaseerror", false);
+		completeTask(taskId, data, DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+		
+		
+		//生产样衣
+		taskId = getTaskId(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER,
+				ProduceServiceImpl.TASK_PRODUCE_SAMPLE, orderId);
+		data=new HashMap <String,Object> ();
+		data.put("producterror", false);
+		completeTask(taskId, data, ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
+	}
+	
+	
 	public void completeTask(long taskId, Map<?, ?> data, String actorId) {
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
@@ -229,6 +301,7 @@ public class JbpmTest {
 	private LogisticsDAO logisticsDAO;
 	@Autowired
 	private ProductDAO productDAO;
-
-	private static Integer orderId=0;
+	@Autowired
+	private ProduceDAO produceDAO;
+	private Integer orderId=0;
 }

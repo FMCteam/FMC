@@ -79,5 +79,7 @@ public interface IOrderDAO {
 	public List<Order> findSampleOrderAndPage(final int off_set,final int length);
 	
 	public int coutSampleOrder();
+	
+	public boolean setOrderScanChecked(Order instance);
 
 }

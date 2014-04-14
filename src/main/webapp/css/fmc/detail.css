@@ -1,3 +1,27 @@
 .action{
 	float: right;
 }
+
+table.detail.table.table-bordered{
+	border-top:1px solid #dddddd ;
+}
+
+.tab-content table.table td{
+	text-align: center;
+	vertical-align:middle;
+}
+
+ul.nav.nav-tabs.detail li{
+	float:right;
+}
+
+ul.nav.nav-tabs li.task-name{
+	float:left;
+	background-color:#0866c6; 
+	color: white;
+	padding: 9px 80px;
+}
+
+div.tab-content{
+	clear: both;	
+}

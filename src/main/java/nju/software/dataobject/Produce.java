@@ -28,8 +28,13 @@ public class Produce implements java.io.Serializable {
 	private Integer xxl;
 	private String type;
 	
-	public static final String TYPE_SAMPLE_PRODUCE = "sampleProduce";
-	public static final String TYPE_SAMPLE_PRODUCED = "sampleProduced";
+	public static final String TYPE_SAMPLE_PRODUCE = "sampleProduce";//生产样衣所需件数
+	public static final String TYPE_SAMPLE_PRODUCED = "sampleProduced";//实际生产件数
+	public static final String TYPE_PRODUCE="PRODUCE";
+	public static final String TYPE_PRODUCED="PRODUCED";
+	public static final String TYPE_QUALIFIED="QUALIFIED";
+	public static final String TYPE_UNQUALIFIED="UNQUALIFIED";
+	
 
 	// Constructors
 

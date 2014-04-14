@@ -2,18 +2,25 @@ package nju.software.controller;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import nju.software.model.OrderInfo;
 import nju.software.service.CustomerService;
 import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
+import nju.software.service.impl.JbpmTest;
+import nju.software.service.impl.LogisticsServiceImpl;
 import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +65,7 @@ public class LogisticsController {
 		String result = request.getParameter("result");
 		String taskId = request.getParameter("taskId");
 		logisticsService.receiveSampleSubmit(Long.parseLong(taskId), result);
-		return "forward:/logistics/receiveSampleSubmit.do";
+		return "forward:/logistics/receiveSampleList.do";
 	}
 
 	
@@ -68,6 +75,10 @@ public class LogisticsController {
 	public String sendSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<OrderInfo> list = logisticsService.getSendSampleList();
+		if(list.size()==0){
+			jbpmTest.completeProduceSample(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
+			list = logisticsService.getSendSampleList();
+		}
 		model.put("list", list);
 		return "/logistics/sendSampleList";
 	}
@@ -89,12 +100,20 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String sendSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String id = request.getParameter("orderId");
-		String taskId = request.getParameter("taskId");
-		String processId = request.getParameter("processId");
-		long tid = Long.parseLong(taskId);
-		long pid = Long.parseLong(processId);
-		logisticsService.sendSampleSubmit(tid, pid);
+		String orderId_string = request.getParameter("orderId");
+		Integer orderId=Integer.parseInt(orderId_string);
+		String taskId_string = request.getParameter("taskId");
+		long taskId=Long.parseLong(taskId_string);
+		String time=request.getParameter("time");
+		String name=request.getParameter("name");
+		String number=request.getParameter("number");
+		Map<String,Object>map=new HashMap<String,Object>();
+		map.put("orderId", orderId);
+		map.put("taskId", taskId);
+		map.put("time", time);
+		map.put("name", name);
+		map.put("number", number);
+		logisticsService.sendSampleSubmit(map);
 		return "forward:/logistics/sendSampleList.do";
 	}
 
@@ -121,7 +140,7 @@ public class LogisticsController {
 	}
 
 	
-	@RequestMapping(value = "/logistics/warehouseSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/logistics/warehouseSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String warehouseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -158,7 +177,7 @@ public class LogisticsController {
 
 
 	// ===========================产品发货=================================
-	@RequestMapping(value = "/logistics/sendClothesList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/logistics/sendClothesList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sendClothesList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -179,30 +198,10 @@ public class LogisticsController {
 
 	}
 
-	/**
-	 * 扫描确认发货
-	 * 
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "logistics/checkSendClothes.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
-	public String checkSendClothes(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-
-		// String orderId=request.getParameter("orderId");
-		// OrderInfo
-		// orderInfo=logisticsService.getSendClothesDetail(Integer.parseInt(orderId));
-		//
-		// model.addAttribute("orderInfo", orderInfo);
-
-		return "logistics/checkSendClothes";
-	}
+	
 
 	
-	@RequestMapping(value = "/logistics/sendClothesDetail.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/logistics/sendClothesDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sendClothesDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -216,7 +215,7 @@ public class LogisticsController {
 	}
 
 	
-	@RequestMapping(value = "/logistics/sendClothesSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/logistics/sendClothesSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sendClothesSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -242,4 +241,42 @@ public class LogisticsController {
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired
 	private ProduceService produceService;
+	@Autowired
+	private JbpmTest jbpmTest;
+
+	@RequestMapping(value = "/logistics/mobile.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String showMobilePage(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		 
+		return "logistics/mobile";
+	}
+	
+	@RequestMapping(value = "/logistics/mobileStore.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String mobileStore(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		 
+		return "logistics/mobileUpdateStore";
+	}
+	/**
+	 * 扫描确认发货
+	 * 
+	 */
+	@RequestMapping(value = "logistics/mobileScan.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String checkSendClothes(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+
+		// String orderId=request.getParameter("orderId");
+		// OrderInfo
+		// orderInfo=logisticsService.getSendClothesDetail(Integer.parseInt(orderId));
+		//
+		// model.addAttribute("orderInfo", orderInfo);
+
+		return "logistics/mobileCheckSendClothes";
+	}
+
+
+
 }

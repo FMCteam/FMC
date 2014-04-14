@@ -1,13 +1,19 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered detail">
 	<tr>
-		<td>业务信息</td>
+		<td rowspan="2">业务信息</td>
 		<td>业务编号</td>
-		<td>${orderInfo.order.orderId}</td>
-		<td>接单时间</td>
-		<td></td>
+		<td colspan="2">接单时间</td>
 		<td>接单业务员</td>
+		<td>订单来源</td>
+		<td>翻单</td>
+	</tr>
+	<tr>
+		<td>${orderInfo.order.orderId}</td>
+		<td colspan="2">${fn:substring(orderInfo.order.orderTime,0,19)}</td>
 		<td>${orderInfo.employee.employeeName}</td>
+		<td>${orderInfo.order.orderSource }</td>
+		<td>否</td>
 	</tr>
 	<tr>
 		<td rowspan="3">客户信息</td>
@@ -33,27 +39,19 @@
 	<tr>
 		<td rowspan="6">款式信息</td>
 		<td><label>款式名称</label></td>
-		<td colspan="2">款式性别</td>
-		<td colspan="2">款式季节</td>
-		<td>订单来源</td>
+		<td>款式性别</td>
+		<td>款式季节</td>
+		<td>面料类型</td>
+		<td>特殊工艺</td>
+		<td>其他说明</td>
 	</tr>
 	<tr>
 		<td>${orderInfo.order.styleName }</td>
-		<td colspan="2">${orderInfo.order.styleSex }</td>
-		<td colspan="2">${orderInfo.order.styleSeason}</td>
-		<td>${orderInfo.order.orderSource }</td>
-	</tr>
-	<tr>
-		<td>面料类型</td>
-		<td colspan="5">${orderInfo.order.fabricType}</td>
-	</tr>
-	<tr>
-		<td>特殊工艺</td>
-		<td colspan="5">${orderInfo.order.specialProcess}</td>
-	</tr>
-	<tr>
-		<td>其他说明</td>
-		<td colspan="5">${orderInfo.order.otherRequirements}</td>
+		<td>${orderInfo.order.styleSex }</td>
+		<td>${orderInfo.order.styleSeason}</td>
+		<td>${orderInfo.order.fabricType}</td>
+		<td>${orderInfo.order.specialProcess}</td>
+		<td>${orderInfo.order.otherRequirements}</td>
 	</tr>
 	<tr>
 		<td>参考链接</td>

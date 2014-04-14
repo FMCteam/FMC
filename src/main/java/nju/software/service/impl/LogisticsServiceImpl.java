@@ -1,6 +1,8 @@
 package nju.software.service.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +20,11 @@ import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.PackageDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
-import nju.software.dataobject.Customer;
-import nju.software.dataobject.Employee;
-import nju.software.dataobject.Logistics;
-import nju.software.dataobject.Order;
+import nju.software.dao.impl.PackageDetailDAO;
+import nju.software.dataobject.*;
+import nju.software.dataobject.Package;
 import nju.software.model.OrderInfo;
 import nju.software.service.LogisticsService;
 import nju.software.util.JbpmAPIUtil;
@@ -61,6 +63,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 		orderInfo.setLogistics(logisticsDAO.findById(orderId));
 		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
+		Produce produce=new Produce();
+		produce.setType(Produce.TYPE_PRODUCE);
+		produce.setOid(orderId);
+		orderInfo.setProduce(produceDAO.findByExample(produce));
+		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
+		orderInfo.setSample(produceDAO.findByExample(produce));
 		orderInfo.setTask(task);
 		return orderInfo;
 	}
@@ -115,18 +123,25 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return orderInfo;
 	}
 
+	
 	@Override
-	public boolean sendSampleSubmit(long taskId, long processId) {
+	public boolean sendSampleSubmit(Map<String,Object>map) {
+		Integer orderId=(Integer) map.get("orderId");
+		Logistics logistics=logisticsDAO.findById(orderId);
+		//logistics.set
+		long taskId=(long) map.get("taskId");
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
-		return true;
 	}
 
+	
 	// ===========================产品入库=================================
 	@Override
 	public List<OrderInfo> getWarehouseList() {
@@ -171,16 +186,24 @@ public class LogisticsServiceImpl implements LogisticsService {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES);
-		List<OrderInfo> models = new ArrayList<>();
+		List<OrderInfo> unscan_models = new ArrayList<>();
+		List<OrderInfo> scan_models = new ArrayList<>();
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) jbpmAPIUtil
 					.getVariable(task, "orderId");
 			OrderInfo model = new OrderInfo();
-			model.setOrder(orderDAO.findById(orderId));
+			Order order = orderDAO.findById(orderId);
+			model.setOrder(order);
 			model.setTask(task);
-			models.add(model);
+			if(order.isScanChecked()) {
+				scan_models.add(model);
+			} else {
+				unscan_models.add(model);
+			}
+			 
 		}
-		return models;
+		scan_models.addAll(unscan_models);
+		return scan_models;
 	}
 
 	@Override
@@ -224,7 +247,11 @@ public class LogisticsServiceImpl implements LogisticsService {
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private FabricDAO fabricDAO;
-
+	@Autowired
+	private ProduceDAO produceDAO;
+	@Autowired
+	private PackageDetailDAO packageDetailDAO;
+	
 	public final static String ACTOR_LOGISTICS_MANAGER = "logisticsManager";
 	public final static String TASK_RECEIVE_SAMPLE = "receiveSample";
 	public final static String TASK_SEND_SAMPLE = "sendSample";
@@ -233,7 +260,122 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	@Override
 	public List<OrderInfo> getSendClothesUncheckedList() {
-		// TODO Auto-generated method stub
-		return new ArrayList<OrderInfo>();
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES);
+		List<OrderInfo> unscan_models = new ArrayList<>();
+		 
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			OrderInfo model = new OrderInfo();
+			Order order = orderDAO.findById(orderId);
+			model.setOrder(order);
+			model.setTask(task);
+			if(!order.isScanChecked() && order.isStored()) {
+				unscan_models.add(model);
+			}
+			 
+		}
+ 
+		return unscan_models;
 	}
+	@Override
+	public List<OrderInfo> getSendClothesUnstoredList() {
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES);
+		List<OrderInfo> unsore_models = new ArrayList<>();
+		 
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			OrderInfo model = new OrderInfo();
+			Order order = orderDAO.findById(orderId);
+			model.setOrder(order);
+			model.setTask(task);
+			if(!order.isScanChecked() && !order.isStored()) {
+				unsore_models.add(model);
+			}
+			 
+		}
+ 
+		return unsore_models;
+	}
+	@Override
+	public boolean setOrderScanChecked(int orderId) {
+		// TODO Auto-generated method stub
+	 
+		Order order = orderDAO.findById(orderId);
+		if(order == null) {
+			return false;
+		}
+		try {
+			orderDAO.setOrderScanChecked(order);
+			return true;
+		} catch(Exception ex) {
+			return false;
+		}
+	}
+	@Override
+	public boolean setOrderStored(int orderId) {
+		// TODO Auto-generated method stub
+	 
+		Order order = orderDAO.findById(orderId);
+		if(order == null) {
+			return false;
+		}
+		try {
+			order.setStored(true);
+			orderDAO.attachDirty(order);
+			return true;
+		} catch(Exception ex) {
+			return false;
+		}
+	}
+	@Override
+	public boolean updateSendClothesStoreInfo(int packageId, String warehouse, String shelf,
+			String location) {
+		// TODO Auto-generated method stub
+		Package pk = packageDAO.findById(packageId);
+		if(pk == null) {
+			return false;
+		}
+		pk.setWarehouseId(warehouse);
+		pk.setShelfId(shelf);
+		pk.setLocation(location);
+		try {
+			packageDAO.attachDirty(pk);
+			return true;
+		} catch(Exception ex) {
+			return false;
+		}
+		
+	}
+	
+	@Override
+	public OrderInfo getScanCheckDetail(int orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
+				TASK_SEND_CLOTHES, orderId);
+		OrderInfo model = new OrderInfo();
+		model.setOrder(orderDAO.findById(orderId));
+		List<Package> pList = packageDAO.findByOrderId(orderId);
+		model.setPackages(pList);
+		model.setPackageDetails(packageDetailDAO.findByPackageList(pList));
+		model.setTask(task);
+		return model;
+	}
+
+	@Override
+	public Package createPackageForOrder(int orderId) {
+		// TODO Auto-generated method stub
+		Package newPackage = new Package();
+		newPackage.setPackageTime(new Timestamp(new Date().getTime()));
+		newPackage.setOrderId(orderId);
+		packageDAO.save(newPackage);
+		return newPackage;
+	}
+
+	
+
+	
 }

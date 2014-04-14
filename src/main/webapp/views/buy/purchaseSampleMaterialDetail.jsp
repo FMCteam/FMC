@@ -89,14 +89,18 @@
 								<td colspan="2">${orderInfo.order.askProducePeriod }</td>
 								<td>${orderInfo.order.askCodeNumber }</td>
 							</tr>
+							
+							
 							<tr>
 								<td rowspan="2">面料</td>
 								<td colspan="2">面料名称</td>
-								<td colspan="2">面料克重</td>
+								<td colspan="2">单件米耗</td>
 								<td colspan="2">操作</td>
 								<input id="fabric_name" name="fabric_name" type="hidden" />
 								<input id="fabric_amount" name="fabric_amount" type="hidden" />
 							</tr>
+							
+							
 							<tr>
 								<td colspan="6" class="innertable"><table
 										class="span12 table fabric_table">
@@ -110,11 +114,13 @@
 							<tr>
 								<td rowspan="2">辅料</td>
 								<td colspan="2">辅料名称</td>
-								<td colspan="2">辅料要求</td>
+								<td colspan="2">单件耗数</td>
 								<td colspan="2">操作</td>
 								<input id="accessory_name" name="accessory_name" type="hidden" />
 								<input id="accessory_query" name="accessory_query" type="hidden" />
 							</tr>
+							
+							
 							<tr>
 								<td colspan="6" class="innertable"><table table
 										class="span12 table accessory_table">
@@ -125,6 +131,8 @@
 										</tr>
 									</table></td>
 							</tr>
+							
+							
 							<tr>
 								<td rowspan="2">客户样衣</td>
 								<td>提供样衣</td>
@@ -179,13 +187,65 @@
 								<td>意见</td>
 								<td colspan="6"><input class="span12" type="text" name="suggestion" /></td>
 							</tr>
+							
+							
+							
+							
+							
+								<tr>
+								 <td rowspan="5">面料采购</td>
+                        <td colspan="2">面料名</td>
+                        <td colspan="1">单件米耗</td>
+                        <td colspan="1">件数</td>
+                        <td colspan="2">总采购米数</td>
+
+								
+							</tr>
+							
+								<tr>
+							
+								 <c:forEach var="fabricCost" items="${fabricCostlist}" >
+	                        <tr >
+	                    <td colspan="2">${fabricCost.fabricName }</td>
+	                     
+						<td colspan="1">${fabricCost.tearPerMeter }</td>
+                        <td colspan="1">${orderInfo.data.SampleAmount}</td>
+                        <td colspan="2">${fabricCost.tearPerMeter*orderInfo.data.SampleAmount}</td>
+						     </tr>
+                        </c:forEach>
+							</tr>
+							
+							
+								
+							<tr>
+								  <td rowspan= "5">辅料采购</td>
+                        <td colspan="2">辅料名</td>
+                        <td colspan="1">单件耗数</td>
+                        <td colspan="1">件数</td>
+                        <td colspan="2">总采购个数</td>
+
+							</tr>
+							
+							<tr>
+								 <c:forEach var="accessoryCost" items="${accessoryCostlist}" >
+	                        <tr >
+	                    <td colspan="2">${accessoryCost.accessoryName }</td>
+       					<td colspan="1">${accessoryCost.tearPerPiece }</td>
+                        <td colspan="1">${orderInfo.data.SampleAmount}</td>
+                        <td colspan="2">${accessoryCost.tearPerPiece*orderInfo.data.SampleAmount}</td>
+						     </tr>
+                        </c:forEach>
+							</tr>
+							
+							
+								
 							<tr>
 								<td>操作</td>	
 
 								<td colspan="6">
 								<form id="verify_form" method="post" action="${ctx }/buy/purchaseSampleMaterialSubmit.do">
-									<input type="hidden" name="order_id" value="${orderInfo.order.orderId }" />
-									<input type="hidden" name="task_id" value="${orderInfo.task.id }" />
+									<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
+									<input type="hidden" name="taskId" value="${orderInfo.task.id }" />
 									<input type="hidden" name="purchaseerror" value="1"/>
 									
 									<a id="agree_detail" class="btn btn-primary btn-rounded"><i class="icon-ok icon-white"></i> 同意</a>
@@ -193,10 +253,9 @@
                                  </form>
 
 	                           <form  method="post" action="${ctx }/buy/purchaseSampleMaterialSubmit.do">
-									<input type="hidden" name="order_id" value="${orderInfo.order.orderId }" />
-									<input type="hidden" name="task_id" value="${orderInfo.task.id }" />
-							<!--  	<input type="hidden" name="process_id" value="${orderInfo.processInstanceId }" />
-									-->
+									<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
+									<input type="hidden" name="taskId" value="${orderInfo.task.id }" />
+							
 									<input type="hidden" name="purchaseerror" value="0"/>
 									
 								
@@ -205,6 +264,9 @@
 
 								</td>
 							</tr>
+							
+							
+
 						</table>
 				
 				</div>

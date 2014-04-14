@@ -3,6 +3,7 @@ package nju.software.dao;
 import java.util.List;
 
 import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Package;
 
 public interface IPackageDetailDAO {
 
@@ -16,7 +17,7 @@ public interface IPackageDetailDAO {
 
 	public abstract List findByProperty(String propertyName, Object value);
 
-	public abstract List<PackageDetail> findByPackageId(Object packageId);
+	public abstract List<PackageDetail> findByPackageId(Integer packageId);
 
 	public abstract List<PackageDetail> findByClothesStyleName(
 			Object clothesStyleName);
@@ -33,5 +34,7 @@ public interface IPackageDetailDAO {
 	public abstract void attachDirty(PackageDetail instance);
 
 	public abstract void attachClean(PackageDetail instance);
-
+	
+	public abstract List<List<PackageDetail>> findByPackageList(List<Package> packageList);
+	
 }

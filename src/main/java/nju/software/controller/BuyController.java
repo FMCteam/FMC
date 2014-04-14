@@ -14,6 +14,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
@@ -61,8 +62,14 @@ public class BuyController {
 		String orderId=request.getParameter("orderId");
 		OrderInfo orderInfo=buyService.getPurchaseSampleMaterialDetail(Integer.parseInt(orderId));
 		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
+		
 		model.addAttribute("orderInfo", orderInfo);
 		model.addAttribute("logistics", logistics);
+		
+		model.addAttribute("fabricCostlist", orderInfo.getFabricCosts()); 
+		model.addAttribute("accessoryCostlist", orderInfo.getAccessoryCosts());//面料报价详细信息
+		
+	
 		
 		return "/buy/purchaseSampleMaterialDetail";
 	}
@@ -321,6 +328,19 @@ public class BuyController {
 		Logistics logistics=buyService.getLogisticsByOrderId(Integer.parseInt(orderId));
 		model.addAttribute("logistics", logistics);
 		
+		List<Fabric> fabrics= orderInfo.getFabrics();
+		int fabricSize=fabrics.size()+3;
+		System.out.println(fabricSize);
+		
+		
+		orderInfo.getData().put("fabricSize", new Integer(fabricSize)); //控制表格间距
+		List<Accessory> accessory= orderInfo.getAccessorys();
+		int accessorySize=accessory.size()+3;
+		System.out.println(accessorySize);
+		
+		orderInfo.getData().put("fabricSize", new Integer(fabricSize)); //控制表格间距
+		orderInfo.getData().put("accessorySize", new Integer(accessorySize)); //控制表格间距
+		
 		model.addAttribute("orderInfo", orderInfo);
 	model.addAttribute("fabric_list", orderInfo.getFabrics());
 	model.addAttribute("accessory_list", orderInfo.getAccessorys());
@@ -364,6 +384,15 @@ public class BuyController {
 		
 		
 		
+		 buyService.updateAccessoryCost(
+				  Integer.parseInt(orderId),
+				 
+				 accessory_names,
+				 tear_per_piece,
+				 cost_per_piece,
+				 accessory_prices);
+			
+		
 		 buyService.computePurchaseCostSubmit( 
 				   Integer.parseInt(orderId),
 				   Long.parseLong(taskId), 
@@ -373,8 +402,7 @@ public class BuyController {
 					fabric_prices
 				   );
 		
-//        buyService.updateAccessoryCost(orderId_request, taskId, processId, accessory_names, tear_per_piece, cost_per_piece, accessory_prices);
-		
+       
 		
 		
 		
