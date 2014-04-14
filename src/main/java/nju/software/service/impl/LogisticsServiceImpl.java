@@ -385,6 +385,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return newPackage;
 	}
 
+	@Override
+	public List<Package> getPackageListByOrderId(int orderId) {
+		// TODO Auto-generated method stub
+		return packageDAO.findByOrderId(orderId);
+	}
+
 	
 
 	
