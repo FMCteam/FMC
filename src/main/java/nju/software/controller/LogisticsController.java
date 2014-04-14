@@ -180,7 +180,7 @@ public class LogisticsController {
 	}
 
 
-	// ===========================产品发货=================================
+	// ===========================大货产品发货=================================
 	@RequestMapping(value = "/logistics/sendClothesList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sendClothesList(HttpServletRequest request,
@@ -188,7 +188,7 @@ public class LogisticsController {
 
 		String user_agent = request.getHeader("user-agent");
 		boolean is_wm = user_agent.contains("Windows Phone 6.5");
-
+		jbpmTest.completeTaskLogistics("1");
 		if (is_wm) {
 			List<OrderInfo> list = logisticsService
 					.getSendClothesUncheckedList();

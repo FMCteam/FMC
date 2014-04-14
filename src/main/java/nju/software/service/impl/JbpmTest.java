@@ -361,7 +361,23 @@ public class JbpmTest {
 		completeTask(taskId, data, QualityServiceImpl.ACTOR_QUALITY_MANAGER);
 	}
 	
+	
+	public void completeTaskLogistics(String actionId){
+		completeCheckQuality(actionId);
 		
+		 long taskId = getTaskId("logisticsManager",
+				"warehouse", orderId);
+		Map data=new HashMap <String,Object> ();
+		completeTask(taskId, data, "logisticsManager");
+		
+		 taskId = getTaskId("financeManager",
+					"confirmFinalPayment", orderId);
+			data=new HashMap <String,Object> ();
+			completeTask(taskId, data, "financeManager");
+	}
+		
+	
+	
 	public void completeTask(long taskId, Map<?, ?> data, String actorId) {
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
