@@ -80,6 +80,5 @@ public interface IOrderDAO {
 	
 	public int coutSampleOrder();
 	
-	public boolean setOrderScanChecked(Order instance);
 
 }

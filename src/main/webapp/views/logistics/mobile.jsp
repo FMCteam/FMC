@@ -17,7 +17,7 @@
 </head>
 <body>
 <h3>智造链-物流操作</h3>
-<a href="${ctx }/logistics/mobileStore.do">入库登记</a>
-<a href="${ctx }/logistics/mobileScan.do">发货扫描</a>
+<a href="${ctx }/logistics/mobileStoreList.do">入库登记</a>
+<a href="${ctx }/logistics/mobileScanList.do">发货扫描</a>
 </body>
 </html>

@@ -5,7 +5,6 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
-					
 
 			<section class="list">
 				<table class="list">

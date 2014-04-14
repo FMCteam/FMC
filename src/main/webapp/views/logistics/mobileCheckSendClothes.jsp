@@ -3,87 +3,101 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
+<title>物流</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script type="text/javascript" src="${ctx }/js/jquery-1.9.1.min.js"></script>
-<title>登录</title>
+<script type="text/javascript">
+
+var has_checked = false;
+function check() {
+	if(has_checked) {
+		return true;
+	} else {
+		alert("还未扫描确认所有包！");
+		return false;
+	}
+}
+$(function() {
+	var $tw = $("#txtWare");
+	var $ts = $("#txtShelf");
+	var $tl = $("#txtLocation");
+	function checkPackageId(pid) {
+		var found = false;
+		var pl = $("#package_list").find("table");
+		for(var i=0;i<pl.length;i++) {
+			var $p = $(pl[i]), _pid = $p.attr("id").split("_")[1];
+			if(_pid===pid) {
+				found = true;
+				$tw.val($p.find("tr:eq(0) td:eq(1)").text());
+				$ts.val($p.find("tr:eq(1) td:eq(1)").text());
+				$tl.val($p.find("tr:eq(1) td:eq(1)").text());
+				$("#status_" + pid).css("color": "green").text("已确认");
+				break;
+			}
+		}
+		if(!found) {
+			alert("错误，扫描包号不属于当前订单！");
+		}
+	}
+	$("#txtScan").keydown(function(e) {
+		if(e.keyCode === 13) {
+			checkPackageId($(this).val().trim());
+		}
+	});
+});
+</script>
+<style type="text/css">
+	* {
+		padding: 0;
+		margin: 0;
+	}
+	ul li {
+		list-style: none;
+	}
+	li {
+		margin-bottom: 15px;
+	}
+</style>
 </head>
 <body>
-	<h3>智造链-验货</h3>
-	<table class="table table-striped table-bordered table-hover">
-		<tr>
-			<td rowspan="2">订单信息</td>
-			<td>订单编号</td>
-			<td>接单业务员</td>
-			<td>客户名字</td>
-			<td>报价日期</td>
+<h3>智造链-入库</h3>
+<div>
+<h3>订单号：${order.orderId}</h3>
+</div>
+<div>
+<form method="post">
 
-		</tr>
-		<tr>
-			<td>${orderInfo.order.orderId }</td>
-			<td>${orderInfo.order.employeeId }</td>
-			<td>${orderInfo.order.customerName }</td>
-			<td>${orderInfo.order.orderTime}</td>
+<table>
+<tr><td>包号：</td><td><input type="text" id="txtScan" name="packageId"/></td></tr>
+<tr><td>仓库：</td><td><input disabled="true" type="text" id="txtWare" name="warehouseId"/></td></tr>
+<tr><td>货架：</td><td><input disabled="true" type="text" id="txtShelf" name="shelfId"/></td></tr>
+<tr><td>位置：：</td><td><input disabled="true" type="text" id="txtLocation" name="location"/></td></tr>
+</table>
+<p><input type="submit" value="提交"/></p>
 
-		</tr>
+</form>
+</div>
 
+<ul id="package_list">
+<c:forEach var="package" items="${packageList}">
+<li>
+<table id="package_${package.packageId }">
+<tr><td>包号：</td><td>${package.packageId }</td></tr>
+<tr><td>仓库：</td><td>${package.warehouseId }</td></tr>
+<tr><td>货架：</td><td>${package.shelfId }</td></tr>
+<tr><td>位置：</td><td>${package.location }</td></tr>
+<tr><td>状态：</td><td><span id="status_${package.packageId }" style="color: red;">未确认</span></td></tr>
+</table>
+</li>
+</c:forEach>
+</ul>
+<div>
 
-		<tr>
-			<td colspan="5">具体货箱数量及装箱条码表对应物流单号表</td>
-		</tr>
-		<tr>
-			<td>总货箱数</td>
-			<td colspan="4">1</td>
-		</tr>
-		<tr>
-			<td>条码列表</td>
-			<td colspan="2">物流单号</td>
-			<td colspan="2">物流公司</td>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td colspan="2">1</td>
-			<td colspan="2">1</td>
-		</tr>
-		<tr>
-			<td rowspan="2">发货信息</td>
-			<td>物流部发货人</td>
-			<td>发货时间</td>
-			<td colspan="2">发货备注</td>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td>1</td>
-			<td colspan="2">1</td>
-		</tr>
-
-
-
-		<tr>
-
-			<td>物流费用</td>
-			<td><input class="span12" name="logistics_cost"
-				id="logistics_cost" placeholder="logistics_cost" type="text" /></td>
-			<input type="hidden" name="orderId"
-				value="${orderInfo.order.orderId }" />
-			<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
-			<input type="hidden" name="pinId"
-				value="${orderInfo.processInstanceId }" />
-		</tr>
-
-
-
-
-
-
-		<tr>
-
-			<td colspan="3"><input type="submit" style="float: right;" /></td>
-		</tr>
-
-
-
-
-	</table>
+<form action="${ctx }/logistics/finishScanClothes.do" method="post" onsubmit="return check();">
+<input type="hidden" value="${order.orderId }" name="orderId" />
+<input type="submit" value="完成入库" name="submit" />
+</form>
+</div>
 </body>
 </html>

@@ -12,8 +12,6 @@ import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
-import nju.software.dataobject.Account;
-import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;

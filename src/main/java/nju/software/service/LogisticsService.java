@@ -58,6 +58,9 @@ public interface LogisticsService {
 	public Package createPackageForOrder(int orderId);
 	//
 	public boolean updateSendClothesStoreInfo(int packageId, String warehouse, String shelf, String location);
-	
-	
+
+
+	public List<Package> getPackageListByOrderId(int orderId);
+	 
+
 }

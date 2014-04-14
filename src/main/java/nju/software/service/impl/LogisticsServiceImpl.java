@@ -171,7 +171,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 		orderInfo.setOrder(orderDAO.findById(orderId));
 		orderInfo.setProducts(productDAO.findByOrderId(orderId));
 		orderInfo.setPackages(packageDAO.findByOrderId(orderId));
-		orderInfo.setPackageDetails(packageDetailDAO.findByPackageList(orderInfo.getPackages()));
+		orderInfo.setPackageDetails(packageDetailDAO
+				.findByPackageList(orderInfo.getPackages()));
 		orderInfo.setTask(task);
 		return orderInfo;
 	}
@@ -194,7 +195,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	public Integer addPackage(Package pack, List<PackageDetail> details) {
 		// TODO Auto-generated method stub
 		packageDAO.save(pack);
-		for(PackageDetail detail:details){
+		for (PackageDetail detail : details) {
 			detail.setPackageId(pack.getPackageId());
 			packageDetailDAO.save(detail);
 		}
@@ -216,7 +217,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Order order = orderDAO.findById(orderId);
 			model.setOrder(order);
 			model.setTask(task);
-			if (order.isScanChecked()) {
+
+			if (order.getLogisticsState() == 3) {
+
 				scan_models.add(model);
 			} else {
 				unscan_models.add(model);
@@ -297,7 +300,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Order order = orderDAO.findById(orderId);
 			model.setOrder(order);
 			model.setTask(task);
-			if (!order.isScanChecked() && order.isStored()) {
+
+			if (order.getLogisticsState() == 2) {
+
 				unscan_models.add(model);
 			}
 
@@ -319,7 +324,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Order order = orderDAO.findById(orderId);
 			model.setOrder(order);
 			model.setTask(task);
-			if (!order.isScanChecked() && !order.isStored()) {
+
+			if (order.getLogisticsState() == 1) {
+
 				unsore_models.add(model);
 			}
 
@@ -337,7 +344,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			return false;
 		}
 		try {
-			orderDAO.setOrderScanChecked(order);
+			order.setLogisticsState(3);
 			return true;
 		} catch (Exception ex) {
 			return false;
@@ -353,7 +360,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			return false;
 		}
 		try {
-			order.setStored(true);
+			order.setLogisticsState(2);
 			orderDAO.attachDirty(order);
 			return true;
 		} catch (Exception ex) {
@@ -403,6 +410,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 		newPackage.setOrderId(orderId);
 		packageDAO.save(newPackage);
 		return newPackage;
+	}
+
+	@Override
+	public List<Package> getPackageListByOrderId(int orderId) {
+		// TODO Auto-generated method stub
+		return packageDAO.findByOrderId(orderId);
 	}
 
 }

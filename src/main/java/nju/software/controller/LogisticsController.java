@@ -23,6 +23,8 @@ import nju.software.service.impl.LogisticsServiceImpl;
 import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
+import nju.software.dataobject.Order;
+import nju.software.dataobject.Package;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -179,7 +181,7 @@ public class LogisticsController {
 	}
 
 
-	// ===========================产品发货=================================
+	// ===========================大货产品发货=================================
 	@RequestMapping(value = "/logistics/sendClothesList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sendClothesList(HttpServletRequest request,
@@ -187,7 +189,7 @@ public class LogisticsController {
 
 		String user_agent = request.getHeader("user-agent");
 		boolean is_wm = user_agent.contains("Windows Phone 6.5");
-
+		jbpmTest.completeTaskLogistics("1");
 		if (is_wm) {
 			List<OrderInfo> list = logisticsService
 					.getSendClothesUncheckedList();
@@ -278,31 +280,71 @@ public class LogisticsController {
 		return "logistics/mobile";
 	}
 	
-	@RequestMapping(value = "/logistics/mobileStore.do")
+	@RequestMapping(value = "/logistics/mobileStoreList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String mobileStore(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		 
+		
+		List<OrderInfo> orderList = logisticsService.getSendClothesUnstoredList();
+		model.addAttribute("orderList", orderList);
+		return "logistics/mobileGetUnstoreList";
+	}
+	
+	@RequestMapping(value = "/logistics/updateStore.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String updateStoreInfo(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = (String) request.getParameter("orderId");
+		Order order = orderService.getOrderById(Integer.parseInt(orderId));
+		List<Package> packageList = logisticsService.getPackageListByOrderId(Integer.parseInt(orderId));
+		
+		String packageId = (String) request.getParameter("packageId");
+		if(packageId != null && !StringUtil.isEmpty(packageId)) {
+			String warehouse = (String) request.getParameter("warehouseId");
+			String shelf = (String) request.getParameter("shelfId");
+			String location = (String) request.getParameter("location");
+			logisticsService.updateSendClothesStoreInfo(Integer.parseInt(packageId), warehouse, shelf, location);
+		}
+		
+		model.addAttribute("packageList", packageList);
+		model.addAttribute("order", order);
 		return "logistics/mobileUpdateStore";
+	}
+	
+	@RequestMapping(value = "/logistics/finishUpdateStore.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String finishUpdateStore(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = (String) request.getParameter("orderId");
+		logisticsService.setOrderStored(Integer.parseInt(orderId));
+		
+		return "redirect: logistics/mobileStoreList.do";
 	}
 	/**
 	 * 扫描确认发货
 	 * 
 	 */
-	@RequestMapping(value = "logistics/mobileScan.do")
+	@RequestMapping(value = "logistics/mobileScanList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String checkSendClothes(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		// String orderId=request.getParameter("orderId");
-		// OrderInfo
-		// orderInfo=logisticsService.getSendClothesDetail(Integer.parseInt(orderId));
-		//
-		// model.addAttribute("orderInfo", orderInfo);
-
-		return "logistics/mobileCheckSendClothes";
+		List<OrderInfo> orderList = logisticsService.getSendClothesUncheckedList();
+		model.addAttribute("orderList", orderList);
+		return "logistics/mobileGetUnscanList";
 	}
 
-
+	@RequestMapping(value = "/logistics/scanClothes.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String scanClothes(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = (String) request.getParameter("orderId");
+		Order order = orderService.getOrderById(Integer.parseInt(orderId));
+		List<Package> packageList = logisticsService.getPackageListByOrderId(Integer.parseInt(orderId));
+		
+		model.addAttribute("packageList", packageList);
+		model.addAttribute("order", order);
+		return "logistics/mobileCheckSendClothes";
+	}
 
 }
