@@ -503,4 +503,18 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		}
 
 	}
+
+	@Override
+	public boolean setOrderScanChecked(Order instance) {
+		log.debug("attaching dirty Order instance");
+		try {
+			instance.setScanChecked(true);
+			getHibernateTemplate().saveOrUpdate(instance);
+			log.debug("attach successful");
+			return true;
+		} catch (RuntimeException re) {
+			log.error("attach failed", re);
+			throw re;
+		}
+	}
 }

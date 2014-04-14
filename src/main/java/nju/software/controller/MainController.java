@@ -80,8 +80,8 @@ public class MainController {
 		boolean is_wm = user_agent.contains("Windows Phone 6.5");
 		if (account != null) {
 			session.setAttribute("cur_user", account);
-			if(account.getUserRole().equals("") && is_wm) {
-				return "redirect:logistics/getSendClothesList.do";
+			if("ADMIN, WULIUZHUGUAN".contains(account.getUserRole()) && is_wm) {
+				return "redirect:logistics/mobile.do";
 			}
 			return "redirect:default.do";
 		} else {

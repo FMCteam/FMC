@@ -1,9 +1,11 @@
 package nju.software.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nju.software.dao.IPackageDetailDAO;
 import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Package;
 
 import org.hibernate.LockMode;
 import org.slf4j.Logger;
@@ -114,7 +116,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#findByPackageId(java.lang.Object)
 	 */
-	public List<PackageDetail> findByPackageId(Object packageId) {
+	public List<PackageDetail> findByPackageId(Integer packageId) {
 		return findByProperty(PACKAGE_ID, packageId);
 	}
 
@@ -200,5 +202,17 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	public static IPackageDetailDAO getFromApplicationContext(
 			ApplicationContext ctx) {
 		return (IPackageDetailDAO) ctx.getBean("PackageDetailDAO");
+	}
+
+	@Override
+	public List<List<PackageDetail>> findByPackageList(List<Package> packageList) {
+		// TODO Auto-generated method stub
+		List<List<PackageDetail>> dList = new ArrayList<List<PackageDetail>>();
+		for(int i=0;i<packageList.size();i++) {
+			Package pk = packageList.get(i);
+			List<PackageDetail> pList = this.findByPackageId(pk.getPackageId());
+			dList.add(pList);
+		}
+		return dList;
 	}
 }
