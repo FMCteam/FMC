@@ -15,9 +15,7 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
-import nju.software.model.QuoteConfirmTaskSummary;
-import nju.software.model.SampleProduceTask;
-import nju.software.model.SampleProduceTaskSummary;
+
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.util.JbpmAPIUtil;

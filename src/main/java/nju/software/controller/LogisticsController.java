@@ -1,6 +1,7 @@
 package nju.software.controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import nju.software.model.OrderInfo;
+import nju.software.dataobject.Package;
+import nju.software.dataobject.PackageDetail;
 import nju.software.service.CustomerService;
 import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
@@ -27,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 
 /**
  * @author 莫其凡
@@ -137,9 +141,30 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String warehouseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo = logisticsService.getWarehouseDetail(Integer
-				.parseInt(orderId));
+		
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		String size=request.getParameter("size");
+		String color=request.getParameter("color");
+		String number=request.getParameter("number");
+		
+		if(size!=null&&size!=""){
+			String sizes[]=size.split(",");
+			String colors[]=color.split(",");
+			String numbers[]=number.split(",");
+			Package pack=new Package(orderId);
+			List<PackageDetail>details=new ArrayList<PackageDetail>();
+			for(int i=0;i<sizes.length;i++){
+				PackageDetail detail=new PackageDetail();
+				detail.setClothesAmount(Integer.parseInt(numbers[i]));
+				detail.setClothesStyleColor(colors[i]);
+				detail.setClothesStyleName(sizes[i]);
+				details.add(detail);
+			}
+			logisticsService.addPackage(pack, details);
+		}
+		
+		OrderInfo orderInfo = logisticsService.getWarehouseDetail(orderId);
+		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/warehouseDetail";
 	}
 
@@ -148,34 +173,8 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String warehouseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String actor = "WULIUZHUGUAN";
-		String orderId = request.getParameter("order_id");
-		String taskId = request.getParameter("task_id");
-		String clothes_amount = request.getParameter("clothes_amount");
-		String clothes_style_color = request
-				.getParameter("clothes_style_color");
-		String clothes_style_name = request.getParameter("clothes_style_name");
-		String inTime = request.getParameter("package_date");
-		Timestamp entryTime = null;
-		if (inTime != null && inTime != "") {
-			Date inDate = DateUtil.parse(inTime, DateUtil.newFormat);
-			entryTime = new Timestamp(inDate.getTime());
-		}
-		try {
-			String[] array_amount = clothes_amount.split(",");
-			String[] array_color = clothes_style_color.split(",");
-			String[] array_name = clothes_style_name.split(",");
-			produceService.savePackageDetail(Integer.parseInt(orderId),
-					array_amount, array_color, array_name, entryTime);
-
-			// 保存package信息
-			jbpmAPIUtil.completeTask(Integer.parseInt(taskId), null, actor);
-			// 推进流程
-
-			return "forward:/logistics/warehouseList.do";
-		} catch (Exception e) {
-
-		}
+		Long taskId = Long.parseLong(request.getParameter("taskId"));
+		logisticsService.warehouseSubmit(taskId, null);
 		return "forward:/logistics/warehouseList.do";
 	}
 
@@ -232,7 +231,30 @@ public class LogisticsController {
 		// processId, design_cost);
 		return "forward:/logistics/sendClothesList";
 	}
+	
+	
+	@RequestMapping(value = "/logistics/addPackage.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String addPackage(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		String size=request.getParameter("size");
+		String color=request.getParameter("color");
+		Integer number=Integer.parseInt(request.getParameter("number"));
+		
+		Package pack=new Package(orderId);
+		PackageDetail detail=new PackageDetail();
+		detail.setClothesAmount(number);
+		detail.setClothesStyleColor(color);
+		detail.setClothesStyleName(size);
+		//Integer pid=logisticsService.addPackage(pack, detail);
+		
+		
+		return "forward:/logistics/sendClothesList";
+	}
 
+	
 	@Autowired
 	private OrderService orderService;
 	@Autowired

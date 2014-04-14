@@ -29,17 +29,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="orderModel" items="${order_model_list}">
+						<c:forEach var="task" items="${list}">
 							<tr class="gradeA">
-								<td>${orderModel.order.orderId }</td>
-								<td>${orderModel.order.employeeId }</td>
-								<td>${orderModel.order.customerName }</td>
-								<td>${orderModel.order.customerCompany }</td>
-								<td>${orderModel.order.styleName }</td>
-								<td>${orderModel.order.askAmount }</td>
-								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+								<td>${task.order.orderId }</td>
+								<td>${task.order.employeeId }</td>
+								<td>${task.order.customerName }</td>
+								<td>${task.order.customerCompany }</td>
+								<td>${task.order.styleName }</td>
+								<td>${task.order.askAmount }</td>
+								<td>${fn:substring(task.order.askDeliverDate,0,10) }</td>
 								<td><a
-									href="${ctx}/logistics/warehouseDetail.do?orderId=${orderModel.order.orderId}">详情</a>
+									href="${ctx}/logistics/warehouseDetail.do?orderId=${task.order.orderId}">详情</a>
 								</td>
 							</tr>
 						</c:forEach>
