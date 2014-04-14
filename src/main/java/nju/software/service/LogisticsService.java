@@ -3,8 +3,11 @@ package nju.software.service;
 import java.util.List;
 import java.util.Map;
 
-import nju.software.model.OrderInfo;
 import nju.software.dataobject.Package;
+import nju.software.dataobject.PackageDetail;
+
+import nju.software.model.OrderInfo;
+
 
 public interface LogisticsService {
 
@@ -36,6 +39,10 @@ public interface LogisticsService {
 
 	public void sendClothesSubmit(int orderId, long taskId, float logistics_cost);
 	
+	// ===========================入库前装箱=================================
+	public Integer addPackage(Package pack,List<PackageDetail> detail);
+	
+	
 	// ======================得到未扫描确认的列表=============================
 	public List<OrderInfo> getSendClothesUncheckedList();
 	//得到未入库的列表
@@ -54,6 +61,14 @@ public interface LogisticsService {
 	//
 	public boolean updateSendClothesStoreInfo(int packageId, String warehouse, String shelf, String location);
 
+
 	public List<Package> getPackageListByOrderId(int orderId);
-	 
+
+	
+	public OrderInfo getStoreClothesDetail(int orderId);
+	
+	public List<PackageDetail> getPackageDetailList(int packageId);
+	
+	public Package getPackageByPackageId(int packageId);
+
 }

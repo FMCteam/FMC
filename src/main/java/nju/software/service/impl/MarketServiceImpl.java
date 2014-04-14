@@ -36,7 +36,6 @@ import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
-import nju.software.model.QuoteConfirmTaskSummary;
 import nju.software.service.MarketService;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;

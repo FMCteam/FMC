@@ -18,7 +18,7 @@ import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
-import nju.software.model.QuoteConfirmTaskSummary;
+
 
 
 public interface MarketService {

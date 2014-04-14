@@ -11,8 +11,6 @@ import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
-import nju.software.model.SampleProduceTask;
-import nju.software.model.SampleProduceTaskSummary;
 
 public interface ProduceService {
 
