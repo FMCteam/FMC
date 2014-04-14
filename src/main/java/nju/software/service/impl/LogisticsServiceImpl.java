@@ -195,7 +195,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Order order = orderDAO.findById(orderId);
 			model.setOrder(order);
 			model.setTask(task);
-			if(order.isScanChecked()) {
+			if(order.getLogisticsState() == 3) {
 				scan_models.add(model);
 			} else {
 				unscan_models.add(model);
@@ -271,7 +271,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Order order = orderDAO.findById(orderId);
 			model.setOrder(order);
 			model.setTask(task);
-			if(!order.isScanChecked() && order.isStored()) {
+			if(order.getLogisticsState() == 2) {
 				unscan_models.add(model);
 			}
 			 
@@ -292,7 +292,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Order order = orderDAO.findById(orderId);
 			model.setOrder(order);
 			model.setTask(task);
-			if(!order.isScanChecked() && !order.isStored()) {
+			if(order.getLogisticsState() == 1) {
 				unsore_models.add(model);
 			}
 			 
@@ -309,7 +309,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			return false;
 		}
 		try {
-			orderDAO.setOrderScanChecked(order);
+			order.setLogisticsState(3);
 			return true;
 		} catch(Exception ex) {
 			return false;
@@ -324,7 +324,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			return false;
 		}
 		try {
-			order.setStored(true);
+			order.setLogisticsState(2);
 			orderDAO.attachDirty(order);
 			return true;
 		} catch(Exception ex) {
