@@ -27,6 +27,7 @@ import nju.software.dataobject.*;
 import nju.software.dataobject.Package;
 import nju.software.model.OrderInfo;
 import nju.software.service.LogisticsService;
+import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 
 @Service("logisticsServiceImpl")
@@ -128,7 +129,10 @@ public class LogisticsServiceImpl implements LogisticsService {
 	public boolean sendSampleSubmit(Map<String,Object>map) {
 		Integer orderId=(Integer) map.get("orderId");
 		Logistics logistics=logisticsDAO.findById(orderId);
-		//logistics.set
+		logistics.setSampleClothesTime(getTime((String)map.get("time")));
+		logistics.setSampleClothesNumber((String)map.get("number"));
+		logistics.setSampleClothesName((String)map.get("name"));
+		logisticsDAO.attachDirty(logistics);
 		long taskId=(long) map.get("taskId");
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
@@ -227,6 +231,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	private Timestamp getTime(String time){
+		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
+		return new Timestamp(outDate.getTime());
 	}
 
 	@Autowired

@@ -155,7 +155,7 @@
 						<ul>
 							<li><a href="${ctx}/logistics/receiveSampleList.do">样衣收取</a></li>
 							<li><a href="${ctx}/logistics/sendSampleList.do">样衣发货</a></li>
-							<li><a href="${ctx}/logistics/wareHouseList.do">产品入库</a></li>
+							<li><a href="${ctx}/logistics/warehouseList.do">产品入库</a></li>
 							<li><a href="${ctx}/logistics/sendClothesList.do">产品发货</a></li>
 						</ul></li>
 						</c:if>
