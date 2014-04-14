@@ -36,6 +36,7 @@ $(function() {
 	$("#txtScan").keydown(function(e) {
 		if(e.keyCode === 13) {
 			checkPackageId($(this).val().trim());
+			e.preventDefault();
 		}
 	});
 });
@@ -73,13 +74,13 @@ $(function() {
 </div>
 
 <ul id="package_list">
-<c:forEach var="package" items="${packageList}">
+<c:forEach var="packageInfo" items="${packageList}">
 <li>
-<table id="package_${package.packageId }">
-<tr><td>包号：</td><td>${package.packageId }</td></tr>
-<tr><td>仓库：</td><td>${package.warehouseId }</td></tr>
-<tr><td>货架：</td><td>${package.shelfId }</td></tr>
-<tr><td>位置：：</td><td>${package.location }</td></tr>
+<table id="package_${packageInfo.packageId }">
+<tr><td>包号：</td><td>${packageInfo.packageId }</td></tr>
+<tr><td>仓库：</td><td>${packageInfo.warehouseId }</td></tr>
+<tr><td>货架：</td><td>${packageInfo.shelfId }</td></tr>
+<tr><td>位置：：</td><td>${packageInfo.location }</td></tr>
 </table>
 </li>
 </c:forEach>

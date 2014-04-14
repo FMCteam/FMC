@@ -23,9 +23,9 @@
 <body>
 <h3>智造链-入库列表</h3>
 <ul>
-<c:forEach var="order" items="${orderList}">
+<c:forEach var="orderInfo" items="${orderList}">
 <li>
-<a href="${ctx }/logistics/updateStore.do?orderId=${orderList.orderId}">${orderList.orderId }</a>
+<a href="${ctx }/logistics/updateStore.do?orderId=${orderInfo.order.orderId}">${orderInfo.order.orderId }</a>
 </li>
 </c:forEach>
 </ul>
