@@ -144,20 +144,19 @@
 						<li class="dropdown"><a href=""><span
 							class="iconfa-th-list"></span> 财务部</a>
 						<ul>
-							<li><a href="${ctx }/finance/confirmSampleMoneyList.do">样衣金确认</a></li>
-							<li><a href="${ctx }/finance/confirmDepositList.do">首定金确认</a></li>
-							<li><a href="${ctx }/finance/confirmFinalPaymentList.do">生产金确认</a></li>
-							<li><a href="#">尾金确认</a></li>
+							<li><a href="${ctx}/finance/confirmSampleMoneyList.do">样衣费确认</a></li>
+							<li><a href="${ctx}/finance/confirmDepositList.do">首定金确认</a></li>
+							<li><a href="${ctx}/finance/confirmFinalPaymentList.do">尾款金确认</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_logistics==true}">
 						<li class="dropdown"><a href=""><span
 							class="iconfa-th-list"></span> 物流部</a>
 						<ul>
-							<li><a href="${ctx }/logistics/receiveSampleList.do">收取样衣</a></li>
-							<li><a href="${ctx }/logistics/sendSampleList.do">样衣发货</a></li>
-							<li><a href="${ctx }/logistics/wareHouseList.do">产品入库</a></li>
-							<li><a href="${ctx }/logistics/sendClothesList.do">产品发货</a></li>
+							<li><a href="${ctx}/logistics/receiveSampleList.do">样衣收取</a></li>
+							<li><a href="${ctx}/logistics/sendSampleList.do">样衣发货</a></li>
+							<li><a href="${ctx}/logistics/wareHouseList.do">产品入库</a></li>
+							<li><a href="${ctx}/logistics/sendClothesList.do">产品发货</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_quality==true}">

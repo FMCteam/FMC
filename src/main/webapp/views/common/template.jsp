@@ -31,55 +31,17 @@
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
 				<div class="tab-pane" id="quote">
-					<form id="costAccounting_form" method="post"
-						action="${ctx }/produce/computeProduceCostSubmit.do">
-						<table>
-							<tr>
-								<td rowspan="4">其他成本</td>
-								<td>裁剪费用</td>
-								<td>管理费用</td>
-								<td>缝制费用</td>
-								<td>整烫费用</td>
-							</tr>
-
-							<tr>
-								<td><input class="span12" name="cut_cost" id="cut_cost"
-									type="text"></td>
-								<td><input class="span12" name="manage_cost"
-									id="manage_cost" type="text"></td>
-								<td><input class="span12" name="nail_cost" id="nail_cost"
-									type="text"></td>
-								<td><input class="span12" name="ironing_cost"
-									id="ironing_cost" type="text"></td>
-								<input type="hidden" name="orderId"
-									value="${orderInfo.order.orderId}" />
-								<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
-							</tr>
-
-							<tr>
-								<td>锁订费用</td>
-								<td>包装费用</td>
-								<td>其他费用</td>
-								<td>设计费用</td>
-							</tr>
-
-							<tr>
-								<td><input class="span12" name="swing_cost" id="swing_cost"
-									type="text"></td>
-								<td><input class="span12" name="package_cost"
-									id="package_cost" type="text"></td>
-								<td><input class="span12" name="other_cost" id="other_cost"
-									type="text"></td>
-								<td><input class="span12" name="design_cost"
-									id="design_cost" type="text"></td>
-							</tr>
-							<tr>
-								<td colspan="3"><input type="submit" style="float: right;" /></td>
-							</tr>
-						</table>
-					</form>
+					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			</div>
+		</div>
+		<div class="action">
+			<a class="btn btn-primary btn-rounded"
+				href="${ctx}/logistics/receiveSampleSubmit.do?result=1&taskId=${orderInfo.task.id}"><i
+				class="icon-ok icon-white"></i>已收到样衣</a> <a
+				class="btn btn-primary btn-rounded"
+				href="${ctx}/logistics/receiveSampleSubmit.do?result=0&taskId=${orderInfo.task.id}"><i
+				class="icon-remove icon-white"></i>未收到样衣</a>
 		</div>
 	</div>
 
