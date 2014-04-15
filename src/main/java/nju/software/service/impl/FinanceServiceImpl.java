@@ -60,6 +60,7 @@ public class FinanceServiceImpl implements FinanceService {
 		
 		model.put("taskName", "确认样衣制作金");
 		model.put("tabName", "制版费用");
+		model.put("type", "样衣制作金");
 		model.put("url", "/finance/confirmSampleMoneySubmit.do");
 		model.put("moneyName", "样衣制作金");
 		model.put("number", 10);
@@ -115,6 +116,15 @@ public class FinanceServiceImpl implements FinanceService {
 		model.put("produce", produceDAO.findByExample(produce));
 		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
 		model.put("sample", produceDAO.findByExample(produce));
+		
+		model.put("taskName", "确认大货定金");
+		model.put("tabName", "大货定金");
+		model.put("type", "大货定金");
+		model.put("url", "/finance/confirmDepositSubmit.do");
+		model.put("moneyName", "30%定金");
+		model.put("number", 10);
+		model.put("price", 200);
+		model.put("total", 600);
 
 		return model;
 	}
@@ -166,6 +176,16 @@ public class FinanceServiceImpl implements FinanceService {
 		model.put("produce", produceDAO.findByExample(produce));
 		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
 		model.put("sample", produceDAO.findByExample(produce));
+		
+		
+		model.put("taskName", "确认大货尾款");
+		model.put("tabName", "大货尾款");
+		model.put("type", "大货尾款");
+		model.put("url", "/finance/confirmDepositSubmit.do");
+		model.put("moneyName", "70%尾款");
+		model.put("number", 10);
+		model.put("price", 200);
+		model.put("total", 1400);
 		return model;
 	}
 
