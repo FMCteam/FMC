@@ -7,11 +7,12 @@ function getInputString(col){
 		inputString+=$("input."+col).eq(i).val()+",";
 	}
 	inputString+=$("input."+col).eq(i).val();
+//	alert(inputString);
 	return inputString;
 }
 
 
-function verify(){
+function getProduce(){
 	$("#produce_color").val(getInputString("produce_color"));
 	$("#produce_xs").val(getInputString("produce_xs"));
 	$("#produce_s").val(getInputString("produce_s"));

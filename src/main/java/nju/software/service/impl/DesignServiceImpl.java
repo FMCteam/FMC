@@ -73,7 +73,7 @@ public class DesignServiceImpl implements DesignService {
 		oi.setFabrics(fabricDAO.findByOrderId(orderId));
 		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		oi.setTask(task);
-		oi.setTaskId(taskId);
+		oi.setTaskId(task.getId());
 		return oi;
 	}
 

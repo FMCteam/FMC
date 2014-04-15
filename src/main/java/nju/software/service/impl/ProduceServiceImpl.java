@@ -86,7 +86,7 @@ public class ProduceServiceImpl implements ProduceService {
 		oi.setFabrics(fabricDAO.findByOrderId(orderId));
 		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		oi.setTask(task);
-		oi.setTaskId(taskId);
+		oi.setTaskId(task.getId());
 		return oi;
 	}
 
@@ -364,6 +364,7 @@ public class ProduceServiceImpl implements ProduceService {
 		String[] xxl = produceXXL.split(",");
 		List<Produce> produceList = new ArrayList<Produce>();
 		for (int i = 0; i < color.length; i++) {
+			System.out.println(color[i] + xs[i] + xxl[i]);
 			Produce produce = new Produce();
 			produce.setColor(color[i]);
 			produce.setXs(Integer.parseInt(xs[i]));

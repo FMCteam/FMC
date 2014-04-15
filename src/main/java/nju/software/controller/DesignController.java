@@ -114,10 +114,9 @@ public class DesignController {
 	public String verifyDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 //		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
+		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
+		long taskId = 0;
 		OrderInfo orderInfo = designService.getVerifyDesignDetail(orderId_request, taskId);
 		model.addAttribute("orderInfo", orderInfo);	
 		return "design/verifyDesignDetail";

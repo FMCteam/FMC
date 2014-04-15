@@ -102,10 +102,9 @@ public class ProduceController {
 		System.out.println("produce verify ================ show detail");
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
+		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
+		long taskId = 0;
 		OrderInfo orderInfo = produceService.getVerifyProduceDetail(orderId_request, taskId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "produce/verifyProduceDetail";
