@@ -547,6 +547,7 @@ public class MarketServiceImpl implements MarketService {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				accountId+"", TASK_MERGE_QUOTE);
+		System.out.println(accountId);
 		List<OrderInfo> taskSummarys = new ArrayList<>();
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) getVariable("orderId", task);

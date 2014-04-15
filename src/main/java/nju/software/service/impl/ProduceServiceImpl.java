@@ -478,23 +478,15 @@ public class ProduceServiceImpl implements ProduceService {
 	@Override
 	public OrderInfo getVerifyProduceDetail(int orderId, long taskId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_PRODUCE_MANAGER, TASK_VERIFY_PRODUCE);
-		for (TaskSummary task : list) {
-			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-					.getKsession().getProcessInstance(task.getProcessInstanceId());
-			int orderId_process = (int) process.getVariable("orderId");
-			if (orderId == orderId_process && taskId == task.getId() ) {
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setLogistics(logisticsDAO.findById(orderId));
-				oi.setFabrics(fabricDAO.findByOrderId(orderId));
-				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				oi.setTask(task);
-				return oi;
-			}
-		}
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER, TASK_VERIFY_PRODUCE, orderId);
+		OrderInfo oi = new OrderInfo();
+		oi.setOrder(orderDAO.findById(orderId));
+		oi.setLogistics(logisticsDAO.findById(orderId));
+		oi.setFabrics(fabricDAO.findByOrderId(orderId));
+		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		oi.setTask(task);
+		oi.setTaskId(taskId);
+		return oi;
 	}
 
 }

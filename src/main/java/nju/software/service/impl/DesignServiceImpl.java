@@ -402,6 +402,7 @@ public class DesignServiceImpl implements DesignService {
 			OrderInfo oi = new OrderInfo();
 			oi.setOrder(orderDAO.findById(orderId));
 			oi.setTask(task);
+			oi.setTaskId(task.getId());
 			orderList.add(oi);
 		}
 		return orderList;
@@ -410,19 +411,15 @@ public class DesignServiceImpl implements DesignService {
 	@Override
 	public OrderInfo getVerifyDesignDetail(int orderId, long taskId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_DESIGN_MANAGER, TASK_VERIFY_DESIGN);
-		for (TaskSummary task : list) {
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setLogistics(logisticsDAO.findById(orderId));
-				oi.setFabrics(fabricDAO.findByOrderId(orderId));
-				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				oi.setTask(task);
-				return oi;
-			
-		}
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER, TASK_VERIFY_DESIGN, orderId);
+		OrderInfo oi = new OrderInfo();
+		oi.setOrder(orderDAO.findById(orderId));
+		oi.setLogistics(logisticsDAO.findById(orderId));
+		oi.setFabrics(fabricDAO.findByOrderId(orderId));
+		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		oi.setTask(task);
+		oi.setTaskId(taskId);
+		return oi;
 	}
 
 

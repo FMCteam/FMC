@@ -37,7 +37,7 @@
 								<td>${orderModel.order.styleName }</td>
 								<td>${orderModel.order.askAmount }</td>
 								<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
-								<td><a href="${ctx }/design/verifyDesignDetail.do?id=${orderModel.order.orderId}&task_id=${orderModel.task.id}">详情
+								<td><a href="${ctx }/design/verifyDesignDetail.do?id=${orderModel.order.orderId}&task_id=${orderModel.taskId}">详情
 									</a></td>								
 	                        </tr>
                         </c:forEach>

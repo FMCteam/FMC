@@ -47,7 +47,7 @@
 						<td>操作</td>
 						<td colspan="6"><input type="hidden" name="orderId"
 							value="${orderInfo.order.orderId }" /> <input type="hidden"
-							name="taskId" value="${orderInfo.task.id }" /> <input
+							name="taskId" value="${orderInfo.taskId }" /> <input
 							id="verify_val" type="hidden" name="designVal" value="" /> <a
 							id="agree_detail" class="btn btn-primary btn-rounded"><i
 								class="icon-ok icon-white"></i> 同意</a> <a id="disagree_detail"
