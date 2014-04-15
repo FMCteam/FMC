@@ -1,0 +1,9 @@
+div.action a.btn-danger{
+	color: white;
+	margin-left: 5px;
+}
+
+div.action a.btn-primary:hover{
+	background-color:#0044cc;
+}
+

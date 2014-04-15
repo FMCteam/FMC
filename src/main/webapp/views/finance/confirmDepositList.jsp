@@ -7,44 +7,7 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
-			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<section class="list">
-				<table class="list">
-					<caption>
-						<span class="text-vertical">样衣制作金确认列表:<span class="number">${fn:length(list)}</span>件任务
-						</span><input type="text" class="search-query float-right"
-							placeholder="输入检索条件">
-					</caption>
-					<thead>
-						<tr>
-							<th>订单号</th>
-							<th>业务员</th>
-							<th>客户姓名</th>
-							<th>客户公司</th>
-							<th>款式</th>
-							<th>件数</th>
-							<th>交货时间</th>
-							<th>操作</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="task" items="${list}">
-							<tr>
-								<td>${task.order.orderId}</td>
-								<td>${task.order.employeeId}</td>
-								<td>${task.order.customerName}</td>
-								<td>${task.order.customerCompany}</td>
-								<td>${task.order.styleName}</td>
-								<td>${task.order.askAmount}</td>
-								<td>${fn:substring(task.order.askDeliverDate,0,10)}</td>
-								<td><a
-									href="${ctx}/finance/confirmDepositDetail.do?orderId=${task.order.orderId}">详情</a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</section>
+			<%@include file="/views/common/list.jsp"%>
 		</div>
 		<!--row-fluid-->
 
@@ -54,6 +17,7 @@
 			</div>
 		</div>
 		<!--footer-->
+
 	</div>
 	<!--maincontentinner-->
 </div>

@@ -26,14 +26,14 @@ public class Logistics implements java.io.Serializable {
 	private Timestamp sampleClothesTime;
 	private String sampleClothesRemark;
 	private String sampleClothesNumber;
-	private String productClothesType;
-	private String productClothesAddress;
-	private String productClothesPrice;
-	private String productClothesNumber;
-	private String productClothesName;
-	private String productClothesPhone;
-	private Timestamp productClothesTime;
-	private String productClothesRemark;
+	private String productClothesType;		//快递名称
+	private String productClothesAddress;	//收货人地址
+	private String productClothesPrice;		//快递价格	
+	private String productClothesNumber;	//快递单号
+	private String productClothesName;      //发货人姓名
+	private String productClothesPhone;		//收货人电话
+	private Timestamp productClothesTime;   //发货时间
+	private String productClothesRemark;    //发货备注
 
 	// Constructors
 
