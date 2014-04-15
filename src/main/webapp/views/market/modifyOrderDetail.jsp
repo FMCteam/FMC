@@ -3,7 +3,7 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-	<form id="verify_form" method="post" 
+	<form id="verify_form" method="post" onsubmit="return verify();"
 						action="${ctx }/market/modifyOrderSubmit.do">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
@@ -20,11 +20,11 @@
 						<tr>
 							<td>业务信息</td>
 							<td>业务编号</td>
-							<td><input class="span12" type="text" value="" readonly /></td>
+							<td>${orderModel.order.orderId }</td>
 							<td>接单时间</td>
 							<td>${fn:substring(orderModel.order.orderTime,0,10) }</td>
 							<td>接单业务员</td>
-							<td>${orderModel.employee.nickName }</td>
+							<td>${orderModel.employee.employeeName }</td>
 						</tr>
 						<tr>
 							<td rowspan="3">客户信息</td>
@@ -88,7 +88,7 @@
 						<tr>
 							<td>其他说明</td>
 							<td colspan="5"><input type="checkbox"
-								name="other_requirements" value="有主标" ${fn:contains(orderModel.order.otherRequirements,'有主标 ')?'checked="checked"':'' } /> 有主标 <input
+								name="other_requirements" value="有主标" ${fn:contains(orderModel.order.otherRequirements,'有主标')?'checked="checked"':'' } /> 有主标 <input
 								type="checkbox" name="other_requirements" value="有吊牌" ${fn:contains(orderModel.order.otherRequirements,'有吊牌')?'checked="checked"':'' } /> 有吊牌 <input
 								type="checkbox" name="other_requirements" value="有水洗" ${fn:contains(orderModel.order.otherRequirements,'有水洗')?'checked="checked"':'' } /> 有水洗 <input
 								type="checkbox" name="other_requirements" value="其他" ${fn:contains(orderModel.order.otherRequirements,'其他')?'checked="checked"':'' }/> <input
@@ -232,7 +232,7 @@
 						</tr>
 						<tr>
 							<td><input class="span6" type="number" name="ask_amount" value="${orderModel.order.askAmount }" /></td>
-							<td colspan="2"><input class="span6" type="date"
+							<td colspan="2"><input class="span12" type="date"
 								name="ask_deliver_date" value="${fn:substring(orderModel.order.askDeliverDate,0,10) }" /></td>
 							<td colspan="2"><input class="span3" type="number"
 								name="ask_produce_period" value="${orderModel.order.askProducePeriod }" /></td>

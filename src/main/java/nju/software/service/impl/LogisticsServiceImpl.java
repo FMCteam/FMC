@@ -441,6 +441,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return packageDAO.findById(packageId);
 	}
 
+	@Override
+	public Logistics findByOrderId(String s_id) {
+		// TODO Auto-generated method stub
+		return logisticsDAO.findById(Integer.parseInt(s_id));
+	}
+
 	
 
 }

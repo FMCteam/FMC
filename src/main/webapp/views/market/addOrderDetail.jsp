@@ -372,6 +372,7 @@
 <script>
 	$(function() {
 		$('#tab a:first').tab('show');
+		init();
 	});
 </script>
 <%@include file="/common/footer.jsp"%>
