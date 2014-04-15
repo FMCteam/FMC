@@ -18,18 +18,34 @@ $(function() {
 });
 </script>
 <style type="text/css">
-	a {
-		display: block;
-		margin-bottom: 20px;
+    body {
+    	text-align:center;
+    	padding-top:10px;
+    	
+    }
+    table {
+        width: 100%;*--
+    }
+	h2 {
+		font-weight: bold;
+		text-align:center;
+	}
+	td {
+		padding: 10px;
+		text-align: center;
+	}
+	#bar {
+		display: inline-block;
 	}
 </style>
 </head>
 <body>
 <input type="hidden" value="${packageInfo.packageId }" id="pid" />
-<table>
+<h2>智造链-装包单</h2>
+<table border="1">
 <tr><td>订单号：</td><td>${order.orderId }</td></tr>
 <tr><td>装包号：</td><td>${packageInfo.packageId }</td></tr>
-<tr><td>条形码：</td><td id="bar"></td></tr>
+<tr><td>条形码：</td><td><span id="bar"></span></td></tr>
 <tr>
 <td>详情：</td>
 <td>
