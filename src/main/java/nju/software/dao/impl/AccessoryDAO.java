@@ -196,6 +196,15 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	@Override
 	public void deleteByProperty(String propertyName, Object orderId) {
 		// TODO Auto-generated method stub
-		
+		log.debug("deleting Accessory instance with property: " + propertyName
+				+ ", value: " + orderId);
+		try {
+			String queryString = "delete from Accessory as model where model."
+					+ propertyName + "= ?";
+			 getHibernateTemplate().bulkUpdate(queryString, orderId);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
 	}
 }

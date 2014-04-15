@@ -42,10 +42,9 @@ public class MainController {
 		if(cur_user != null) {
 			return "redirect:default.do";
 		} else {
-			String user_agent = request.getHeader("user-agent");
-			System.out.println(user_agent);
-			System.out.println(user_agent.contains("Windows Phone 6.5"));
-			if(user_agent.contains("Windows Phone 6.5")) {
+			String user_agent = request.getHeader("user-agent").toLowerCase();
+			
+			if(user_agent.contains("windows phone") || user_agent.contains("android") || user_agent.contains("iphone")) {
 				return "login2";
 			} else {
 				return "login";
@@ -77,9 +76,9 @@ public class MainController {
 		String user_password = request.getParameter("user_password");
 		HttpSession session = request.getSession();
 		Account account = accountService.vertifyAccount(user_name, user_password);
-		String user_agent = request.getHeader("user-agent");
+		String user_agent = request.getHeader("user-agent").toLowerCase();
 		
-		boolean is_wm = user_agent.contains("Windows Phone 6.5");
+		boolean is_wm = user_agent.contains("windows phone") || user_agent.contains("android") || user_agent.contains("iphone");
 		if (account != null) {
 			session.setAttribute("cur_user", account);
 			if("ADMIN, WULIUZHUGUAN".contains(account.getUserRole()) && is_wm) {

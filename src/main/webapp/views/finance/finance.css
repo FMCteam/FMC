@@ -1,0 +1,9 @@
+table.finance a.btn.btn-danger {
+	color: white;
+	margin-left: 40px;
+}
+
+table.finance a.btn{
+	margin-bottom: 0px;
+}
+

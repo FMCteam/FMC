@@ -33,10 +33,10 @@ import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
-
 import nju.software.model.QuoteModel;
 import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
+import nju.software.service.LogisticsService;
 import nju.software.service.MarketService;
 import nju.software.service.OrderService;
 import nju.software.service.QuoteService;
@@ -68,6 +68,8 @@ public class MarketController {
 	private OrderService orderService;
 	@Autowired
 	private BuyService buyService;
+	@Autowired
+	private LogisticsService logisticsService;
 	@Autowired
 	private QuoteService quoteService;
 	@Autowired
@@ -151,6 +153,8 @@ public class MarketController {
 		String fabric_amount[] = fabric_amounts.split(",");
 		List<Fabric> fabrics = new ArrayList<Fabric>();
 		for (int i = 0; i < fabric_name.length; i++) {
+			if(fabric_name[i].equals(""))
+				continue;
 			fabrics.add(new Fabric(0, fabric_name[i], fabric_amount[i]));
 		}
 
@@ -160,7 +164,9 @@ public class MarketController {
 		String accessory_name[] = accessory_names.split(",");
 		String accessory_query[] = accessory_querys.split(",");
 		List<Accessory> accessorys = new ArrayList<Accessory>();
-		for (int i = 0; i < fabric_name.length; i++) {
+		for (int i = 0; i < accessory_name.length; i++) {
+			if(accessory_name[i].equals(""))
+				continue;
 			accessorys.add(new Accessory(0, accessory_name[i],
 					accessory_query[i]));
 		}
@@ -182,6 +188,8 @@ public class MarketController {
 		String produce_xxl[] = produce_xxls.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
+			if(produce_color[i].equals(""))
+				continue;
 			Produce p = new Produce();
 			p.setColor(produce_color[i]);
 			p.setOid(0);
@@ -217,6 +225,8 @@ public class MarketController {
 		String version_sleeves[] = version_sleevess.split(",");
 		List<VersionData> versions = new ArrayList<VersionData>();
 		for (int i = 0; i < version_size.length; i++) {
+			if(version_size[i].equals(""))
+				continue;
 			versions.add(new VersionData(0,version_size[i],version_centerBackLength[i],version_bust[i],version_waistLine[i]
 					,version_shoulder[i],version_buttock[i],version_hem[i],version_trousers[i],version_skirt[i],version_sleeves[i]));
 		}
@@ -671,7 +681,7 @@ public class MarketController {
 		String accessory_name[] = accessory_names.split(",");
 		String accessory_query[] = accessory_querys.split(",");
 		List<Accessory> accessorys = new ArrayList<Accessory>();
-		for (int i = 0; i < fabric_name.length; i++) {
+		for (int i = 0; i < accessory_name.length; i++) {
 			accessorys.add(new Accessory(0, accessory_name[i],
 					accessory_query[i]));
 		}
@@ -693,6 +703,8 @@ public class MarketController {
 		String produce_xxl[] = produce_xxls.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
+			if(produce_color[i].equals(""))
+				continue;
 			Produce p = new Produce();
 			p.setColor(produce_color[i]);
 			p.setOid(0);
@@ -728,12 +740,14 @@ public class MarketController {
 		String version_sleeves[] = version_sleevess.split(",");
 		List<VersionData> versions = new ArrayList<VersionData>();
 		for (int i = 0; i < version_size.length; i++) {
+			if(version_size[i].equals(""))
+				continue;
 			versions.add(new VersionData(0,version_size[i],version_centerBackLength[i],version_bust[i],version_waistLine[i]
 					,version_shoulder[i],version_buttock[i],version_hem[i],version_trousers[i],version_skirt[i],version_sleeves[i]));
 		}
 
 		// 物流数据
-		Logistics logistics = new Logistics();
+		Logistics logistics = logisticsService.findByOrderId(s_id);
 		String in_post_sample_clothes_time = request
 				.getParameter("in_post_sample_clothes_time");
 		String in_post_sample_clothes_type = request

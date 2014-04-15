@@ -1,14 +1,18 @@
 ﻿package nju.software.controller;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Money;
 import nju.software.model.OrderInfo;
 import nju.software.service.FinanceService;
 import nju.software.service.impl.FinanceServiceImpl;
 import nju.software.service.impl.JbpmTest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,13 +33,15 @@ public class FinanceController {
 	public String confirmSampleMoneyList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		List<OrderInfo> list = financeService
+		List<Map<String,Object>> list = financeService
 				.getConfirmSampleMoneyList(actorId);
 		if (list.size() == 0) {
-			jbpmTest.completeConfirmQuote(getActorId(request));
+			jbpmTest.completeConfirmQuote(FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
 			list = financeService.getConfirmSampleMoneyList(actorId);
 		}
 		model.addAttribute("list", list);
+		model.addAttribute("taskName", "确认样衣制作金");
+		model.addAttribute("url", "/finance/confirmSampleMoneyDetail.do");
 		return "/finance/confirmSampleMoneyList";
 	}
 
@@ -46,7 +52,7 @@ public class FinanceController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		OrderInfo orderInfo = financeService.getConfirmSampleMoneyDetail(
+		Map<String,Object> orderInfo = financeService.getConfirmSampleMoneyDetail(
 				actorId, Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/confirmSampleMoneyDetail";
@@ -80,8 +86,10 @@ public class FinanceController {
 	public String confirmDepositList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		List<OrderInfo> list = financeService.getConfirmDepositList(actorId);
+		List<Map<String,Object>> list = financeService.getConfirmDepositList(actorId);
 		model.addAttribute("list", list);
+		model.addAttribute("taskName", "确认大货定金");
+		model.addAttribute("url", "/finance/confirmDepositDetail.do");
 		return "/finance/confirmDepositList";
 	}
 
@@ -92,7 +100,7 @@ public class FinanceController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		OrderInfo orderInfo = financeService.getConfirmDepositDetail(actorId,
+		Map<String,Object> orderInfo = financeService.getConfirmDepositDetail(actorId,
 				Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/confirmDepositDetail";
@@ -128,9 +136,11 @@ public class FinanceController {
 			HttpServletResponse response, ModelMap model) {
 
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		List<OrderInfo> list = financeService
+		List<Map<String,Object>> list = financeService
 				.getConfirmFinalPaymentList(actorId);
 		model.addAttribute("list", list);
+		model.addAttribute("taskName", "确认大货尾款");
+		model.addAttribute("url", "/finance/confirmFinalPaymentDetail.do");
 		return "/finance/confirmFinalPaymentList";
 
 	}
@@ -142,7 +152,7 @@ public class FinanceController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		OrderInfo orderInfo = financeService.getConfirmFinalPaymentDetail(
+		Map<String,Object> orderInfo = financeService.getConfirmFinalPaymentDetail(
 				actorId, Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/confirmFinalPaymentDetail";
@@ -170,14 +180,6 @@ public class FinanceController {
 		financeService.confirmFinalPaymentSubmit(actorId, taskId, result,
 				money);
 		return "forward:/finance/confirmFinalPaymentList.do";
-	}
-
-	
-	private String getActorId(HttpServletRequest request) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
-		System.out.println(account.getUserId());
-		return account.getUserId() + "";
 	}
 
 	

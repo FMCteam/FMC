@@ -200,7 +200,8 @@ public class LogisticsController {
 		} else {
 			List<OrderInfo> list = logisticsService.getSendClothesList();
 			model.addAttribute("list", list);
-			return "/logistic/sendClothesList";
+			//System.out.println(list.size());
+			return "/logistics/sendClothesList";
 		}
 
 	}
@@ -236,37 +237,14 @@ public class LogisticsController {
 		return "forward:/logistics/sendClothesList";
 	}
 	
-	
-	@RequestMapping(value = "/logistics/addPackage.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String addPackage(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		
-		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
-		String size=request.getParameter("size");
-		String color=request.getParameter("color");
-		Integer number=Integer.parseInt(request.getParameter("number"));
-		
-		Package pack=new Package(orderId);
-		PackageDetail detail=new PackageDetail();
-		detail.setClothesAmount(number);
-		detail.setClothesStyleColor(color);
-		detail.setClothesStyleName(size);
-		//Integer pid=logisticsService.addPackage(pack, detail);
-		
-		
-		return "forward:/logistics/sendClothesList";
-	}
 
-	
-	@Autowired
-	private OrderService orderService;
+
+
 	@Autowired
 	private LogisticsService logisticsService;
+
 	@Autowired
-	private CustomerService customerService;
-	@Autowired
-	private EmployeeService employeeService;
+	private OrderService orderService;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired
