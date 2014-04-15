@@ -7,18 +7,18 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 
 			<ul class="nav nav-tabs detail" id="tab">
-				<li class="task-name">${taskName}</li>
-				<li><a href="#finance" data-toggle="tab">${tabName}</a></li>
+				<li class="task-name">${orderInfo.taskName}</li>
+				<li  class="active"><a href="#finance" data-toggle="tab">${orderInfo.tabName}</a></li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
-				<li class="active"><a href="#basic" data-toggle="tab">基本信息</a></li>
+				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
 
 			<div class="tab-content">
-				<div class="tab-pane active" id="basic">
+				<div class="tab-pane" id="basic">
 					<%@include file="/views/common/basic.jsp"%>
 				</div>
 				<div class="tab-pane" id="material">
@@ -36,7 +36,7 @@
 				<div class="tab-pane" id="quote">
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
-				<div class="tab-pane" id="finance">
+				<div class="tab-pane  active" id="finance">
 					<%@include file="/views/finance/finance.jsp"%>
 				</div>
 			</div>
@@ -58,7 +58,8 @@
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
+<link rel="stylesheet" href="${ctx}/views/finance/finance.css">
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<script type="text/javascript" src="/views/finance/finance.js"></script>
+<script type="text/javascript" src="${ctx}/views/finance/finance.js"></script>
 <%@include file="/common/footer.jsp"%>

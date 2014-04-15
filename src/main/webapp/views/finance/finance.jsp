@@ -1,18 +1,19 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<form action="${ctx}${orderInfo.url}" method="post"
+<form id="verify_form" action="${ctx}${orderInfo.url}" method="post"
 	onsubmit="return verifyFinance()">
 	<input type="hidden" name="money_state" value="已收到" /> <input
-		type="hidden" name="money_type" value="${orderInfo.type}" /> <input type="hidden"
-		name="orderId" value="${orderInfo.order.orderId}" /> <input
+		id="verify_val" type="hidden" name="val" value="已收到" /> <input
+		type="hidden" name="money_type" value="${orderInfo.type}" /> <input
+		type="hidden" name="orderId" value="${orderInfo.order.orderId}" /> <input
 		type="hidden" name="taskId" value="${orderInfo.task.id}" /><input
 		type="hidden" name="result" value="1" />
 
-	<table class="table table-bordered detail">
+	<table class="table table-bordered detail finance">
 		<tr>
 			<td rowspan="2">样衣信息</td>
 			<td>金额类型</td>
-			<td>样衣件数</td>
-			<td>制版单价</td>
+			<td>件数</td>
+			<td>单价</td>
 			<td>应收金额</td>
 		</tr>
 		<tr>
@@ -41,10 +42,12 @@
 		</tr>
 		<tr>
 			<td>操作</td>
-			<td colspan="4"><input class="btn btn-primary" type="submit"
-				value="确认收款" /> <a class="btn btn-primary"
+			<td colspan="4"><a id="agree_detail" class="btn btn-primary btn-rounded"><i
+					class="icon-ok icon-white"></i>确认收款</a>
+				<a class="btn btn-danger btn-rounded"
 				href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
-				onclick="return confirmFinanceSubmit()">未收到汇款</a></td>
+				onclick="return confirmFinanceSubmit()"><i
+					class="icon-remove icon-white"></i>未收到汇款</a></td>
 		</tr>
 	</table>
 </form>
