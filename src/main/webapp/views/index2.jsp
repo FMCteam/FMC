@@ -72,7 +72,7 @@
 							<td colspan="5"><input type="radio" name="fabric_type"
 								checked="checked" value="梭织" /> <span>梭织</span> <input
 								type="radio" name="fabric_type" value="梭织" /> <span>针织</span> <input
-								type="radio" name="fabric_type" /value="编织"> <span>编织</span>
+								type="radio" name="fabric_type" value="编织"> <span>编织</span>
 								<input type="radio" name="fabric_type" value="梭针混合" /> <span>梭针混合</span>
 								<input type="radio" name="fabric_type" value="阵编混合" /> <span>阵编混合</span>
 								<input type="radio" name="fabric_type" value="梭编混合" /> <span>梭编混合</span></td>
@@ -365,6 +365,6 @@
 <script>
 	$(function() {
 		$('#tab a:first').tab('show');
-	})
+	});
 </script>
 <%@include file="/common/footer.jsp"%>

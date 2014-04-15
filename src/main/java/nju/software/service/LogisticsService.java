@@ -3,9 +3,9 @@ package nju.software.service;
 import java.util.List;
 import java.util.Map;
 
+import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
-
 import nju.software.model.OrderInfo;
 
 
@@ -70,5 +70,7 @@ public interface LogisticsService {
 	public List<PackageDetail> getPackageDetailList(int packageId);
 	
 	public Package getPackageByPackageId(int packageId);
+
+	public Logistics findByOrderId(String s_id);
 
 }

@@ -196,8 +196,10 @@ public class MarketServiceImpl implements MarketService {
 			Integer orderId = (Integer) getVariable("orderId", task);
 			if (id == orderId && task_id == task.getId()) {
 				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setEmployee(employeeDAO.findById(orderId));
+				Order o = orderDAO.findById(orderId);
+				oi.setOrder(o);
+				oi.setEmployee(employeeDAO.findById(o.getEmployeeId()));
+				oi.setLogistics(logisticsDAO.findById(orderId));
 				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
 				oi.setFabrics(fabricDAO.findByOrderId(orderId));
 				oi.setProduces(produceDAO.findByOrderId(orderId));
@@ -215,9 +217,8 @@ public class MarketServiceImpl implements MarketService {
 			List<VersionData> versions, boolean editok, long taskId, Integer accountId) {
 		// TODO Auto-generated method stub
 		// 添加订单信息
-		orderDAO.save(order);
+		orderDAO.merge(order);
 		Integer orderId = order.getOrderId();
-		orderDAO.attachDirty(order);
 		// 添加面料信息
 		fabricDAO.deleteByProperty("orderId", orderId);
 		for (Fabric fabric : fabrics) {
@@ -244,7 +245,7 @@ public class MarketServiceImpl implements MarketService {
 		}
 		// 添加物流信息
 		logistics.setOrderId(orderId);
-		logisticsDAO.save(logistics);
+		logisticsDAO.merge(logistics);
 
 		// 启动流程
 		Map<String, Object> params = new HashMap<String, Object>();
