@@ -34,8 +34,7 @@
 				<div class="tab-pane active" id="quote">
 					<form id="verify_form" onSubmit="return getProduce()" method="post"
 						action="${ctx }/produce/produceSampleSubmit.do">
-						<table
-							class="table table-striped table-bordered table-hover detail">
+						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span1" rowspan="${fn:length(orderInfo.produces)+1}">计划生产数量</td>
 								<td class="span1">颜色</td>

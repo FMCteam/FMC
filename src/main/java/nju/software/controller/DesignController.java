@@ -420,7 +420,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/getConfirmDesignDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getConfirmDesignDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String getConfirmDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -475,7 +475,7 @@ public class DesignController {
 				 Long.parseLong(taskId),
 				 url,
 				 uploadTime);
-		return "redirect:/design/getConfirmDesignList";
+		return "redirect:/design/getConfirmDesignList.do";
 	}
 	
 	

@@ -1,6 +1,7 @@
 package nju.software.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,8 +46,10 @@ public class QualityController {
 	public String qualityCheckList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		List<OrderInfo> tasks = qualityService.getCheckQualityList();
-		model.addAttribute("tasks", tasks);
+		List<Map<String,Object>> orderList = qualityService.getCheckQualityList();
+		model.addAttribute("list", orderList);
+		model.addAttribute("taskName", "设计验证");
+		model.addAttribute("url", "/design/verifyDesignDetail.do");
 		return "quality/checkQualityList";
 	}
 	
@@ -60,7 +63,6 @@ public class QualityController {
 		String s_processId = request.getParameter("pid");
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
-		long processId = Long.parseLong(s_processId);
 		OrderInfo oi = qualityService.getCheckQualityDetail(id,taskId);
 		model.addAttribute("orderInfo", oi);
 		return "quality/checkQualityDetail";
@@ -73,11 +75,9 @@ public class QualityController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String s_taskId = request.getParameter("taskId");
-		String s_processId = request.getParameter("processId");
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
-		long processId = Long.parseLong(s_processId);
-		qualityService.checkQualitySubmit(id,taskId,processId,true);
+		qualityService.checkQualitySubmit(id, taskId, true);
 		//marketService.modifyProduct(account.getUserId(),id,taskId,processId,null);
 
 		return "redirect:/quality/checkQualityList.do";
