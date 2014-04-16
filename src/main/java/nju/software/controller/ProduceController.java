@@ -15,7 +15,6 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
-
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.util.JbpmAPIUtil;
@@ -48,16 +47,17 @@ public class ProduceController {
 	 */
 	@RequestMapping(value = "produce/verifyProduceList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String verify(HttpServletRequest request,
+	public String verifyProduceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("produce verify ================ show task");
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
 
-		List<OrderInfo> orderList = produceService.getVerifyProduceList();
-		model.addAttribute("order_list", orderList);
-		
+		List<Map<String,Object>> orderList = produceService.getVerifyProduceList();
+		model.addAttribute("list", orderList);
+		model.addAttribute("taskName", "生产验证");
+		model.addAttribute("url", "/produce/verifyProduceDetail.do");
 		return "produce/verifyProduceList";
 	}
 	/**
@@ -69,7 +69,7 @@ public class ProduceController {
 	 */
 	@RequestMapping(value = "produce/verifyProduceSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String doVerify(HttpServletRequest request,
+	public String verifyProduceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		System.out.println("produce verify ================");
 		
@@ -96,16 +96,15 @@ public class ProduceController {
 	 */
 	@RequestMapping(value = "produce/verifyProduceDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String verifyDetail(HttpServletRequest request,
+	public String verifyProduceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("produce verify ================ show detail");
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
+		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
+		long taskId = 0;
 		OrderInfo orderInfo = produceService.getVerifyProduceDetail(orderId_request, taskId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "produce/verifyProduceDetail";
@@ -136,8 +135,10 @@ public class ProduceController {
 	public String computeProduceCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-	List<OrderInfo>list=produceService.getComputeProduceCostList();
+		List<Map<String,Object>> list=produceService.getComputeProduceCostList();
 		model.addAttribute("list", list);
+		model.addAttribute("taskName", "生产成本核算");
+		model.addAttribute("url", "/produce/computeProduceCostDetail.do");
 		
 		return "/produce/computeProduceCostList";
 	}
@@ -180,7 +181,7 @@ public class ProduceController {
 	
 	@RequestMapping(value = "produce/computeProduceCostSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String doCostAccounting(HttpServletRequest request,
+	public String computeProduceCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		String orderId = (String) request.getParameter("orderId");
@@ -224,8 +225,10 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<OrderInfo> list = produceService.getProduceSampleList();
+		List<Map<String,Object>> list = produceService.getProduceSampleList();
 		model.addAttribute("list", list);
+		model.addAttribute("taskName", "样衣生产");
+		model.addAttribute("url", "/produce/produceSampleDetail.do");
 		return "/produce/produceSampleList";
 	}
 	
@@ -270,8 +273,10 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<OrderInfo>list=produceService.getProduceList();
+		List<Map<String,Object>> list=produceService.getProduceList();
 		model.addAttribute("list", list);
+		model.addAttribute("taskName", "批量生产");
+		model.addAttribute("url", "/produce/produceDetail.do");
 		return "/produce/produceList";
 	}
 	

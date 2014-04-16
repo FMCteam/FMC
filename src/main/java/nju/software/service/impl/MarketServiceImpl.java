@@ -490,6 +490,10 @@ public class MarketServiceImpl implements MarketService {
 				OrderInfo orderInfo = new OrderInfo();
 				orderInfo.setOrder(orderDAO.findById(orderId));
 				orderInfo.setQuote(quoteDAO.findById(orderId));
+				orderInfo.setProduces(produceDAO.findByOrderId(orderId));
+				orderInfo.setVersions(versionDataDAO.findByOrderId(orderId));
+				orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
 				orderInfo.setTask(task);
 				return orderInfo;
 			}
@@ -548,6 +552,7 @@ public class MarketServiceImpl implements MarketService {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				accountId+"", TASK_MERGE_QUOTE);
+		System.out.println(accountId);
 		List<OrderInfo> taskSummarys = new ArrayList<>();
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) getVariable("orderId", task);
@@ -645,9 +650,12 @@ public class MarketServiceImpl implements MarketService {
 			Integer orderId = (Integer) getVariable("orderId", task);
 			if (id == orderId && task_id == task.getId()) {
 				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
 				oi.setQuote(quoteDAO.findById(orderId));
 				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
 				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setProduces(produceDAO.findByOrderId(orderId));
+				oi.setVersions(versionDataDAO.findByOrderId(orderId));
 				oi.setTask(task);
 				return oi;
 			}
@@ -664,9 +672,12 @@ public class MarketServiceImpl implements MarketService {
 			Integer orderId = (Integer) getVariable("orderId", task);
 			if (id == orderId && task_id == task.getId()) {
 				OrderInfo oi = new OrderInfo();
+				oi.setOrder(orderDAO.findById(orderId));
 				oi.setQuote(quoteDAO.findById(orderId));
 				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
 				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setProduces(produceDAO.findByOrderId(orderId));
+				oi.setVersions(versionDataDAO.findByOrderId(orderId));
 				oi.setTask(task);
 				return oi;
 			}
@@ -687,6 +698,8 @@ public class MarketServiceImpl implements MarketService {
 				oi.setQuote(quoteDAO.findById(orderId));
 				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
 				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setProduces(produceDAO.findByOrderId(orderId));
+				oi.setVersions(versionDataDAO.findByOrderId(orderId));
 				oi.setTask(task);
 				return oi;
 			}
