@@ -251,6 +251,7 @@ public class ProduceController {
 		
 		boolean result = Boolean.parseBoolean(request.getParameter("result"));
 		String taskId = request.getParameter("taskId");
+		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		List<Produce> produceList = null;
 		if (!result) {
 			String produceColor = request.getParameter("produce_color");
@@ -260,7 +261,7 @@ public class ProduceController {
 			String produceL = request.getParameter("produce_l");
 			String produceXL = request.getParameter("produce_xl");
 			String produceXXL = request.getParameter("produce_xxl");
-			produceList = produceService.getProduceList(produceColor, 
+			produceList = produceService.getProduceList(orderId, produceColor, 
 					produceXS, produceS, produceM, produceL, produceXL, produceXXL);
 		}
 		produceService.produceSampleSubmit(Long.parseLong(taskId), result, produceList);

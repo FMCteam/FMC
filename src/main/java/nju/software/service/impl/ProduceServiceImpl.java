@@ -207,6 +207,7 @@ public class ProduceServiceImpl implements ProduceService {
 		// TODO Auto-generated method stub
 		if (!producterror) {
 			for (int i = 0; i < produceList.size(); i++) {
+				System.out.println(produceList.get(i).getOid() + produceList.get(i).getType());
 				produceDAO.save(produceList.get(i));
 			}
 		}
@@ -353,7 +354,7 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 	
 	
-	public List<Produce> getProduceList(String produceColor, String produceXS, String produceS, 
+	public List<Produce> getProduceList(int orderId, String produceColor, String produceXS, String produceS, 
 			String produceM, String produceL, String produceXL, String produceXXL) {
 		String[] color = produceColor.split(",");
 		String[] xs = produceXS.split(",");
@@ -366,6 +367,7 @@ public class ProduceServiceImpl implements ProduceService {
 		for (int i = 0; i < color.length; i++) {
 			System.out.println(color[i] + xs[i] + xxl[i]);
 			Produce produce = new Produce();
+			produce.setOid(orderId);
 			produce.setColor(color[i]);
 			produce.setXs(Integer.parseInt(xs[i]));
 			produce.setS(Integer.parseInt(s[i]));

@@ -34,7 +34,7 @@ public interface ProduceService {
 	
 	public boolean produceSampleSubmit(long taskId, boolean result, List<Produce> produceList);
 	
-	public List<Produce> getProduceList(String produceColor, String produceXS, String produceS, 
+	public List<Produce> getProduceList(int orderId, String produceColor, String produceXS, String produceS, 
 			String produceM, String produceL, String produceXL, String produceXXL);
 	
 	public List<Map<String, Object>> getProduceList();
