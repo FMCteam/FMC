@@ -204,7 +204,7 @@
 							
 								<tr>
 							
-								 <c:forEach var="fabricCost" items="${fabricCostlist}" >
+								 <c:forEach var="fabricCost" items="${orderInfo.fabricCosts}" >
 	                        <tr >
 	                    <td colspan="2">${fabricCost.fabricName }</td>
 	                     
@@ -227,7 +227,7 @@
 							</tr>
 							
 							<tr>
-								 <c:forEach var="accessoryCost" items="${accessoryCostlist}" >
+								 <c:forEach var="accessoryCost" items="${orderInfo.accessoryCosts}" >
 	                        <tr >
 	                    <td colspan="2">${accessoryCost.accessoryName }</td>
        					<td colspan="1">${accessoryCost.tearPerPiece }</td>

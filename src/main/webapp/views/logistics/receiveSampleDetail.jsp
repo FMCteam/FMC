@@ -6,6 +6,7 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
+				<li class="task-name">收取样衣</li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
@@ -37,10 +38,12 @@
 		</div>
 		<div class="action">
 			<a class="btn btn-primary btn-rounded"
-				href="${ctx}/logistics/receiveSampleSubmit.do?result=1&taskId=${orderInfo.task.id}" onclick="return confirmReceiveSampleSubmit()"><i
+				href="${ctx}/logistics/receiveSampleSubmit.do?result=1&taskId=${orderInfo.task.id}"
+				onclick="return confirmReceiveSampleSubmit()"><i
 				class="icon-ok icon-white"></i>已收到样衣</a> <a
 				class="btn btn-danger btn-rounded"
-				href="${ctx}/logistics/receiveSampleSubmit.do?result=0&taskId=${orderInfo.task.id}" onclick="return confirmReceiveSampleSubmit()"><i
+				href="${ctx}/logistics/receiveSampleSubmit.do?result=0&taskId=${orderInfo.task.id}"
+				onclick="return confirmReceiveSampleSubmit()"><i
 				class="icon-remove icon-white"></i>未收到样衣</a>
 		</div>
 	</div>
