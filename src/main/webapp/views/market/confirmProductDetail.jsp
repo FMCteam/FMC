@@ -44,7 +44,7 @@
 						</table>
 						<input type="hidden" name="order_id" value="${orderInfo.order.orderId}" />
 						<input type="hidden" name="task_id" value="${orderInfo.task.id}" />
-						<input type="hidden" name="process_id" value="${orderInfo..task.processInstanceId }" />
+						<input type="hidden" name="process_id" value="${orderInfo.task.processInstanceId }" />
 						<input type="hidden" name="comfirmworksheet" value="true" />
 					</form>
 				</div>

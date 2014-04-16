@@ -46,14 +46,15 @@
 					</tr>
 					<tr>
 						<td>操作</td>
-						<td colspan="6"><input type="hidden" name="orderId"
-							value="${orderInfo.order.orderId }" /> <input type="hidden"
-							name="taskId" value="${orderInfo.taskId }" /> <input
-							id="verify_val" type="hidden" name="designVal" value="" /> <a
-							id="agree" class="btn btn-primary btn-rounded"><i
-								class="icon-ok icon-white"></i> 同意</a> <a id="disagree"
-							class="btn btn-danger btn-rounded"><i
-								class="icon-remove icon-white"></i> 拒绝</a></td>
+						<td colspan="6">
+							<input type="hidden" name="orderId" value="${orderInfo.order.orderId}" /> 
+							<input type="hidden" name="taskId" value="${orderInfo.taskId }" /> 
+							<input id="verify_val" type="hidden" name="designVal" value="" /> 
+							<a id="agree" class="btn btn-primary btn-rounded">
+								<i class="icon-ok icon-white"></i> 同意</a> 
+							<a id="disagree" class="btn btn-danger btn-rounded">
+								<i class="icon-remove icon-white"></i> 拒绝</a>
+						</td>
 					</tr>
 				</table>
 			</form>
