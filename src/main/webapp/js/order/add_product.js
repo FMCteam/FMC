@@ -8,6 +8,15 @@
 			table_addrow_onclick("product_table","product_amount","product_color","product_style");
 		});
 		
+		$("a.btn-danger").click(function(){
+			$("input[name='tof']").val("false");
+			$("form").submit();
+		});
+		
+		$("a.btn-primary").click(function(){
+			$("input[name='tof']").val("true");
+			$("form").submit();
+		});
 //		init();
 	});
 
@@ -96,6 +105,16 @@ function verify(){
 
 	
 	return true;
+}
+
+function produce_verify(){
+	$("#produce_color").val(getTdString("produce_color"));
+	$("#produce_xs").val(getTdString("produce_xs"));
+	$("#produce_s").val(getTdString("produce_s"));
+	$("#produce_m").val(getTdString("produce_m"));
+	$("#produce_l").val(getTdString("produce_l"));
+	$("#produce_xl").val(getTdString("produce_xl"));
+	$("#produce_xxl").val(getTdString("produce_xxl"));
 }
 
 function init(){

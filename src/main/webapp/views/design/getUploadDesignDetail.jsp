@@ -38,27 +38,24 @@
 					</div>
 				</div>
                 
-                	<form action="${ctx }/design/uploadDesignSubmit.do" method="post" enctype="multipart/form-data">  
-  
-  						<table class="table table-striped table-bordered table-hover">
-							
+                	<form action="${ctx }/design/uploadDesignSubmit.do" 
+                		method="post" enctype="multipart/form-data">  
+  						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 	                        	<td>选择文件</td>
-	                     		<td>
+	                     		<td colspan="3">
 	                      			<input name="CADFile" id="CADFile" type="file" />  
 	                      			<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
 		                  			<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
 								</td>
-	                    	</tr>
-								
-							<tr>
-	
-	                        	<td colspan="3"><input type="submit"/></td>
+								<td colspan="3">
+									<input type="submit" class="btn btn-primary btn-rounded">
+								</td>
 	                    	</tr>
 						</table>
 	               </form>  
 				
-                      </div><!--row-fluid-->
+                   </div><!--row-fluid-->
                 
                 <div class="footer">
                     <div class="footer-left">

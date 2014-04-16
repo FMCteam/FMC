@@ -311,7 +311,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/getModifyDesignDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getModifyDesignDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String getModifyDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -363,7 +363,7 @@ public class DesignController {
 				 url,
 				 uploadTime);
 	
-		return "redirect:/design/modifyDesignSubmit.do";
+		return "redirect:/design/getModifyDesignList.do";
 	}
 	
 	

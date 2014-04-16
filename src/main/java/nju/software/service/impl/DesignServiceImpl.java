@@ -215,7 +215,11 @@ public class DesignServiceImpl implements DesignService {
 						 TASK_MODIFY_DESIGN , orderId);
 				OrderInfo model = new OrderInfo();
 				model.setOrder(orderDAO.findById(orderId));
+				model.setLogistics(logisticsDAO.findById(orderId));
+				model.setFabrics(fabricDAO.findByOrderId(orderId));
+				model.setAccessorys(accessoryDAO.findByOrderId(orderId));
 				model.setTask(task);
+				model.setTaskId(task.getId());
 				return model;
 	}
 
