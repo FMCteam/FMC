@@ -14,3 +14,7 @@ div#warehouse table {
 div#warehouse input.btn{
 	margin-bottom: 20px;
 }
+
+a:hover{
+	cursor: pointer;
+}
