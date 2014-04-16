@@ -10,31 +10,60 @@
 			<section class="list">
 				<table id="dyntable"
 					class="list">
-					<caption>客户下单</caption>
-					<tr>
-						<th class="head0">客户姓名</th>
-						<th class="head1">客户电话</th>
-						<th class="head0">客户地址</th>
-						<th class="head1">公司名称</th>
-						<th class="head0">公司电话</th>
-						<th class="head1">操作</th>
-					</tr>
-					<c:forEach var="task" items="${tasks}">
+					<caption>
+						<span class="text-vertical">签订合同:<span class="number">${fn:length(list)}</span>件任务
+						</span><input type="text" class="search-query float-right"
+							placeholder="输入检索条件">
+					</caption>
+					<colgroup>
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="head0">订单号</th>
+                            <th class="head1">业务员</th>
+                            <th class="head0">客户姓名</th>
+                            <th class="head1">客户公司</th>
+                            <th class="head0">款式</th>
+                            <th class="head1">件数</th>
+                            <th class="head0">交货时间</th>
+                            <th class="head1">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+					<c:forEach var="orderModel" items="${list}">
 						<tr class="gradeA">
-							<td>${task.order.orderId}</td>
-							<td>${task.order.customerName }</td>
-							<td>${task.order.customerCompany }</td>
-							<td>${task.order.customerPhone1 }</td>
-							<td>${task.order.customerPhone2}</td>
-							<td><a 
-								href="${ctx}/market/signContract.do?orderId=${task.order.orderId}&taskId=${task.taskId}">签订合同</a></td>
+							<td>${orderModel.order.orderId }</td>
+							<td>${orderModel.order.employeeId }</td>
+							<td>${orderModel.order.customerName }</td>
+							<td>${orderModel.order.customerCompany }</td>
+							<td>${orderModel.order.styleName }</td>
+							<td>${orderModel.order.askAmount }</td>
+							<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+							<td><a href="${ctx}/market/signContractDetail.do?orderId=${orderModel.order.orderId }&taskId=${orderModel.task.id }">签订合同</a></td>
 						</tr>
 					</c:forEach>
+				</tbody>
 				</table>
 			</section>
 
 		</div>
 		<!--row-fluid-->
+		<div class="footer">
+			<div class="footer-left">
+				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
+			</div>
+
+		</div>
+		<!--footer-->
 	</div>
 	<!--maincontentinner-->
 </div>
@@ -44,70 +73,6 @@
 <%@include file="/common/js_file.jsp"%>
 <!-- 这里引入你需要的js文件 -->
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<style type="text/css">
-.table th,.table td {
-	color: #000;
-	margin: 0;
-	padding: 8px 20px;
-	text-align: center;
-	
-}
-
-.table tr {
-	background: #E6E6E6;
-	border-bottom: 1px solid #B5B5B5;
-	border-radius: 4px;
-}
-
-.table tr:nth-child(even) {
-	background: #F1F1F1;
-}
-
-.table caption {
-	margin: 0;
-	padding: 8px 20px;
-	border-bottom: 1px solid #B5B5B5;
-	color:#FFF;
-	text-align: left;
-	background: #003366;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-}
-
-.table th:first-child,.table td:first-child {
-	text-align: left;
-}
-
-.table tr:last-child td{
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-}
-
-section {
-	box-shadow: 4px 4px 2px #919191;
-	border-radius: 4px;
-	border: 1px solid #000;
-}
-
-.button{
-	border-radius: 4px;
-}
-
-.button:hover{
-text-decoration: none;
-}
-
-.table {
-	border-collapse: separate;
-	border-radius: 4px;
-}
-
-.table th{
-   background: #CCCCCC;
-}
-
-.table tr:hover td{
-	background: #FFFFCC;
-}
-</style>
+<link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <%@include file="/common/footer.jsp"%>

@@ -291,21 +291,21 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public boolean confirmProduceOrderSubmit(Account account, int orderId, long taskId,
-			long processId, boolean comfirmworksheet, List<Product> productList) {
+	public boolean confirmProduceOrderSubmit(String actorId, int orderId, long taskId,
+			long processId, boolean comfirmworksheet, List<Produce> productList) {
 		// TODO Auto-generated method stub
-		// String actorId = account.getUserRole();
-		String actorId = ACTOR_MARKET_STAFF;
 		// 需要获取task中的数据
 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 				.getKsession().getProcessInstance(processId);
 		int orderId_process = (int) process.getVariable("orderId");
-		System.out.println("orderId: " + orderId);
+
 		if (orderId == orderId_process) {
 			// 如果通过，创建合同加工单
+			produceDAO.deleteByProperty("oid", orderId);
 			if (comfirmworksheet) {
-				for (int i = 0; i < productList.size(); i++) {
-					productDAO.save(productList.get(i));
+				for (Produce produce : productList) {
+					produce.setOid(orderId);
+					produceDAO.save(produce);
 				}
 			}
 			// 修改流程参数
@@ -368,24 +368,27 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public boolean modifyProduct(Integer userId, int id, long taskId,
-			long processId, boolean editworksheetok, List<Product> productList) {
+	public boolean modifyProductSubmit(String userId, int id, long taskId,
+			long processId, boolean editworksheetok, List<Produce> productList) {
 		// TODO Auto-generated method stub
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				userId+"", TASK_MODIFY_PRODUCE_ORDER);
+				userId, TASK_MODIFY_PRODUCE_ORDER);
 		for (TaskSummary task : tasks) {
 			if (task.getId() == taskId
 					&& getVariable("orderId", task).equals(id)) {
+				produceDAO.deleteByProperty("oid", id);
 				if (editworksheetok) {
-					for (int i = 0; i < productList.size(); i++) {
-						productDAO.save(productList.get(i));
+					for (Produce produce : productList) {
+						produce.setOid(id);
+						produceDAO.save(produce);
 					}
 				}
+				// 修改流程参数
+				Map<String, Object> data = new HashMap<>();
+				data.put("editworksheetok", editworksheetok);
+				// 直接进入到下一个流程时
 				try {
-					Map<String, Object> data = new HashMap<>();
-					data.put("editworksheetok", editworksheetok);
-					jbpmAPIUtil.completeTask(taskId, data, userId+"");
-					return true;
+					jbpmAPIUtil.completeTask(taskId, data, userId);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -511,6 +514,11 @@ public class MarketServiceImpl implements MarketService {
 			if (id == orderId && taskId == task.getId()) {
 				OrderInfo oi = new OrderInfo();
 				oi.setOrder(orderDAO.findById(orderId));
+				oi.setQuote(quoteDAO.findById(orderId));
+				oi.setProduces(produceDAO.findByOrderId(orderId));
+				oi.setVersions(versionDataDAO.findByOrderId(orderId));
+				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				oi.setFabrics(fabricDAO.findByOrderId(orderId));
 				oi.setTask(task);
 				return oi;
 			}
@@ -541,6 +549,7 @@ public class MarketServiceImpl implements MarketService {
 		// TODO Auto-generated method stub
 		TaskSummary task = jbpmAPIUtil.getTask(arctorId,
 				TASK_SIGN_CONTRACT, orderId);
+		if(task==null) return null;
 		OrderInfo model = new OrderInfo();
 		model.setOrder(orderDAO.findById(orderId));
 		model.setTask(task);
@@ -625,11 +634,12 @@ public class MarketServiceImpl implements MarketService {
 		}
 	}
 
-	public boolean signContractSubmit(String actorId, long taskId, String result,Integer orderId,double discount) {
+	public boolean signContractSubmit(String actorId, long taskId, int orderId, double discount, double total) {
 		// TODO Auto-generated method stub
 		Order order = orderDAO.findById(orderId);
 		order.setDiscount(discount);
-		orderDAO.attachDirty(order);
+		order.setTotalMoney(total);
+		orderDAO.merge(order);
 		Map<String, Object> data = new HashMap<>();
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
@@ -736,6 +746,7 @@ public class MarketServiceImpl implements MarketService {
 			Integer orderId = (Integer) getVariable("orderId", task);
 			OrderInfo oi = new OrderInfo();
 			oi.setOrder(orderDAO.findById(orderId));
+			
 			oi.setTask(task);
 			taskSummarys.add(oi);
 		}
@@ -752,7 +763,12 @@ public class MarketServiceImpl implements MarketService {
 			if (id == orderId && taskId == task.getId()) {
 				OrderInfo oi = new OrderInfo();
 				oi.setOrder(orderDAO.findById(orderId));
-				
+				oi.setOrder(orderDAO.findById(orderId));
+				oi.setQuote(quoteDAO.findById(orderId));
+				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				oi.setFabrics(fabricDAO.findByOrderId(orderId));
+				oi.setProduces(produceDAO.findByOrderId(orderId));
+				oi.setVersions(versionDataDAO.findByOrderId(orderId));
 				oi.setTask(task);
 				return oi;
 			}
