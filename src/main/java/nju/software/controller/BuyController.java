@@ -182,7 +182,7 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService.getPurchaseMaterialList();
 		model.put("list", list);
-		model.addAttribute("taskName", "成产采购");
+		model.addAttribute("taskName", "生产采购");
 		model.addAttribute("url", "/buy/purchaseMaterialDetail.do");
 		return "/buy/purchaseMaterialList";
 	}

@@ -91,21 +91,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	// ===========================样衣发货=================================
 	@Override
-	public List<OrderInfo> getSendSampleList() {
+	public List<Map<String, Object>> getSendSampleList() {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_LOGISTICS_MANAGER, TASK_SEND_SAMPLE);
-		List<OrderInfo> list = new ArrayList<OrderInfo>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil
-					.getVariable(task, "orderId");
-			OrderInfo orderInfo = new OrderInfo();
-			orderInfo.setOrder(orderDAO.findById(orderId));
-			orderInfo.setLogistics(logisticsDAO.findById(orderId));
-			orderInfo.setTask(task);
-			list.add(orderInfo);
-		}
-		return list;
+		return service.getOrderList(ACTOR_LOGISTICS_MANAGER, TASK_SEND_SAMPLE);
 	}
 
 	@Override
@@ -146,18 +134,28 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	// ===========================产品入库=================================
 	@Override
-	public List<OrderInfo> getWarehouseList() {
+	public List<Map<String, Object>> getPackageList() {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
-		List<OrderInfo> list = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil
-					.getVariable(task, "orderId");
-			OrderInfo orderInfo = new OrderInfo();
-			orderInfo.setOrder(orderDAO.findById(orderId));
-			orderInfo.setTask(task);
-			list.add(orderInfo);
+		List<Map<String, Object>>temp=service.getOrderList(ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
+		List<Map<String, Object>>list= new ArrayList<>();
+		for(Map<String, Object>model:temp){
+			if(((Order)model.get("order")).getLogisticsState()==0){
+				list.add(model);
+			}
+		}
+		return list;
+	}
+	
+	
+	@Override
+	public List<Map<String, Object>> getWarehouseList() {
+		// TODO Auto-generated method stub
+		List<Map<String, Object>>temp=service.getOrderList(ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
+		List<Map<String, Object>>list= new ArrayList<>();
+		for(Map<String, Object>model:temp){
+			if(((Order)model.get("order")).getLogisticsState()==1){
+				list.add(model);
+			}
 		}
 		return list;
 	}
@@ -280,6 +278,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 	private ProduceDAO produceDAO;
 	@Autowired
 	private PackageDetailDAO packageDetailDAO;
+	@Autowired
+	private ServiceUtil service;
 
 	public final static String ACTOR_LOGISTICS_MANAGER = "logisticsManager";
 	public final static String TASK_RECEIVE_SAMPLE = "receiveSample";

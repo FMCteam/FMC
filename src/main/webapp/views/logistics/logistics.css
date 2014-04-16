@@ -7,3 +7,10 @@ div.action a.btn-primary:hover{
 	background-color:#0044cc;
 }
 
+div#warehouse table {
+	margin-bottom: 10px;
+}
+
+div#warehouse input.btn{
+	margin-bottom: 20px;
+}
