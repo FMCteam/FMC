@@ -19,14 +19,16 @@ public interface LogisticsService {
 	public boolean receiveSampleSubmit(long taskId, String result);
 
 	// ===========================样衣发货=================================
-	public List<OrderInfo> getSendSampleList();
+	public List<Map<String, Object>> getSendSampleList();
 
 	public OrderInfo getSendSampleDetail(Integer orderId);
 	
 	public boolean sendSampleSubmit(Map<String,Object>map);
 	
 	// ===========================产品入库=================================
-	public List<OrderInfo> getWarehouseList();
+	public List<Map<String, Object>> getPackageList();
+	
+	public List<Map<String, Object>> getWarehouseList();
 
 	public OrderInfo getWarehouseDetail(Integer orderId);
 

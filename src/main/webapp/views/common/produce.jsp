@@ -47,10 +47,13 @@
 		</tr>
 	</c:forEach>
 	<tr>
-		<td class="span1">大货总件数</td>
+		<td class="span1">汇总信息</td>
+		<td class="span1">样衣总数</td>
+		<td class="span1">${orderInfo.order.askAmount}</td>
+		<td class="span1">大货总数</td>
 		<td class="span1">${orderInfo.order.askAmount}</td>
 		<td class="span1">最迟交货时间</td>
-		<td class="span1" colspan="2">${fn:substring(orderInfo.order.askDeliverDate,0,10)}</td>
+		<td class="span1">${fn:substring(orderInfo.order.askDeliverDate,0,10)}</td>
 		<td class="span1">完工时间（天）</td>
 		<td class="span1">${orderInfo.order.askProducePeriod}</td>
 	</tr>

@@ -177,7 +177,7 @@ public class BuyServiceImpl implements BuyService {
 	@Override
 	public boolean purchaseSampleMaterialSubmit(long taskId, String result) {
 		// TODO Auto-generated method stub
-		boolean purchaseerror = result.equals("0");
+		boolean purchaseerror = result.equals("1");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("purchaseerror", purchaseerror);
 		try {
