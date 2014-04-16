@@ -3,7 +3,6 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form method="post" action="${ctx}/market/mergeQuoteSubmit.do" >
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
@@ -32,34 +31,39 @@
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
 				<div class="tab-pane" id="quote">
-					<%@include file="/views/common/quote_w.jsp"%>
+					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			</div>
 		</div>
-		<div class="action">
-			<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
-			<input type="hidden" name="order_id" value="${orderInfo.quote.orderId }" />
-			<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
-			<button class="btn btn-primary btn-rounded"><i
-				class="icon-ok icon-white"></i>确定</button> 
-		</div>
+		<form action="${ctx}/market/signContractSubmit.do" method="post">
+			<div class="action">
+				<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
+				<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
+				<label>优惠金额：</label><input name="discount" type="text" />
+				<label>总金额：</label><input name="totalmoney" type="text" />
+				<button class="btn btn-primary btn-rounded"><i
+					class="icon-ok icon-white"></i>签订</button> 
+			</div>
 		</form>
+		<!--row-fluid-->
+
 	</div>
-
-
+	<!--maincontentinner-->
 	<div class="footer">
 		<div class="footer-left">
 			<span>&copy; 2014. 江苏南通智造链有限公司.</span>
 		</div>
 	</div>
-
-
+	<!--footer-->
 </div>
+<!--maincontent-->
 
 
 
 
-
+<link rel="stylesheet" href="${ctx}/css/order/add_order.css">
+<script type="text/javascript" src="${ctx}/js/order/add_product.js"></script>
+<script type="text/javascript" src="${ctx}/js/order/add_produce.js"></script>
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">

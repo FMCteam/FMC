@@ -410,7 +410,7 @@ public class MarketController {
 		List<OrderInfo> tasks = marketService.getModifyProductList(account
 				.getUserId());
 
-		model.addAttribute("tasks", tasks);
+		model.addAttribute("list", tasks);
 		return "market/modifyProductList";
 	}
 
@@ -419,16 +419,14 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyProductDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String orderId = request.getParameter("id");
-		String s_taskId = request.getParameter("tid");
-		String s_processId = request.getParameter("pid");
+		String orderId = request.getParameter("orderId");
+		String s_taskId = request.getParameter("taskId");
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
-		long processId = Long.parseLong(s_processId);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		OrderInfo oi = marketService.getModifyProductDetail(id, taskId, account.getUserId());
-		model.addAttribute("orderModel", oi);
+		model.addAttribute("orderInfo", oi);
 		return "market/modifyProductDetail";
 	}
 
@@ -437,27 +435,48 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyProductSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String orderId = request.getParameter("orderId");
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
+		String s_orderId_request = (String) request.getParameter("orderId");
+		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
-		String s_processId = request.getParameter("processId");
-		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
+		String s_processId = request.getParameter("processId");
 		long processId = Long.parseLong(s_processId);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
-
-		String productAskAmount = request.getParameter("product_amount");
-		String productColor = request.getParameter("product_color");
-		String productStyle = request.getParameter("product_style");
-		boolean editworksheet = true;
-
-		if ((productAskAmount != null) && (productColor != null)
-				&& (productStyle != null)) {
-			List<Product> productList = marketService.getProductList(id,
-					productAskAmount, productColor, productStyle);
-			marketService.modifyProduct(account.getUserId(), id, taskId,
-					processId, editworksheet, productList);
+		boolean editworksheetok = Boolean.parseBoolean(request.getParameter("tof"));
+		//加工要求
+		String produce_colors = request.getParameter("produce_color");
+		String produce_xss = request.getParameter("produce_xs");
+		String produce_ss = request.getParameter("produce_s");
+		String produce_ms = request.getParameter("produce_m");
+		String produce_ls = request.getParameter("produce_l");
+		String produce_xls = request.getParameter("produce_xl");
+		String produce_xxls = request.getParameter("produce_xxl");
+		String produce_color[] = produce_colors.split(",");
+		String produce_xs[] = produce_xss.split(",");
+		String produce_s[] = produce_ss.split(",");
+		String produce_m[] = produce_ms.split(",");
+		String produce_l[] = produce_ls.split(",");
+		String produce_xl[] = produce_xls.split(",");
+		String produce_xxl[] = produce_xxls.split(",");
+		List<Produce> produces = new ArrayList<Produce>();
+		for (int i = 0; i < produce_color.length; i++) {
+			if(produce_color[i].equals(""))
+				continue;
+			Produce p = new Produce();
+			p.setColor(produce_color[i]);
+			p.setOid(0);
+			p.setL(Integer.parseInt(produce_l[i]));
+			p.setM(Integer.parseInt(produce_m[i]));
+			p.setS(Integer.parseInt(produce_s[i]));
+			p.setXl(Integer.parseInt(produce_xl[i]));
+			p.setXs(Integer.parseInt(produce_xs[i]));
+			p.setXxl(Integer.parseInt(produce_xxl[i]));
+			produces.add(p);
 		}
+		
+		marketService.modifyProductSubmit(account.getUserId()+"", orderId_request, taskId, 
+				processId, editworksheetok, produces);
 		return "redirect:/market/modifyProductList.do";
 	}
 
@@ -641,8 +660,6 @@ public class MarketController {
 		// 订单数据
 
 		String orderState = "A";
-		Timestamp orderTime = new Timestamp(new Date().getTime());
-
 		String styleName = request.getParameter("style_name");
 		String fabricType = request.getParameter("fabric_type");
 		String styleSex = request.getParameter("style_sex");
@@ -788,7 +805,6 @@ public class MarketController {
 		//order.setEmployeeId(employeeId);
 		// order.setCustomerId(customerId);
 		order.setOrderState(orderState);
-		order.setOrderTime(orderTime);
 		// order.setCustomerName(customerName);
 		// order.setCustomerCompany(customerCompany);
 		// order.setCustomerCompanyFax(customerCompanyFax);
@@ -921,34 +937,49 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmProduceOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		System.out.println("product confirm ================");
 
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		String s_orderId_request = (String) request.getParameter("order_id");
+		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
+		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-		String s_processId = request.getParameter("process_id");
+		String s_processId = request.getParameter("processId");
 		long processId = Long.parseLong(s_processId);
-		String productAskAmount = request.getParameter("product_amount");
-		String productColor = request.getParameter("product_color");
-		String productStyle = request.getParameter("product_style");
-		boolean comfirmworksheet = true;
-		List<Product> productList = null;
-		
-		if (comfirmworksheet) {
-			if ((productAskAmount != null) && (productColor != null)
-					&& (productStyle != null)) {
-				productList = marketService.getProductList(orderId_request, productAskAmount, 
-						productColor,productStyle);
-			}
+		boolean comfirmworksheet = Boolean.parseBoolean(request.getParameter("tof"));
+		//加工要求
+		String produce_colors = request.getParameter("produce_color");
+		String produce_xss = request.getParameter("produce_xs");
+		String produce_ss = request.getParameter("produce_s");
+		String produce_ms = request.getParameter("produce_m");
+		String produce_ls = request.getParameter("produce_l");
+		String produce_xls = request.getParameter("produce_xl");
+		String produce_xxls = request.getParameter("produce_xxl");
+		String produce_color[] = produce_colors.split(",");
+		String produce_xs[] = produce_xss.split(",");
+		String produce_s[] = produce_ss.split(",");
+		String produce_m[] = produce_ms.split(",");
+		String produce_l[] = produce_ls.split(",");
+		String produce_xl[] = produce_xls.split(",");
+		String produce_xxl[] = produce_xxls.split(",");
+		List<Produce> produces = new ArrayList<Produce>();
+		for (int i = 0; i < produce_color.length; i++) {
+			if(produce_color[i].equals(""))
+				continue;
+			Produce p = new Produce();
+			p.setColor(produce_color[i]);
+			p.setOid(0);
+			p.setL(Integer.parseInt(produce_l[i]));
+			p.setM(Integer.parseInt(produce_m[i]));
+			p.setS(Integer.parseInt(produce_s[i]));
+			p.setXl(Integer.parseInt(produce_xl[i]));
+			p.setXs(Integer.parseInt(produce_xs[i]));
+			p.setXxl(Integer.parseInt(produce_xxl[i]));
+			produces.add(p);
 		}
 		
-		marketService.confirmProduceOrderSubmit(account, orderId_request, taskId, 
-				processId, comfirmworksheet, productList);
-
-
+		marketService.confirmProduceOrderSubmit(account.getUserId()+"", orderId_request, taskId, 
+				processId, comfirmworksheet, produces);
 		return "redirect:/market/confirmProduceOrderList.do";
 	}
 
@@ -999,7 +1030,7 @@ public class MarketController {
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
 		boolean comfirmworksheet = false;
-		marketService.confirmProduceOrderSubmit(account, orderId_request, taskId,
+		marketService.confirmProduceOrderSubmit(account.getUserId()+"", orderId_request, taskId,
 				processId, comfirmworksheet, null);
 
 		return "redirect:/market/confirmProduceOrderList.do";
@@ -1034,19 +1065,20 @@ public class MarketController {
 		return "/market/signContractDetail";
 	}
 
-	@RequestMapping(value = "market/signContractSubmit.do")
+	@RequestMapping(value = "market/signContractSubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String signContractSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String discount = request.getParameter("discount");
+		String total = request.getParameter("totalmoney");
 		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
 		String actorId=account.getUserId()+"";
 		
-		marketService.signContractSubmit(actorId,Long.parseLong(taskId),null,Integer.parseInt(orderId),
-				Double.parseDouble(discount) );
-		return "forward:/market/signContractList.do";
+		marketService.signContractSubmit(actorId, Long.parseLong(taskId), Integer.parseInt(orderId),
+				Double.parseDouble(discount), Double.parseDouble(total) );
+		return "redirect:/market/signContractList.do";
 	}
 }

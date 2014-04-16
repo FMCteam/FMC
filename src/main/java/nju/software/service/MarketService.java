@@ -36,7 +36,7 @@ public interface MarketService {
 	
 	public OrderInfo getSignContractDetail(String arctorId,Integer orderId);
 	
-	public boolean signContractSubmit(String actorId,long taskId,String result,Integer orderId,double discount);
+	public boolean signContractSubmit(String actorId,long taskId,int i,double d,double discount);
 	
 	
 	
@@ -54,8 +54,8 @@ public interface MarketService {
 	
 	public List<Product> getProductList(int orderId, String productAskAmount, String productColor, String productStyle);
 
-	public boolean confirmProduceOrderSubmit(Account account, int orderId, long taskId, 
-			long processId, boolean comfirmworksheet, List<Product> productList);
+	public boolean confirmProduceOrderSubmit(String string, int orderId, long taskId, 
+			long processId, boolean comfirmworksheet, List<Produce> produces);
 	
 	
 	
@@ -69,8 +69,8 @@ public interface MarketService {
 
 	public List<OrderInfo> getModifyProductList(Integer userId);
 
-	public boolean modifyProduct(Integer userId, int id, long taskId,
-			long processId, boolean b, List<Product> pList);
+	public boolean modifyProductSubmit(String string, int id, long taskId,
+			long processId, boolean b, List<Produce> produces);
 
 	public List<OrderInfo> getModifyQuoteList(Integer userId);
 

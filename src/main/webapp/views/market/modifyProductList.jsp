@@ -8,40 +8,62 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<section class="list">
-				<table id="dyntable" class="list">
+				<table id="dyntable"
+					class="list">
 					<caption>
-						<span class="text-vertical">修改加工单列表:<span class="number">${fn:length(tasks)}</span>件任务
+						<span class="text-vertical">修改合同:<span class="number">${fn:length(list)}</span>件任务
 						</span><input type="text" class="search-query float-right"
 							placeholder="输入检索条件">
 					</caption>
-					<tr>
-						<th class="head0">客户姓名</th>
-						<th class="head1">客户电话</th>
-						<th class="head1">公司名称</th>
-						<th class="head0">公司电话</th>
-						<th class="head0">内部报价</th>
-						<th class="head0">外部报价</th>
-						<th class="head1">操作</th>
-					</tr>
-					<c:forEach var="task" items="${tasks}">
+					<colgroup>
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="head0">订单号</th>
+                            <th class="head1">业务员</th>
+                            <th class="head0">客户姓名</th>
+                            <th class="head1">客户公司</th>
+                            <th class="head0">款式</th>
+                            <th class="head1">件数</th>
+                            <th class="head0">交货时间</th>
+                            <th class="head1">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+					<c:forEach var="orderModel" items="${list}">
 						<tr class="gradeA">
-							<td>${task.order.customerName}</td>
-							<td>${task.order.customerPhone1}</td>
-							<td>${task.order.customerCompany}</td>
-							<td>${task.order.customerCompanyFax}</td>
-							<td>${task.task.id}</td>
-							<td>${task.task.processInstanceId}</td>
-							<td>
-								<a
-								href="${ctx}/market/modifyProductDetail.do?id=${task.order.orderId}&tid=${task.task.id}&pid=${task.task.processInstanceId}">
-									修改</a> </td>
+							<td>${orderModel.order.orderId }</td>
+							<td>${orderModel.order.employeeId }</td>
+							<td>${orderModel.order.customerName }</td>
+							<td>${orderModel.order.customerCompany }</td>
+							<td>${orderModel.order.styleName }</td>
+							<td>${orderModel.order.askAmount }</td>
+							<td>${fn:substring(orderModel.order.askDeliverDate,0,10) }</td>
+							<td><a href="${ctx}/market/modifyProductDetail.do?orderId=${orderModel.order.orderId }&taskId=${orderModel.task.id }">签订合同</a></td>
 						</tr>
 					</c:forEach>
+				</tbody>
 				</table>
 			</section>
 
 		</div>
 		<!--row-fluid-->
+		<div class="footer">
+			<div class="footer-left">
+				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
+			</div>
+
+		</div>
+		<!--footer-->
 	</div>
 	<!--maincontentinner-->
 </div>
@@ -51,8 +73,6 @@
 <%@include file="/common/js_file.jsp"%>
 <!-- 这里引入你需要的js文件 -->
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<link rel="stylesheet" href="../views/market/quoteConfirmList.css">
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <%@include file="/common/footer.jsp"%>
-
