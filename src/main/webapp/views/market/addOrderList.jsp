@@ -14,22 +14,24 @@
 						</span><input type="text" class="search-query float-right"
 							placeholder="输入检索条件">
 					</caption>
-					<tr>
-						<th class="head0">客户姓名</th>
-						<th class="head1">客户电话</th>
-						<th class="head0">客户地址</th>
-						<th class="head1">公司名称</th>
-						<th class="head0">公司电话</th>
-						<th class="head1">操作</th>
-					</tr>
+					<thead>
+						<tr>
+							<th>客户姓名</th>
+							<th>客户电话</th>
+							<th>公司名称</th>
+							<th>公司地址</th>
+							<th>公司电话</th>
+							<th>操作</th>
+						</tr>
+					</thead>
 					<c:forEach var="customer" items="${customers}">
 						<tr class="gradeA">
 							<td>${customer.customerName }</td>
 							<td>${customer.customerPhone }</td>
-							<td>${customer.companyAddress }</td>
 							<td>${customer.companyName }</td>
+							<td>${customer.companyAddress }</td>
 							<td>${customer.companyPhone }</td>
-							<td><a 
+							<td><a
 								href="${ctx}/market/addOrderDetail.do?cid=${customer.customerId}">下单</a></td>
 						</tr>
 					</c:forEach>
@@ -55,7 +57,6 @@
 	margin: 0;
 	padding: 8px 20px;
 	text-align: center;
-	
 }
 
 .table tr {
@@ -72,7 +73,7 @@
 	margin: 0;
 	padding: 8px 20px;
 	border-bottom: 1px solid #B5B5B5;
-	color:#FFF;
+	color: #FFF;
 	text-align: left;
 	background: #003366;
 	border-top-left-radius: 4px;
@@ -83,7 +84,7 @@
 	text-align: left;
 }
 
-.table tr:last-child td{
+.table tr:last-child td {
 	border-bottom-left-radius: 4px;
 	border-bottom-right-radius: 4px;
 }
@@ -94,12 +95,12 @@ section {
 	border: 1px solid #000;
 }
 
-.button{
+.button {
 	border-radius: 4px;
 }
 
-.button:hover{
-text-decoration: none;
+.button:hover {
+	text-decoration: none;
 }
 
 .table {
@@ -107,11 +108,11 @@ text-decoration: none;
 	border-radius: 4px;
 }
 
-.table th{
-   background: #CCCCCC;
+.table th {
+	background: #CCCCCC;
 }
 
-.table tr:hover td{
+.table tr:hover td {
 	background: #FFFFCC;
 }
 </style>

@@ -1,8 +1,7 @@
 package nju.software.controller;
 
-import java.sql.Timestamp;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,19 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import nju.software.model.OrderInfo;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
-import nju.software.service.CustomerService;
-import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.impl.JbpmTest;
-import nju.software.service.impl.LogisticsServiceImpl;
-import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
 import nju.software.dataobject.Order;
-import nju.software.dataobject.Package;
-import nju.software.dataobject.PackageDetail;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 
 
 /**
@@ -43,7 +36,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LogisticsController {
 
-	
 	// =============================收取样衣=====================================
 	@RequestMapping(value = "/logistics/receiveSampleList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -82,12 +74,14 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String sendSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<OrderInfo> list = logisticsService.getSendSampleList();
+		List<Map<String, Object>> list = logisticsService.getSendSampleList();
 		if(list.size()==0){
 			jbpmTest.completeProduceSample("1");
 			list = logisticsService.getSendSampleList();
 		}
 		model.put("list", list);
+		model.addAttribute("taskName", "样衣发货");
+		model.addAttribute("url", "/logistics/sendSampleDetail.do");
 		return "/logistics/sendSampleList";
 	}
 
@@ -131,12 +125,14 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String warehouseList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<OrderInfo> list = logisticsService.getWarehouseList();
-		if(list.size()==0){
+		List<Map<String, Object>> packageList = logisticsService.getPackageList();
+		List<Map<String, Object>> warehouseList = logisticsService.getWarehouseList();
+		if(packageList.size()==0){
 			jbpmTest.completeCheckQuality("1");
-			list = logisticsService.getWarehouseList();
+			packageList = logisticsService.getPackageList();
 		}
-		model.put("list", list);
+		model.put("packageList", packageList);
+		model.put("warehouseList", warehouseList);
 		return "/logistics/warehouseList";
 	}
 
@@ -150,6 +146,7 @@ public class LogisticsController {
 		String size=request.getParameter("size");
 		String color=request.getParameter("color");
 		String number=request.getParameter("number");
+
 		
 		if(size!=null&&size!=""){
 			String sizes[]=size.split(",");
@@ -171,6 +168,16 @@ public class LogisticsController {
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/warehouseDetail";
 	}
+	
+	@RequestMapping(value = "/logistics/packageSubmit.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String packageSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Long taskId = Long.parseLong(request.getParameter("taskId"));
+		logisticsService.warehouseSubmit(taskId, null);
+		return "forward:/logistics/warehouseList.do";
+	}
+	
 
 	
 	@RequestMapping(value = "/logistics/warehouseSubmit.do")

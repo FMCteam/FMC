@@ -1,9 +1,9 @@
 package nju.software.service;
 
 import java.util.List;
+import java.util.Map;
 
 import nju.software.dataobject.Accessory;
-import nju.software.dataobject.Account;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.model.OrderInfo;
@@ -11,63 +11,43 @@ import nju.software.model.ProductModel;
 
 public interface BuyService {
 	
-
-	public List<OrderInfo> getPurchaseSampleMaterialList();
-	
-	public OrderInfo getPurchaseSampleMaterialDetail(Integer orderId);
-	
-	public boolean purchaseSampleMaterialSubmit(long taskId,String result);
-	
-	public List<OrderInfo> getConfirmPurchaseList();
-	
-	public OrderInfo getConfirmPurchaseDetail(Integer orderId);
-	
-	public boolean confirmPurchaseSubmit(long taskId,String result);
-	
-	public List<OrderInfo> getPurchaseMaterialList();
-	
-	public OrderInfo getPurchaseMaterialDetail(Integer orderId);
-	
-	public boolean purchaseMaterialSubmit(long taskId,String result);
-	
-	
-	
-	
-	
-
-	public boolean verifyPurchaseSubmit(long taskId,boolean buyVal, String comment);
-
-//	public boolean costAccounting(Account account, int orderId, long taskId, 
-//			long processId, String[] fabric_names,String[] tear_per_meters,String[] cost_per_meters
-//			,String[] fabric_prices);
-	
-
-	public void updateAccessoryCost(int orderId,  
-		String[] accessory_names,String[] tear_per_piece,String[] cost_per_piece,String[] accessory_prices);
-//	
-	
-	 public List<OrderInfo> getComputePurchaseCostList();
-		
-		public OrderInfo getComputePurchaseCostInfo(Integer orderId);
-
-		public void computePurchaseCostSubmit(int orderId,long taskId,
-				String[] fabric_names,String[] tear_per_meters,String[] cost_per_meters
-				,String[] fabric_prices);
-	
-	
-	
-
-	public Logistics getLogisticsByOrderId(int orderId);
-	
-	public List<Fabric> getFabricByOrderId(int orderId);
-	
-	public List<Accessory> getAccessoryByOrderId(int orderId);
-
-	public ProductModel getProductDetail(int int_orderId, int int_taskId,
-			int int_processId);
-
-	public List<OrderInfo> getVerifyPurchaseList();
+	//===========================采购验证=================================
+	public List<Map<String,Object>> getVerifyPurchaseList();
 
 	public OrderInfo getVerifyPurchaseDetail(Integer orderId);
 	
+	public boolean verifyPurchaseSubmit(long taskId, boolean buyVal,
+			String comment);
+	
+	//===========================采购成本核算=================================
+	public List<Map<String,Object>> getComputePurchaseCostList();
+
+	public OrderInfo getComputePurchaseCostDetail(Integer orderId);
+	
+	public void computePurchaseCostSubmit(int orderId, long taskId,
+			String[] fabric_names, String[] tear_per_meters,
+			String[] cost_per_meters, String[] fabric_prices,
+			String[] accessory_names, String[] tear_per_piece,
+			String[] cost_per_piece, String[] accessory_prices);
+	
+	//===========================采购样衣原料=================================
+	public List<Map<String,Object>> getPurchaseSampleMaterialList();
+
+	public OrderInfo getPurchaseSampleMaterialDetail(Integer orderId);
+
+	public boolean purchaseSampleMaterialSubmit(long taskId, String result);
+	
+	//===========================采购确认=================================
+	public List<Map<String,Object>> getConfirmPurchaseList();
+
+	public OrderInfo getConfirmPurchaseDetail(Integer orderId);
+
+	public boolean confirmPurchaseSubmit(long taskId, String result);
+	
+	//===========================大货原料采购=================================
+	public List<Map<String,Object>> getPurchaseMaterialList();
+
+	public OrderInfo getPurchaseMaterialDetail(Integer orderId);
+
+	public boolean purchaseMaterialSubmit(long taskId, String result);
 }

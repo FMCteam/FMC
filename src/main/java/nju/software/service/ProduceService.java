@@ -2,6 +2,7 @@ package nju.software.service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
@@ -27,21 +28,21 @@ public interface ProduceService {
 	
 	public List<Accessory> getAccessoryByOrderId(int orderId);
 	
-	public List<OrderInfo>getProduceSampleList();
+	public List<Map<String, Object>> getProduceSampleList();
 	
 	public OrderInfo getProduceSampleDetail(Integer orderId) ;
 	
 	public boolean produceSampleSubmit(long taskId, boolean result, List<Produce> produceList);
 	
-	public List<Produce> getProduceList(String produceColor, String produceXS, String produceS, 
+	public List<Produce> getProduceList(int orderId, String produceColor, String produceXS, String produceS, 
 			String produceM, String produceL, String produceXL, String produceXXL);
 	
-	public List<OrderInfo> getProduceList();
+	public List<Map<String, Object>> getProduceList();
 	
 	public OrderInfo getProduceDetail(Integer orderId);
 
 	
-  public List<OrderInfo> getComputeProduceCostList();
+  public List<Map<String, Object>> getComputeProduceCostList();
 	
 	public OrderInfo getComputeProduceCostInfo(Integer orderId);
 
@@ -61,7 +62,7 @@ public interface ProduceService {
 	public void savePackageDetail(int parseInt, String[] array_amount,
 			String[] array_color, String[] array_name, Timestamp entryTime);
 
-	public List<OrderInfo> getVerifyProduceList();
+	public List<Map<String, Object>> getVerifyProduceList();
 
 	public OrderInfo getVerifyProduceDetail(int orderId, long taskId);
 

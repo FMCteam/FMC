@@ -9,8 +9,8 @@ function verifyFinance() {
 	var money_amount = $("input[name='money_amount']").val();
 	var money_remark = $("input[name='money_remark']").val();
 	if (money_name == "" || money_number == "" || money_bank == ""
-			|| money_amount == "" || money_remark == "") {
-		alert("数据不能为空");
+			|| money_amount == "" || isNaN(money_amount)) {
+		alert("请填入正确数据内容");
 		return false;
 	}
 	return confirmFinanceSubmit();

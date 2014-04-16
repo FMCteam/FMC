@@ -1,0 +1,13 @@
+form.verify table td{
+	text-align: center;
+	vertical-align: middle;
+}
+
+form.verify table td *{
+	margin: 0px;
+}
+
+
+form.verify table td a.btn-danger{
+	margin-left: 20px;
+}
