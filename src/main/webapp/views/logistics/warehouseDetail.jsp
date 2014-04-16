@@ -7,7 +7,7 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">大货入库</li>
-				<li  class="active"><a href="#warehouse" data-toggle="tab">入库信息</a></li>
+				<li class="active"><a href="#warehouse" data-toggle="tab">入库信息</a></li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
@@ -36,32 +36,37 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 				<div class="tab-pane active" id="warehouse">
-					<table class="table table-bordered detail package">
-						<tr>
-							<td class="span3">颜色</td>
-							<td class="span3">大小</td>
-							<td class="span3">件数</td>
-							<td class="span2">操作</td>
-						</tr>
-						<tr class="addrow">
-							<td><input type="text" class="color" /></td>
-							<td><input type="text" class="size" /></td>
-							<td><input type="text" class="number" /></td>
-							<td><a>添加</a></td>
-						</tr>
-					</table>
 
-					<div class="action">
-						<form action="${ctx}/logistics/warehouseDetail.do" method="post"
-							onsubmit="return dealString()">
-							<input type="hidden" name="color" /> <input type="hidden"
-								name="size" /> <input type="hidden" name="number" /> <input
-								type="hidden" name="orderId" value="${orderInfo.order.orderId}" />
-							<input class="btn btn-primary" type="submit" value="添加箱号" />
-						</form>
-					</div>
+					<c:if test="${warehouse==0}">
+						<table class="table table-bordered detail package">
+							<tr>
+								<td class="span3">颜色</td>
+								<td class="span3">大小</td>
+								<td class="span3">件数</td>
+								<td class="span2">操作</td>
+							</tr>
+							<tr class="addrow">
+								<td><input type="text" class="color" /></td>
+								<td><input type="text" class="size" /></td>
+								<td><input type="number" class="number" /></td>
+								<td><a>添加</a></td>
+							</tr>
+						</table>
 
-					<table class="table table-bordered detail">
+						<div class="action">
+							<form action="${ctx}/logistics/warehouseDetail.do" method="post"
+								onsubmit="return dealString()">
+								<input type="hidden" name="warehouse" value="0" /> <input
+									type="hidden" name="color" /> <input type="hidden" name="size" />
+								<input type="hidden" name="number" /> <input type="hidden"
+									name="orderId" value="${orderInfo.order.orderId}" /> <input
+									class="btn btn-primary" type="submit" value="添加箱号" />
+							</form>
+						</div>
+
+					</c:if>
+
+					<table class="table table-bordered detail" id="pack">
 						<tr>
 							<td>箱号</td>
 							<td>颜色</td>
@@ -78,7 +83,13 @@
 								<td>${orderInfo.packageDetails[status.index][0].clothesStyleName}</td>
 								<td>${orderInfo.packageDetails[status.index][0].clothesAmount}</td>
 								<td
-									rowspan="${fn:length(orderInfo.packageDetails[status.index])}"><a>打印</a></td>
+									rowspan="${fn:length(orderInfo.packageDetails[status.index])}">
+									<c:if test="${warehouse==0}">
+										<a href="${ctx}/logistics/warehouseDetail.do?orderId=${orderInfo.order.orderId}&warehouse=0&packageId=${pack.packageId}">删除</a>
+									</c:if> <c:if test="${warehouse!=0}">
+										<a>打印</a>
+									</c:if>
+								</td>
 							</tr>
 							<c:forEach var="detail" begin="1"
 								items="${orderInfo.packageDetails[status.index]}">
@@ -91,10 +102,13 @@
 
 						</c:forEach>
 					</table>
-					<div class="action">
-						<a class="btn btn-primary"
-							href="${ctx}/logistics/warehouseSubmit.do?taskId=${orderInfo.task.id}">完成装箱</a>
-					</div>
+					<c:if test="${warehouse==0}">
+						<div class="action">
+							<a class="btn btn-primary"
+								onclick="return confirmPackageSubmit()"
+								href="${ctx}/logistics/packageSubmit.do?orderId=${orderInfo.order.orderId}">完成装箱</a>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -121,6 +135,7 @@
 <script type="text/javascript" src="${ctx}/js/fmc/common.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <link rel="stylesheet" href="${ctx}/views/logistics/logistics.css">
+<script type="text/javascript" src="${ctx}/views/logistics/logistics.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>

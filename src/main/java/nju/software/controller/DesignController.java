@@ -1,34 +1,18 @@
 package nju.software.controller;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
-import nju.software.dataobject.Fabric;
-import nju.software.dataobject.Logistics;
-import nju.software.dataobject.Order;
 import nju.software.model.OrderInfo;
-import nju.software.model.OrderModel;
 import nju.software.service.DesignService;
 import nju.software.service.OrderService;
-import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.JbpmTest;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
-
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -161,7 +145,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/getComputeDesignCostDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getComputeDesignCostDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String getComputeDesignCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {

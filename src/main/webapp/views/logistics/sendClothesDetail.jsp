@@ -6,63 +6,64 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
+				<li class="task-name">大货发货</li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
-				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
+				<li class="active"><a href="#logistics" data-toggle="tab">发货信息</a></li>
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
-				<li class="active"><a href="#basic" data-toggle="tab">基本信息</a></li>
+				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
 
 			<div class="tab-content">
-				<div class="tab-pane active" id="basic">
+				<div class="tab-pane" id="basic">
 					<%@include file="/views/common/basic.jsp"%>
 				</div>
 				<div class="tab-pane" id="material">
 					<%@include file="/views/common/material.jsp"%>
 				</div>
-				<div class="tab-pane" id="sample">
-					<form action="${ctx}/logistics/sendSampleSubmit.do" method="post">
+				<div class="tab-pane active" id="logistics">
+					<form action="${ctx}/logistics/sendClothesSubmit.do" method="post"
+					onsubmit="return confirm('确认操作？');">
 						<input type="hidden" name="orderId"
 							value="${orderInfo.order.orderId}" /> <input type="hidden"
 							name="taskId" value="${orderInfo.task.id}" />
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td rowspan="5">物流信息</td>
-								<td>衣服箱数</td>
-								<td>收货人</td>
-								<td>手机</td>
-								<td>收货地址</td>
+								<td class="span2" rowspan="5">物流信息</td>
+								<td class="span1">衣服箱数</td>
+								<td class="span1">收货人</td>
+								<td class="span3">手机</td>
+								<td class="span3">收货地址</td>
 							</tr>
 							<tr>
 								<td>10</td>
 								<td>${orderInfo.logistics.sampleClothesName }</td>
 								<td>${orderInfo.logistics.sampleClothesPhone }</td>
 								<td>${orderInfo.logistics.sampleClothesAddress }</td>
-
 							</tr>
 							<tr>
-								
 								<td>邮寄时间</td>
 								<td>快递名称</td>
-								<td colspan="3">快递单号</td>
+								<td>快递单号</td>
 								<td>快递价格</td>
 							</tr>
 							<tr>
-								<td><input type="date" name="time" /></td>
-								<td><input type="text" name="name" /></td>
-								<td colspan="3"><input type="text" name="number" /></td>
+								<td><input type="date" name="time" required="required" /></td>
+								<td><input type="text" name="name"  required="required"/></td>
+								<td><input type="text" name="number" required="required"/></td>
+								<td><input type="text" name="price" required="required"/></td>
 							</tr>
 							<tr>
 								<td>其他备注</td>
-								<td colspan="4"><input class="span12" type="text" name="remark" /></td>
-							</tr>
-							<tr>
-								<td>操作</td>
-								<td><input type="submit" value="发货成功"/></td>
+								<td colspan="4"><input class="span12" type="text"
+									name="remark" /></td>
 							</tr>
 						</table>
+						<div class="action">
+							<input class="btn btn-primary" type="submit" value="完成发货" />
+						</div>
 					</form>
 				</div>
 				<div class="tab-pane" id="produce">

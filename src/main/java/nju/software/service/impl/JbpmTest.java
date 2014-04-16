@@ -61,7 +61,7 @@ public class JbpmTest {
 		order.setHasPostedSampleClothes((short) 1);
 		order.setIsNeedSampleClothes((short) 1);
 		order.setOrderSource("Test");
-		order.setLogisticsState(1);
+		order.setLogisticsState(0);
 		orderDAO.save(order);
 		orderId=order.getOrderId();
 		

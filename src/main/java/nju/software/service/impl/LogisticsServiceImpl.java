@@ -136,24 +136,25 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public List<Map<String, Object>> getPackageList() {
 		// TODO Auto-generated method stub
-		List<Map<String, Object>>temp=service.getOrderList(ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
-		List<Map<String, Object>>list= new ArrayList<>();
-		for(Map<String, Object>model:temp){
-			if(((Order)model.get("order")).getLogisticsState()==0){
+		List<Map<String, Object>> temp = service.getOrderList(
+				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (Map<String, Object> model : temp) {
+			if (((Order) model.get("order")).getLogisticsState() == 0) {
 				list.add(model);
 			}
 		}
 		return list;
 	}
-	
-	
+
 	@Override
 	public List<Map<String, Object>> getWarehouseList() {
 		// TODO Auto-generated method stub
-		List<Map<String, Object>>temp=service.getOrderList(ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
-		List<Map<String, Object>>list= new ArrayList<>();
-		for(Map<String, Object>model:temp){
-			if(((Order)model.get("order")).getLogisticsState()==1){
+		List<Map<String, Object>> temp = service.getOrderList(
+				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (Map<String, Object> model : temp) {
+			if (((Order) model.get("order")).getLogisticsState() == 1) {
 				list.add(model);
 			}
 		}
@@ -176,6 +177,36 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	@Override
+	public Integer addPackage(Package pack, List<PackageDetail> details) {
+		// TODO Auto-generated method stub
+		packageDAO.save(pack);
+		for (PackageDetail detail : details) {
+			detail.setPackageId(pack.getPackageId());
+			packageDetailDAO.save(detail);
+		}
+		return pack.getPackageId();
+	}
+
+	@Override
+	public boolean removepackage(Integer pid) {
+		Package pack = packageDAO.findById(pid);
+		packageDAO.delete(pack);
+		List<PackageDetail> details = packageDetailDAO.findByPackageId(pid);
+		for (PackageDetail detail : details) {
+			packageDetailDAO.delete(detail);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean packageSubmit(Integer orderId) {
+		Order order = orderDAO.findById(orderId);
+		order.setLogisticsState(1);
+		orderDAO.attachDirty(order);
+		return true;
+	}
+
+	@Override
 	public boolean warehouseSubmit(long taskId, String result) {
 		// TODO Auto-generated method stub
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -187,17 +218,6 @@ public class LogisticsServiceImpl implements LogisticsService {
 			e.printStackTrace();
 			return false;
 		}
-	}
-
-	@Override
-	public Integer addPackage(Package pack, List<PackageDetail> details) {
-		// TODO Auto-generated method stub
-		packageDAO.save(pack);
-		for (PackageDetail detail : details) {
-			detail.setPackageId(pack.getPackageId());
-			packageDetailDAO.save(detail);
-		}
-		return pack.getPackageId();
 	}
 
 	// ===========================产品发货=================================
@@ -240,8 +260,16 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	@Override
-	public void sendClothesSubmit(int orderId, long taskId, float logistics_cost) {
+	public void sendClothesSubmit(Integer orderId, long taskId, float price,
+			String name, String time, String number, String remark) {
 		// TODO Auto-generated method stub
+		Logistics logistics = logisticsDAO.findById(orderId);
+		logistics.setProductClothesNumber(number);
+		logistics.setProductClothesRemark(remark);
+		logistics.setProductClothesPrice(price + "");
+		logistics.setProductClothesType(name);
+		logistics.setProductClothesTime(getTime(time));
+		logisticsDAO.attachDirty(logistics);
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
@@ -419,14 +447,13 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return packageDAO.findByOrderId(orderId);
 	}
 
-
 	@Override
 	public OrderInfo getStoreClothesDetail(int orderId) {
 		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
 				TASK_WAREHOUSE, orderId);
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setOrder(orderDAO.findById(orderId));
-		  
+
 		orderInfo.setTask(task);
 		return orderInfo;
 	}
@@ -446,7 +473,5 @@ public class LogisticsServiceImpl implements LogisticsService {
 		// TODO Auto-generated method stub
 		return logisticsDAO.findById(Integer.parseInt(s_id));
 	}
-
-	
 
 }
