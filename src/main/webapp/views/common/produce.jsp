@@ -35,7 +35,7 @@
 			<td>${sample.l}</td>
 			<td>${sample.xl}</td>
 			<td>${sample.xxl}</td>
-			<td class="span1"></td>
+			<td>${sample.produceAmount}</td>
 		</tr>
 	</c:forEach>
 	<tr>
@@ -58,7 +58,7 @@
 			<td>${produce.l}</td>
 			<td>${produce.xl}</td>
 			<td>${produce.xxl}</td>
-			<td class="span1"></td>
+			<td>${produce.produceAmount}</td>
 		</tr>
 	</c:forEach>
 </table>

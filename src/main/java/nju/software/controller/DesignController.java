@@ -246,25 +246,25 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 
 		String orderId = (String) request.getParameter("orderId");
-	
+
 		String taskId = request.getParameter("taskId");
-	
-	 MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
-		
-		  MultipartFile file = multipartRequest.getFile("CADFile");
-		     
-          	  String filename=file.getOriginalFilename();     
-		      FileOperateUtil.Upload(file);
-		   
-		    String url="D:/"+"/"+ filename;
-		    
-		    Timestamp uploadTime = new Timestamp(new Date().getTime());
-		    
-		 designService.uploadDesignSubmit(
+
+		MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
+
+		MultipartFile file = multipartRequest.getFile("CADFile");
+
+		String filename=file.getOriginalFilename();     
+		FileOperateUtil.Upload(file);
+
+		String url="D:/"+"/"+ filename;
+
+		Timestamp uploadTime = new Timestamp(new Date().getTime());
+
+		designService.uploadDesignSubmit(
 				Integer.parseInt(orderId), 
-				 Long.parseLong(taskId),
-				 url,
-				 uploadTime);
+				Long.parseLong(taskId),
+				url,
+				uploadTime);
 	
 		return "redirect:/design/getUploadDesignList.do";
 	}
@@ -462,20 +462,15 @@ public class DesignController {
 		return "redirect:/design/getConfirmDesignList.do";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@RequestMapping(value = "design/downloadCadSubmit.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String downloadCadSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+	    String url = request.getParameter("cadUrl");
+	    FileOperateUtil.Download(response, url);
+		
+		return "redirect:/design/getModifyDesignDetail.do";
+	}
 	
 }

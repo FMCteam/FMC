@@ -56,6 +56,8 @@ public class DesignServiceImpl implements DesignService {
 	private DesignCadDAO DesignCadDAO;
 	@Autowired
 	private ServiceUtil service;
+	@Autowired
+	private DesignCadDAO designCadDAO;
 
 	@Override
 	public List<Map<String, Object>> getVerifyDesignList() {
@@ -211,6 +213,7 @@ public class DesignServiceImpl implements DesignService {
 				model.setLogistics(logisticsDAO.findById(orderId));
 				model.setFabrics(fabricDAO.findByOrderId(orderId));
 				model.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				model.setCad(designCadDAO.findByOrderId(orderId).get(0));
 				model.setTask(task);
 				model.setTaskId(task.getId());
 				return model;

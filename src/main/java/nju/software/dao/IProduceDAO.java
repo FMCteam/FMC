@@ -17,7 +17,9 @@ public interface IProduceDAO {
 
 	public abstract List findByProperty(String propertyName, Object value);
 	
-	public abstract List<Produce> findByOrderId(Object orderId);
+	public abstract List<Produce> findProduceByOrderId(Object orderId);
+	
+	public abstract List<Produce> findSampleProduceByOrderId(Object orderId);
 	
 	public abstract List findAll();
 

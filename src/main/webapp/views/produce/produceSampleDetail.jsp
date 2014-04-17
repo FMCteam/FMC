@@ -36,7 +36,7 @@
 						action="${ctx }/produce/produceSampleSubmit.do">
 						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="span1" rowspan="${fn:length(orderInfo.produces)+1}">计划生产数量</td>
+								<td class="span1" rowspan="${fn:length(orderInfo.produced)+1}">计划生产数量</td>
 								<td class="span1">颜色</td>
 								<td class="span1">XS</td>
 								<td class="span1">S</td>
@@ -45,7 +45,7 @@
 								<td class="span1">XL</td>
 								<td class="span1">XXL</td>
 							</tr>
-							<c:forEach var="produce" items="${orderInfo.produces}">
+							<c:forEach var="produce" items="${orderInfo.produced}">
 								<tr>
 									<td>${produce.color}</td>
 									<td>${produce.xs}</td>
@@ -58,7 +58,7 @@
 							</c:forEach>
 
 							<tr>
-								<td class="span1" rowspan="${fn:length(orderInfo.produces)+1}">实际生产数量</td>
+								<td class="span1" rowspan="${fn:length(orderInfo.produced)+1}">实际生产数量</td>
 								<td class="span1">颜色</td>
 								<td class="span1">XS</td>
 								<td class="span1">S</td>
@@ -67,7 +67,7 @@
 								<td class="span1">XL</td>
 								<td class="span1">XXL</td>
 							</tr>
-							<c:forEach var="produce" items="${orderInfo.produces}">
+							<c:forEach var="produce" items="${orderInfo.produced}">
 								<tr>
 									<td><input class="span12 produce_color" type="text"
 										value="${produce.color}" /></td>

@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.service.QualityService;
@@ -42,6 +44,8 @@ public class QualityServiceImpl implements QualityService{
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired
 	private ServiceUtil service;
+	@Autowired
+	private ProduceDAO produceDAO;
 	
 	@Override
 	public List<Map<String,Object>> getCheckQualityList() {
@@ -58,8 +62,14 @@ public class QualityServiceImpl implements QualityService{
 	}
 
 	@Override
-	public boolean checkQualitySubmit(int id, long taskId, boolean b) {
+	public boolean checkQualitySubmit(int id, long taskId, boolean b, List<Produce> goodList, List<Produce> badList) {
 		// TODO Auto-generated method stub
+		for (int i = 0; i < goodList.size(); i++) {
+			produceDAO.save(goodList.get(i));
+		}
+		for (int i = 0; i < badList.size(); i++) {
+			produceDAO.save(badList.get(i));
+		}
 		Map<String, Object> data = new HashMap<>();
 		//data.put("", b);
 		try {
@@ -87,6 +97,10 @@ public class QualityServiceImpl implements QualityService{
 				oi.setCustomer(customerDAO.findById(o.getCustomerId()));
 				oi.setTask(task);
 				oi.setTaskId(task.getId());
+				Produce produce = new Produce();
+				produce.setOid(orderId);
+				produce.setType(Produce.TYPE_PRODUCED);
+				oi.setProduced(produceDAO.findByExample(produce));
 				return oi;
 			}
 		}
