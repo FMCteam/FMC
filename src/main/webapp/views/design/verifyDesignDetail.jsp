@@ -7,7 +7,6 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">设计验证</li>
-				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
@@ -30,9 +29,6 @@
 				</div>
 				<div class="tab-pane" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
-				</div>
-				<div class="tab-pane" id="quote">
-					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			</div>
 

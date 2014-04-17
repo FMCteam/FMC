@@ -239,4 +239,5 @@ public class FinanceServiceImpl implements FinanceService {
 	public final static String TASK_CONFIRM_SAMPLE_MONEY = "confirmSampleMoney";
 	public final static String TASK_CONFIRM_DEPOSIT = "confirmDeposit";
 	public final static String TASK_CONFIRM_FINAL_PAYMENT = "confirmFinalPayment";
+	public final static String RESULT_MONEY="receiveMoney";
 }

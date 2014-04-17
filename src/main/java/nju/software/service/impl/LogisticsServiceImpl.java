@@ -23,6 +23,7 @@ import nju.software.dao.impl.PackageDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.PackageDetailDAO;
+import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.*;
 import nju.software.dataobject.Package;
 import nju.software.model.OrderInfo;
@@ -53,27 +54,13 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	@Override
-	public OrderInfo getReceiveSampleDetail(Integer orderId) {
+	public Map<String,Object> getReceiveSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
+		return service.getBasicOrderModel(ACTOR_LOGISTICS_MANAGER,
 				TASK_RECEIVE_SAMPLE, orderId);
-		OrderInfo orderInfo = new OrderInfo();
-		orderInfo.setOrder(orderDAO.findById(orderId));
-		orderInfo.setEmployee(employeeDAO.findById(orderInfo.getOrder()
-				.getEmployeeId()));
-		orderInfo.setLogistics(logisticsDAO.findById(orderId));
-		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
-		Produce produce = new Produce();
-		produce.setType(Produce.TYPE_PRODUCE);
-		produce.setOid(orderId);
-		orderInfo.setProduce(produceDAO.findByExample(produce));
-		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
-		orderInfo.setSample(produceDAO.findByExample(produce));
-		orderInfo.setTask(task);
-		return orderInfo;
 	}
 
+	
 	@Override
 	public boolean receiveSampleSubmit(long taskId, String result) {
 		// TODO Auto-generated method stub
@@ -306,6 +293,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 	private ProduceDAO produceDAO;
 	@Autowired
 	private PackageDetailDAO packageDetailDAO;
+	@Autowired
+	private VersionDataDAO versionDataDAO;
 	@Autowired
 	private ServiceUtil service;
 

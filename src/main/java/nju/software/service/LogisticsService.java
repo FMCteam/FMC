@@ -13,7 +13,7 @@ public interface LogisticsService {
 	// ===========================收取样衣=================================
 	public List<OrderInfo> getReceiveSampleList();
 
-	public OrderInfo getReceiveSampleDetail(Integer orderId);
+	public Map<String,Object> getReceiveSampleDetail(Integer orderId);
 
 	public boolean receiveSampleSubmit(long taskId, String result);
 

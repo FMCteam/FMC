@@ -32,7 +32,8 @@
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
 				<div class="tab-pane active" id="buy">
-					<table class="table table-striped table-bordered table-hover detail">
+					<table
+						class="table table-striped table-bordered table-hover detail">
 						<tr>
 							<td rowspan="${fn:length(orderInfo.fabricCosts)+1}">面料采购</td>
 							<td colspan="2">面料名</td>
@@ -40,16 +41,14 @@
 							<td colspan="1">件数</td>
 							<td colspan="2">总采购米数</td>
 						</tr>
-						<tr>
-							<c:forEach var="fabricCost" items="${orderInfo.fabricCosts}">
-								<tr>
-									<td colspan="2">${fabricCost.fabricName }</td>
-									<td colspan="1">${fabricCost.tearPerMeter }</td>
-									<td colspan="1">${orderInfo.data.SampleAmount}</td>
-									<td colspan="2">${fabricCost.tearPerMeter*orderInfo.data.SampleAmount}</td>
-								</tr>
-							</c:forEach>
-						</tr>
+						<c:forEach var="fabricCost" items="${orderInfo.fabricCosts}">
+							<tr>
+								<td colspan="2">${fabricCost.fabricName }</td>
+								<td colspan="1">${fabricCost.tearPerMeter }</td>
+								<td colspan="1">${orderInfo.data.SampleAmount}</td>
+								<td colspan="2">${fabricCost.tearPerMeter*orderInfo.data.SampleAmount}</td>
+							</tr>
+						</c:forEach>
 						<tr>
 							<td rowspan="${fn:length(orderInfo.accessoryCosts)+1}">辅料采购</td>
 							<td colspan="2">辅料名</td>
@@ -57,17 +56,14 @@
 							<td colspan="1">件数</td>
 							<td colspan="2">总采购个数</td>
 						</tr>
-						<tr>
-							<c:forEach var="accessoryCost"
-								items="${orderInfo.accessoryCosts}">
-								<tr>
-									<td colspan="2">${accessoryCost.accessoryName }</td>
-									<td colspan="1">${accessoryCost.tearPerPiece }</td>
-									<td colspan="1">${orderInfo.data.SampleAmount}</td>
-									<td colspan="2">${accessoryCost.tearPerPiece*orderInfo.data.SampleAmount}</td>
-								</tr>
-							</c:forEach>
-						</tr>
+						<c:forEach var="accessoryCost" items="${orderInfo.accessoryCosts}">
+							<tr>
+								<td colspan="2">${accessoryCost.accessoryName }</td>
+								<td colspan="1">${accessoryCost.tearPerPiece }</td>
+								<td colspan="1">${orderInfo.data.SampleAmount}</td>
+								<td colspan="2">${accessoryCost.tearPerPiece*orderInfo.data.SampleAmount}</td>
+							</tr>
+						</c:forEach>
 					</table>
 					<div class="action">
 						<a

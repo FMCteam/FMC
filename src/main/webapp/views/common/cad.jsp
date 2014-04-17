@@ -12,6 +12,20 @@
 		<td class="span1">裙长</td>
 		<td class="span1">袖长</td>
 	</tr>
+	<c:forEach var="version" items="${orderInfo.versions}">
+		<tr>
+			<td class="span1">${version.size}</td>
+			<td class="span1">${version.centerBackLength}</td>
+			<td class="span1">${version.bust}</td>
+			<td class="span1">${version.waistline}</td>
+			<td class="span1">${version.shoulder}</td>
+			<td class="span1">${version.buttock}</td>
+			<td class="span1">${version.hem}</td>
+			<td class="span1">${version.trousers}</td>
+			<td class="span1">${version.skirt}</td>
+			<td class="span1">${version.sleeves}</td>
+		</tr>
+	</c:forEach>
 </table>
 <table class="table table-striped table-bordered table-hover detail">
 	<tr>

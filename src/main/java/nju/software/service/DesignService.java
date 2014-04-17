@@ -56,6 +56,6 @@ public interface DesignService {
 
 	public List<Map<String, Object>> getVerifyDesignList();
 
-	public OrderInfo getVerifyDesignDetail(int orderId, long taskId);
+	public Map<String,Object> getVerifyDesignDetail(int orderId, long taskId);
 	
 }

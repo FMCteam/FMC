@@ -15,7 +15,10 @@ import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.PackageDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
+import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
+import nju.software.model.OrderInfo;
 import nju.software.util.JbpmAPIUtil;
 
 import org.jbpm.task.query.TaskSummary;
@@ -24,7 +27,7 @@ import org.springframework.stereotype.Service;
 
 @Service("service")
 public class ServiceUtil {
-	
+
 	public List<Map<String, Object>> getOrderList(String actorId,
 			String taskName) {
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
@@ -42,7 +45,31 @@ public class ServiceUtil {
 		}
 		return list;
 	}
-	
+
+	public Map<String, Object> getBasicOrderModel(String actorId,
+			String taskName, Integer orderId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		TaskSummary task = jbpmAPIUtil.getTask(actorId, taskName, orderId);
+		Order order=orderDAO.findById(orderId);
+		model.put("task", task);
+		model.put("order", order);
+		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+		model.put("logistics", logisticsDAO.findById(orderId));
+		model.put("fabrics", fabricDAO.findByOrderId(orderId));
+		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
+		
+		Produce produce = new Produce();
+		produce.setOid(orderId);
+		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
+		model.put("sample", produceDAO.findByExample(produce));
+		
+		produce.setType(Produce.TYPE_PRODUCE);
+		model.put("produce", produceDAO.findByExample(produce));
+		
+		model.put("versions", versionDataDAO.findByOrderId(orderId));
+		return model;
+	}
+
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired
@@ -65,5 +92,7 @@ public class ServiceUtil {
 	private ProduceDAO produceDAO;
 	@Autowired
 	private MoneyDAO moneyDAO;
+	@Autowired
+	private VersionDataDAO versionDataDAO;
 
 }
