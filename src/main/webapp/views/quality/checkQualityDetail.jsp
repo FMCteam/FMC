@@ -5,77 +5,39 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<div class="widget">
-				<h4 class="widgettitle">质量检查</h4>
-				<div class="widgetcontent">
+			<ul class="nav nav-tabs detail" id="tab">
+				<li class="task-name">质量检查</li>
+				<li class="active"><a href="#quality" data-toggle="tab">质量检查</a></li>
+				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
+				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
+				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
+				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
+				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
+				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
+			</ul>
 
-					<form method="post"
-						action="${ctx }/quality/checkQualitySubmit.do">
-						<table class="table table-striped table-bordered table-hover">
-							<tr>
-								<td>订单信息</td>
-								<td>单号</td>
-								<td>${orderInfo.order.orderId }</td>
-								<td>生成时间</td>
-								<td>${fn:substring(orderInfo.order.orderTime,0,10) }</td>
-							</tr>
-							<tr>
-								<td>加工方信息</td>
-								<td>加工工厂</td>
-								<td colspan="3">1</td>
-							</tr>
-							<tr>
-								<td rowspan="3">客户信息</td>
-								<td>公司名称</td>
-								<td>${orderInfo.customer.companyName }</td>
-								<td>联系电话</td>
-								<td>${orderInfo.customer.companyPhone }</td>
-							</tr>
-							<tr>
-								<td>采购人姓名</td>
-								<td>${orderInfo.customer.buyContact }</td>
-								<td>固定电话</td>
-								<td>${orderInfo.customer.contactPhone1 }</td>
-							</tr>
-							<tr>
-								<td>QQ</td>
-								<td>${orderInfo.customer.qq }</td>
-								<td>EMAIL</td>
-								<td>${orderInfo.customer.email }</td>
-							</tr>
-							<tr>
-								<td>专员信息</td>
-								<td>姓名</td>
-								<td>${orderInfo.employee.employeeName }</td>
-								<td>电话</td>
-								<td>${orderInfo.employee.phone1 }</td>
-							</tr>
-							<tr>
-								<td rowspan="2">款式信息</td>
-								<td colspan="2">名称</td>
-								<td colspan="2">面料种类</td>
-							</tr>
-							<tr>
-								<td colspan="2">${orderInfo.order.styleName }</td>
-								<td colspan="2">${orderInfo.order.fabricType }</td>
-							</tr>
-							<tr>
-								<td rowspan="4">加工要求</td>
-								<td colspan="2">设计部要求</td>
-								<td colspan="2">1</td>
-							</tr>
-							<tr>
-								<td colspan="2">客户要求</td>
-								<td colspan="2">1</td>
-							</tr>
-							<tr>
-								<td colspan="2">客户新要求</td>
-								<td colspan="2">1</td>
-							</tr>
-							<tr>
-								<td colspan="2">生产主管意见</td>
-								<td colspan="2">1</td>
-							</tr>
+			<div class="tab-content">
+				<div class="tab-pane" id="basic">
+					<%@include file="/views/common/basic.jsp"%>
+				</div>
+				<div class="tab-pane" id="material">
+					<%@include file="/views/common/material.jsp"%>
+				</div>
+				<div class="tab-pane" id="sample">
+					<%@include file="/views/common/sample.jsp"%>
+				</div>
+				<div class="tab-pane" id="produce">
+					<%@include file="/views/common/produce.jsp"%>
+				</div>
+				<div class="tab-pane" id="cad">
+					<%@include file="/views/common/cad.jsp"%>
+				</div>
+				<div class="tab-pane" id="quote">
+					<%@include file="/views/common/quote.jsp"%>
+				</div>
+				<div class="tab-pane active" id="quality">
+					<form method="post" action="${ctx }/quality/checkQualitySubmit.do">
+						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td>质检信息</td>
 								<td>开始时间</td>
@@ -164,13 +126,17 @@
 								<td colspan="4"><button class="btn btn-primary btn-rounded">确认</button></td>
 							</tr>
 						</table>
-						<input type="hidden" name="orderId"
-							value="${orderInfo.order.orderId}" />
-							<input type="hidden" name="taskId"
-							value="${orderInfo.task.id}" />
-							<input type="hidden" name="processId"
-							value="${orderInfo.task.processInstanceId}" />
+						<input type="hidden" name="orderId" value="${orderInfo.order.orderId}" />
+						<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
 					</form>
+				</div>
+			</div>
+			
+			<div class="widget">
+				<h4 class="widgettitle">质量检查</h4>
+				<div class="widgetcontent">
+
+					
 				</div>
 				
 				<!--widgetcontent-->

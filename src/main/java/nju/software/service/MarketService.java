@@ -45,7 +45,7 @@ public interface MarketService {
 	public Customer getAddOrderDetail(Integer cid);
 	
 	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
-			List<Accessory> accessorys, Logistics logistics,List<Produce> produces, List<VersionData> versions, HttpServletRequest request);
+			List<Accessory> accessorys, Logistics logistics,List<Produce> produces, List<Produce> sample_produces, List<VersionData> versions, HttpServletRequest request);
 	
 
 
@@ -93,7 +93,7 @@ public interface MarketService {
 	public OrderInfo getModifyOrderDetail(int accountId, int id, long task_id);
 
 	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
-			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<VersionData> versions, boolean editok, long taskId, Integer accountId);
+			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<Produce> sample_produces, List<VersionData> versions, boolean editok, long taskId, Integer accountId);
 
 	public OrderInfo getMergeQuoteDetail(Integer userId, int id, long task_id);
 

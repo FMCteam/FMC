@@ -27,6 +27,8 @@ public interface IProduceDAO {
 
 	public abstract void attachClean(Produce instance);
 
-	public void deleteByProperty(String propertyName,Object orderId);
+	public void deleteProduceByProperty(String propertyName,Object orderId);
+	
+	public void deleteSampleProduceByProperty(String propertyName,Object orderId);
 	
 }
