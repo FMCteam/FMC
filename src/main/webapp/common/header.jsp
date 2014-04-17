@@ -122,12 +122,9 @@
 						<ul>
 							<li><a href="${ctx }/buy/verifyPurchaseList.do">采购验证</a></li>
 							<li><a href="${ctx }/buy/computePurchaseCostList.do">成本合算</a></li>
-							<li><a href="${ctx }/buy/purchaseSampleMaterialList.do">样衣采购确认</a></li>
-							
-							
-							
-							<li><a href="${ctx }/buy/confirmPurchaseList.do">生产采购验证</a></li>
-							<li><a href="${ctx }/buy/purchaseMaterialList.do">原料采购</a></li>
+							<li><a href="${ctx }/buy/purchaseSampleMaterialList.do">样衣采购</a></li>
+							<li><a href="${ctx }/buy/confirmPurchaseList.do">采购确认</a></li>
+							<li><a href="${ctx }/buy/purchaseMaterialList.do">生产采购</a></li>
 						</ul></li>
 						</c:if>
 						<c:if test="${ROLE_produce==true}">

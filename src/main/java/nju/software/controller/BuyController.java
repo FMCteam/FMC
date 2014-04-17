@@ -39,7 +39,7 @@ public class BuyController {
 	public String verifyPurchaseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo = buyService.getVerifyPurchaseDetail(Integer
+		Map<String,Object> orderInfo = buyService.getVerifyPurchaseDetail(Integer
 				.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/buy/verifyPurchaseDetail";
@@ -74,12 +74,13 @@ public class BuyController {
 	public String computePurchaseCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo = buyService.getComputePurchaseCostDetail(Integer
+		Map<String,Object> orderInfo = buyService.getComputePurchaseCostDetail(Integer
 				.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/buy/computePurchaseCostDetail";
 	}
 
+	
 	@RequestMapping(value = "/buy/computePurchaseCostSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String computePurchaseCostSubmit(HttpServletRequest request,
@@ -171,7 +172,7 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
 		String result = request.getParameter("purchaseerror");
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
+		buyService.confirmPurchaseSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/confirmPurchaseList.do";
 	}
 
@@ -204,7 +205,7 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
 		String result = request.getParameter("purchaseerror");
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
+		buyService.purchaseMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/purchaseMaterialList.do";
 	}
 

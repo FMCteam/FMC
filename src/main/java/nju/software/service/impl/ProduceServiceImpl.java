@@ -77,17 +77,10 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public OrderInfo getVerifyProduceDetail(int orderId, long taskId) {
+	public Map<String,Object> getVerifyProduceDetail(int orderId, long taskId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER, TASK_VERIFY_PRODUCE, orderId);
-		OrderInfo oi = new OrderInfo();
-		oi.setOrder(orderDAO.findById(orderId));
-		oi.setLogistics(logisticsDAO.findById(orderId));
-		oi.setFabrics(fabricDAO.findByOrderId(orderId));
-		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		oi.setTask(task);
-		oi.setTaskId(task.getId());
-		return oi;
+		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER,
+				TASK_VERIFY_PRODUCE, orderId);
 	}
 
 	@Override
@@ -121,17 +114,9 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public OrderInfo getComputeProduceCostInfo(Integer orderId) {
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER,
+	public Map<String,Object> getComputeProduceCostInfo(Integer orderId) {
+		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER,
 				TASK_COMPUTE_PRODUCE_COST, orderId);
-		OrderInfo model = new OrderInfo();
-		model.setOrder(orderDAO.findById(orderId));
-		model.setLogistics(logisticsDAO.findById(orderId));
-		model.setFabrics(fabricDAO.findByOrderId(orderId));
-		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		model.setTask(task);
-		model.setTaskId(task.getId());
-		return model;
 	}
 
 	@Override

@@ -48,7 +48,7 @@ public class LogisticsController {
 	public String receiveSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
-		OrderInfo orderInfo = logisticsService.getReceiveSampleDetail(orderId);
+		Map<String,Object> orderInfo = logisticsService.getReceiveSampleDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/receiveSampleDetail";
 	}

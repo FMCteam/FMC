@@ -44,7 +44,7 @@ public interface ProduceService {
 	
   public List<Map<String, Object>> getComputeProduceCostList();
 	
-	public OrderInfo getComputeProduceCostInfo(Integer orderId);
+	public Map<String,Object> getComputeProduceCostInfo(Integer orderId);
 
 	public void ComputeProduceCostSubmit(int orderId,long taskId,float cut_cost, float manage_cost, float nali_cost,
 			float ironing_cost, float swing_cost, float package_cost,
@@ -64,6 +64,6 @@ public interface ProduceService {
 
 	public List<Map<String, Object>> getVerifyProduceList();
 
-	public OrderInfo getVerifyProduceDetail(int orderId, long taskId);
+	public Map<String,Object> getVerifyProduceDetail(int orderId, long taskId);
 
 }

@@ -35,7 +35,8 @@
 
 					<form id="costAccounting_form" method="post"
 						action="${ctx}/buy/computePurchaseCostSubmit.do">
-						<table class="table table-striped table-bordered table-hover detail">
+						<table
+							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span2" rowspan="${fn:length(orderInfo.fabrics)+1}">面料报价</td>
 								<td class="span3">面料名</td>
@@ -46,7 +47,8 @@
 
 							<c:forEach var="fabric" items="${orderInfo.fabrics}">
 								<tr>
-									<td>${fabric.fabricName}</td>
+									<td>${fabric.fabricName}<input type="hidden"
+										name="fabricName" value="${fabric.fabricName}" /></td>
 									<td><input class="span12" name="tear_per_meter"
 										type="text" /></td>
 									<td><input class="span12" name="cost_per_meter"
@@ -65,7 +67,8 @@
 
 							<c:forEach var="accessory" items="${orderInfo.accessorys}">
 								<tr>
-									<td>${accessory.accessoryName }</td>
+									<td>${accessory.accessoryName}<input type="hidden"
+										name="accessoryName" value="${accessory.accessoryName}" /></td>
 									<td><input class="span12" name="tear_per_piece"
 										type="text" /></td>
 									<td><input class="span12" name="cost_per_piece"
@@ -85,12 +88,9 @@
 							</tr>
 						</table>
 						<input class="btn btn-primary" type="submit" value="提交报价"
-							style="float:right;"> <input type="hidden"
-							name="fabricName" value="${fabric.fabricName}" /> <input
-							type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
-						<input type="hidden" name="taskId" value="${orderInfo.task.id }" />
-						<input type="hidden" name="accessoryName"
-							value="${accessory.accessoryName}" />
+							style="float:right;"> <input type="hidden" name="orderId"
+							value="${orderInfo.order.orderId }" /> <input type="hidden"
+							name="taskId" value="${orderInfo.task.id}" />
 					</form>
 				</div>
 			</div>

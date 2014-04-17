@@ -26,6 +26,7 @@ public class Produce implements java.io.Serializable {
 	private Integer l;
 	private Integer xl;
 	private Integer xxl;
+	private Integer produceAmount;
 	private String type;
 	
 	public static final String TYPE_SAMPLE_PRODUCE = "sampleProduce";//生产样衣所需件数
@@ -154,6 +155,15 @@ public class Produce implements java.io.Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Column(name = "produceAmount")
+	public Integer getProduceAmount() {
+		return produceAmount;
+	}
+
+	public void setProduceAmount(Integer produceAmount) {
+		this.produceAmount = produceAmount;
 	}
 
 }

@@ -19,6 +19,11 @@
 			table_addrow_onclick("produce_table",colName,7);
 		});
 		
+		$("table.sample_produce_table a").click(function(){
+			var colName = ["sample_produce_color","sample_produce_xs","sample_produce_s","sample_produce_m","sample_produce_l","sample_produce_xl","sample_produce_xxl"];
+			table_addrow_onclick("sample_produce_table",colName,7);
+		});
+		
 		$("table.version_table a").click(function(){
 			var colName = ["version_size","version_centerBackLength","version_bust","version_waistLine","version_shoulder",
 			               "version_buttock","version_hem","version_trousers","version_skirt","version_sleeves"];
@@ -123,6 +128,13 @@ function verify(){
 	$("#produce_l").val(getTdString("produce_l"));
 	$("#produce_xl").val(getTdString("produce_xl"));
 	$("#produce_xxl").val(getTdString("produce_xxl"));
+	$("#sample_produce_color").val(getTdString("sample_produce_color"));
+	$("#sample_produce_xs").val(getTdString("sample_produce_xs"));
+	$("#sample_produce_s").val(getTdString("sample_produce_s"));
+	$("#sample_produce_m").val(getTdString("sample_produce_m"));
+	$("#sample_produce_l").val(getTdString("sample_produce_l"));
+	$("#sample_produce_xl").val(getTdString("sample_produce_xl"));
+	$("#sample_produce_xxl").val(getTdString("sample_produce_xxl"));
 	$("#version_size").val(getTdString("version_size"));
 	$("#version_centerBackLength").val(getTdString("version_centerBackLength"));
 	$("#version_bust").val(getTdString("version_bust"));
@@ -166,6 +178,13 @@ function init(){
 	$("#produce_l").val("1,2,3");
 	$("#produce_xl").val("1,2,3");
 	$("#produce_xxl").val("1,2,3");
+	$("#sample_produce_color").val("红,黄,绿");
+	$("#sample_produce_xs").val("1,1,2");
+	$("#sample_produce_s").val("1,1,2");
+	$("#sample_produce_m").val("1,1,2");
+	$("#sample_produce_l").val("1,1,2");
+	$("#sample_produce_xl").val("1,1,2");
+	$("#sample_produce_xxl").val("1,1,2");
 	$("#version_size").val("21,22,23");
 	$("#version_centerBackLength").val("21,22,23");
 	$("#version_bust").val("21,22,23");

@@ -14,7 +14,7 @@ public interface BuyService {
 	//===========================采购验证=================================
 	public List<Map<String,Object>> getVerifyPurchaseList();
 
-	public OrderInfo getVerifyPurchaseDetail(Integer orderId);
+	public Map<String,Object> getVerifyPurchaseDetail(Integer orderId);
 	
 	public boolean verifyPurchaseSubmit(long taskId, boolean buyVal,
 			String comment);
@@ -22,7 +22,7 @@ public interface BuyService {
 	//===========================采购成本核算=================================
 	public List<Map<String,Object>> getComputePurchaseCostList();
 
-	public OrderInfo getComputePurchaseCostDetail(Integer orderId);
+	public Map<String,Object> getComputePurchaseCostDetail(Integer orderId);
 	
 	public void computePurchaseCostSubmit(int orderId, long taskId,
 			String[] fabric_names, String[] tear_per_meters,

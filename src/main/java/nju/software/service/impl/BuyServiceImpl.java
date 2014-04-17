@@ -45,17 +45,10 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public OrderInfo getVerifyPurchaseDetail(Integer orderId) {
+	public Map<String,Object> getVerifyPurchaseDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PURCHASE_MANAGER,
+		return service.getBasicOrderModel(ACTOR_PURCHASE_MANAGER,
 				TASK_VERIFY_PURCHASE, orderId);
-		OrderInfo orderInfo = new OrderInfo();
-		orderInfo.setOrder(orderDAO.findById(orderId));
-		orderInfo.setLogistics(logisticsDAO.findById(orderId));
-		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
-		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		orderInfo.setTask(task);
-		return orderInfo;
 	}
 
 	@Override
@@ -84,17 +77,10 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public OrderInfo getComputePurchaseCostDetail(Integer orderId) {
+	public Map<String,Object> getComputePurchaseCostDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PURCHASE_MANAGER,
+		return service.getBasicOrderModel(ACTOR_PURCHASE_MANAGER,
 				TASK_COMPUTE_PURCHASE_COST, orderId);
-		OrderInfo model = new OrderInfo();
-		model.setFabrics(fabricDAO.findByOrderId(orderId));
-		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		model.setOrder(orderDAO.findById(orderId));
-		model.setLogistics(logisticsDAO.findById(orderId));
-		model.setTask(task);
-		return model;
 	}
 
 	@Override
@@ -104,31 +90,28 @@ public class BuyServiceImpl implements BuyService {
 			String[] accessory_names, String[] tear_per_piece,
 			String[] cost_per_piece, String[] accessory_prices) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < fabric_names.length; i++) {
-			FabricCost fabricCost = new FabricCost();
-			fabricCost.setOrderId(orderId);
-			// 修改FabricCost内容
-			fabricCost.setFabricName(fabric_names[i]);
-			fabricCost.setTearPerMeter(Float.parseFloat(tear_per_meters[i]));
-			fabricCost.setCostPerMeter(Float.parseFloat(cost_per_meters[i]));
-			fabricCost.setPrice(Float.parseFloat(fabric_prices[i]));
-			// 提交修改
-			FabricCostDAO.save(fabricCost);
+		if(fabric_names!=null){
+			for (int i = 0; i < fabric_names.length; i++) {
+				FabricCost fabricCost = new FabricCost();
+				fabricCost.setOrderId(orderId);
+				fabricCost.setFabricName(fabric_names[i]);
+				fabricCost.setTearPerMeter(Float.parseFloat(tear_per_meters[i]));
+				fabricCost.setCostPerMeter(Float.parseFloat(cost_per_meters[i]));
+				fabricCost.setPrice(Float.parseFloat(fabric_prices[i]));
+				FabricCostDAO.save(fabricCost);
+			}
 		}
-
-		for (int i = 0; i < accessory_names.length; i++) {
-			AccessoryCost accessoryCost = new AccessoryCost();
-			accessoryCost.setOrderId(orderId);
-			// 修改FabricCost内容
-			accessoryCost.setAccessoryName(accessory_names[i]);
-			accessoryCost.setTearPerPiece(Float.parseFloat(tear_per_piece[i]));
-			accessoryCost.setCostPerPiece(Float.parseFloat(cost_per_piece[i]));
-			accessoryCost.setPrice(Float.parseFloat(accessory_prices[i]));
-			// 提交修改
-			AccessoryCostDAO.save(accessoryCost);
-
+		if(accessory_names!=null){
+			for (int i = 0; i < accessory_names.length; i++) {
+				AccessoryCost accessoryCost = new AccessoryCost();
+				accessoryCost.setOrderId(orderId);
+				accessoryCost.setAccessoryName(accessory_names[i]);
+				accessoryCost.setTearPerPiece(Float.parseFloat(tear_per_piece[i]));
+				accessoryCost.setCostPerPiece(Float.parseFloat(cost_per_piece[i]));
+				accessoryCost.setPrice(Float.parseFloat(accessory_prices[i]));
+				AccessoryCostDAO.save(accessoryCost);
+			}
 		}
-
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			data.put("ComputePurchaseCost", true);
@@ -162,7 +145,7 @@ public class BuyServiceImpl implements BuyService {
 
 		int SampleAmount = 0;
 		// 样衣总数量
-		List<Produce> produces = ProduceDAO.findByOrderId(orderId);
+		List<Produce> produces = ProduceDAO.findProduceByOrderId(orderId);
 		for (Produce produce : produces) {
 			if (produce.getType().equals("sampleProduce")) {
 				SampleAmount = produce.getL() + produce.getM() + produce.getS()
@@ -250,7 +233,7 @@ public class BuyServiceImpl implements BuyService {
 	@Override
 	public boolean purchaseMaterialSubmit(long taskId, String result) {
 		// TODO Auto-generated method stub
-		boolean purchaseerror = result.equals("0");
+		boolean purchaseerror = result.equals("1");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("procurementerror", purchaseerror);
 		try {

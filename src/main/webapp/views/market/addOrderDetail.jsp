@@ -210,7 +210,7 @@
 					</table>
 				</div>
 				<div class="tab-pane" id="produce">
-					<table class="table table-striped table-bordered table-hover produce_table">
+					<table class="table table-striped table-bordered table-hover">
 						<tr>
 							<td rowspan="2">加工信息</td>
 							<td>加工件数<span class="required">*</span></td>
@@ -243,24 +243,66 @@
 								type="hidden" name="produce_xxl" /></td>
 						</tr>
 						<tr>
-							<td>颜色</td>
-							<td>XS</td>
-							<td>S</td>
-							<td>M</td>
-							<td>L</td>
-							<td>XL</td>
-							<td>XXL</td>
-							<td>操作</td>
+							<td colspan="8" class="innertable">
+								<table class="span12 table produce_table">
+									<tr>
+										<td>颜色</td>
+										<td>XS</td>
+										<td>S</td>
+										<td>M</td>
+										<td>L</td>
+										<td>XL</td>
+										<td>XXL</td>
+										<td>操作</td>
+									</tr>
+									<tr class="addrow">
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><a>添加</a></td>
+									</tr>
+								</table>
+							</td>
 						</tr>
-						<tr class="addrow">
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><a>添加</a></td>
+						<tr>
+							<td colspan="8">样衣加工具体要求 <input id="sample_produce_color"
+								type="hidden" name="sample_produce_color" /> <input id="sample_produce_xs"
+								type="hidden" name="sample_produce_xs" /> <input id="sample_produce_s"
+								type="hidden" name="sample_produce_s" /> <input id="sample_produce_m"
+								type="hidden" name="sample_produce_m" /> <input id="sample_produce_l"
+								type="hidden" name="sample_produce_l" /> <input id="sample_produce_xl"
+								type="hidden" name="sample_produce_xl" /> <input id="sample_produce_xxl"
+								type="hidden" name="sample_produce_xxl" /></td>
+						</tr>
+						<tr>
+							<td colspan="8" class="innertable">
+								<table class="span12 table sample_produce_table">
+									<tr>
+										<td>颜色</td>
+										<td>XS</td>
+										<td>S</td>
+										<td>M</td>
+										<td>L</td>
+										<td>XL</td>
+										<td>XXL</td>
+										<td>操作</td>
+									</tr>
+									<tr class="addrow">
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><a>添加</a></td>
+									</tr>
+								</table>
+							</td>
 						</tr>
 					</table>
 				</div>

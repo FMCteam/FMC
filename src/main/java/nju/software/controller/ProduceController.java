@@ -1,26 +1,16 @@
 package nju.software.controller;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
-import nju.software.dataobject.Fabric;
-import nju.software.dataobject.Logistics;
-import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
-import nju.software.model.OrderModel;
-import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
-import nju.software.util.JbpmAPIUtil;
 
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,11 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class ProduceController {
-	
-	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
-	private OrderService orderService;
+
 	@Autowired
 	private ProduceService produceService;
 	
@@ -105,7 +91,7 @@ public class ProduceController {
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		long taskId = 0;
-		OrderInfo orderInfo = produceService.getVerifyProduceDetail(orderId_request, taskId);
+		Map<String,Object> orderInfo = produceService.getVerifyProduceDetail(orderId_request, taskId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "produce/verifyProduceDetail";
 	}
@@ -157,10 +143,8 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String computeProduceCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		
-		
-		String orderId=request.getParameter("orderId");
-		OrderInfo orderInfo=produceService.getComputeProduceCostInfo(Integer.parseInt(orderId));
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		Map<String,Object> orderInfo=produceService.getComputeProduceCostInfo(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/produce/computeProduceCostDetail";
 	}
