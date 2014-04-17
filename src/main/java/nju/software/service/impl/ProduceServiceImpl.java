@@ -196,7 +196,7 @@ public class ProduceServiceImpl implements ProduceService {
 		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
 		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		orderInfo.setLogistics(logisticsDAO.findById(orderId));
-		orderInfo.setProduces(produceDAO.findByOrderId(orderId));
+		orderInfo.setProduces(produceDAO.findProduceByOrderId(orderId));
 		orderInfo.setTask(task);
 		orderInfo.setTaskId(task.getId());
 		return orderInfo;

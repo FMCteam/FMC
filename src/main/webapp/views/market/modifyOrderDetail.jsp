@@ -327,13 +327,13 @@
 									</tr>
 									<c:forEach var="produceRow" items="${orderModel.sample }" >
 										<tr>
-											<td class='span12 produce_color'>${produceRow.color }</td>
-											<td class='span12 produce_xs'>${produceRow.xs }</td>
-											<td class='span12 produce_s'>${produceRow.s }</td>
-											<td class='span12 produce_m'>${produceRow.m }</td>
-											<td class='span12 produce_l'>${produceRow.l }</td>
-											<td class='span12 produce_xl'>${produceRow.xl }</td>
-											<td class='span12 produce_xxl'>${produceRow.xxl }</td>
+											<td class='span12 sample_produce_color'>${produceRow.color }</td>
+											<td class='span12 sample_produce_xs'>${produceRow.xs }</td>
+											<td class='span12 sample_produce_s'>${produceRow.s }</td>
+											<td class='span12 sample_produce_m'>${produceRow.m }</td>
+											<td class='span12 sample_produce_l'>${produceRow.l }</td>
+											<td class='span12 sample_produce_xl'>${produceRow.xl }</td>
+											<td class='span12 sample_produce_xxl'>${produceRow.xxl }</td>
 											<td class='span12'><a onclick="deleteRow(this,'sample_produce_table')">删除</a></td>
 										</tr>
 									</c:forEach>

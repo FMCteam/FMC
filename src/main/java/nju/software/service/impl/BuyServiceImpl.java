@@ -162,7 +162,7 @@ public class BuyServiceImpl implements BuyService {
 
 		int SampleAmount = 0;
 		// 样衣总数量
-		List<Produce> produces = ProduceDAO.findByOrderId(orderId);
+		List<Produce> produces = ProduceDAO.findProduceByOrderId(orderId);
 		for (Produce produce : produces) {
 			if (produce.getType().equals("sampleProduce")) {
 				SampleAmount = produce.getL() + produce.getM() + produce.getS()

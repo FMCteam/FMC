@@ -420,7 +420,7 @@ public class MarketController {
 	public String modifyQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		String orderId = request.getParameter("id");
+		String orderId = request.getParameter("orderId");
 		// String s_processId=request.getParameter("pid");
 		int id = Integer.parseInt(orderId);
 		// long processId=Long.parseLong(s_processId);
@@ -439,10 +439,12 @@ public class MarketController {
 
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<OrderInfo> tasks = marketService.getModifyQuoteList(account
+		List<Map<String, Object>> tasks = marketService.getModifyQuoteList(account
 				.getUserId());
 
-		model.addAttribute("tasks", tasks);
+		model.put("list", tasks);
+		model.addAttribute("taskName", "修改报价");
+		model.addAttribute("url", "/market/modifyQuoteDetail.do");
 		return "market/modifyQuoteList";
 	}
 
@@ -454,10 +456,12 @@ public class MarketController {
 
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<OrderInfo> tasks = marketService.getModifyProductList(account
+		List<Map<String, Object>> tasks = marketService.getModifyProductList(account
 				.getUserId());
 
-		model.addAttribute("list", tasks);
+		model.put("list", tasks);
+		model.addAttribute("taskName", "修改合同加工单");
+		model.addAttribute("url", "/market/modifyProductDetail.do");
 		return "market/modifyProductList";
 	}
 
@@ -467,12 +471,10 @@ public class MarketController {
 	public String modifyProductDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		String s_taskId = request.getParameter("taskId");
 		int id = Integer.parseInt(orderId);
-		long taskId = Long.parseLong(s_taskId);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		OrderInfo oi = marketService.getModifyProductDetail(id, taskId, account.getUserId());
+		OrderInfo oi = marketService.getModifyProductDetail(id, account.getUserId());
 		model.addAttribute("orderInfo", oi);
 		return "market/modifyProductDetail";
 	}
@@ -570,13 +572,10 @@ public class MarketController {
 	public String mergeQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
-		String s_task_id = request.getParameter("taskId");
 		int id = Integer.parseInt(s_id);
-		long task_id = Long.parseLong(s_task_id);
-
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		OrderInfo orderModel = marketService.getMergeQuoteDetail(account.getUserId(), id, task_id);
+		OrderInfo orderModel = marketService.getMergeQuoteDetail(account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
 		model.addAttribute("merge_w", true);
 		return "market/mergeQuoteDetail";
@@ -590,9 +589,11 @@ public class MarketController {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		
-		List<OrderInfo> list = marketService.getMergeQuoteList(account.getAccountId());
+		List<Map<String, Object>> list = marketService.getMergeQuoteList(account.getAccountId());
 
-		model.addAttribute("quote_list", list);
+		model.put("list", list);
+		model.addAttribute("taskName", "合并报价");
+		model.addAttribute("url", "/market/mergeQuoteDetail.do");
 		return "market/mergeQuoteList";
 	}
 
@@ -633,13 +634,10 @@ public class MarketController {
 	public String verifyQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
-		String s_task_id = request.getParameter("taskId");
 		int id = Integer.parseInt(s_id);
-		long task_id = Long.parseLong(s_task_id);
-
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		OrderInfo orderModel = marketService.getVerifyQuoteDetail(account.getUserId(), id, task_id);
+		OrderInfo orderModel = marketService.getVerifyQuoteDetail(account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
 		return "market/verifyQuoteDetail";
 
@@ -652,8 +650,10 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<OrderInfo> list = marketService.getVerifyQuoteList(account.getUserId());
-		model.addAttribute("quote_list", list);
+		List<Map<String, Object>> list = marketService.getVerifyQuoteList(account.getUserId());
+		model.put("list", list);
+		model.addAttribute("taskName", "审核报价");
+		model.addAttribute("url", "/market/verifyQuoteDetail.do");
 		return "market/verifyQuoteList";
 
 	}
@@ -665,36 +665,32 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<OrderInfo> orderModelList = marketService.getModifyOrderList(account.getUserId());
+		List<Map<String, Object>> orderModelList = marketService.getModifyOrderList(account.getUserId());
 		if(orderModelList.size()==0){
 			jbpmTest.completeVerify(account.getUserId()+"", false);
 			orderModelList = marketService.getModifyOrderList(account.getUserId());
 		}
-		model.put("order_list", orderModelList);
+		model.put("list", orderModelList);
+		model.addAttribute("taskName", "修改询单");
+		model.addAttribute("url", "/market/modifyOrderDetail.do");
 		return "market/modifyOrderList";
 	}
 
 	// 询单的修改界面
-	@RequestMapping(value = "market/modifyOrderDetail.do", method = RequestMethod.POST)
+	@RequestMapping(value = "market/modifyOrderDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		String s_id = request.getParameter("id");
-		String s_task_id = request.getParameter("task_id");
+		String s_id = request.getParameter("orderId");
 		int id = Integer.parseInt(s_id);
-		long task_id = Long.parseLong(s_task_id);
 		// 修改
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		OrderInfo orderModel = marketService.getModifyOrderDetail(account.getUserId(), id, task_id);
+		OrderInfo orderModel = marketService.getModifyOrderDetail(account.getUserId(), id);
 		model.addAttribute("orderModel", orderModel);
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(orderModel.getTask().getProcessInstanceId());
-		String buyComment = process.getVariable("buyComment")
-				.toString();
-		String designComment = process.getVariable("designComment")
-				.toString();
+		String buyComment = jbpmAPIUtil.getVariable(orderModel.getTask(), "buyComment").toString();
+		String designComment = jbpmAPIUtil.getVariable(orderModel.getTask(), "designComment").toString();
 		model.addAttribute("buyComment", buyComment);
 		model.addAttribute("designComment", designComment);
 		return "market/modifyOrderDetail";
@@ -957,9 +953,11 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<OrderInfo> list = marketService.getConfirmQuoteList(account
+		List<Map<String, Object>> list = marketService.getConfirmQuoteList(account
 				.getUserId() + "");
-		model.addAttribute("list", list);
+		model.put("list", list);
+		model.addAttribute("taskName", "确认报价");
+		model.addAttribute("url", "/market/confirmQuoteDetail.do");
 		return "market/confirmQuoteList";
 	}
 
@@ -968,13 +966,10 @@ public class MarketController {
 	public String confirmQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
-		String s_task_id = request.getParameter("taskId");
 		int id = Integer.parseInt(s_id);
-		long task_id = Long.parseLong(s_task_id);
-
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		OrderInfo orderModel = marketService.getConfirmQuoteDetail(account.getUserId(), id, task_id);
+		OrderInfo orderModel = marketService.getConfirmQuoteDetail(account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
 		return "market/confirmQuoteDetail";
 	}
@@ -1022,8 +1017,10 @@ public class MarketController {
 
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 		String actorId = account.getUserId()+"";
-		List<OrderInfo> orderList = marketService.getConfirmProductList(actorId);
-		model.addAttribute("order_list", orderList);
+		List<Map<String, Object>> orderList = marketService.getConfirmProductList(actorId);
+		model.put("list", orderList);
+		model.addAttribute("taskName", "确认合同加工单");
+		model.addAttribute("url", "/market/confirmProductDetail.do");
 		return "market/confirmProductList";
 	}
 
@@ -1111,7 +1108,7 @@ public class MarketController {
 		int id = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-		OrderInfo orderInfo = marketService.getConfirmProductDetail(account.getUserId(), id, taskId);
+		OrderInfo orderInfo = marketService.getConfirmProductDetail(account.getUserId(), id);
 		model.addAttribute("orderInfo", orderInfo);
 
 		return "market/confirmProductDetail";
@@ -1156,9 +1153,11 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		List<OrderInfo> list = marketService.getSignContractList(account
+		List<Map<String, Object>> list = marketService.getSignContractList(account
 				.getUserId() + "");
-		model.addAttribute("list", list);
+		model.put("list", list);
+		model.addAttribute("taskName", "签订合同");
+		model.addAttribute("url", "/market/signContractDetail.do");
 		return "/market/signContractList";
 	}
 

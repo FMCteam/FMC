@@ -76,6 +76,8 @@ public class MarketServiceImpl implements MarketService {
 	private VersionDataDAO versionDataDAO;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
+	@Autowired
+	private ServiceUtil service;
 
 	@Override
 	public List<Customer> getAddOrderList() {
@@ -178,43 +180,31 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public List<OrderInfo> getModifyOrderList(Integer accountId) {
+	public List<Map<String, Object>> getModifyOrderList(Integer accountId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		List<Map<String, Object>> temp = service.getOrderList(
 				accountId+"", TASK_MODIFY_ORDER);
-		List<OrderInfo> taskSummarys = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-				Integer orderId = (Integer) getVariable("orderId", task);
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setTask(task);
-				taskSummarys.add(oi);
-		}
-		return taskSummarys;
+		return temp;
 	}
 
 	@Override
-	public OrderInfo getModifyOrderDetail(int accountId, int id, long task_id) {
+	public OrderInfo getModifyOrderDetail(int accountId, int id) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				accountId+"", TASK_MODIFY_ORDER);
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			if (id == orderId && task_id == task.getId()) {
-				OrderInfo oi = new OrderInfo();
-				Order o = orderDAO.findById(orderId);
-				oi.setOrder(o);
-				oi.setEmployee(employeeDAO.findById(o.getEmployeeId()));
-				oi.setLogistics(logisticsDAO.findById(orderId));
-				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				oi.setFabrics(fabricDAO.findByOrderId(orderId));
-				oi.setProduces(produceDAO.findByOrderId(orderId));
-				oi.setVersions(versionDataDAO.findByOrderId(orderId));
-				oi.setTask(task);
-				return oi;
-			}
-		}
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(accountId+"",
+				TASK_MODIFY_ORDER, id);
+		OrderInfo oi = new OrderInfo();
+		Order o = orderDAO.findById(id);
+		oi.setOrder(o);
+		oi.setEmployee(employeeDAO.findById(o.getEmployeeId()));
+		oi.setLogistics(logisticsDAO.findById(id));
+		oi.setAccessorys(accessoryDAO.findByOrderId(id));
+		oi.setFabrics(fabricDAO.findByOrderId(id));
+		oi.setProduces(produceDAO.findProduceByOrderId(id));
+		oi.setSample(produceDAO.findSampleProduceByOrderId(id));
+		oi.setVersions(versionDataDAO.findByOrderId(id));
+		oi.setTask(task);
+		return oi;
+
 	}
 
 	@Override
@@ -364,19 +354,11 @@ public class MarketServiceImpl implements MarketService {
 
 	
 	@Override
-	public List<OrderInfo> getModifyProductList(Integer userId) {
+	public List<Map<String, Object>> getModifyProductList(Integer userId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		List<Map<String, Object>> temp = service.getOrderList(
 				userId+"", TASK_MODIFY_PRODUCE_ORDER);
-		List<OrderInfo> taskSummarys = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			OrderInfo oi = new OrderInfo();
-			oi.setOrder(orderDAO.findById(orderId));
-			oi.setTask(task);
-			taskSummarys.add(oi);
-		}
-		return taskSummarys;
+		return temp;
 	}
 
 	@Override
@@ -413,20 +395,11 @@ public class MarketServiceImpl implements MarketService {
 	
 	//==========================报价商定=======================
 	@Override
-	public List<OrderInfo> getConfirmQuoteList(String actorId) {
+	public List<Map<String, Object>> getConfirmQuoteList(String actorId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		List<Map<String, Object>> temp = service.getOrderList(
 				actorId, TASK_CONFIRM_QUOTE);
-		List<OrderInfo> list = new ArrayList<OrderInfo>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			OrderInfo orderInfo = new OrderInfo();
-			orderInfo.setOrder(orderDAO.findById(orderId));
-			orderInfo.setQuote(quoteDAO.findById(orderId));
-			orderInfo.setTask(task);
-			list.add(orderInfo);
-		}
-		return list;
+		return temp;
 	}
 
 	@Override
@@ -470,90 +443,56 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public List<OrderInfo> getModifyQuoteList(Integer userId) {
+	public List<Map<String, Object>> getModifyQuoteList(Integer userId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		List<Map<String, Object>> temp = service.getOrderList(
 				userId+"", TASK_MODIFY_QUOTE);
-		List<OrderInfo> models = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			OrderInfo model = new OrderInfo();
-			model.setOrder(orderDAO.findById(orderId));
-			model.setQuote(quoteDAO.findById(orderId));
-			model.setTask(task);
-			models.add(model);
-		}
-		return models;
+		return temp;
 	}
 
 	@Override
 	public OrderInfo getModifyQuoteDetail(int orderId, int accountId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				accountId+"", TASK_MODIFY_QUOTE);
-		if (list.isEmpty()) {
-			System.out.println("no task list");
-		}
-		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
-		WorkflowProcessInstance process = null;
-		for (TaskSummary task : list) {
-			// 需要获取task中的数据
-			long pid = task.getProcessInstanceId();
-			process = (WorkflowProcessInstance) session.getProcessInstance(pid);
-			int oid = (int) process.getVariable("orderId");
-			if (orderId == oid) {
-				OrderInfo orderInfo = new OrderInfo();
-				orderInfo.setOrder(orderDAO.findById(orderId));
-				orderInfo.setQuote(quoteDAO.findById(orderId));
-				orderInfo.setProduces(produceDAO.findByOrderId(orderId));
-				orderInfo.setVersions(versionDataDAO.findByOrderId(orderId));
-				orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
-				orderInfo.setTask(task);
-				return orderInfo;
-			}
-		}
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(accountId+"",
+				TASK_MODIFY_QUOTE, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setQuote(quoteDAO.findById(orderId));
+		orderInfo.setLogistics(logisticsDAO.findById(orderId));
+		orderInfo.setProduce(produceDAO.findProduceByOrderId(orderId));
+		orderInfo.setSample(produceDAO.findSampleProduceByOrderId(orderId));
+		orderInfo.setVersions(versionDataDAO.findByOrderId(orderId));
+		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
+		orderInfo.setTask(task);
+		return orderInfo;
 	}
 
 	@Override
-	public OrderInfo getModifyProductDetail(int id, long taskId, Integer accountId) {
+	public OrderInfo getModifyProductDetail(int orderId, Integer accountId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				accountId+"", TASK_MODIFY_PRODUCE_ORDER);
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			if (id == orderId && taskId == task.getId()) {
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setQuote(quoteDAO.findById(orderId));
-				oi.setProduces(produceDAO.findByOrderId(orderId));
-				oi.setVersions(versionDataDAO.findByOrderId(orderId));
-				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				oi.setFabrics(fabricDAO.findByOrderId(orderId));
-				oi.setTask(task);
-				return oi;
-			}
-		}
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(accountId+"",
+				TASK_MODIFY_PRODUCE_ORDER, orderId);
+		OrderInfo oi = new OrderInfo();
+		oi.setOrder(orderDAO.findById(orderId));
+		oi.setQuote(quoteDAO.findById(orderId));
+		oi.setLogistics(logisticsDAO.findById(orderId));
+		oi.setProduces(produceDAO.findProduceByOrderId(orderId));
+		oi.setSample(produceDAO.findSampleProduceByOrderId(orderId));
+		oi.setVersions(versionDataDAO.findByOrderId(orderId));
+		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		oi.setFabrics(fabricDAO.findByOrderId(orderId));
+		oi.setTask(task);
+		return oi;
 	}
 
 	//==========================签订合同=======================
 	@Override
-	public List<OrderInfo> getSignContractList(String actorId) {
+	public List<Map<String, Object>> getSignContractList(String actorId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		List<Map<String, Object>> temp = service.getOrderList(
 				actorId, TASK_SIGN_CONTRACT);
-		List<OrderInfo> list = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil
-					.getVariable(task, "orderId");
-			OrderInfo orderInfo = new OrderInfo();
-			orderInfo.setOrder(orderDAO.findById(orderId));
-			orderInfo.setTask(task);
-			list.add(orderInfo);
-		}
-		return list;
+		return temp;
 	}
 
 	@Override
@@ -569,21 +508,11 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public List<OrderInfo> getMergeQuoteList(Integer accountId) {
+	public List<Map<String, Object>> getMergeQuoteList(Integer accountId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		List<Map<String, Object>> temp = service.getOrderList(
 				accountId+"", TASK_MERGE_QUOTE);
-		System.out.println(accountId);
-		List<OrderInfo> taskSummarys = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			OrderInfo oi = new OrderInfo();
-			oi.setOrder(orderDAO.findById(orderId));
-			oi.setQuote(quoteDAO.findById(orderId));
-			oi.setTask(task);
-			taskSummarys.add(oi);
-		}
-		return taskSummarys;
+		return temp;
 	}
 
 
@@ -610,20 +539,11 @@ public class MarketServiceImpl implements MarketService {
 
 
 	@Override
-	public List<OrderInfo> getVerifyQuoteList(Integer accountId) {
+	public List<Map<String, Object>> getVerifyQuoteList(Integer accountId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		List<Map<String, Object>> temp = service.getOrderList(
 				ACTOR_MARKET_MANAGER, TASK_VERIFY_QUOTE);
-		List<OrderInfo> taskSummarys = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			OrderInfo oi = new OrderInfo();
-			oi.setOrder(orderDAO.findById(orderId));
-			oi.setQuote(quoteDAO.findById(orderId));
-			oi.setTask(task);
-			taskSummarys.add(oi);
-		}
-		return taskSummarys;
+		return temp;
 	}
 
 
@@ -664,69 +584,57 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public OrderInfo getMergeQuoteDetail(Integer userId, int id, long task_id) {
+	public OrderInfo getMergeQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				userId+"", TASK_MERGE_QUOTE);
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			if (id == orderId && task_id == task.getId()) {
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setQuote(quoteDAO.findById(orderId));
-				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				oi.setFabrics(fabricDAO.findByOrderId(orderId));
-				oi.setProduces(produceDAO.findByOrderId(orderId));
-				oi.setVersions(versionDataDAO.findByOrderId(orderId));
-				oi.setTask(task);
-				return oi;
-			}
-		}
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(userId+"",
+				TASK_MERGE_QUOTE, orderId);
+		OrderInfo oi = new OrderInfo();
+		oi.setOrder(orderDAO.findById(orderId));
+		oi.setQuote(quoteDAO.findById(orderId));
+		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		oi.setFabrics(fabricDAO.findByOrderId(orderId));
+		oi.setLogistics(logisticsDAO.findById(orderId));
+		oi.setProduce(produceDAO.findProduceByOrderId(orderId));
+		oi.setSample(produceDAO.findSampleProduceByOrderId(orderId));
+		oi.setVersions(versionDataDAO.findByOrderId(orderId));
+		oi.setTask(task);
+		return oi;
 	}
 
 	@Override
-	public OrderInfo getVerifyQuoteDetail(Integer userId, int id, long task_id) {
+	public OrderInfo getVerifyQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_MARKET_MANAGER, TASK_VERIFY_QUOTE);
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			if (id == orderId && task_id == task.getId()) {
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setQuote(quoteDAO.findById(orderId));
-				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				oi.setFabrics(fabricDAO.findByOrderId(orderId));
-				oi.setProduces(produceDAO.findByOrderId(orderId));
-				oi.setVersions(versionDataDAO.findByOrderId(orderId));
-				oi.setTask(task);
-				return oi;
-			}
-		}
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_MARKET_MANAGER,
+				TASK_VERIFY_QUOTE, orderId);
+		OrderInfo oi = new OrderInfo();
+		oi.setOrder(orderDAO.findById(orderId));
+		oi.setQuote(quoteDAO.findById(orderId));
+		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		oi.setFabrics(fabricDAO.findByOrderId(orderId));
+		oi.setLogistics(logisticsDAO.findById(orderId));
+		oi.setProduce(produceDAO.findProduceByOrderId(orderId));
+		oi.setSample(produceDAO.findSampleProduceByOrderId(orderId));
+		oi.setVersions(versionDataDAO.findByOrderId(orderId));
+		oi.setTask(task);
+		return oi;
 	}
 
 	@Override
-	public OrderInfo getConfirmQuoteDetail(Integer userId, int id, long task_id) {
+	public OrderInfo getConfirmQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				userId+"", TASK_CONFIRM_QUOTE);
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			if (id == orderId && task_id == task.getId()) {
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setQuote(quoteDAO.findById(orderId));
-				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				oi.setFabrics(fabricDAO.findByOrderId(orderId));
-				oi.setProduces(produceDAO.findByOrderId(orderId));
-				oi.setVersions(versionDataDAO.findByOrderId(orderId));
-				oi.setTask(task);
-				return oi;
-			}
-		}
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(userId+"",
+				TASK_CONFIRM_QUOTE, orderId);
+		OrderInfo oi = new OrderInfo();
+		oi.setOrder(orderDAO.findById(orderId));
+		oi.setQuote(quoteDAO.findById(orderId));
+		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		oi.setFabrics(fabricDAO.findByOrderId(orderId));
+		oi.setLogistics(logisticsDAO.findById(orderId));
+		oi.setProduce(produceDAO.findProduceByOrderId(orderId));
+		oi.setSample(produceDAO.findSampleProduceByOrderId(orderId));
+		oi.setVersions(versionDataDAO.findByOrderId(orderId));
+		oi.setTask(task);
+		return oi;
 	}
 
 	@Override
@@ -749,43 +657,30 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public List<OrderInfo> getConfirmProductList(String actorId) {
+	public List<Map<String, Object>> getConfirmProductList(String actorId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		List<Map<String, Object>> temp = service.getOrderList(
 				actorId, TASK_CONFIRM_PRODUCE_ORDER);
-		List<OrderInfo> taskSummarys = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			OrderInfo oi = new OrderInfo();
-			oi.setOrder(orderDAO.findById(orderId));
-			
-			oi.setTask(task);
-			taskSummarys.add(oi);
-		}
-		return taskSummarys;
+		return temp;
 	}
 
 	@Override
-	public OrderInfo getConfirmProductDetail(Integer userId, int id, long taskId) {
+	public OrderInfo getConfirmProductDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				userId+"", TASK_CONFIRM_PRODUCE_ORDER);
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			if (id == orderId && taskId == task.getId()) {
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setQuote(quoteDAO.findById(orderId));
-				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				oi.setFabrics(fabricDAO.findByOrderId(orderId));
-				oi.setProduces(produceDAO.findByOrderId(orderId));
-				oi.setVersions(versionDataDAO.findByOrderId(orderId));
-				oi.setTask(task);
-				return oi;
-			}
-		}
-		return null;
+		TaskSummary task = jbpmAPIUtil.getTask(userId+"",
+				TASK_CONFIRM_PRODUCE_ORDER, orderId);
+		OrderInfo oi = new OrderInfo();
+		oi.setOrder(orderDAO.findById(orderId));
+		oi.setOrder(orderDAO.findById(orderId));
+		oi.setQuote(quoteDAO.findById(orderId));
+		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		oi.setFabrics(fabricDAO.findByOrderId(orderId));
+		oi.setLogistics(logisticsDAO.findById(orderId));
+		oi.setProduces(produceDAO.findProduceByOrderId(orderId));
+		oi.setSample(produceDAO.findSampleProduceByOrderId(orderId));
+		oi.setVersions(versionDataDAO.findByOrderId(orderId));
+		oi.setTask(task);
+		return oi;
 	}
 	
 	/*@Override
