@@ -12,7 +12,6 @@ table {
 table.table td{
 	text-align: center;
 	vertical-align:middle;
-	width:9%;
 }
 
 table.table td input,select{
@@ -21,7 +20,9 @@ table.table td input,select{
 	text-align:center;
 	margin-right:0px;
 }
-
+table.table td textarea{
+	margin-bottom:0px;
+}
 
 table.table table.table {
 	vertical-align:middle;
@@ -58,4 +59,10 @@ span.required{
 
 .vertical{
 	resize:vertical;	
+}
+
+table.table table.table{
+	margin: 0px;
+}
+table.table table.table td {
 }

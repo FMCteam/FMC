@@ -75,7 +75,7 @@
 						</table>
 						<input type="hidden" name="orderId"
 							value="${orderInfo.order.orderId}" /> <input type="hidden"
-							name="taskId" value="${orderInfo.taskId}" /> <input
+							name="taskId" value="${orderInfo.task.id}" /> <input
 							class="btn btn-primary" type="submit" value="提交报价"
 							style="float:right;"><i class="icon-remove icon-white"></i></input>
 					</form>
