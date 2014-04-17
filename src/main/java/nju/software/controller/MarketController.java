@@ -171,7 +171,7 @@ public class MarketController {
 					accessory_query[i]));
 		}
 
-		//加工要求
+		//大货加工要求
 		String produce_colors = request.getParameter("produce_color");
 		String produce_xss = request.getParameter("produce_xs");
 		String produce_ss = request.getParameter("produce_s");
@@ -193,13 +193,60 @@ public class MarketController {
 			Produce p = new Produce();
 			p.setColor(produce_color[i]);
 			p.setOid(0);
-			p.setL(Integer.parseInt(produce_l[i]));
-			p.setM(Integer.parseInt(produce_m[i]));
-			p.setS(Integer.parseInt(produce_s[i]));
-			p.setXl(Integer.parseInt(produce_xl[i]));
-			p.setXs(Integer.parseInt(produce_xs[i]));
-			p.setXxl(Integer.parseInt(produce_xxl[i]));
+			int l = Integer.parseInt(produce_l[i]);
+			int m = Integer.parseInt(produce_m[i]);
+			int s = Integer.parseInt(produce_s[i]);
+			int xs = Integer.parseInt(produce_xs[i]);
+			int xl = Integer.parseInt(produce_xl[i]);
+			int xxl = Integer.parseInt(produce_xxl[i]);
+			p.setL(l);
+			p.setM(m);
+			p.setS(s);
+			p.setXl(xl);
+			p.setXs(xs);
+			p.setXxl(xxl);
+			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
+		}
+		
+		//样衣加工要求
+		String sample_produce_colors = request.getParameter("sample_produce_color");
+		String sample_produce_xss = request.getParameter("sample_produce_xs");
+		String sample_produce_ss = request.getParameter("sample_produce_s");
+		String sample_produce_ms = request.getParameter("sample_produce_m");
+		String sample_produce_ls = request.getParameter("sample_produce_l");
+		String sample_produce_xls = request.getParameter("sample_produce_xl");
+		String sample_produce_xxls = request.getParameter("sample_produce_xxl");
+		String sample_produce_color[] = sample_produce_colors.split(",");
+		String sample_produce_xs[] = sample_produce_xss.split(",");
+		String sample_produce_s[] = sample_produce_ss.split(",");
+		String sample_produce_m[] = sample_produce_ms.split(",");
+		String sample_produce_l[] = sample_produce_ls.split(",");
+		String sample_produce_xl[] = sample_produce_xls.split(",");
+		String sample_produce_xxl[] = sample_produce_xxls.split(",");
+		List<Produce> sample_produces = new ArrayList<Produce>();
+		for (int i = 0; i < sample_produce_color.length; i++) {
+			if(sample_produce_color[i].equals(""))
+				continue;
+			Produce p = new Produce();
+			p.setColor(sample_produce_color[i]);
+			p.setOid(0);
+			int l = Integer.parseInt(sample_produce_l[i]);
+			int m = Integer.parseInt(sample_produce_m[i]);
+			int s = Integer.parseInt(sample_produce_s[i]);
+			int xs = Integer.parseInt(sample_produce_xs[i]);
+			int xl = Integer.parseInt(sample_produce_xl[i]);
+			int xxl = Integer.parseInt(sample_produce_xxl[i]);
+			p.setL(l);
+			p.setM(m);
+			p.setS(s);
+			p.setXl(xl);
+			p.setXs(xs);
+			p.setXxl(xxl);
+			p.setType(Produce.TYPE_SAMPLE_PRODUCE);
+			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			sample_produces.add(p);
 		}
 		
 		//版型数据
@@ -293,7 +340,7 @@ public class MarketController {
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 
-		marketService.addOrderSubmit(order, fabrics, accessorys, logistics, produces, versions,
+		marketService.addOrderSubmit(order, fabrics, accessorys, logistics, produces, sample_produces, versions,
 				request);
 		
 		JavaMailUtil.send();
@@ -444,7 +491,7 @@ public class MarketController {
 		String s_processId = request.getParameter("processId");
 		long processId = Long.parseLong(s_processId);
 		boolean editworksheetok = Boolean.parseBoolean(request.getParameter("tof"));
-		//加工要求
+		//大货加工要求
 		String produce_colors = request.getParameter("produce_color");
 		String produce_xss = request.getParameter("produce_xs");
 		String produce_ss = request.getParameter("produce_s");
@@ -466,12 +513,20 @@ public class MarketController {
 			Produce p = new Produce();
 			p.setColor(produce_color[i]);
 			p.setOid(0);
-			p.setL(Integer.parseInt(produce_l[i]));
-			p.setM(Integer.parseInt(produce_m[i]));
-			p.setS(Integer.parseInt(produce_s[i]));
-			p.setXl(Integer.parseInt(produce_xl[i]));
-			p.setXs(Integer.parseInt(produce_xs[i]));
-			p.setXxl(Integer.parseInt(produce_xxl[i]));
+			int l = Integer.parseInt(produce_l[i]);
+			int m = Integer.parseInt(produce_m[i]);
+			int s = Integer.parseInt(produce_s[i]);
+			int xs = Integer.parseInt(produce_xs[i]);
+			int xl = Integer.parseInt(produce_xl[i]);
+			int xxl = Integer.parseInt(produce_xxl[i]);
+			p.setL(l);
+			p.setM(m);
+			p.setS(s);
+			p.setXl(xl);
+			p.setXs(xs);
+			p.setXxl(xxl);
+			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
 		
@@ -703,7 +758,7 @@ public class MarketController {
 					accessory_query[i]));
 		}
 		
-		//加工要求
+		//大货加工要求
 		String produce_colors = request.getParameter("produce_color");
 		String produce_xss = request.getParameter("produce_xs");
 		String produce_ss = request.getParameter("produce_s");
@@ -725,13 +780,60 @@ public class MarketController {
 			Produce p = new Produce();
 			p.setColor(produce_color[i]);
 			p.setOid(0);
-			p.setL(Integer.parseInt(produce_l[i]));
-			p.setM(Integer.parseInt(produce_m[i]));
-			p.setS(Integer.parseInt(produce_s[i]));
-			p.setXl(Integer.parseInt(produce_xl[i]));
-			p.setXs(Integer.parseInt(produce_xs[i]));
-			p.setXxl(Integer.parseInt(produce_xxl[i]));
+			int l = Integer.parseInt(produce_l[i]);
+			int m = Integer.parseInt(produce_m[i]);
+			int s = Integer.parseInt(produce_s[i]);
+			int xs = Integer.parseInt(produce_xs[i]);
+			int xl = Integer.parseInt(produce_xl[i]);
+			int xxl = Integer.parseInt(produce_xxl[i]);
+			p.setL(l);
+			p.setM(m);
+			p.setS(s);
+			p.setXl(xl);
+			p.setXs(xs);
+			p.setXxl(xxl);
+			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
+		}
+		
+		//样衣加工要求
+		String sample_produce_colors = request.getParameter("sample_produce_color");
+		String sample_produce_xss = request.getParameter("sample_produce_xs");
+		String sample_produce_ss = request.getParameter("sample_produce_s");
+		String sample_produce_ms = request.getParameter("sample_produce_m");
+		String sample_produce_ls = request.getParameter("sample_produce_l");
+		String sample_produce_xls = request.getParameter("sample_produce_xl");
+		String sample_produce_xxls = request.getParameter("sample_produce_xxl");
+		String sample_produce_color[] = sample_produce_colors.split(",");
+		String sample_produce_xs[] = sample_produce_xss.split(",");
+		String sample_produce_s[] = sample_produce_ss.split(",");
+		String sample_produce_m[] = sample_produce_ms.split(",");
+		String sample_produce_l[] = sample_produce_ls.split(",");
+		String sample_produce_xl[] = sample_produce_xls.split(",");
+		String sample_produce_xxl[] = sample_produce_xxls.split(",");
+		List<Produce> sample_produces = new ArrayList<Produce>();
+		for (int i = 0; i < sample_produce_color.length; i++) {
+			if(sample_produce_color[i].equals(""))
+				continue;
+			Produce p = new Produce();
+			p.setColor(sample_produce_color[i]);
+			p.setOid(0);
+			int l = Integer.parseInt(sample_produce_l[i]);
+			int m = Integer.parseInt(sample_produce_m[i]);
+			int s = Integer.parseInt(sample_produce_s[i]);
+			int xs = Integer.parseInt(sample_produce_xs[i]);
+			int xl = Integer.parseInt(sample_produce_xl[i]);
+			int xxl = Integer.parseInt(sample_produce_xxl[i]);
+			p.setL(l);
+			p.setM(m);
+			p.setS(s);
+			p.setXl(xl);
+			p.setXs(xs);
+			p.setXxl(xxl);
+			p.setType(Produce.TYPE_SAMPLE_PRODUCE);
+			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			sample_produces.add(p);
 		}
 		
 		//版型数据
@@ -830,7 +932,7 @@ public class MarketController {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		boolean editok = request.getParameter("editok").equals("true")?true:false;
-		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics, produces, versions, editok, task_id, account.getUserId());
+		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics, produces, sample_produces, versions, editok, task_id, account.getUserId());
 //		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 //				.getKsession().getProcessInstance(Long.parseLong(s_process_id));
 //		String buyComment = process.getVariable("buyComment").toString();
@@ -947,7 +1049,7 @@ public class MarketController {
 		String s_processId = request.getParameter("processId");
 		long processId = Long.parseLong(s_processId);
 		boolean comfirmworksheet = Boolean.parseBoolean(request.getParameter("tof"));
-		//加工要求
+		//大货加工要求
 		String produce_colors = request.getParameter("produce_color");
 		String produce_xss = request.getParameter("produce_xs");
 		String produce_ss = request.getParameter("produce_s");
@@ -969,12 +1071,20 @@ public class MarketController {
 			Produce p = new Produce();
 			p.setColor(produce_color[i]);
 			p.setOid(0);
-			p.setL(Integer.parseInt(produce_l[i]));
-			p.setM(Integer.parseInt(produce_m[i]));
-			p.setS(Integer.parseInt(produce_s[i]));
-			p.setXl(Integer.parseInt(produce_xl[i]));
-			p.setXs(Integer.parseInt(produce_xs[i]));
-			p.setXxl(Integer.parseInt(produce_xxl[i]));
+			int l = Integer.parseInt(produce_l[i]);
+			int m = Integer.parseInt(produce_m[i]);
+			int s = Integer.parseInt(produce_s[i]);
+			int xs = Integer.parseInt(produce_xs[i]);
+			int xl = Integer.parseInt(produce_xl[i]);
+			int xxl = Integer.parseInt(produce_xxl[i]);
+			p.setL(l);
+			p.setM(m);
+			p.setS(s);
+			p.setXl(xl);
+			p.setXs(xs);
+			p.setXxl(xxl);
+			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
 		

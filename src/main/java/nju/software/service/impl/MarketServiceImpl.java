@@ -91,8 +91,8 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
-			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<VersionData> versions,
-			HttpServletRequest request) {
+			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<Produce> sample_produces, 
+			List<VersionData> versions, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 
 		// 添加订单信息
@@ -130,8 +130,14 @@ public class MarketServiceImpl implements MarketService {
 			accessoryDAO.save(accessory);
 		}
 
-		//添加加工单信息
+		//添加大货加工单信息
 		for (Produce produce : produces) {
+			produce.setOid(orderId);
+			produceDAO.save(produce);
+		}
+		
+		//添加样衣加工单信息
+		for (Produce produce : sample_produces) {
 			produce.setOid(orderId);
 			produceDAO.save(produce);
 		}
@@ -213,7 +219,7 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
-			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, 
+			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<Produce> sample_produces,
 			List<VersionData> versions, boolean editok, long taskId, Integer accountId) {
 		// TODO Auto-generated method stub
 		// 添加订单信息
@@ -231,8 +237,14 @@ public class MarketServiceImpl implements MarketService {
 			accessory.setOrderId(orderId);
 			accessoryDAO.save(accessory);
 		}
-		//添加加工单信息
-		produceDAO.deleteByProperty("oid", orderId);
+		//添加大货加工单信息
+		produceDAO.deleteProduceByProperty("oid", orderId);
+		for (Produce produce : produces) {
+			produce.setOid(orderId);
+			produceDAO.save(produce);
+		}
+		//添加样衣加工单信息
+		produceDAO.deleteSampleProduceByProperty("oid", orderId);
 		for (Produce produce : produces) {
 			produce.setOid(orderId);
 			produceDAO.save(produce);
@@ -301,7 +313,7 @@ public class MarketServiceImpl implements MarketService {
 
 		if (orderId == orderId_process) {
 			// 如果通过，创建合同加工单
-			produceDAO.deleteByProperty("oid", orderId);
+			produceDAO.deleteProduceByProperty("oid", orderId);
 			if (comfirmworksheet) {
 				for (Produce produce : productList) {
 					produce.setOid(orderId);
@@ -376,7 +388,7 @@ public class MarketServiceImpl implements MarketService {
 		for (TaskSummary task : tasks) {
 			if (task.getId() == taskId
 					&& getVariable("orderId", task).equals(id)) {
-				produceDAO.deleteByProperty("oid", id);
+				produceDAO.deleteProduceByProperty("oid", id);
 				if (editworksheetok) {
 					for (Produce produce : productList) {
 						produce.setOid(id);

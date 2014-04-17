@@ -192,13 +192,29 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 	}
 
 	@Override
-	public void deleteByProperty(String propertyName, Object orderId) {
+	public void deleteProduceByProperty(String propertyName, Object orderId) {
 		// TODO Auto-generated method stub
 		log.debug("deleting Produce instance with property: " + propertyName
 				+ ", value: " + orderId);
 		try {
 			String queryString = "delete from Produce as model where model."
-					+ propertyName + "= ?";
+					+ propertyName + "= ? and model.type=" + Produce.TYPE_PRODUCE;
+			 getHibernateTemplate().bulkUpdate(queryString, orderId);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public void deleteSampleProduceByProperty(String propertyName,
+			Object orderId) {
+		// TODO Auto-generated method stub
+		log.debug("deleting sample Produce instance with property: " + propertyName
+				+ ", value: " + orderId);
+		try {
+			String queryString = "delete from Produce as model where model."
+					+ propertyName + "= ? and model.type=" + Produce.TYPE_SAMPLE_PRODUCE;
 			 getHibernateTemplate().bulkUpdate(queryString, orderId);
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
