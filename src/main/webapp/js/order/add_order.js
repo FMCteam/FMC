@@ -42,7 +42,7 @@
 		
 
 
-		//init();
+		init();
 		
 		
 	});
@@ -83,9 +83,9 @@
 			var item = "";
 			for(var j=0;j<col_sum;j++){
 				$("table."+table_name+" tr.addrow input").eq(j).val("");
-				item+="<td class='span12 "+col_name[j]+"'>"+content[j]+"</td>";
+				item+="<td class='"+col_name[j]+"'>"+content[j]+"</td>";
 			}
-			item+="<td class='span12'><a onclick=\"deleteRow(this,'"+table_name+"')\">删除</a></td>";
+			item+="<td><a onclick=\"deleteRow(this,'"+table_name+"')\">删除</a></td>";
 			item="<tr>"+item+"</tr>";
 			$("table."+table_name+" tr.addrow").after(item);
 			
@@ -97,7 +97,7 @@
 })(jQuery);
 
 function deleteRow(a,table){
-	alert($(a).parents('.'+table+' tr').length);
+	//alert($(a).parents('.'+table+' tr').length);
 	$(a).parents('.'+table+' tr').remove();
 }
 
