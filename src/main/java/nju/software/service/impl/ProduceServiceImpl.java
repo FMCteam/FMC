@@ -196,21 +196,24 @@ public class ProduceServiceImpl implements ProduceService {
 		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
 		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
 		orderInfo.setLogistics(logisticsDAO.findById(orderId));
-		orderInfo.setProduces(produceDAO.findByOrderId(orderId));
 		orderInfo.setTask(task);
 		orderInfo.setTaskId(task.getId());
+		Produce produce = new Produce();
+		produce.setOid(orderId);
+		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
+		orderInfo.setProduced(produceDAO.findByExample(produce));
 		return orderInfo;
 	}
 
 	@Override
 	public boolean produceSampleSubmit(long taskId, boolean producterror, List<Produce> produceList) {
 		// TODO Auto-generated method stub
-		if (!producterror) {
-			for (int i = 0; i < produceList.size(); i++) {
-				System.out.println(produceList.get(i).getOid() + produceList.get(i).getType());
-				produceDAO.save(produceList.get(i));
-			}
-		}
+//		if (!producterror) {
+//			for (int i = 0; i < produceList.size(); i++) {
+//				System.out.println(produceList.get(i).getOid() + produceList.get(i).getType());
+//				produceDAO.save(produceList.get(i));
+//			}
+//		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("producterror", producterror);
 		try {
@@ -355,7 +358,7 @@ public class ProduceServiceImpl implements ProduceService {
 	
 	
 	public List<Produce> getProduceList(int orderId, String produceColor, String produceXS, String produceS, 
-			String produceM, String produceL, String produceXL, String produceXXL) {
+			String produceM, String produceL, String produceXL, String produceXXL, String type) {
 		String[] color = produceColor.split(",");
 		String[] xs = produceXS.split(",");
 		String[] s = produceS.split(",");
@@ -375,7 +378,7 @@ public class ProduceServiceImpl implements ProduceService {
 			produce.setL(Integer.parseInt(l[i]));
 			produce.setXl(Integer.parseInt(xl[i]));
 			produce.setXxl(Integer.parseInt(xxl[i]));
-			produce.setType(Produce.TYPE_SAMPLE_PRODUCED);
+			produce.setType(type);
 			produceList.add(produce);
 		}
 		return produceList;

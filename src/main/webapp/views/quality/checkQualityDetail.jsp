@@ -36,110 +36,90 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 				<div class="tab-pane active" id="quality">
-					<form method="post" action="${ctx }/quality/checkQualitySubmit.do">
+					<form method="post" onSubmit="return getQuality()" 
+					action="${ctx }/quality/checkQualitySubmit.do">
 						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td>质检信息</td>
-								<td>开始时间</td>
-								<td><input id="datepicker" type="text" name="start_date" class="input-small" /></td>
-								<td>完成时间</td>
-								<td><input id="datepicker1" type="text" name="end_date" class="input-small" /></td>
+								<td rowspan="${fn:length(orderInfo.produced)+1}">质检合格数量表</td>
+								<td>颜色</td>
+								<td>XS</td>
+								<td>S</td>
+								<td>M</td>
+								<td>L</td>
+								<td>XL</td>
+								<td>XXL</td>
 							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td colspan="5">质检合格具体数量表</td>
-							</tr>
-							<tr>
-								<td colspan="5">
-								<table class=" table table-striped table-bordered">
-								<tbody>
+							<c:forEach var="produce" items="${orderInfo.produces}">
 								<tr>
-									<td>颜色</td>
-									<td>XS</td>
-									<td>S</td>
-									<td>M</td>
-									<td>L</td>
-									<td>XL</td>
-									<td>XXL</td>
+									<td><input class="span12 good_color" type="text"
+										value="${produced.color}" /></td>
+									<td><input class="span12 good_xs" type="text"
+										value="${produced.xs}" /></td>
+									<td><input class="span12 good_s" type="text"
+										value="${produced.s}" /></td>
+									<td><input class="span12 good_m" type="text"
+										value="${produced.m}" /></td>
+									<td><input class="span12 good_l" type="text"
+										value="${produced.l}" /></td>
+									<td><input class="span12 good_xl" type="text"
+										value="${produced.xl}" /></td>
+									<td><input class="span12 good_xxl" type="text"
+										value="${produced.xxl}" /></td>
 								</tr>
+							</c:forEach>
+							<tr>
+								<td rowspan="${fn:length(orderInfo.produced)+1}">质检不合格数量表</td>
+								<td>颜色</td>
+								<td>XS</td>
+								<td>S</td>
+								<td>M</td>
+								<td>L</td>
+								<td>XL</td>
+								<td>XXL</td>
+							</tr>
+							<c:forEach var="produce" items="${orderInfo.produces}">
 								<tr>
-									<td><input class="span12" type="text" name="good_color" /></td>
-									<td><input class="span12" type="text" name="good_xs" /></td>
-									<td><input class="span12" type="text" name="good_s" /></td>
-									<td><input class="span12" type="text" name="good_m" /></td>
-									<td><input class="span12" type="text" name="good_l" /></td>
-									<td><input class="span12" type="text" name="good_xl" /></td>
-									<td><input class="span12" type="text" name="good_xxl" /></td>
+									<td><input class="span12 bad_color" type="text"
+										value="0" /></td>
+									<td><input class="span12 bad_xs" type="text"
+										value="0" /></td>
+									<td><input class="span12 bad_s" type="text"
+										value="0" /></td>
+									<td><input class="span12 bad_m" type="text"
+										value="0" /></td>
+									<td><input class="span12 bad_l" type="text"
+										value="0" /></td>
+									<td><input class="span12 bad_xl" type="text"
+										value="0" /></td>
+									<td><input class="span12 bad_xxl" type="text"
+										value="0" /></td>
 								</tr>
-								</tbody>
-								</table>
-								</td>
-							</tr>
-							<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-							</tr>
-							<tr>
-								<td colspan="5">质检不合格具体数量表</td>
-							</tr>
-							<tr>
-								<td colspan="5">
-								<table class=" table table-striped table-bordered">
-								<tbody>
-								<tr>
-									<td>颜色</td>
-									<td>XS</td>
-									<td>S</td>
-									<td>M</td>
-									<td>L</td>
-									<td>XL</td>
-									<td>XXL</td>
-								</tr>
-								<tr>
-									<td><input class="span12" type="text" name="bad_color" /></td>
-									<td><input class="span12" type="text" name="bad_xs" /></td>
-									<td><input class="span12" type="text" name="bad_s" /></td>
-									<td><input class="span12" type="text" name="bad_m" /></td>
-									<td><input class="span12" type="text" name="bad_l" /></td>
-									<td><input class="span12" type="text" name="bad_xl" /></td>
-									<td><input class="span12" type="text" name="bad_xxl" /></td>
-								</tr>
-								</tbody>
-								</table>
-								</td>
-							</tr>
-							<tr>
-								<td>质检主管意见</td>
-								<td colspan="4"><input class="span12" type="text" name="suggestion" /></td>
-							</tr>
+							</c:forEach>
 							<tr>
 								<td>操作</td>
-								<td colspan="4"><button class="btn btn-primary btn-rounded">确认</button></td>
+								<td><button class="btn btn-primary btn-rounded">确认</button></td>
 							</tr>
 						</table>
 						<input type="hidden" name="orderId" value="${orderInfo.order.orderId}" />
 						<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
+						
+						<input id="good_color" name="good_color" type="hidden" /> 
+						<input id="good_xs" name="good_xs" type="hidden" /> 
+						<input id="good_s" name="good_s" type="hidden" /> 
+						<input id="good_m" name="good_m" type="hidden" /> 
+						<input id="good_l" name="good_l" type="hidden" /> 
+						<input id="good_xl" name="good_xl" type="hidden" /> 
+						<input id="good_xxl" name="good_xxl" type="hidden" />
+						
+						<input id="bad_color" name="bad_color" type="hidden" /> 
+						<input id="bad_xs" name="bad_xs" type="hidden" /> 
+						<input id="bad_s" name="bad_s" type="hidden" /> 
+						<input id="bad_m" name="bad_m" type="hidden" /> 
+						<input id="bad_l" name="bad_l" type="hidden" /> 
+						<input id="bad_xl" name="bad_xl" type="hidden" /> 
+						<input id="bad_xxl" name="bad_xxl" type="hidden" />
 					</form>
 				</div>
-			</div>
-			
-			<div class="widget">
-				<h4 class="widgettitle">质量检查</h4>
-				<div class="widgetcontent">
-
-					
-				</div>
-				
-				<!--widgetcontent-->
 			</div>
 
 		</div>
@@ -165,6 +145,11 @@
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
+<link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
+<link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
+<link rel="stylesheet" href="${ctx}/css/order/add_order.css">
+<script type="text/javascript" src="${ctx}/js/order/add_quality.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>
 

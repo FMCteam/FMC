@@ -253,17 +253,17 @@ public class ProduceController {
 		String taskId = request.getParameter("taskId");
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		List<Produce> produceList = null;
-		if (!result) {
-			String produceColor = request.getParameter("produce_color");
-			String produceXS = request.getParameter("produce_xs");
-			String produceS = request.getParameter("produce_s");
-			String produceM = request.getParameter("produce_m");
-			String produceL = request.getParameter("produce_l");
-			String produceXL = request.getParameter("produce_xl");
-			String produceXXL = request.getParameter("produce_xxl");
-			produceList = produceService.getProduceList(orderId, produceColor, 
-					produceXS, produceS, produceM, produceL, produceXL, produceXXL);
-		}
+//		if (!result) {
+//			String produceColor = request.getParameter("produce_color");
+//			String produceXS = request.getParameter("produce_xs");
+//			String produceS = request.getParameter("produce_s");
+//			String produceM = request.getParameter("produce_m");
+//			String produceL = request.getParameter("produce_l");
+//			String produceXL = request.getParameter("produce_xl");
+//			String produceXXL = request.getParameter("produce_xxl");
+//			produceList = produceService.getProduceList(orderId, produceColor, 
+//					produceXS, produceS, produceM, produceL, produceXL, produceXXL);
+//		}
 		produceService.produceSampleSubmit(Long.parseLong(taskId), result, produceList);
 		return "forward:/produce/produceSampleList.do";
 	}

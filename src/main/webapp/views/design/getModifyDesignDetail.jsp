@@ -35,6 +35,21 @@
 						<%@include file="/views/common/quote.jsp"%>
 					</div>
 				</div>
+				
+			<form action="${ctx }/design/downloadCadSubmit.do" 
+				method="post" enctype="multipart/form-data">
+				<table class="table table-striped table-bordered table-hover">
+					<tr>
+						<td>下载文件</td>
+						<td>版本：${orderInfo.cad.cadVersion}</td>
+						<td>上传时间：${orderInfo.cad.uploadTime}</td>
+						<td>
+							<input type="submit" class="btn btn-primary btn-rounded" value="下载"/>
+						</td>
+					</tr>
+				</table>
+				<input type="hidden" name="cadUrl" value="${orderInfo.cad.cadUrl}" />
+			</form>
 
 			<form action="${ctx }/design/modifyDesignSubmit.do" 
 				method="post" enctype="multipart/form-data">
