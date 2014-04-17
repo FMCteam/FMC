@@ -7,7 +7,6 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">采购验证</li>
-				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
@@ -31,9 +30,6 @@
 				<div class="tab-pane" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
-				<div class="tab-pane" id="quote">
-					<%@include file="/views/common/quote.jsp"%>
-				</div>
 			</div>
 			<div>
 				<form id="verify_form" method="post" class="verify"
@@ -45,10 +41,6 @@
 							<td colspan="6"><textarea class="span12"
 									style="resize:vertical" rows="5" name="suggestion"></textarea></td>
 						</tr>
-						<input type="hidden" name="orderId"
-							value="${orderInfo.order.orderId }" />
-						<input type="hidden" name="taskId" value="${orderInfo.task.id }" />
-						<input id="verify_val" type="hidden" name="buyVal" value="" />
 						<tr>
 							<td>操作</td>
 							<td colspan="6"><a id="agree"
@@ -58,6 +50,10 @@
 									class="icon-remove icon-white"></i> 拒绝</a></td>
 						</tr>
 					</table>
+					<input type="hidden" name="orderId"
+						value="${orderInfo.order.orderId }" /> <input type="hidden"
+						name="taskId" value="${orderInfo.task.id }" /> <input
+						id="verify_val" type="hidden" name="buyVal" value="" />
 				</form>
 			</div>
 		</div>

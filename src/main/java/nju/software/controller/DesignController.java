@@ -101,7 +101,7 @@ public class DesignController {
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		long taskId = 0;
-		OrderInfo orderInfo = designService.getVerifyDesignDetail(orderId_request, taskId);
+		Map<String,Object> orderInfo = designService.getVerifyDesignDetail(orderId_request, taskId);
 		model.addAttribute("orderInfo", orderInfo);	
 		return "design/verifyDesignDetail";
 	}

@@ -64,17 +64,10 @@ public class DesignServiceImpl implements DesignService {
 	}
 
 	@Override
-	public OrderInfo getVerifyDesignDetail(int orderId, long taskId) {
+	public Map<String,Object> getVerifyDesignDetail(int orderId, long taskId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER, TASK_VERIFY_DESIGN, orderId);
-		OrderInfo oi = new OrderInfo();
-		oi.setOrder(orderDAO.findById(orderId));
-		oi.setLogistics(logisticsDAO.findById(orderId));
-		oi.setFabrics(fabricDAO.findByOrderId(orderId));
-		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		oi.setTask(task);
-		oi.setTaskId(task.getId());
-		return oi;
+		return service.getBasicOrderModel(ACTOR_DESIGN_MANAGER,
+				TASK_VERIFY_DESIGN, orderId);
 	}
 
 	@Override

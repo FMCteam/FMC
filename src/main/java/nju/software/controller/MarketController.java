@@ -193,6 +193,7 @@ public class MarketController {
 			Produce p = new Produce();
 			p.setColor(produce_color[i]);
 			p.setOid(0);
+			
 			int l = Integer.parseInt(produce_l[i]);
 			int m = Integer.parseInt(produce_m[i]);
 			int s = Integer.parseInt(produce_s[i]);
