@@ -245,7 +245,7 @@ public class MarketServiceImpl implements MarketService {
 		}
 		//添加样衣加工单信息
 		produceDAO.deleteSampleProduceByProperty("oid", orderId);
-		for (Produce produce : produces) {
+		for (Produce produce : sample_produces) {
 			produce.setOid(orderId);
 			produceDAO.save(produce);
 		}

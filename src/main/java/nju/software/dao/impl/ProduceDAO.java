@@ -197,8 +197,8 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 		log.debug("deleting Produce instance with property: " + propertyName
 				+ ", value: " + orderId);
 		try {
-			String queryString = "delete from Produce as model where model."
-					+ propertyName + "= ? and model.type=" + Produce.TYPE_PRODUCE;
+			String queryString = "delete from Produce as model where model.type='"+Produce.TYPE_PRODUCE
+					+ "' and model."+propertyName + "= ? " ;
 			 getHibernateTemplate().bulkUpdate(queryString, orderId);
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
@@ -213,8 +213,8 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 		log.debug("deleting sample Produce instance with property: " + propertyName
 				+ ", value: " + orderId);
 		try {
-			String queryString = "delete from Produce as model where model."
-					+ propertyName + "= ? and model.type=" + Produce.TYPE_SAMPLE_PRODUCE;
+			String queryString = "delete from Produce as model where model.type='"+Produce.TYPE_SAMPLE_PRODUCE
+					+ "' and model."+propertyName + "= ? " ;
 			 getHibernateTemplate().bulkUpdate(queryString, orderId);
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
