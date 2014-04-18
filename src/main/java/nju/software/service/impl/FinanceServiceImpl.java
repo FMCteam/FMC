@@ -100,10 +100,11 @@ public class FinanceServiceImpl implements FinanceService {
 			Integer orderId) {
 		// TODO Auto-generated method stub
 		TaskSummary task = jbpmAPIUtil.getTask(actorId,
-				TASK_CONFIRM_SAMPLE_MONEY, orderId);
+				TASK_CONFIRM_DEPOSIT, orderId);
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("order", orderDAO.findById(orderId));
 		model.put("task", task);
+		model.put("taskId", task.getId());
 		model.put("employee", employeeDAO.findById(orderDAO.findById(orderId)
 				.getEmployeeId()));
 		model.put("logistics", logisticsDAO.findById(orderId));

@@ -5,7 +5,7 @@
 		id="verify_val" type="hidden" name="val" value="已收到" /> <input
 		type="hidden" name="money_type" value="${orderInfo.type}" /> <input
 		type="hidden" name="orderId" value="${orderInfo.order.orderId}" /> <input
-		type="hidden" name="taskId" value="${orderInfo.task.id}" /><input
+		type="hidden" name="taskId" value="${orderInfo.taskId}" /><input
 		type="hidden" name="result" value="1" />
 
 	<table class="table table-bordered detail finance">

@@ -474,8 +474,9 @@ public class DesignController {
 	    System.out.println("download:" + url);
 	    FileOperateUtil.Download(response, url);
 	    System.out.println("download end");
-		
-		return "redirect:/design/getModifyDesignDetail.do";
+	    
+	    return null;
+//		return "redirect:/design/getModifyDesignDetail.do";
 	}
 	
 }
