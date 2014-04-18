@@ -19,6 +19,11 @@
 			table_addrow_onclick("produce_table",colName,7);
 		});
 		
+		$("table.sample_produce_table a").click(function(){
+			var colName = ["sample_produce_color","sample_produce_xs","sample_produce_s","sample_produce_m","sample_produce_l","sample_produce_xl","sample_produce_xxl"];
+			table_addrow_onclick("sample_produce_table",colName,7);
+		});
+		
 		$("table.version_table a").click(function(){
 			var colName = ["version_size","version_centerBackLength","version_bust","version_waistLine","version_shoulder",
 			               "version_buttock","version_hem","version_trousers","version_skirt","version_sleeves"];
@@ -78,9 +83,9 @@
 			var item = "";
 			for(var j=0;j<col_sum;j++){
 				$("table."+table_name+" tr.addrow input").eq(j).val("");
-				item+="<td class='span12 "+col_name[j]+"'>"+content[j]+"</td>";
+				item+="<td class='"+col_name[j]+"'>"+content[j]+"</td>";
 			}
-			item+="<td class='span12'><a onclick=\"deleteRow(this,'"+table_name+"')\">删除</a></td>";
+			item+="<td><a onclick=\"deleteRow(this,'"+table_name+"')\">删除</a></td>";
 			item="<tr>"+item+"</tr>";
 			$("table."+table_name+" tr.addrow").after(item);
 			
@@ -92,7 +97,7 @@
 })(jQuery);
 
 function deleteRow(a,table){
-	alert($(a).parents('.'+table+' tr').length);
+	//alert($(a).parents('.'+table+' tr').length);
 	$(a).parents('.'+table+' tr').remove();
 }
 
@@ -108,35 +113,42 @@ function getTdString(col){
 
 
 function verify(){
-	//alert(getTdString("fabric_name"));
-	//alert(getTdString("fabric_amount"));
-	//alert(getTdString("accessory_name"));
-	//alert(getTdString("accessory_query"));
-	//$("#fabric_name").val(getTdString("fabric_name"));
-	//$("#fabric_amount").val(getTdString("fabric_amount"));
-	//$("#accessory_name").val(getTdString("accessory_name"));
-	//$("#accessory_query").val(getTdString("accessory_query"));
-	//$("#produce_color").val(getTdString("produce_color"));
-	//$("#produce_xs").val(getTdString("produce_xs"));
-	//$("#produce_s").val(getTdString("produce_s"));
-	//$("#produce_m").val(getTdString("produce_m"));
-	//$("#produce_l").val(getTdString("produce_l"));
-	//$("#produce_xl").val(getTdString("produce_xl"));
-	//$("#produce_xxl").val(getTdString("produce_xxl"));
-	//$("#version_size").val(getTdString("version_size"));
-	//$("#version_centerBackLength").val(getTdString("version_centerBackLength"));
-	//$("#version_bust").val(getTdString("version_bust"));
-	//$("#version_waistLine").val(getTdString("version_waistLine"));
-	//$("#version_shoulder").val(getTdString("version_shoulder"));
-	//$("#version_buttock").val(getTdString("version_buttock"));
-	//$("#version_hem").val(getTdString("version_hem"));
-	//$("#version_trousers").val(getTdString("version_trousers"));
-	//$("#version_skirt").val(getTdString("version_skirt"));
-	//$("#version_sleeves").val(getTdString("version_sleeves"));
+	/*alert(getTdString("fabric_name"));
+	alert(getTdString("fabric_amount"));
+	alert(getTdString("accessory_name"));
+	alert(getTdString("accessory_query"));*/
+	$("#fabric_name").val(getTdString("fabric_name"));
+	$("#fabric_amount").val(getTdString("fabric_amount"));
+	$("#accessory_name").val(getTdString("accessory_name"));
+	$("#accessory_query").val(getTdString("accessory_query"));
+	$("#produce_color").val(getTdString("produce_color"));
+	$("#produce_xs").val(getTdString("produce_xs"));
+	$("#produce_s").val(getTdString("produce_s"));
+	$("#produce_m").val(getTdString("produce_m"));
+	$("#produce_l").val(getTdString("produce_l"));
+	$("#produce_xl").val(getTdString("produce_xl"));
+	$("#produce_xxl").val(getTdString("produce_xxl"));
+	$("#sample_produce_color").val(getTdString("sample_produce_color"));
+	$("#sample_produce_xs").val(getTdString("sample_produce_xs"));
+	$("#sample_produce_s").val(getTdString("sample_produce_s"));
+	$("#sample_produce_m").val(getTdString("sample_produce_m"));
+	$("#sample_produce_l").val(getTdString("sample_produce_l"));
+	$("#sample_produce_xl").val(getTdString("sample_produce_xl"));
+	$("#sample_produce_xxl").val(getTdString("sample_produce_xxl"));
+	$("#version_size").val(getTdString("version_size"));
+	$("#version_centerBackLength").val(getTdString("version_centerBackLength"));
+	$("#version_bust").val(getTdString("version_bust"));
+	$("#version_waistLine").val(getTdString("version_waistLine"));
+	$("#version_shoulder").val(getTdString("version_shoulder"));
+	$("#version_buttock").val(getTdString("version_buttock"));
+	$("#version_hem").val(getTdString("version_hem"));
+	$("#version_trousers").val(getTdString("version_trousers"));
+	$("#version_skirt").val(getTdString("version_skirt"));
+	$("#version_sleeves").val(getTdString("version_sleeves"));
 	
-/*	var employee_id=jQuery("select[name='employee_id']").val();
+/*	var employee_id=jQuery("input[name='employee_id']").val();
 	var order_source=jQuery("input[name='order_source']").val();
-	var customer_id=jQuery("select[name='customer_id']").val();
+	var customer_id=jQuery("input[name='customer_id']").val();
 	var style_name=jQuery("input[name='style_name']").val();
 	var ask_amount=jQuery("input[name='ask_amount']").val();
 	var ask_deliver_date=jQuery("input[name='ask_deliver_date']").val();
@@ -166,6 +178,13 @@ function init(){
 	$("#produce_l").val("1,2,3");
 	$("#produce_xl").val("1,2,3");
 	$("#produce_xxl").val("1,2,3");
+	$("#sample_produce_color").val("红,黄,绿");
+	$("#sample_produce_xs").val("1,1,2");
+	$("#sample_produce_s").val("1,1,2");
+	$("#sample_produce_m").val("1,1,2");
+	$("#sample_produce_l").val("1,1,2");
+	$("#sample_produce_xl").val("1,1,2");
+	$("#sample_produce_xxl").val("1,1,2");
 	$("#version_size").val("21,22,23");
 	$("#version_centerBackLength").val("21,22,23");
 	$("#version_bust").val("21,22,23");

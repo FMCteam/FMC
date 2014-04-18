@@ -6,16 +6,17 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
-				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
+				<li class="task-name">生产成本核算</li>
+				<li class="active"><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
-				<li class="active"><a href="#basic" data-toggle="tab">基本信息</a></li>
+				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
 
 			<div class="tab-content">
-				<div class="tab-pane active" id="basic">
+				<div class="tab-pane" id="basic">
 					<%@include file="/views/common/basic.jsp"%>
 				</div>
 				<div class="tab-pane" id="material">
@@ -30,12 +31,13 @@
 				<div class="tab-pane" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
-				<div class="tab-pane" id="quote">
+				<div class="tab-pane  active" id="quote">
 					<form id="costAccounting_form" method="post"
 						action="${ctx }/produce/computeProduceCostSubmit.do">
-						<table>
+						<table
+							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td rowspan="4">其他成本</td>
+								<td rowspan="4">生产成本</td>
 								<td>裁剪费用</td>
 								<td>管理费用</td>
 								<td>缝制费用</td>
@@ -44,16 +46,13 @@
 
 							<tr>
 								<td><input class="span12" name="cut_cost" id="cut_cost"
-									type="text"></td>
+									type="text" /></td>
 								<td><input class="span12" name="manage_cost"
-									id="manage_cost" type="text"></td>
+									id="manage_cost" type="text" /></td>
 								<td><input class="span12" name="nail_cost" id="nail_cost"
-									type="text"></td>
+									type="text" /></td>
 								<td><input class="span12" name="ironing_cost"
-									id="ironing_cost" type="text"></td>
-								<input type="hidden" name="orderId"
-									value="${orderInfo.order.orderId}" />
-								<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
+									id="ironing_cost" type="text" /></td>
 							</tr>
 
 							<tr>
@@ -65,18 +64,20 @@
 
 							<tr>
 								<td><input class="span12" name="swing_cost" id="swing_cost"
-									type="text"></td>
+									type="text" /></td>
 								<td><input class="span12" name="package_cost"
-									id="package_cost" type="text"></td>
+									id="package_cost" type="text" /></td>
 								<td><input class="span12" name="other_cost" id="other_cost"
-									type="text"></td>
+									type="text" /></td>
 								<td><input class="span12" name="design_cost"
-									id="design_cost" type="text"></td>
-							</tr>
-							<tr>
-								<td colspan="3"><input type="submit" style="float: right;" /></td>
+									id="design_cost" type="text" /></td>
 							</tr>
 						</table>
+						<input type="hidden" name="orderId"
+							value="${orderInfo.order.orderId}" /> <input type="hidden"
+							name="taskId" value="${orderInfo.task.id}" /> <input
+							class="btn btn-primary" type="submit" value="提交报价"
+							style="float:right;"><i class="icon-remove icon-white"></i></input>
 					</form>
 				</div>
 			</div>
@@ -102,6 +103,8 @@
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
+<link rel="stylesheet" href="${ctx}/views/produce/cost.css">
+<script type="text/javascript" src="${ctx}/views/produce/cost.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>

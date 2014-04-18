@@ -1,34 +1,21 @@
 package nju.software.controller;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
-import nju.software.dataobject.Fabric;
-import nju.software.dataobject.Logistics;
-import nju.software.dataobject.Order;
 import nju.software.model.OrderInfo;
-import nju.software.model.OrderModel;
 import nju.software.service.DesignService;
 import nju.software.service.OrderService;
-import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.JbpmTest;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,15 +50,16 @@ public class DesignController {
 	 */
 	@RequestMapping(value = "design/verifyDesignList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String verify(HttpServletRequest request,
+	public String verifyDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		System.out.println("design verify ================ show task");
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
-		List<OrderInfo> orderList = designService.getVerifyDesignList();
-		model.addAttribute("order_list", orderList);
-		
+		List<Map<String,Object>> orderList = designService.getVerifyDesignList();
+		model.addAttribute("list", orderList);
+		model.addAttribute("taskName", "设计验证");
+		model.addAttribute("url", "/design/verifyDesignDetail.do");
 		return "design/verifyDesignList";
 	}
 	/**
@@ -83,7 +71,7 @@ public class DesignController {
 	 */
 	@RequestMapping(value = "design/verifyDesignSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String doVerify(HttpServletRequest request,
+	public String verifyDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		System.out.println("design verify ================");
 		
@@ -110,14 +98,13 @@ public class DesignController {
 	 */
 	@RequestMapping(value = "design/verifyDesignDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String verifyDetail(HttpServletRequest request,
+	public String verifyDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 //		String actorId = account.getUserRole();
-		String s_orderId_request = (String) request.getParameter("id");
+		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
-		OrderInfo orderInfo = designService.getVerifyDesignDetail(orderId_request, taskId);
+		long taskId = 0;
+		Map<String,Object> orderInfo = designService.getVerifyDesignDetail(orderId_request, taskId);
 		model.addAttribute("orderInfo", orderInfo);	
 		return "design/verifyDesignDetail";
 	}
@@ -137,17 +124,19 @@ public class DesignController {
 	 */
 	@RequestMapping(value = "design/getComputeDesignCostList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-	public String computeDesignCostList(HttpServletRequest request,
+	public String getComputeDesignCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		List<OrderInfo>list=designService.getComputeDesignCostList();
+		List<Map<String,Object>> list = designService.getComputeDesignCostList();
 		
 		if(list.size()==0){
 			jbpmTest.completeVerify("1", true);
 			list=designService.getComputeDesignCostList();
 		}
 		
-		model.addAttribute("list", list);		
+		model.addAttribute("list", list);	
+		model.addAttribute("taskName", "设计成本核算");
+		model.addAttribute("url", "/design/getComputeDesignCostDetail.do");
 		return "design/computeDesignCostList";
 	}
 	
@@ -159,9 +148,9 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/getComputeDesignCostDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getComputeDesignCostDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String costAccountingDetail(HttpServletRequest request,
+	public String getComputeDesignCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		String orderId=request.getParameter("orderId");
@@ -217,8 +206,10 @@ public class DesignController {
 	public String getUploadDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		List<OrderInfo>list=designService.getUploadDesignList();
-		model.addAttribute("list", list);		
+		List<Map<String,Object>> list = designService.getUploadDesignList();
+		model.addAttribute("list", list);	
+		model.addAttribute("taskName", "录入版型数据");
+		model.addAttribute("url", "/design/getUploadDesignDetail.do");
 	    return "design/getUploadDesignList";
 	}
 	
@@ -258,25 +249,25 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 
 		String orderId = (String) request.getParameter("orderId");
-	
+
 		String taskId = request.getParameter("taskId");
-	
-	 MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
-		
-		  MultipartFile file = multipartRequest.getFile("CADFile");
-		     
-          	  String filename=file.getOriginalFilename();     
-		      FileOperateUtil.Upload(file);
-		   
-		    String url="D:/"+"/"+ filename;
-		    
-		    Timestamp uploadTime = new Timestamp(new Date().getTime());
-		    
-		 designService.uploadDesignSubmit(
+
+		MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
+
+		MultipartFile file = multipartRequest.getFile("CADFile");
+
+		String filename=file.getOriginalFilename();     
+		FileOperateUtil.Upload(file);
+
+		String url="D:/"+"/"+ filename;
+
+		Timestamp uploadTime = new Timestamp(new Date().getTime());
+
+		designService.uploadDesignSubmit(
 				Integer.parseInt(orderId), 
-				 Long.parseLong(taskId),
-				 url,
-				 uploadTime);
+				Long.parseLong(taskId),
+				url,
+				uploadTime);
 	
 		return "redirect:/design/getUploadDesignList.do";
 	}
@@ -307,9 +298,10 @@ public class DesignController {
 	public String getModifyDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-       	List<OrderInfo>list=designService.getModifyDesignList();
+		List<Map<String,Object>> list = designService.getModifyDesignList();
 		model.addAttribute("list", list);		
-	    
+		model.addAttribute("taskName", "设计部确认");
+		model.addAttribute("url", "/design/getModifyDesignDetail.do");
 		return "design/getModifyDesignList";
 	}
 	
@@ -322,7 +314,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/getModifyDesignDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getModifyDesignDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String getModifyDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -348,7 +340,7 @@ public class DesignController {
 	 */
 	@RequestMapping(value = "design/modifyDesignSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String doCadConfirm(HttpServletRequest request,
+	public String modifyDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		String orderId = (String) request.getParameter("orderId");
@@ -374,7 +366,7 @@ public class DesignController {
 				 url,
 				 uploadTime);
 	
-		return "redirect:/design/modifyDesignSubmit.do";
+		return "redirect:/design/getModifyDesignList.do";
 	}
 	
 	
@@ -399,10 +391,10 @@ public class DesignController {
 	public String getConfirmDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-	  	List<OrderInfo>list=designService.getConfirmDesignList();
-			model.addAttribute("list", list);		
-		    
-			
+		List<Map<String,Object>> list = designService.getConfirmDesignList();
+		model.addAttribute("list", list);		
+		model.addAttribute("taskName", "设计生产确认");
+		model.addAttribute("url", "/design/getConfirmDesignDetail.do");
 		return "design/getConfirmDesignList";
 	}
 	
@@ -415,7 +407,7 @@ public class DesignController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "design/getConfirmDesignDetail.do", method= RequestMethod.POST)
+	@RequestMapping(value = "design/getConfirmDesignDetail.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String getConfirmDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -470,23 +462,20 @@ public class DesignController {
 				 Long.parseLong(taskId),
 				 url,
 				 uploadTime);
-		return "redirect:/design/getConfirmDesignList";
+		return "redirect:/design/getConfirmDesignList.do";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@RequestMapping(value = "design/downloadCadSubmit.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String downloadCadSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+	    String url = request.getParameter("cadUrl");
+	    System.out.println("download:" + url);
+	    FileOperateUtil.Download(response, url);
+	    System.out.println("download end");
+		
+		return "redirect:/design/getModifyDesignDetail.do";
+	}
 	
 }

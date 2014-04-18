@@ -3,7 +3,7 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-	<form id="verify_form" method="post" 
+	<form id="verify_form" method="post" onsubmit="return verify();"
 						action="${ctx }/market/modifyOrderSubmit.do">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
@@ -20,11 +20,11 @@
 						<tr>
 							<td>业务信息</td>
 							<td>业务编号</td>
-							<td><input class="span12" type="text" value="" readonly /></td>
+							<td>${orderModel.order.orderId }</td>
 							<td>接单时间</td>
 							<td>${fn:substring(orderModel.order.orderTime,0,10) }</td>
 							<td>接单业务员</td>
-							<td>${orderModel.employee.nickName }</td>
+							<td>${orderModel.employee.employeeName }</td>
 						</tr>
 						<tr>
 							<td rowspan="3">客户信息</td>
@@ -88,7 +88,7 @@
 						<tr>
 							<td>其他说明</td>
 							<td colspan="5"><input type="checkbox"
-								name="other_requirements" value="有主标" ${fn:contains(orderModel.order.otherRequirements,'有主标 ')?'checked="checked"':'' } /> 有主标 <input
+								name="other_requirements" value="有主标" ${fn:contains(orderModel.order.otherRequirements,'有主标')?'checked="checked"':'' } /> 有主标 <input
 								type="checkbox" name="other_requirements" value="有吊牌" ${fn:contains(orderModel.order.otherRequirements,'有吊牌')?'checked="checked"':'' } /> 有吊牌 <input
 								type="checkbox" name="other_requirements" value="有水洗" ${fn:contains(orderModel.order.otherRequirements,'有水洗')?'checked="checked"':'' } /> 有水洗 <input
 								type="checkbox" name="other_requirements" value="其他" ${fn:contains(orderModel.order.otherRequirements,'其他')?'checked="checked"':'' }/> <input
@@ -222,7 +222,7 @@
 					</table>
 				</div>
 				<div class="tab-pane" id="produce">
-					<table class="table table-striped table-bordered table-hover produce_table">
+					<table class="table table-striped table-bordered table-hover">
 						<tr>
 							<td rowspan="2">加工信息</td>
 							<td>加工件数<span class="required">*</span></td>
@@ -232,7 +232,7 @@
 						</tr>
 						<tr>
 							<td><input class="span6" type="number" name="ask_amount" value="${orderModel.order.askAmount }" /></td>
-							<td colspan="2"><input class="span6" type="date"
+							<td colspan="2"><input class="span12" type="date"
 								name="ask_deliver_date" value="${fn:substring(orderModel.order.askDeliverDate,0,10) }" /></td>
 							<td colspan="2"><input class="span3" type="number"
 								name="ask_produce_period" value="${orderModel.order.askProducePeriod }" /></td>
@@ -255,37 +255,91 @@
 								type="hidden" name="produce_xxl" /></td>
 						</tr>
 						<tr>
-							<td>颜色</td>
-							<td>XS</td>
-							<td>S</td>
-							<td>M</td>
-							<td>L</td>
-							<td>XL</td>
-							<td>XXL</td>
-							<td>操作</td>
+							<td colspan="8" class="innertable">
+								<table class="span12 table produce_table">
+									<tr>
+										<td>颜色</td>
+										<td>XS</td>
+										<td>S</td>
+										<td>M</td>
+										<td>L</td>
+										<td>XL</td>
+										<td>XXL</td>
+										<td>操作</td>
+									</tr>
+									<tr class="addrow">
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><a>添加</a></td>
+									</tr>
+									<c:forEach var="produceRow" items="${orderModel.produces }" >
+										<tr>
+											<td class='span12 produce_color'>${produceRow.color }</td>
+											<td class='span12 produce_xs'>${produceRow.xs }</td>
+											<td class='span12 produce_s'>${produceRow.s }</td>
+											<td class='span12 produce_m'>${produceRow.m }</td>
+											<td class='span12 produce_l'>${produceRow.l }</td>
+											<td class='span12 produce_xl'>${produceRow.xl }</td>
+											<td class='span12 produce_xxl'>${produceRow.xxl }</td>
+											<td class='span12'><a onclick="deleteRow(this,'produce_table')">删除</a></td>
+										</tr>
+									</c:forEach>
+								</table>
+							</td>
 						</tr>
-						<tr class="addrow">
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><input type="text" class="span12" /></td>
-							<td><a>添加</a></td>
+						<tr>
+							<td colspan="8">样衣加工具体要求 <input id="sample_produce_color"
+								type="hidden" name="sample_produce_color" /> <input id="sample_produce_xs"
+								type="hidden" name="sample_produce_xs" /> <input id="sample_produce_s"
+								type="hidden" name="sample_produce_s" /> <input id="sample_produce_m"
+								type="hidden" name="sample_produce_m" /> <input id="sample_produce_l"
+								type="hidden" name="sample_produce_l" /> <input id="sample_produce_xl"
+								type="hidden" name="sample_produce_xl" /> <input id="sample_produce_xxl"
+								type="hidden" name="sample_produce_xxl" /></td>
 						</tr>
-						<c:forEach var="produceRow" items="${orderModel.produces }" >
-							<tr>
-								<td class='span12 produce_color'>${produceRow.color }</td>
-								<td class='span12 produce_xs'>${produceRow.xs }</td>
-								<td class='span12 produce_s'>${produceRow.s }</td>
-								<td class='span12 produce_m'>${produceRow.m }</td>
-								<td class='span12 produce_l'>${produceRow.l }</td>
-								<td class='span12 produce_xl'>${produceRow.xl }</td>
-								<td class='span12 produce_xxl'>${produceRow.xxl }</td>
-								<td class='span12'><a onclick="deleteRow(this,'produce_table')">删除</a></td>
-							</tr>
-						</c:forEach>
+						<tr>
+							<td colspan="8" class="innertable">
+								<table class="span12 table sample_produce_table">
+									<tr>
+										<td>颜色</td>
+										<td>XS</td>
+										<td>S</td>
+										<td>M</td>
+										<td>L</td>
+										<td>XL</td>
+										<td>XXL</td>
+										<td>操作</td>
+									</tr>
+									<tr class="addrow">
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><input type="text" class="span12" /></td>
+										<td><a>添加</a></td>
+									</tr>
+									<c:forEach var="produceRow" items="${orderModel.sample }" >
+										<tr>
+											<td class='span12 sample_produce_color'>${produceRow.color }</td>
+											<td class='span12 sample_produce_xs'>${produceRow.xs }</td>
+											<td class='span12 sample_produce_s'>${produceRow.s }</td>
+											<td class='span12 sample_produce_m'>${produceRow.m }</td>
+											<td class='span12 sample_produce_l'>${produceRow.l }</td>
+											<td class='span12 sample_produce_xl'>${produceRow.xl }</td>
+											<td class='span12 sample_produce_xxl'>${produceRow.xxl }</td>
+											<td class='span12'><a onclick="deleteRow(this,'sample_produce_table')">删除</a></td>
+										</tr>
+									</c:forEach>
+								</table>
+							</td>
+						</tr>
 					</table>
 				</div>
 				<div class="tab-pane" id="cad">

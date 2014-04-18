@@ -16,7 +16,7 @@ function table_addrow_onclick(table_name, col_name, col_sum) {
 		var col = $("table." + table_name + " tr.addrow input").eq(i).val();
 		content[i] = col;
 		if (col == "") {
-			alert("不能为空");
+			alert("请正确填写数据");
 			return;
 		}
 	}
@@ -38,7 +38,13 @@ function dealString(){
 	$("input[name='color']").val(getTdString("color"));
 	$("input[name='size']").val(getTdString("size"));
 	$("input[name='number']").val(getTdString("number"));
-	return true;
+	if($("input[name='color']").val()==""){
+		alert("请先输入正确数据在点击添加箱号~");
+		return false;
+	}else{
+		return true;
+	}
+	
 }
 
 

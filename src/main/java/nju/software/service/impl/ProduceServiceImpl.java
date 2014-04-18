@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
@@ -64,6 +66,22 @@ public class ProduceServiceImpl implements ProduceService {
 	private PackageDAO packageDAO;
 	@Autowired
 	private PackageDetailDAO packageDetailDAO;
+	@Autowired
+	private ServiceUtil service;
+
+	@Override
+	public List<Map<String, Object>> getVerifyProduceList() {
+		// TODO Auto-generated method stub
+		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_VERIFY_PRODUCE);
+		
+	}
+
+	@Override
+	public Map<String,Object> getVerifyProduceDetail(int orderId, long taskId) {
+		// TODO Auto-generated method stub
+		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER,
+				TASK_VERIFY_PRODUCE, orderId);
+	}
 
 	@Override
 	public boolean verifyProduceSubmit(Account account, int orderId, long taskId,
@@ -88,6 +106,147 @@ public class ProduceServiceImpl implements ProduceService {
 				e.printStackTrace();
 			}
 			return true;
+	}
+
+	@Override
+	public List<Map<String, Object>> getComputeProduceCostList() {
+		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_COMPUTE_PRODUCE_COST);
+	}
+
+	@Override
+	public Map<String,Object> getComputeProduceCostInfo(Integer orderId) {
+		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER,
+				TASK_COMPUTE_PRODUCE_COST, orderId);
+	}
+
+	@Override
+	public void ComputeProduceCostSubmit(int orderId,
+			long taskId,float cut_cost, float manage_cost, float nali_cost,
+			float ironing_cost, float swing_cost, float package_cost,
+			float other_cost, float design_cost) {
+		
+		Quote quote = QuoteDAO.findById(orderId);
+	
+		if (quote == null) {
+			quote = new Quote();
+			quote.setOrderId(orderId);
+			quote.setCutCost(cut_cost);
+			quote.setManageCost(manage_cost);
+			quote.setSwingCost(swing_cost);
+			quote.setIroningCost(ironing_cost);
+			quote.setNailCost(nali_cost);
+			quote.setPackageCost(package_cost);
+			quote.setOtherCost(other_cost);
+			quote.setDesignCost(design_cost);
+			QuoteDAO.save(quote);
+		} else {
+			quote.setCutCost(cut_cost);
+			quote.setManageCost(manage_cost);
+			quote.setSwingCost(swing_cost);
+			quote.setIroningCost(ironing_cost);
+			quote.setNailCost(nali_cost);
+			quote.setPackageCost(package_cost);
+			quote.setOtherCost(other_cost);
+			quote.setDesignCost(design_cost);
+			QuoteDAO.attachDirty(quote);
+		}
+		
+		  float producecost = cut_cost + manage_cost + swing_cost
+				+ ironing_cost + nali_cost + package_cost + other_cost + design_cost;
+		
+				Map<String, Object> data = new HashMap<String, Object>();
+				try {
+					data.put("volumeproduction", true);
+					jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	}
+
+	//=========================样衣生产========================
+	@Override
+	public List<Map<String, Object>> getProduceSampleList() {
+		// TODO Auto-generated method stub
+		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_PRODUCE_SAMPLE);
+	}
+
+	@Override
+	public OrderInfo getProduceSampleDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER,
+				TASK_PRODUCE_SAMPLE, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
+		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setLogistics(logisticsDAO.findById(orderId));
+		orderInfo.setTask(task);
+		orderInfo.setTaskId(task.getId());
+		Produce produce = new Produce();
+		produce.setOid(orderId);
+		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
+		orderInfo.setProduced(produceDAO.findByExample(produce));
+		return orderInfo;
+	}
+
+	@Override
+	public boolean produceSampleSubmit(long taskId, boolean producterror, List<Produce> produceList) {
+		// TODO Auto-generated method stub
+//		if (!producterror) {
+//			for (int i = 0; i < produceList.size(); i++) {
+//				System.out.println(produceList.get(i).getOid() + produceList.get(i).getType());
+//				produceDAO.save(produceList.get(i));
+//			}
+//		}
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("producterror", producterror);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	//=======================批量生产========================
+	@Override
+	public List<Map<String,Object>> getProduceList() {
+		// TODO Auto-generated method stub
+		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_PRODUCE);
+	}
+
+	@Override
+	public OrderInfo getProduceDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER,
+				TASK_PRODUCE, orderId);
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setTask(task);
+		return orderInfo;
+	}
+
+	@Override
+	public boolean pruduceSubmit(String[] pid, String[] askAmount, long taskId) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < pid.length; i++) {
+			Product product = productDAO.findById(Integer.parseInt(pid[i]));
+			product.setAskAmount(Integer.parseInt(askAmount[i]));
+			productDAO.attachDirty(product);
+		}
+		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			data.put("volumeproduction", true);
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -183,63 +342,8 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 	
 	
-	//=========================样衣生产========================
-	@Override
-	public List<OrderInfo> getProduceSampleList() {
-		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_PRODUCE_MANAGER, TASK_PRODUCE_SAMPLE);
-		List<OrderInfo> list = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
-			OrderInfo orderInfo = new OrderInfo();
-			orderInfo.setOrder(orderDAO.findById(orderId));
-			orderInfo.setTask(task);
-			orderInfo.setTaskId(task.getId());
-			list.add(orderInfo);
-		}
-		return list;
-	}
-
-	@Override
-	public OrderInfo getProduceSampleDetail(Integer orderId) {
-		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER,
-				TASK_PRODUCE_SAMPLE, orderId);
-		OrderInfo orderInfo = new OrderInfo();
-		orderInfo.setOrder(orderDAO.findById(orderId));
-		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
-		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		orderInfo.setLogistics(logisticsDAO.findById(orderId));
-		orderInfo.setProduces(produceDAO.findByOrderId(orderId));
-		orderInfo.setTask(task);
-		orderInfo.setTaskId(task.getId());
-		return orderInfo;
-	}
-
-	
-	@Override
-	public boolean produceSampleSubmit(long taskId, boolean producterror, List<Produce> produceList) {
-		// TODO Auto-generated method stub
-		if (!producterror) {
-			for (int i = 0; i < produceList.size(); i++) {
-				produceDAO.save(produceList.get(i));
-			}
-		}
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("producterror", producterror);
-		try {
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
-			return true;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-	}
-	
-	public List<Produce> getProduceList(String produceColor, String produceXS, String produceS, 
-			String produceM, String produceL, String produceXL, String produceXXL) {
+	public List<Produce> getProduceList(int orderId, String produceColor, String produceXS, String produceS, 
+			String produceM, String produceL, String produceXL, String produceXXL, String type) {
 		String[] color = produceColor.split(",");
 		String[] xs = produceXS.split(",");
 		String[] s = produceS.split(",");
@@ -249,7 +353,9 @@ public class ProduceServiceImpl implements ProduceService {
 		String[] xxl = produceXXL.split(",");
 		List<Produce> produceList = new ArrayList<Produce>();
 		for (int i = 0; i < color.length; i++) {
+			System.out.println(color[i] + xs[i] + xxl[i]);
 			Produce produce = new Produce();
+			produce.setOid(orderId);
 			produce.setColor(color[i]);
 			produce.setXs(Integer.parseInt(xs[i]));
 			produce.setS(Integer.parseInt(s[i]));
@@ -257,64 +363,13 @@ public class ProduceServiceImpl implements ProduceService {
 			produce.setL(Integer.parseInt(l[i]));
 			produce.setXl(Integer.parseInt(xl[i]));
 			produce.setXxl(Integer.parseInt(xxl[i]));
-			produce.setType(Produce.TYPE_SAMPLE_PRODUCED);
+			produce.setType(type);
 			produceList.add(produce);
 		}
 		return produceList;
 	}
 	
 
-	//=======================批量生产========================
-	@Override
-	public List<OrderInfo> getProduceList() {
-		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_PRODUCE_MANAGER, TASK_PRODUCE);
-		List<OrderInfo> list = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
-			OrderInfo orderInfo = new OrderInfo();
-			orderInfo.setOrder(orderDAO.findById(orderId));
-			orderInfo.setTask(task);
-			list.add(orderInfo);
-		}
-		return list;
-	}
-
-	
-	@Override
-	public OrderInfo getProduceDetail(Integer orderId) {
-		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER,
-				TASK_PRODUCE, orderId);
-		OrderInfo orderInfo = new OrderInfo();
-		orderInfo.setOrder(orderDAO.findById(orderId));
-		orderInfo.setTask(task);
-		return orderInfo;
-	}
-	
-	
-	@Override
-	public boolean pruduceSubmit(String[] pid, String[] askAmount, long taskId) {
-		// TODO Auto-generated method stub
-		for (int i = 0; i < pid.length; i++) {
-			Product product = productDAO.findById(Integer.parseInt(pid[i]));
-			product.setAskAmount(Integer.parseInt(askAmount[i]));
-			productDAO.attachDirty(product);
-		}
-		Map<String, Object> data = new HashMap<String, Object>();
-		try {
-			data.put("volumeproduction", true);
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
-			return true;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	
 	@Override
 	public List<Product> getProductByOrderId(int parseInt) {
 		// TODO Auto-generated method stub
@@ -372,129 +427,6 @@ public class ProduceServiceImpl implements ProduceService {
 			packageDetailDAO.save(pd1);
 		}
 
-	}
-
-	
-	@Override
-	public List<OrderInfo> getComputeProduceCostList() {
-		
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_PRODUCE_MANAGER, TASK_COMPUTE_PRODUCE_COST );
-		List<OrderInfo> models = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
-			OrderInfo model = new OrderInfo();
-			model.setOrder(orderDAO.findById(orderId));
-			model.setTask(task);
-			models.add(model);
-		}
-		return models;
-	}
-
-	@Override
-	public OrderInfo getComputeProduceCostInfo(Integer orderId) {
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER,
-				TASK_COMPUTE_PRODUCE_COST, orderId);
-		OrderInfo model = new OrderInfo();
-		model.setOrder(orderDAO.findById(orderId));
-		model.setLogistics(logisticsDAO.findById(orderId));
-		model.setFabrics(fabricDAO.findByOrderId(orderId));
-		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		model.setTask(task);
-		model.setTaskId(task.getId());
-		return model;
-	}
-
-	@Override
-	public void ComputeProduceCostSubmit(int orderId,
-			long taskId,float cut_cost, float manage_cost, float nali_cost,
-			float ironing_cost, float swing_cost, float package_cost,
-			float other_cost, float design_cost) {
-		
-		Quote quote = QuoteDAO.findById(orderId);
-
-		if (quote == null) {
-			quote = new Quote();
-			quote.setOrderId(orderId);
-			quote.setCutCost(cut_cost);
-			quote.setManageCost(manage_cost);
-			quote.setSwingCost(swing_cost);
-			quote.setIroningCost(ironing_cost);
-			quote.setNailCost(nali_cost);
-			quote.setPackageCost(package_cost);
-			quote.setOtherCost(other_cost);
-			quote.setDesignCost(design_cost);
-			QuoteDAO.save(quote);
-		} else {
-			quote.setCutCost(cut_cost);
-			quote.setManageCost(manage_cost);
-			quote.setSwingCost(swing_cost);
-			quote.setIroningCost(ironing_cost);
-			quote.setNailCost(nali_cost);
-			quote.setPackageCost(package_cost);
-			quote.setOtherCost(other_cost);
-			quote.setDesignCost(design_cost);
-			QuoteDAO.attachDirty(quote);
-		}
-		
-		  float producecost = cut_cost + manage_cost + swing_cost
-				+ ironing_cost + nali_cost + package_cost + other_cost + design_cost;
-		
-				Map<String, Object> data = new HashMap<String, Object>();
-				try {
-					data.put("volumeproduction", true);
-					jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	}
-
-	@Override
-	public List<OrderInfo> getVerifyProduceList() {
-		// TODO Auto-generated method stub
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_PRODUCE_MANAGER, TASK_VERIFY_PRODUCE);
-		List<OrderInfo> orderList = new ArrayList<OrderInfo>();
-		if (list.isEmpty()) {
-			System.out.println("no task list");
-		}
-		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
-		WorkflowProcessInstance process = null;
-		for (TaskSummary task : list) {
-			// 需要获取task中的数据
-			long processId = task.getProcessInstanceId();
-			process = (WorkflowProcessInstance) session
-					.getProcessInstance(processId);
-			int orderId = (int) process.getVariable("orderId");
-			OrderInfo oi = new OrderInfo();
-			oi.setOrder(orderDAO.findById(orderId));
-			oi.setTask(task);
-			orderList.add(oi);
-		}
-		return orderList;
-	}
-
-	@Override
-	public OrderInfo getVerifyProduceDetail(int orderId, long taskId) {
-		// TODO Auto-generated method stub
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_PRODUCE_MANAGER, TASK_VERIFY_PRODUCE);
-		for (TaskSummary task : list) {
-			WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-					.getKsession().getProcessInstance(task.getProcessInstanceId());
-			int orderId_process = (int) process.getVariable("orderId");
-			if (orderId == orderId_process && taskId == task.getId() ) {
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setLogistics(logisticsDAO.findById(orderId));
-				oi.setFabrics(fabricDAO.findByOrderId(orderId));
-				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				oi.setTask(task);
-				return oi;
-			}
-		}
-		return null;
 	}
 
 }

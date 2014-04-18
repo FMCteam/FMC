@@ -15,17 +15,48 @@ public class Quote implements java.io.Serializable {
 	// Fields
 
 	private Integer orderId;
-	private Float designCost=(float) 0;
-	private Float cutCost=(float) 0;
-	private Float manageCost=(float) 0;
-	private Float swingCost=(float) 0;
-	private Float ironingCost=(float) 0;
-	private Float nailCost=(float) 0;
-	private Float packageCost=(float) 0;
-	private Float otherCost=(float) 0;
-	private Float profitPerPiece=(float) 0;
-	private Float innerPrice=(float) 0;
-	private Float outerPrice=(float) 0;
+	private Float designCost = (float) 0; // 设计费用
+	private Float cutCost = (float) 0; // 裁剪费用
+	private Float manageCost = (float) 0; // 管理费用
+	private Float swingCost = (float) 0; // 缝制费用
+	private Float ironingCost = (float) 0; // 整烫费用
+	private Float nailCost = (float) 0; // 锁订费用
+	private Float packageCost = (float) 0; // 包装费用
+	private Float otherCost = (float) 0; // 其他费用
+	private Float fabricCost = (float) 0; // 面料费用
+	private Float accessoryCost = (float) 0; // 辅料费用
+	private Float singleCost = (float) 0; // 单件成本
+
+	@Column(name = "fabric_cost", nullable = false, precision = 12, scale = 0)
+	public Float getFabricCost() {
+		return fabricCost;
+	}
+
+	public void setFabricCost(Float fabricCost) {
+		this.fabricCost = fabricCost;
+	}
+
+	@Column(name = "accessory_cost", nullable = false, precision = 12, scale = 0)
+	public Float getAccessoryCost() {
+		return accessoryCost;
+	}
+
+	public void setAccessoryCost(Float accessoryCost) {
+		this.accessoryCost = accessoryCost;
+	}
+
+	@Column(name = "single_cost", nullable = false, precision = 12, scale = 0)
+	public Float getSingleCost() {
+		return singleCost;
+	}
+
+	public void setSingleCost(Float singleCost) {
+		this.singleCost = singleCost;
+	}
+
+	private Float profitPerPiece = (float) 0; // 单件利润
+	private Float innerPrice = (float) 0; // 生产报价
+	private Float outerPrice = (float) 0; // 外部报价
 
 	// Constructors
 

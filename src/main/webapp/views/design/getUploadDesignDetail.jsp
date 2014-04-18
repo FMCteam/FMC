@@ -1,202 +1,77 @@
 
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-		
-		<%@include file="/common/header.jsp" %>
 
-        
-        <div class="maincontent">
-            <div class="maincontentinner">
-                <div class="row-fluid" style="min-height:300px;">
-                
-                	<form action="${ctx }/design/uploadDesignSubmit.do" method="post" enctype="multipart/form-data">  
-  
-  						<table class="table table-striped table-bordered table-hover">
-							<tr>
-								<td>业务信息</td>
-								<td>业务编号</td>
-								<td>${orderInfo.order.orderId}</td>
-								<td>接单时间</td>
-								<td></td>
-								<td>接单业务员</td>
-								<td>${orderInfo.employee.employeeName}</td>
-							</tr>
-							<tr>
-								<td rowspan="3">客户信息</td>
-								<td>客户编号</td>
-								<td>姓名</td>
-								<td>公司</td>
-								<td>传真</td>
-								<td>手机1</td>
-								<td>手机2</td>
-							</tr>
-							<tr>
-								<td>${orderInfo.order.customerId }</td>
-								<td>${orderInfo.order.customerName }</td>
-								<td>${orderInfo.order.customerCompany }</td>
-								<td>${orderInfo.order.customerCompanyFax}</td>
-								<td>${orderInfo.order.customerPhone1}</td>
-								<td>${orderInfo.order.customerPhone2}</td>
-							</tr>
-							<tr>
-								<td>公司地址</td>
-								<td colspan="5">${orderInfo.order.customerCompanyAddress}</td>
-							</tr>
-							<tr>
-								<td rowspan="6">款式信息</td>
-								<td><label>款式名称</label></td>
-								<td colspan="2">款式性别</td>
-								<td colspan="2">款式季节</td>
-								<td>订单来源</td>
-							</tr>
-							<tr>
-								<td>${orderInfo.order.styleName }</td>
-								<td colspan="2">${orderInfo.order.styleSex }</td>
-								<td colspan="2">${orderInfo.order.styleSeason}</td>
-								<td>${orderInfo.order.orderSource }</td>
-							</tr>
-							<tr>
-								<td>面料类型</td>
-								<td colspan="5">${orderInfo.order.fabricType}</td>
-							</tr>
-							<tr>
-								<td>特殊工艺</td>
-								<td colspan="5">${orderInfo.order.specialProcess}</td>
-							</tr>
-							<tr>
-								<td>其他说明</td>
-								<td colspan="5">${orderInfo.order.otherRequirements}</td>
-							</tr>
-							<tr>
-								<td>参考链接</td>
-								<td colspan="5"></td>
-							</tr>
-							<tr>
-								<td rowspan="2">加工信息</td>
-								<td>加工件数<span class="required">*</span></td>
-								<td colspan="2">最迟交货时间</td>
-								<td colspan="2">完工时间（天）</td>
-								<td>码数</td>
-							</tr>
-							<tr>
-								<td>${orderInfo.order.askAmount}</td>
-								<td colspan="2">${fn:substring(orderInfo.order.askDeliverDate,0,10) }</td>
-								<td colspan="2">${orderInfo.order.askProducePeriod }</td>
-								<td>${orderInfo.order.askCodeNumber }</td>
-							</tr>
-							<tr>
-								<td rowspan="${fn:length(orderInfo.fabrics)+1}">面料</td>
-								<td colspan="3">面料名称</td>
-								<td colspan="3">面料克重</td>
-							</tr>
-							<c:forEach var="fabric" items="${orderInfo.fabrics}">
-								<tr>
-									<td colspan="3">${fabric.fabricName}</td>
-									<td colspan="3">${fabric.fabricAmount}</td>
-								</tr>
-							</c:forEach>
-							<tr>
-								<td rowspan="${fn:length(orderInfo.accessorys)+1}">辅料</td>
-								<td colspan="3">辅料名称</td>
-								<td colspan="3">辅料要求</td>
-							</tr>
-		
-		
-							<c:forEach var="accessory" items="${orderInfo.accessorys}">
-								<tr>
-									<td colspan="3">${accessory.accessoryName}</td>
-									<td colspan="3">${accessory.accessoryQuery}</td>
-								</tr>
-							</c:forEach>
-		
-							<tr>
-								<td rowspan="2">客户样衣</td>
-								<td>提供样衣</td>
-								<td colspan="2">邮寄时间</td>
-								<td>快递名称</td>
-								<td colspan="2">快递单号</td>
-							</tr>
-							<tr>
-								<td>${orderInfo.order.hasPostedSampleClothes==0?'没有样衣':'' }
-									${orderInfo.order.hasPostedSampleClothes==1?'未收到样衣':'' }
-									${orderInfo.order.hasPostedSampleClothes==2?'收到样衣':'' }</td>
-								<td colspan="2">${fn:substring(orderInfo.logistics.inPostSampleClothesTime,0,10) }</td>
-								<td>${orderInfo.logistics.inPostSampleClothesType }</td>
-								<td colspan="2">${orderInfo.logistics.inPostSampleClothesNumber }</td>
-							</tr>
-							<tr>
-								<td rowspan="5">生产样衣</td>
-								<td>制作样衣</td>
-								<td colspan="2">邮寄时间</td>
-								<td>快递名称</td>
-								<td colspan="2">快递单号</td>
-							</tr>
-							<tr>
-								<td>${orderInfo.order.isNeedSampleClothes==0?'否':'是' }</td>
-								<td colspan="2">${fn:substring(orderInfo.logistics.sampleClothesTime,0,10) }</td>
-								<td>${orderInfo.logistics.sampleClothesType }</td>
-								<td colspan="2">${orderInfo.logistics.sampleClothesNumber }</td>
-							</tr>
-							<tr>
-								<td>邮寄人</td>
-								<td>手机</td>
-								<td colspan="4">邮寄地址</td>
-							</tr>
-							<tr>
-								<td>${orderInfo.logistics.sampleClothesName }</td>
-								<td>${orderInfo.logistics.sampleClothesPhone }</td>
-								<td colspan="4">${orderInfo.logistics.sampleClothesAddress }</td>
-							</tr>
-							<tr>
-								<td>其他备注</td>
-								<td colspan="5">${orderInfo.logistics.sampleClothesRemark }</td>
-		
-							</tr>
-							<tr>
-								<td>样衣信息</td>
-								<td>样衣图片</td>
-								<td colspan="2">
-								<img src="${ctx}/${orderInfo.order.sampleClothesPicture}" alt="没有图片"></img></td>
-								<td>参考图片</td>
-								<td colspan="2">
-								<img src="${ctx}/${orderInfo.order.referencePicture}" alt="没有图片"></img></td>
-							</tr>
-							
-							
-							<tr>
-	                        	<td>选择文件</td>
-	                     		<td>
-	                      			<input name="CADFile" id="CADFile" type="file" />  
-	                      			<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
-		                  			<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
-								</td>
-	                    	</tr>
-								
-							<tr>
-	
-	                        	<td colspan="3"><input type="submit" style="float: right;"/></td>
-	                    	</tr>
-						</table>
-	               </form>  
-				
-                      </div><!--row-fluid-->
-                
-                <div class="footer">
-                    <div class="footer-left">
-                        <span>&copy; 2014. 江苏南通智造链有限公司.</span>
-                    </div>
-                  
-                </div><!--footer-->
-                
-            </div><!--maincontentinner-->
-        </div><!--maincontent-->
-        
-        <%@include file="/common/js_file.jsp" %>
-		<%@include file="/common/js_form_file.jsp"%>
-        
-        <!-- 这里引入你需要的js文件 -->
-        <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-        <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
-		<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
-        
-        <%@include file="/common/footer.jsp" %>
-    
+<%@include file="/common/header.jsp"%>
+
+
+<div class="maincontent">
+	<div class="maincontentinner">
+		<div class="row-fluid" style="min-height:300px;">
+
+			<ul class="nav nav-tabs detail" id="tab">
+				<li class="task-name">录入版型数据</li>
+				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
+				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
+				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
+				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
+				<li class="active"><a href="#basic" data-toggle="tab">基本信息</a></li>
+			</ul>
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="basic">
+					<%@include file="/views/common/basic.jsp"%>
+				</div>
+				<div class="tab-pane" id="material">
+					<%@include file="/views/common/material.jsp"%>
+				</div>
+				<div class="tab-pane" id="sample">
+					<%@include file="/views/common/sample.jsp"%>
+				</div>
+				<div class="tab-pane" id="produce">
+					<%@include file="/views/common/produce.jsp"%>
+				</div>
+				<div class="tab-pane" id="cad">
+					<%@include file="/views/common/cad.jsp"%>
+				</div>
+			</div>
+
+			<form action="${ctx }/design/uploadDesignSubmit.do" method="post"
+				enctype="multipart/form-data">
+				<table class="table table-striped table-bordered table-hover detail">
+					<tr>
+						<td>选择文件</td>
+						<td colspan="3"><input name="CADFile" id="CADFile"
+							type="file" /> <input type="hidden" name="orderId"
+							value="${orderInfo.order.orderId }" /> <input type="hidden"
+							name="taskId" value="${orderInfo.taskId }" /></td>
+						<td colspan="3"><input type="submit"
+							class="btn btn-primary btn-rounded"></td>
+					</tr>
+				</table>
+			</form>
+
+		</div>
+		<!--row-fluid-->
+
+		<div class="footer">
+			<div class="footer-left">
+				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
+			</div>
+
+		</div>
+		<!--footer-->
+
+	</div>
+	<!--maincontentinner-->
+</div>
+<!--maincontent-->
+
+<%@include file="/common/js_file.jsp"%>
+<%@include file="/common/js_form_file.jsp"%>
+<link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
+<link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
+<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
+<script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<%@include file="/common/footer.jsp"%>
+

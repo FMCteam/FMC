@@ -54,6 +54,23 @@ public class DesignServiceImpl implements DesignService {
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private DesignCadDAO DesignCadDAO;
+	@Autowired
+	private ServiceUtil service;
+	@Autowired
+	private DesignCadDAO designCadDAO;
+
+	@Override
+	public List<Map<String, Object>> getVerifyDesignList() {
+		// TODO Auto-generated method stub
+		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_VERIFY_DESIGN);
+	}
+
+	@Override
+	public Map<String,Object> getVerifyDesignDetail(int orderId, long taskId) {
+		// TODO Auto-generated method stub
+		return service.getBasicOrderModel(ACTOR_DESIGN_MANAGER,
+				TASK_VERIFY_DESIGN, orderId);
+	}
 
 	@Override
 	public boolean verifyDesignSubmit(Account account, int orderId, long taskId,
@@ -78,6 +95,145 @@ public class DesignServiceImpl implements DesignService {
 				e.printStackTrace();
 			}
 			return true;
+	}
+
+	@Override
+	public List<Map<String,Object>> getComputeDesignCostList() {
+		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_COMPUTE_DESIGN_COST);
+	}
+
+	@Override
+	public OrderInfo getComputeDesignCostDetail(Integer orderId) {
+		
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
+				TASK_COMPUTE_DESIGN_COST, orderId);
+		OrderInfo model = new OrderInfo();
+		model.setOrder(orderDAO.findById(orderId));
+		model.setTask(task);
+		model.setTaskId(task.getId());
+		return model;
+	}
+
+	@Override
+	public void computeDesignCostSubmit(int orderId, long taskId,
+			float design_cost) {
+		// TODO Auto-generated method stub
+		Quote quote = QuoteDAO.findById(orderId);
+	
+		if (quote == null) {
+			quote = new Quote();
+			quote.setOrderId(orderId);
+			quote.setDesignCost(design_cost);
+			QuoteDAO.save(quote);
+		} else {
+			quote.setDesignCost(design_cost);
+			QuoteDAO.attachDirty(quote);
+		}
+		
+		
+				Map<String, Object> data = new HashMap<String, Object>();
+				try {
+					data.put("ComputeDesignCost", true);
+					jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	}
+
+	@Override
+	public List<Map<String,Object>> getUploadDesignList() {
+		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_UPLOAD_DESIGN);
+	}
+
+	@Override
+	public OrderInfo getUploadDesignDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
+				TASK_UPLOAD_DESIGN, orderId);
+		OrderInfo model = new OrderInfo();
+		model.setOrder(orderDAO.findById(orderId));
+		model.setLogistics(logisticsDAO.findById(orderId));
+		model.setFabrics(fabricDAO.findByOrderId(orderId));
+		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		model.setTask(task);
+		model.setTaskId(task.getId());
+		return model;
+	}
+
+	@Override
+	public void uploadDesignSubmit(int orderId, long taskId, String url,
+			Timestamp uploadTime) {
+		// TODO Auto-generated method stub
+		DesignCad designCad = DesignCadDAO.findById(orderId);
+		if (designCad == null) {
+			// 数据库中无designCad对象
+			// 新建QUote内容
+			designCad = new DesignCad();
+			designCad.setOrderId(orderId);
+			designCad.setCadUrl(url);
+			designCad.setCadVersion((short) 1);
+			designCad.setUploadTime(uploadTime);
+			DesignCadDAO.save(designCad);
+		} else {
+			// designCad已存在于数据库
+			// 修改QUote内容
+	
+			short newVersion = (short) (designCad.getCadVersion() + 1);
+			designCad.setCadUrl(url);
+			designCad.setCadVersion(newVersion);
+			designCad.setUploadTime(uploadTime);
+			DesignCadDAO.attachDirty(designCad);
+		}
+	
+		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			data.put("Design", true);
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	@Override
+	public List<Map<String,Object>> getModifyDesignList() {
+		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_MODIFY_DESIGN);
+	}
+
+	@Override
+	public OrderInfo getModifyDesignDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+				TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
+						 TASK_MODIFY_DESIGN , orderId);
+				OrderInfo model = new OrderInfo();
+				model.setOrder(orderDAO.findById(orderId));
+				model.setLogistics(logisticsDAO.findById(orderId));
+				model.setFabrics(fabricDAO.findByOrderId(orderId));
+				model.setAccessorys(accessoryDAO.findByOrderId(orderId));
+				model.setCad(designCadDAO.findByOrderId(orderId).get(0));
+				model.setTask(task);
+				model.setTaskId(task.getId());
+				return model;
+	}
+
+	@Override
+	public List<Map<String,Object>> getConfirmDesignList() {
+		// TODO Auto-generated method stub
+		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CONFIRM_DESIGN);
+	}
+
+	@Override
+	public OrderInfo getConfirmDesignDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
+				 TASK_CONFIRM_DESIGN , orderId);
+		OrderInfo model = new OrderInfo();
+		model.setOrder(orderDAO.findById(orderId));
+		model.setTask(task);
+		return model;
 	}
 
 	@Override
@@ -192,237 +348,6 @@ public class DesignServiceImpl implements DesignService {
 			return true;
 		}
 		return false;
-	}
-
-
-	
-	
-	@Override
-	public List<OrderInfo> getComputeDesignCostList() {
-		
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_DESIGN_MANAGER, TASK_COMPUTE_DESIGN_COST );
-		List<OrderInfo> models = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
-			OrderInfo model = new OrderInfo();
-			model.setOrder(orderDAO.findById(orderId));
-			model.setTask(task);
-			models.add(model);
-		}
-		return models;
-	}
-
-	
-	@Override
-	public OrderInfo getComputeDesignCostDetail(Integer orderId) {
-		
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
-				TASK_COMPUTE_DESIGN_COST, orderId);
-		OrderInfo model = new OrderInfo();
-		model.setOrder(orderDAO.findById(orderId));
-		model.setTask(task);
-		model.setTaskId(task.getId());
-		return model;
-	}
-
-	
-	@Override
-	public void computeDesignCostSubmit(int orderId, long taskId,
-			float design_cost) {
-		// TODO Auto-generated method stub
-		Quote quote = QuoteDAO.findById(orderId);
-
-		if (quote == null) {
-			quote = new Quote();
-			quote.setOrderId(orderId);
-			quote.setDesignCost(design_cost);
-			QuoteDAO.save(quote);
-		} else {
-			quote.setDesignCost(design_cost);
-			QuoteDAO.attachDirty(quote);
-		}
-		
-		
-				Map<String, Object> data = new HashMap<String, Object>();
-				try {
-					data.put("ComputeDesignCost", true);
-					jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	}
-
-	
-	@Override
-	public List<OrderInfo> getUploadDesignList() {
-		
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_DESIGN_MANAGER, TASK_UPLOAD_DESIGN );
-		List<OrderInfo> models = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
-			OrderInfo model = new OrderInfo();
-			model.setOrder(orderDAO.findById(orderId));
-			model.setTask(task);
-			model.setTaskId(task.getId());
-			models.add(model);
-		}
-		return models;
-	}
-
-	@Override
-	public OrderInfo getUploadDesignDetail(Integer orderId) {
-		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
-				TASK_UPLOAD_DESIGN, orderId);
-		OrderInfo model = new OrderInfo();
-		model.setOrder(orderDAO.findById(orderId));
-		model.setLogistics(logisticsDAO.findById(orderId));
-		model.setFabrics(fabricDAO.findByOrderId(orderId));
-		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		model.setTask(task);
-		model.setTaskId(task.getId());
-		return model;
-	}
-
-	@Override
-	public void uploadDesignSubmit(int orderId, long taskId, String url,
-			Timestamp uploadTime) {
-		// TODO Auto-generated method stub
-		DesignCad designCad = DesignCadDAO.findById(orderId);
-		if (designCad == null) {
-			// 数据库中无designCad对象
-			// 新建QUote内容
-			designCad = new DesignCad();
-			designCad.setOrderId(orderId);
-			designCad.setCadUrl(url);
-			designCad.setCadVersion((short) 1);
-			designCad.setUploadTime(uploadTime);
-			DesignCadDAO.save(designCad);
-		} else {
-			// designCad已存在于数据库
-			// 修改QUote内容
-
-			short newVersion = (short) (designCad.getCadVersion() + 1);
-			designCad.setCadUrl(url);
-			designCad.setCadVersion(newVersion);
-			designCad.setUploadTime(uploadTime);
-			DesignCadDAO.attachDirty(designCad);
-		}
-
-		Map<String, Object> data = new HashMap<String, Object>();
-		try {
-			data.put("Design", true);
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
-
-	
-	@Override
-	public List<OrderInfo> getModifyDesignList() {
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_DESIGN_MANAGER,  TASK_MODIFY_DESIGN  );
-		List<OrderInfo> models = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
-			OrderInfo model = new OrderInfo();
-			model.setOrder(orderDAO.findById(orderId));
-			model.setTask(task);
-			models.add(model);
-		}
-		return models;
-	}
-
-	@Override
-	public OrderInfo getModifyDesignDetail(Integer orderId) {
-		// TODO Auto-generated method stub
-				TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
-						 TASK_MODIFY_DESIGN , orderId);
-				OrderInfo model = new OrderInfo();
-				model.setOrder(orderDAO.findById(orderId));
-				model.setTask(task);
-				return model;
-	}
-
-	@Override
-	public List<OrderInfo> getConfirmDesignList() {
-		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_DESIGN_MANAGER,  TASK_CONFIRM_DESIGN  );
-		List<OrderInfo> models = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task,"orderId");
-			OrderInfo model = new OrderInfo();
-			model.setOrder(orderDAO.findById(orderId));
-			model.setTask(task);
-			models.add(model);
-		}
-		return models;
-	}
-
-	@Override
-	public OrderInfo getConfirmDesignDetail(Integer orderId) {
-		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
-				 TASK_CONFIRM_DESIGN , orderId);
-		OrderInfo model = new OrderInfo();
-		model.setOrder(orderDAO.findById(orderId));
-		model.setTask(task);
-		return model;
-	}
-
-	
-		
-	
-
-	@Override
-	public List<OrderInfo> getVerifyDesignList() {
-		// TODO Auto-generated method stub
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_DESIGN_MANAGER, TASK_VERIFY_DESIGN);
-		List<OrderInfo> orderList = new ArrayList<OrderInfo>();
-		if (list.isEmpty()) {
-			System.out.println("no task list");
-		}
-		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
-		WorkflowProcessInstance process = null;
-		for (TaskSummary task : list) {
-			// 需要获取task中的数据
-			long processId = task.getProcessInstanceId();
-			process = (WorkflowProcessInstance) session
-					.getProcessInstance(processId);
-			int orderId = (int) process.getVariable("orderId");
-			OrderInfo oi = new OrderInfo();
-			oi.setOrder(orderDAO.findById(orderId));
-			oi.setTask(task);
-			orderList.add(oi);
-		}
-		return orderList;
-	}
-
-	@Override
-	public OrderInfo getVerifyDesignDetail(int orderId, long taskId) {
-		// TODO Auto-generated method stub
-		List<TaskSummary> list = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_DESIGN_MANAGER, TASK_VERIFY_DESIGN);
-		for (TaskSummary task : list) {
-				OrderInfo oi = new OrderInfo();
-				oi.setOrder(orderDAO.findById(orderId));
-				oi.setLogistics(logisticsDAO.findById(orderId));
-				oi.setFabrics(fabricDAO.findByOrderId(orderId));
-				oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				oi.setTask(task);
-				return oi;
-			
-		}
-		return null;
 	}
 
 

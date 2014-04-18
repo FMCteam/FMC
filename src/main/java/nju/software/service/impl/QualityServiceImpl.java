@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
 import nju.software.service.QualityService;
@@ -40,20 +42,15 @@ public class QualityServiceImpl implements QualityService{
 	private CustomerDAO customerDAO;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private ServiceUtil service;
+	@Autowired
+	private ProduceDAO produceDAO;
+	
 	@Override
-	public List<OrderInfo> getCheckQualityList() {
+	public List<Map<String,Object>> getCheckQualityList() {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_QUALITY_MANAGER, TASK_CHECK_QUALITY);
-		List<OrderInfo> taskSummarys = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) getVariable("orderId", task);
-			OrderInfo oi = new OrderInfo();
-			oi.setOrder(orderDAO.findById(orderId));
-			oi.setTask(task);
-			taskSummarys.add(oi);
-		}
-		return taskSummarys;
+		return service.getOrderList(ACTOR_QUALITY_MANAGER, TASK_CHECK_QUALITY);
 	}
 	
 	public Object getVariable(String name, TaskSummary task) {
@@ -65,8 +62,14 @@ public class QualityServiceImpl implements QualityService{
 	}
 
 	@Override
-	public boolean checkQualitySubmit(int id, long taskId, long processId, boolean b) {
+	public boolean checkQualitySubmit(int id, long taskId, boolean b, List<Produce> goodList, List<Produce> badList) {
 		// TODO Auto-generated method stub
+		for (int i = 0; i < goodList.size(); i++) {
+			produceDAO.save(goodList.get(i));
+		}
+		for (int i = 0; i < badList.size(); i++) {
+			produceDAO.save(badList.get(i));
+		}
 		Map<String, Object> data = new HashMap<>();
 		//data.put("", b);
 		try {
@@ -93,6 +96,11 @@ public class QualityServiceImpl implements QualityService{
 				oi.setEmployee(employeeDAO.findById(o.getEmployeeId()));
 				oi.setCustomer(customerDAO.findById(o.getCustomerId()));
 				oi.setTask(task);
+				oi.setTaskId(task.getId());
+				Produce produce = new Produce();
+				produce.setOid(orderId);
+				produce.setType(Produce.TYPE_PRODUCED);
+				oi.setProduced(produceDAO.findByExample(produce));
 				return oi;
 			}
 		}

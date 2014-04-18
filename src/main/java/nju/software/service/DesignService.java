@@ -2,6 +2,7 @@ package nju.software.service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.net.ntp.TimeStamp;
 
@@ -19,27 +20,27 @@ public interface DesignService {
 	public boolean costAccounting(Account account, int orderId, long taskId, 
 			long processId, float design_cost);
 	
-	 public List<OrderInfo> getComputeDesignCostList();
+	 public List<Map<String,Object>> getComputeDesignCostList();
 		
 		public OrderInfo getComputeDesignCostDetail(Integer orderId);
 
 		public void computeDesignCostSubmit(int orderId,long taskId,float design_cost);
 	
-		 public List<OrderInfo> getUploadDesignList();
+		 public List<Map<String,Object>> getUploadDesignList();
 			
 			public OrderInfo getUploadDesignDetail(Integer orderId);
 
 			public void uploadDesignSubmit(int orderId,long taskId, String url,Timestamp uploadTime);
 		
 			
-			 public List<OrderInfo> getModifyDesignList();
+			 public List<Map<String,Object>> getModifyDesignList();
 				
 				public OrderInfo getModifyDesignDetail(Integer orderId);
 
 //				public void ModifyDesignSubmit(int orderId,long taskId, String url,Timestamp uploadTime);
 			
 						
-		 public List<OrderInfo> getConfirmDesignList();
+		 public List<Map<String,Object>> getConfirmDesignList();
 					
 		public OrderInfo getConfirmDesignDetail(Integer orderId);
 			
@@ -53,8 +54,8 @@ public interface DesignService {
 	 public boolean uploadCAD(Account account, int orderId, long taskId, 
 				long processId, String url,Timestamp uploadTime);
 
-	public List<OrderInfo> getVerifyDesignList();
+	public List<Map<String, Object>> getVerifyDesignList();
 
-	public OrderInfo getVerifyDesignDetail(int orderId, long taskId);
+	public Map<String,Object> getVerifyDesignDetail(int orderId, long taskId);
 	
 }

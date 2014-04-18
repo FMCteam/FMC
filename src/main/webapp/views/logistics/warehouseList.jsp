@@ -19,27 +19,35 @@
 					<thead>
 						<tr>
 							<th>订单号</th>
-							<th>业务员</th>
+							<th>市场专员</th>
 							<th>客户姓名</th>
 							<th>客户公司</th>
-							<th>款式</th>
-							<th>件数</th>
-							<th>交货时间</th>
+							<th>任务开始时间</th>
 							<th>操作</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="task" items="${list}">
-							<tr class="gradeA">
-								<td>${task.order.orderId }</td>
-								<td>${task.order.employeeId }</td>
-								<td>${task.order.customerName }</td>
-								<td>${task.order.customerCompany }</td>
-								<td>${task.order.styleName }</td>
-								<td>${task.order.askAmount }</td>
-								<td>${fn:substring(task.order.askDeliverDate,0,10) }</td>
+						<c:forEach var="model" items="${packageList}">
+							<tr>
+								<td>${model.order.orderId}</td>
+								<td>${model.employee.employeeName}</td>
+								<td>${model.order.customerName}</td>
+								<td>${model.order.customerCompany}</td>
+								<td>${model.task.createdOn}</td>
 								<td><a
-									href="${ctx}/logistics/warehouseDetail.do?orderId=${task.order.orderId}">详情</a>
+									href="${ctx}/logistics/warehouseDetail.do?orderId=${model.order.orderId}&warehouse=0">装箱</a>
+								</td>
+							</tr>
+						</c:forEach>
+						<c:forEach var="model" items="${warehouseList}">
+							<tr>
+								<td>${model.order.orderId}</td>
+								<td>${model.employee.employeeName}</td>
+								<td>${model.order.customerName}</td>
+								<td>${model.order.customerCompany}</td>
+								<td>${model.task.createdOn}</td>
+								<td><a
+									href="${ctx}/logistics/warehouseDetail.do?orderId=${model.order.orderId}&warehouse=1">入库</a>
 								</td>
 							</tr>
 						</c:forEach>

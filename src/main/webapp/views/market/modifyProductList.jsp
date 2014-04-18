@@ -1,58 +1,34 @@
 
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+
 <%@include file="/common/header.jsp"%>
 
 
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
-			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<section class="list">
-				<table id="dyntable" class="list">
-					<caption>
-						<span class="text-vertical">修改加工单列表:<span class="number">${fn:length(tasks)}</span>件任务
-						</span><input type="text" class="search-query float-right"
-							placeholder="输入检索条件">
-					</caption>
-					<tr>
-						<th class="head0">客户姓名</th>
-						<th class="head1">客户电话</th>
-						<th class="head1">公司名称</th>
-						<th class="head0">公司电话</th>
-						<th class="head0">内部报价</th>
-						<th class="head0">外部报价</th>
-						<th class="head1">操作</th>
-					</tr>
-					<c:forEach var="task" items="${tasks}">
-						<tr class="gradeA">
-							<td>${task.order.customerName}</td>
-							<td>${task.order.customerPhone1}</td>
-							<td>${task.order.customerCompany}</td>
-							<td>${task.order.customerCompanyFax}</td>
-							<td>${task.task.id}</td>
-							<td>${task.task.processInstanceId}</td>
-							<td>
-								<a
-								href="${ctx}/market/modifyProductDetail.do?id=${task.order.orderId}&tid=${task.task.id}&pid=${task.task.processInstanceId}">
-									修改</a> </td>
-						</tr>
-					</c:forEach>
-				</table>
-			</section>
-
+			<%@include file="/views/common/list.jsp"%>
 		</div>
 		<!--row-fluid-->
+
+		<div class="footer">
+			<div class="footer-left">
+				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
+			</div>
+		</div>
+		<!--footer-->
+
 	</div>
 	<!--maincontentinner-->
 </div>
 <!--maincontent-->
 
 
+
 <%@include file="/common/js_file.jsp"%>
 <!-- 这里引入你需要的js文件 -->
-<script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<link rel="stylesheet" href="../views/market/quoteConfirmList.css">
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
+<script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>
 
