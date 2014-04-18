@@ -49,6 +49,8 @@
 					</tr>
 				</table>
 				<input type="hidden" name="cadUrl" value="${orderInfo.cad.cadUrl}" />
+				<input type="hidden" name="orderId" value="${orderInfo.order.orderId}"/>
+				<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
 			</form>
 
 			<form action="${ctx }/design/modifyDesignSubmit.do" 

@@ -38,7 +38,7 @@
 			</div>
 		</div>
 		<div class="action">
-			<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
+			<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
 			<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
 			<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 			<input type="hidden" name="tof" >

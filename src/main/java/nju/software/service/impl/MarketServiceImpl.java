@@ -680,6 +680,7 @@ public class MarketServiceImpl implements MarketService {
 		oi.setSample(produceDAO.findSampleProduceByOrderId(orderId));
 		oi.setVersions(versionDataDAO.findByOrderId(orderId));
 		oi.setTask(task);
+		oi.setTaskId(task.getId());
 		return oi;
 	}
 	
