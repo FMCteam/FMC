@@ -190,6 +190,7 @@ public class BuyServiceImpl implements BuyService {
 		orderInfo.setOrder(orderDAO.findById(orderId));
 		orderInfo.setLogistics(logisticsDAO.findById(orderId));
 		orderInfo.setTask(task);
+		orderInfo.setTaskId(task.getId());
 		return orderInfo;
 	}
 

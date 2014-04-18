@@ -225,21 +225,28 @@ public class ProduceServiceImpl implements ProduceService {
 				TASK_PRODUCE, orderId);
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
+		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setLogistics(logisticsDAO.findById(orderId));
 		orderInfo.setTask(task);
+		orderInfo.setTaskId(task.getId());
+		Produce produce = new Produce();
+		produce.setOid(orderId);
+		produce.setType(Produce.TYPE_PRODUCE);
+		orderInfo.setProduce(produceDAO.findByExample(produce));
 		return orderInfo;
 	}
 
 	@Override
-	public boolean pruduceSubmit(String[] pid, String[] askAmount, long taskId) {
-		// TODO Auto-generated method stub
-		for (int i = 0; i < pid.length; i++) {
-			Product product = productDAO.findById(Integer.parseInt(pid[i]));
-			product.setAskAmount(Integer.parseInt(askAmount[i]));
-			productDAO.attachDirty(product);
+	public boolean pruduceSubmit(long taskId, boolean result, List<Produce> produceList) {
+		if (result) {
+			for (int i = 0; i < produceList.size(); i++) {
+				produceDAO.save(produceList.get(i));
+			}
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			data.put("volumeproduction", true);
+			data.put("volumeproduction", result);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			return true;
 		} catch (InterruptedException e) {

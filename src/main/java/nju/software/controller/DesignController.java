@@ -414,7 +414,7 @@ public class DesignController {
 
 		 
 		 String orderId=request.getParameter("orderId");
-		   OrderInfo orderInfo=designService.getModifyDesignDetail(Integer.parseInt(orderId));
+		   OrderInfo orderInfo=designService.getConfirmDesignDetail(Integer.parseInt(orderId));
 		   model.addAttribute("orderInfo", orderInfo);
 		  
 		

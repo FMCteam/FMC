@@ -57,7 +57,7 @@ public interface ProduceService {
 	public List<List<PackageDetail>> getProductDetailByPackage(
 			List<nju.software.dataobject.Package> packageList);
 
-	public boolean pruduceSubmit(String[] pid,String[] askAmount,long taskId);
+	public boolean pruduceSubmit(long taskId, boolean result, List<Produce> produceList);
 
 	public void savePackageDetail(int parseInt, String[] array_amount,
 			String[] array_color, String[] array_name, Timestamp entryTime);
