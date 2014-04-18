@@ -39,7 +39,7 @@ $(function() {
 			checkPackageId($(this).val().trim());
 			 
 		}
-	});
+	}).focus();
 	$("#submit_btn").click(function() {
 		$("#updateForm").submit();
 	});
@@ -93,7 +93,7 @@ $(function() {
 <div>
 
 <form action="${ctx }/logistics/finishUpdateStore.do" method="post">
-<input type="hidden" value="${task.taskId }" name="taskId" />
+<input type="hidden" value="${task.id }" name="taskId" />
 <input type="hidden" value="${order.orderId }" name="orderId" />
 <input type="submit" value="完成入库" name="submit" />
 </form>

@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <table class="table table-striped table-bordered detail">
 	<tr>
-		<td rowspan="${fn:length(orderInfo.fabrics)+1}">面料报价</td>
+		<td rowspan="${fn:length(orderInfo.fabricCosts)+1}">面料报价</td>
 		<td>面料名</td>
 		<td>单件米耗</td>
 		<td>价格</td>
@@ -17,7 +17,7 @@
 		</tr>
 	</c:forEach>
 	<tr>
-		<td rowspan="${fn:length(orderInfo.accessorys)+1}">辅料报价</td>
+		<td rowspan="${fn:length(orderInfo.accessoryCosts)+1}">辅料报价</td>
 		<td>辅料名</td>
 		<td>单件耗数</td>
 		<td>价格</td>
@@ -26,9 +26,9 @@
 	<c:forEach var="accessory" items="${orderInfo.accessoryCosts}">
 		<tr>
 			<td>${accessory.accessoryName}</td>
-			<td>${accessory.tearPerMeter}</td>
+			<td>${accessory.costPerPiece}</td>
 			<td>${accessory.price}</td>
-			<td>${accessory.costPerMeter}</td>
+			<td>${accessory.costPerPiece}</td>
 		</tr>
 	</c:forEach>
 	<tr>

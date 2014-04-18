@@ -15,6 +15,7 @@ import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.impl.JbpmTest;
+import nju.software.service.impl.LogisticsServiceImpl;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
 import nju.software.dataobject.Order;
@@ -231,7 +232,7 @@ public class LogisticsController {
 		Float price = Float.parseFloat(request.getParameter("price"));
 		String remark = request.getParameter("remark");
 		logisticsService.sendClothesSubmit(orderId, taskId, price, name, time, number, remark);
-		return "forward:/logistics/sendClothesList";
+		return "forward:/logistics/sendClothesList.do";
 	}
 
 	@Autowired
@@ -308,7 +309,7 @@ public class LogisticsController {
 		try {
 			logisticsService.setOrderStored(Integer.parseInt(orderId));
 			// 保存package信息
-			jbpmAPIUtil.completeTask(Integer.parseInt(taskId), null, actor);
+			jbpmAPIUtil.completeTask(Integer.parseInt(taskId), null, LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
 			// 推进流程
 
 		} catch (Exception e) {
@@ -361,7 +362,7 @@ public class LogisticsController {
 		try {
 			logisticsService.setOrderScanChecked(Integer.parseInt(orderId));
 			// 保存package信息
-			jbpmAPIUtil.completeTask(Integer.parseInt(taskId), null, actor);
+		//	jbpmAPIUtil.completeTask(Integer.parseInt(taskId), null, LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
 			// 推进流程
 
 		} catch (Exception e) {

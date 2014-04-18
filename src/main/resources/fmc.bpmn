@@ -29,7 +29,6 @@
   <itemDefinition id="_epositokItem" structureRef="Boolean" />
   <itemDefinition id="_procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_marketStaffItem" structureRef="String" />
   <itemDefinition id="_buyValItem" structureRef="Boolean" />
   <itemDefinition id="_designValItem" structureRef="Boolean" />
@@ -38,6 +37,8 @@
   <itemDefinition id="_buyCommentItem" structureRef="String" />
   <itemDefinition id="_designCommentItem" structureRef="String" />
   <itemDefinition id="_produceCommentItem" structureRef="String" />
+  <itemDefinition id="_receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_7-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_7-needclothesItem" structureRef="Boolean" />
@@ -56,7 +57,6 @@
   <itemDefinition id="_7-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_7-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_7-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_7-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_7-marketStaffItem" structureRef="String" />
   <itemDefinition id="_7-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_7-designValItem" structureRef="Boolean" />
@@ -65,6 +65,8 @@
   <itemDefinition id="_7-buyCommentItem" structureRef="String" />
   <itemDefinition id="_7-designCommentItem" structureRef="String" />
   <itemDefinition id="_7-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_7-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_7-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_10-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_10-needclothesItem" structureRef="Boolean" />
@@ -83,7 +85,6 @@
   <itemDefinition id="_10-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_10-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_10-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_10-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_10-marketStaffItem" structureRef="String" />
   <itemDefinition id="_10-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_10-designValItem" structureRef="Boolean" />
@@ -92,6 +93,8 @@
   <itemDefinition id="_10-buyCommentItem" structureRef="String" />
   <itemDefinition id="_10-designCommentItem" structureRef="String" />
   <itemDefinition id="_10-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_10-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_10-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_11-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_11-needclothesItem" structureRef="Boolean" />
@@ -110,7 +113,6 @@
   <itemDefinition id="_11-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_11-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_11-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_11-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_11-marketStaffItem" structureRef="String" />
   <itemDefinition id="_11-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_11-designValItem" structureRef="Boolean" />
@@ -119,6 +121,8 @@
   <itemDefinition id="_11-buyCommentItem" structureRef="String" />
   <itemDefinition id="_11-designCommentItem" structureRef="String" />
   <itemDefinition id="_11-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_11-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_11-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_12-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_12-needclothesItem" structureRef="Boolean" />
@@ -137,7 +141,6 @@
   <itemDefinition id="_12-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_12-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_12-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_12-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_12-marketStaffItem" structureRef="String" />
   <itemDefinition id="_12-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_12-designValItem" structureRef="Boolean" />
@@ -146,6 +149,8 @@
   <itemDefinition id="_12-buyCommentItem" structureRef="String" />
   <itemDefinition id="_12-designCommentItem" structureRef="String" />
   <itemDefinition id="_12-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_12-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_12-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_19-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_19-needclothesItem" structureRef="Boolean" />
@@ -164,7 +169,6 @@
   <itemDefinition id="_19-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_19-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_19-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_19-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_19-marketStaffItem" structureRef="String" />
   <itemDefinition id="_19-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_19-designValItem" structureRef="Boolean" />
@@ -173,6 +177,8 @@
   <itemDefinition id="_19-buyCommentItem" structureRef="String" />
   <itemDefinition id="_19-designCommentItem" structureRef="String" />
   <itemDefinition id="_19-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_19-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_19-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_23-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_23-needclothesItem" structureRef="Boolean" />
@@ -191,7 +197,6 @@
   <itemDefinition id="_23-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_23-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_23-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_23-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_23-marketStaffItem" structureRef="String" />
   <itemDefinition id="_23-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_23-designValItem" structureRef="Boolean" />
@@ -200,6 +205,8 @@
   <itemDefinition id="_23-buyCommentItem" structureRef="String" />
   <itemDefinition id="_23-designCommentItem" structureRef="String" />
   <itemDefinition id="_23-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_23-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_23-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_25-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_25-needclothesItem" structureRef="Boolean" />
@@ -218,7 +225,6 @@
   <itemDefinition id="_25-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_25-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_25-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_25-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_25-marketStaffItem" structureRef="String" />
   <itemDefinition id="_25-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_25-designValItem" structureRef="Boolean" />
@@ -227,6 +233,8 @@
   <itemDefinition id="_25-buyCommentItem" structureRef="String" />
   <itemDefinition id="_25-designCommentItem" structureRef="String" />
   <itemDefinition id="_25-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_25-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_25-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_24-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_24-needclothesItem" structureRef="Boolean" />
@@ -245,7 +253,6 @@
   <itemDefinition id="_24-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_24-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_24-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_24-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_24-marketStaffItem" structureRef="String" />
   <itemDefinition id="_24-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_24-designValItem" structureRef="Boolean" />
@@ -254,6 +261,8 @@
   <itemDefinition id="_24-buyCommentItem" structureRef="String" />
   <itemDefinition id="_24-designCommentItem" structureRef="String" />
   <itemDefinition id="_24-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_24-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_24-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_29-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_29-needclothesItem" structureRef="Boolean" />
@@ -272,7 +281,6 @@
   <itemDefinition id="_29-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_29-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_29-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_29-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_29-marketStaffItem" structureRef="String" />
   <itemDefinition id="_29-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_29-designValItem" structureRef="Boolean" />
@@ -281,6 +289,8 @@
   <itemDefinition id="_29-buyCommentItem" structureRef="String" />
   <itemDefinition id="_29-designCommentItem" structureRef="String" />
   <itemDefinition id="_29-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_29-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_29-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_28-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_28-needclothesItem" structureRef="Boolean" />
@@ -299,7 +309,6 @@
   <itemDefinition id="_28-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_28-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_28-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_28-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_28-marketStaffItem" structureRef="String" />
   <itemDefinition id="_28-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_28-designValItem" structureRef="Boolean" />
@@ -308,6 +317,8 @@
   <itemDefinition id="_28-buyCommentItem" structureRef="String" />
   <itemDefinition id="_28-designCommentItem" structureRef="String" />
   <itemDefinition id="_28-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_28-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_28-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_34-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_34-needclothesItem" structureRef="Boolean" />
@@ -326,7 +337,6 @@
   <itemDefinition id="_34-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_34-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_34-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_34-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_34-marketStaffItem" structureRef="String" />
   <itemDefinition id="_34-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_34-designValItem" structureRef="Boolean" />
@@ -335,6 +345,8 @@
   <itemDefinition id="_34-buyCommentItem" structureRef="String" />
   <itemDefinition id="_34-designCommentItem" structureRef="String" />
   <itemDefinition id="_34-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_34-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_34-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_33-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_33-needclothesItem" structureRef="Boolean" />
@@ -353,7 +365,6 @@
   <itemDefinition id="_33-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_33-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_33-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_33-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_33-marketStaffItem" structureRef="String" />
   <itemDefinition id="_33-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_33-designValItem" structureRef="Boolean" />
@@ -362,6 +373,8 @@
   <itemDefinition id="_33-buyCommentItem" structureRef="String" />
   <itemDefinition id="_33-designCommentItem" structureRef="String" />
   <itemDefinition id="_33-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_33-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_33-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_41-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_41-needclothesItem" structureRef="Boolean" />
@@ -380,7 +393,6 @@
   <itemDefinition id="_41-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_41-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_41-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_41-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_41-marketStaffItem" structureRef="String" />
   <itemDefinition id="_41-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_41-designValItem" structureRef="Boolean" />
@@ -389,6 +401,8 @@
   <itemDefinition id="_41-buyCommentItem" structureRef="String" />
   <itemDefinition id="_41-designCommentItem" structureRef="String" />
   <itemDefinition id="_41-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_41-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_41-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_47-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_47-needclothesItem" structureRef="Boolean" />
@@ -407,7 +421,6 @@
   <itemDefinition id="_47-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_47-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_47-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_47-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_47-marketStaffItem" structureRef="String" />
   <itemDefinition id="_47-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_47-designValItem" structureRef="Boolean" />
@@ -416,6 +429,8 @@
   <itemDefinition id="_47-buyCommentItem" structureRef="String" />
   <itemDefinition id="_47-designCommentItem" structureRef="String" />
   <itemDefinition id="_47-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_47-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_47-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_48-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_48-needclothesItem" structureRef="Boolean" />
@@ -434,7 +449,6 @@
   <itemDefinition id="_48-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_48-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_48-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_48-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_48-marketStaffItem" structureRef="String" />
   <itemDefinition id="_48-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_48-designValItem" structureRef="Boolean" />
@@ -443,6 +457,8 @@
   <itemDefinition id="_48-buyCommentItem" structureRef="String" />
   <itemDefinition id="_48-designCommentItem" structureRef="String" />
   <itemDefinition id="_48-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_48-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_48-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_54-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_54-needclothesItem" structureRef="Boolean" />
@@ -461,7 +477,6 @@
   <itemDefinition id="_54-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_54-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_54-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_54-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_54-marketStaffItem" structureRef="String" />
   <itemDefinition id="_54-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_54-designValItem" structureRef="Boolean" />
@@ -470,6 +485,8 @@
   <itemDefinition id="_54-buyCommentItem" structureRef="String" />
   <itemDefinition id="_54-designCommentItem" structureRef="String" />
   <itemDefinition id="_54-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_54-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_54-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_59-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_59-needclothesItem" structureRef="Boolean" />
@@ -488,7 +505,6 @@
   <itemDefinition id="_59-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_59-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_59-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_59-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_59-marketStaffItem" structureRef="String" />
   <itemDefinition id="_59-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_59-designValItem" structureRef="Boolean" />
@@ -497,6 +513,8 @@
   <itemDefinition id="_59-buyCommentItem" structureRef="String" />
   <itemDefinition id="_59-designCommentItem" structureRef="String" />
   <itemDefinition id="_59-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_59-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_59-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_62-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_62-needclothesItem" structureRef="Boolean" />
@@ -515,7 +533,6 @@
   <itemDefinition id="_62-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_62-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_62-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_62-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_62-marketStaffItem" structureRef="String" />
   <itemDefinition id="_62-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_62-designValItem" structureRef="Boolean" />
@@ -524,6 +541,8 @@
   <itemDefinition id="_62-buyCommentItem" structureRef="String" />
   <itemDefinition id="_62-designCommentItem" structureRef="String" />
   <itemDefinition id="_62-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_62-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_62-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_69-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_69-needclothesItem" structureRef="Boolean" />
@@ -542,7 +561,6 @@
   <itemDefinition id="_69-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_69-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_69-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_69-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_69-marketStaffItem" structureRef="String" />
   <itemDefinition id="_69-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_69-designValItem" structureRef="Boolean" />
@@ -551,6 +569,8 @@
   <itemDefinition id="_69-buyCommentItem" structureRef="String" />
   <itemDefinition id="_69-designCommentItem" structureRef="String" />
   <itemDefinition id="_69-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_69-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_69-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_70-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_70-needclothesItem" structureRef="Boolean" />
@@ -569,7 +589,6 @@
   <itemDefinition id="_70-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_70-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_70-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_70-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_70-marketStaffItem" structureRef="String" />
   <itemDefinition id="_70-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_70-designValItem" structureRef="Boolean" />
@@ -578,6 +597,8 @@
   <itemDefinition id="_70-buyCommentItem" structureRef="String" />
   <itemDefinition id="_70-designCommentItem" structureRef="String" />
   <itemDefinition id="_70-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_70-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_70-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_74-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_74-needclothesItem" structureRef="Boolean" />
@@ -596,7 +617,6 @@
   <itemDefinition id="_74-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_74-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_74-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_74-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_74-marketStaffItem" structureRef="String" />
   <itemDefinition id="_74-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_74-designValItem" structureRef="Boolean" />
@@ -605,6 +625,8 @@
   <itemDefinition id="_74-buyCommentItem" structureRef="String" />
   <itemDefinition id="_74-designCommentItem" structureRef="String" />
   <itemDefinition id="_74-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_74-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_74-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_75-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_75-needclothesItem" structureRef="Boolean" />
@@ -623,7 +645,6 @@
   <itemDefinition id="_75-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_75-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_75-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_75-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_75-marketStaffItem" structureRef="String" />
   <itemDefinition id="_75-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_75-designValItem" structureRef="Boolean" />
@@ -632,6 +653,8 @@
   <itemDefinition id="_75-buyCommentItem" structureRef="String" />
   <itemDefinition id="_75-designCommentItem" structureRef="String" />
   <itemDefinition id="_75-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_75-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_75-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_87-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_87-needclothesItem" structureRef="Boolean" />
@@ -650,7 +673,6 @@
   <itemDefinition id="_87-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_87-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_87-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_87-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_87-marketStaffItem" structureRef="String" />
   <itemDefinition id="_87-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_87-designValItem" structureRef="Boolean" />
@@ -659,6 +681,8 @@
   <itemDefinition id="_87-buyCommentItem" structureRef="String" />
   <itemDefinition id="_87-designCommentItem" structureRef="String" />
   <itemDefinition id="_87-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_87-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_87-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_80-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_80-needclothesItem" structureRef="Boolean" />
@@ -677,7 +701,6 @@
   <itemDefinition id="_80-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_80-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_80-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_80-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_80-marketStaffItem" structureRef="String" />
   <itemDefinition id="_80-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_80-designValItem" structureRef="Boolean" />
@@ -686,6 +709,8 @@
   <itemDefinition id="_80-buyCommentItem" structureRef="String" />
   <itemDefinition id="_80-designCommentItem" structureRef="String" />
   <itemDefinition id="_80-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_80-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_80-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_88-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_88-needclothesItem" structureRef="Boolean" />
@@ -704,7 +729,6 @@
   <itemDefinition id="_88-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_88-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_88-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_88-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_88-marketStaffItem" structureRef="String" />
   <itemDefinition id="_88-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_88-designValItem" structureRef="Boolean" />
@@ -713,6 +737,8 @@
   <itemDefinition id="_88-buyCommentItem" structureRef="String" />
   <itemDefinition id="_88-designCommentItem" structureRef="String" />
   <itemDefinition id="_88-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_88-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_88-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_103-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_103-needclothesItem" structureRef="Boolean" />
@@ -731,7 +757,6 @@
   <itemDefinition id="_103-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_103-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_103-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_103-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_103-marketStaffItem" structureRef="String" />
   <itemDefinition id="_103-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_103-designValItem" structureRef="Boolean" />
@@ -740,6 +765,8 @@
   <itemDefinition id="_103-buyCommentItem" structureRef="String" />
   <itemDefinition id="_103-designCommentItem" structureRef="String" />
   <itemDefinition id="_103-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_103-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_103-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_96-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_96-needclothesItem" structureRef="Boolean" />
@@ -758,7 +785,6 @@
   <itemDefinition id="_96-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_96-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_96-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_96-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_96-marketStaffItem" structureRef="String" />
   <itemDefinition id="_96-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_96-designValItem" structureRef="Boolean" />
@@ -767,6 +793,8 @@
   <itemDefinition id="_96-buyCommentItem" structureRef="String" />
   <itemDefinition id="_96-designCommentItem" structureRef="String" />
   <itemDefinition id="_96-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_96-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_96-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_110-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_110-needclothesItem" structureRef="Boolean" />
@@ -785,7 +813,6 @@
   <itemDefinition id="_110-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_110-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_110-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_110-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_110-marketStaffItem" structureRef="String" />
   <itemDefinition id="_110-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_110-designValItem" structureRef="Boolean" />
@@ -794,6 +821,8 @@
   <itemDefinition id="_110-buyCommentItem" structureRef="String" />
   <itemDefinition id="_110-designCommentItem" structureRef="String" />
   <itemDefinition id="_110-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_110-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_110-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_107-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_107-needclothesItem" structureRef="Boolean" />
@@ -812,7 +841,6 @@
   <itemDefinition id="_107-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_107-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_107-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_107-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_107-marketStaffItem" structureRef="String" />
   <itemDefinition id="_107-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_107-designValItem" structureRef="Boolean" />
@@ -821,6 +849,8 @@
   <itemDefinition id="_107-buyCommentItem" structureRef="String" />
   <itemDefinition id="_107-designCommentItem" structureRef="String" />
   <itemDefinition id="_107-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_107-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_107-paymentokItem" structureRef="Boolean" />
 
   <itemDefinition id="_115-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_115-needclothesItem" structureRef="Boolean" />
@@ -839,7 +869,6 @@
   <itemDefinition id="_115-epositokItem" structureRef="Boolean" />
   <itemDefinition id="_115-procurementerrorItem" structureRef="Boolean" />
   <itemDefinition id="_115-volumeproductionItem" structureRef="Boolean" />
-  <itemDefinition id="_115-paymentokItem" structureRef="Boolean" />
   <itemDefinition id="_115-marketStaffItem" structureRef="String" />
   <itemDefinition id="_115-buyValItem" structureRef="Boolean" />
   <itemDefinition id="_115-designValItem" structureRef="Boolean" />
@@ -848,6 +877,8 @@
   <itemDefinition id="_115-buyCommentItem" structureRef="String" />
   <itemDefinition id="_115-designCommentItem" structureRef="String" />
   <itemDefinition id="_115-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_115-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_115-paymentokItem" structureRef="Boolean" />
 
   <process processType="Private" isExecutable="true" id="nju.software.fmc.bpmn" name="Sample Process" tns:packageName="defaultPackage" >
 
@@ -869,7 +900,6 @@
     <property id="epositok" itemSubjectRef="_epositokItem"/>
     <property id="procurementerror" itemSubjectRef="_procurementerrorItem"/>
     <property id="volumeproduction" itemSubjectRef="_volumeproductionItem"/>
-    <property id="paymentok" itemSubjectRef="_paymentokItem"/>
     <property id="marketStaff" itemSubjectRef="_marketStaffItem"/>
     <property id="buyVal" itemSubjectRef="_buyValItem"/>
     <property id="designVal" itemSubjectRef="_designValItem"/>
@@ -878,6 +908,8 @@
     <property id="buyComment" itemSubjectRef="_buyCommentItem"/>
     <property id="designComment" itemSubjectRef="_designCommentItem"/>
     <property id="produceComment" itemSubjectRef="_produceCommentItem"/>
+    <property id="receiveMoney" itemSubjectRef="_receiveMoneyItem"/>
+    <property id="paymentok" itemSubjectRef="_paymentokItem"/>
 
     <laneSet>
       <lane name="financeManager" >
@@ -1297,12 +1329,12 @@
     <userTask id="_41" name="确认样衣制作金" >
       <ioSpecification>
         <dataInput id="_41_TaskNameInput" name="TaskName" />
-        <dataOutput id="_41_receivedsamplejinOutput" name="receivedsamplejin" />
+        <dataOutput id="_41_receiveMoneyOutput" name="receiveMoney" />
         <inputSet>
           <dataInputRefs>_41_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
-          <dataOutputRefs>_41_receivedsamplejinOutput</dataOutputRefs>
+          <dataOutputRefs>_41_receiveMoneyOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -1313,8 +1345,8 @@
         </assignment>
       </dataInputAssociation>
       <dataOutputAssociation>
-        <sourceRef>_41_receivedsamplejinOutput</sourceRef>
-        <targetRef>receivedsamplejin</targetRef>
+        <sourceRef>_41_receiveMoneyOutput</sourceRef>
+        <targetRef>receiveMoney</targetRef>
       </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
@@ -1698,12 +1730,12 @@
     <userTask id="_80" name="30%定金确认" >
       <ioSpecification>
         <dataInput id="_80_TaskNameInput" name="TaskName" />
-        <dataOutput id="_80_epositokOutput" name="epositok" />
+        <dataOutput id="_80_receiveMoneyOutput" name="receiveMoney" />
         <inputSet>
           <dataInputRefs>_80_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
-          <dataOutputRefs>_80_epositokOutput</dataOutputRefs>
+          <dataOutputRefs>_80_receiveMoneyOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -1714,8 +1746,8 @@
         </assignment>
       </dataInputAssociation>
       <dataOutputAssociation>
-        <sourceRef>_80_epositokOutput</sourceRef>
-        <targetRef>epositok</targetRef>
+        <sourceRef>_80_receiveMoneyOutput</sourceRef>
+        <targetRef>receiveMoney</targetRef>
       </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
@@ -1808,12 +1840,12 @@
     <userTask id="_110" name="70%金额确认" >
       <ioSpecification>
         <dataInput id="_110_TaskNameInput" name="TaskName" />
-        <dataOutput id="_110_paymentokOutput" name="paymentok" />
+        <dataOutput id="_110_receiveMoneyOutput" name="receiveMoney" />
         <inputSet>
           <dataInputRefs>_110_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
-          <dataOutputRefs>_110_paymentokOutput</dataOutputRefs>
+          <dataOutputRefs>_110_receiveMoneyOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -1824,8 +1856,8 @@
         </assignment>
       </dataInputAssociation>
       <dataOutputAssociation>
-        <sourceRef>_110_paymentokOutput</sourceRef>
-        <targetRef>paymentok</targetRef>
+        <sourceRef>_110_receiveMoneyOutput</sourceRef>
+        <targetRef>receiveMoney</targetRef>
       </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
@@ -1978,7 +2010,7 @@ return true;
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return confirmquote;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_44-_43" sourceRef="_44" targetRef="_43" name="receivedsamplejin" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receivedsamplejin;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receiveMoney;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_137-_40" sourceRef="_137" targetRef="_40" name="noeidtquote" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !eidtquote;</conditionExpression>
@@ -1993,7 +2025,7 @@ return true;
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !purchaseerror;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_44-_49" sourceRef="_44" targetRef="_49" name="noreceivedsamplejin" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receivedsamplejin;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveMoney;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_49-_48" sourceRef="_49" targetRef="_48" />
     <sequenceFlow id="_54-_55" sourceRef="_54" targetRef="_55" />
@@ -2048,17 +2080,17 @@ return true;
     <sequenceFlow id="_80-_84" sourceRef="_80" targetRef="_84" />
     <sequenceFlow id="_89-_87" sourceRef="_89" targetRef="_87" />
     <sequenceFlow id="_84-_86" sourceRef="_84" targetRef="_86" name="noepositok" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !epositok;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receiveMoney;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_74-_80" sourceRef="_74" targetRef="_80" />
     <sequenceFlow id="_87-_94" sourceRef="_87" targetRef="_94" />
     <sequenceFlow id="_84-_89" sourceRef="_84" targetRef="_89" name="epositok" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return epositok;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveMoney;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_89-_88" sourceRef="_89" targetRef="_88" />
     <sequenceFlow id="_88-_91" sourceRef="_88" targetRef="_91" />
     <sequenceFlow id="_94-_91" sourceRef="_94" targetRef="_91" name="noprocurementerror" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !procurementerror;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return true;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_96-_102" sourceRef="_96" targetRef="_102" />
     <sequenceFlow id="_102-_103" sourceRef="_102" targetRef="_103" name="volumeproduction" tns:priority="1" >
@@ -2068,16 +2100,16 @@ return true;
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !volumeproduction;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_94-_99" sourceRef="_94" targetRef="_99" name="procurementerror" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return procurementerror;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return false;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_91-_96" sourceRef="_91" targetRef="_96" />
     <sequenceFlow id="_107-_110" sourceRef="_107" targetRef="_110" />
     <sequenceFlow id="_103-_107" sourceRef="_103" targetRef="_107" />
     <sequenceFlow id="_114-_116" sourceRef="_114" targetRef="_116" name="nopaymentok" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !paymentok;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" >return false;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_114-_115" sourceRef="_114" targetRef="_115" name="paymentok" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return paymentok;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" >return true;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_110-_114" sourceRef="_110" targetRef="_114" />
     <sequenceFlow id="_115-_127" sourceRef="_115" targetRef="_127" />

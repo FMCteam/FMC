@@ -189,6 +189,21 @@ public class BuyServiceImpl implements BuyService {
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setOrder(orderDAO.findById(orderId));
 		orderInfo.setLogistics(logisticsDAO.findById(orderId));
+		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
+		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setFabricCosts(FabricCostDAO.findByOrderId(orderId));
+		orderInfo.setAccessoryCosts(AccessoryCostDAO.findByOrderId(orderId));
+
+		int SampleAmount = 0;
+		// 样衣总数量
+		List<Produce> produces = ProduceDAO.findProduceByOrderId(orderId);
+		for (Produce produce : produces) {
+			if (produce.getType().equals("sampleProduce")) {
+				SampleAmount = produce.getL() + produce.getM() + produce.getS()
+						+ produce.getXl() + produce.getXs() + produce.getXxl();
+			}
+		}
+		orderInfo.getData().put("SampleAmount", new Integer(SampleAmount));
 		orderInfo.setTask(task);
 		return orderInfo;
 	}
@@ -226,6 +241,21 @@ public class BuyServiceImpl implements BuyService {
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setOrder(orderDAO.findById(orderId));
 		orderInfo.setLogistics(logisticsDAO.findById(orderId));
+		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
+		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setFabricCosts(FabricCostDAO.findByOrderId(orderId));
+		orderInfo.setAccessoryCosts(AccessoryCostDAO.findByOrderId(orderId));
+
+		int SampleAmount = 0;
+		// 样衣总数量
+		List<Produce> produces = ProduceDAO.findProduceByOrderId(orderId);
+		for (Produce produce : produces) {
+			if (produce.getType().equals("sampleProduce")) {
+				SampleAmount = produce.getL() + produce.getM() + produce.getS()
+						+ produce.getXl() + produce.getXs() + produce.getXxl();
+			}
+		}
+		orderInfo.getData().put("SampleAmount", new Integer(SampleAmount));
 		orderInfo.setTask(task);
 		return orderInfo;
 	}

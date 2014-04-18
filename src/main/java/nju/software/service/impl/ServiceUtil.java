@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.EmployeeDAO;
+import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.MoneyDAO;
@@ -15,9 +17,13 @@ import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.PackageDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
+import nju.software.dao.impl.QuoteDAO;
 import nju.software.dao.impl.VersionDataDAO;
+import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
+import nju.software.dataobject.Quote;
 import nju.software.model.OrderInfo;
 import nju.software.util.JbpmAPIUtil;
 
@@ -36,7 +42,13 @@ public class ServiceUtil {
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) jbpmAPIUtil
 					.getVariable(task, "orderId");
+			
+			System.out.println( jbpmAPIUtil
+					.getVariable(task, "orderId")+" receiveMoney:"+jbpmAPIUtil
+					.getVariable(task, "receiveMoney")+" task:"+task.getName());
 			Map<String, Object> model = new HashMap<String, Object>();
+			System.out.println(jbpmAPIUtil
+					.getVariable(task, "paymentok"));
 			Order order = orderDAO.findById(orderId);
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -69,6 +81,20 @@ public class ServiceUtil {
 		model.put("versions", versionDataDAO.findByOrderId(orderId));
 		return model;
 	}
+	
+	
+	public Map<String, Object> getBasicOrderModelWithQuote(String actorId,
+			String taskName, Integer orderId) {
+		Map<String, Object> model=getBasicOrderModel(actorId, taskName, orderId);
+		Quote quote = quoteDAO.findById(orderId);
+		model.put("quote", quote);
+		List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(orderId);
+		model.put("fabricCosts", fabricCosts);
+		List<AccessoryCost> accessoryCosts = accessoryCostDAO
+				.findByOrderId(orderId);
+		model.put("accessoryCosts", accessoryCosts);
+		return model;
+	}
 
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
@@ -94,5 +120,11 @@ public class ServiceUtil {
 	private MoneyDAO moneyDAO;
 	@Autowired
 	private VersionDataDAO versionDataDAO;
+	@Autowired
+	private QuoteDAO quoteDAO;
+	@Autowired
+	private FabricCostDAO fabricCostDAO;
+	@Autowired
+	private AccessoryCostDAO accessoryCostDAO;
 
 }

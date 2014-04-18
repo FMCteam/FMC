@@ -225,18 +225,26 @@ public class ProduceServiceImpl implements ProduceService {
 				TASK_PRODUCE, orderId);
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setOrder(orderDAO.findById(orderId));
+		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
+		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
+		orderInfo.setLogistics(logisticsDAO.findById(orderId));
 		orderInfo.setTask(task);
+		orderInfo.setTaskId(task.getId());
+		Produce produce = new Produce();
+		produce.setOid(orderId);
+		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
+		orderInfo.setProduced(produceDAO.findByExample(produce));
 		return orderInfo;
 	}
 
 	@Override
 	public boolean pruduceSubmit(String[] pid, String[] askAmount, long taskId) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < pid.length; i++) {
-			Product product = productDAO.findById(Integer.parseInt(pid[i]));
-			product.setAskAmount(Integer.parseInt(askAmount[i]));
-			productDAO.attachDirty(product);
-		}
+//		for (int i = 0; i < pid.length; i++) {
+//			Product product = productDAO.findById(Integer.parseInt(pid[i]));
+//			product.setAskAmount(Integer.parseInt(askAmount[i]));
+//			productDAO.attachDirty(product);
+//		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			data.put("volumeproduction", true);

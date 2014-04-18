@@ -334,6 +334,7 @@ public class MarketController {
 		order.setSpecialProcess(specialProcess);
 		order.setOtherRequirements(otherRequirements);
 		order.setAskAmount(askAmount);
+		order.setSampleAmount(0);
 		order.setAskProducePeriod(askProducePeriod);
 		order.setAskDeliverDate(askDeliverDate);
 		order.setAskCodeNumber(askCodeNumber);

@@ -284,7 +284,7 @@ public class ProduceController {
 		String taskId=request.getParameter("taskId");
 		String pid=request.getParameter("pid");
 		String askAmount=request.getParameter("produceAmount");
-		produceService.pruduceSubmit(pid.split(","), askAmount.split(","), Long.parseLong(taskId));
+		produceService.pruduceSubmit(null, null, Long.parseLong(taskId));
 		return "forward:/produce/produceList.do";
 	}
 }

@@ -232,7 +232,7 @@ public class JbpmTest {
 		long taskId = getTaskId(FinanceServiceImpl.ACTOR_FINANCE_MANAGER,
 				FinanceServiceImpl.TASK_CONFIRM_SAMPLE_MONEY, orderId);
 		Map data=new HashMap <String,Object> ();
-		data.put("receivedsamplejin", true);
+		data.put(FinanceServiceImpl.RESULT_MONEY, true);
 		completeTask(taskId, data, FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
 		
 		
@@ -310,7 +310,7 @@ public class JbpmTest {
 		taskId = getTaskId(FinanceServiceImpl.ACTOR_FINANCE_MANAGER,
 				FinanceServiceImpl.TASK_CONFIRM_DEPOSIT, orderId);
 		data=new HashMap <String,Object> ();
-		data.put("epositok", true);
+		data.put(FinanceServiceImpl.RESULT_MONEY, true);
 		completeTask(taskId, data, FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
 		
 		
@@ -320,7 +320,7 @@ public class JbpmTest {
 		data=new HashMap <String,Object> ();
 		data.put("procurementerror", false);
 		completeTask(taskId, data, BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
-		
+		System.out.println("采购部完成\n\n\n");
 		
 		//设计部确认
 		taskId = getTaskId(DesignServiceImpl.ACTOR_DESIGN_MANAGER,

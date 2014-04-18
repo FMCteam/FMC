@@ -331,7 +331,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public List<OrderInfo> getSendClothesUnstoredList() {
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES);
+				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
 		List<OrderInfo> unsore_models = new ArrayList<>();
 
 		for (TaskSummary task : tasks) {
