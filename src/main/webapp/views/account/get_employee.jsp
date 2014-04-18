@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
 	                    <c:forEach var="employee" items="${employee_list}" >
-	                        <tr class="gradeA">
+	                        <tr>
 	                            <td>${employee.employeeName }</td>
 								<td>${employee.sex }</td>
 								<td>${employee.age }</td>
