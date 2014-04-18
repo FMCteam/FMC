@@ -53,7 +53,7 @@ public class QualityController {
 		List<Map<String,Object>> orderList = qualityService.getCheckQualityList();
 		model.addAttribute("list", orderList);
 		model.addAttribute("taskName", "设计验证");
-		model.addAttribute("url", "/design/verifyDesignDetail.do");
+		model.addAttribute("url", "/quality/checkQualityDetail.do");
 		return "quality/checkQualityList";
 	}
 	
