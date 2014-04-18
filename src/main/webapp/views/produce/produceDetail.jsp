@@ -36,7 +36,7 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 				<div class="tab-pane active" id="produceList">
-					<form method="post" action="${ctx}/produce/produceSubmit.do" onsubmit="return deal()">
+					<form method="post" action="${ctx}/produce/produceSubmit.do" onsubmit="return getProduce()">
 						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span1" rowspan="${fn:length(orderInfo.produce)+1}">计划生产数量</td>
