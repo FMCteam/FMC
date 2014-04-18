@@ -30,7 +30,7 @@ public interface ProduceService {
 	
 	public List<Map<String, Object>> getProduceSampleList();
 	
-	public OrderInfo getProduceSampleDetail(Integer orderId) ;
+	public Map<String,Object> getProduceSampleDetail(Integer orderId) ;
 	
 	public boolean produceSampleSubmit(long taskId, boolean result, List<Produce> produceList);
 	
@@ -39,7 +39,7 @@ public interface ProduceService {
 	
 	public List<Map<String, Object>> getProduceList();
 	
-	public OrderInfo getProduceDetail(Integer orderId);
+	public Map<String,Object> getProduceDetail(Integer orderId);
 
 	
   public List<Map<String, Object>> getComputeProduceCostList();
@@ -64,6 +64,6 @@ public interface ProduceService {
 
 	public List<Map<String, Object>> getVerifyProduceList();
 
-	public Map<String,Object> getVerifyProduceDetail(int orderId, long taskId);
+	public Map<String,Object> getVerifyProduceDetail(int orderId);
 
 }

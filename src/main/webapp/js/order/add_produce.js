@@ -21,7 +21,7 @@ function getProduce(){
 	$("#produce_xl").val(getInputString("produce_xl"));
 	$("#produce_xxl").val(getInputString("produce_xxl"));
 
-	return true;
+	return confirm('确认提交？');
 }
 
 function init(){

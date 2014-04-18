@@ -8,7 +8,8 @@
 			<div class="widget">
 				<h4 class="widgettitle">设计成本核算</h4>
 				<div class="widgetcontent">
-					<form id="costAccounting_form" method="post" action="${ctx }/design/computeDesignCostSubmit.do">
+					<form id="costAccounting_form" onsubmit="return confirm('确认提交？')"
+					 method="post" action="${ctx }/design/computeDesignCostSubmit.do">
 						<table class="table table-striped table-bordered table-hover">
 									<tr>
 								<td rowspan="3">客户信息</td>

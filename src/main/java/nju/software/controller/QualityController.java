@@ -62,12 +62,9 @@ public class QualityController {
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyProductDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String orderId = request.getParameter("id");
-		String s_taskId = request.getParameter("tid");
-		String s_processId = request.getParameter("pid");
+		String orderId = request.getParameter("orderId");
 		int id = Integer.parseInt(orderId);
-		long taskId = Long.parseLong(s_taskId);
-		OrderInfo oi = qualityService.getCheckQualityDetail(id,taskId);
+		Map<String,Object> oi = qualityService.getCheckQualityDetail(id);
 		model.addAttribute("orderInfo", oi);
 		return "quality/checkQualityDetail";
 	}

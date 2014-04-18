@@ -85,13 +85,9 @@ public class ProduceController {
 	public String verifyProduceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("produce verify ================ show detail");
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
 		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		long taskId = 0;
-		Map<String,Object> orderInfo = produceService.getVerifyProduceDetail(orderId_request, taskId);
+		int orderId = Integer.parseInt(s_orderId_request);
+		Map<String,Object> orderInfo = produceService.getVerifyProduceDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "produce/verifyProduceDetail";
 	}
@@ -222,7 +218,7 @@ public class ProduceController {
 	public String produceSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
+		Map<String,Object> orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/produce/produceSampleDetail";
 	}
@@ -271,7 +267,7 @@ public class ProduceController {
 	public String produceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
-		OrderInfo orderInfo=produceService.getProduceDetail(Integer.parseInt(orderId));
+		Map<String,Object> orderInfo=produceService.getProduceDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/produce/produceDetail";
 	}

@@ -66,7 +66,7 @@ public class DesignServiceImpl implements DesignService {
 	}
 
 	@Override
-	public Map<String,Object> getVerifyDesignDetail(int orderId, long taskId) {
+	public Map<String,Object> getVerifyDesignDetail(int orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModel(ACTOR_DESIGN_MANAGER,
 				TASK_VERIFY_DESIGN, orderId);
@@ -103,15 +103,10 @@ public class DesignServiceImpl implements DesignService {
 	}
 
 	@Override
-	public OrderInfo getComputeDesignCostDetail(Integer orderId) {
+	public Map<String,Object> getComputeDesignCostDetail(Integer orderId) {
 		
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
+		return service.getBasicOrderModel(ACTOR_DESIGN_MANAGER,
 				TASK_COMPUTE_DESIGN_COST, orderId);
-		OrderInfo model = new OrderInfo();
-		model.setOrder(orderDAO.findById(orderId));
-		model.setTask(task);
-		model.setTaskId(task.getId());
-		return model;
 	}
 
 	@Override
@@ -147,17 +142,10 @@ public class DesignServiceImpl implements DesignService {
 	}
 
 	@Override
-	public OrderInfo getUploadDesignDetail(Integer orderId) {
+	public Map<String,Object> getUploadDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
-				TASK_UPLOAD_DESIGN, orderId);
-		OrderInfo model = new OrderInfo();
-		model.setOrder(orderDAO.findById(orderId));
-		model.setLogistics(logisticsDAO.findById(orderId));
-		model.setFabrics(fabricDAO.findByOrderId(orderId));
-		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		model.setTask(task);
-		model.setTaskId(task.getId());
+		Map<String,Object> model=service.getBasicOrderModel(
+				ACTOR_DESIGN_MANAGER, TASK_UPLOAD_DESIGN, orderId);
 		return model;
 	}
 
@@ -204,19 +192,12 @@ public class DesignServiceImpl implements DesignService {
 	}
 
 	@Override
-	public OrderInfo getModifyDesignDetail(Integer orderId) {
+	public Map<String,Object> getModifyDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-				TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
-						 TASK_MODIFY_DESIGN , orderId);
-				OrderInfo model = new OrderInfo();
-				model.setOrder(orderDAO.findById(orderId));
-				model.setLogistics(logisticsDAO.findById(orderId));
-				model.setFabrics(fabricDAO.findByOrderId(orderId));
-				model.setAccessorys(accessoryDAO.findByOrderId(orderId));
-				model.setCad(designCadDAO.findByOrderId(orderId).get(0));
-				model.setTask(task);
-				model.setTaskId(task.getId());
-				return model;
+		Map<String,Object> model=service.getBasicOrderModel(
+				ACTOR_DESIGN_MANAGER, TASK_MODIFY_DESIGN, orderId);
+		model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
+		return model;
 	}
 
 	@Override
@@ -226,18 +207,11 @@ public class DesignServiceImpl implements DesignService {
 	}
 
 	@Override
-	public OrderInfo getConfirmDesignDetail(Integer orderId) {
+	public Map<String,Object> getConfirmDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_DESIGN_MANAGER,
-				 TASK_CONFIRM_DESIGN , orderId);
-		OrderInfo model = new OrderInfo();
-		model.setOrder(orderDAO.findById(orderId));
-		model.setLogistics(logisticsDAO.findById(orderId));
-		model.setFabrics(fabricDAO.findByOrderId(orderId));
-		model.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		model.setCad(designCadDAO.findByOrderId(orderId).get(0));
-		model.setTask(task);
-		model.setTaskId(task.getId());
+		Map<String,Object> model=service.getBasicOrderModel(
+				ACTOR_DESIGN_MANAGER, TASK_CONFIRM_DESIGN, orderId);
+		model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
 		return model;
 	}
 

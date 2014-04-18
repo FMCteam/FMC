@@ -100,11 +100,9 @@ public class DesignController {
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-//		String actorId = account.getUserRole();
 		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		long taskId = 0;
-		Map<String,Object> orderInfo = designService.getVerifyDesignDetail(orderId_request, taskId);
+		int orderId = Integer.parseInt(s_orderId_request);
+		Map<String,Object> orderInfo = designService.getVerifyDesignDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);	
 		return "design/verifyDesignDetail";
 	}
@@ -154,7 +152,7 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		
 		String orderId=request.getParameter("orderId");
-		OrderInfo orderInfo=designService.getComputeDesignCostDetail(Integer.parseInt(orderId));
+		Map<String,Object> orderInfo=designService.getComputeDesignCostDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 	
 		
@@ -227,7 +225,7 @@ public class DesignController {
 	public String getUploadDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
        String orderId=request.getParameter("orderId");
-	   OrderInfo orderInfo=designService.getUploadDesignDetail(Integer.parseInt(orderId));
+       Map<String,Object> orderInfo=designService.getUploadDesignDetail(Integer.parseInt(orderId));
 	   model.addAttribute("orderInfo", orderInfo);
 	   return "design/getUploadDesignDetail";
 	}
@@ -320,7 +318,7 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		 
 		 String orderId=request.getParameter("orderId");
-		   OrderInfo orderInfo=designService.getModifyDesignDetail(Integer.parseInt(orderId));
+		 Map<String,Object> orderInfo=designService.getModifyDesignDetail(Integer.parseInt(orderId));
 		   model.addAttribute("orderInfo", orderInfo);
 		  
 		
@@ -414,13 +412,8 @@ public class DesignController {
 
 		 
 		 String orderId=request.getParameter("orderId");
-		   OrderInfo orderInfo=designService.getConfirmDesignDetail(Integer.parseInt(orderId));
-		   model.addAttribute("orderInfo", orderInfo);
-		  
-		
-	
-		
-		
+		 Map<String,Object> orderInfo=designService.getConfirmDesignDetail(Integer.parseInt(orderId));
+		 model.addAttribute("orderInfo", orderInfo);
 		return "design/getConfirmDesignDetail";
 	}
 	
@@ -438,44 +431,44 @@ public class DesignController {
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		
-		
+
+
 		String orderId = (String) request.getParameter("orderId");
-		
+
 		String taskId = request.getParameter("taskId");
-	
-	 MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
-		
-		  MultipartFile file = multipartRequest.getFile("CADFile");
-		     
-          	  String filename=file.getOriginalFilename();     
-		      FileOperateUtil.Upload(file);
-		   
-		    String url="D:/"+"/"+ filename;
-		    
-		    Timestamp uploadTime = new Timestamp(new Date().getTime());
-		 
-  //上传文件实现一致，公用uploadDesign方法代码		    
-		    
-		 designService.uploadDesignSubmit(
+
+		MultipartHttpServletRequest multipartRequest =(MultipartHttpServletRequest) request;
+
+		MultipartFile file = multipartRequest.getFile("CADFile");
+
+		String filename=file.getOriginalFilename();     
+		FileOperateUtil.Upload(file);
+
+		String url="D:/"+"/"+ filename;
+
+		Timestamp uploadTime = new Timestamp(new Date().getTime());
+
+		//上传文件实现一致，公用uploadDesign方法代码		    
+
+		designService.uploadDesignSubmit(
 				Integer.parseInt(orderId), 
-				 Long.parseLong(taskId),
-				 url,
-				 uploadTime);
+				Long.parseLong(taskId),
+				url,
+				uploadTime);
 		return "redirect:/design/getConfirmDesignList.do";
 	}
-	
+
 	@RequestMapping(value = "design/downloadCadSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String downloadCadSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		
-	    String url = request.getParameter("cadUrl");
-	    System.out.println("download:" + url);
-	    FileOperateUtil.Download(response, url);
-	    System.out.println("download end");
-	    
-	    return null;
+
+		String url = request.getParameter("cadUrl");
+		System.out.println("download:" + url);
+		FileOperateUtil.Download(response, url);
+		System.out.println("download end");
+
+		return null;
 //		return "redirect:/design/getModifyDesignDetail.do";
 	}
 	
