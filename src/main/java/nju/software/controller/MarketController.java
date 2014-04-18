@@ -1021,7 +1021,7 @@ public class MarketController {
 		List<Map<String, Object>> orderList = marketService.getConfirmProductList(actorId);
 		model.put("list", orderList);
 		model.addAttribute("taskName", "确认合同加工单");
-		model.addAttribute("url", "/market/confirmProductDetail.do");
+		model.addAttribute("url", "/market/confirmProduceOrderDetail.do");
 		return "market/confirmProductList";
 	}
 
@@ -1107,8 +1107,8 @@ public class MarketController {
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int id = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
+//		String s_taskId = request.getParameter("taskId");
+//		long taskId = Long.parseLong(s_taskId);
 		OrderInfo orderInfo = marketService.getConfirmProductDetail(account.getUserId(), id);
 		model.addAttribute("orderInfo", orderInfo);
 

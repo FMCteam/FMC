@@ -4,8 +4,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import nju.software.dataobject.Account;
 import nju.software.model.OrderInfo;
 import nju.software.service.DesignService;
@@ -13,6 +15,7 @@ import nju.software.service.OrderService;
 import nju.software.service.impl.JbpmTest;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -468,7 +471,9 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		
 	    String url = request.getParameter("cadUrl");
+	    System.out.println("download:" + url);
 	    FileOperateUtil.Download(response, url);
+	    System.out.println("download end");
 		
 		return "redirect:/design/getModifyDesignDetail.do";
 	}
