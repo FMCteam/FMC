@@ -1,16 +1,11 @@
 package nju.software.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.drools.runtime.StatefulKnowledgeSession;
 import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricCostDAO;
@@ -19,19 +14,10 @@ import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.ProduceDAO;
-import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
-import nju.software.dataobject.Account;
-import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
-import nju.software.dataobject.Logistics;
-import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
-import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
-import nju.software.model.OrderModel;
-import nju.software.model.ProductModel;
-import nju.software.dataobject.Quote;
 import nju.software.service.BuyService;
 import nju.software.util.JbpmAPIUtil;
 

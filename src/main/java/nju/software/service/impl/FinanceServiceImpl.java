@@ -3,11 +3,8 @@ package nju.software.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.jbpm.task.query.TaskSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
@@ -150,7 +147,7 @@ public class FinanceServiceImpl implements FinanceService {
 		model.put("taskName", "确认大货尾款");
 		model.put("tabName", "大货尾款");
 		model.put("type", "大货尾款");
-		model.put("url", "/finance/confirmDepositSubmit.do");
+		model.put("url", "/finance/confirmFinalPaymentSubmit.do");
 		model.put("moneyName", "70%尾款");
 		return model;
 		

@@ -17,7 +17,7 @@
                 <div class="widget">
                     <h4 class="widgettitle">修改账户</h4>
                     <div class="widgetcontent">
-                    <form class="stdform" action="${ctx }/customer/doModify.do" method="post">
+                    <form class="stdform" action="${ctx }/account/modifyCustomerSubmit.do" method="post">
                         <p>
                             <label>客户登录名</label>
                             <span class="field"><input type="text" name="user_name"   class="input-medium" value="${account_to_modify.userName }" readonly>

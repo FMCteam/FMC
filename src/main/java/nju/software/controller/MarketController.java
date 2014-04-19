@@ -1192,4 +1192,26 @@ public class MarketController {
 				Double.parseDouble(discount), Double.parseDouble(total) );
 		return "redirect:/market/signContractList.do";
 	}
+	
+	@RequestMapping(value = "/market/orderList.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String orderList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Account account=(Account) request.getSession().getAttribute("cur_user");
+		List<Map<String,Object>>list=marketService.getOrderList(account.getUserId());
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "订单列表");
+		model.addAttribute("url", "/market/orderDetail.do");
+		return "/market/orderList";
+	}
+	
+	@RequestMapping(value = "/market/orderDetail.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String orderDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		Map<String,Object>orderInfo=marketService.getOrderDetail(orderId);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/market/orderDetail";
+	}
 }

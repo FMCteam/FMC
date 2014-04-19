@@ -1,16 +1,13 @@
 package nju.software.service.impl;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.jbpm.task.query.TaskSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
@@ -27,7 +24,6 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Produce;
-import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 
 
@@ -42,25 +38,26 @@ public class JbpmTest {
 		order.setCustomerId(1);
 		order.setOrderState("Test");
 		order.setOrderTime(new Timestamp(new Date().getTime()));
-		order.setCustomerName("Test");
-		order.setCustomerCompany("Test");
-		order.setCustomerCompanyFax("Test");
-		order.setCustomerPhone1("Test");
-		order.setCustomerPhone2("Test");
+		order.setCustomerName("张三");
+		order.setCustomerCompany("制造链");
+		order.setCustomerCompanyFax("025-666-888");
+		order.setCustomerPhone1("15991231235");
+		order.setCustomerPhone2("15991231234");
 		order.setCustomerCompanyAddress("Test");
-		order.setStyleName("Test");
-		order.setFabricType("Test");
-		order.setStyleSex("Test");
-		order.setStyleSeason("Test");
-		order.setSpecialProcess("Test");
-		order.setOtherRequirements("Test");
-		order.setAskAmount(1);
-		order.setAskProducePeriod("Test");
+		order.setStyleName("炫酷");
+		order.setFabricType("针织 梭织");
+		order.setStyleSex("男");
+		order.setStyleSeason("春夏");
+		order.setSpecialProcess("水印");
+		order.setOtherRequirements("其他");
+		order.setSampleAmount(20);
+		order.setAskAmount(120);
+		order.setAskProducePeriod("10");
 		order.setAskDeliverDate(new Timestamp(new Date().getTime()));
-		order.setAskCodeNumber("Test");
+		order.setAskCodeNumber("XXL");
 		order.setHasPostedSampleClothes((short) 1);
 		order.setIsNeedSampleClothes((short) 1);
-		order.setOrderSource("Test");
+		order.setOrderSource("客户推荐 老王");
 		order.setLogisticsState(0);
 		orderDAO.save(order);
 		orderId=order.getOrderId();
@@ -224,9 +221,7 @@ public class JbpmTest {
 	public void completeProduceSample(String actorId){
 		completeConfirmQuote(actorId);
 		
-		
-		
-		
+
 		
 		//样衣制作金确认
 		long taskId = getTaskId(FinanceServiceImpl.ACTOR_FINANCE_MANAGER,
@@ -262,7 +257,7 @@ public class JbpmTest {
 	}
 	
 	
-	public void completeCheckQuality(String actorId){
+	public void completeProduceConfirm(String actorId,boolean result){
 		completeProduceSample(actorId);
 		
 		
@@ -286,7 +281,7 @@ public class JbpmTest {
 		taskId = getTaskId(BuyServiceImpl.ACTOR_PURCHASE_MANAGER,
 				BuyServiceImpl.TASK_CONFIRM_PURCHASE, orderId);
 		data=new HashMap <String,Object> ();
-		data.put("isworksheet", true);
+		data.put("isworksheet", result);
 		completeTask(taskId, data, BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
 		
 		
@@ -296,12 +291,15 @@ public class JbpmTest {
 		data=new HashMap <String,Object> ();
 		//data.put("comfirmworksheet", true);
 		completeTask(taskId, data, DesignServiceImpl.ACTOR_DESIGN_MANAGER);
-		
-		
+	}
+	
+	
+	public void completeBeforeProduce(String actorId){
+		completeProduceConfirm(actorId, true);
 		//签订合同加工单
-		taskId = getTaskId(actorId,
+		long taskId = getTaskId(actorId,
 				MarketServiceImpl.TASK_SIGN_CONTRACT, orderId);
-		data=new HashMap <String,Object> ();
+		Map<String,Object> data=new HashMap <String,Object> ();
 		//data.put("comfirmworksheet", true);
 		completeTask(taskId, data, actorId);
 		
@@ -328,6 +326,13 @@ public class JbpmTest {
 		data=new HashMap <String,Object> ();
 		//data.put("comfirmworksheet", true);
 		completeTask(taskId, data, DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+	}
+	
+	
+	
+	public void completeCheckQuality(String actorId){
+		
+		completeBeforeProduce(actorId);
 		
 		
 		for(int i=0;i<3;i++){
@@ -347,9 +352,9 @@ public class JbpmTest {
 		
 		
 		//生产
-		taskId = getTaskId(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER,
+		long taskId = getTaskId(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER,
 				ProduceServiceImpl.TASK_PRODUCE, orderId);
-		data=new HashMap <String,Object> ();
+		Map<String,Object>data=new HashMap <String,Object> ();
 		data.put("volumeproduction", true);
 		completeTask(taskId, data, ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
 		

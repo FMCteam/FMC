@@ -109,4 +109,8 @@ public interface MarketService {
 
 	public OrderInfo getConfirmProductDetail(Integer userId, int id);
 	
+	public List<Map<String, Object>>getOrderList(Integer employeeId);
+	
+	public Map<String, Object>getOrderDetail(Integer orderId);
+	
 }
