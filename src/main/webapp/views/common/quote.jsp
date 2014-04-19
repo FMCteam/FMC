@@ -26,9 +26,9 @@
 	<c:forEach var="accessory" items="${orderInfo.accessoryCosts}">
 		<tr>
 			<td>${accessory.accessoryName}</td>
-			<td>${accessory.tearPerMeter}</td>
+			<td>${accessory.tearPerPiece}</td>
 			<td>${accessory.price}</td>
-			<td>${accessory.costPerMeter}</td>
+			<td>${accessory.costPerPiece}</td>
 		</tr>
 	</c:forEach>
 	<tr>
