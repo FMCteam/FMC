@@ -52,6 +52,7 @@ import nju.software.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ntp.TimeStamp;
 import org.drools.runtime.process.WorkflowProcessInstance;
+import org.jbpm.task.Task;
 import org.jbpm.task.query.TaskSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -427,7 +428,7 @@ public class MarketController {
 		// long processId=Long.parseLong(s_processId);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		OrderInfo orderInfo = marketService.getModifyQuoteDetail(id, account.getUserId());
+		Map<String,Object> orderInfo = marketService.getModifyQuoteDetail(id, account.getUserId());
 		model.addAttribute("orderInfo", orderInfo);
 		return "market/modifyQuoteDetail";
 	}
@@ -475,7 +476,7 @@ public class MarketController {
 		int id = Integer.parseInt(orderId);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		OrderInfo oi = marketService.getModifyProductDetail(id, account.getUserId());
+		Map<String,Object> oi = marketService.getModifyProductDetail(id, account.getUserId());
 		model.addAttribute("orderInfo", oi);
 		return "market/modifyProductDetail";
 	}
@@ -576,7 +577,7 @@ public class MarketController {
 		int id = Integer.parseInt(s_id);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		OrderInfo orderModel = marketService.getMergeQuoteDetail(account.getUserId(), id);
+		Map<String,Object> orderModel = marketService.getMergeQuoteDetail(account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
 		model.addAttribute("merge_w", true);
 		return "market/mergeQuoteDetail";
@@ -638,7 +639,7 @@ public class MarketController {
 		int id = Integer.parseInt(s_id);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		OrderInfo orderModel = marketService.getVerifyQuoteDetail(account.getUserId(), id);
+		Map<String,Object> orderModel = marketService.getVerifyQuoteDetail(account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
 		return "market/verifyQuoteDetail";
 
@@ -688,10 +689,10 @@ public class MarketController {
 		// 修改
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		OrderInfo orderModel = marketService.getModifyOrderDetail(account.getUserId(), id);
+		Map<String,Object> orderModel = marketService.getModifyOrderDetail(account.getUserId(), id);
 		model.addAttribute("orderModel", orderModel);
-		String buyComment = jbpmAPIUtil.getVariable(orderModel.getTask(), "buyComment").toString();
-		String designComment = jbpmAPIUtil.getVariable(orderModel.getTask(), "designComment").toString();
+		String buyComment = jbpmAPIUtil.getVariable((TaskSummary)orderModel.get("task"), "buyComment").toString();
+		String designComment = jbpmAPIUtil.getVariable((TaskSummary)orderModel.get("task"), "designComment").toString();
 		model.addAttribute("buyComment", buyComment);
 		model.addAttribute("designComment", designComment);
 		return "market/modifyOrderDetail";
@@ -970,7 +971,7 @@ public class MarketController {
 		int id = Integer.parseInt(s_id);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		OrderInfo orderModel = marketService.getConfirmQuoteDetail(account.getUserId(), id);
+		Map<String, Object> orderModel = marketService.getConfirmQuoteDetail(account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
 		return "market/confirmQuoteDetail";
 	}
@@ -1109,7 +1110,7 @@ public class MarketController {
 		int id = Integer.parseInt(s_orderId_request);
 //		String s_taskId = request.getParameter("taskId");
 //		long taskId = Long.parseLong(s_taskId);
-		OrderInfo orderInfo = marketService.getConfirmProductDetail(account.getUserId(), id);
+		Map<String, Object> orderInfo = marketService.getConfirmProductDetail(account.getUserId(), id);
 		model.addAttribute("orderInfo", orderInfo);
 
 		return "market/confirmProductDetail";
@@ -1169,7 +1170,7 @@ public class MarketController {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
 		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo = marketService.getSignContractDetail(account
+		Map<String, Object> orderInfo = marketService.getSignContractDetail(account
 				.getUserId() + "", Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/market/signContractDetail";

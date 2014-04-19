@@ -35,7 +35,7 @@ public interface MarketService {
 	//==========================签订合同=======================
 	public List<Map<String, Object>> getSignContractList(String actorId);
 	
-	public OrderInfo getSignContractDetail(String arctorId,Integer orderId);
+	public Map<String, Object> getSignContractDetail(String arctorId,Integer orderId);
 	
 	public boolean signContractSubmit(String actorId,long taskId,int i,double d,double discount);
 	
@@ -75,9 +75,9 @@ public interface MarketService {
 
 	public List<Map<String, Object>> getModifyQuoteList(Integer userId);
 
-	public OrderInfo getModifyQuoteDetail(int id, int accountId);
+	public Map<String, Object> getModifyQuoteDetail(int id, int accountId);
 
-	public OrderInfo getModifyProductDetail(int id, Integer integer);
+	public Map<String, Object> getModifyProductDetail(int id, Integer integer);
 
 	public List<Map<String, Object>> getMergeQuoteList(Integer accountId);
 
@@ -91,22 +91,22 @@ public interface MarketService {
 
 	public List<Map<String, Object>> getModifyOrderList(Integer accountId);
 
-	public OrderInfo getModifyOrderDetail(int accountId, int id);
+	public Map<String, Object> getModifyOrderDetail(int accountId, int id);
 
 	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<Produce> sample_produces, List<VersionData> versions, boolean editok, long taskId, Integer accountId);
 
-	public OrderInfo getMergeQuoteDetail(Integer userId, int id);
+	public Map<String, Object> getMergeQuoteDetail(Integer userId, int id);
 
-	public OrderInfo getVerifyQuoteDetail(Integer userId, int id);
+	public Map<String, Object> getVerifyQuoteDetail(Integer userId, int id);
 
-	public OrderInfo getConfirmQuoteDetail(Integer userId, int id);
+	public Map<String, Object> getConfirmQuoteDetail(Integer userId, int id);
 
 	public void modifyQuoteSubmit(Quote quote, int id, long taskId,
 			long processId, Integer userId);
 
 	public List<Map<String, Object>> getConfirmProductList(String actorId);
 
-	public OrderInfo getConfirmProductDetail(Integer userId, int id);
+	public Map<String, Object> getConfirmProductDetail(Integer userId, int id);
 	
 }
