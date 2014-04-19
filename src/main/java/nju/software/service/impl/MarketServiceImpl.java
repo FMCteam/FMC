@@ -548,7 +548,7 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public Map<String,Object> getVerifyQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithQuote(userId+"", TASK_VERIFY_QUOTE, orderId);
+		return service.getBasicOrderModelWithQuote(ACTOR_MARKET_MANAGER, TASK_VERIFY_QUOTE, orderId);
 	}
 
 	@Override

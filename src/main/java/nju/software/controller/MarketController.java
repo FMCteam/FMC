@@ -396,16 +396,19 @@ public class MarketController {
 		String s_profit = request.getParameter("profitPerPiece");
 		String innerPrice = request.getParameter("inner_price");
 		String outerPrice = request.getParameter("outer_price");
+		String s_single = request.getParameter("single_cost");
 		String orderId = request.getParameter("order_id");
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
 		float profit = Float.parseFloat(s_profit);
 		float inner = Float.parseFloat(innerPrice);
 		float outer = Float.parseFloat(outerPrice);
+		float single = Float.parseFloat(s_single);
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
 		Quote quote = quoteService.findByOrderId(orderId);
+		quote.setSingleCost(single);
 		quote.setProfitPerPiece(profit);
 		quote.setInnerPrice(inner);
 		quote.setOuterPrice(outer);
@@ -548,12 +551,14 @@ public class MarketController {
 		String s_profit = request.getParameter("profitPerPiece");
 		String innerPrice = request.getParameter("inner_price");
 		String outerPrice = request.getParameter("outer_price");
+		String s_single = request.getParameter("single_cost");
 		String orderId = request.getParameter("order_id");
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
 		float profit = Float.parseFloat(s_profit);
 		float inner = Float.parseFloat(innerPrice);
 		float outer = Float.parseFloat(outerPrice);
+		float single = Float.parseFloat(s_single);
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
@@ -562,6 +567,7 @@ public class MarketController {
 		quote.setProfitPerPiece(profit);
 		quote.setInnerPrice(inner);
 		quote.setOuterPrice(outer);
+		quote.setSingleCost(single);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		marketService.mergeQuoteSubmit(account.getUserId(), quote, id, taskId, processId);
@@ -610,6 +616,7 @@ public class MarketController {
 		 * customerService.listCustomer(params);
 		 * model.addAttribute("customer_list", list.get(0));
 		 */
+		String s_single = request.getParameter("single_cost");
 		String s_profit = request.getParameter("profitPerPiece");
 		String innerPrice = request.getParameter("inner_price");
 		String outerPrice = request.getParameter("outer_price");
@@ -619,10 +626,12 @@ public class MarketController {
 		float profit = Float.parseFloat(s_profit);
 		float inner = Float.parseFloat(innerPrice);
 		float outer = Float.parseFloat(outerPrice);
+		float single = Float.parseFloat(s_single);
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
 		Quote quote = quoteService.findByOrderId(orderId);
+		quote.setSingleCost(single);
 		quote.setProfitPerPiece(profit);
 		quote.setInnerPrice(inner);
 		quote.setOuterPrice(outer);
