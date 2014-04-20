@@ -271,38 +271,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return new Timestamp(outDate.getTime());
 	}
 
-	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
-	private LogisticsDAO logisticsDAO;
-	@Autowired
-	private OrderDAO orderDAO;
-	@Autowired
-	private EmployeeDAO employeeDAO;
-	@Autowired
-	private CustomerDAO customerDAO;
-	@Autowired
-	private ProductDAO productDAO;
-	@Autowired
-	private PackageDAO packageDAO;
-	@Autowired
-	private AccessoryDAO accessoryDAO;
-	@Autowired
-	private FabricDAO fabricDAO;
-	@Autowired
-	private ProduceDAO produceDAO;
-	@Autowired
-	private PackageDetailDAO packageDetailDAO;
-	@Autowired
-	private VersionDataDAO versionDataDAO;
-	@Autowired
-	private ServiceUtil service;
 
-	public final static String ACTOR_LOGISTICS_MANAGER = "logisticsManager";
-	public final static String TASK_RECEIVE_SAMPLE = "receiveSample";
-	public final static String TASK_SEND_SAMPLE = "sendSample";
-	public final static String TASK_WAREHOUSE = "warehouse";
-	public final static String TASK_SEND_CLOTHES = "sendClothes";
 
 	@Override
 	public List<OrderInfo> getSendClothesUncheckedList() {
@@ -463,4 +432,39 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return logisticsDAO.findById(Integer.parseInt(s_id));
 	}
 
+	
+	@Autowired
+	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private LogisticsDAO logisticsDAO;
+	@Autowired
+	private OrderDAO orderDAO;
+	@Autowired
+	private EmployeeDAO employeeDAO;
+	@Autowired
+	private CustomerDAO customerDAO;
+	@Autowired
+	private ProductDAO productDAO;
+	@Autowired
+	private PackageDAO packageDAO;
+	@Autowired
+	private AccessoryDAO accessoryDAO;
+	@Autowired
+	private FabricDAO fabricDAO;
+	@Autowired
+	private ProduceDAO produceDAO;
+	@Autowired
+	private PackageDetailDAO packageDetailDAO;
+	@Autowired
+	private VersionDataDAO versionDataDAO;
+	@Autowired
+	private ServiceUtil service;
+
+	public final static String ACTOR_LOGISTICS_MANAGER = "logisticsManager";
+	public final static String TASK_RECEIVE_SAMPLE = "receiveSample";
+	public final static String TASK_SEND_SAMPLE = "sendSample";
+	public final static String TASK_WAREHOUSE = "warehouse";
+	public final static String TASK_SEND_CLOTHES = "sendClothes";
+	public final static String RESULT_RECEIVE_SAMPLE="receiveSample";
+	public final static String RESULT_SEND_SAMPLE="sendSample";
 }

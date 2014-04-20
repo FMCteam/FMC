@@ -42,6 +42,7 @@ public class ProduceServiceImpl implements ProduceService {
 	public final static String TASK_COMPUTE_PRODUCE_COST = "computeProduceCost";
 	public final static String TASK_PRODUCE_SAMPLE = "produceSample";
 	public final static String TASK_PRODUCE = "produce";
+	public final static String RESULT_PRODUCE="produce";
 
 	@Autowired
 	private OrderDAO orderDAO;

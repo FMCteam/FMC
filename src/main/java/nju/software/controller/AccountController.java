@@ -32,17 +32,12 @@ public class AccountController {
 	public String employeeList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int page;
-		int numberPerPage;
+		int numberPerPage=10;
 		String s_page = request.getParameter("page");
-		String s_number = "10";
 		if (s_page == null || s_page.equals("")) {
 			s_page = "1";
 		}
-		// if (s_number == null || s_number.equals("")) {
-		// s_number = "10";
-		// }
 		page = Integer.parseInt(s_page);
-		numberPerPage = Integer.parseInt(s_number);
 		System.out.println("page: " + page + " ,number: " + numberPerPage);
 		List<Employee> list = employeeService.getEmployeeByPage(page,
 				numberPerPage);
@@ -364,6 +359,7 @@ public class AccountController {
 				((HashMap<String, Object>) o.get(1)).get("page_number"));
 		model.addAttribute("page",
 				((HashMap<String, Object>) o.get(1)).get("page"));
+		model.addAttribute("notify", "顾客列表~");
 		return "/account/customerList";
 	}
 
