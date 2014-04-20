@@ -119,6 +119,36 @@ public class DesignServiceImpl implements DesignService {
 		model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
 		return model;
 	}
+	
+	@Override
+	public boolean modifyDesignSubmit(int orderId, long taskId, String url,
+			Timestamp uploadTime) {
+		// TODO Auto-generated method stub
+		DesignCad designCad = designCadDAO.findById(orderId);
+		if (designCad == null) {
+			designCad = new DesignCad();
+			designCad.setOrderId(orderId);
+			designCad.setCadVersion((short) 1);
+		} else {
+			short newVersion = (short) (designCad.getCadVersion() + 1);
+			designCad.setCadVersion(newVersion);
+		}
+		designCad.setCadUrl(url);
+		designCad.setUploadTime(uploadTime);
+		designCadDAO.attachDirty(designCad);
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_DESIGN, true);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 
 	// ===========================确认版型=================================
 	@Override

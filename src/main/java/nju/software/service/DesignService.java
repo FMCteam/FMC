@@ -27,6 +27,9 @@ public interface DesignService {
 
 	public Map<String, Object> getModifyDesignDetail(Integer orderId);
 
+	public boolean modifyDesignSubmit(int orderId, long taskId, String url,
+			Timestamp uploadTime);
+
 	// ===========================确认版型=================================
 	public List<Map<String, Object>> getConfirmDesignList();
 

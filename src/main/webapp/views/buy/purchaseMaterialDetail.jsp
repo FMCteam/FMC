@@ -67,11 +67,11 @@
 					</table>
 					<div class="action">
 						<a
-							href="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&purchaseerror=0"
+							href="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1"
 							class="btn btn-primary btn-rounded"><i
 							class="icon-ok icon-white"></i>采购完成 </a><a
 							class="btn btn-danger btn-rounded"
-							href="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&purchaseerror=1"
+							href="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0"
 							class=""><i class="icon-remove icon-white"></i>采购失败</a>
 					</div>
 

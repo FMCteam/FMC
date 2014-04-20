@@ -137,7 +137,7 @@ public class BuyController {
 	public String purchaseSampleMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
-		boolean result = Boolean.parseBoolean(request.getParameter("result"));
+		boolean result = request.getParameter("result").equals("1");
 		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/purchaseSampleMaterialList.do";
 	}
@@ -170,7 +170,7 @@ public class BuyController {
 	public String confirmPurchaseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
-		Boolean result = Boolean.parseBoolean(request.getParameter("result"));
+		Boolean result = request.getParameter("result").equals("1");
 		buyService.confirmPurchaseSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/confirmPurchaseList.do";
 	}
@@ -203,7 +203,7 @@ public class BuyController {
 	public String purchaseMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
-		Boolean result = Boolean.parseBoolean(request.getParameter("result"));
+		Boolean result = request.getParameter("result").equals("1");
 		buyService.purchaseMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/purchaseMaterialList.do";
 	}

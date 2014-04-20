@@ -258,6 +258,7 @@ public class JbpmTest {
 		taskId = getTaskId(DesignServiceImpl.ACTOR_DESIGN_MANAGER,
 				DesignServiceImpl.TASK_MODIFY_DESIGN, orderId);
 		data = new HashMap<String, Object>();
+		data.put(DesignServiceImpl.RESULT_DESIGN, true);
 		completeTask(taskId, data, DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 		System.out.println("//设计部确认");
 	}
@@ -289,7 +290,6 @@ public class JbpmTest {
 		taskId = getTaskId(DesignServiceImpl.ACTOR_DESIGN_MANAGER,
 				DesignServiceImpl.TASK_CONFIRM_DESIGN, orderId);
 		data = new HashMap<String, Object>();
-		data.put(DesignServiceImpl.RESULT_DESIGN, true);
 		completeTask(taskId, data, DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 	}
 
