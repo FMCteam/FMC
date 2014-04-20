@@ -78,7 +78,7 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public Map<String,Object> getVerifyProduceDetail(int orderId, long taskId) {
+	public Map<String,Object> getVerifyProduceDetail(int orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER,
 				TASK_VERIFY_PRODUCE, orderId);
@@ -149,11 +149,13 @@ public class ProduceServiceImpl implements ProduceService {
 			quote.setPackageCost(package_cost);
 			quote.setOtherCost(other_cost);
 			quote.setDesignCost(design_cost);
-			QuoteDAO.attachDirty(quote);
 		}
 		
 		  float producecost = cut_cost + manage_cost + swing_cost
-				+ ironing_cost + nali_cost + package_cost + other_cost + design_cost;
+				+ ironing_cost + nali_cost + package_cost + other_cost + design_cost
+				+ quote.getFabricCost() + quote.getAccessoryCost();
+		  quote.setSingleCost(producecost);
+		  QuoteDAO.attachDirty(quote);
 		
 				Map<String, Object> data = new HashMap<String, Object>();
 				try {
@@ -173,21 +175,10 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public OrderInfo getProduceSampleDetail(Integer orderId) {
+	public Map<String,Object> getProduceSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER,
-				TASK_PRODUCE_SAMPLE, orderId);
-		OrderInfo orderInfo = new OrderInfo();
-		orderInfo.setOrder(orderDAO.findById(orderId));
-		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
-		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		orderInfo.setLogistics(logisticsDAO.findById(orderId));
-		orderInfo.setTask(task);
-		orderInfo.setTaskId(task.getId());
-		Produce produce = new Produce();
-		produce.setOid(orderId);
-		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
-		orderInfo.setProduced(produceDAO.findByExample(produce));
+		Map<String,Object> orderInfo=service.getBasicOrderModel(
+				ACTOR_PRODUCE_MANAGER, TASK_PRODUCE_SAMPLE, orderId);
 		return orderInfo;
 	}
 
@@ -220,8 +211,9 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public OrderInfo getProduceDetail(Integer orderId) {
+	public Map<String,Object> getProduceDetail(Integer orderId) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PRODUCE_MANAGER,
 				TASK_PRODUCE, orderId);
 		OrderInfo orderInfo = new OrderInfo();
@@ -235,10 +227,15 @@ public class ProduceServiceImpl implements ProduceService {
 		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
 		orderInfo.setProduced(produceDAO.findByExample(produce));
+=======
+		Map<String,Object> orderInfo=service.getBasicOrderModel(
+				ACTOR_PRODUCE_MANAGER, TASK_PRODUCE, orderId);
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 		return orderInfo;
 	}
 
 	@Override
+<<<<<<< HEAD
 	public boolean pruduceSubmit(String[] pid, String[] askAmount, long taskId) {
 		// TODO Auto-generated method stub
 //		for (int i = 0; i < pid.length; i++) {
@@ -246,9 +243,17 @@ public class ProduceServiceImpl implements ProduceService {
 //			product.setAskAmount(Integer.parseInt(askAmount[i]));
 //			productDAO.attachDirty(product);
 //		}
+=======
+	public boolean pruduceSubmit(long taskId, boolean result, List<Produce> produceList) {
+		if (result) {
+			for (int i = 0; i < produceList.size(); i++) {
+				produceDAO.save(produceList.get(i));
+			}
+		}
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			data.put("volumeproduction", true);
+			data.put("volumeproduction", result);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			return true;
 		} catch (InterruptedException e) {

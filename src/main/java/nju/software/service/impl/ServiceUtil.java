@@ -64,6 +64,7 @@ public class ServiceUtil {
 		TaskSummary task = jbpmAPIUtil.getTask(actorId, taskName, orderId);
 		Order order=orderDAO.findById(orderId);
 		model.put("task", task);
+		model.put("taskId", task.getId());
 		model.put("order", order);
 		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 		model.put("logistics", logisticsDAO.findById(orderId));
@@ -82,7 +83,10 @@ public class ServiceUtil {
 		return model;
 	}
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 	public Map<String, Object> getBasicOrderModelWithQuote(String actorId,
 			String taskName, Integer orderId) {
 		Map<String, Object> model=getBasicOrderModel(actorId, taskName, orderId);
@@ -126,5 +130,9 @@ public class ServiceUtil {
 	private FabricCostDAO fabricCostDAO;
 	@Autowired
 	private AccessoryCostDAO accessoryCostDAO;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 
 }

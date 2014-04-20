@@ -84,7 +84,7 @@
 									type="radio" name="fabric_type" value="梭织" /> <span>针织</span>
 									<input type="radio" name="fabric_type" value="编织"> <span>编织</span>
 									<input type="radio" name="fabric_type" value="梭针混合" /> <span>梭针混合</span>
-									<input type="radio" name="fabric_type" value="阵编混合" /> <span>针编混合</span>
+									<input type="radio" name="fabric_type" value="针编混合" /> <span>针编混合</span>
 									<input type="radio" name="fabric_type" value="梭编混合" /> <span>梭编混合</span></td>
 							</tr>
 							<tr>
@@ -115,7 +115,7 @@
 					</div>
 					<div class="tab-pane" id="material">
 						<table
-							class="table table-striped table-bordered table-hover detail">
+							class="table table-striped table-bordered table-hover">
 							<tr>
 								<td class="span2">面料<input id="fabric_name" type="hidden"
 									name="fabric_name" /> <input id="fabric_amount" type="hidden"

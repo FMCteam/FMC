@@ -67,11 +67,19 @@
 					</table>
 					<div class="action">
 						<a
+<<<<<<< HEAD
 							href="${ctx}/buy/confirmPurchaseSubmit.do?taskId=${orderInfo.task.id}&purchaseerror=1"
 							class="btn btn-primary btn-rounded"><i
 							class="icon-ok icon-white"></i>采购确认 </a><a
 							class="btn btn-danger btn-rounded"
 							href="${ctx}/buy/confirmPurchaseSubmit.do?taskId=${orderInfo.task.id}&purchaseerror=0"
+=======
+							href="${ctx}/buy/confirmPurchaseSubmit.do?taskId=${orderInfo.taskId}&purchaseerror=0"
+							class="btn btn-primary btn-rounded"><i
+							class="icon-ok icon-white"></i>采购确认 </a><a
+							class="btn btn-danger btn-rounded"
+							href="${ctx}/buy/confirmPurchaseSubmit.do?taskId=${orderInfo.taskId}&purchaseerror=1"
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 							class=""><i class="icon-remove icon-white"></i>采购修改</a>
 					</div>
 

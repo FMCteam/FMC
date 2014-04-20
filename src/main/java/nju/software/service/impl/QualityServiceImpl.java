@@ -78,21 +78,15 @@ public class QualityServiceImpl implements QualityService {
 	}
 
 	@Override
-	public OrderInfo getCheckQualityDetail(int orderId, long taskId) {
+	public Map<String,Object> getCheckQualityDetail(int orderId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_QUALITY_MANAGER,
-				TASK_CHECK_QUALITY, orderId);
-		OrderInfo oi = new OrderInfo();
+		Map<String,Object> oi=service.getBasicOrderModel(
+				ACTOR_QUALITY_MANAGER, TASK_CHECK_QUALITY, orderId);
 		Order o = orderDAO.findById(orderId);
-		oi.setOrder(o);
-		oi.setEmployee(employeeDAO.findById(o.getEmployeeId()));
-		oi.setCustomer(customerDAO.findById(o.getCustomerId()));
-		oi.setTask(task);
-		oi.setTaskId(task.getId());
 		Produce produce = new Produce();
 		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_PRODUCED);
-		oi.setProduced(produceDAO.findByExample(produce));
+		oi.put("produced", produceDAO.findByExample(produce));
 		return oi;
 	}
 }

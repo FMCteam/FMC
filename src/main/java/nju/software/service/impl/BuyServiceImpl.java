@@ -191,6 +191,7 @@ public class BuyServiceImpl implements BuyService {
 		}
 		orderInfo.getData().put("SampleAmount", new Integer(SampleAmount));
 		orderInfo.setTask(task);
+		orderInfo.setTaskId(task.getId());
 		return orderInfo;
 	}
 

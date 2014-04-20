@@ -29,7 +29,7 @@ function getQuality(){
 	$("#bad_xl").val(getInputString("bad_xl"));
 	$("#bad_xxl").val(getInputString("bad_xxl"));
 
-	return true;
+	return confirm('确认提交？');
 }
 
 function init(){

@@ -199,8 +199,9 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public OrderInfo getModifyOrderDetail(int accountId, int id) {
+	public Map<String,Object> getModifyOrderDetail(int accountId, int id) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		TaskSummary task = jbpmAPIUtil.getTask(accountId + "",
 				TASK_MODIFY_ORDER, id);
 		OrderInfo oi = new OrderInfo();
@@ -216,6 +217,9 @@ public class MarketServiceImpl implements MarketService {
 		oi.setTask(task);
 		return oi;
 
+=======
+		return service.getBasicOrderModel(accountId+"", TASK_MODIFY_ORDER, id);
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 	}
 
 	@Override
@@ -463,6 +467,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public OrderInfo getModifyQuoteDetail(int orderId, int accountId) {
 		// TODO Auto-generated method stub
 		TaskSummary task = jbpmAPIUtil.getTask(accountId + "",
@@ -496,6 +501,17 @@ public class MarketServiceImpl implements MarketService {
 		oi.setFabrics(fabricDAO.findByOrderId(orderId));
 		oi.setTask(task);
 		return oi;
+=======
+	public Map<String,Object> getModifyQuoteDetail(int orderId, int accountId) {
+		// TODO Auto-generated method stub
+		return service.getBasicOrderModelWithQuote(accountId+"", TASK_MODIFY_QUOTE, orderId);
+	}
+
+	@Override
+	public Map<String,Object> getModifyProductDetail(int orderId, Integer accountId) {
+		// TODO Auto-generated method stub
+		return service.getBasicOrderModel(accountId+"", TASK_MODIFY_PRODUCE_ORDER, orderId);
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 	}
 
 	// ==========================签订合同=======================
@@ -508,8 +524,9 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public OrderInfo getSignContractDetail(String arctorId, Integer orderId) {
+	public Map<String, Object> getSignContractDetail(String actorId, Integer orderId) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		TaskSummary task = jbpmAPIUtil.getTask(arctorId, TASK_SIGN_CONTRACT,
 				orderId);
 		if (task == null)
@@ -518,6 +535,9 @@ public class MarketServiceImpl implements MarketService {
 		model.setOrder(orderDAO.findById(orderId));
 		model.setTask(task);
 		return model;
+=======
+		return service.getBasicOrderModelWithQuote(actorId, TASK_SIGN_CONTRACT, orderId);
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 	}
 
 	@Override
@@ -594,6 +614,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public OrderInfo getMergeQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
 		TaskSummary task = jbpmAPIUtil.getTask(userId + "", TASK_MERGE_QUOTE,
@@ -609,29 +630,23 @@ public class MarketServiceImpl implements MarketService {
 		oi.setVersions(versionDataDAO.findByOrderId(orderId));
 		oi.setTask(task);
 		return oi;
+=======
+	public Map<String,Object> getMergeQuoteDetail(Integer userId, int orderId) {
+		// TODO Auto-generated method stub
+		return service.getBasicOrderModelWithQuote(userId+"", TASK_MERGE_QUOTE, orderId);
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 	}
 
 	@Override
-	public OrderInfo getVerifyQuoteDetail(Integer userId, int orderId) {
+	public Map<String,Object> getVerifyQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_MARKET_MANAGER,
-				TASK_VERIFY_QUOTE, orderId);
-		OrderInfo oi = new OrderInfo();
-		oi.setOrder(orderDAO.findById(orderId));
-		oi.setQuote(quoteDAO.findById(orderId));
-		oi.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		oi.setFabrics(fabricDAO.findByOrderId(orderId));
-		oi.setLogistics(logisticsDAO.findById(orderId));
-		oi.setProduce(produceDAO.findProduceByOrderId(orderId));
-		oi.setSample(produceDAO.findSampleProduceByOrderId(orderId));
-		oi.setVersions(versionDataDAO.findByOrderId(orderId));
-		oi.setTask(task);
-		return oi;
+		return service.getBasicOrderModelWithQuote(ACTOR_MARKET_MANAGER, TASK_VERIFY_QUOTE, orderId);
 	}
 
 	@Override
-	public OrderInfo getConfirmQuoteDetail(Integer userId, int orderId) {
+	public Map<String, Object> getConfirmQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		TaskSummary task = jbpmAPIUtil.getTask(userId + "", TASK_CONFIRM_QUOTE,
 				orderId);
 		OrderInfo oi = new OrderInfo();
@@ -645,6 +660,9 @@ public class MarketServiceImpl implements MarketService {
 		oi.setVersions(versionDataDAO.findByOrderId(orderId));
 		oi.setTask(task);
 		return oi;
+=======
+		return service.getBasicOrderModelWithQuote(userId+"", TASK_CONFIRM_QUOTE, orderId);
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 	}
 
 	@Override
@@ -675,6 +693,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public OrderInfo getConfirmProductDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
 		TaskSummary task = jbpmAPIUtil.getTask(userId + "",
@@ -692,6 +711,11 @@ public class MarketServiceImpl implements MarketService {
 		oi.setTask(task);
 		oi.setTaskId(task.getId());
 		return oi;
+=======
+	public Map<String, Object> getConfirmProductDetail(Integer userId, int orderId) {
+		// TODO Auto-generated method stub
+		return service.getBasicOrderModel(userId+"", TASK_CONFIRM_PRODUCE_ORDER, orderId);	
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 	}
 
 	@Override

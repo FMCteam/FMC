@@ -30,7 +30,7 @@ public interface ProduceService {
 	
 	public List<Map<String, Object>> getProduceSampleList();
 	
-	public OrderInfo getProduceSampleDetail(Integer orderId) ;
+	public Map<String,Object> getProduceSampleDetail(Integer orderId) ;
 	
 	public boolean produceSampleSubmit(long taskId, boolean result, List<Produce> produceList);
 	
@@ -39,7 +39,7 @@ public interface ProduceService {
 	
 	public List<Map<String, Object>> getProduceList();
 	
-	public OrderInfo getProduceDetail(Integer orderId);
+	public Map<String,Object> getProduceDetail(Integer orderId);
 
 	
   public List<Map<String, Object>> getComputeProduceCostList();
@@ -57,13 +57,13 @@ public interface ProduceService {
 	public List<List<PackageDetail>> getProductDetailByPackage(
 			List<nju.software.dataobject.Package> packageList);
 
-	public boolean pruduceSubmit(String[] pid,String[] askAmount,long taskId);
+	public boolean pruduceSubmit(long taskId, boolean result, List<Produce> produceList);
 
 	public void savePackageDetail(int parseInt, String[] array_amount,
 			String[] array_color, String[] array_name, Timestamp entryTime);
 
 	public List<Map<String, Object>> getVerifyProduceList();
 
-	public Map<String,Object> getVerifyProduceDetail(int orderId, long taskId);
+	public Map<String,Object> getVerifyProduceDetail(int orderId);
 
 }

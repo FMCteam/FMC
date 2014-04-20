@@ -36,8 +36,8 @@
 					</div>
 				</div>
 				
-			<form action="${ctx }/design/downloadCadSubmit.do" 
-				method="post" enctype="multipart/form-data">
+			<form action="${ctx }/design/downloadCadSubmit.do" method="post" 
+				onsubmit="return confirm('确认提交？')" nctype="multipart/form-data">
 				<table class="table table-striped table-bordered table-hover">
 					<tr>
 						<td>下载文件</td>

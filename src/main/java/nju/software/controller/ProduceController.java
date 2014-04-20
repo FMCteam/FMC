@@ -85,13 +85,9 @@ public class ProduceController {
 	public String verifyProduceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("produce verify ================ show detail");
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
 		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		long taskId = 0;
-		Map<String,Object> orderInfo = produceService.getVerifyProduceDetail(orderId_request, taskId);
+		int orderId = Integer.parseInt(s_orderId_request);
+		Map<String,Object> orderInfo = produceService.getVerifyProduceDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "produce/verifyProduceDetail";
 	}
@@ -222,7 +218,7 @@ public class ProduceController {
 	public String produceSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
+		Map<String,Object> orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/produce/produceSampleDetail";
 	}
@@ -271,7 +267,7 @@ public class ProduceController {
 	public String produceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
-		OrderInfo orderInfo=produceService.getProduceDetail(Integer.parseInt(orderId));
+		Map<String,Object> orderInfo=produceService.getProduceDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/produce/produceDetail";
 	}
@@ -281,10 +277,29 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {	
+<<<<<<< HEAD
 		String taskId=request.getParameter("taskId");
 		String pid=request.getParameter("pid");
 		String askAmount=request.getParameter("produceAmount");
 		produceService.pruduceSubmit(null, null, Long.parseLong(taskId));
+=======
+		boolean result = Boolean.parseBoolean(request.getParameter("result"));
+		String taskId = request.getParameter("taskId");
+		int orderId = Integer.parseInt(request.getParameter("orderId"));
+		List<Produce> produceList = null;
+		if (result) {
+			String produceColor = request.getParameter("produce_color");
+			String produceXS = request.getParameter("produce_xs");
+			String produceS = request.getParameter("produce_s");
+			String produceM = request.getParameter("produce_m");
+			String produceL = request.getParameter("produce_l");
+			String produceXL = request.getParameter("produce_xl");
+			String produceXXL = request.getParameter("produce_xxl");
+			produceList = produceService.getProduceList(orderId, produceColor, produceXS, 
+					produceS, produceM, produceL, produceXL, produceXXL, Produce.TYPE_PRODUCED);
+		}
+		produceService.pruduceSubmit(Long.parseLong(taskId), result, produceList);
+>>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 		return "forward:/produce/produceList.do";
 	}
 }
