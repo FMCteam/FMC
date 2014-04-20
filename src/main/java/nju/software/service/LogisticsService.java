@@ -11,16 +11,16 @@ import nju.software.model.OrderInfo;
 public interface LogisticsService {
 
 	// ===========================收取样衣=================================
-	public List<OrderInfo> getReceiveSampleList();
+	public List<Map<String,Object>> getReceiveSampleList();
 
 	public Map<String,Object> getReceiveSampleDetail(Integer orderId);
 
-	public boolean receiveSampleSubmit(long taskId, String result);
+	public boolean receiveSampleSubmit(long taskId,Integer orderId,Short result);
 
 	// ===========================样衣发货=================================
 	public List<Map<String, Object>> getSendSampleList();
 
-	public OrderInfo getSendSampleDetail(Integer orderId);
+	public Map<String, Object> getSendSampleDetail(Integer orderId);
 
 	public boolean sendSampleSubmit(Map<String, Object> map);
 

@@ -36,7 +36,7 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 				<div class="tab-pane active" id="produceList">
-					<form method="post"
+					<form method="post" id="verify_form"
 					action="${ctx}/produce/produceSubmit.do" onsubmit="return getProduce()">
 						<table class="table table-striped table-bordered table-hover detail">
 							<tr>

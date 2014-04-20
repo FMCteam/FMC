@@ -32,7 +32,7 @@
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
 				<div class="tab-pane  active" id="quote">
-					<form id="costAccounting_form" onsubmit="return confirm('确认提交？')"
+					<form id="costAccounting_form"
 						method="post" action="${ctx }/produce/computeProduceCostSubmit.do">
 						<table
 							class="table table-striped table-bordered table-hover detail">

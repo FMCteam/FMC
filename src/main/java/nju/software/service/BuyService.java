@@ -16,7 +16,7 @@ public interface BuyService {
 
 	public Map<String,Object> getVerifyPurchaseDetail(Integer orderId);
 	
-	public boolean verifyPurchaseSubmit(long taskId, boolean buyVal,
+	public boolean verifyPurchaseSubmit(long taskId, boolean result,
 			String comment);
 	
 	//===========================采购成本核算=================================
@@ -33,21 +33,21 @@ public interface BuyService {
 	//===========================采购样衣原料=================================
 	public List<Map<String,Object>> getPurchaseSampleMaterialList();
 
-	public OrderInfo getPurchaseSampleMaterialDetail(Integer orderId);
+	public Map<String,Object> getPurchaseSampleMaterialDetail(Integer orderId);
 
-	public boolean purchaseSampleMaterialSubmit(long taskId, String result);
+	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result);
 	
 	//===========================采购确认=================================
 	public List<Map<String,Object>> getConfirmPurchaseList();
 
-	public OrderInfo getConfirmPurchaseDetail(Integer orderId);
+	public Map<String, Object> getConfirmPurchaseDetail(Integer orderId);
 
-	public boolean confirmPurchaseSubmit(long taskId, String result);
+	public boolean confirmPurchaseSubmit(long taskId, boolean result);
 	
 	//===========================大货原料采购=================================
 	public List<Map<String,Object>> getPurchaseMaterialList();
 
-	public OrderInfo getPurchaseMaterialDetail(Integer orderId);
+	public Map<String, Object> getPurchaseMaterialDetail(Integer orderId);
 
-	public boolean purchaseMaterialSubmit(long taskId, String result);
+	public boolean purchaseMaterialSubmit(long taskId, boolean result);
 }

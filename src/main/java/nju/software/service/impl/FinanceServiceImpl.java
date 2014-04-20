@@ -62,13 +62,13 @@ public class FinanceServiceImpl implements FinanceService {
 
 	@Override
 	public boolean confirmSampleMoneySubmit(String actorId, long taskId,
-			boolean receivedsamplejin, Money money) {
+			boolean result, Money money) {
 		// TODO Auto-generated method stub
-		if (receivedsamplejin) {
+		if (result) {
 			moneyDAO.save(money);
 		}
 		Map<String, Object> data = new HashMap<>();
-		data.put(RESULT_MONEY, receivedsamplejin);
+		data.put(RESULT_MONEY, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
 			return true;
@@ -109,13 +109,13 @@ public class FinanceServiceImpl implements FinanceService {
 
 	@Override
 	public boolean confirmDepositSubmit(String actorId, long taskId,
-			boolean epositok, Money money) {
+			boolean result, Money money) {
 		// TODO Auto-generated method stub
-		if (epositok) {
+		if (result) {
 			moneyDAO.save(money);
 		}
 		Map<String, Object> data = new HashMap<>();
-		data.put(RESULT_MONEY, epositok);
+		data.put(RESULT_MONEY, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
 			return true;
@@ -157,13 +157,13 @@ public class FinanceServiceImpl implements FinanceService {
 
 	@Override
 	public boolean confirmFinalPaymentSubmit(String actorId, long taskId,
-			boolean paymentok, Money money) {
+			boolean result, Money money) {
 		// TODO Auto-generated method stub
-		if (paymentok) {
+		if (result) {
 			moneyDAO.save(money);
 		}
 		Map<String, Object> data = new HashMap<>();
-		data.put(RESULT_MONEY, paymentok);
+		data.put(RESULT_MONEY, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
 			return true;

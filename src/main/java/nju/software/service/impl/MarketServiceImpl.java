@@ -57,6 +57,11 @@ public class MarketServiceImpl implements MarketService {
 	public final static String TASK_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder";
 	public final static String TASK_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
 	public final static String TASK_SIGN_CONTRACT = "signContract";
+	public final static String RESULT_REORDER = "reorder";
+	public final static String RESULT_MODIFY_ORDER = "modifyOrder";
+	public final static String RESULT_QUOTE = "quote";
+	public final static String RESULT_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder";
+	public final static String RESULT_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
 
 	@Autowired
 	private ProductDAO productDAO;
@@ -169,8 +174,11 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("orderId", orderId);
 		params.put("marketStaff", order.getEmployeeId());
-		params.put("needclothes", order.getIsNeedSampleClothes() == 1);
-		params.put("sendclothes", order.getHasPostedSampleClothes() == 1);
+		params.put(LogisticsServiceImpl.RESULT_RECEIVE_SAMPLE,
+				(int) order.getIsNeedSampleClothes());
+		params.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
+				(int) order.getHasPostedSampleClothes());
+		params.put(RESULT_REORDER, false);
 		doTMWorkFlowStart(params);
 
 		return false;
@@ -199,9 +207,10 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public Map<String,Object> getModifyOrderDetail(int accountId, int id) {
+	public Map<String, Object> getModifyOrderDetail(int accountId, int id) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModel(accountId+"", TASK_MODIFY_ORDER, id);
+		return service
+				.getBasicOrderModel(accountId + "", TASK_MODIFY_ORDER, id);
 
 	}
 
@@ -251,7 +260,7 @@ public class MarketServiceImpl implements MarketService {
 
 		// 启动流程
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("editok", editok);
+		params.put(RESULT_MODIFY_ORDER, editok);
 		try {
 			jbpmAPIUtil.completeTask(taskId, params, accountId + "");
 		} catch (InterruptedException e) {
@@ -313,7 +322,7 @@ public class MarketServiceImpl implements MarketService {
 			}
 			// 修改流程参数
 			Map<String, Object> data = new HashMap<>();
-			data.put("comfirmworksheet", comfirmworksheet);
+			data.put(RESULT_CONFIRM_PRODUCE_ORDER, comfirmworksheet);
 			// 直接进入到下一个流程时
 			try {
 				jbpmAPIUtil.completeTask(taskId, data, actorId);
@@ -379,7 +388,7 @@ public class MarketServiceImpl implements MarketService {
 				}
 				// 修改流程参数
 				Map<String, Object> data = new HashMap<>();
-				data.put("editworksheetok", editworksheetok);
+				data.put(RESULT_MODIFY_PRODUCE_ORDER, editworksheetok);
 				// 直接进入到下一个流程时
 				try {
 					jbpmAPIUtil.completeTask(taskId, data, userId);
@@ -416,21 +425,8 @@ public class MarketServiceImpl implements MarketService {
 	public boolean confirmQuoteSubmit(String actorId, long taskId, String result) {
 		// TODO Auto-generated method stub
 		Map<String, Object> data = new HashMap<String, Object>();
-		if (result.equals("1")) {
-			data.put("confirmquote", true);
-			data.put("eidtquote", false);
-			data.put("samplejin", true);
-		}
-		if (result.equals("2")) {
-			data.put("confirmquote", false);
-			data.put("eidtquote", true);
-			data.put("samplejin", true);
-		}
-		if (result.equals("3")) {
-			data.put("confirmquote", false);
-			data.put("eidtquote", false);
-			data.put("samplejin", true);
-		}
+
+		data.put(RESULT_QUOTE,Integer.parseInt(result));
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
 			return true;
@@ -449,18 +445,18 @@ public class MarketServiceImpl implements MarketService {
 		return temp;
 	}
 
-
-
-
-	public Map<String,Object> getModifyQuoteDetail(int orderId, int accountId) {
+	public Map<String, Object> getModifyQuoteDetail(int orderId, int accountId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithQuote(accountId+"", TASK_MODIFY_QUOTE, orderId);
+		return service.getBasicOrderModelWithQuote(accountId + "",
+				TASK_MODIFY_QUOTE, orderId);
 	}
 
 	@Override
-	public Map<String,Object> getModifyProductDetail(int orderId, Integer accountId) {
+	public Map<String, Object> getModifyProductDetail(int orderId,
+			Integer accountId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModel(accountId+"", TASK_MODIFY_PRODUCE_ORDER, orderId);
+		return service.getBasicOrderModel(accountId + "",
+				TASK_MODIFY_PRODUCE_ORDER, orderId);
 	}
 
 	// ==========================签订合同=======================
@@ -473,9 +469,11 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public Map<String, Object> getSignContractDetail(String actorId, Integer orderId) {
+	public Map<String, Object> getSignContractDetail(String actorId,
+			Integer orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithQuote(actorId, TASK_SIGN_CONTRACT, orderId);
+		return service.getBasicOrderModelWithQuote(actorId, TASK_SIGN_CONTRACT,
+				orderId);
 
 	}
 
@@ -553,21 +551,24 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public Map<String,Object> getMergeQuoteDetail(Integer userId, int orderId) {
+	public Map<String, Object> getMergeQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithQuote(userId+"", TASK_MERGE_QUOTE, orderId);
+		return service.getBasicOrderModelWithQuote(userId + "",
+				TASK_MERGE_QUOTE, orderId);
 	}
 
 	@Override
-	public Map<String,Object> getVerifyQuoteDetail(Integer userId, int orderId) {
+	public Map<String, Object> getVerifyQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithQuote(ACTOR_MARKET_MANAGER, TASK_VERIFY_QUOTE, orderId);
+		return service.getBasicOrderModelWithQuote(ACTOR_MARKET_MANAGER,
+				TASK_VERIFY_QUOTE, orderId);
 	}
 
 	@Override
 	public Map<String, Object> getConfirmQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithQuote(userId+"", TASK_CONFIRM_QUOTE, orderId);
+		return service.getBasicOrderModelWithQuote(userId + "",
+				TASK_CONFIRM_QUOTE, orderId);
 	}
 
 	@Override
@@ -598,11 +599,11 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-
-
-	public Map<String, Object> getConfirmProductDetail(Integer userId, int orderId) {
+	public Map<String, Object> getConfirmProductDetail(Integer userId,
+			int orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModel(userId+"", TASK_CONFIRM_PRODUCE_ORDER, orderId);	
+		return service.getBasicOrderModelWithQuote(userId + "",
+				TASK_CONFIRM_PRODUCE_ORDER, orderId);
 	}
 
 	@Override

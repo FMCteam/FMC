@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import nju.software.model.OrderInfo;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
@@ -19,7 +17,6 @@ import nju.software.service.impl.LogisticsServiceImpl;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.StringUtil;
 import nju.software.dataobject.Order;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,10 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * @author 莫其凡
- * @date 2014/04/11
- */
 @Controller
 public class LogisticsController {
 
@@ -39,7 +32,7 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String receiveSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<OrderInfo> list = logisticsService.getReceiveSampleList();
+		List<Map<String,Object>> list = logisticsService.getReceiveSampleList();
 		model.addAttribute("list", list);
 		return "/logistics/receiveSampleList";
 	}
@@ -58,9 +51,10 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String receiveSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String result = request.getParameter("result");
-		String taskId = request.getParameter("taskId");
-		logisticsService.receiveSampleSubmit(Long.parseLong(taskId), result);
+		long taskId = Long.parseLong(request.getParameter("taskId"));
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		Short result =Short.parseShort(request.getParameter("result")) ;
+		logisticsService.receiveSampleSubmit(taskId,orderId,result);
 		return "forward:/logistics/receiveSampleList.do";
 	}
 
@@ -86,7 +80,7 @@ public class LogisticsController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId_string = request.getParameter("orderId");
 		int orderId = Integer.parseInt(orderId_string);
-		OrderInfo orderInfo = logisticsService.getSendSampleDetail(orderId);
+		Map<String,Object> orderInfo = logisticsService.getSendSampleDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/sendSampleDetail";
 	}

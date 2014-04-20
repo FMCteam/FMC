@@ -7,6 +7,7 @@
 		<div class="row-fluid" style="min-height:300px;">
 		
 				<ul class="nav nav-tabs detail" id="tab">
+				<li class="task-name">修改版型数据</li>
 					<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 					<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 					<li><a href="#produce" data-toggle="tab">加工信息</a></li>

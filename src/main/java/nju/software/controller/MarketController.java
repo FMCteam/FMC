@@ -40,6 +40,8 @@ import nju.software.service.LogisticsService;
 import nju.software.service.MarketService;
 import nju.software.service.OrderService;
 import nju.software.service.QuoteService;
+import nju.software.service.impl.BuyServiceImpl;
+import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.JbpmTest;
 import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
@@ -77,7 +79,7 @@ public class MarketController {
 	private CustomerService customerService;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
-	
+
 	@Autowired
 	private JavaMailUtil javaMailUtil;
 	@Autowired
@@ -154,7 +156,7 @@ public class MarketController {
 		String fabric_amount[] = fabric_amounts.split(",");
 		List<Fabric> fabrics = new ArrayList<Fabric>();
 		for (int i = 0; i < fabric_name.length; i++) {
-			if(fabric_name[i].equals(""))
+			if (fabric_name[i].equals(""))
 				continue;
 			fabrics.add(new Fabric(0, fabric_name[i], fabric_amount[i]));
 		}
@@ -166,13 +168,13 @@ public class MarketController {
 		String accessory_query[] = accessory_querys.split(",");
 		List<Accessory> accessorys = new ArrayList<Accessory>();
 		for (int i = 0; i < accessory_name.length; i++) {
-			if(accessory_name[i].equals(""))
+			if (accessory_name[i].equals(""))
 				continue;
 			accessorys.add(new Accessory(0, accessory_name[i],
 					accessory_query[i]));
 		}
 
-		//大货加工要求
+		// 大货加工要求
 		String produce_colors = request.getParameter("produce_color");
 		String produce_xss = request.getParameter("produce_xs");
 		String produce_ss = request.getParameter("produce_s");
@@ -189,12 +191,12 @@ public class MarketController {
 		String produce_xxl[] = produce_xxls.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
-			if(produce_color[i].equals(""))
+			if (produce_color[i].equals(""))
 				continue;
 			Produce p = new Produce();
 			p.setColor(produce_color[i]);
 			p.setOid(0);
-			
+
 			int l = Integer.parseInt(produce_l[i]);
 			int m = Integer.parseInt(produce_m[i]);
 			int s = Integer.parseInt(produce_s[i]);
@@ -207,13 +209,14 @@ public class MarketController {
 			p.setXl(xl);
 			p.setXs(xs);
 			p.setXxl(xxl);
-			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			p.setProduceAmount(l + m + s + xs + xl + xxl);
 			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
-		
-		//样衣加工要求
-		String sample_produce_colors = request.getParameter("sample_produce_color");
+
+		// 样衣加工要求
+		String sample_produce_colors = request
+				.getParameter("sample_produce_color");
 		String sample_produce_xss = request.getParameter("sample_produce_xs");
 		String sample_produce_ss = request.getParameter("sample_produce_s");
 		String sample_produce_ms = request.getParameter("sample_produce_m");
@@ -229,7 +232,7 @@ public class MarketController {
 		String sample_produce_xxl[] = sample_produce_xxls.split(",");
 		List<Produce> sample_produces = new ArrayList<Produce>();
 		for (int i = 0; i < sample_produce_color.length; i++) {
-			if(sample_produce_color[i].equals(""))
+			if (sample_produce_color[i].equals(""))
 				continue;
 			Produce p = new Produce();
 			p.setColor(sample_produce_color[i]);
@@ -247,13 +250,14 @@ public class MarketController {
 			p.setXs(xs);
 			p.setXxl(xxl);
 			p.setType(Produce.TYPE_SAMPLE_PRODUCE);
-			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			p.setProduceAmount(l + m + s + xs + xl + xxl);
 			sample_produces.add(p);
 		}
-		
-		//版型数据
+
+		// 版型数据
 		String version_sizes = request.getParameter("version_size");
-		String version_centerBackLengths = request.getParameter("version_centerBackLength");
+		String version_centerBackLengths = request
+				.getParameter("version_centerBackLength");
 		String version_busts = request.getParameter("version_bust");
 		String version_waistLines = request.getParameter("version_waistLine");
 		String version_shoulders = request.getParameter("version_shoulder");
@@ -263,7 +267,8 @@ public class MarketController {
 		String version_skirts = request.getParameter("version_skirt");
 		String version_sleevess = request.getParameter("version_sleeves");
 		String version_size[] = version_sizes.split(",");
-		String version_centerBackLength[] = version_centerBackLengths.split(",");
+		String version_centerBackLength[] = version_centerBackLengths
+				.split(",");
 		String version_bust[] = version_busts.split(",");
 		String version_waistLine[] = version_waistLines.split(",");
 		String version_shoulder[] = version_shoulders.split(",");
@@ -274,12 +279,15 @@ public class MarketController {
 		String version_sleeves[] = version_sleevess.split(",");
 		List<VersionData> versions = new ArrayList<VersionData>();
 		for (int i = 0; i < version_size.length; i++) {
-			if(version_size[i].equals(""))
+			if (version_size[i].equals(""))
 				continue;
-			versions.add(new VersionData(0,version_size[i],version_centerBackLength[i],version_bust[i],version_waistLine[i]
-					,version_shoulder[i],version_buttock[i],version_hem[i],version_trousers[i],version_skirt[i],version_sleeves[i]));
+			versions.add(new VersionData(0, version_size[i],
+					version_centerBackLength[i], version_bust[i],
+					version_waistLine[i], version_shoulder[i],
+					version_buttock[i], version_hem[i], version_trousers[i],
+					version_skirt[i], version_sleeves[i]));
 		}
-		
+
 		// 物流数据
 		Logistics logistics = new Logistics();
 		String in_post_sample_clothes_time = request
@@ -343,11 +351,11 @@ public class MarketController {
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 
-		marketService.addOrderSubmit(order, fabrics, accessorys, logistics, produces, sample_produces, versions,
-				request);
-		
+		marketService.addOrderSubmit(order, fabrics, accessorys, logistics,
+				produces, sample_produces, versions, request);
+
 		JavaMailUtil.send();
-		
+
 		return "forward:/market/addOrderList.do";
 	}
 
@@ -415,7 +423,8 @@ public class MarketController {
 		quote.setOuterPrice(outer);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		marketService.modifyQuoteSubmit(quote, id, taskId, processId, account.getUserId());
+		marketService.modifyQuoteSubmit(quote, id, taskId, processId,
+				account.getUserId());
 
 		return "redirect:/market/confirmQuoteList.do";
 	}
@@ -432,7 +441,8 @@ public class MarketController {
 		// long processId=Long.parseLong(s_processId);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		Map<String,Object> orderInfo = marketService.getModifyQuoteDetail(id, account.getUserId());
+		Map<String, Object> orderInfo = marketService.getModifyQuoteDetail(id,
+				account.getUserId());
 		model.addAttribute("orderInfo", orderInfo);
 		return "market/modifyQuoteDetail";
 	}
@@ -445,8 +455,8 @@ public class MarketController {
 
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<Map<String, Object>> tasks = marketService.getModifyQuoteList(account
-				.getUserId());
+		List<Map<String, Object>> tasks = marketService
+				.getModifyQuoteList(account.getUserId());
 
 		model.put("list", tasks);
 		model.addAttribute("taskName", "修改报价");
@@ -462,8 +472,8 @@ public class MarketController {
 
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<Map<String, Object>> tasks = marketService.getModifyProductList(account
-				.getUserId());
+		List<Map<String, Object>> tasks = marketService
+				.getModifyProductList(account.getUserId());
 
 		model.put("list", tasks);
 		model.addAttribute("taskName", "修改合同加工单");
@@ -480,7 +490,8 @@ public class MarketController {
 		int id = Integer.parseInt(orderId);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		Map<String,Object> oi = marketService.getModifyProductDetail(id, account.getUserId());
+		Map<String, Object> oi = marketService.getModifyProductDetail(id,
+				account.getUserId());
 		model.addAttribute("orderInfo", oi);
 		return "market/modifyProductDetail";
 	}
@@ -498,8 +509,9 @@ public class MarketController {
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("processId");
 		long processId = Long.parseLong(s_processId);
-		boolean editworksheetok = Boolean.parseBoolean(request.getParameter("tof"));
-		//大货加工要求
+		boolean editworksheetok = Boolean.parseBoolean(request
+				.getParameter("tof"));
+		// 大货加工要求
 		String produce_colors = request.getParameter("produce_color");
 		String produce_xss = request.getParameter("produce_xs");
 		String produce_ss = request.getParameter("produce_s");
@@ -516,7 +528,7 @@ public class MarketController {
 		String produce_xxl[] = produce_xxls.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
-			if(produce_color[i].equals(""))
+			if (produce_color[i].equals(""))
 				continue;
 			Produce p = new Produce();
 			p.setColor(produce_color[i]);
@@ -533,13 +545,13 @@ public class MarketController {
 			p.setXl(xl);
 			p.setXs(xs);
 			p.setXxl(xxl);
-			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			p.setProduceAmount(l + m + s + xs + xl + xxl);
 			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
-		
-		marketService.modifyProductSubmit(account.getUserId()+"", orderId_request, taskId, 
-				processId, editworksheetok, produces);
+
+		marketService.modifyProductSubmit(account.getUserId() + "",
+				orderId_request, taskId, processId, editworksheetok, produces);
 		return "redirect:/market/modifyProductList.do";
 	}
 
@@ -571,10 +583,11 @@ public class MarketController {
 		quote.setSingleCost(single);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		marketService.mergeQuoteSubmit(account.getUserId(), quote, id, taskId, processId);
+		marketService.mergeQuoteSubmit(account.getUserId(), quote, id, taskId,
+				processId);
 		return "redirect:/market/mergeQuoteList.do";
 	}
-	
+
 	// 专员合并报价信息
 	@RequestMapping(value = "market/mergeQuoteDetail.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -584,7 +597,8 @@ public class MarketController {
 		int id = Integer.parseInt(s_id);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		Map<String,Object> orderModel = marketService.getMergeQuoteDetail(account.getUserId(), id);
+		Map<String, Object> orderModel = marketService.getMergeQuoteDetail(
+				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
 		model.addAttribute("merge_w", true);
 		return "market/mergeQuoteDetail";
@@ -597,8 +611,9 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		
-		List<Map<String, Object>> list = marketService.getMergeQuoteList(account.getAccountId());
+
+		List<Map<String, Object>> list = marketService
+				.getMergeQuoteList(account.getAccountId());
 
 		model.put("list", list);
 		model.addAttribute("taskName", "合并报价");
@@ -639,7 +654,7 @@ public class MarketController {
 		marketService.verifyQuoteSubmit(quote, id, taskId, processId);
 		return "redirect:/market/verifyQuoteList.do";
 	}
-	
+
 	// 主管审核报价detail
 	@RequestMapping(value = "market/verifyQuoteDetail.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
@@ -649,7 +664,8 @@ public class MarketController {
 		int id = Integer.parseInt(s_id);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		Map<String,Object> orderModel = marketService.getVerifyQuoteDetail(account.getUserId(), id);
+		Map<String, Object> orderModel = marketService.getVerifyQuoteDetail(
+				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
 		return "market/verifyQuoteDetail";
 
@@ -662,7 +678,8 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<Map<String, Object>> list = marketService.getVerifyQuoteList(account.getUserId());
+		List<Map<String, Object>> list = marketService
+				.getVerifyQuoteList(account.getUserId());
 		model.put("list", list);
 		model.addAttribute("taskName", "审核报价");
 		model.addAttribute("url", "/market/verifyQuoteDetail.do");
@@ -677,10 +694,12 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<Map<String, Object>> orderModelList = marketService.getModifyOrderList(account.getUserId());
-		if(orderModelList.size()==0){
-			jbpmTest.completeVerify(account.getUserId()+"", false);
-			orderModelList = marketService.getModifyOrderList(account.getUserId());
+		List<Map<String, Object>> orderModelList = marketService
+				.getModifyOrderList(account.getUserId());
+		if (orderModelList.size() == 0) {
+			jbpmTest.completeVerify(account.getUserId() + "", false);
+			orderModelList = marketService.getModifyOrderList(account
+					.getUserId());
 		}
 		model.put("list", orderModelList);
 		model.addAttribute("taskName", "修改询单");
@@ -699,14 +718,18 @@ public class MarketController {
 		// 修改
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		Map<String,Object> orderModel = marketService.getModifyOrderDetail(account.getUserId(), id);
+		Map<String, Object> orderModel = marketService.getModifyOrderDetail(
+				account.getUserId(), id);
 		model.addAttribute("orderModel", orderModel);
-		String buyComment = jbpmAPIUtil.getVariable((TaskSummary)orderModel.get("task"), "buyComment").toString();
-		String designComment = jbpmAPIUtil.getVariable((TaskSummary)orderModel.get("task"), "designComment").toString();
+		Object buyComment = jbpmAPIUtil.getVariable(
+				(TaskSummary) orderModel.get("task"),
+				BuyServiceImpl.RESULT_PURCHASE_COMMENT);
+		Object designComment = jbpmAPIUtil.getVariable(
+				(TaskSummary) orderModel.get("task"),
+				DesignServiceImpl.RESULT_DESIGN_COMMENT);
 		model.addAttribute("buyComment", buyComment);
 		model.addAttribute("designComment", designComment);
 		return "market/modifyOrderDetail";
-
 	}
 
 	// 询单的修改界面
@@ -765,8 +788,8 @@ public class MarketController {
 			accessorys.add(new Accessory(0, accessory_name[i],
 					accessory_query[i]));
 		}
-		
-		//大货加工要求
+
+		// 大货加工要求
 		String produce_colors = request.getParameter("produce_color");
 		String produce_xss = request.getParameter("produce_xs");
 		String produce_ss = request.getParameter("produce_s");
@@ -783,7 +806,7 @@ public class MarketController {
 		String produce_xxl[] = produce_xxls.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
-			if(produce_color[i].equals(""))
+			if (produce_color[i].equals(""))
 				continue;
 			Produce p = new Produce();
 			p.setColor(produce_color[i]);
@@ -800,13 +823,14 @@ public class MarketController {
 			p.setXl(xl);
 			p.setXs(xs);
 			p.setXxl(xxl);
-			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			p.setProduceAmount(l + m + s + xs + xl + xxl);
 			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
-		
-		//样衣加工要求
-		String sample_produce_colors = request.getParameter("sample_produce_color");
+
+		// 样衣加工要求
+		String sample_produce_colors = request
+				.getParameter("sample_produce_color");
 		String sample_produce_xss = request.getParameter("sample_produce_xs");
 		String sample_produce_ss = request.getParameter("sample_produce_s");
 		String sample_produce_ms = request.getParameter("sample_produce_m");
@@ -822,7 +846,7 @@ public class MarketController {
 		String sample_produce_xxl[] = sample_produce_xxls.split(",");
 		List<Produce> sample_produces = new ArrayList<Produce>();
 		for (int i = 0; i < sample_produce_color.length; i++) {
-			if(sample_produce_color[i].equals(""))
+			if (sample_produce_color[i].equals(""))
 				continue;
 			Produce p = new Produce();
 			p.setColor(sample_produce_color[i]);
@@ -840,13 +864,14 @@ public class MarketController {
 			p.setXs(xs);
 			p.setXxl(xxl);
 			p.setType(Produce.TYPE_SAMPLE_PRODUCE);
-			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			p.setProduceAmount(l + m + s + xs + xl + xxl);
 			sample_produces.add(p);
 		}
-		
-		//版型数据
+
+		// 版型数据
 		String version_sizes = request.getParameter("version_size");
-		String version_centerBackLengths = request.getParameter("version_centerBackLength");
+		String version_centerBackLengths = request
+				.getParameter("version_centerBackLength");
 		String version_busts = request.getParameter("version_bust");
 		String version_waistLines = request.getParameter("version_waistLine");
 		String version_shoulders = request.getParameter("version_shoulder");
@@ -856,7 +881,8 @@ public class MarketController {
 		String version_skirts = request.getParameter("version_skirt");
 		String version_sleevess = request.getParameter("version_sleeves");
 		String version_size[] = version_sizes.split(",");
-		String version_centerBackLength[] = version_centerBackLengths.split(",");
+		String version_centerBackLength[] = version_centerBackLengths
+				.split(",");
 		String version_bust[] = version_busts.split(",");
 		String version_waistLine[] = version_waistLines.split(",");
 		String version_shoulder[] = version_shoulders.split(",");
@@ -867,10 +893,13 @@ public class MarketController {
 		String version_sleeves[] = version_sleevess.split(",");
 		List<VersionData> versions = new ArrayList<VersionData>();
 		for (int i = 0; i < version_size.length; i++) {
-			if(version_size[i].equals(""))
+			if (version_size[i].equals(""))
 				continue;
-			versions.add(new VersionData(0,version_size[i],version_centerBackLength[i],version_bust[i],version_waistLine[i]
-					,version_shoulder[i],version_buttock[i],version_hem[i],version_trousers[i],version_skirt[i],version_sleeves[i]));
+			versions.add(new VersionData(0, version_size[i],
+					version_centerBackLength[i], version_bust[i],
+					version_waistLine[i], version_shoulder[i],
+					version_buttock[i], version_hem[i], version_trousers[i],
+					version_skirt[i], version_sleeves[i]));
 		}
 
 		// 物流数据
@@ -912,7 +941,7 @@ public class MarketController {
 
 		// Order
 		Order order = orderService.findByOrderId(s_id);
-		//order.setEmployeeId(employeeId);
+		// order.setEmployeeId(employeeId);
 		// order.setCustomerId(customerId);
 		order.setOrderState(orderState);
 		// order.setCustomerName(customerName);
@@ -936,19 +965,24 @@ public class MarketController {
 		order.setHasPostedSampleClothes(hasPostedSampleClothes);
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
-		
+
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		boolean editok = request.getParameter("editok").equals("true")?true:false;
-		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics, produces, sample_produces, versions, editok, task_id, account.getUserId());
-//		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-//				.getKsession().getProcessInstance(Long.parseLong(s_process_id));
-//		String buyComment = process.getVariable("buyComment").toString();
-//		String designComment = process.getVariable("designComment").toString();
-//		// String
-//		// productComment=process.getVariable("productComment").toString();
-//		orderService.verify(id, task_id, process_id, true, buyComment,
-//				designComment, null);
+		boolean editok = request.getParameter("editok").equals("true") ? true
+				: false;
+		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
+				produces, sample_produces, versions, editok, task_id,
+				account.getUserId());
+		// WorkflowProcessInstance process = (WorkflowProcessInstance)
+		// jbpmAPIUtil
+		// .getKsession().getProcessInstance(Long.parseLong(s_process_id));
+		// String buyComment = process.getVariable("buyComment").toString();
+		// String designComment =
+		// process.getVariable("designComment").toString();
+		// // String
+		// // productComment=process.getVariable("productComment").toString();
+		// orderService.verify(id, task_id, process_id, true, buyComment,
+		// designComment, null);
 		return "redirect:/market/modifyOrderList.do";
 	}
 
@@ -957,16 +991,14 @@ public class MarketController {
 		return new Timestamp(outDate.getTime());
 	}
 
-
-	
 	@RequestMapping(value = "/market/confirmQuoteList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		List<Map<String, Object>> list = marketService.getConfirmQuoteList(account
-				.getUserId() + "");
+		List<Map<String, Object>> list = marketService
+				.getConfirmQuoteList(account.getUserId() + "");
 		model.put("list", list);
 		model.addAttribute("taskName", "确认报价");
 		model.addAttribute("url", "/market/confirmQuoteDetail.do");
@@ -981,12 +1013,12 @@ public class MarketController {
 		int id = Integer.parseInt(s_id);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		Map<String, Object> orderModel = marketService.getConfirmQuoteDetail(account.getUserId(), id);
+		Map<String, Object> orderModel = marketService.getConfirmQuoteDetail(
+				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
 		return "market/confirmQuoteDetail";
 	}
 
-	
 	@RequestMapping(value = "/market/confirmQuoteSubmit.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteSubmit(HttpServletRequest request,
@@ -997,22 +1029,19 @@ public class MarketController {
 		String orderId = request.getParameter("orderId");
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		String actorId=account.getUserId()+"";
-		marketService.confirmQuoteSubmit(actorId,Long.parseLong(taskId),
+		String actorId = account.getUserId() + "";
+		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),
 				result);
-		
-		// 2=修改报价
-		if (result.equals("2")) {
+
+		// 1=修改报价
+		if (result.equals("1")) {
 			return "redirect:/market/modifyQuoteList.do?id=" + orderId;
 		} else {
 			return "redirect:/market/confirmQuoteList.do";
 		}
 	}
 
-
-	
-	//============================确认合同加工单===========================
-
+	// ============================确认合同加工单===========================
 
 	/**
 	 * 确认合同加工单跳转链接
@@ -1027,9 +1056,15 @@ public class MarketController {
 	public String confirmProduceOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-		String actorId = account.getUserId()+"";
-		List<Map<String, Object>> orderList = marketService.getConfirmProductList(actorId);
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
+		String actorId = account.getUserId() + "";
+		List<Map<String, Object>> orderList = marketService
+				.getConfirmProductList(actorId);
+		if (orderList.size() == 0) {
+			jbpmTest.completeProduceConfirm("1", true);
+			orderList = marketService.getConfirmProductList(actorId);
+		}
 		model.put("list", orderList);
 		model.addAttribute("taskName", "确认合同加工单");
 		model.addAttribute("url", "/market/confirmProduceOrderDetail.do");
@@ -1057,8 +1092,9 @@ public class MarketController {
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("processId");
 		long processId = Long.parseLong(s_processId);
-		boolean comfirmworksheet = Boolean.parseBoolean(request.getParameter("tof"));
-		//大货加工要求
+		boolean comfirmworksheet = Boolean.parseBoolean(request
+				.getParameter("tof"));
+		// 大货加工要求
 		String produce_colors = request.getParameter("produce_color");
 		String produce_xss = request.getParameter("produce_xs");
 		String produce_ss = request.getParameter("produce_s");
@@ -1075,7 +1111,7 @@ public class MarketController {
 		String produce_xxl[] = produce_xxls.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
-			if(produce_color[i].equals(""))
+			if (produce_color[i].equals(""))
 				continue;
 			Produce p = new Produce();
 			p.setColor(produce_color[i]);
@@ -1092,13 +1128,13 @@ public class MarketController {
 			p.setXl(xl);
 			p.setXs(xs);
 			p.setXxl(xxl);
-			p.setProduceAmount(l+m+s+xs+xl+xxl);
+			p.setProduceAmount(l + m + s + xs + xl + xxl);
 			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
-		
-		marketService.confirmProduceOrderSubmit(account.getUserId()+"", orderId_request, taskId, 
-				processId, comfirmworksheet, produces);
+
+		marketService.confirmProduceOrderSubmit(account.getUserId() + "",
+				orderId_request, taskId, processId, comfirmworksheet, produces);
 		return "redirect:/market/confirmProduceOrderList.do";
 	}
 
@@ -1115,12 +1151,14 @@ public class MarketController {
 	public String confirmProduceOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		Account account = (Account) request.getSession().getAttribute("cur_user");
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int id = Integer.parseInt(s_orderId_request);
-//		String s_taskId = request.getParameter("taskId");
-//		long taskId = Long.parseLong(s_taskId);
-		Map<String, Object> orderInfo = marketService.getConfirmProductDetail(account.getUserId(), id);
+		// String s_taskId = request.getParameter("taskId");
+		// long taskId = Long.parseLong(s_taskId);
+		Map<String, Object> orderInfo = marketService.getConfirmProductDetail(
+				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderInfo);
 
 		return "market/confirmProductDetail";
@@ -1149,15 +1187,14 @@ public class MarketController {
 		String s_processId = request.getParameter("process_id");
 		long processId = Long.parseLong(s_processId);
 		boolean comfirmworksheet = false;
-		marketService.confirmProduceOrderSubmit(account.getUserId()+"", orderId_request, taskId,
-				processId, comfirmworksheet, null);
+		marketService.confirmProduceOrderSubmit(account.getUserId() + "",
+				orderId_request, taskId, processId, comfirmworksheet, null);
 
 		return "redirect:/market/confirmProduceOrderList.do";
 	}
-	
-	//=======================================================
 
-	
+	// =======================================================
+
 	// ========================签订合同============================
 	@RequestMapping(value = "/market/signContractList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -1165,8 +1202,8 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		List<Map<String, Object>> list = marketService.getSignContractList(account
-				.getUserId() + "");
+		List<Map<String, Object>> list = marketService
+				.getSignContractList(account.getUserId() + "");
 		model.put("list", list);
 		model.addAttribute("taskName", "签订合同");
 		model.addAttribute("url", "/market/signContractDetail.do");
@@ -1180,8 +1217,8 @@ public class MarketController {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
 		String orderId = request.getParameter("orderId");
-		Map<String, Object> orderInfo = marketService.getSignContractDetail(account
-				.getUserId() + "", Integer.parseInt(orderId));
+		Map<String, Object> orderInfo = marketService.getSignContractDetail(
+				account.getUserId() + "", Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/market/signContractDetail";
 	}
@@ -1196,31 +1233,34 @@ public class MarketController {
 		String taskId = request.getParameter("taskId");
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		String actorId=account.getUserId()+"";
-		
-		marketService.signContractSubmit(actorId, Long.parseLong(taskId), Integer.parseInt(orderId),
-				Double.parseDouble(discount), Double.parseDouble(total) );
+		String actorId = account.getUserId() + "";
+
+		marketService.signContractSubmit(actorId, Long.parseLong(taskId),
+				Integer.parseInt(orderId), Double.parseDouble(discount),
+				Double.parseDouble(total));
 		return "redirect:/market/signContractList.do";
 	}
-	
+
 	@RequestMapping(value = "/market/orderList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String orderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account=(Account) request.getSession().getAttribute("cur_user");
-		List<Map<String,Object>>list=marketService.getOrderList(account.getUserId());
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
+		List<Map<String, Object>> list = marketService.getOrderList(account
+				.getUserId());
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/market/orderDetail.do");
 		return "/market/orderList";
 	}
-	
+
 	@RequestMapping(value = "/market/orderDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String orderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
-		Map<String,Object>orderInfo=marketService.getOrderDetail(orderId);
+		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
+		Map<String, Object> orderInfo = marketService.getOrderDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/market/orderDetail";
 	}

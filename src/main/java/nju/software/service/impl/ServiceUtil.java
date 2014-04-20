@@ -42,10 +42,6 @@ public class ServiceUtil {
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) jbpmAPIUtil
 					.getVariable(task, "orderId");
-			
-			System.out.println( jbpmAPIUtil
-					.getVariable(task, "orderId")+" receiveMoney:"+jbpmAPIUtil
-					.getVariable(task, "receiveMoney")+" task:"+task.getName());
 			Map<String, Object> model = new HashMap<String, Object>();
 			System.out.println(jbpmAPIUtil
 					.getVariable(task, "paymentok"));

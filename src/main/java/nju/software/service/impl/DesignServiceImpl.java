@@ -33,32 +33,7 @@ import nju.software.util.JbpmAPIUtil;
 @Service("designServiceImpl")
 public class DesignServiceImpl implements DesignService {
 
-	public final static String ACTOR_DESIGN_MANAGER = "designManager";
-	public final static String TASK_VERIFY_DESIGN = "verifyDesign";
-	public final static String TASK_COMPUTE_DESIGN_COST = "computeDesignCost";
-	public final static String TASK_UPLOAD_DESIGN = "uploadDegisn";
-	public final static String TASK_MODIFY_DESIGN = "modifyDesign";
-	public final static String TASK_CONFIRM_DESIGN = "confirmDesign";
-
-	@Autowired
-	private OrderDAO orderDAO;
-	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
-	private LogisticsDAO logisticsDAO;
-	@Autowired
-	private FabricDAO fabricDAO;
-	@Autowired
-	private QuoteDAO QuoteDAO;
-	@Autowired
-	private AccessoryDAO accessoryDAO;
-	@Autowired
-	private DesignCadDAO DesignCadDAO;
-	@Autowired
-	private ServiceUtil service;
-	@Autowired
-	private DesignCadDAO designCadDAO;
-
+	// ===========================设计验证=================================
 	@Override
 	public List<Map<String, Object>> getVerifyDesignList() {
 		// TODO Auto-generated method stub
@@ -66,269 +41,114 @@ public class DesignServiceImpl implements DesignService {
 	}
 
 	@Override
-	public Map<String,Object> getVerifyDesignDetail(int orderId) {
+	public Map<String, Object> getVerifyDesignDetail(int orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModel(ACTOR_DESIGN_MANAGER,
 				TASK_VERIFY_DESIGN, orderId);
 	}
 
 	@Override
-	public boolean verifyDesignSubmit(Account account, int orderId, long taskId,
-			boolean designVal, String comment) {
+	public boolean verifyDesignSubmit(long taskId, boolean result,
+			String comment) {
 		// TODO Auto-generated method stub
-		// String actorId = account.getUserRole();
-			Order order = orderDAO.findById(orderId);
-			// 修改order内容
-
-			// 提交修改
-			orderDAO.attachDirty(order);
-
-			// 修改流程参数
-			Map<String, Object> data = new HashMap<>();
-			data.put("designVal", designVal);
-			data.put("designComment", comment);
-			// 直接进入到下一个流程时
-			try {
-				jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_DESIGN, result);
+		data.put(RESULT_DESIGN_COMMENT, comment);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
 			return true;
-	}
-
-	@Override
-	public List<Map<String,Object>> getComputeDesignCostList() {
-		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_COMPUTE_DESIGN_COST);
-	}
-
-	@Override
-	public Map<String,Object> getComputeDesignCostDetail(Integer orderId) {
-		
-		return service.getBasicOrderModel(ACTOR_DESIGN_MANAGER,
-				TASK_COMPUTE_DESIGN_COST, orderId);
-	}
-
-	@Override
-	public void computeDesignCostSubmit(int orderId, long taskId,
-			float design_cost) {
-		// TODO Auto-generated method stub
-		Quote quote = QuoteDAO.findById(orderId);
-	
-		if (quote == null) {
-			quote = new Quote();
-			quote.setOrderId(orderId);
-			quote.setDesignCost(design_cost);
-			QuoteDAO.save(quote);
-		} else {
-			quote.setDesignCost(design_cost);
-			QuoteDAO.attachDirty(quote);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
 		}
-		
-		
-				Map<String, Object> data = new HashMap<String, Object>();
-				try {
-					data.put("ComputeDesignCost", true);
-					jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 	}
 
+	// ===========================上传版型=================================
 	@Override
-	public List<Map<String,Object>> getUploadDesignList() {
+	public List<Map<String, Object>> getUploadDesignList() {
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_UPLOAD_DESIGN);
 	}
 
 	@Override
-	public Map<String,Object> getUploadDesignDetail(Integer orderId) {
+	public Map<String, Object> getUploadDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String,Object> model=service.getBasicOrderModel(
-				ACTOR_DESIGN_MANAGER, TASK_UPLOAD_DESIGN, orderId);
-		return model;
+		return service.getBasicOrderModel(ACTOR_DESIGN_MANAGER,
+				TASK_UPLOAD_DESIGN, orderId);
 	}
 
 	@Override
-	public void uploadDesignSubmit(int orderId, long taskId, String url,
+	public boolean uploadDesignSubmit(int orderId, long taskId, String url,
 			Timestamp uploadTime) {
 		// TODO Auto-generated method stub
-		DesignCad designCad = DesignCadDAO.findById(orderId);
+		DesignCad designCad = designCadDAO.findById(orderId);
 		if (designCad == null) {
-			// 数据库中无designCad对象
-			// 新建QUote内容
 			designCad = new DesignCad();
 			designCad.setOrderId(orderId);
-			designCad.setCadUrl(url);
 			designCad.setCadVersion((short) 1);
-			designCad.setUploadTime(uploadTime);
-			DesignCadDAO.save(designCad);
 		} else {
-			// designCad已存在于数据库
-			// 修改QUote内容
-	
 			short newVersion = (short) (designCad.getCadVersion() + 1);
-			designCad.setCadUrl(url);
 			designCad.setCadVersion(newVersion);
-			designCad.setUploadTime(uploadTime);
-			DesignCadDAO.attachDirty(designCad);
 		}
-	
+		designCad.setCadUrl(url);
+		designCad.setUploadTime(uploadTime);
+		designCadDAO.attachDirty(designCad);
+		
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			data.put("Design", true);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
-		
-		
 	}
 
+	// ===========================修改版型=================================
 	@Override
-	public List<Map<String,Object>> getModifyDesignList() {
+	public List<Map<String, Object>> getModifyDesignList() {
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_MODIFY_DESIGN);
 	}
 
 	@Override
-	public Map<String,Object> getModifyDesignDetail(Integer orderId) {
+	public Map<String, Object> getModifyDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-
-		Map<String,Object> model=service.getBasicOrderModel(
+		Map<String, Object> model = service.getBasicOrderModel(
 				ACTOR_DESIGN_MANAGER, TASK_MODIFY_DESIGN, orderId);
 		model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
 		return model;
 	}
 
+	// ===========================确认版型=================================
 	@Override
-	public List<Map<String,Object>> getConfirmDesignList() {
+	public List<Map<String, Object>> getConfirmDesignList() {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CONFIRM_DESIGN);
 	}
 
 	@Override
-	public Map<String,Object> getConfirmDesignDetail(Integer orderId) {
+	public Map<String, Object> getConfirmDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String,Object> model=service.getBasicOrderModel(
+		Map<String, Object> model = service.getBasicOrderModel(
 				ACTOR_DESIGN_MANAGER, TASK_CONFIRM_DESIGN, orderId);
 		model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
 		return model;
 	}
 
-	@Override
-	public boolean costAccounting(Account account, int orderId, long taskId,
-			long processId, float design_cost) {
-		// TODO Auto-generated method stub
+	public final static String ACTOR_DESIGN_MANAGER = "designManager";
+	public final static String TASK_VERIFY_DESIGN = "verifyDesign";
+	public final static String TASK_COMPUTE_DESIGN_COST = "computeDesignCost";
+	public final static String TASK_UPLOAD_DESIGN = "uploadDegisn";
+	public final static String TASK_MODIFY_DESIGN = "modifyDesign";
+	public final static String TASK_CONFIRM_DESIGN = "confirmDesign";
+	public final static String RESULT_DESIGN = "design";
+	public final static String RESULT_DESIGN_COMMENT = "designComment";
 
-		String actorId = "SHEJIZHUGUAN";
-		// 需要获取task中的数据
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(processId);
-		int orderId_process = (int) process.getVariable("orderId");
-		System.out.println("orderId: " + orderId);
-		if (orderId == orderId_process) {
-
-			Quote quote = QuoteDAO.findById(orderId);
-			if (quote == null) {
-				// 数据库中无quote对象
-				// 修改QUote内容
-				quote = new Quote();
-				quote.setOrderId(orderId);
-				quote.setDesignCost(design_cost);
-				QuoteDAO.save(quote);
-			} else {
-				// quote已存在于数据库
-				// 修改QUote内容
-				quote.setDesignCost(design_cost);
-				QuoteDAO.attachDirty(quote);
-			}
-
-			// 修改流程参数
-			Map<String, Object> data = new HashMap<>();
-			// data.put("designVal", designVal);
-			data.put("designcost", design_cost);
-			// 直接进入到下一个流程时
-			try {
-				jbpmAPIUtil.completeTask(taskId, data, actorId);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return true;
-		}
-		return false;
-
-	}
-
-	@Override
-	public Logistics getLogisticsByOrderId(int orderId) {
-		// TODO Auto-generated method stub
-		Logistics logistic = logisticsDAO.findById(orderId);
-		return logistic;
-	}
-
-	@Override
-	public List<Fabric> getFabricByOrderId(int orderId) {
-		// TODO Auto-generated method stub
-		List<Fabric> list = fabricDAO.findByOrderId(orderId);
-		return list;
-	}
-
-	@Override
-	public List<Accessory> getAccessoryByOrderId(int orderId) {
-		// TODO Auto-generated method stub
-		List<Accessory> list = accessoryDAO.findByOrderId(orderId);
-		return list;
-	}
-
-	@Override
-	public boolean uploadCAD(Account account, int orderId, long taskId,
-			long processId, String url, Timestamp uploadTime) {
-		String actorId = "SHEJIZHUGUAN";
-		// 需要获取task中的数据
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(processId);
-		int orderId_process = (int) process.getVariable("orderId");
-		System.out.println("orderId: " + orderId);
-		if (orderId == orderId_process) {
-
-			DesignCad designCad = DesignCadDAO.findById(orderId);
-			if (designCad == null) {
-				// 数据库中无designCad对象
-				// 新建QUote内容
-				designCad = new DesignCad();
-				designCad.setOrderId(orderId);
-				designCad.setCadUrl(url);
-				designCad.setCadVersion((short) 1);
-				designCad.setUploadTime(uploadTime);
-				DesignCadDAO.save(designCad);
-			} else {
-				// designCad已存在于数据库
-				// 修改QUote内容
-
-				short newVersion = (short) (designCad.getCadVersion() + 1);
-				designCad.setCadUrl(url);
-				designCad.setCadVersion(newVersion);
-				designCad.setUploadTime(uploadTime);
-				DesignCadDAO.attachDirty(designCad);
-			}
-
-			// 修改流程参数
-			Map<String, Object> data = new HashMap<>();
-			// data.put("designVal", designVal);
-			data.put("OrderId", orderId);
-			// 直接进入到下一个流程时
-			try {
-				jbpmAPIUtil.completeTask(taskId, data, actorId);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return true;
-		}
-		return false;
-	}
-
-
+	@Autowired
+	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private ServiceUtil service;
+	@Autowired
+	private DesignCadDAO designCadDAO;
 }

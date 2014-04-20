@@ -32,7 +32,7 @@
 				</div>
 			</div>
 
-			<form id="verify_form" method="post" onsubmit="return confirm('确认提交？')"
+			<form id="verify_form" method="post" 
 				class="verify" action="${ctx }/design/verifyDesignSubmit.do">
 				<table class="table table-striped table-bordered table-hover detail">
 					<tr>

@@ -52,7 +52,7 @@ public class Order implements java.io.Serializable {
 	private String askProducePeriod;
 	private Timestamp askDeliverDate;
 	private String askCodeNumber;
-	private Short hasPostedSampleClothes;//0 no sample 1 recieved the sample 2 not recieved the sample
+	private Short hasPostedSampleClothes;//0 no sample 1 not recieved the sample 2  recieved the sample
 	private Short isNeedSampleClothes;//0 not need sample 1 need sample
 	private String orderSource;
 	private String payAccountInfo;

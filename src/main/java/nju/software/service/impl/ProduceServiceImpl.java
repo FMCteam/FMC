@@ -1,17 +1,14 @@
 package nju.software.service.impl;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
@@ -21,113 +18,66 @@ import nju.software.dao.impl.PackageDetailDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
-import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
-import nju.software.dataobject.Fabric;
-import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
-import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Produce;
-import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
-import nju.software.model.OrderInfo;
 import nju.software.service.ProduceService;
 import nju.software.util.JbpmAPIUtil;
 
 @Service("produceServiceImpl")
 public class ProduceServiceImpl implements ProduceService {
 
-	public final static String ACTOR_PRODUCE_MANAGER = "produceManager";
-	public final static String TASK_VERIFY_PRODUCE = "verifyProduce";
-	public final static String TASK_COMPUTE_PRODUCE_COST = "computeProduceCost";
-	public final static String TASK_PRODUCE_SAMPLE = "produceSample";
-	public final static String TASK_PRODUCE = "produce";
-	public final static String RESULT_PRODUCE="produce";
-
-	@Autowired
-	private OrderDAO orderDAO;
-	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
-	private LogisticsDAO logisticsDAO;
-	@Autowired
-	private QuoteDAO QuoteDAO;
-	@Autowired
-	private FabricDAO fabricDAO;
-	@Autowired
-	private AccessoryDAO accessoryDAO;
-	@Autowired
-	private QuoteDAO quoteDAO;
-	@Autowired
-	private ProductDAO productDAO;
-	@Autowired
-	private ProduceDAO produceDAO;
-
-	@Autowired
-	private PackageDAO packageDAO;
-	@Autowired
-	private PackageDetailDAO packageDetailDAO;
-	@Autowired
-	private ServiceUtil service;
-
 	@Override
 	public List<Map<String, Object>> getVerifyProduceList() {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_VERIFY_PRODUCE);
-		
 	}
 
 	@Override
-	public Map<String,Object> getVerifyProduceDetail(int orderId) {
+	public Map<String, Object> getVerifyProduceDetail(int orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER,
 				TASK_VERIFY_PRODUCE, orderId);
 	}
 
 	@Override
-	public boolean verifyProduceSubmit(Account account, int orderId, long taskId,
-			boolean productVal, String comment) {
+	public boolean verifyProduceSubmit(long taskId, boolean result,
+			String comment) {
 		// TODO Auto-generated method stub
-		// String actorId = account.getUserRole();
-			Order order = orderDAO.findById(orderId);
-			// 修改order内容
-
-			// 提交修改
-			orderDAO.attachDirty(order);
-
-			// 修改流程参数
-			Map<String, Object> data = new HashMap<>();
-			data.put("productVal", productVal);
-			data.put("productComment", comment);
-			// 直接进入到下一个流程时
-			try {
-				jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_PRODUCE, result);
+		data.put(RESULT_PRODUCE_COMMENT, comment);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
 	public List<Map<String, Object>> getComputeProduceCostList() {
-		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_COMPUTE_PRODUCE_COST);
+		return service.getOrderList(ACTOR_PRODUCE_MANAGER,
+				TASK_COMPUTE_PRODUCE_COST);
 	}
 
 	@Override
-	public Map<String,Object> getComputeProduceCostInfo(Integer orderId) {
+	public Map<String, Object> getComputeProduceCostInfo(Integer orderId) {
 		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER,
 				TASK_COMPUTE_PRODUCE_COST, orderId);
 	}
 
 	@Override
-	public void ComputeProduceCostSubmit(int orderId,
-			long taskId,float cut_cost, float manage_cost, float nali_cost,
+	public void computeProduceCostSubmit(int orderId, long taskId,
+			float cut_cost, float manage_cost, float nali_cost,
 			float ironing_cost, float swing_cost, float package_cost,
 			float other_cost, float design_cost) {
-		
+
 		Quote quote = QuoteDAO.findById(orderId);
-	
+
 		if (quote == null) {
 			quote = new Quote();
 			quote.setOrderId(orderId);
@@ -150,24 +100,23 @@ public class ProduceServiceImpl implements ProduceService {
 			quote.setOtherCost(other_cost);
 			quote.setDesignCost(design_cost);
 		}
-		
-		  float producecost = cut_cost + manage_cost + swing_cost
-				+ ironing_cost + nali_cost + package_cost + other_cost + design_cost
+
+		float producecost = cut_cost + manage_cost + swing_cost + ironing_cost
+				+ nali_cost + package_cost + other_cost + design_cost
 				+ quote.getFabricCost() + quote.getAccessoryCost();
-		  quote.setSingleCost(producecost);
-		  QuoteDAO.attachDirty(quote);
-		
-				Map<String, Object> data = new HashMap<String, Object>();
-				try {
-					data.put("volumeproduction", true);
-					jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		quote.setSingleCost(producecost);
+		QuoteDAO.attachDirty(quote);
+
+		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	//=========================样衣生产========================
+	// =========================样衣生产========================
 	@Override
 	public List<Map<String, Object>> getProduceSampleList() {
 		// TODO Auto-generated method stub
@@ -175,24 +124,17 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public Map<String,Object> getProduceSampleDetail(Integer orderId) {
+	public Map<String, Object> getProduceSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String,Object> orderInfo=service.getBasicOrderModel(
-				ACTOR_PRODUCE_MANAGER, TASK_PRODUCE_SAMPLE, orderId);
-		return orderInfo;
+		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER,
+				TASK_PRODUCE_SAMPLE, orderId);
 	}
 
 	@Override
-	public boolean produceSampleSubmit(long taskId, boolean producterror, List<Produce> produceList) {
+	public boolean produceSampleSubmit(long taskId, boolean result) {
 		// TODO Auto-generated method stub
-//		if (!producterror) {
-//			for (int i = 0; i < produceList.size(); i++) {
-//				System.out.println(produceList.get(i).getOid() + produceList.get(i).getType());
-//				produceDAO.save(produceList.get(i));
-//			}
-//		}
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("producterror", producterror);
+		data.put(RESULT_PRODUCE, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			return true;
@@ -203,32 +145,31 @@ public class ProduceServiceImpl implements ProduceService {
 		}
 	}
 
-	//=======================批量生产========================
+	// =======================批量生产========================
 	@Override
-	public List<Map<String,Object>> getProduceList() {
+	public List<Map<String, Object>> getProduceList() {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_PRODUCE);
 	}
 
 	@Override
-	public Map<String,Object> getProduceDetail(Integer orderId) {
+	public Map<String, Object> getProduceDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String,Object> orderInfo=service.getBasicOrderModel(
-				ACTOR_PRODUCE_MANAGER, TASK_PRODUCE, orderId);
-		return orderInfo;
+		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER, TASK_PRODUCE,
+				orderId);
 	}
 
 	@Override
-
-	public boolean pruduceSubmit(long taskId, boolean result, List<Produce> produceList) {
+	public boolean pruduceSubmit(long taskId, boolean result,
+			List<Produce> produceList) {
 		if (result) {
-			for (int i = 0; i < produceList.size(); i++) {
-				produceDAO.save(produceList.get(i));
-			}
+			// for (int i = 0; i < produceList.size(); i++) {
+			// produceDAO.save(produceList.get(i));
+			// }
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			data.put("volumeproduction", result);
+			data.put(RESULT_PRODUCE, result);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			return true;
 		} catch (InterruptedException e) {
@@ -238,101 +179,10 @@ public class ProduceServiceImpl implements ProduceService {
 		}
 	}
 
-	@Override
-	public Logistics getLogisticsByOrderId(int orderId) {
-		// TODO Auto-generated method stub
-		Logistics logistic = logisticsDAO.findById(orderId);
-		return logistic;
-	}
 
-	@Override
-	public List<Fabric> getFabricByOrderId(int orderId) {
-		// TODO Auto-generated method stub
-		List<Fabric> list = fabricDAO.findByOrderId(orderId);
-		return list;
-	}
-
-	@Override
-	public List<Accessory> getAccessoryByOrderId(int orderId) {
-		// TODO Auto-generated method stub
-		List<Accessory> list = accessoryDAO.findByOrderId(orderId);
-		return list;
-	}
-
-
-
-	
-	public Object getVariable(String name, TaskSummary task) {
-		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
-		long processId = task.getProcessInstanceId();
-		WorkflowProcessInstance process = (WorkflowProcessInstance) session
-				.getProcessInstance(processId);
-		return process.getVariable(name);
-	}
-
-	@Override
-	public boolean costAccounting(Account account, int orderId, long taskId,
-			long processId, float cut_cost, float manage_cost, float nali_cost,
-			float ironing_cost, float swing_cost, float package_cost,
-			float other_cost) {
-		// TODO Auto-generated method stub
-
-		String actorId = "SHENGCHANZHUGUAN";
-		// 需要获取task中的数据
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(processId);
-		int orderId_process = (int) process.getVariable("orderId");
-		System.out.println("orderId: " + orderId);
-		if (orderId == orderId_process) {
-			Quote quote = QuoteDAO.findById(orderId);
-
-			if (quote == null) {
-				quote = new Quote();
-				quote.setOrderId(orderId);
-				quote.setCutCost(cut_cost);
-				quote.setManageCost(manage_cost);
-				quote.setSwingCost(swing_cost);
-				quote.setIroningCost(ironing_cost);
-				quote.setNailCost(nali_cost);
-				quote.setPackageCost(package_cost);
-				quote.setOtherCost(other_cost);
-				QuoteDAO.save(quote);
-			} else {
-				quote.setCutCost(cut_cost);
-				quote.setManageCost(manage_cost);
-				quote.setSwingCost(swing_cost);
-				quote.setIroningCost(ironing_cost);
-				quote.setNailCost(nali_cost);
-				quote.setPackageCost(package_cost);
-				quote.setOtherCost(other_cost);
-				QuoteDAO.attachDirty(quote);
-			}
-			// 修改QUote内容
-
-			QuoteDAO.attachDirty(quote);
-
-			float producecost = cut_cost + manage_cost + swing_cost
-					+ ironing_cost + nali_cost + package_cost + other_cost;
-			// 修改流程参数
-			Map<String, Object> data = new HashMap<>();
-			// data.put("designVal", designVal);
-			data.put("producecost", producecost);
-			// 直接进入到下一个流程时
-			try {
-				jbpmAPIUtil.completeTask(taskId, data, actorId);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return true;
-		}
-		return false;
-
-	}
-	
-	
-	public List<Produce> getProduceList(int orderId, String produceColor, String produceXS, String produceS, 
-			String produceM, String produceL, String produceXL, String produceXXL, String type) {
+	public List<Produce> getProduceList(int orderId, String produceColor,
+			String produceXS, String produceS, String produceM,
+			String produceL, String produceXL, String produceXXL, String type) {
 		String[] color = produceColor.split(",");
 		String[] xs = produceXS.split(",");
 		String[] s = produceS.split(",");
@@ -357,65 +207,36 @@ public class ProduceServiceImpl implements ProduceService {
 		}
 		return produceList;
 	}
-	
 
-	@Override
-	public List<Product> getProductByOrderId(int parseInt) {
-		// TODO Auto-generated method stub
-		List<Product> productList = productDAO.findByProperty("orderId",
-				parseInt);
-		return productList;
-	}
-
-	@Override
-	public List<nju.software.dataobject.Package> getPackageByOrderId(
-			int parseInt) {
-		// TODO Auto-generated method stub
-		List<nju.software.dataobject.Package> packageList = packageDAO
-				.findByProperty("orderId", parseInt);
-		return packageList;
-	}
-
-	@Override
-	public List<List<PackageDetail>> getProductDetailByPackage(
-			List<nju.software.dataobject.Package> packageList) {
-		// TODO Auto-generated method stub
-		List<List<PackageDetail>> detail = new ArrayList<List<PackageDetail>>();
-		for (nju.software.dataobject.Package p : packageList) {
-
-			int packageId = p.getPackageId();
-			List<PackageDetail> l1 = packageDetailDAO.findByProperty(
-					"packageId", packageId);
-			detail.add(l1);
-
-		}
-		return detail;
-
-	}
-	
-	
-
-
-	@Override
-	public void savePackageDetail(int orderId, String[] array_amount,
-			String[] array_color, String[] array_name, Timestamp entryTime) {
-		// TODO Auto-generated method stub
-		// 保存package
-		nju.software.dataobject.Package p1 = new nju.software.dataobject.Package();
-		p1.setOrderId(orderId);
-		p1.setPackageTime(entryTime);
-		packageDAO.save(p1);
-		// 保持packegedetail
-		for (int i = 0; i < array_amount.length; i++) {
-
-			PackageDetail pd1 = new PackageDetail();
-			pd1.setClothesAmount(Integer.parseInt(array_amount[i]));
-			pd1.setClothesStyleColor(array_color[i]);
-			pd1.setClothesStyleName(array_name[i]);
-			pd1.setPackageId(p1.getPackageId());
-			packageDetailDAO.save(pd1);
-		}
-
-	}
-
+	public final static String ACTOR_PRODUCE_MANAGER = "produceManager";
+	public final static String TASK_VERIFY_PRODUCE = "verifyProduce";
+	public final static String TASK_COMPUTE_PRODUCE_COST = "computeProduceCost";
+	public final static String TASK_PRODUCE_SAMPLE = "produceSample";
+	public final static String TASK_PRODUCE = "produce";
+	public final static String RESULT_PRODUCE = "produce";
+	public final static String RESULT_PRODUCE_COMMENT = "produceComment";
+	@Autowired
+	private OrderDAO orderDAO;
+	@Autowired
+	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private LogisticsDAO logisticsDAO;
+	@Autowired
+	private QuoteDAO QuoteDAO;
+	@Autowired
+	private FabricDAO fabricDAO;
+	@Autowired
+	private AccessoryDAO accessoryDAO;
+	@Autowired
+	private QuoteDAO quoteDAO;
+	@Autowired
+	private ProductDAO productDAO;
+	@Autowired
+	private ProduceDAO produceDAO;
+	@Autowired
+	private PackageDAO packageDAO;
+	@Autowired
+	private PackageDetailDAO packageDetailDAO;
+	@Autowired
+	private ServiceUtil service;
 }

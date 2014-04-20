@@ -59,12 +59,12 @@ public class QualityServiceImpl implements QualityService {
 	public boolean checkQualitySubmit(int id, long taskId, boolean b,
 			List<Produce> goodList, List<Produce> badList) {
 		// TODO Auto-generated method stub
-//		for (int i = 0; i < goodList.size(); i++) {
-//			produceDAO.save(goodList.get(i));
-//		}
-//		for (int i = 0; i < badList.size(); i++) {
-//			produceDAO.save(badList.get(i));
-//		}
+		for (int i = 0; i < goodList.size(); i++) {
+			produceDAO.save(goodList.get(i));
+		}
+		for (int i = 0; i < badList.size(); i++) {
+			produceDAO.save(badList.get(i));
+		}
 		Map<String, Object> data = new HashMap<>();
 		// data.put("", b);
 		try {
