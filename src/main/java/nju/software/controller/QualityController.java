@@ -64,11 +64,7 @@ public class QualityController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		int id = Integer.parseInt(orderId);
-<<<<<<< HEAD
-		OrderInfo oi = qualityService.getCheckQualityDetail(id,0);
-=======
 		Map<String,Object> oi = qualityService.getCheckQualityDetail(id);
->>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 		model.addAttribute("orderInfo", oi);
 		return "quality/checkQualityDetail";
 	}

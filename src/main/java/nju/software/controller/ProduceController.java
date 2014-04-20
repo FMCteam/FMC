@@ -277,12 +277,6 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {	
-<<<<<<< HEAD
-		String taskId=request.getParameter("taskId");
-		String pid=request.getParameter("pid");
-		String askAmount=request.getParameter("produceAmount");
-		produceService.pruduceSubmit(null, null, Long.parseLong(taskId));
-=======
 		boolean result = Boolean.parseBoolean(request.getParameter("result"));
 		String taskId = request.getParameter("taskId");
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -299,7 +293,6 @@ public class ProduceController {
 					produceS, produceM, produceL, produceXL, produceXXL, Produce.TYPE_PRODUCED);
 		}
 		produceService.pruduceSubmit(Long.parseLong(taskId), result, produceList);
->>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 		return "forward:/produce/produceList.do";
 	}
 }

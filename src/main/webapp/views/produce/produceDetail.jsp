@@ -36,20 +36,11 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 				<div class="tab-pane active" id="produceList">
-<<<<<<< HEAD
-					<form method="post" action="${ctx}/produce/produceSubmit.do"
-						onsubmit="return deal()">
-						<table
-							class="table table-striped table-bordered table-hover detail">
-							<tr>
-								<td class="span1" rowspan="${fn:length(orderInfo.produced)+1}">计划生产数量</td>
-=======
 					<form method="post"
 					action="${ctx}/produce/produceSubmit.do" onsubmit="return getProduce()">
 						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span1" rowspan="${fn:length(orderInfo.produce)+1}">计划生产数量</td>
->>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 								<td class="span1">颜色</td>
 								<td class="span1">XS</td>
 								<td class="span1">S</td>
@@ -58,11 +49,7 @@
 								<td class="span1">XL</td>
 								<td class="span1">XXL</td>
 							</tr>
-<<<<<<< HEAD
-							<c:forEach var="produce" items="${orderInfo.produced}">
-=======
 							<c:forEach var="produce" items="${orderInfo.produce}">
->>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 								<tr>
 									<td>${produce.color}</td>
 									<td>${produce.xs}</td>
@@ -71,8 +58,6 @@
 									<td>${produce.l}</td>
 									<td>${produce.xl}</td>
 									<td>${produce.xxl}</td>
-<<<<<<< HEAD
-=======
 								</tr>
 							</c:forEach>
 
@@ -102,50 +87,9 @@
 										value="${produce.xl}" /></td>
 									<td><input class="span12 produce_xxl" type="text"
 										value="${produce.xxl}" /></td>
->>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
-								</tr>
-							</c:forEach>
-						</table>
-						<table
-							class="table table-striped table-bordered table-hover detail">
-							<tr>
-<<<<<<< HEAD
-								<td class="span1" rowspan="${fn:length(orderInfo.produced)+1}">实际生产数量</td>
-								<td class="span1">颜色</td>
-								<td class="span1">XS</td>
-								<td class="span1">S</td>
-								<td class="span1">M</td>
-								<td class="span1">L</td>
-								<td class="span1">XL</td>
-								<td class="span1">XXL</td>
-							</tr>
-							<c:forEach var="produce" items="${orderInfo.produced}">
-								<tr>
-									<td><input class="span12 produce_color" type="text"
-										value="${produce.color}" /></td>
-									<td><input class="span12 produce_xs" type="text"
-										value="${produce.xs}" /></td>
-									<td><input class="span12 produce_s" type="text"
-										value="${produce.s}" /></td>
-									<td><input class="span12 produce_m" type="text"
-										value="${produce.m}" /></td>
-									<td><input class="span12 produce_l" type="text"
-										value="${produce.l}" /></td>
-									<td><input class="span12 produce_xl" type="text"
-										value="${produce.xl}" /></td>
-									<td><input class="span12 produce_xxl" type="text"
-										value="${produce.xxl}" /></td>
 								</tr>
 							</c:forEach>
 							<tr>
-								<td colspan="3"><input type="submit"
-									class="btn btn-danger btn-rounded"></td>
-							</tr>
-						</table>
-						<input id="pid" type="hidden" name="pid" /> <input
-							id="produceAmount" type="hidden" name="produceAmount" /> <input
-							id="taskId" type="hidden" name="taskId" value="${orderInfo.task.id}" />
-=======
 								<td>操作</td>
 								<td colspan="7"><input type="hidden" name="orderId"
 									value="${orderInfo.order.orderId }" /> <input type="hidden"
@@ -164,7 +108,6 @@
 							id="produce_l" name="produce_l" type="hidden" /> <input
 							id="produce_xl" name="produce_xl" type="hidden" /> <input
 							id="produce_xxl" name="produce_xxl" type="hidden" />
->>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 					</form>
 				</div>
 			</div>
@@ -193,31 +136,6 @@
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
-<<<<<<< HEAD
-<link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
-<script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
-<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
-<script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<script type="text/javascript">
-	function deal() {
-
-		$("#pid").val(getString("pid"));
-		$("#produceAmount").val(getString("produceAmount"));
-		return true;
-	}
-
-	function getString(col) {
-		var tdString = "";
-		var i = 0;
-		for (; i < $("." + col).length - 1; i++) {
-			tdString += $("." + col).eq(i).val() + ",";
-		}
-		tdString += $("." + col).eq(i).val();
-		return tdString;
-	}
-</script>
-=======
 <script type="text/javascript" src="${ctx}/js/order/add_produce.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
->>>>>>> 80030ed50283f32fc85efb63c18a5cf7c28193cb
 <%@include file="/common/footer.jsp"%>
