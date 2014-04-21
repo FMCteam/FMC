@@ -13,19 +13,19 @@ public interface FinanceService {
 	
 	public Map<String,Object> getConfirmSampleMoneyDetail(String actorId,Integer orderId);
 	
-	public boolean confirmSampleMoneySubmit(String actorId,long taskId,boolean receivedsamplejin, Money money);
+	public boolean confirmSampleMoneySubmit(String actorId,long taskId,boolean result, Money money);
 	
 	//===========================定金确认===================================
 	public List<Map<String,Object>>getConfirmDepositList(String actorId);
 	
 	public Map<String,Object> getConfirmDepositDetail(String actorId,Integer orderId);
 	
-	public boolean confirmDepositSubmit(String actorId,long taskId,boolean epositok, Money money);
+	public boolean confirmDepositSubmit(String actorId,long taskId,boolean result, Money money);
 	
 	//===========================尾款确认===================================
 	public List<Map<String,Object>>getConfirmFinalPaymentList(String actorId);
 	
 	public Map<String,Object> getConfirmFinalPaymentDetail(String actorId,Integer orderId);
 	
-	public boolean confirmFinalPaymentSubmit(String actorId,long taskId,boolean paymentok, Money money);
+	public boolean confirmFinalPaymentSubmit(String actorId,long taskId,boolean result, Money money);
 }

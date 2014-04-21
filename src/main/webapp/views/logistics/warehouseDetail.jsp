@@ -85,9 +85,11 @@
 								<td
 									rowspan="${fn:length(orderInfo.packageDetails[status.index])}">
 									<c:if test="${warehouse==0}">
-										<a href="${ctx}/logistics/warehouseDetail.do?orderId=${orderInfo.order.orderId}&warehouse=0&packageId=${pack.packageId}">删除</a>
+										<a
+											href="${ctx}/logistics/warehouseDetail.do?orderId=${orderInfo.order.orderId}&warehouse=0&packageId=${pack.packageId}">删除</a>
 									</c:if> <c:if test="${warehouse!=0}">
-										<a>打印</a>
+										<a target="_blank"
+											href="${ctx}/logistics/printPackage.do?order_id=${orderInfo.order.orderId}&package_id=${pack.packageId}">打印</a>
 									</c:if>
 								</td>
 							</tr>

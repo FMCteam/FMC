@@ -6,6 +6,7 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
+				<li class="task-name">签订合同</li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
@@ -38,11 +39,13 @@
 		<form action="${ctx}/market/signContractSubmit.do" method="post">
 			<div class="action">
 				<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
-				<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
-				<label>优惠金额：</label><input name="discount" type="text" />
-				<label>总金额：</label><input name="totalmoney" type="text" />
-				<button class="btn btn-primary btn-rounded"><i
-					class="icon-ok icon-white"></i>签订</button> 
+				<input type="hidden" name="orderId"
+					value="${orderInfo.order.orderId }" /> <label>优惠金额：</label><input
+					name="discount" type="text" /> <label>总金额：</label><input
+					name="totalmoney" type="text" />
+				<button class="btn btn-primary btn-rounded">
+					<i class="icon-ok icon-white"></i>签订
+				</button>
 			</div>
 		</form>
 		<!--row-fluid-->

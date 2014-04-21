@@ -1,13 +1,10 @@
 package nju.software.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.drools.runtime.StatefulKnowledgeSession;
 import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +16,10 @@ import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.ProduceDAO;
-import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
-import nju.software.dataobject.Account;
-import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
-import nju.software.dataobject.Logistics;
-import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
-import nju.software.dataobject.Product;
 import nju.software.model.OrderInfo;
-import nju.software.model.OrderModel;
-import nju.software.model.ProductModel;
-import nju.software.dataobject.Quote;
 import nju.software.service.BuyService;
 import nju.software.util.JbpmAPIUtil;
 
@@ -45,19 +33,19 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public Map<String,Object> getVerifyPurchaseDetail(Integer orderId) {
+	public Map<String, Object> getVerifyPurchaseDetail(Integer orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModel(ACTOR_PURCHASE_MANAGER,
 				TASK_VERIFY_PURCHASE, orderId);
 	}
 
 	@Override
-	public boolean verifyPurchaseSubmit(long taskId, boolean buyVal,
+	public boolean verifyPurchaseSubmit(long taskId, boolean result,
 			String comment) {
 		// TODO Auto-generated method stub
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("buyVal", buyVal);
-		data.put("buyComment", comment);
+		data.put(RESULT_PURCHASE, result);
+		data.put(RESULT_PURCHASE_COMMENT, comment);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			return true;
@@ -77,7 +65,7 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public Map<String,Object> getComputePurchaseCostDetail(Integer orderId) {
+	public Map<String, Object> getComputePurchaseCostDetail(Integer orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModel(ACTOR_PURCHASE_MANAGER,
 				TASK_COMPUTE_PURCHASE_COST, orderId);
@@ -90,31 +78,34 @@ public class BuyServiceImpl implements BuyService {
 			String[] accessory_names, String[] tear_per_piece,
 			String[] cost_per_piece, String[] accessory_prices) {
 		// TODO Auto-generated method stub
-		if(fabric_names!=null){
+		if (fabric_names != null) {
 			for (int i = 0; i < fabric_names.length; i++) {
 				FabricCost fabricCost = new FabricCost();
 				fabricCost.setOrderId(orderId);
 				fabricCost.setFabricName(fabric_names[i]);
-				fabricCost.setTearPerMeter(Float.parseFloat(tear_per_meters[i]));
-				fabricCost.setCostPerMeter(Float.parseFloat(cost_per_meters[i]));
+				fabricCost
+						.setTearPerMeter(Float.parseFloat(tear_per_meters[i]));
+				fabricCost
+						.setCostPerMeter(Float.parseFloat(cost_per_meters[i]));
 				fabricCost.setPrice(Float.parseFloat(fabric_prices[i]));
 				FabricCostDAO.save(fabricCost);
 			}
 		}
-		if(accessory_names!=null){
+		if (accessory_names != null) {
 			for (int i = 0; i < accessory_names.length; i++) {
 				AccessoryCost accessoryCost = new AccessoryCost();
 				accessoryCost.setOrderId(orderId);
 				accessoryCost.setAccessoryName(accessory_names[i]);
-				accessoryCost.setTearPerPiece(Float.parseFloat(tear_per_piece[i]));
-				accessoryCost.setCostPerPiece(Float.parseFloat(cost_per_piece[i]));
+				accessoryCost.setTearPerPiece(Float
+						.parseFloat(tear_per_piece[i]));
+				accessoryCost.setCostPerPiece(Float
+						.parseFloat(cost_per_piece[i]));
 				accessoryCost.setPrice(Float.parseFloat(accessory_prices[i]));
 				AccessoryCostDAO.save(accessoryCost);
 			}
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			data.put("ComputePurchaseCost", true);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -131,38 +122,17 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public OrderInfo getPurchaseSampleMaterialDetail(Integer orderId) {
+	public Map<String,Object> getPurchaseSampleMaterialDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PURCHASE_MANAGER,
+		return service.getBasicOrderModelWithQuote(ACTOR_PURCHASE_MANAGER,
 				TASK_PURCHASE_SAMPLE_MATERIAL, orderId);
-		OrderInfo orderInfo = new OrderInfo();
-		orderInfo.setOrder(orderDAO.findById(orderId));
-		orderInfo.setLogistics(logisticsDAO.findById(orderId));
-		orderInfo.setFabrics(fabricDAO.findByOrderId(orderId));
-		orderInfo.setAccessorys(accessoryDAO.findByOrderId(orderId));
-		orderInfo.setFabricCosts(FabricCostDAO.findByOrderId(orderId));
-		orderInfo.setAccessoryCosts(AccessoryCostDAO.findByOrderId(orderId));
-
-		int SampleAmount = 0;
-		// 样衣总数量
-		List<Produce> produces = ProduceDAO.findProduceByOrderId(orderId);
-		for (Produce produce : produces) {
-			if (produce.getType().equals("sampleProduce")) {
-				SampleAmount = produce.getL() + produce.getM() + produce.getS()
-						+ produce.getXl() + produce.getXs() + produce.getXxl();
-			}
-		}
-		orderInfo.getData().put("SampleAmount", new Integer(SampleAmount));
-		orderInfo.setTask(task);
-		return orderInfo;
 	}
 
 	@Override
-	public boolean purchaseSampleMaterialSubmit(long taskId, String result) {
+	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result) {
 		// TODO Auto-generated method stub
-		boolean purchaseerror = result.equals("1");
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("purchaseerror", purchaseerror);
+		data.put(RESULT_PURCHASE, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			return true;
@@ -182,24 +152,17 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public OrderInfo getConfirmPurchaseDetail(Integer orderId) {
+	public Map<String, Object> getConfirmPurchaseDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PURCHASE_MANAGER,
+		return service.getBasicOrderModelWithQuote(ACTOR_PURCHASE_MANAGER,
 				TASK_CONFIRM_PURCHASE, orderId);
-		OrderInfo orderInfo = new OrderInfo();
-		orderInfo.setOrder(orderDAO.findById(orderId));
-		orderInfo.setLogistics(logisticsDAO.findById(orderId));
-		orderInfo.setTask(task);
-		return orderInfo;
 	}
 
 	@Override
-	public boolean confirmPurchaseSubmit(long taskId, String result) {
+	public boolean confirmPurchaseSubmit(long taskId, boolean result) {
 		// TODO Auto-generated method stub
-		boolean purchaseerror = result.equals("1");
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("purchaseerror", purchaseerror);
-		data.put("isworksheet", purchaseerror);
+		data.put(RESULT_PURCHASE, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			return true;
@@ -219,23 +182,17 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public OrderInfo getPurchaseMaterialDetail(Integer orderId) {
+	public Map<String, Object> getPurchaseMaterialDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_PURCHASE_MANAGER,
+		return service.getBasicOrderModelWithQuote(ACTOR_PURCHASE_MANAGER,
 				TASK_PURCHASE_MATERIAL, orderId);
-		OrderInfo orderInfo = new OrderInfo();
-		orderInfo.setOrder(orderDAO.findById(orderId));
-		orderInfo.setLogistics(logisticsDAO.findById(orderId));
-		orderInfo.setTask(task);
-		return orderInfo;
 	}
 
 	@Override
-	public boolean purchaseMaterialSubmit(long taskId, String result) {
+	public boolean purchaseMaterialSubmit(long taskId, boolean result) {
 		// TODO Auto-generated method stub
-		boolean purchaseerror = result.equals("1");
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("procurementerror", purchaseerror);
+		data.put(RESULT_PURCHASE, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			return true;
@@ -273,4 +230,6 @@ public class BuyServiceImpl implements BuyService {
 	public final static String TASK_PURCHASE_SAMPLE_MATERIAL = "purchaseSampleMaterial";
 	public final static String TASK_CONFIRM_PURCHASE = "confirmPurchase";
 	public final static String TASK_PURCHASE_MATERIAL = "purchaseMaterial";
+	public final static String RESULT_PURCHASE = "purchase";
+	public final static String RESULT_PURCHASE_COMMENT = "purchaseComment";
 }

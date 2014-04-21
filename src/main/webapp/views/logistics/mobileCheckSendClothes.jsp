@@ -47,7 +47,8 @@ $(function() {
 			checkPackageId($(this).val().trim());
 			$(this).select();
 		}
-	});
+	}).focus();
+	
 });
 </script>
 <style type="text/css">
@@ -100,7 +101,7 @@ $(function() {
 <form action="${ctx }/logistics/finishScanClothes.do" method="post" onsubmit="return check();">
 <input type="hidden" value="${order.orderId }" name="orderId" />
 <input type="hidden" value="${task.taskId }" name="taskId"/>
-<input type="submit" value="完成入库" name="submit" />
+<input type="submit" value="完成扫描" name="submit" />
 </form>
 </div>
 </body>

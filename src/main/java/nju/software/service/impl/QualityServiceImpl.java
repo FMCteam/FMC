@@ -23,16 +23,10 @@ import nju.software.service.QualityService;
 import nju.software.util.JbpmAPIUtil;
 
 @Service("qualityServiceImpl")
-public class QualityServiceImpl implements QualityService{
-	
-	
+public class QualityServiceImpl implements QualityService {
+
 	public final static String ACTOR_QUALITY_MANAGER = "qualityManager";
 	public final static String TASK_CHECK_QUALITY = "checkQuality";
-	
-	
-	
-	
-	
 
 	@Autowired
 	private OrderDAO orderDAO;
@@ -46,13 +40,13 @@ public class QualityServiceImpl implements QualityService{
 	private ServiceUtil service;
 	@Autowired
 	private ProduceDAO produceDAO;
-	
+
 	@Override
-	public List<Map<String,Object>> getCheckQualityList() {
+	public List<Map<String, Object>> getCheckQualityList() {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_QUALITY_MANAGER, TASK_CHECK_QUALITY);
 	}
-	
+
 	public Object getVariable(String name, TaskSummary task) {
 		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
 		long processId = task.getProcessInstanceId();
@@ -62,7 +56,8 @@ public class QualityServiceImpl implements QualityService{
 	}
 
 	@Override
-	public boolean checkQualitySubmit(int id, long taskId, boolean b, List<Produce> goodList, List<Produce> badList) {
+	public boolean checkQualitySubmit(int id, long taskId, boolean b,
+			List<Produce> goodList, List<Produce> badList) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < goodList.size(); i++) {
 			produceDAO.save(goodList.get(i));
@@ -71,7 +66,7 @@ public class QualityServiceImpl implements QualityService{
 			produceDAO.save(badList.get(i));
 		}
 		Map<String, Object> data = new HashMap<>();
-		//data.put("", b);
+		// data.put("", b);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_QUALITY_MANAGER);
 			return true;
@@ -83,28 +78,15 @@ public class QualityServiceImpl implements QualityService{
 	}
 
 	@Override
-	public OrderInfo getCheckQualityDetail(int orderId, long taskId) {
+	public Map<String,Object> getCheckQualityDetail(int orderId) {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_QUALITY_MANAGER, TASK_CHECK_QUALITY);
-		for (TaskSummary task : tasks) {
-			Integer id = (Integer) getVariable("orderId", task);
-			if(id==orderId && taskId==task.getId()){
-				OrderInfo oi = new OrderInfo();
-				Order o = orderDAO.findById(orderId);
-				oi.setOrder(o);
-				oi.setEmployee(employeeDAO.findById(o.getEmployeeId()));
-				oi.setCustomer(customerDAO.findById(o.getCustomerId()));
-				oi.setTask(task);
-				oi.setTaskId(task.getId());
-				Produce produce = new Produce();
-				produce.setOid(orderId);
-				produce.setType(Produce.TYPE_PRODUCED);
-				oi.setProduced(produceDAO.findByExample(produce));
-				return oi;
-			}
-		}
-		return null;
+		Map<String,Object> oi=service.getBasicOrderModel(
+				ACTOR_QUALITY_MANAGER, TASK_CHECK_QUALITY, orderId);
+		Order o = orderDAO.findById(orderId);
+		Produce produce = new Produce();
+		produce.setOid(orderId);
+		produce.setType(Produce.TYPE_PRODUCED);
+		oi.put("produced", produceDAO.findByExample(produce));
+		return oi;
 	}
-	
 }

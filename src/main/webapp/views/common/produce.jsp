@@ -14,8 +14,6 @@
 		<td class="span1" colspan="2">${orderInfo.order.askProducePeriod}</td>
 	</tr>
 	<tr>
-	</tr>
-	<tr>
 		<td class="span1" rowspan="${fn:length(orderInfo.sample)+1}">样衣加工</td>
 		<td class="span1">颜色</td>
 		<td class="span1">XS</td>

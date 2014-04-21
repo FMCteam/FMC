@@ -23,7 +23,7 @@
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span2" rowspan="2">业务信息</td>
-								<td class="span3">业务编号</td>
+								<td class="span2">业务编号</td>
 								<td class="span2" colspan="2">接单时间<span class="required">*</span></td>
 								<td class="span2">接单业务员</td>
 								<td class="span2">订单来源<span class="required">*</span></td>
@@ -42,8 +42,8 @@
 							<tr>
 								<td rowspan="3">客户信息</td>
 								<td>客户编号</td>
-								<td>姓名</td>
-								<td>公司</td>
+								<td class="span2">姓名</td>
+								<td class="span2">公司</td>
 								<td>传真</td>
 								<td>手机1</td>
 								<td>手机2</td>
@@ -84,7 +84,7 @@
 									type="radio" name="fabric_type" value="梭织" /> <span>针织</span>
 									<input type="radio" name="fabric_type" value="编织"> <span>编织</span>
 									<input type="radio" name="fabric_type" value="梭针混合" /> <span>梭针混合</span>
-									<input type="radio" name="fabric_type" value="阵编混合" /> <span>针编混合</span>
+									<input type="radio" name="fabric_type" value="针编混合" /> <span>针编混合</span>
 									<input type="radio" name="fabric_type" value="梭编混合" /> <span>梭编混合</span></td>
 							</tr>
 							<tr>
@@ -115,7 +115,7 @@
 					</div>
 					<div class="tab-pane" id="material">
 						<table
-							class="table table-striped table-bordered table-hover detail">
+							class="table table-striped table-bordered table-hover">
 							<tr>
 								<td class="span2">面料<input id="fabric_name" type="hidden"
 									name="fabric_name" /> <input id="fabric_amount" type="hidden"
@@ -246,7 +246,7 @@
 							</table>
 							<table class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td>大货加工具体要求 <input id="produce_color"
+								<td class="span2">大货加工 <input id="produce_color"
 									type="hidden" name="produce_color" /> <input id="produce_xs"
 									type="hidden" name="produce_xs" /> <input id="produce_s"
 									type="hidden" name="produce_s" /> <input id="produce_m"
@@ -280,7 +280,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td>样衣加工具体要求 <input id="sample_produce_color"
+								<td class="span2">样衣加工 <input id="sample_produce_color"
 									type="hidden" name="sample_produce_color" /> <input
 									id="sample_produce_xs" type="hidden" name="sample_produce_xs" />
 									<input id="sample_produce_s" type="hidden"
@@ -378,27 +378,27 @@
 								<td class="span1" rowspan="4">版型数据</td>
 								<td class="span1">面料</td>
 								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+										style="resize:none" rows="2"></textarea></td>
 								<td class="span1">包装</td>
 								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+										style="resize:none" rows="2"></textarea></td>
 							</tr>
 							<tr>
 								<td class="span1">版型</td>
 								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+										style="resize:none" rows="2"></textarea></td>
 								<td class="span1">装箱</td>
 								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+										style="resize:none" rows="2"></textarea></td>
 
 							</tr>
 							<tr>
 								<td class="span1">工艺</td>
 								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+										style="resize:none" rows="2"></textarea></td>
 								<td class="span1">其他</td>
 								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+										style="resize:none" rows="2"></textarea></td>
 							</tr>
 						</table>
 					</div>

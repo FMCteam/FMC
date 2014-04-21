@@ -39,8 +39,8 @@ public class BuyController {
 	public String verifyPurchaseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		Map<String,Object> orderInfo = buyService.getVerifyPurchaseDetail(Integer
-				.parseInt(orderId));
+		Map<String, Object> orderInfo = buyService
+				.getVerifyPurchaseDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/buy/verifyPurchaseDetail";
 	}
@@ -51,8 +51,8 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		Long taskId = Long.parseLong(request.getParameter("taskId"));
 		String comment = request.getParameter("suggestion");
-		boolean buyVal = Boolean.parseBoolean(request.getParameter("buyVal"));
-		buyService.verifyPurchaseSubmit(taskId, buyVal, comment);
+		boolean result = Boolean.parseBoolean(request.getParameter("result"));
+		buyService.verifyPurchaseSubmit(taskId, result, comment);
 		return "forward:/buy/verifyPurchaseList.do";
 	}
 
@@ -74,13 +74,12 @@ public class BuyController {
 	public String computePurchaseCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		Map<String,Object> orderInfo = buyService.getComputePurchaseCostDetail(Integer
-				.parseInt(orderId));
+		Map<String, Object> orderInfo = buyService
+				.getComputePurchaseCostDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/buy/computePurchaseCostDetail";
 	}
 
-	
 	@RequestMapping(value = "/buy/computePurchaseCostSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String computePurchaseCostSubmit(HttpServletRequest request,
@@ -127,7 +126,7 @@ public class BuyController {
 	public String purchaseSampleMaterialDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
-		OrderInfo orderInfo = buyService
+		Map<String, Object> orderInfo = buyService
 				.getPurchaseSampleMaterialDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/buy/purchaseSampleMaterialDetail";
@@ -138,7 +137,7 @@ public class BuyController {
 	public String purchaseSampleMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
-		String result = request.getParameter("purchaseerror");
+		boolean result = request.getParameter("result").equals("1");
 		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/purchaseSampleMaterialList.do";
 	}
@@ -160,8 +159,8 @@ public class BuyController {
 	public String confirmPurchaseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo = buyService.getConfirmPurchaseDetail(Integer
-				.parseInt(orderId));
+		Map<String, Object> orderInfo = buyService
+				.getConfirmPurchaseDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/buy/confirmPurchaseDetail";
 	}
@@ -171,7 +170,7 @@ public class BuyController {
 	public String confirmPurchaseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
-		String result = request.getParameter("purchaseerror");
+		Boolean result = request.getParameter("result").equals("1");
 		buyService.confirmPurchaseSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/confirmPurchaseList.do";
 	}
@@ -193,8 +192,8 @@ public class BuyController {
 	public String purchaseMaterialDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo = buyService.getPurchaseMaterialDetail(Integer
-				.parseInt(orderId));
+		Map<String, Object> orderInfo = buyService
+				.getPurchaseMaterialDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/buy/purchaseMaterialDetail";
 	}
@@ -204,7 +203,7 @@ public class BuyController {
 	public String purchaseMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
-		String result = request.getParameter("purchaseerror");
+		Boolean result = request.getParameter("result").equals("1");
 		buyService.purchaseMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/purchaseMaterialList.do";
 	}

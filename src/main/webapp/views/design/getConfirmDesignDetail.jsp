@@ -9,6 +9,7 @@
 		<div class="row-fluid" style="min-height:300px;">
 		
 				<ul class="nav nav-tabs detail" id="tab">
+				<li class="task-name">确认版型数据</li>
 					<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 					<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 					<li><a href="#produce" data-toggle="tab">加工信息</a></li>
@@ -37,10 +38,26 @@
 						<%@include file="/views/common/quote.jsp"%>
 					</div>
 				</div>
+				
+			<form action="${ctx }/design/downloadCadSubmit.do" method="post"
+			onsubmit="return confirm('确认提交？')" enctype="multipart/form-data">
+				<table class="table table-striped table-bordered table-hover">
+					<tr>
+						<td>下载文件</td>
+						<td>版本：${orderInfo.cad.cadVersion}</td>
+						<td>上传时间：${orderInfo.cad.uploadTime}</td>
+						<td>
+							<input type="submit" class="btn btn-primary btn-rounded" value="下载"/>
+						</td>
+					</tr>
+				</table>
+				<input type="hidden" name="cadUrl" value="${orderInfo.cad.cadUrl}" />
+				<input type="hidden" name="orderId" value="${orderInfo.order.orderId}"/>
+				<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
+			</form>
 
 			<form action="${ctx }/design/confirmDesignSubmit.do" method="post"
 				enctype="multipart/form-data">
-
 				<table class="table table-striped table-bordered table-hover">
 					<tr>
 						<td>选择文件</td>
@@ -53,18 +70,7 @@
 							<input type="submit" class="btn btn-primary btn-rounded" />
 						</td>
 					</tr>
-
-
-
-
 				</table>
-
-
-
-
-
-
-
 			</form>
 
 		</div>

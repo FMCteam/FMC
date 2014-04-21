@@ -6,6 +6,7 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
+			<li class="task-name">商定报价</li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
@@ -39,11 +40,11 @@
 			<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
 			<input type="hidden" name="order_id" value="${orderInfo.quote.orderId }" />
 			<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
-			<a href="${ctx}/market/confirmQuoteSubmit.do?result=1&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
+			<a href="${ctx}/market/confirmQuoteSubmit.do?result=0&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
 			class="btn btn-primary btn-rounded"><i class="icon-white"></i>确认</a> 
-				<a href="${ctx}/market/confirmQuoteSubmit.do?result=2&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
+				<a href="${ctx}/market/confirmQuoteSubmit.do?result=1&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
 				class="btn btn-primary btn-rounded"><i class="icon-white"></i>修改</a>
-				<a href="${ctx}/market/confirmQuoteSubmit.do?result=3&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
+				<a href="${ctx}/market/confirmQuoteSubmit.do?result=2&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
 				class="btn btn-danger btn-rounded"><i class="icon-white"></i>取消订单</a>
 		</div>
 	</div>

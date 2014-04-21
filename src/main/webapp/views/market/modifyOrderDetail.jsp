@@ -4,19 +4,20 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 	<form id="verify_form" method="post" onsubmit="return verify();"
-						action="${ctx }/market/modifyOrderSubmit.do">
+						action="${ctx }/market/modifyOrderSubmit.do" enctype="multipart/form-data" >
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<ul class="nav nav-tabs" id="tab">
-				<li><a class="tab-pane active" href="#basic" data-toggle="tab">基本信息</a></li>
-				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
-				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
-				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
+			<ul class="nav nav-tabs detail" id="tab">
+				<li class="task-name">修改询单</li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
+				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
+				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
+				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
+				<li class="active"><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active" id="basic">
-					<table class="table table-striped table-bordered table-hover">
+					<table class="table table-striped table-bordered table-hover detail">
 						<tr>
 							<td>业务信息</td>
 							<td>业务编号</td>
@@ -104,15 +105,15 @@
 				<div class="tab-pane" id="material">
 					<table class="table table-striped table-bordered table-hover">
 						<tr>
-							<td>面料<input id="fabric_name" type="hidden"
+							<td class="span2">面料<input id="fabric_name" type="hidden"
 								name="fabric_name" /> <input id="fabric_amount" type="hidden"
 								name="fabric_amount" /></td>
-							<td colspan="6" class="innertable"><table
+							<td class="innertable span12"><table
 									class="span12 table fabric_table">
 									<tr>
-										<td>面料名称</td>
-										<td>面料克重</td>
-										<td>操作</td>
+										<td class="span5">面料名称</td>
+										<td class="span5">面料克重</td>
+										<td class="span3">操作</td>
 									</tr>
 									<tr class="addrow">
 										<td><input class="span12" type="text" /></td>
@@ -121,23 +122,23 @@
 									</tr>
 									<c:forEach var="fabricRow" items="${orderModel.fabrics }" >
 										<tr>
-											<td class='span12 fabric_name'>${fabricRow.fabricName }</td>
-											<td class='span12 fabric_amount'>${fabricRow.fabricAmount }</td>
-											<td class='span12'><a onclick="deleteRow(this,'fabric_table')">删除</a></td>
+											<td class='fabric_name'>${fabricRow.fabricName }</td>
+											<td class='fabric_amount'>${fabricRow.fabricAmount }</td>
+											<td><a onclick="deleteRow(this,'fabric_table')">删除</a></td>
 										</tr>
 									</c:forEach>
 								</table></td>
 						</tr>
 						<tr>
-							<td>辅料<input id="accessory_name" type="hidden"
+							<td class="span2">辅料<input id="accessory_name" type="hidden"
 								name="accessory_name" /> <input id="accessory_query"
 								type="hidden" name="accessory_query" /></td>
-							<td colspan="6" class="innertable"><table
+							<td class="innertable span12"><table
 									class="span12 table accessory_table">
 									<tr>
-										<td>辅料名称</td>
-										<td>辅料要求</td>
-										<td>操作</td>
+										<td class="span5">辅料名称</td>
+										<td class="span5">辅料要求</td>
+										<td class="span3">操作</td>
 									</tr>
 									<tr class="addrow">
 										<td><input class="span12" type="text" /></td>
@@ -146,9 +147,9 @@
 									</tr>
 									<c:forEach var="accessoryRow" items="${orderModel.accessorys }" >
 										<tr>
-											<td class='span12 accessory_name'>${accessoryRow.accessoryName }</td>
-											<td class='span12 accessory_query'>${accessoryRow.accessoryQuery }</td>
-											<td class='span12'><a onclick="deleteRow(this,'accessory_table')">删除</a></td>
+											<td class='accessory_name'>${accessoryRow.accessoryName }</td>
+											<td class='accessory_query'>${accessoryRow.accessoryQuery }</td>
+											<td><a onclick="deleteRow(this,'accessory_table')">删除</a></td>
 										</tr>
 									</c:forEach>
 								</table></td>
@@ -156,7 +157,7 @@
 					</table>
 				</div>
 				<div class="tab-pane" id="sample">
-					<table class="table table-striped table-bordered table-hover">
+					<table class="table table-striped table-bordered table-hover detail">
 						<tr>
 							<td rowspan="2">客户样衣</td>
 							<td>提供样衣</td>
@@ -222,131 +223,127 @@
 					</table>
 				</div>
 				<div class="tab-pane" id="produce">
-					<table class="table table-striped table-bordered table-hover">
+					<table class="table table-striped table-bordered table-hover detail">
 						<tr>
 							<td rowspan="2">加工信息</td>
-							<td>加工件数<span class="required">*</span></td>
-							<td colspan="2">最迟交货时间</td>
-							<td colspan="2">完工时间（天）</td>
-							<td>码数</td>
+							<td class="span2" colspan="2">样衣总数<span class="required">*</span></td>
+							<td class="span2" colspan="2">大货总数<span class="required">*</span></td>
+							<td class="span2" colspan="2">最迟交货时间</td>
+							<td class="span2" colspan="2">完工时间（天）</td>
 						</tr>
 						<tr>
-							<td><input class="span6" type="number" name="ask_amount" value="${orderModel.order.askAmount }" /></td>
-							<td colspan="2"><input class="span12" type="date"
-								name="ask_deliver_date" value="${fn:substring(orderModel.order.askDeliverDate,0,10) }" /></td>
-							<td colspan="2"><input class="span3" type="number"
-								name="ask_produce_period" value="${orderModel.order.askProducePeriod }" /></td>
-							<td><select class="span6" name="ask_code_number">
-									<option value="XS" ${orderModel.order.askCodeNumber eq 'XS'?'selected':'' } >XS</option>
-									<option value="S" ${orderModel.order.askCodeNumber eq 'S'?'selected':'' } >S</option>
-									<option value="L" ${orderModel.order.askCodeNumber eq 'L'?'selected':'' } >L</option>
-									<option value="XL" ${orderModel.order.askCodeNumber eq 'XL'?'selected':'' } >XL</option>
-									<option value="XXL" ${orderModel.order.askCodeNumber eq 'XXL'?'selected':'' } >XXL</option>
-							</select></td>
+							<td class="span2" colspan="2"><input class="span6"
+								type="number" name="sample_amount" value="${orderModel.order.askAmount }"/></td>
+							<td class="span2" colspan="2"><input class="span6"
+								type="number" name="ask_amount" value="${orderModel.order.askAmount }" /></td>
+							<td class="span2" colspan="2"><input class="span8"
+								type="date" name="ask_deliver_date" value="${fn:substring(orderModel.order.askDeliverDate,0,10) }" /></td>
+							<td class="span2" colspan="2"><input class="span4"
+								type="number" name="ask_produce_period" value="${orderModel.order.askProducePeriod }" /></td>
 						</tr>
-						<tr>
-							<td colspan="8">大货加工具体要求 <input id="produce_color"
-								type="hidden" name="produce_color" /> <input id="produce_xs"
-								type="hidden" name="produce_xs" /> <input id="produce_s"
-								type="hidden" name="produce_s" /> <input id="produce_m"
-								type="hidden" name="produce_m" /> <input id="produce_l"
-								type="hidden" name="produce_l" /> <input id="produce_xl"
-								type="hidden" name="produce_xl" /> <input id="produce_xxl"
-								type="hidden" name="produce_xxl" /></td>
-						</tr>
-						<tr>
-							<td colspan="8" class="innertable">
-								<table class="span12 table produce_table">
-									<tr>
-										<td>颜色</td>
-										<td>XS</td>
-										<td>S</td>
-										<td>M</td>
-										<td>L</td>
-										<td>XL</td>
-										<td>XXL</td>
-										<td>操作</td>
-									</tr>
-									<tr class="addrow">
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><a>添加</a></td>
-									</tr>
-									<c:forEach var="produceRow" items="${orderModel.produces }" >
+						</table>
+						<table class="table table-striped table-bordered table-hover detail">
+							<tr>
+								<td>大货加工具体要求 <input id="produce_color"
+									type="hidden" name="produce_color" /> <input id="produce_xs"
+									type="hidden" name="produce_xs" /> <input id="produce_s"
+									type="hidden" name="produce_s" /> <input id="produce_m"
+									type="hidden" name="produce_m" /> <input id="produce_l"
+									type="hidden" name="produce_l" /> <input id="produce_xl"
+									type="hidden" name="produce_xl" /> <input id="produce_xxl"
+									type="hidden" name="produce_xxl" /></td>
+								<td colspan="8" class="innertable">
+									<table class="span12 table produce_table">
 										<tr>
-											<td class='span12 produce_color'>${produceRow.color }</td>
-											<td class='span12 produce_xs'>${produceRow.xs }</td>
-											<td class='span12 produce_s'>${produceRow.s }</td>
-											<td class='span12 produce_m'>${produceRow.m }</td>
-											<td class='span12 produce_l'>${produceRow.l }</td>
-											<td class='span12 produce_xl'>${produceRow.xl }</td>
-											<td class='span12 produce_xxl'>${produceRow.xxl }</td>
-											<td class='span12'><a onclick="deleteRow(this,'produce_table')">删除</a></td>
+											<td class="span1">颜色</td>
+											<td class="span1">XS</td>
+											<td class="span1">S</td>
+											<td class="span1">M</td>
+											<td class="span1">L</td>
+											<td class="span1">XL</td>
+											<td class="span1">XXL</td>
+											<td class="span1">操作</td>
 										</tr>
-									</c:forEach>
-								</table>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="8">样衣加工具体要求 <input id="sample_produce_color"
-								type="hidden" name="sample_produce_color" /> <input id="sample_produce_xs"
-								type="hidden" name="sample_produce_xs" /> <input id="sample_produce_s"
-								type="hidden" name="sample_produce_s" /> <input id="sample_produce_m"
-								type="hidden" name="sample_produce_m" /> <input id="sample_produce_l"
-								type="hidden" name="sample_produce_l" /> <input id="sample_produce_xl"
-								type="hidden" name="sample_produce_xl" /> <input id="sample_produce_xxl"
-								type="hidden" name="sample_produce_xxl" /></td>
-						</tr>
-						<tr>
-							<td colspan="8" class="innertable">
-								<table class="span12 table sample_produce_table">
-									<tr>
-										<td>颜色</td>
-										<td>XS</td>
-										<td>S</td>
-										<td>M</td>
-										<td>L</td>
-										<td>XL</td>
-										<td>XXL</td>
-										<td>操作</td>
-									</tr>
-									<tr class="addrow">
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><input type="text" class="span12" /></td>
-										<td><a>添加</a></td>
-									</tr>
-									<c:forEach var="produceRow" items="${orderModel.sample }" >
+										<tr class="addrow">
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><a>添加</a></td>
+										</tr>
+										<c:forEach var="produceRow" items="${orderModel.produce }" >
+											<tr>
+												<td class='produce_color'>${produceRow.color }</td>
+												<td class='produce_xs'>${produceRow.xs }</td>
+												<td class='produce_s'>${produceRow.s }</td>
+												<td class='produce_m'>${produceRow.m }</td>
+												<td class='produce_l'>${produceRow.l }</td>
+												<td class='produce_xl'>${produceRow.xl }</td>
+												<td class='produce_xxl'>${produceRow.xxl }</td>
+												<td><a onclick="deleteRow(this,'produce_table')">删除</a></td>
+											</tr>
+										</c:forEach>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td>样衣加工具体要求 <input id="sample_produce_color"
+									type="hidden" name="sample_produce_color" /> <input
+									id="sample_produce_xs" type="hidden" name="sample_produce_xs" />
+									<input id="sample_produce_s" type="hidden"
+									name="sample_produce_s" /> <input id="sample_produce_m"
+									type="hidden" name="sample_produce_m" /> <input
+									id="sample_produce_l" type="hidden" name="sample_produce_l" />
+									<input id="sample_produce_xl" type="hidden"
+									name="sample_produce_xl" /> <input id="sample_produce_xxl"
+									type="hidden" name="sample_produce_xxl" /></td>
+								<td colspan="8" class="innertable">
+									<table class="span12 table sample_produce_table">
 										<tr>
-											<td class='span12 sample_produce_color'>${produceRow.color }</td>
-											<td class='span12 sample_produce_xs'>${produceRow.xs }</td>
-											<td class='span12 sample_produce_s'>${produceRow.s }</td>
-											<td class='span12 sample_produce_m'>${produceRow.m }</td>
-											<td class='span12 sample_produce_l'>${produceRow.l }</td>
-											<td class='span12 sample_produce_xl'>${produceRow.xl }</td>
-											<td class='span12 sample_produce_xxl'>${produceRow.xxl }</td>
-											<td class='span12'><a onclick="deleteRow(this,'sample_produce_table')">删除</a></td>
+											<td class="span1">颜色</td>
+											<td class="span1">XS</td>
+											<td class="span1">S</td>
+											<td class="span1">M</td>
+											<td class="span1">L</td>
+											<td class="span1">XL</td>
+											<td class="span1">XXL</td>
+											<td class="span1">操作</td>
 										</tr>
-									</c:forEach>
-								</table>
-							</td>
-						</tr>
-					</table>
+										<tr class="addrow">
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><a>添加</a></td>
+										</tr>
+										<c:forEach var="produceRow" items="${orderModel.sample }" >
+											<tr>
+												<td class='sample_produce_color'>${produceRow.color }</td>
+												<td class='sample_produce_xs'>${produceRow.xs }</td>
+												<td class='sample_produce_s'>${produceRow.s }</td>
+												<td class='sample_produce_m'>${produceRow.m }</td>
+												<td class='sample_produce_l'>${produceRow.l }</td>
+												<td class='sample_produce_xl'>${produceRow.xl }</td>
+												<td class='sample_produce_xxl'>${produceRow.xxl }</td>
+												<td><a onclick="deleteRow(this,'sample_produce_table')">删除</a></td>
+											</tr>
+										</c:forEach>
+									</table>
+								</td>
+							</tr>
+						</table>
 				</div>
 				<div class="tab-pane" id="cad">
-					<table class="table table-striped table-bordered table-hover">
+					<table class="table table-striped table-bordered table-hover detail">
 						<tr>
 							<td colspan="7" class="innertable">
-								<table class="span12 table version_table">
+								<table class="span12 table table-striped table-hover detail version_table">
 									<tbody>
 										<tr>
 											<td colspan="11">版型数据信息 <input id="version_size"
@@ -365,17 +362,17 @@
 												id="version_sleeves" type="hidden" name="version_sleeves" /></td>
 										</tr>
 										<tr>
-											<td>尺寸表/部位</td>
-											<td>后中长</td>
-											<td>胸围</td>
-											<td>腰围</td>
-											<td>肩宽</td>
-											<td>臀围</td>
-											<td>下摆</td>
-											<td>裤长</td>
-											<td>裙长</td>
-											<td>袖长</td>
-											<td>操作</td>
+											<td class="span1">尺寸表/部位</td>
+											<td class="span1">后中长</td>
+											<td class="span1">胸围</td>
+											<td class="span1">腰围</td>
+											<td class="span1">肩宽</td>
+											<td class="span1">臀围</td>
+											<td class="span1">下摆</td>
+											<td class="span1">裤长</td>
+											<td class="span1">裙长</td>
+											<td class="span1">袖长</td>
+											<td class="span1">操作</td>
 										</tr>
 										<tr class="addrow">
 											<td><input type="text" class="span12" /></td>
@@ -392,43 +389,52 @@
 										</tr>
 										<c:forEach var="versionRow" items="${orderModel.versions }" >
 											<tr>
-												<td class='span12 version_size'>${versionRow.size }</td>
-												<td class='span12 version_centerBackLength'>${versionRow.centerBackLength }</td>
-												<td class='span12 version_bust'>${versionRow.bust }</td>
-												<td class='span12 version_waistLine'>${versionRow.waistline }</td>
-												<td class='span12 version_shoulder'>${versionRow.shoulder }</td>
-												<td class='span12 version_buttock'>${versionRow.buttock }</td>
-												<td class='span12 version_hem'>${versionRow.hem }</td>
-												<td class='span12 version_trousers'>${versionRow.trousers }</td>
-												<td class='span12 version_skirt'>${versionRow.skirt }</td>
-												<td class='span12 version_sleeves'>${versionRow.sleeves }</td>
-												<td class='span12'><a onclick="deleteRow(this,'version_table')">删除</a></td>
+												<td class='version_size'>${versionRow.size }</td>
+												<td class='version_centerBackLength'>${versionRow.centerBackLength }</td>
+												<td class='version_bust'>${versionRow.bust }</td>
+												<td class='version_waistLine'>${versionRow.waistline }</td>
+												<td class='version_shoulder'>${versionRow.shoulder }</td>
+												<td class='version_buttock'>${versionRow.buttock }</td>
+												<td class='version_hem'>${versionRow.hem }</td>
+												<td class='version_trousers'>${versionRow.trousers }</td>
+												<td class='version_skirt'>${versionRow.skirt }</td>
+												<td class='version_sleeves'>${versionRow.sleeves }</td>
+												<td><a onclick="deleteRow(this,'version_table')">删除</a></td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
 							</td>
-						</tr>
-						<tr>
-							<td colspan="7">版型数据信息</td>
-						</tr>
-						<tr>
-							<td>面料</td>
-							<td colspan="3"><input type="text" class="span12" /></td>
-							<td>包装</td>
-							<td colspan="2"><input type="text" class="span12" /></td>
-						</tr>
-						<tr>
-							<td>版型</td>
-							<td colspan="3"><input type="text" class="span12" /></td>
-							<td>装箱</td>
-							<td colspan="2"><input type="text" class="span12" /></td>
-						</tr>
-						<tr>
-							<td>工艺</td>
-							<td colspan="6"><input type="text" class="span12" /></td>
-						</tr>
-					</table>
+						</tr></table>
+						<table
+							class="table table-striped table-bordered table-hover detail">
+							<tr>
+								<td class="span1" rowspan="4">版型数据</td>
+								<td class="span1">面料</td>
+								<td class="span3"><textarea class="span12"
+										style="resize:none" rows="3"></textarea></td>
+								<td class="span1">包装</td>
+								<td class="span3"><textarea class="span12"
+										style="resize:none" rows="3"></textarea></td>
+							</tr>
+							<tr>
+								<td class="span1">版型</td>
+								<td class="span3"><textarea class="span12"
+										style="resize:none" rows="3"></textarea></td>
+								<td class="span1">装箱</td>
+								<td class="span3"><textarea class="span12"
+										style="resize:none" rows="3"></textarea></td>
+
+							</tr>
+							<tr>
+								<td class="span1">工艺</td>
+								<td class="span3"><textarea class="span12"
+										style="resize:none" rows="3"></textarea></td>
+								<td class="span1">其他</td>
+								<td class="span3"><textarea class="span12"
+										style="resize:none" rows="3"></textarea></td>
+							</tr>
+						</table>
 				</div>
 			</div>
 			
@@ -463,12 +469,10 @@
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
+<link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
+<script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<script>
-	$(function() {
-		$('#tab a:first').tab('show');
-	});
-</script>
 <%@include file="/common/footer.jsp"%>
+

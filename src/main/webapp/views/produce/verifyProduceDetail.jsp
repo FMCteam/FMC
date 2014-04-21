@@ -32,8 +32,8 @@
 				</div>
 			</div>
 
-			<form id="verify_form" method="post" class="verify"
-				action="${ctx }/produce/verifyProduceSubmit.do">
+			<form id="verify_form" method="post"
+				class="verify" action="${ctx }/produce/verifyProduceSubmit.do">
 				<table class="table table-striped table-bordered table-hover detail">
 					<tr>
 						<td class="span2">意见</td>

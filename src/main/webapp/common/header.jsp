@@ -69,8 +69,8 @@
 							<li class="dropdown"><a href=""><span
 									class="iconfa-pencil"></span> 客户管理</a>
 								<ul>
-									<li><a href="${ctx }/customer/add.do">新建客户</a></li>
-									<li><a href="${ctx }/customer/search.do">查看客户</a></li>
+									<li><a href="${ctx}/account/addCustomerDetail.do">新建客户</a></li>
+									<li><a href="${ctx}/account/customerList.do">查看客户</a></li>
 								</ul>
 							</li>
 						</c:if>
@@ -78,7 +78,7 @@
 							<li class="dropdown"><a href=""><span
 								class="iconfa-pencil"></span> 订单管理</a>
 							<ul>
-								<li><a href="#">查看订单</a></li>
+								<li><a href="${ctx}/market/orderList.do">查看订单</a></li>
 							</ul>
 							</li>
 						</c:if>
@@ -167,8 +167,8 @@
 						<li class="dropdown"><a href=""><span
 							class="iconfa-th-list"></span> 人事部</a>
 						<ul>
-							<li><a href="${ctx }/employee/addEmployee.do">添加员工</a></li>
-							<li><a href="${ctx }/employee/getEmployeeList.do">查看员工</a></li>
+							<li><a href="${ctx}/account/addEmployeeDetail.do">添加员工</a></li>
+							<li><a href="${ctx}/account/employeeList.do">查看员工</a></li>
 						</ul></li>
 						</c:if>
 					 

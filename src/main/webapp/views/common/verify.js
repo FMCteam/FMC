@@ -10,12 +10,11 @@ jQuery(document).ready(function(){
 		var suggestion = $("form.verify textarea").val();
 		if (suggestion == "") {
 			alert("拒绝意见不能为空");
-			return
+			return;
 		}
 		if(confirm("确认操作？")){
 			jQuery("#verify_val").val("false");
 			jQuery("#verify_form").submit();
 		}
 	});
-	
 });

@@ -13,5 +13,5 @@ public interface QualityService {
 
 	public boolean checkQualitySubmit(int id, long taskId, boolean b, List<Produce> goodList, List<Produce> badList);
 
-	public OrderInfo getCheckQualityDetail(int orderId, long taskId);
+	public Map<String,Object> getCheckQualityDetail(int orderId);
 }

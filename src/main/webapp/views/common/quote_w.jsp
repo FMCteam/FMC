@@ -8,12 +8,12 @@
 		<td>单件成本</td>
 	</tr>
 
-	<c:forEach var="fabric" items="${orderInfo.fabrics}">
+	<c:forEach var="fabric" items="${orderInfo.fabricCosts}">
 		<tr>
-			<td>${fabric.fabricName }</td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>${fabric.fabricName}</td>
+			<td>${fabric.tearPerMeter}</td>
+			<td>${fabric.price}</td>
+			<td>${fabric.costPerMeter}</td>
 		</tr>
 	</c:forEach>
 	<tr>
@@ -23,20 +23,20 @@
 		<td>价格</td>
 		<td>单件成本</td>
 	</tr>
-	<c:forEach var="accessory" items="${orderInfo.accessorys}">
+	<c:forEach var="accessory" items="${orderInfo.accessoryCosts}">
 		<tr>
-			<td>${accessory.accessoryName }</td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>${accessory.accessoryName}</td>
+			<td>${accessory.tearPerPiece}</td>
+			<td>${accessory.price}</td>
+			<td>${accessory.costPerPiece}</td>
 		</tr>
 	</c:forEach>
 	<tr>
 		<td>面辅总计</td>
 		<td>面料总计</td>
-		<td></td>
+		<td>${orderInfo.quote.fabricCost}</td>
 		<td>辅料总计</td>
-		<td></td>
+		<td>${orderInfo.quote.accessoryCost}</td>
 	</tr>
 	<tr>
 		<td rowspan="4">其他成本</td>
@@ -47,10 +47,10 @@
 	</tr>
 
 	<tr>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td>${orderInfo.quote.cutCost}</td>
+		<td>${orderInfo.quote.manageCost}</td>
+		<td>${orderInfo.quote.swingCost}</td>
+		<td>${orderInfo.quote.ironingCost}</td>
 	</tr>
 	<tr>
 		<td>锁订费用</td>
@@ -59,28 +59,26 @@
 		<td>设计费用</td>
 	</tr>
 	<tr>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td>${orderInfo.quote.nailCost}</td>
+		<td>${orderInfo.quote.packageCost}</td>
+		<td>${orderInfo.quote.otherCost}</td>
+		<td>${orderInfo.quote.designCost}</td>
 	</tr>
 	<tr>
 		<td rowspan="2">费用核算</td>
 		<td>成本总计</td>
-		<td>单件利润</td>
 		<td>生产报价</td>
+		<td>单件利润</td>
 		<td>客户报价</td>
 	</tr>
 	<tr>
-		<td></td>
-		<td><input class="span12" type="text" name="profitPerPiece" value="${merge_w eq null ? orderInfo.quote.profitPerPiece : '' }" />
-			
+		<td><input class="span12" type="text" name="single_cost" value="${merge_w eq null ? orderInfo.quote.singleCost : '' }" />
 		</td>
-		<td><input class="span12" type="text" name="inner_price" value="${merge_w eq null ? orderInfo.quote.innerPrice : '' }" />
-			
+		<td><input class="span12" type="text" name="inner_price" value="${merge_w eq null ? orderInfo.quote.innerPrice : '' }" />	
 		</td>
-		<td><input class="span12" type="text" name="outer_price" value="${merge_w eq null ? orderInfo.quote.outerPrice : '' }" />
-			
+		<td><input class="span12" type="text" name="profitPerPiece" value="${merge_w eq null ? orderInfo.quote.profitPerPiece : '' }" />	
+		</td>
+		<td><input class="span12" type="text" name="outer_price" value="${merge_w eq null ? orderInfo.quote.outerPrice : '' }" />	
 		</td>
 	</tr>
 

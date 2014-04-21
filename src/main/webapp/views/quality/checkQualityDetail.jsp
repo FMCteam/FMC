@@ -49,7 +49,7 @@
 								<td>XL</td>
 								<td>XXL</td>
 							</tr>
-							<c:forEach var="produce" items="${orderInfo.produces}">
+							<c:forEach var="produce" items="${orderInfo.produced}">
 								<tr>
 									<td><input class="span12 good_color" type="text"
 										value="${produced.color}" /></td>
@@ -77,7 +77,7 @@
 								<td>XL</td>
 								<td>XXL</td>
 							</tr>
-							<c:forEach var="produce" items="${orderInfo.produces}">
+							<c:forEach var="produce" items="${orderInfo.produced}">
 								<tr>
 									<td><input class="span12 bad_color" type="text"
 										value="0" /></td>

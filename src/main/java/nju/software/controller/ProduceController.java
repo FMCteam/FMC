@@ -24,13 +24,7 @@ public class ProduceController {
 	@Autowired
 	private ProduceService produceService;
 	
-	/**
-	 * 生产验证跳转链接
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
+
 	@RequestMapping(value = "produce/verifyProduceList.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyProduceList(HttpServletRequest request,
@@ -57,18 +51,10 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyProduceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		System.out.println("produce verify ================");
-		
-		Account account = (Account) request.getSession().getAttribute("cur_user");
 		boolean productVal = Boolean.parseBoolean(request.getParameter("productVal"));
-		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
+		long taskId = Long.parseLong(request.getParameter("taskId"));
 		String comment = request.getParameter("suggestion");
-
-		produceService.verifyProduceSubmit(account, orderId_request, taskId, productVal, comment);
-		
+		produceService.verifyProduceSubmit(taskId, productVal, comment);
 		return "redirect:/produce/verifyProduceList.do";
 	}
 	
@@ -85,13 +71,9 @@ public class ProduceController {
 	public String verifyProduceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		System.out.println("produce verify ================ show detail");
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-//		String actorId = account.getUserRole();
 		String s_orderId_request = (String) request.getParameter("orderId");
-		int orderId_request = Integer.parseInt(s_orderId_request);
-		long taskId = 0;
-		Map<String,Object> orderInfo = produceService.getVerifyProduceDetail(orderId_request, taskId);
+		int orderId = Integer.parseInt(s_orderId_request);
+		Map<String,Object> orderInfo = produceService.getVerifyProduceDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "produce/verifyProduceDetail";
 	}
@@ -187,7 +169,7 @@ public class ProduceController {
 	    //设计费用
 		String design_cost = request.getParameter("design_cost");
 		
-		produceService.ComputeProduceCostSubmit(
+		produceService.computeProduceCostSubmit(
 				Integer.parseInt(orderId),
 				Long.parseLong(taskId), 
 				Float.parseFloat(cut_cost),
@@ -222,7 +204,7 @@ public class ProduceController {
 	public String produceSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
+		Map<String,Object> orderInfo=produceService.getProduceSampleDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/produce/produceSampleDetail";
 	}
@@ -232,23 +214,9 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		
-		boolean result = Boolean.parseBoolean(request.getParameter("result"));
-		String taskId = request.getParameter("taskId");
-		int orderId = Integer.parseInt(request.getParameter("orderId"));
-		List<Produce> produceList = null;
-//		if (!result) {
-//			String produceColor = request.getParameter("produce_color");
-//			String produceXS = request.getParameter("produce_xs");
-//			String produceS = request.getParameter("produce_s");
-//			String produceM = request.getParameter("produce_m");
-//			String produceL = request.getParameter("produce_l");
-//			String produceXL = request.getParameter("produce_xl");
-//			String produceXXL = request.getParameter("produce_xxl");
-//			produceList = produceService.getProduceList(orderId, produceColor, 
-//					produceXS, produceS, produceM, produceL, produceXL, produceXXL);
-//		}
-		produceService.produceSampleSubmit(Long.parseLong(taskId), result, produceList);
+		boolean result =request.getParameter("result").equals("1");
+		long taskId = Long.parseLong(request.getParameter("taskId"));
+		produceService.produceSampleSubmit(taskId, result);
 		return "forward:/produce/produceSampleList.do";
 	}
 	
@@ -271,7 +239,7 @@ public class ProduceController {
 	public String produceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
-		OrderInfo orderInfo=produceService.getProduceDetail(Integer.parseInt(orderId));
+		Map<String,Object> orderInfo=produceService.getProduceDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/produce/produceDetail";
 	}
@@ -281,10 +249,20 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {	
-		String taskId=request.getParameter("taskId");
-		String pid=request.getParameter("pid");
-		String askAmount=request.getParameter("produceAmount");
-		produceService.pruduceSubmit(pid.split(","), askAmount.split(","), Long.parseLong(taskId));
+		boolean result = Boolean.parseBoolean(request.getParameter("result"));
+		String taskId = request.getParameter("taskId");
+		int orderId = Integer.parseInt(request.getParameter("orderId"));
+		List<Produce> produceList = null;
+		if (result) {
+			String produceColor = request.getParameter("produce_color");
+			String produceXS = request.getParameter("produce_xs");
+			String produceS = request.getParameter("produce_s");
+			String produceM = request.getParameter("produce_m");
+			String produceL = request.getParameter("produce_l");
+			String produceXL = request.getParameter("produce_xl");
+			String produceXXL = request.getParameter("produce_xxl");
+		}
+		produceService.pruduceSubmit(Long.parseLong(taskId), result, null);
 		return "forward:/produce/produceList.do";
 	}
 }
