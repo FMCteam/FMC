@@ -355,7 +355,7 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "account/deleteEmployee.do", method= RequestMethod.post)
+	@RequestMapping(value = "account/deleteEmployee.do", method= RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String deleteEmployee(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
