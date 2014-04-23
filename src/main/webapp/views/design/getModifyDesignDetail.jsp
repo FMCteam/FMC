@@ -39,7 +39,7 @@
 				
 			<c:if test="${orderInfo.cad!=null}">
 			<form action="${ctx }/design/downloadCadSubmit.do" method="post" 
-				onsubmit="return confirm('确认提交？')" nctype="multipart/form-data">
+				nctype="multipart/form-data">
 				<table class="table table-striped table-bordered table-hover">
 					<tr>
 						<td>下载文件</td>
@@ -56,8 +56,8 @@
 			</form>
 			</c:if>
 
-			<form action="${ctx }/design/modifyDesignSubmit.do" 
-				method="post" enctype="multipart/form-data">
+			<form action="${ctx }/design/modifyDesignSubmit.do" method="post" 
+			onsubmit="return confirm('确认提交？')" enctype="multipart/form-data">
 				<table class="table table-striped table-bordered table-hover">
 					<tr>
 						<td>选择文件</td>
