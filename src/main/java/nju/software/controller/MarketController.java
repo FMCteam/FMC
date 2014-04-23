@@ -149,7 +149,8 @@ public class MarketController {
 		Short isNeedSampleClothes = Short.parseShort(request
 				.getParameter("is_need_sample_clothes"));
 		String orderSource = request.getParameter("order_source");
-		String sampleClothesPicture = request.getParameter("sample_clothes_picture");
+		String sampleClothesPicture = request
+				.getParameter("sample_clothes_picture");
 		String refPicture = request.getParameter("reference_picture");
 		// 面料数据
 		String fabric_names = request.getParameter("fabric_name");
@@ -292,7 +293,7 @@ public class MarketController {
 
 		// 物流数据
 		Logistics logistics = new Logistics();
-		if(hasPostedSampleClothes==1){
+		if (hasPostedSampleClothes == 1) {
 			String in_post_sample_clothes_time = request
 					.getParameter("in_post_sample_clothes_time");
 			String in_post_sample_clothes_type = request
@@ -302,15 +303,16 @@ public class MarketController {
 			logistics
 					.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
 			logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
-			logistics.setInPostSampleClothesNumber(in_post_sample_clothes_number);
+			logistics
+					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
 		}
-		if(isNeedSampleClothes==1){
-	//		String sample_clothes_time = request
-	//				.getParameter("sample_clothes_time");
-	//		String sample_clothes_type = request
-	//				.getParameter("sample_clothes_type");
-	//		String sample_clothes_number = request
-	//				.getParameter("sample_clothes_number");
+		if (isNeedSampleClothes == 1) {
+			// String sample_clothes_time = request
+			// .getParameter("sample_clothes_time");
+			// String sample_clothes_type = request
+			// .getParameter("sample_clothes_type");
+			// String sample_clothes_number = request
+			// .getParameter("sample_clothes_number");
 			String sample_clothes_name = request
 					.getParameter("sample_clothes_name");
 			String sample_clothes_phone = request
@@ -319,32 +321,26 @@ public class MarketController {
 					.getParameter("sample_clothes_address");
 			String sample_clothes_remark = request
 					.getParameter("sample_clothes_remark");
-	
-	//		logistics.setSampleClothesTime(getTime(sample_clothes_time));
-	//		logistics.setSampleClothesType(sample_clothes_type);
-	//		logistics.setSampleClothesNumber(sample_clothes_number);
+
+			// logistics.setSampleClothesTime(getTime(sample_clothes_time));
+			// logistics.setSampleClothesType(sample_clothes_type);
+			// logistics.setSampleClothesNumber(sample_clothes_number);
 			logistics.setSampleClothesName(sample_clothes_name);
 			logistics.setSampleClothesPhone(sample_clothes_phone);
 			logistics.setSampleClothesAddress(sample_clothes_address);
 			logistics.setSampleClothesRemark(sample_clothes_remark);
 		}
-		
-		//CAD
+
+		// CAD
 		DesignCad cad = new DesignCad();
 		cad.setOrderId(0);
 		cad.setCadVersion((short) 1);
-		String cad_fabric = request
-				.getParameter("cadFabric");
-		String cad_box = request
-				.getParameter("cadBox");
-		String cad_package = request
-				.getParameter("cadPackage");
-		String cad_version_data = request
-				.getParameter("cadVersionData");
-		String cad_tech = request
-				.getParameter("cadTech");
-		String cad_other = request
-				.getParameter("cadOther");
+		String cad_fabric = request.getParameter("cadFabric");
+		String cad_box = request.getParameter("cadBox");
+		String cad_package = request.getParameter("cadPackage");
+		String cad_version_data = request.getParameter("cadVersionData");
+		String cad_tech = request.getParameter("cadTech");
+		String cad_other = request.getParameter("cadOther");
 		cad.setCadBox(cad_box);
 		cad.setCadFabric(cad_fabric);
 		cad.setCadOther(cad_other);
@@ -642,6 +638,11 @@ public class MarketController {
 		List<Map<String, Object>> list = marketService
 				.getMergeQuoteList(account.getAccountId());
 
+		if (list.size() == 0) {
+			jbpmTest.completeComputeCost(account.getAccountId() + "");
+			list = marketService.getMergeQuoteList(account.getAccountId());
+		}
+
 		model.put("list", list);
 		model.addAttribute("taskName", "合并报价");
 		model.addAttribute("url", "/market/mergeQuoteDetail.do");
@@ -931,20 +932,21 @@ public class MarketController {
 
 		// 物流数据
 		Logistics logistics = logisticsService.findByOrderId(s_id);
-		if(hasPostedSampleClothes==1){
+		if (hasPostedSampleClothes == 1) {
 			String in_post_sample_clothes_time = request
 					.getParameter("in_post_sample_clothes_time");
 			String in_post_sample_clothes_type = request
 					.getParameter("in_post_sample_clothes_type");
 			String in_post_sample_clothes_number = request
 					.getParameter("in_post_sample_clothes_number");
-	
+
 			logistics
 					.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
 			logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
-			logistics.setInPostSampleClothesNumber(in_post_sample_clothes_number);
+			logistics
+					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
 		}
-		if(isNeedSampleClothes==1){
+		if (isNeedSampleClothes == 1) {
 			String sample_clothes_time = request
 					.getParameter("sample_clothes_time");
 			String sample_clothes_type = request
@@ -959,7 +961,7 @@ public class MarketController {
 					.getParameter("sample_clothes_address");
 			String sample_clothes_remark = request
 					.getParameter("sample_clothes_remark");
-	
+
 			logistics.setSampleClothesTime(getTime(sample_clothes_time));
 			logistics.setSampleClothesType(sample_clothes_type);
 			logistics.setSampleClothesNumber(sample_clothes_number);
@@ -968,8 +970,7 @@ public class MarketController {
 			logistics.setSampleClothesAddress(sample_clothes_address);
 			logistics.setSampleClothesRemark(sample_clothes_remark);
 		}
-		
-		
+
 		// Order
 		Order order = orderService.findByOrderId(s_id);
 		// order.setEmployeeId(employeeId);
@@ -1235,6 +1236,10 @@ public class MarketController {
 				"cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSignContractList(account.getUserId() + "");
+		if (list.size() == 0) {
+			jbpmTest.completeProduceConfirm(account.getUserId() + "", true);
+			marketService.getSignContractList(account.getUserId() + "");
+		}
 		model.put("list", list);
 		model.addAttribute("taskName", "签订合同");
 		model.addAttribute("url", "/market/signContractDetail.do");

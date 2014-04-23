@@ -5,10 +5,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.jbpm.task.query.TaskSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
@@ -18,12 +22,15 @@ import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
+import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Fabric;
+import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Produce;
+import nju.software.dataobject.Quote;
 import nju.software.util.JbpmAPIUtil;
 
 @Service("test")
@@ -172,6 +179,23 @@ public class JbpmTest {
 				ProduceServiceImpl.TASK_COMPUTE_PRODUCE_COST, orderId);
 		data = new HashMap<String, Object>();
 		completeTask(taskId, data, ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
+		
+		
+		fabricCostDAO.save(new FabricCost(orderId, "f1", (float)12, (float)2, (float)24));
+		fabricCostDAO.save(new FabricCost(orderId, "f2", (float)12, (float)2, (float)24));
+		fabricCostDAO.save(new FabricCost(orderId, "f3", (float)12, (float)2, (float)24));
+		
+		accessoryCostDAO.save(new AccessoryCost(orderId, "a1", (float)12, (float)2, (float)24));
+		accessoryCostDAO.save(new AccessoryCost(orderId, "a2", (float)12, (float)2, (float)24));
+		accessoryCostDAO.save(new AccessoryCost(orderId, "a3", (float)12, (float)2, (float)24));
+		
+		
+		Quote quote=new Quote();
+		quote.setAccessoryCost((float)12);
+		quote.setDesignCost((float)12);
+		quoteDAO.save(quote);
+		
+		
 	}
 
 	public void completeConfirmQuote(String actorId) {
@@ -293,6 +317,7 @@ public class JbpmTest {
 		completeTask(taskId, data, DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 	}
 
+	
 	public void completeCheckQuality(String actorId) {
 
 		completeBeforeProduce(actorId);
@@ -323,7 +348,38 @@ public class JbpmTest {
 				QualityServiceImpl.TASK_CHECK_QUALITY, orderId);
 		data = new HashMap<String, Object>();
 		completeTask(taskId, data, QualityServiceImpl.ACTOR_QUALITY_MANAGER);
+		
+		
+		for (int i = 0; i < 3; i++) {
+			Produce p = new Produce();
+			p.setType(Produce.TYPE_QUALIFIED);
+			p.setColor(i + "");
+			p.setXs(1);
+			p.setS(2);
+			p.setM(3);
+			p.setL(4);
+			p.setXl(5);
+			p.setXxl(6);
+			p.setOid(orderId);
+			produceDAO.save(p);
+		}
+		
+		for (int i = 0; i < 3; i++) {
+			Produce p = new Produce();
+			p.setType(Produce.TYPE_UNQUALIFIED);
+			p.setColor(i + "");
+			p.setXs(1);
+			p.setS(2);
+			p.setM(3);
+			p.setL(4);
+			p.setXl(5);
+			p.setXxl(6);
+			p.setOid(orderId);
+			produceDAO.save(p);
+		}
 	}
+	
+	
 
 	public void completeTaskLogistics(String actionId) {
 		completeCheckQuality(actionId);
@@ -392,6 +448,10 @@ public class JbpmTest {
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private FabricDAO fabricDAO;
+	@Autowired
+	private AccessoryCostDAO accessoryCostDAO;
+	@Autowired
+	private FabricCostDAO fabricCostDAO;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired

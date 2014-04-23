@@ -199,10 +199,8 @@ public class DesignController {
 		return null;
 	}
 
-	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
-	private OrderService orderService;
+
+
 	@Autowired
 	private DesignService designService;
 	@Autowired
