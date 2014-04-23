@@ -37,6 +37,7 @@
 					</div>
 				</div>
 				
+			<c:if test="${orderInfo.cad!=null}">
 			<form action="${ctx }/design/downloadCadSubmit.do" method="post" 
 				onsubmit="return confirm('确认提交？')" nctype="multipart/form-data">
 				<table class="table table-striped table-bordered table-hover">
@@ -53,6 +54,7 @@
 				<input type="hidden" name="orderId" value="${orderInfo.order.orderId}"/>
 				<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
 			</form>
+			</c:if>
 
 			<form action="${ctx }/design/modifyDesignSubmit.do" 
 				method="post" enctype="multipart/form-data">
@@ -60,7 +62,7 @@
 					<tr>
 						<td>选择文件</td>
 						<td colspan="3">
-							<input name="CADFile" id="CADFile" type="file" /> 
+							<input name="CADFile" id="CADFile" type="file" required="required"/> 
 							<input type="hidden" name="orderId" value="${orderInfo.order.orderId}"/>
 							<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
 						</td>
