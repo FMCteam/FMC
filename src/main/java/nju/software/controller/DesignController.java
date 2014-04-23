@@ -173,7 +173,7 @@ public class DesignController {
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
 		FileOperateUtil.Upload(file);
-		String url = "D:/" + "/" + filename;
+		String url = "D:/" + filename;
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.uploadDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);

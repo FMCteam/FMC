@@ -16,9 +16,11 @@ import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.ProduceDAO;
+import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Produce;
+import nju.software.dataobject.Quote;
 import nju.software.model.OrderInfo;
 import nju.software.service.BuyService;
 import nju.software.util.JbpmAPIUtil;
@@ -74,12 +76,16 @@ public class BuyServiceImpl implements BuyService {
 	@Override
 	public void computePurchaseCostSubmit(int orderId, long taskId,
 			String[] fabric_names, String[] tear_per_meters,
-			String[] cost_per_meters, String[] fabric_prices,
-			String[] accessory_names, String[] tear_per_piece,
-			String[] cost_per_piece, String[] accessory_prices) {
+			String[] cost_per_meters,String[] accessory_names, String[] tear_per_piece,
+			String[] cost_per_piece) {
+		
+		
+		float all_fabric_prices=0.0f;
+		float all_accessory_prices=0.0f;
 		// TODO Auto-generated method stub
 		if (fabric_names != null) {
 			for (int i = 0; i < fabric_names.length; i++) {
+				
 				FabricCost fabricCost = new FabricCost();
 				fabricCost.setOrderId(orderId);
 				fabricCost.setFabricName(fabric_names[i]);
@@ -87,7 +93,14 @@ public class BuyServiceImpl implements BuyService {
 						.setTearPerMeter(Float.parseFloat(tear_per_meters[i]));
 				fabricCost
 						.setCostPerMeter(Float.parseFloat(cost_per_meters[i]));
-				fabricCost.setPrice(Float.parseFloat(fabric_prices[i]));
+				
+			float fabric_price=Float.parseFloat(tear_per_meters[i])*Float.parseFloat(cost_per_meters[i]);
+			
+			all_fabric_prices+=fabric_price;
+			
+			
+			
+				fabricCost.setPrice(fabric_price);
 				FabricCostDAO.save(fabricCost);
 			}
 		}
@@ -100,10 +113,53 @@ public class BuyServiceImpl implements BuyService {
 						.parseFloat(tear_per_piece[i]));
 				accessoryCost.setCostPerPiece(Float
 						.parseFloat(cost_per_piece[i]));
-				accessoryCost.setPrice(Float.parseFloat(accessory_prices[i]));
+				
+				float accessory_price=Float
+						.parseFloat(tear_per_piece[i])*Float
+						.parseFloat(cost_per_piece[i]);
+				
+				all_accessory_prices+=accessory_price;
+				
+				accessoryCost.setPrice(accessory_price);
 				AccessoryCostDAO.save(accessoryCost);
 			}
 		}
+		
+		Quote quote=quoteDAO.findById(orderId);
+		
+		if(quote==null){
+			quote=new Quote();
+			quote.setOrderId(orderId);
+			quote.setAccessoryCost(all_accessory_prices);
+			quote.setFabricCost(all_fabric_prices);
+			quoteDAO.save(quote);
+				}
+		else{
+			quote.setAccessoryCost(all_accessory_prices);
+			quote.setFabricCost(all_fabric_prices);
+			
+			float singleCost=quote.getCutCost()+quote.getManageCost()+quote.getDesignCost()+
+					quote.getIroningCost()+quote.getNailCost()+quote.getPackageCost()+
+					quote.getSwingCost()+quote.getOtherCost()+all_accessory_prices+all_fabric_prices;
+			
+			quote.setSingleCost(singleCost);
+			
+			quoteDAO.attachDirty(quote);
+			
+			quoteDAO.attachDirty(quote);
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
@@ -217,6 +273,8 @@ public class BuyServiceImpl implements BuyService {
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private ProductDAO productDAO;
+	@Autowired
+	private QuoteDAO quoteDAO;
 	@Autowired
 	private AccessoryCostDAO AccessoryCostDAO;
 	@Autowired
