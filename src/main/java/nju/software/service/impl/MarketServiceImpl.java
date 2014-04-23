@@ -175,9 +175,9 @@ public class MarketServiceImpl implements MarketService {
 		params.put("orderId", orderId);
 		params.put("marketStaff", order.getEmployeeId());
 		params.put(LogisticsServiceImpl.RESULT_RECEIVE_SAMPLE,
-				(int) order.getIsNeedSampleClothes());
+				(int)order.getHasPostedSampleClothes() );
 		params.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
-				(int) order.getHasPostedSampleClothes());
+				(int)order.getIsNeedSampleClothes() );
 		params.put(RESULT_REORDER, false);
 		doTMWorkFlowStart(params);
 

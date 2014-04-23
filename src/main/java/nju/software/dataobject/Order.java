@@ -58,7 +58,7 @@ public class Order implements java.io.Serializable {
 	private String payAccountInfo;
 	private double discount;
 	private double totalMoney;
-	private double sampleMoney;
+	private double sampleMoney=0;
 	private int logisticsState; //物流状态：0,未装包。1，装包未入库，2，入库待扫描，3已扫描待发货。4发货
 	
 	@Column(name = "sampleMoney", nullable = true, precision = 22, scale = 0)
