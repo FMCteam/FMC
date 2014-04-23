@@ -115,13 +115,13 @@
 					</div>
 					<div class="tab-pane" id="material">
 						<table
-							class="table table-striped table-bordered table-hover">
+							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span2">面料<input id="fabric_name" type="hidden"
 									name="fabric_name" /> <input id="fabric_amount" type="hidden"
 									name="fabric_amount" /></td>
 								<td class="innertable span12"><table
-										class="span12 table fabric_table">
+										class="span12 table fabric_table span12">
 										<tr>
 											<td class="span5">面料名称</td>
 											<td class="span5">面料克重</td>

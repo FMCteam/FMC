@@ -9,6 +9,7 @@
 		<thead>
 			<tr>
 				<th>订单号</th>
+				<th>样衣图片</th>
 				<th>市场专员</th>
 				<th>客户姓名</th>
 				<th>客户公司</th>
@@ -19,13 +20,16 @@
 		<tbody>
 			<c:forEach var="model" items="${list}">
 				<tr>
-					<td>${model.order.orderId}</td>
+					<td>${model.orderId}</td>
+					<td style="padding:8px 0px 0px 0px;"><c:if test="${model.order.sampleClothesPicture!=null}">
+							<img width="60px" height="100%" src="${ctx}/${model.order.sampleClothesPicture}"
+								alt="样衣图片"></img>
+						</c:if></td>
 					<td>${model.employee.employeeName}</td>
 					<td>${model.order.customerName}</td>
 					<td>${model.order.customerCompany}</td>
-					<td>${model.task.createdOn}</td>
-					<td><a
-						href="${ctx}${url}?orderId=${model.order.orderId}">详情</a>
+					<td>${model.taskTime}</td>
+					<td><a href="${ctx}${url}?orderId=${model.order.orderId}">详情</a>
 					</td>
 				</tr>
 			</c:forEach>

@@ -32,7 +32,7 @@
 							<span class="head-icon head-message"></span> <span
 							class="headmenu-label">新任务</span>
 					</a></li>
-					<li><a> <span class="count">10</span> <span
+					<li><a> <span class="count">${taskNumber}</span> <span
 							class="head-icon head-users"></span> <span class="headmenu-label">新客户</span>
 					</a></li>
 

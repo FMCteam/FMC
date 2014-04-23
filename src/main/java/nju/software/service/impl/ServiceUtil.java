@@ -1,5 +1,6 @@
 package nju.software.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +40,8 @@ public class ServiceUtil {
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				actorId, taskName);
 		List<Map<String, Object>> list = new ArrayList<>();
+		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat dateFormat2=new SimpleDateFormat("yyyyMMdd");
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) jbpmAPIUtil
 					.getVariable(task, "orderId");
@@ -49,6 +52,8 @@ public class ServiceUtil {
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("task", task);
+			model.put("taskTime",dateFormat.format(task.getCreatedOn()));
+			model.put("orderId",dateFormat2.format(order.getOrderTime())+String.format("%06d",order.getOrderId()));
 			list.add(model);
 		}
 		return list;

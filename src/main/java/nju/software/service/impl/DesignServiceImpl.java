@@ -116,7 +116,11 @@ public class DesignServiceImpl implements DesignService {
 		// TODO Auto-generated method stub
 		Map<String, Object> model = service.getBasicOrderModel(
 				ACTOR_DESIGN_MANAGER, TASK_MODIFY_DESIGN, orderId);
-		model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
+		
+		if(designCadDAO.findByOrderId(orderId)!=null&&designCadDAO.findByOrderId(orderId).size()!=0){
+			model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
+		}
+		
 		return model;
 	}
 	

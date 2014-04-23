@@ -134,7 +134,7 @@ public class DesignController {
 		FileOperateUtil.Upload(file);
 		String url = "D:/" + "/" + filename;
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
-		designService.uploadDesignSubmit(Integer.parseInt(orderId),
+		designService.modifyDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
 		return "forward:/design/getModifyDesignList.do";
 	}
