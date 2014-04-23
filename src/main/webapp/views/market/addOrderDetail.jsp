@@ -176,34 +176,21 @@
 									name="in_post_sample_clothes_number" /></td>
 							</tr>
 							<tr>
-								<td rowspan="5">生产样衣</td>
+								<td rowspan="3">生产样衣</td>
 								<td>制作样衣</td>
-								<td>邮寄时间</td>
-								<td>快递名称</td>
-								<td>快递单号</td>
+								<td>邮寄人</td>
+								<td>手机</td>
+								<td>邮寄地址</td>
 							</tr>
 							<tr>
 								<td><input type="radio" name="is_need_sample_clothes"
 									checked="checked" value="1" /> 是 <input type="radio"
 									name="is_need_sample_clothes" value="0" /> 否</td>
-								<td><input class="span12" type="date"
-									name="sample_clothes_time" /></td>
-								<td><input class="span12" type="text"
-									name="sample_clothes_type" /></td>
-								<td><input class="span12" type="text"
-									name="sample_clothes_number" /></td>
-							</tr>
-							<tr>
-								<td>邮寄人</td>
-								<td>手机</td>
-								<td colspan="2">邮寄地址</td>
-							</tr>
-							<tr>
 								<td><input class="span12" type="text"
 									name="sample_clothes_name" /></td>
 								<td><input class="span12" type="text"
 									name="sample_clothes_phone" /></td>
-								<td colspan="2"><input class="span12" type="text"
+								<td><input class="span12" type="text"
 									name="sample_clothes_address" /></td>
 							</tr>
 							<tr>
@@ -227,14 +214,11 @@
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td rowspan="2">加工信息</td>
-								<td class="span2" colspan="2">样衣总数<span class="required">*</span></td>
 								<td class="span2" colspan="2">大货总数<span class="required">*</span></td>
 								<td class="span2" colspan="2">最迟交货时间</td>
 								<td class="span2" colspan="2">完工时间（天）</td>
 							</tr>
 							<tr>
-								<td class="span2" colspan="2"><input class="span6"
-									type="number" name="sample_amount" /></td>
 								<td class="span2" colspan="2"><input class="span6"
 									type="number" name="ask_amount" /></td>
 								<td class="span2" colspan="2"><input class="span8"
@@ -377,27 +361,27 @@
 							<tr>
 								<td class="span1" rowspan="4">版型数据</td>
 								<td class="span1">面料</td>
-								<td class="span3"><textarea class="span12"
+								<td class="span3"><textarea class="span12" name="cadFabric"
 										style="resize:none" rows="2"></textarea></td>
 								<td class="span1">包装</td>
-								<td class="span3"><textarea class="span12"
+								<td class="span3"><textarea class="span12" name="cadBox"
 										style="resize:none" rows="2"></textarea></td>
 							</tr>
 							<tr>
 								<td class="span1">版型</td>
-								<td class="span3"><textarea class="span12"
+								<td class="span3"><textarea class="span12" name="cadVersionData"
 										style="resize:none" rows="2"></textarea></td>
 								<td class="span1">装箱</td>
-								<td class="span3"><textarea class="span12"
+								<td class="span3"><textarea class="span12" name="cadPackage"
 										style="resize:none" rows="2"></textarea></td>
 
 							</tr>
 							<tr>
 								<td class="span1">工艺</td>
-								<td class="span3"><textarea class="span12"
+								<td class="span3"><textarea class="span12" name="cadTech"
 										style="resize:none" rows="2"></textarea></td>
 								<td class="span1">其他</td>
-								<td class="span3"><textarea class="span12"
+								<td class="span3"><textarea class="span12" name="cadOther"
 										style="resize:none" rows="2"></textarea></td>
 							</tr>
 						</table>

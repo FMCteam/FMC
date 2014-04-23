@@ -9,6 +9,7 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">修改询单</li>
+				<li><a href="#comment" data-toggle="tab">修改意见</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
@@ -435,6 +436,22 @@
 										style="resize:none" rows="3"></textarea></td>
 							</tr>
 						</table>
+				</div>
+				<div class="tab-pane" id="comment">
+					<table class="table table-striped table-bordered table-hover detail">
+						<tr>
+							<td>设计部意见</td>
+							<td colspan="5"></td>
+						</tr>
+						<tr>
+							<td>采购部意见</td>
+							<td colspan="5"></td>
+						</tr>
+						<tr>
+							<td>生产部意见</td>
+							<td colspan="5"></td>
+						</tr>
+					</table>
 				</div>
 			</div>
 			

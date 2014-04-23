@@ -22,6 +22,12 @@ public class DesignCad implements java.io.Serializable {
 	private String cadUrl;
 	private Short cadVersion;
 	private Timestamp uploadTime;
+	private String cadFabric; //面料
+	private String cadPackage; //装箱
+	private String cadVersionData; //版型
+	private String cadBox; //包装
+	private String cadTech; //工艺
+	private String cadOther; //其他
 
 	// Constructors
 
@@ -59,7 +65,7 @@ public class DesignCad implements java.io.Serializable {
 		this.orderId = orderId;
 	}
 
-	@Column(name = "cad_url", nullable = false, length = 250)
+	@Column(name = "cad_url", nullable = true, length = 250)
 	public String getCadUrl() {
 		return this.cadUrl;
 	}
@@ -84,6 +90,60 @@ public class DesignCad implements java.io.Serializable {
 
 	public void setUploadTime(Timestamp uploadTime) {
 		this.uploadTime = uploadTime;
+	}
+
+	@Column(name = "cad_fabric")
+	public String getCadFabric() {
+		return cadFabric;
+	}
+
+	public void setCadFabric(String cadFabric) {
+		this.cadFabric = cadFabric;
+	}
+
+	@Column(name = "cad_package")
+	public String getCadPackage() {
+		return cadPackage;
+	}
+
+	public void setCadPackage(String cadPackage) {
+		this.cadPackage = cadPackage;
+	}
+
+	@Column(name = "cad_version_data")
+	public String getCadVersionData() {
+		return cadVersionData;
+	}
+
+	public void setCadVersionData(String cadVersionData) {
+		this.cadVersionData = cadVersionData;
+	}
+
+	@Column(name = "cad_box")
+	public String getCadBox() {
+		return cadBox;
+	}
+
+	public void setCadBox(String cadBox) {
+		this.cadBox = cadBox;
+	}
+
+	@Column(name = "cad_tech")
+	public String getCadTech() {
+		return cadTech;
+	}
+
+	public void setCadTech(String cadTech) {
+		this.cadTech = cadTech;
+	}
+
+	@Column(name = "cad_other")
+	public String getCadOther() {
+		return cadOther;
+	}
+
+	public void setCadOther(String cadOther) {
+		this.cadOther = cadOther;
 	}
 
 }
