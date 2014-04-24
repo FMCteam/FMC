@@ -37,6 +37,7 @@ import nju.software.model.OrderModel;
 import nju.software.model.QuoteModel;
 import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
+import nju.software.service.DesignCadService;
 import nju.software.service.LogisticsService;
 import nju.software.service.MarketService;
 import nju.software.service.OrderService;
@@ -72,6 +73,8 @@ public class MarketController {
 	private OrderService orderService;
 	@Autowired
 	private BuyService buyService;
+	@Autowired
+	private DesignCadService cadService;
 	@Autowired
 	private LogisticsService logisticsService;
 	@Autowired
@@ -976,9 +979,8 @@ public class MarketController {
 		}
 		
 		// CAD
-		DesignCad cad = new DesignCad();
-		cad.setOrderId(0);
-		cad.setCadVersion((short) 1);
+		DesignCad cad = cadService.findByOrderId(s_id);
+		//cad.setCadVersion((short) 1);
 		String cad_fabric = request.getParameter("cadFabric");
 		String cad_box = request.getParameter("cadBox");
 		String cad_package = request.getParameter("cadPackage");
@@ -1024,7 +1026,7 @@ public class MarketController {
 		boolean editok = request.getParameter("editok").equals("true") ? true
 				: false;
 		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
-				produces, sample_produces, versions, editok, task_id,
+				produces, sample_produces, versions, cad, editok, task_id,
 				account.getUserId());
 		// WorkflowProcessInstance process = (WorkflowProcessInstance)
 		// jbpmAPIUtil
