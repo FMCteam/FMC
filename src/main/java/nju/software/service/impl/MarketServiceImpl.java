@@ -225,7 +225,7 @@ public class MarketServiceImpl implements MarketService {
 	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
-			List<VersionData> versions, boolean editok, long taskId,
+			List<VersionData> versions, DesignCad cad, boolean editok, long taskId,
 			Integer accountId) {
 		// TODO Auto-generated method stub
 		// 添加订单信息
@@ -265,6 +265,9 @@ public class MarketServiceImpl implements MarketService {
 		logistics.setOrderId(orderId);
 		logisticsDAO.merge(logistics);
 
+		//cad
+		cadDAO.merge(cad);
+		
 		// 启动流程
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put(RESULT_MODIFY_ORDER, editok);

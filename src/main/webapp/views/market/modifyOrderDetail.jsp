@@ -167,7 +167,7 @@
 							<td colspan="2">快递单号</td>
 						</tr>
 						<tr>
-							<td><input type="radio" name="has_posted_sample_clothes" ${orderModel.order.hasPostedSampleClothes==1?'checked="checked"':'' }
+							<td><input type="radio" name="has_posted_sample_clothes" ${orderModel.order.hasPostedSampleClothes>0?'checked="checked"':'' }
 								value="1" /> 是 <input type="radio" ${orderModel.order.hasPostedSampleClothes==0?'checked="checked"':'' }
 								name="has_posted_sample_clothes" value="0" /> 否</td>
 							<td colspan="2"><input class="span6" type="date"
@@ -412,28 +412,28 @@
 							<tr>
 								<td class="span1" rowspan="4">版型数据</td>
 								<td class="span1">面料</td>
-								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+								<td class="span3"><textarea class="span12" name="cadFabric"
+										style="resize:none" rows="2">${orderModel.designCad[0].cadFabric }</textarea></td>
 								<td class="span1">包装</td>
-								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+								<td class="span3"><textarea class="span12" name="cadBox"
+										style="resize:none" rows="2">${orderModel.designCad[0].cadBox }</textarea></td>
 							</tr>
 							<tr>
 								<td class="span1">版型</td>
-								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+								<td class="span3"><textarea class="span12" name="cadVersionData"
+										style="resize:none" rows="2">${orderModel.designCad[0].cadVersionData }</textarea></td>
 								<td class="span1">装箱</td>
-								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+								<td class="span3"><textarea class="span12" name="cadPackage"
+										style="resize:none" rows="2">${orderModel.designCad[0].cadPackage }</textarea></td>
 
 							</tr>
 							<tr>
 								<td class="span1">工艺</td>
-								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+								<td class="span3"><textarea class="span12" name="cadTech"
+										style="resize:none" rows="2">${orderModel.designCad[0].cadTech }</textarea></td>
 								<td class="span1">其他</td>
-								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="3"></textarea></td>
+								<td class="span3"><textarea class="span12" name="cadOther"
+										style="resize:none" rows="2">${orderModel.designCad[0].cadOther }</textarea></td>
 							</tr>
 						</table>
 				</div>
@@ -441,15 +441,15 @@
 					<table class="table table-striped table-bordered table-hover detail">
 						<tr>
 							<td>设计部意见</td>
-							<td colspan="5"></td>
+							<td colspan="5">${designComment }</td>
 						</tr>
 						<tr>
 							<td>采购部意见</td>
-							<td colspan="5"></td>
+							<td colspan="5">${purchaseComment }</td>
 						</tr>
 						<tr>
 							<td>生产部意见</td>
-							<td colspan="5"></td>
+							<td colspan="5">${produceComment }</td>
 						</tr>
 					</table>
 				</div>

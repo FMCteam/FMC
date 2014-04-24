@@ -95,7 +95,7 @@ public interface MarketService {
 	public Map<String, Object> getModifyOrderDetail(int accountId, int id);
 
 	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
-			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<Produce> sample_produces, List<VersionData> versions, boolean editok, long taskId, Integer accountId);
+			List<Accessory> accessorys, Logistics logistics, List<Produce> produces, List<Produce> sample_produces, List<VersionData> versions, DesignCad cad, boolean editok, long taskId, Integer accountId);
 
 	public Map<String, Object> getMergeQuoteDetail(Integer userId, int id);
 

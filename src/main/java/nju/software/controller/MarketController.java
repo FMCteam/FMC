@@ -37,6 +37,7 @@ import nju.software.model.OrderModel;
 import nju.software.model.QuoteModel;
 import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
+import nju.software.service.DesignCadService;
 import nju.software.service.LogisticsService;
 import nju.software.service.MarketService;
 import nju.software.service.OrderService;
@@ -72,6 +73,8 @@ public class MarketController {
 	private OrderService orderService;
 	@Autowired
 	private BuyService buyService;
+	@Autowired
+	private DesignCadService cadService;
 	@Autowired
 	private LogisticsService logisticsService;
 	@Autowired
@@ -749,14 +752,18 @@ public class MarketController {
 		Map<String, Object> orderModel = marketService.getModifyOrderDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderModel", orderModel);
-		Object buyComment = jbpmAPIUtil.getVariable(
+		String purchaseComment = (String)jbpmAPIUtil.getVariable(
 				(TaskSummary) orderModel.get("task"),
 				BuyServiceImpl.RESULT_PURCHASE_COMMENT);
-		Object designComment = jbpmAPIUtil.getVariable(
+		String designComment = (String)jbpmAPIUtil.getVariable(
 				(TaskSummary) orderModel.get("task"),
 				DesignServiceImpl.RESULT_DESIGN_COMMENT);
-		model.addAttribute("buyComment", buyComment);
+		String produceComment = (String)jbpmAPIUtil.getVariable(
+				(TaskSummary) orderModel.get("task"), 
+				ProduceServiceImpl.RESULT_PRODUCE_COMMENT);
+		model.addAttribute("purchaseComment", purchaseComment);
 		model.addAttribute("designComment", designComment);
+		model.addAttribute("produceComment", produceComment);
 		return "market/modifyOrderDetail";
 	}
 
@@ -970,6 +977,22 @@ public class MarketController {
 			logistics.setSampleClothesAddress(sample_clothes_address);
 			logistics.setSampleClothesRemark(sample_clothes_remark);
 		}
+		
+		// CAD
+		DesignCad cad = cadService.findByOrderId(s_id);
+		//cad.setCadVersion((short) 1);
+		String cad_fabric = request.getParameter("cadFabric");
+		String cad_box = request.getParameter("cadBox");
+		String cad_package = request.getParameter("cadPackage");
+		String cad_version_data = request.getParameter("cadVersionData");
+		String cad_tech = request.getParameter("cadTech");
+		String cad_other = request.getParameter("cadOther");
+		cad.setCadBox(cad_box);
+		cad.setCadFabric(cad_fabric);
+		cad.setCadOther(cad_other);
+		cad.setCadPackage(cad_package);
+		cad.setCadTech(cad_tech);
+		cad.setCadVersionData(cad_version_data);
 
 		// Order
 		Order order = orderService.findByOrderId(s_id);
@@ -1003,7 +1026,7 @@ public class MarketController {
 		boolean editok = request.getParameter("editok").equals("true") ? true
 				: false;
 		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
-				produces, sample_produces, versions, editok, task_id,
+				produces, sample_produces, versions, cad, editok, task_id,
 				account.getUserId());
 		// WorkflowProcessInstance process = (WorkflowProcessInstance)
 		// jbpmAPIUtil

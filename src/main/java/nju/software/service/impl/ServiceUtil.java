@@ -9,6 +9,7 @@ import java.util.Map;
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
@@ -21,6 +22,7 @@ import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
@@ -69,6 +71,7 @@ public class ServiceUtil {
 		model.put("logistics", logisticsDAO.findById(orderId));
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));
 		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
+		model.put("designCad", cadDAO.findByOrderId(orderId));
 		
 		Produce produce = new Produce();
 		produce.setOid(orderId);
@@ -120,6 +123,8 @@ public class ServiceUtil {
 	private MoneyDAO moneyDAO;
 	@Autowired
 	private VersionDataDAO versionDataDAO;
+	@Autowired
+	private DesignCadDAO cadDAO;
 	@Autowired
 	private QuoteDAO quoteDAO;
 	@Autowired
