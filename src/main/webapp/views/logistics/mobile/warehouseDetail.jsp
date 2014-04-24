@@ -47,7 +47,7 @@
 </head>
 <body>
 	<%@include file="/views/logistics/mobile/nav.jsp"%>
-	<h3>智造链-入库</h3>
+	<h3>入库</h3>
 	<div>
 		<h3>订单号：${orderInfo.order.orderId}</h3>
 	</div>

@@ -7,10 +7,10 @@
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="brand" href="./Bootstrap_files/Bootstrap.htm">制造链FMC</a>
+			<a class="brand" href="#">制造链FMC</a>
 			<div class="nav-collapse collapse">
 				<ul class="nav">
-					<li class="active"><a
+					<li class=""><a
 						href="${ctx}/logistics/mobile/warehouseList.do">入库登记</a></li>
 					<li class=""><a href="${ctx}/logistics/mobile/sendClothesList.do">发货扫描</a></li>
 				</ul>

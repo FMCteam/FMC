@@ -4,23 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import nju.software.model.OrderInfo;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
-import nju.software.service.ProduceService;
 import nju.software.service.impl.JbpmTest;
-import nju.software.service.impl.LogisticsServiceImpl;
 import nju.software.util.JbpmAPIUtil;
-import nju.software.util.StringUtil;
 import nju.software.dataobject.Order;
-
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -195,6 +188,26 @@ public class LogisticsController {
 		return "/logistics/warehouseDetail";
 	}
 
+	@RequestMapping(value = "/logistics/printPackage.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String printPackage(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = (String) request.getParameter("order_id");
+		String packageId = (String) request.getParameter("package_id");
+
+		Package packageInfo = logisticsService.getPackageByPackageId(Integer
+				.parseInt(packageId));
+		Order order = orderService.findByOrderId(orderId);
+		List<PackageDetail> pdList = logisticsService
+				.getPackageDetailList(Integer.parseInt(packageId));
+
+		model.addAttribute("order", order);
+		model.addAttribute("packageInfo", packageInfo);
+		model.addAttribute("packageDetailList", pdList);
+
+		return "/logistics/printPackage";
+	}
+
 	@RequestMapping(value = "/logistics/mobile/index.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String mobileIndex(HttpServletRequest request,
@@ -301,8 +314,8 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String mobileSendClothesSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String orderId = (String) request.getParameter("orderId");
-		logisticsService.mobileSendClothesSubmit(Integer.parseInt(orderId));
+		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
+		logisticsService.mobileSendClothesSubmit(orderId);
 		return "forward:/logistics/mobile/sendClothesList.do";
 	}
 
@@ -324,32 +337,8 @@ public class LogisticsController {
 
 	@Autowired
 	private LogisticsService logisticsService;
-
 	@Autowired
 	private OrderService orderService;
 	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-
-	@Autowired
 	private JbpmTest jbpmTest;
-
-	@RequestMapping(value = "/logistics/printPackage.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String printPackage(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		String orderId = (String) request.getParameter("order_id");
-		String packageId = (String) request.getParameter("package_id");
-
-		Package packageInfo = logisticsService.getPackageByPackageId(Integer
-				.parseInt(packageId));
-		Order order = orderService.findByOrderId(orderId);
-		List<PackageDetail> pdList = logisticsService
-				.getPackageDetailList(Integer.parseInt(packageId));
-
-		model.addAttribute("order", order);
-		model.addAttribute("packageInfo", packageInfo);
-		model.addAttribute("packageDetailList", pdList);
-
-		return "logistics/printPackage";
-	}
 }

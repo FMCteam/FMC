@@ -271,11 +271,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 			} else {
 				unscan_models.add(model);
 			}
-
 		}
 		scan_models.addAll(unscan_models);
 		// return scan_models;
-
 		return null;
 	}
 
@@ -331,7 +329,6 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public boolean mobileSendClothesSubmit(int orderId) {
 		// TODO Auto-generated method stub
-
 		Order order = orderDAO.findById(orderId);
 		if (order == null) {
 			return false;

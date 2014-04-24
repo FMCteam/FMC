@@ -8,7 +8,7 @@
 </head>
 <body>
 	<%@include file="/views/logistics/mobile/nav.jsp"%>
-		<h3>智造链-入库列表</h3>
+		<h3>入库列表</h3>
 	<ul>
 		<c:forEach var="orderInfo" items="${orderList}">
 			<li><a
