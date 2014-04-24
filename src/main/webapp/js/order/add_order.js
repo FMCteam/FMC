@@ -261,4 +261,16 @@ function init(){
 	$("input[name='sample_clothes_address']").val("江苏南京");
 	$("input[name='sample_clothes_remark']").val("ggggggggggggggggggg");
 	
+	if($('input:radio[name="has_posted_sample_clothes"]:checked').val()=="0"){
+		$("input[name='in_post_sample_clothes_time']").attr("readonly","readonly");
+		$("input[name='in_post_sample_clothes_type']").attr("readonly","readonly");
+		$("input[name='in_post_sample_clothes_number']").attr("readonly","readonly");
+	}
+	
+	if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
+		$("input[name='sample_clothes_name']").attr("readonly","readonly");
+		$("input[name='sample_clothes_phone']").attr("readonly","readonly");
+		$("input[name='sample_clothes_address']").attr("readonly","readonly");
+		$("input[name='sample_clothes_remark']").attr("readonly","readonly");
+	}
 }
