@@ -749,14 +749,18 @@ public class MarketController {
 		Map<String, Object> orderModel = marketService.getModifyOrderDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderModel", orderModel);
-		Object buyComment = jbpmAPIUtil.getVariable(
+		String purchaseComment = (String)jbpmAPIUtil.getVariable(
 				(TaskSummary) orderModel.get("task"),
 				BuyServiceImpl.RESULT_PURCHASE_COMMENT);
-		Object designComment = jbpmAPIUtil.getVariable(
+		String designComment = (String)jbpmAPIUtil.getVariable(
 				(TaskSummary) orderModel.get("task"),
 				DesignServiceImpl.RESULT_DESIGN_COMMENT);
-		model.addAttribute("buyComment", buyComment);
+		String produceComment = (String)jbpmAPIUtil.getVariable(
+				(TaskSummary) orderModel.get("task"), 
+				ProduceServiceImpl.RESULT_PRODUCE_COMMENT);
+		model.addAttribute("purchaseComment", purchaseComment);
 		model.addAttribute("designComment", designComment);
+		model.addAttribute("produceComment", produceComment);
 		return "market/modifyOrderDetail";
 	}
 
@@ -970,6 +974,23 @@ public class MarketController {
 			logistics.setSampleClothesAddress(sample_clothes_address);
 			logistics.setSampleClothesRemark(sample_clothes_remark);
 		}
+		
+		// CAD
+		DesignCad cad = new DesignCad();
+		cad.setOrderId(0);
+		cad.setCadVersion((short) 1);
+		String cad_fabric = request.getParameter("cadFabric");
+		String cad_box = request.getParameter("cadBox");
+		String cad_package = request.getParameter("cadPackage");
+		String cad_version_data = request.getParameter("cadVersionData");
+		String cad_tech = request.getParameter("cadTech");
+		String cad_other = request.getParameter("cadOther");
+		cad.setCadBox(cad_box);
+		cad.setCadFabric(cad_fabric);
+		cad.setCadOther(cad_other);
+		cad.setCadPackage(cad_package);
+		cad.setCadTech(cad_tech);
+		cad.setCadVersionData(cad_version_data);
 
 		// Order
 		Order order = orderService.findByOrderId(s_id);

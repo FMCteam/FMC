@@ -31,22 +31,22 @@
 	<tr>
 		<td class="span2" rowspan="5">版型数据信息</td>
 		<td class="span3">面料</td>
-		<td class="span6" colspan="3"></td>
+		<td class="span6" colspan="3">${orderInfo.designCad[0].cadFabric }</td>
 	</tr>
 	<tr>
 		<td class="span3">包装</td>
-		<td class="span6" colspan="2"></td>
+		<td class="span6" colspan="2">${orderInfo.designCad[0].cadBox }</td>
 	</tr>
 	<tr>
 		<td class="span3">版型</td>
-		<td colspan="3"></td>
+		<td colspan="3">${orderInfo.designCad[0].cadVersionData }</td>
 	</tr>
 	<tr>
 		<td class="span1">装箱</td>
-		<td colspan="2"></td>
+		<td colspan="2">${orderInfo.designCad[0].cadPackage }</td>
 	</tr>
 	<tr>
 		<td class="span1">工艺</td>
-		<td colspan="6"></td>
+		<td colspan="6">${orderInfo.designCad[0].cadTech }</td>
 	</tr>
 </table>
