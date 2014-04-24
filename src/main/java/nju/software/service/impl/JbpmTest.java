@@ -191,6 +191,7 @@ public class JbpmTest {
 		
 		
 		Quote quote=new Quote();
+		quote.setOrderId(orderId);
 		quote.setAccessoryCost((float)12);
 		quote.setDesignCost((float)12);
 		quoteDAO.save(quote);
