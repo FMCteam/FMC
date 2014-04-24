@@ -35,7 +35,7 @@
 								<td>${model.order.customerCompany}</td>
 								<td>${model.task.createdOn}</td>
 								<td><a
-									href="${ctx}/logistics/warehouseDetail.do?orderId=${model.order.orderId}&warehouse=0">装箱</a>
+									href="${ctx}/logistics/packageDetail.do?orderId=${model.order.orderId}">装箱</a>
 								</td>
 							</tr>
 						</c:forEach>
@@ -47,7 +47,7 @@
 								<td>${model.order.customerCompany}</td>
 								<td>${model.task.createdOn}</td>
 								<td><a
-									href="${ctx}/logistics/warehouseDetail.do?orderId=${model.order.orderId}&warehouse=1">入库</a>
+									href="${ctx}/logistics/warehouseDetail.do?orderId=${model.order.orderId}">入库</a>
 								</td>
 							</tr>
 						</c:forEach>

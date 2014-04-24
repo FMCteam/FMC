@@ -83,7 +83,7 @@ public class DesignCad implements java.io.Serializable {
 		this.cadVersion = cadVersion;
 	}
 
-	@Column(name = "upload_time", nullable = false, length = 19)
+	@Column(name = "upload_time", nullable = true, length = 19)
 	public Timestamp getUploadTime() {
 		return this.uploadTime;
 	}
