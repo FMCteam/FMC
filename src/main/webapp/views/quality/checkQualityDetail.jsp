@@ -49,22 +49,22 @@
 								<td>XL</td>
 								<td>XXL</td>
 							</tr>
-							<c:forEach var="produce" items="${orderInfo.produced}">
+							<c:forEach var="produced" items="${orderInfo.produced}">
 								<tr>
 									<td><input class="span12 good_color" type="text"
-										value="${produced.color}" /></td>
-									<td><input class="span12 good_xs" type="text"
-										value="${produced.xs}" /></td>
-									<td><input class="span12 good_s" type="text"
-										value="${produced.s}" /></td>
-									<td><input class="span12 good_m" type="text"
-										value="${produced.m}" /></td>
-									<td><input class="span12 good_l" type="text"
-										value="${produced.l}" /></td>
-									<td><input class="span12 good_xl" type="text"
-										value="${produced.xl}" /></td>
-									<td><input class="span12 good_xxl" type="text"
-										value="${produced.xxl}" /></td>
+										value="${produced.color}" readonly="readonly"/></td>
+									<td><input class="span12 good_xs" type="number"
+										min="0" value="${produced.xs}" required="required"/></td>
+									<td><input class="span12 good_s" type="number"
+										min="0" value="${produced.s}" required="required"/></td>
+									<td><input class="span12 good_m" type="number"
+										min="0" value="${produced.m}" required="required"/></td>
+									<td><input class="span12 good_l" type="number"
+										min="0" value="${produced.l}" required="required"/></td>
+									<td><input class="span12 good_xl" type="number"
+										min="0" value="${produced.xl}" required="required"/></td>
+									<td><input class="span12 good_xxl" type="number"
+										min="0" value="${produced.xxl}" required="required"/></td>
 								</tr>
 							</c:forEach>
 							<tr>
@@ -77,27 +77,27 @@
 								<td>XL</td>
 								<td>XXL</td>
 							</tr>
-							<c:forEach var="produce" items="${orderInfo.produced}">
+							<c:forEach var="produced" items="${orderInfo.produced}">
 								<tr>
 									<td><input class="span12 bad_color" type="text"
-										value="0" /></td>
-									<td><input class="span12 bad_xs" type="text"
-										value="0" /></td>
-									<td><input class="span12 bad_s" type="text"
-										value="0" /></td>
-									<td><input class="span12 bad_m" type="text"
-										value="0" /></td>
-									<td><input class="span12 bad_l" type="text"
-										value="0" /></td>
-									<td><input class="span12 bad_xl" type="text"
-										value="0" /></td>
-									<td><input class="span12 bad_xxl" type="text"
-										value="0" /></td>
+										value="${produced.color}" readonly="readonly"/></td>
+									<td><input class="span12 bad_xs" type="number"
+										min="0" value="0" required="required"/></td>
+									<td><input class="span12 bad_s" type="number"
+										min="0" value="0" required="required"/></td>
+									<td><input class="span12 bad_m" type="number"
+										min="0" value="0" required="required"/></td>
+									<td><input class="span12 bad_l" type="number"
+										min="0" value="0" required="required"/></td>
+									<td><input class="span12 bad_xl" type="number"
+										min="0" value="0" required="required"/></td>
+									<td><input class="span12 bad_xxl" type="number"
+										min="0" value="0" required="required"/></td>
 								</tr>
 							</c:forEach>
 							<tr>
 								<td>操作</td>
-								<td><button class="btn btn-primary btn-rounded">确认</button></td>
+								<td colspan="7"><button class="btn btn-primary btn-rounded">确认</button></td>
 							</tr>
 						</table>
 						<input type="hidden" name="orderId" value="${orderInfo.order.orderId}" />

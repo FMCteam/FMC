@@ -23,6 +23,7 @@ import net.sf.json.JSONObject;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Money;
@@ -36,6 +37,7 @@ import nju.software.model.OrderModel;
 import nju.software.model.QuoteModel;
 import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
+import nju.software.service.DesignCadService;
 import nju.software.service.LogisticsService;
 import nju.software.service.MarketService;
 import nju.software.service.OrderService;
@@ -71,6 +73,8 @@ public class MarketController {
 	private OrderService orderService;
 	@Autowired
 	private BuyService buyService;
+	@Autowired
+	private DesignCadService cadService;
 	@Autowired
 	private LogisticsService logisticsService;
 	@Autowired
@@ -148,7 +152,9 @@ public class MarketController {
 		Short isNeedSampleClothes = Short.parseShort(request
 				.getParameter("is_need_sample_clothes"));
 		String orderSource = request.getParameter("order_source");
-
+		String sampleClothesPicture = request
+				.getParameter("sample_clothes_picture");
+		String refPicture = request.getParameter("reference_picture");
 		// 面料数据
 		String fabric_names = request.getParameter("fabric_name");
 		String fabric_amounts = request.getParameter("fabric_amount");
@@ -290,40 +296,60 @@ public class MarketController {
 
 		// 物流数据
 		Logistics logistics = new Logistics();
-		String in_post_sample_clothes_time = request
-				.getParameter("in_post_sample_clothes_time");
-		String in_post_sample_clothes_type = request
-				.getParameter("in_post_sample_clothes_type");
-		String in_post_sample_clothes_number = request
-				.getParameter("in_post_sample_clothes_number");
-		logistics
-				.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
-		logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
-		logistics.setInPostSampleClothesNumber(in_post_sample_clothes_number);
+		if (hasPostedSampleClothes == 1) {
+			String in_post_sample_clothes_time = request
+					.getParameter("in_post_sample_clothes_time");
+			String in_post_sample_clothes_type = request
+					.getParameter("in_post_sample_clothes_type");
+			String in_post_sample_clothes_number = request
+					.getParameter("in_post_sample_clothes_number");
+			logistics
+					.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
+			logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
+			logistics
+					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
+		}
+		if (isNeedSampleClothes == 1) {
+			// String sample_clothes_time = request
+			// .getParameter("sample_clothes_time");
+			// String sample_clothes_type = request
+			// .getParameter("sample_clothes_type");
+			// String sample_clothes_number = request
+			// .getParameter("sample_clothes_number");
+			String sample_clothes_name = request
+					.getParameter("sample_clothes_name");
+			String sample_clothes_phone = request
+					.getParameter("sample_clothes_phone");
+			String sample_clothes_address = request
+					.getParameter("sample_clothes_address");
+			String sample_clothes_remark = request
+					.getParameter("sample_clothes_remark");
 
-		String sample_clothes_time = request
-				.getParameter("sample_clothes_time");
-		String sample_clothes_type = request
-				.getParameter("sample_clothes_type");
-		String sample_clothes_number = request
-				.getParameter("sample_clothes_number");
-		String sample_clothes_name = request
-				.getParameter("sample_clothes_name");
-		String sample_clothes_phone = request
-				.getParameter("sample_clothes_phone");
-		String sample_clothes_address = request
-				.getParameter("sample_clothes_address");
-		String sample_clothes_remark = request
-				.getParameter("sample_clothes_remark");
+			// logistics.setSampleClothesTime(getTime(sample_clothes_time));
+			// logistics.setSampleClothesType(sample_clothes_type);
+			// logistics.setSampleClothesNumber(sample_clothes_number);
+			logistics.setSampleClothesName(sample_clothes_name);
+			logistics.setSampleClothesPhone(sample_clothes_phone);
+			logistics.setSampleClothesAddress(sample_clothes_address);
+			logistics.setSampleClothesRemark(sample_clothes_remark);
+		}
 
-		logistics.setSampleClothesTime(getTime(sample_clothes_time));
-		logistics.setSampleClothesType(sample_clothes_type);
-		logistics.setSampleClothesNumber(sample_clothes_number);
-		logistics.setSampleClothesName(sample_clothes_name);
-		logistics.setSampleClothesPhone(sample_clothes_phone);
-		logistics.setSampleClothesAddress(sample_clothes_address);
-		logistics.setSampleClothesRemark(sample_clothes_remark);
-
+		// CAD
+		DesignCad cad = new DesignCad();
+		cad.setOrderId(0);
+		cad.setCadVersion((short) 1);
+		String cad_fabric = request.getParameter("cadFabric");
+		String cad_box = request.getParameter("cadBox");
+		String cad_package = request.getParameter("cadPackage");
+		String cad_version_data = request.getParameter("cadVersionData");
+		String cad_tech = request.getParameter("cadTech");
+		String cad_other = request.getParameter("cadOther");
+		cad.setCadBox(cad_box);
+		cad.setCadFabric(cad_fabric);
+		cad.setCadOther(cad_other);
+		cad.setCadPackage(cad_package);
+		cad.setCadTech(cad_tech);
+		cad.setCadVersionData(cad_version_data);
 		// Order
 		Order order = new Order();
 		order.setEmployeeId(employeeId);
@@ -352,7 +378,7 @@ public class MarketController {
 		order.setOrderSource(orderSource);
 
 		marketService.addOrderSubmit(order, fabrics, accessorys, logistics,
-				produces, sample_produces, versions, request);
+				produces, sample_produces, versions, cad, request);
 
 		JavaMailUtil.send();
 
@@ -615,6 +641,11 @@ public class MarketController {
 		List<Map<String, Object>> list = marketService
 				.getMergeQuoteList(account.getAccountId());
 
+		if (list.size() == 0) {
+			jbpmTest.completeComputeCost(account.getAccountId() + "");
+			list = marketService.getMergeQuoteList(account.getAccountId());
+		}
+
 		model.put("list", list);
 		model.addAttribute("taskName", "合并报价");
 		model.addAttribute("url", "/market/mergeQuoteDetail.do");
@@ -721,14 +752,18 @@ public class MarketController {
 		Map<String, Object> orderModel = marketService.getModifyOrderDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderModel", orderModel);
-		Object buyComment = jbpmAPIUtil.getVariable(
+		String purchaseComment = (String)jbpmAPIUtil.getVariable(
 				(TaskSummary) orderModel.get("task"),
 				BuyServiceImpl.RESULT_PURCHASE_COMMENT);
-		Object designComment = jbpmAPIUtil.getVariable(
+		String designComment = (String)jbpmAPIUtil.getVariable(
 				(TaskSummary) orderModel.get("task"),
 				DesignServiceImpl.RESULT_DESIGN_COMMENT);
-		model.addAttribute("buyComment", buyComment);
+		String produceComment = (String)jbpmAPIUtil.getVariable(
+				(TaskSummary) orderModel.get("task"), 
+				ProduceServiceImpl.RESULT_PRODUCE_COMMENT);
+		model.addAttribute("purchaseComment", purchaseComment);
 		model.addAttribute("designComment", designComment);
+		model.addAttribute("produceComment", produceComment);
 		return "market/modifyOrderDetail";
 	}
 
@@ -904,40 +939,60 @@ public class MarketController {
 
 		// 物流数据
 		Logistics logistics = logisticsService.findByOrderId(s_id);
-		String in_post_sample_clothes_time = request
-				.getParameter("in_post_sample_clothes_time");
-		String in_post_sample_clothes_type = request
-				.getParameter("in_post_sample_clothes_type");
-		String in_post_sample_clothes_number = request
-				.getParameter("in_post_sample_clothes_number");
+		if (hasPostedSampleClothes == 1) {
+			String in_post_sample_clothes_time = request
+					.getParameter("in_post_sample_clothes_time");
+			String in_post_sample_clothes_type = request
+					.getParameter("in_post_sample_clothes_type");
+			String in_post_sample_clothes_number = request
+					.getParameter("in_post_sample_clothes_number");
 
-		logistics
-				.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
-		logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
-		logistics.setInPostSampleClothesNumber(in_post_sample_clothes_number);
+			logistics
+					.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
+			logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
+			logistics
+					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
+		}
+		if (isNeedSampleClothes == 1) {
+			String sample_clothes_time = request
+					.getParameter("sample_clothes_time");
+			String sample_clothes_type = request
+					.getParameter("sample_clothes_type");
+			String sample_clothes_number = request
+					.getParameter("sample_clothes_number");
+			String sample_clothes_name = request
+					.getParameter("sample_clothes_name");
+			String sample_clothes_phone = request
+					.getParameter("sample_clothes_phone");
+			String sample_clothes_address = request
+					.getParameter("sample_clothes_address");
+			String sample_clothes_remark = request
+					.getParameter("sample_clothes_remark");
 
-		String sample_clothes_time = request
-				.getParameter("sample_clothes_time");
-		String sample_clothes_type = request
-				.getParameter("sample_clothes_type");
-		String sample_clothes_number = request
-				.getParameter("sample_clothes_number");
-		String sample_clothes_name = request
-				.getParameter("sample_clothes_name");
-		String sample_clothes_phone = request
-				.getParameter("sample_clothes_phone");
-		String sample_clothes_address = request
-				.getParameter("sample_clothes_address");
-		String sample_clothes_remark = request
-				.getParameter("sample_clothes_remark");
-
-		logistics.setSampleClothesTime(getTime(sample_clothes_time));
-		logistics.setSampleClothesType(sample_clothes_type);
-		logistics.setSampleClothesNumber(sample_clothes_number);
-		logistics.setSampleClothesName(sample_clothes_name);
-		logistics.setSampleClothesPhone(sample_clothes_phone);
-		logistics.setSampleClothesAddress(sample_clothes_address);
-		logistics.setSampleClothesRemark(sample_clothes_remark);
+			logistics.setSampleClothesTime(getTime(sample_clothes_time));
+			logistics.setSampleClothesType(sample_clothes_type);
+			logistics.setSampleClothesNumber(sample_clothes_number);
+			logistics.setSampleClothesName(sample_clothes_name);
+			logistics.setSampleClothesPhone(sample_clothes_phone);
+			logistics.setSampleClothesAddress(sample_clothes_address);
+			logistics.setSampleClothesRemark(sample_clothes_remark);
+		}
+		
+		// CAD
+		DesignCad cad = cadService.findByOrderId(s_id);
+		//cad.setCadVersion((short) 1);
+		String cad_fabric = request.getParameter("cadFabric");
+		String cad_box = request.getParameter("cadBox");
+		String cad_package = request.getParameter("cadPackage");
+		String cad_version_data = request.getParameter("cadVersionData");
+		String cad_tech = request.getParameter("cadTech");
+		String cad_other = request.getParameter("cadOther");
+		cad.setCadBox(cad_box);
+		cad.setCadFabric(cad_fabric);
+		cad.setCadOther(cad_other);
+		cad.setCadPackage(cad_package);
+		cad.setCadTech(cad_tech);
+		cad.setCadVersionData(cad_version_data);
 
 		// Order
 		Order order = orderService.findByOrderId(s_id);
@@ -971,7 +1026,7 @@ public class MarketController {
 		boolean editok = request.getParameter("editok").equals("true") ? true
 				: false;
 		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
-				produces, sample_produces, versions, editok, task_id,
+				produces, sample_produces, versions, cad, editok, task_id,
 				account.getUserId());
 		// WorkflowProcessInstance process = (WorkflowProcessInstance)
 		// jbpmAPIUtil
@@ -1204,6 +1259,10 @@ public class MarketController {
 				"cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSignContractList(account.getUserId() + "");
+		if (list.size() == 0) {
+			jbpmTest.completeProduceConfirm(account.getUserId() + "", true);
+			marketService.getSignContractList(account.getUserId() + "");
+		}
 		model.put("list", list);
 		model.addAttribute("taskName", "签订合同");
 		model.addAttribute("url", "/market/signContractDetail.do");

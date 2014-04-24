@@ -81,12 +81,14 @@ public class DesignServiceImpl implements DesignService {
 	public boolean uploadDesignSubmit(int orderId, long taskId, String url,
 			Timestamp uploadTime) {
 		// TODO Auto-generated method stub
-		DesignCad designCad = designCadDAO.findById(orderId);
-		if (designCad == null) {
+		DesignCad designCad = null;
+		List<DesignCad> designCadList = designCadDAO.findByOrderId(orderId);
+		if (designCadList.isEmpty()) {
 			designCad = new DesignCad();
 			designCad.setOrderId(orderId);
 			designCad.setCadVersion((short) 1);
 		} else {
+			designCad = designCadList.get(0);
 			short newVersion = (short) (designCad.getCadVersion() + 1);
 			designCad.setCadVersion(newVersion);
 		}
@@ -116,7 +118,13 @@ public class DesignServiceImpl implements DesignService {
 		// TODO Auto-generated method stub
 		Map<String, Object> model = service.getBasicOrderModel(
 				ACTOR_DESIGN_MANAGER, TASK_MODIFY_DESIGN, orderId);
-		model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
+
+		
+		if(designCadDAO.findByOrderId(orderId)!=null&&designCadDAO.findByOrderId(orderId).size()!=0){
+			if (((Order)model.get("order")).getIsNeedSampleClothes() == 1) {
+				model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
+			}
+		}
 		return model;
 	}
 	
@@ -124,12 +132,14 @@ public class DesignServiceImpl implements DesignService {
 	public boolean modifyDesignSubmit(int orderId, long taskId, String url,
 			Timestamp uploadTime) {
 		// TODO Auto-generated method stub
-		DesignCad designCad = designCadDAO.findById(orderId);
-		if (designCad == null) {
+		DesignCad designCad = null;
+		List<DesignCad> designCadList = designCadDAO.findByOrderId(orderId);
+		if (designCadList.isEmpty()) {
 			designCad = new DesignCad();
 			designCad.setOrderId(orderId);
 			designCad.setCadVersion((short) 1);
 		} else {
+			designCad = designCadList.get(0);
 			short newVersion = (short) (designCad.getCadVersion() + 1);
 			designCad.setCadVersion(newVersion);
 		}

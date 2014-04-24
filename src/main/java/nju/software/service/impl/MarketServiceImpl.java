@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
@@ -31,6 +32,7 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
@@ -80,6 +82,8 @@ public class MarketServiceImpl implements MarketService {
 	@Autowired
 	private FabricDAO fabricDAO;
 	@Autowired
+	private DesignCadDAO cadDAO;
+	@Autowired
 	private ProduceDAO produceDAO;
 	@Autowired
 	private VersionDataDAO versionDataDAO;
@@ -108,7 +112,7 @@ public class MarketServiceImpl implements MarketService {
 	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
-			List<VersionData> versions, HttpServletRequest request) {
+			List<VersionData> versions, DesignCad cad, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 
 		// 添加订单信息
@@ -170,14 +174,17 @@ public class MarketServiceImpl implements MarketService {
 		logistics.setOrderId(orderId);
 		logisticsDAO.save(logistics);
 
+		//cad
+		cad.setOrderId(orderId);
+		cadDAO.save(cad);
 		// 启动流程
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("orderId", orderId);
 		params.put("marketStaff", order.getEmployeeId());
 		params.put(LogisticsServiceImpl.RESULT_RECEIVE_SAMPLE,
-				(int) order.getIsNeedSampleClothes());
+				(int)order.getHasPostedSampleClothes() );
 		params.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
-				(int) order.getHasPostedSampleClothes());
+				(int)order.getIsNeedSampleClothes() );
 		params.put(RESULT_REORDER, false);
 		doTMWorkFlowStart(params);
 
@@ -218,7 +225,7 @@ public class MarketServiceImpl implements MarketService {
 	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
-			List<VersionData> versions, boolean editok, long taskId,
+			List<VersionData> versions, DesignCad cad, boolean editok, long taskId,
 			Integer accountId) {
 		// TODO Auto-generated method stub
 		// 添加订单信息
@@ -258,6 +265,9 @@ public class MarketServiceImpl implements MarketService {
 		logistics.setOrderId(orderId);
 		logisticsDAO.merge(logistics);
 
+		//cad
+		cadDAO.merge(cad);
+		
 		// 启动流程
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put(RESULT_MODIFY_ORDER, editok);

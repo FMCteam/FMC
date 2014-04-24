@@ -10,6 +10,8 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
 import nju.software.service.ProduceService;
+import nju.software.service.impl.JbpmTest;
+import nju.software.service.impl.ProduceServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,8 @@ public class ProduceController {
 
 	@Autowired
 	private ProduceService produceService;
+	@Autowired
+	private JbpmTest jbpmTest;
 	
 
 	@RequestMapping(value = "produce/verifyProduceList.do", method= RequestMethod.GET)
@@ -227,6 +231,10 @@ public class ProduceController {
 	public String produceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=produceService.getProduceList();
+		if(list.size()==0){
+			jbpmTest.completeBeforeProduce(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
+			list=produceService.getProduceList();
+		}
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "批量生产");
 		model.addAttribute("url", "/produce/produceDetail.do");
@@ -261,8 +269,10 @@ public class ProduceController {
 			String produceL = request.getParameter("produce_l");
 			String produceXL = request.getParameter("produce_xl");
 			String produceXXL = request.getParameter("produce_xxl");
+			produceList = produceService.getProduceList(orderId, produceColor, produceXS, 
+					produceS, produceM, produceL, produceXL, produceXXL, Produce.TYPE_PRODUCED);
 		}
-		produceService.pruduceSubmit(Long.parseLong(taskId), result, null);
+		produceService.pruduceSubmit(Long.parseLong(taskId), result, produceList);
 		return "forward:/produce/produceList.do";
 	}
 }

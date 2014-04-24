@@ -56,14 +56,14 @@
 						<p>
 							<label>角色</label> <span class="field"> <select name="role"
 								class="uniformselect">
-									<option value="SHICHANGZHUGUAN">市场主管</option>
-									<option value="SHICHANGZHUANYUAN">市场专员</option>
-									<option value="SHENGCHANZHUGUAN">生产主管</option>
-									<option value="CAIGOUZHUGUAN">采购主管</option>
-									<option value="ZHIJIANZHUGUAN">质检主管</option>
-									<option value="CAIWUZHUGUAN">财务主管</option>
-									<option value="WULIUZHUGUAN">物流主管</option>
-									<option value="SHEJIZHUGUAN">设计主管</option>
+									<option value="marketManager">市场主管</option>
+									<option value="marketStaff">市场专员</option>
+									<option value="produceManager">生产主管</option>
+									<option value="purchaseManager">采购主管</option>
+									<option value="qualityManager">质检主管</option>
+									<option value="financeManager">财务主管</option>
+									<option value="logisticsManager">物流主管</option>
+									<option value="designManager">设计主管</option>
 							</select> &nbsp;<span style="color:#ff0000;">*</span>(必填)
 							</span>
 						</p>

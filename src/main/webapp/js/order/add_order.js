@@ -39,8 +39,31 @@
 			$("input[name='reference_picture']").click();
 		});
 		
-		
+		$("input[name='has_posted_sample_clothes']").change(function(){
+			if($('input:radio[name="has_posted_sample_clothes"]:checked').val()=="0"){
+				$("input[name='in_post_sample_clothes_time']").attr("readonly","readonly");
+				$("input[name='in_post_sample_clothes_type']").attr("readonly","readonly");
+				$("input[name='in_post_sample_clothes_number']").attr("readonly","readonly");
+			}else{
+				$("input[name='in_post_sample_clothes_time']").removeAttr("readonly");
+				$("input[name='in_post_sample_clothes_type']").removeAttr("readonly");
+				$("input[name='in_post_sample_clothes_number']").removeAttr("readonly");
+			}
+		});
 
+		$("input[name='is_need_sample_clothes']").change(function(){
+			if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
+				$("input[name='sample_clothes_name']").attr("readonly","readonly");
+				$("input[name='sample_clothes_phone']").attr("readonly","readonly");
+				$("input[name='sample_clothes_address']").attr("readonly","readonly");
+				$("input[name='sample_clothes_remark']").attr("readonly","readonly");
+			}else{
+				$("input[name='sample_clothes_name']").removeAttr("readonly");
+				$("input[name='sample_clothes_phone']").removeAttr("readonly");
+				$("input[name='sample_clothes_address']").removeAttr("readonly");
+				$("input[name='sample_clothes_remark']").removeAttr("readonly");
+			}
+		});
 
 		init();
 		
@@ -238,4 +261,16 @@ function init(){
 	$("input[name='sample_clothes_address']").val("江苏南京");
 	$("input[name='sample_clothes_remark']").val("ggggggggggggggggggg");
 	
+	if($('input:radio[name="has_posted_sample_clothes"]:checked').val()=="0"){
+		$("input[name='in_post_sample_clothes_time']").attr("readonly","readonly");
+		$("input[name='in_post_sample_clothes_type']").attr("readonly","readonly");
+		$("input[name='in_post_sample_clothes_number']").attr("readonly","readonly");
+	}
+	
+	if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
+		$("input[name='sample_clothes_name']").attr("readonly","readonly");
+		$("input[name='sample_clothes_phone']").attr("readonly","readonly");
+		$("input[name='sample_clothes_address']").attr("readonly","readonly");
+		$("input[name='sample_clothes_remark']").attr("readonly","readonly");
+	}
 }

@@ -91,8 +91,11 @@ public class DesignController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
-		FileOperateUtil.Upload(file);
-		String url = "D:/" + "/" + filename;
+		String url = "D:/fmc/" + orderId;
+		String fileid = "CADFile";
+		FileOperateUtil.Upload(request, url, null, fileid);
+//		FileOperateUtil.Upload(file, url);
+		url = url + "/" + filename;
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.uploadDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
@@ -131,10 +134,13 @@ public class DesignController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
-		FileOperateUtil.Upload(file);
-		String url = "D:/" + "/" + filename;
+		String url = "D:/fmc/" + orderId;
+		String fileid = "CADFile";
+		FileOperateUtil.Upload(request, url, null, fileid);
+//		FileOperateUtil.Upload(file, url);
+		url = url + "/" + filename;
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
-		designService.uploadDesignSubmit(Integer.parseInt(orderId),
+		designService.modifyDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
 		return "forward:/design/getModifyDesignList.do";
 	}
@@ -172,8 +178,11 @@ public class DesignController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
-		FileOperateUtil.Upload(file);
-		String url = "D:/" + "/" + filename;
+		String url = "D:/fmc/" + orderId;
+		String fileid = "CADFile";
+		FileOperateUtil.Upload(request, url, null, fileid);
+//		FileOperateUtil.Upload(file, url);
+		url = url + "/" + filename;
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.uploadDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
@@ -190,10 +199,8 @@ public class DesignController {
 		return null;
 	}
 
-	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
-	private OrderService orderService;
+
+
 	@Autowired
 	private DesignService designService;
 	@Autowired

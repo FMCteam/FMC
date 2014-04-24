@@ -130,7 +130,7 @@ public class FileOperateUtil {
 	
 	
 	
-	public static void  Upload ( MultipartFile file){
+	public static void  Upload ( MultipartFile file, String url){
 		
 		  if (file == null) {
               try {
@@ -160,7 +160,7 @@ public class FileOperateUtil {
 		
 		    if(file.getSize()>0){                
                 try {
-                    SaveFileFromInputStream(file.getInputStream(),"D:/",filename);
+                    SaveFileFromInputStream(file.getInputStream(),url,filename);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                   
