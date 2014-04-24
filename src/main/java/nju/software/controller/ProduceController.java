@@ -269,8 +269,10 @@ public class ProduceController {
 			String produceL = request.getParameter("produce_l");
 			String produceXL = request.getParameter("produce_xl");
 			String produceXXL = request.getParameter("produce_xxl");
+			produceList = produceService.getProduceList(orderId, produceColor, produceXS, 
+					produceS, produceM, produceL, produceXL, produceXXL, Produce.TYPE_PRODUCED);
 		}
-		produceService.pruduceSubmit(Long.parseLong(taskId), result, null);
+		produceService.pruduceSubmit(Long.parseLong(taskId), result, produceList);
 		return "forward:/produce/produceList.do";
 	}
 }

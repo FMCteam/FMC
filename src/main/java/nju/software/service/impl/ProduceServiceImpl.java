@@ -163,9 +163,9 @@ public class ProduceServiceImpl implements ProduceService {
 	public boolean pruduceSubmit(long taskId, boolean result,
 			List<Produce> produceList) {
 		if (result) {
-			// for (int i = 0; i < produceList.size(); i++) {
-			// produceDAO.save(produceList.get(i));
-			// }
+			 for (int i = 0; i < produceList.size(); i++) {
+			 produceDAO.save(produceList.get(i));
+			 }
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
@@ -203,6 +203,9 @@ public class ProduceServiceImpl implements ProduceService {
 			produce.setXl(Integer.parseInt(xl[i]));
 			produce.setXxl(Integer.parseInt(xxl[i]));
 			produce.setType(type);
+			int total = produce.getXs() + produce.getS() + produce.getM() + produce.getL() +
+					produce.getXl() + produce.getXxl();
+			produce.setProduceAmount(total);
 			produceList.add(produce);
 		}
 		return produceList;

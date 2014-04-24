@@ -78,29 +78,29 @@ public class QualityController {
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
 		
-//		List<Produce> goodList = null;
-//		String goodColor = request.getParameter("good_color");
-//		String goodXS = request.getParameter("good_xs");
-//		String goodS = request.getParameter("good_s");
-//		String goodM = request.getParameter("good_m");
-//		String goodL = request.getParameter("good_l");
-//		String goodXL = request.getParameter("good_xl");
-//		String goodXXL = request.getParameter("good_xxl");
-//		goodList = produceService.getProduceList(orderId, goodColor, 
-//				goodXS, goodS, goodM, goodL, goodXL, goodXXL, Produce.TYPE_QUALIFIED);
-//		
-//		List<Produce> badList = null;
-//		String badColor = request.getParameter("bad_color");
-//		String badXS = request.getParameter("bad_xs");
-//		String badS = request.getParameter("bad_s");
-//		String badM = request.getParameter("bad_m");
-//		String badL = request.getParameter("bad_l");
-//		String badXL = request.getParameter("bad_xl");
-//		String badXXL = request.getParameter("bad_xxl");
-//		badList = produceService.getProduceList(orderId, badColor, 
-//				badXS, badS, badM, badL, badXL, badXXL, Produce.TYPE_UNQUALIFIED);
+		List<Produce> goodList = null;
+		String goodColor = request.getParameter("good_color");
+		String goodXS = request.getParameter("good_xs");
+		String goodS = request.getParameter("good_s");
+		String goodM = request.getParameter("good_m");
+		String goodL = request.getParameter("good_l");
+		String goodXL = request.getParameter("good_xl");
+		String goodXXL = request.getParameter("good_xxl");
+		goodList = produceService.getProduceList(orderId, goodColor, 
+				goodXS, goodS, goodM, goodL, goodXL, goodXXL, Produce.TYPE_QUALIFIED);
 		
-		qualityService.checkQualitySubmit(orderId, taskId, true, null, null);
+		List<Produce> badList = null;
+		String badColor = request.getParameter("bad_color");
+		String badXS = request.getParameter("bad_xs");
+		String badS = request.getParameter("bad_s");
+		String badM = request.getParameter("bad_m");
+		String badL = request.getParameter("bad_l");
+		String badXL = request.getParameter("bad_xl");
+		String badXXL = request.getParameter("bad_xxl");
+		badList = produceService.getProduceList(orderId, badColor, 
+				badXS, badS, badM, badL, badXL, badXXL, Produce.TYPE_UNQUALIFIED);
+		
+		qualityService.checkQualitySubmit(orderId, taskId, true, goodList, badList);
 		//marketService.modifyProduct(account.getUserId(),id,taskId,processId,null);
 
 		return "redirect:/quality/checkQualityList.do";
