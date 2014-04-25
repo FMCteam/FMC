@@ -89,7 +89,7 @@ public class MainController {
 			model.addAttribute("state", "wrong");
 			
 			if(is_wm) {
-				return "login2";
+				return "login";
 			} else {
 				return "login";
 			}

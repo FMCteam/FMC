@@ -7,7 +7,7 @@
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="brand" href="#">制造链FMC</a>
+			<a class="brand" href="${ctx}/logistics/mobile/index.do">制造链FMC</a>
 			<div class="nav-collapse collapse">
 				<ul class="nav">
 					<li class=""><a

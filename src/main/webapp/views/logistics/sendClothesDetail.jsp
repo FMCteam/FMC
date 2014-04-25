@@ -7,7 +7,7 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">大货发货</li>
-				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
+				<li><a href="#warehouse" data-toggle="tab">入库信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li class="active"><a href="#logistics" data-toggle="tab">发货信息</a></li>
@@ -24,7 +24,7 @@
 				</div>
 				<div class="tab-pane active" id="logistics">
 					<form action="${ctx}/logistics/sendClothesSubmit.do" method="post"
-					onsubmit="return confirm('确认操作？');">
+						onsubmit="return confirm('确认操作？');">
 						<input type="hidden" name="orderId"
 							value="${orderInfo.order.orderId}" /> <input type="hidden"
 							name="taskId" value="${orderInfo.task.id}" />
@@ -51,9 +51,9 @@
 							</tr>
 							<tr>
 								<td><input type="date" name="time" required="required" /></td>
-								<td><input type="text" name="name"  required="required"/></td>
-								<td><input type="text" name="number" required="required"/></td>
-								<td><input type="text" name="price" required="required"/></td>
+								<td><input type="text" name="name" required="required" /></td>
+								<td><input type="text" name="number" required="required" /></td>
+								<td><input type="text" name="price" required="required" /></td>
 							</tr>
 							<tr>
 								<td>其他备注</td>
@@ -72,8 +72,8 @@
 				<div class="tab-pane" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
-				<div class="tab-pane" id="quote">
-					<%@include file="/views/common/quote.jsp"%>
+				<div class="tab-pane" id="warehouse">
+					<%@include file="/views/common/warehouse.jsp"%>
 				</div>
 			</div>
 		</div>

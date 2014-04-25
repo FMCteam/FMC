@@ -7,9 +7,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.jbpm.task.query.TaskSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.EmployeeDAO;
@@ -114,29 +116,13 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public List<Map<String, Object>> getPackageList() {
 		// TODO Auto-generated method stub
-		List<Map<String, Object>> temp = service.getOrderList(
-				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
-		List<Map<String, Object>> list = new ArrayList<>();
-		for (Map<String, Object> model : temp) {
-			if (((Order) model.get("order")).getLogisticsState() == 0) {
-				list.add(model);
-			}
-		}
-		return list;
+		return getLogisticsList(TASK_WAREHOUSE, 0);
 	}
 
 	@Override
 	public List<Map<String, Object>> getWarehouseList() {
 		// TODO Auto-generated method stub
-		List<Map<String, Object>> temp = service.getOrderList(
-				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
-		List<Map<String, Object>> list = new ArrayList<>();
-		for (Map<String, Object> model : temp) {
-			if (((Order) model.get("order")).getLogisticsState() == 1) {
-				list.add(model);
-			}
-		}
-		return list;
+		return getLogisticsList(TASK_WAREHOUSE, 1);
 	}
 
 	@Override
@@ -148,6 +134,19 @@ public class LogisticsServiceImpl implements LogisticsService {
 		model.put("packages", packages);
 		model.put("packageDetails",
 				packageDetailDAO.findByPackageList(packages));
+		return model;
+	}
+
+	@Override
+	public Map<String, Object> getPrintWarehouseDetail(Integer orderId,
+			Integer packageId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> model = new HashMap<>();
+		Order order = orderDAO.findById(orderId);
+		model.put("order", order);
+		model.put("pack", packageDAO.findById(packageId));
+		model.put("packDetails", packageDetailDAO.findByPackageId(packageId));
+		model.put("orderId", service.getOrderId(order));
 		return model;
 	}
 
@@ -182,24 +181,25 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	@Override
-	public List<OrderInfo> getMobileWarehouseList() {
+	public List<Map<String, Object>> getMobileWarehouseList() {
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
-		List<OrderInfo> unsore_models = new ArrayList<>();
-
+		List<Map<String, Object>> list = new ArrayList<>();
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) jbpmAPIUtil
 					.getVariable(task, "orderId");
-			OrderInfo model = new OrderInfo();
+			Map<String, Object> model = new HashMap<String, Object>();
 			Order order = orderDAO.findById(orderId);
-			model.setOrder(order);
-			model.setTask(task);
+			model.put("order", order);
+			model.put("orderId", dateFormat2.format(order.getOrderTime())
+					+ String.format("%06d", order.getOrderId()));
 
 			if (order.getLogisticsState() == 1) {
-				unsore_models.add(model);
+				list.add(model);
 			}
 		}
-		return unsore_models;
+		return list;
 	}
 
 	@Override
@@ -207,9 +207,15 @@ public class LogisticsServiceImpl implements LogisticsService {
 		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
 				TASK_WAREHOUSE, orderId);
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("order", orderDAO.findById(orderId));
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
+		Order order = orderDAO.findById(orderId);
+		model.put("order", order);
 		model.put("packs", packageDAO.findByOrderId(orderId));
 		model.put("task", task);
+		model.put(
+				"orderId",
+				dateFormat2.format(order.getOrderTime())
+						+ String.format("%06d", order.getOrderId()));
 		return model;
 	}
 
@@ -253,39 +259,22 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	// ===========================产品发货=================================
 	@Override
-	public List<Map<String, Object>> getSendClothesList() {
+	public List<Map<String, Object>> getScanClothesList() {
 		// TODO Auto-generated method stub
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
-				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES);
-		List<OrderInfo> unscan_models = new ArrayList<>();
-		List<OrderInfo> scan_models = new ArrayList<>();
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil
-					.getVariable(task, "orderId");
-			OrderInfo model = new OrderInfo();
-			Order order = orderDAO.findById(orderId);
-			model.setOrder(order);
-			model.setTask(task);
-			if (order.getLogisticsState() == 3) {
-				scan_models.add(model);
-			} else {
-				unscan_models.add(model);
-			}
-		}
-		scan_models.addAll(unscan_models);
-		// return scan_models;
-		return null;
+		return getLogisticsList(TASK_SEND_CLOTHES, 2);
 	}
 
 	@Override
-	public OrderInfo getSendClothesDetail(Integer orderId) {
+	public List<Map<String, Object>> getSendClothesList() {
 		// TODO Auto-generated method stub
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
+		return getLogisticsList(TASK_SEND_CLOTHES, 3);
+	}
+
+	@Override
+	public Map<String, Object> getSendClothesDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		return service.getBasicOrderModelWithWareHouse(ACTOR_LOGISTICS_MANAGER,
 				TASK_SEND_CLOTHES, orderId);
-		OrderInfo model = new OrderInfo();
-		model.setOrder(orderDAO.findById(orderId));
-		model.setTask(task);
-		return model;
 	}
 
 	@Override
@@ -293,10 +282,6 @@ public class LogisticsServiceImpl implements LogisticsService {
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES);
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss");
-		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
-
 		for (TaskSummary task : tasks) {
 			Integer orderId = (Integer) jbpmAPIUtil
 					.getVariable(task, "orderId");
@@ -305,9 +290,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 			if (order.getLogisticsState() == 2) {
 				model.put("order", order);
 				model.put("task", task);
-				model.put("taskTime", dateFormat.format(task.getCreatedOn()));
-				model.put("orderId", dateFormat2.format(order.getOrderTime())
-						+ String.format("%06d", order.getOrderId()));
+				model.put("taskTime", service.getTaskTime(task.getCreatedOn()));
+				model.put("orderId", service.getOrderId(order));
 				list.add(model);
 			}
 		}
@@ -320,9 +304,15 @@ public class LogisticsServiceImpl implements LogisticsService {
 		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
 				TASK_SEND_CLOTHES, orderId);
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("order", orderDAO.findById(orderId));
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
+		Order order = orderDAO.findById(orderId);
+		model.put("order", order);
 		model.put("packs", packageDAO.findByOrderId(orderId));
 		model.put("task", task);
+		model.put(
+				"orderId",
+				dateFormat2.format(order.getOrderTime())
+						+ String.format("%06d", order.getOrderId()));
 		return model;
 	}
 
@@ -362,19 +352,22 @@ public class LogisticsServiceImpl implements LogisticsService {
 		}
 	}
 
+	private List<Map<String, Object>> getLogisticsList(String taskName,
+			Integer state) {
+		List<Map<String, Object>> temp = service.getOrderList(
+				ACTOR_LOGISTICS_MANAGER, taskName);
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (Map<String, Object> model : temp) {
+			if (((Order) model.get("order")).getLogisticsState() == state) {
+				list.add(model);
+			}
+		}
+		return list;
+	}
+
 	private Timestamp getTime(String time) {
 		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
 		return new Timestamp(outDate.getTime());
-	}
-
-	@Override
-	public Package createPackageForOrder(int orderId) {
-		// TODO Auto-generated method stub
-		Package newPackage = new Package();
-		newPackage.setPackageTime(new Timestamp(new Date().getTime()));
-		newPackage.setOrderId(orderId);
-		packageDAO.save(newPackage);
-		return newPackage;
 	}
 
 	@Override
@@ -429,14 +422,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 	public final static String RESULT_SEND_SAMPLE = "sendSample";
 
 	@Override
-	public List<Map<String, Object>> getScanClothesList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Logistics findByOrderId(String s_id) {
 		// TODO Auto-generated method stub
 		return logisticsDAO.findById(Integer.parseInt(s_id));
 	}
+
 }

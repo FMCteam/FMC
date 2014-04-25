@@ -2,6 +2,7 @@ package nju.software.service;
 
 import java.util.List;
 import java.util.Map;
+
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
@@ -30,6 +31,8 @@ public interface LogisticsService {
 	public List<Map<String, Object>> getWarehouseList();
 
 	public Map<String, Object> getPackageDetail(Integer orderId);
+	
+	public Map<String, Object> getPrintWarehouseDetail(Integer orderId,Integer packageId);
 
 	public Integer addPackage(Package pack, List<PackageDetail> detail);
 
@@ -37,7 +40,7 @@ public interface LogisticsService {
 
 	public boolean packageSubmit(Integer orderId);
 
-	public List<OrderInfo> getMobileWarehouseList();
+	public List<Map<String, Object>> getMobileWarehouseList();
 
 	public Map<String, Object> getMobileWarehouseDetail(int orderId);
 
@@ -51,7 +54,7 @@ public interface LogisticsService {
 
 	public List<Map<String, Object>> getSendClothesList();
 
-	public OrderInfo getSendClothesDetail(Integer orderId);
+	public Map<String, Object> getSendClothesDetail(Integer orderId);
 
 	public List<Map<String, Object>> getMobileSendClothesList();
 
@@ -61,9 +64,6 @@ public interface LogisticsService {
 
 	public void sendClothesSubmit(Integer orderId, long taskId, float price,
 			String name, String time, String number, String remark);
-
-	// 新建一个package，返回新的package_id
-	public Package createPackageForOrder(int orderId);
 
 	public List<Package> getPackageListByOrderId(int orderId);
 

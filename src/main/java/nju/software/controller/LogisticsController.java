@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import nju.software.model.OrderInfo;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
@@ -14,6 +16,7 @@ import nju.software.service.OrderService;
 import nju.software.service.impl.JbpmTest;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.dataobject.Order;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -188,24 +191,16 @@ public class LogisticsController {
 		return "/logistics/warehouseDetail";
 	}
 
-	@RequestMapping(value = "/logistics/printPackage.do")
+	@RequestMapping(value = "/logistics/printWarehouseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
-	public String printPackage(HttpServletRequest request,
+	public String printWarehouseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String orderId = (String) request.getParameter("order_id");
-		String packageId = (String) request.getParameter("package_id");
-
-		Package packageInfo = logisticsService.getPackageByPackageId(Integer
-				.parseInt(packageId));
-		Order order = orderService.findByOrderId(orderId);
-		List<PackageDetail> pdList = logisticsService
-				.getPackageDetailList(Integer.parseInt(packageId));
-
-		model.addAttribute("order", order);
-		model.addAttribute("packageInfo", packageInfo);
-		model.addAttribute("packageDetailList", pdList);
-
-		return "/logistics/printPackage";
+		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
+		Integer packageId = Integer.parseInt(request.getParameter("packageId"));
+		Map<String, Object> orderInfo = logisticsService
+				.getPrintWarehouseDetail(orderId, packageId);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/logistics/printWarehouseDetail";
 	}
 
 	@RequestMapping(value = "/logistics/mobile/index.do")
@@ -219,7 +214,8 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String mobileWarehouseList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<OrderInfo> orderList = logisticsService.getMobileWarehouseList();
+		List<Map<String, Object>> orderList = logisticsService
+				.getMobileWarehouseList();
 		model.addAttribute("orderList", orderList);
 		return "/logistics/mobile/warehouseList";
 	}
@@ -262,8 +258,10 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String sendClothesList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<Map<String, Object>> list = logisticsService.getSendClothesList();
-		model.addAttribute("list", list);
+		List<Map<String, Object>> scanList = logisticsService.getScanClothesList();
+		List<Map<String, Object>> sendList = logisticsService.getSendClothesList();
+		model.addAttribute("scanList", scanList);
+		model.addAttribute("sendList", sendList);
 		return "/logistics/sendClothesList";
 	}
 
@@ -272,8 +270,8 @@ public class LogisticsController {
 	public String scanClothesDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo = logisticsService.getSendClothesDetail(Integer
-				.parseInt(orderId));
+		Map<String, Object> orderInfo = logisticsService
+				.getSendClothesDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/scanClothesDetail";
 	}
@@ -283,8 +281,8 @@ public class LogisticsController {
 	public String sendClothesDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
-		OrderInfo orderInfo = logisticsService.getSendClothesDetail(Integer
-				.parseInt(orderId));
+		Map<String, Object> orderInfo = logisticsService
+				.getSendClothesDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/sendClothesDetail";
 	}
