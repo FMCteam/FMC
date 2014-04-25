@@ -48,8 +48,6 @@ public class ServiceUtil {
 			Integer orderId = (Integer) jbpmAPIUtil
 					.getVariable(task, "orderId");
 			Map<String, Object> model = new HashMap<String, Object>();
-			System.out.println(jbpmAPIUtil
-					.getVariable(task, "paymentok"));
 			Order order = orderDAO.findById(orderId);
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));

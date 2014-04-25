@@ -45,7 +45,7 @@ public class MainController {
 			String user_agent = request.getHeader("user-agent").toLowerCase();
 			
 			if(user_agent.contains("windows phone") || user_agent.contains("android") || user_agent.contains("iphone")) {
-				return "login2";
+				return "login";
 			} else {
 				return "login";
 			}
@@ -82,7 +82,7 @@ public class MainController {
 		if (account != null) {
 			session.setAttribute("cur_user", account);
 			if("ADMIN, WULIUZHUGUAN".contains(account.getUserRole()) && is_wm) {
-				return "redirect:logistics/mobile.do";
+				return "redirect:/logistics/mobile/index.do";
 			}
 			return "redirect:default.do";
 		} else {

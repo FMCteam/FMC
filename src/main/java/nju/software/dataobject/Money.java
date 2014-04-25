@@ -1,9 +1,13 @@
 package nju.software.dataobject;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -25,8 +29,29 @@ public class Money implements java.io.Serializable {
 	private String moneyBank;
 	private String moneyNumber;
 	private String moneyRemark;
+	private Timestamp receiveTime;
+	private String receiveAccount;
+	
 
 	// Constructors
+
+	@Column(name = "money_receive_time", nullable = false, length = 19)
+	public Timestamp getReceiveTime() {
+		return receiveTime;
+	}
+
+	public void setReceiveTime(Timestamp receiveTime) {
+		this.receiveTime = receiveTime;
+	}
+
+	@Column(name = "money_receive_account", nullable = false, length = 250)
+	public String getReceiveAccount() {
+		return receiveAccount;
+	}
+
+	public void setReceiveAccount(String receiveAccount) {
+		this.receiveAccount = receiveAccount;
+	}
 
 	/** default constructor */
 	public Money() {

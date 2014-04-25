@@ -10,7 +10,7 @@
 			<section class="list">
 				<table class="list">
 					<caption>
-						<span class="text-vertical">待发货收取列表:<span class="number">${fn:length(list)}</span>件任务
+						<span class="text-vertical">待发货列表:<span class="number">${fn:length(list)}</span>件任务
 						</span><input type="text" class="search-query float-right"
 							placeholder="输入检索条件">
 					</caption>

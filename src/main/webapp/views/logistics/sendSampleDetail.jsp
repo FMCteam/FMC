@@ -23,7 +23,8 @@
 					<%@include file="/views/common/material.jsp"%>
 				</div>
 				<div class="tab-pane  active" id="sample">
-					<form action="${ctx}/logistics/sendSampleSubmit.do" method="post"  onsubmit="return confirmSendSampleSubmit()">
+					<form action="${ctx}/logistics/sendSampleSubmit.do" method="post"
+						onsubmit="return confirmSendSampleSubmit()">
 						<input type="hidden" name="orderId"
 							value="${orderInfo.order.orderId}" /> <input type="hidden"
 							name="taskId" value="${orderInfo.task.id}" />
@@ -65,8 +66,17 @@
 							</tr>
 							<tr>
 								<td><input type="date" name="time" /></td>
-								<td><input type="text" name="name" /></td>
-								<td colspan="3"><input class="span12" type="text" name="number" /></td>
+								<td><input type="text" name="name" /> <select>
+										<option value="顺丰">顺丰</option>
+										<option value="韵达">韵达</option>
+										<option value="圆通">圆通</option>
+										<option value="中通">中通</option>
+										<option value="申通">申通</option>
+										<option value="汇通">汇通</option>
+										<option value="EMS">EMS</option>
+								</select></td>
+								<td colspan="3"><input class="span12" type="text"
+									name="number" /></td>
 							</tr>
 							<tr>
 								<td>其他备注</td>
@@ -82,7 +92,9 @@
 									src="${ctx}/${orderInfo.order.referencePicture}" alt="没有图片"></img></td>
 							</tr>
 						</table>
-						<div class="action"><input class="btn btn-primary" type="submit" value="发货完成" /></div>
+						<div class="action">
+							<input class="btn btn-primary" type="submit" value="发货完成" />
+						</div>
 					</form>
 				</div>
 				<div class="tab-pane" id="produce">

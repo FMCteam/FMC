@@ -1,5 +1,7 @@
 ﻿package nju.software.controller;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,7 @@ import nju.software.model.OrderInfo;
 import nju.software.service.FinanceService;
 import nju.software.service.impl.FinanceServiceImpl;
 import nju.software.service.impl.JbpmTest;
+import nju.software.util.DateUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -192,6 +195,8 @@ public class FinanceController {
 		String moneyName = request.getParameter("money_name");
 		String moneyNumber = request.getParameter("money_number");
 		String moneyRemark = request.getParameter("money_remark");
+		String time = request.getParameter("time");
+		String account = request.getParameter("account");
 
 		Money money = new Money();
 		money.setMoneyAmount(moneyAmount);
@@ -201,7 +206,14 @@ public class FinanceController {
 		money.setMoneyName(moneyName);
 		money.setMoneyNumber(moneyNumber);
 		money.setMoneyRemark(moneyRemark);
+		money.setReceiveAccount(account);
+		money.setReceiveTime(getTime(time));
 		return money;
+	}
+	
+	public Timestamp getTime(String time) {
+		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
+		return new Timestamp(outDate.getTime());
 	}
 
 	@Autowired
