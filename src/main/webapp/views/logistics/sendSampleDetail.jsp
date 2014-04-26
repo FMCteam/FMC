@@ -35,7 +35,7 @@
 								<td class="span2">提供样衣</td>
 								<td class="span3">邮寄时间</td>
 								<td class="span2">快递名称</td>
-								<td class="span3" colspan="3">快递单号</td>
+								<td class="span3">快递单号</td>
 							</tr>
 							<tr>
 								<td>${orderInfo.order.hasPostedSampleClothes==0?'没有样衣':''}
@@ -66,7 +66,7 @@
 							</tr>
 							<tr>
 								<td><input type="date" name="time" /></td>
-								<td><input type="text" name="name" /> <select>
+								<td><select name="name" style="margin: 0px">
 										<option value="顺丰">顺丰</option>
 										<option value="韵达">韵达</option>
 										<option value="圆通">圆通</option>
@@ -85,11 +85,17 @@
 							<tr>
 								<td>样衣信息</td>
 								<td>样衣图片</td>
-								<td><img
-									src="${ctx}/${orderInfo.order.sampleClothesPicture}" alt="没有图片"></img></td>
+								<td><c:if
+										test="${orderInfo.order.sampleClothesPicture!=null}">
+										<img src="${ctx}/${orderInfo.order.sampleClothesPicture}"
+											alt="样衣图片"></img>
+									</c:if></td>
 								<td>参考图片</td>
-								<td colspan="2"><img
-									src="${ctx}/${orderInfo.order.referencePicture}" alt="没有图片"></img></td>
+								<td colspan="2"><c:if
+										test="${orderInfo.order.referencePicture!=null}">
+										<img src="${ctx}/${orderInfo.order.referencePicture}"
+											alt="参考图片"></img>
+									</c:if></td>
 							</tr>
 						</table>
 						<div class="action">

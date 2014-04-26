@@ -29,5 +29,5 @@ public interface FinanceService {
 	
 	public boolean confirmFinalPaymentSubmit(String actorId,long taskId,boolean result, Money money);
 	
-	public Map<String, Object> getProcessState();
+	public  List<Map<String, Object>> getProcessState(long pid);
 }

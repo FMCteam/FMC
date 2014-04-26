@@ -51,7 +51,15 @@
 							</tr>
 							<tr>
 								<td><input type="date" name="time" required="required" /></td>
-								<td><input type="text" name="name" required="required" /></td>
+								<td><select name="name" style="margin: 0px">
+										<option value="顺丰">顺丰</option>
+										<option value="韵达">韵达</option>
+										<option value="圆通">圆通</option>
+										<option value="中通">中通</option>
+										<option value="申通">申通</option>
+										<option value="汇通">汇通</option>
+										<option value="EMS">EMS</option>
+								</select></td>
 								<td><input type="text" name="number" required="required" /></td>
 								<td><input type="text" name="price" required="required" /></td>
 							</tr>

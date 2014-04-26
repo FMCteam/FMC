@@ -1,48 +1,23 @@
-
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 
-<%@include file="/common/header.jsp"%>
+<html>
+<head>
+<%@ include file="/common/taglibs.jsp"%>
+<script type="text/javascript" src="${ctx}/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+	$.ready(function() {
+		window.scrollTo(${list[0].x-500},0);
+	});
+</script>
+<title>流水状态</title>
+</head>
 
-<div class="pageheader">
-
-	<div class="pageicon">
-		<span class="iconfa-laptop"></span>
-	</div>
-	<div class="pagetitle">
-		<h5>服装快速响应供应链</h5>
-		<h1>智造链</h1>
-	</div>
-</div>
-<!--pageheader-->
-
-<div class="maincontent">
-	<div class="maincontentinner">
-		<div class="row-fluid" style="min-height:300px;">
-			这里是公司介绍等。
-			<!--  如果是其它页面，这里是填充具体的内容。 -->
-			<c:forEach var="node" items="${fmc.nodes}">
-			${node} <br/>
-			</c:forEach>
-		</div>
-		<!--row-fluid-->
-
-		<div class="footer">
-			<div class="footer-left">
-				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
-			</div>
-
-		</div>
-		<!--footer-->
-
-	</div>
-	<!--maincontentinner-->
-</div>
-<!--maincontent-->
-
-<%@include file="/common/js_file.jsp"%>
-
-<!-- 这里引入你需要的js文件 -->
-<script type="text/javascript" src="${ctx }/js/custom.js"></script>
-
-
-<%@include file="/common/footer.jsp"%>
+<body>
+	<img src="${ctx}/images/fmc.png"
+		style="position: absolute; left: 0px; top: 0px;" onload="window.scrollTo(${list[0].x-500},0);">
+	<c:forEach var="node" items="${list}">
+		<div
+			style="position: absolute; border: 2px solid red; left: ${node.x}px; top:${node.y}px; width: ${node.width-3}px; height: ${node.height-3}px; border-radius:13px 13px 15px 13px"></div>
+	</c:forEach>
+</body>
+</html>

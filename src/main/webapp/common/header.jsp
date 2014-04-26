@@ -14,6 +14,13 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("table.tablesorter").tablesorter();
+		$.ajax({
+			url : "${ctx}/common/getTaskNumber.do",
+			success : function(msg) {
+				alert(msg);
+				$("span.count").text(msg);
+			}
+		});
 	});
 </script>
 <style type="text/css">
@@ -40,7 +47,6 @@ table.tablesorter thead tr .headerSortDown {
 </head>
 <body>
 	<div id="mainwrapper" class="mainwrapper">
-
 		<div class="header">
 			<div class="logo">
 				<a href="#" style="color:white;font-size:55px;font-family:"MiscrosoftYaHei"">

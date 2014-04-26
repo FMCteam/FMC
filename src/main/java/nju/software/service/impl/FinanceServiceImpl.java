@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.drools.command.Context;
+import org.drools.command.impl.GenericCommand;
+import org.drools.command.impl.KnowledgeCommandContext;
+import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.process.NodeInstance;
-import org.drools.runtime.process.NodeInstanceContainer;
 import org.drools.runtime.process.ProcessInstance;
 import org.drools.runtime.process.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,26 +183,33 @@ public class FinanceServiceImpl implements FinanceService {
 		}
 	}
 
-	public Map<String, Object> getProcessState() {
-		ProcessInstance p = jbpmAPIUtil.getKsession().getProcessInstances()
-				.iterator().next();
-		WorkflowProcessInstance wfInstance = ((WorkflowProcessInstance) p);
-		List<String> activeNodes = new ArrayList<String>();
-		getActiveNodes(wfInstance, activeNodes);
-		Map<String, Object> image = new HashMap<String, Object>();
-		image.put("nodes", activeNodes);
-		return null;
-	}
+	@Override
+	public List<Map<String, Object>> getProcessState(final long pid) {
+		// //System.out.println("size:"+jbpmAPIUtil.getKsession().getProcessInstances().size());
+		final List<Map<String, Object>> list = new ArrayList<>();
+		jbpmAPIUtil.getKsession().execute(new GenericCommand<String>() {
+			public String execute(Context context) {
+				StatefulKnowledgeSession ksession = ((KnowledgeCommandContext) context)
+						.getStatefulKnowledgesession();
+				System.out.println(ksession.getProcessInstances().size());
 
-	private void getActiveNodes(NodeInstanceContainer container,
-			List<String> activeNodes) {
-		for (NodeInstance nodeInstance : container.getNodeInstances()) {
-			activeNodes.add(nodeInstance.getNodeName());
-			// if (nodeInstance instanceof NodeInstanceContainer) {
-			// getActiveNodes((NodeInstanceContainer) nodeInstance,
-			// activeNodes);
-			// }
-		}
+				org.jbpm.process.instance.ProcessInstance processInstance = (org.jbpm.process.instance.ProcessInstance) ksession
+						.getProcessInstance(pid);
+				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
+						.getNodeInstances()) {
+					Map<String, Object> data = nodeInstance.getNode()
+							.getMetaData();
+					Map<String, Object> data2 = new HashMap<String, Object>();
+					data2.put("x", data.get("x"));
+					data2.put("y", data.get("y"));
+					data2.put("width", data.get("width"));
+					data2.put("height", data.get("height"));
+					list.add(data2);
+				}
+				return null;
+			}
+		});
+		return list;
 	}
 
 	@Autowired
