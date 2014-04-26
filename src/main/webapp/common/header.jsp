@@ -17,8 +17,8 @@
 		$.ajax({
 			url : "${ctx}/common/getTaskNumber.do",
 			success : function(msg) {
-				alert(msg);
-				$("span.count").text(msg);
+				var json=eval("("+msg+")");
+				$("span.count:eq(0)").text(json.list);
 			}
 		});
 	});
@@ -57,7 +57,7 @@ table.tablesorter thead tr .headerSortDown {
 				<ul class="headmenu">
 					<li class="odd"><a href="#"> <span class="count">4</span>
 							<span class="head-icon head-message"></span> <span
-							class="headmenu-label">新任务</span>
+							class="headmenu-label">任务</span>
 					</a></li>
 					<li><a> <span class="count">${taskNumber}</span> <span
 							class="head-icon head-users"></span> <span class="headmenu-label">新客户</span>

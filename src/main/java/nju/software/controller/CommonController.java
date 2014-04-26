@@ -2,18 +2,14 @@ package nju.software.controller;
 
 import net.sf.json.JSONObject;
 import nju.software.dataobject.Account;
-import nju.software.service.BuyService;
 import nju.software.service.impl.MarketServiceImpl;
 import nju.software.util.JbpmAPIUtil;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.jbpm.task.query.TaskSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +32,7 @@ public class CommonController {
 			number=task.size();
 		}
 		JSONObject jsonobj = new JSONObject();
-        jsonobj.put("list", number);
+        jsonobj.put("number", number);
 		sendJson(response, jsonobj);	
 	}
 	
