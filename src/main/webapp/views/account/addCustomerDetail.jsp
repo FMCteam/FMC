@@ -192,9 +192,7 @@
 		$("#customerForm").validate({
 
 			rules : {
-
 				user_name : "required",
-
 				customer_name : "required",
 				company_id : "required",
 				company_name : "required",
@@ -208,7 +206,6 @@
 			},
 
 			messages : {
-
 				user_name : "请输入用户登录名称",
 				customer_name : "请输入用户真实姓名",
 				company_id : "请输入公司编号",
@@ -221,5 +218,6 @@
 		});
 
 	});
+	
 </script>
 <%@include file="/common/footer.jsp"%>
