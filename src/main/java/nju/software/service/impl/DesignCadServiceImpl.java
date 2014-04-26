@@ -17,7 +17,7 @@ public class DesignCadServiceImpl implements DesignCadService{
 	@Override
 	public DesignCad findByOrderId(String orderId) {
 		// TODO Auto-generated method stub
-		List<DesignCad> list = cadDAO.findByOrderId(orderId);
+		List<DesignCad> list = cadDAO.findByOrderId(Integer.parseInt(orderId));
 		if(list.size()>0)
 			return list.get(0);
 		else

@@ -38,7 +38,7 @@ public class FinanceController {
 		List<Map<String, Object>> list = financeService
 				.getConfirmSampleMoneyList(actorId);
 		if (list.size() == 0) {
-			jbpmTest.completeConfirmQuote(FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
+			jbpmTest.completeConfirmQuote("1");
 			list = financeService.getConfirmSampleMoneyList(actorId);
 		}
 		model.addAttribute("list", list);

@@ -639,11 +639,12 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 
 		List<Map<String, Object>> list = marketService
-				.getMergeQuoteList(account.getAccountId());
+				.getMergeQuoteList(account.getUserId());
 
 		if (list.size() == 0) {
-			jbpmTest.completeComputeCost(account.getAccountId() + "");
-			list = marketService.getMergeQuoteList(account.getAccountId());
+			jbpmTest.completeComputeCost(account.getUserId() + "");
+			list = marketService.getMergeQuoteList(account.getUserId());
+			System.out.println(account.getUserId());
 		}
 
 		model.put("list", list);

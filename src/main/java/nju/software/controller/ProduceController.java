@@ -232,7 +232,7 @@ public class ProduceController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=produceService.getProduceList();
 		if(list.size()==0){
-			jbpmTest.completeBeforeProduce(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
+			jbpmTest.completeBeforeProduce("1");
 			list=produceService.getProduceList();
 		}
 		model.addAttribute("list", list);
