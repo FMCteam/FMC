@@ -37,6 +37,7 @@ import nju.software.model.OrderModel;
 import nju.software.model.QuoteModel;
 import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
+import nju.software.service.DesignCadService;
 import nju.software.service.LogisticsService;
 import nju.software.service.MarketService;
 import nju.software.service.OrderService;
