@@ -44,7 +44,7 @@ table.tablesorter thead tr .headerSortDown {
 		<div class="header">
 			<div class="logo">
 				<a href="#" style="color:white;font-size:55px;font-family:"MiscrosoftYaHei"">
-					<!-- <img src="images/logo.png" alt="" /> -->智造链
+					<!-- <img src="images/logo.png" alt="" /> --> <span>智造链</span>
 				</a>
 			</div>
 			<div class="headerinner">
