@@ -28,4 +28,6 @@ public interface FinanceService {
 	public Map<String,Object> getConfirmFinalPaymentDetail(String actorId,Integer orderId);
 	
 	public boolean confirmFinalPaymentSubmit(String actorId,long taskId,boolean result, Money money);
+	
+	public Map<String, Object> getProcessState();
 }

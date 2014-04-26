@@ -29,14 +29,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class FinanceController {
 
-	
 	// ===========================样衣金确认=================================
 	@RequestMapping(value = "/finance/confirmSampleMoneyList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmSampleMoneyList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		List<Map<String,Object>> list = financeService
+		List<Map<String, Object>> list = financeService
 				.getConfirmSampleMoneyList(actorId);
 		if (list.size() == 0) {
 			jbpmTest.completeConfirmQuote(FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
@@ -48,20 +47,18 @@ public class FinanceController {
 		return "/finance/confirmSampleMoneyList";
 	}
 
-	
 	@RequestMapping(value = "/finance/confirmSampleMoneyDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmSampleMoneyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		Map<String,Object> orderInfo = financeService.getConfirmSampleMoneyDetail(
-				actorId, Integer.parseInt(orderId));
+		Map<String, Object> orderInfo = financeService
+				.getConfirmSampleMoneyDetail(actorId, Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/confirmSampleMoneyDetail";
 	}
 
-	
 	@RequestMapping(value = "/finance/confirmSampleMoneySubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmSampleMoneySubmit(HttpServletRequest request,
@@ -77,39 +74,36 @@ public class FinanceController {
 			money.setOrderId(orderId);
 		}
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		financeService.confirmSampleMoneySubmit(actorId, taskId,
-				result, money);
+		financeService.confirmSampleMoneySubmit(actorId, taskId, result, money);
 		return "forward:/finance/confirmSampleMoneyList.do";
 	}
 
-	
 	// ===========================定金确认===================================
 	@RequestMapping(value = "/finance/confirmDepositList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		List<Map<String,Object>> list = financeService.getConfirmDepositList(actorId);
+		List<Map<String, Object>> list = financeService
+				.getConfirmDepositList(actorId);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "确认大货定金");
 		model.addAttribute("url", "/finance/confirmDepositDetail.do");
 		return "/finance/confirmDepositList";
 	}
 
-	
 	@RequestMapping(value = "/finance/confirmDepositDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		Map<String,Object> orderInfo = financeService.getConfirmDepositDetail(actorId,
-				Integer.parseInt(orderId));
+		Map<String, Object> orderInfo = financeService.getConfirmDepositDetail(
+				actorId, Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/confirmDepositDetail";
 	}
 
-	
 	@RequestMapping(value = "/finance/confirmDepositSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositSubmit(HttpServletRequest request,
@@ -131,7 +125,6 @@ public class FinanceController {
 		return "forward:/finance/confirmDepositList.do";
 	}
 
-	
 	// ===========================尾款确认===================================
 	@RequestMapping(value = "finance/confirmFinalPaymentList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -139,7 +132,7 @@ public class FinanceController {
 			HttpServletResponse response, ModelMap model) {
 
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		List<Map<String,Object>> list = financeService
+		List<Map<String, Object>> list = financeService
 				.getConfirmFinalPaymentList(actorId);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "确认大货尾款");
@@ -148,20 +141,19 @@ public class FinanceController {
 
 	}
 
-	
 	@RequestMapping(value = "/finance/confirmFinalPaymentDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		Map<String,Object> orderInfo = financeService.getConfirmFinalPaymentDetail(
-				actorId, Integer.parseInt(orderId));
+		Map<String, Object> orderInfo = financeService
+				.getConfirmFinalPaymentDetail(actorId,
+						Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/confirmFinalPaymentDetail";
 	}
 
-	
 	@RequestMapping(value = "/finance/confirmFinalPaymentSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentSubmit(HttpServletRequest request,
@@ -178,14 +170,22 @@ public class FinanceController {
 			money = getMoney(request);
 			money.setOrderId(orderId);
 		}
-		
+
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		financeService.confirmFinalPaymentSubmit(actorId, taskId, result,
-				money);
+		financeService
+				.confirmFinalPaymentSubmit(actorId, taskId, result, money);
 		return "forward:/finance/confirmFinalPaymentList.do";
 	}
 
-	
+	@RequestMapping(value = "/image.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String image(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Map<String, Object> image=financeService.getProcessState();
+		model.addAttribute("fmc", image);
+		return "/image";
+	}
+
 	private Money getMoney(HttpServletRequest request) {
 		String money_amount_string = request.getParameter("money_amount");
 		double moneyAmount = Double.parseDouble(money_amount_string);
@@ -210,7 +210,7 @@ public class FinanceController {
 		money.setReceiveTime(getTime(time));
 		return money;
 	}
-	
+
 	public Timestamp getTime(String time) {
 		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
 		return new Timestamp(outDate.getTime());

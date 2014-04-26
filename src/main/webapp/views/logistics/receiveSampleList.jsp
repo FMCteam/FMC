@@ -7,7 +7,7 @@
 		<div class="row-fluid" style="min-height:300px;">
 
 			<section class="list">
-				<table class="list">
+				<table class="list tablesorter">
 					<caption>
 						<span class="text-vertical">待收取样衣:<span class="number">${fn:length(list)}</span>件任务
 						</span><input type="text" class="search-query float-right"
@@ -25,7 +25,7 @@
 					</thead>
 					<c:forEach var="task" items="${list}">
 						<tr>
-							<td>${task.order.orderId}</td>
+							<td>${task.orderId}</td>
 							<td>${task.order.customerName}</td>
 							<td>${task.logistics.inPostSampleClothesType}</td>
 							<td>${task.logistics.inPostSampleClothesNumber}</td>

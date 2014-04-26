@@ -44,9 +44,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Integer orderId = (Integer) jbpmAPIUtil
 					.getVariable(task, "orderId");
 			Map<String, Object> model = new HashMap<String, Object>();
-			model.put("order", orderDAO.findById(orderId));
+			Order order = orderDAO.findById(orderId);
+			model.put("order",order);
 			model.put("logistics", logisticsDAO.findById(orderId));
 			model.put("task", task);
+			model.put("taskTime", service.getTaskTime(task.getCreatedOn()));
+			model.put("orderId", service.getOrderId(order));
 			list.add(model);
 		}
 		return list;

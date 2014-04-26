@@ -7,8 +7,8 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
-					<section class="list">
-				<table class="list">
+			<section class="list">
+				<table class="list tablesorter">
 					<caption>
 						<span class="text-vertical">待发货列表:<span class="number">${fn:length(scanList)+fn:length(sendList)}</span>件任务
 						</span><input type="text" class="search-query float-right"

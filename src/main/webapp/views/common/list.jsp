@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <section class="list">
-	<table class="list">
+	<table class="list tablesorter">
 		<caption>
 			<span class="text-vertical">${taskName}:<span class="number">${fn:length(list)}</span>件任务
 			</span><input type="text" class="search-query float-right"
