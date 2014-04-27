@@ -359,7 +359,7 @@ public class AccountController {
 				((HashMap<String, Object>) o.get(1)).get("page_number"));
 		model.addAttribute("page",
 				((HashMap<String, Object>) o.get(1)).get("page"));
-		model.addAttribute("notify", "顾客列表~");
+		model.addAttribute("notify", "顾客列表");
 		return "/account/customerList";
 	}
 
