@@ -58,14 +58,14 @@
 		                            <label>角色</label>
 		                            <span class="field">
 		                            <select name="role" class="uniformselect">
-		                            	<option value="SHICHANGZHUGUAN" ${account_to_modify.userRole eq 'SHICHANGZHUGUAN'?'selected':'' }>市场主管</option>
-		                            	<option value="SHICHANGZHUANYUAN" ${account_to_modify.userRole eq 'SHICHANGZHUANYUAN'?'selected':'' }>市场专员</option>
-		                                <option value="SHENGCHANZHUGUAN" ${account_to_modify.userRole eq 'SHENGCHANZHUGUAN'?'selected':'' }>生产主管</option>
-		                                <option value="CAIGOUZHUGUAN" ${account_to_modify.userRole eq 'CAIGOUZHUGUAN'?'selected':'' }>采购主管</option>
-		                                <option value="ZHIJIANZHUGUAN" ${account_to_modify.userRole eq 'ZHIJIANZHUGUAN'?'selected':'' }>质检主管</option>
-		                                <option value="CAIWUZHUGUAN" ${account_to_modify.userRole eq 'CAIWUZHUGUAN'?'selected':'' }>财务主管</option>
-		                                <option value="WULIUZHUGUAN" ${account_to_modify.userRole eq 'WULIUZHUGUAN'?'selected':'' }>物流主管</option>
-		                                <option value="SHEJIZHUGUAN" ${account_to_modify.userRole eq 'SHEJIZHUGUAN'?'selected':'' }>设计主管</option>
+		                            	<option value="marketManager" ${account_to_modify.userRole eq 'marketManager'?'selected':'' }>市场主管</option>
+		                            	<option value="marketStaff" ${account_to_modify.userRole eq 'marketStaff'?'selected':'' }>市场专员</option>
+		                                <option value="produceManager" ${account_to_modify.userRole eq 'produceManager'?'selected':'' }>生产主管</option>
+		                                <option value="purchaseManager" ${account_to_modify.userRole eq 'purchaseManager'?'selected':'' }>采购主管</option>
+		                                <option value="qualityManager" ${account_to_modify.userRole eq 'qualityManager'?'selected':'' }>质检主管</option>
+		                                <option value="financeManager" ${account_to_modify.userRole eq 'financeManager'?'selected':'' }>财务主管</option>
+		                                <option value="logisticsManager" ${account_to_modify.userRole eq 'logisticsManager'?'selected':'' }>物流主管</option>
+		                                <option value="designManager" ${account_to_modify.userRole eq 'designManager'?'selected':'' }>设计主管</option>
 		                            </select>
 		                            </span>
 		                        </p>

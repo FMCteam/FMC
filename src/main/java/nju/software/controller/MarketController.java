@@ -639,12 +639,20 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 
 		List<Map<String, Object>> list = marketService
-				.getMergeQuoteList(account.getAccountId());
+				.getMergeQuoteList(account.getUserId());
 
+<<<<<<< HEAD
 		/*if (list.size() == 0) {
 			jbpmTest.completeComputeCost(account.getAccountId() + "");
 			list = marketService.getMergeQuoteList(account.getAccountId());
 		}*/
+=======
+		if (list.size() == 0) {
+			jbpmTest.completeComputeCost(account.getUserId() + "");
+			list = marketService.getMergeQuoteList(account.getUserId());
+			System.out.println(account.getUserId());
+		}
+>>>>>>> b64a5d2487575fd4b7b71c872d0460743d181f92
 
 		model.put("list", list);
 		model.addAttribute("taskName", "合并报价");
