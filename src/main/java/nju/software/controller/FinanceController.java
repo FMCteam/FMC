@@ -37,13 +37,8 @@ public class FinanceController {
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
 		List<Map<String, Object>> list = financeService
 				.getConfirmSampleMoneyList(actorId);
-<<<<<<< HEAD
 		/*if (list.size() == 0) {
 			jbpmTest.completeConfirmQuote(FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
-=======
-		if (list.size() == 0) {
-			jbpmTest.completeConfirmQuote("1");
->>>>>>> b64a5d2487575fd4b7b71c872d0460743d181f92
 			list = financeService.getConfirmSampleMoneyList(actorId);
 		}*/
 		model.addAttribute("list", list);

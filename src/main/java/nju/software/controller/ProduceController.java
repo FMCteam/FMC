@@ -231,13 +231,8 @@ public class ProduceController {
 	public String produceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=produceService.getProduceList();
-<<<<<<< HEAD
 		/*if(list.size()==0){
 			jbpmTest.completeBeforeProduce(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
-=======
-		if(list.size()==0){
-			jbpmTest.completeBeforeProduce("1");
->>>>>>> b64a5d2487575fd4b7b71c872d0460743d181f92
 			list=produceService.getProduceList();
 		}*/
 		model.addAttribute("list", list);
