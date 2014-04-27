@@ -641,11 +641,10 @@ public class MarketController {
 		List<Map<String, Object>> list = marketService
 				.getMergeQuoteList(account.getUserId());
 
-		if (list.size() == 0) {
-			jbpmTest.completeComputeCost(account.getUserId() + "");
-			list = marketService.getMergeQuoteList(account.getUserId());
-			System.out.println(account.getUserId());
-		}
+		/*if (list.size() == 0) {
+			jbpmTest.completeComputeCost(account.getAccountId() + "");
+			list = marketService.getMergeQuoteList(account.getAccountId());
+		}*/
 
 		model.put("list", list);
 		model.addAttribute("taskName", "合并报价");
@@ -728,11 +727,11 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> orderModelList = marketService
 				.getModifyOrderList(account.getUserId());
-		if (orderModelList.size() == 0) {
+		/*if (orderModelList.size() == 0) {
 			jbpmTest.completeVerify(account.getUserId() + "", false);
 			orderModelList = marketService.getModifyOrderList(account
 					.getUserId());
-		}
+		}*/
 		model.put("list", orderModelList);
 		model.addAttribute("taskName", "修改询单");
 		model.addAttribute("url", "/market/modifyOrderDetail.do");
@@ -1117,10 +1116,10 @@ public class MarketController {
 		String actorId = account.getUserId() + "";
 		List<Map<String, Object>> orderList = marketService
 				.getConfirmProductList(actorId);
-		if (orderList.size() == 0) {
+		/*if (orderList.size() == 0) {
 			jbpmTest.completeProduceConfirm("1", true);
 			orderList = marketService.getConfirmProductList(actorId);
-		}
+		}*/
 		model.put("list", orderList);
 		model.addAttribute("taskName", "确认合同加工单");
 		model.addAttribute("url", "/market/confirmProduceOrderDetail.do");
@@ -1260,10 +1259,10 @@ public class MarketController {
 				"cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSignContractList(account.getUserId() + "");
-		if (list.size() == 0) {
+		/*if (list.size() == 0) {
 			jbpmTest.completeProduceConfirm(account.getUserId() + "", true);
 			marketService.getSignContractList(account.getUserId() + "");
-		}
+		}*/
 		model.put("list", list);
 		model.addAttribute("taskName", "签订合同");
 		model.addAttribute("url", "/market/signContractDetail.do");

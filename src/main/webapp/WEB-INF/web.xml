@@ -234,7 +234,7 @@
 	</welcome-file-list>
 	<error-page>
 		<error-code>404</error-code>
-		<location>/views/404.jsp</location>
+		<location>/views/405.jsp</location>
 	</error-page>
 	<error-page>
        <error-code>500</error-code>

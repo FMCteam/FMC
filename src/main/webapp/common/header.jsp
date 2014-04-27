@@ -96,7 +96,7 @@ table.tablesorter thead tr .headerSortDown {
 			<div class="leftmenu">
 				<ul class="nav nav-tabs nav-stacked">
 					<li class="nav-header">Navigation</li>
-					<li class="active"><a href="dashboard.html"><span
+					<li class="active"><a href="#"><span
 							class="iconfa-laptop"></span> 欢迎</a></li>
 
 

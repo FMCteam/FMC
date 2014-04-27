@@ -241,25 +241,26 @@ function init(){
 	
 	
 	
-	$("input[name='style_name']").val("杀马特3000");
-	$("input[name='order_source']").val("杀马特3000");
+	$("input[name='style_name']").val("");
+	$("input[name='order_source']").val("");
 	$("input[name='ask_amount']").val("20");
 	$("input[name='ask_produce_period']").val("10");
-	$("input[name='ask_deliver_date']").val("2012-12-12");
+	$("input[name='ask_deliver_date']").val("");
+
 	
 	
-	$("input[name='in_post_sample_clothes_time']").val("2012-12-12");
+	
+	$("input[name='in_post_sample_clothes_time']").val();
 	$("input[name='in_post_sample_clothes_type']").val("顺丰");
-	$("input[name='in_post_sample_clothes_number']").val("435435345435345");
+	$("input[name='in_post_sample_clothes_number']").val("");
 	
-	
-	$("input[name='sample_clothes_time']").val("2012-12-12");
+	$("input[name='sample_clothes_time']").val("");
 	$("input[name='sample_clothes_type']").val("申通");
-	$("input[name='sample_clothes_number']").val("657567567567567567");
-	$("input[name='sample_clothes_name']").val("黑撒旦躬");
-	$("input[name='sample_clothes_phone']").val("1599546546");
-	$("input[name='sample_clothes_address']").val("江苏南京");
-	$("input[name='sample_clothes_remark']").val("ggggggggggggggggggg");
+	$("input[name='sample_clothes_number']").val("");
+	$("input[name='sample_clothes_name']").val("");
+	$("input[name='sample_clothes_phone']").val("");
+	$("input[name='sample_clothes_address']").val("");
+	$("input[name='sample_clothes_remark']").val("");
 	
 	if($('input:radio[name="has_posted_sample_clothes"]:checked').val()=="0"){
 		$("input[name='in_post_sample_clothes_time']").attr("readonly","readonly");
