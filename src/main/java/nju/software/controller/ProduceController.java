@@ -231,10 +231,10 @@ public class ProduceController {
 	public String produceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=produceService.getProduceList();
-		if(list.size()==0){
+		/*if(list.size()==0){
 			jbpmTest.completeBeforeProduce(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
 			list=produceService.getProduceList();
-		}
+		}*/
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "批量生产");
 		model.addAttribute("url", "/produce/produceDetail.do");

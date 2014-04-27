@@ -65,10 +65,10 @@ public class LogisticsController {
 	public String sendSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = logisticsService.getSendSampleList();
-		if (list.size() == 0) {
+		/*if (list.size() == 0) {
 			jbpmTest.completeProduceSample("1");
 			list = logisticsService.getSendSampleList();
-		}
+		}*/
 		model.put("list", list);
 		model.addAttribute("taskName", "样衣发货");
 		model.addAttribute("url", "/logistics/sendSampleDetail.do");
@@ -117,11 +117,11 @@ public class LogisticsController {
 				.getPackageList();
 		List<Map<String, Object>> warehouseList = logisticsService
 				.getWarehouseList();
-		if (packageList.size() == 0) {
+		/*if (packageList.size() == 0) {
 			jbpmTest.completeCheckQuality("1");
 			packageList = logisticsService.getPackageList();
 			warehouseList = logisticsService.getWarehouseList();
-		}
+		}*/
 		model.put("packageList", packageList);
 		model.put("warehouseList", warehouseList);
 		return "/logistics/warehouseList";
