@@ -28,17 +28,17 @@ public class AccessFilter implements Filter {
 	public static HashMap<String, String> accessTable = new HashMap<String, String>();
 	static {
 		accessTable.put("employee", "ADMIN");
-		accessTable.put("customer", "ADMIN, SHICHANGZHUANYUAN, SHICHANGZHUGUAN");
-		accessTable.put("buy", "CAIGOUZHUGUAN");
-		accessTable.put("design", "SHEJIZHUGUAN");
-		accessTable.put("finance", "CAIWUZHUGUAN");
-		accessTable.put("market", "marketStaff, ma");
+		accessTable.put("customer", "ADMIN, marketManager, marketStaff");
+		accessTable.put("buy", "ADMIN,purchaseManager");
+		accessTable.put("design", "ADMIN,designManager");
+		accessTable.put("finance", "ADMIN,financeManager");
+		accessTable.put("market", "ADMIN,marketStaff,marketManager");
 		accessTable.put("order", "ADMIN, designManager, marketManager");
-		accessTable.put("produce", "SHENGCHANZHUGUAN");
-		accessTable.put("logistics", "logisticsManager");
-		accessTable.put("quality", "qualityManager");
-		accessTable.put("other", "ALL");
-		accessTable.put("account", "ALL");
+		accessTable.put("produce", "ADMIN,produceManager");
+		accessTable.put("logistics", "ADMIN,logisticsManager");
+		accessTable.put("quality", "ADMIN,qualityManager");
+		accessTable.put("other", "ADMIN,ALL");
+		accessTable.put("account", "ADMIN,ALL");
 //		accessTable.put("other", "ADMIN, SHICHANGZHUANYUAN, SHICHANGZHUGUAN");
 
 	};
@@ -66,16 +66,16 @@ public class AccessFilter implements Filter {
 			//todo 从cookie读取数据，看看是否是记住密码用户。
 			has_access = false;
 		}  else {
-//			String user_role = curUser.getUserRole();		
-//				String access = accessTable.get(type);
-//				if(access != null && (
-//						(access.equals("ALL") && !user_role.equals("CUSTOMER")) || access.contains(user_role))
-//				){
-//					has_access = true;
-//				} else {
-//					has_access = false;
-//				}
-			has_access = true;
+			/*  String user_role = curUser.getUserRole();		
+				String access = accessTable.get(type);
+				if(access != null && (
+						(access.equals("ALL") && !user_role.equals("CUSTOMER")) || access.contains(user_role))
+				){
+					has_access = true;
+				} else {
+					has_access = false;
+				}*/
+		has_access = true;
 
 		}
 		
@@ -86,7 +86,7 @@ public class AccessFilter implements Filter {
 				
 //				System.out.println(acc.getKey() + "," + acc.getValue().contains(curUser.getUserRole()));
 				
-				request.setAttribute("ROLE_" + acc.getKey(), true); // acc.getValue().contains(curUser.getUserRole()));
+				request.setAttribute("ROLE_" + acc.getKey(), acc.getValue().contains(curUser.getUserRole())); // acc.getValue().contains(curUser.getUserRole()));
 				
 			}
 			
