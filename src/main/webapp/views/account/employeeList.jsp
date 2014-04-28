@@ -28,7 +28,7 @@
 						<c:forEach var="employee" items="${employee_list}">
 							<tr>
 								<td>${employee.employeeName }</td>
-								<td>${employee.sex }</td>
+								<td>${employee.sex==1?'男':'' }${employee.sex==2?'女':'' }${employee.sex==3?'保密':'' }</td>
 								<td>${employee.age }</td>
 								<td>${employee.department }</td>
 								<td>${fn:substring(employee.entryTime,0,10) }</td>
