@@ -48,12 +48,12 @@
 		<td>样衣图片</td>
 		<td><c:if
 				test="${orderInfo.order.sampleClothesPicture!=null}">
-				<img src="${ctx}/${orderInfo.order.sampleClothesPicture}" alt="样衣图片"></img>
+				<img src="${ctx}${orderInfo.order.sampleClothesPicture}" style="max-height: 300px;" alt="样衣图片"></img>
 			</c:if></td>
 		<td>参考图片</td>
 		<td colspan="2"><c:if
 				test="${orderInfo.order.referencePicture!=null}">
-				<img src="${ctx}/${orderInfo.order.referencePicture}" alt="参考图片"></img>
+				<img src="${ctx}${orderInfo.order.referencePicture}" style="max-height: 300px;" alt="参考图片"></img>
 			</c:if></td>
 	</tr>
 </table>

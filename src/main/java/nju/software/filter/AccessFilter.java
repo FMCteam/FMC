@@ -90,8 +90,8 @@ public class AccessFilter implements Filter {
 				
 			}
 			
-//			request.setAttribute("USER_nick_name", curUser.getNickName());
-//			request.setAttribute("USER_user_name", curUser.getUserName());
+			request.setAttribute("USER_nick_name", curUser.getNickName());
+			request.setAttribute("USER_user_name", curUser.getUserName());
 //			
 //			if(jbpmAPIUtil==null){
 //				System.out.println("jbpm null");
