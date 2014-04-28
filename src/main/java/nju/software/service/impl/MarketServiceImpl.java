@@ -64,6 +64,9 @@ public class MarketServiceImpl implements MarketService {
 	public final static String RESULT_QUOTE = "quote";
 	public final static String RESULT_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder";
 	public final static String RESULT_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
+	public final static String UPLOAD_DIR_SAMPLE="D:/fmc/sample/";
+	public final static String UPLOAD_DIR_REFERENCE="D:/fmc/reference/";
+	
 
 	@Autowired
 	private ProductDAO productDAO;
@@ -124,18 +127,16 @@ public class MarketServiceImpl implements MarketService {
 		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/sampleClothesPicture/" + orderId);
-			File file = FileOperateUtil.Upload(request, filedir, null,
+			File file = FileOperateUtil.Upload(request, UPLOAD_DIR_SAMPLE+orderId, "1",
 					"sample_clothes_picture");
-			order.setSampleClothesPicture("/upload/sampleClothesPicture/"
-					+ orderId + "/" + file.getName());
+			order.setSampleClothesPicture(file.getAbsolutePath());
 		}
 		if (!multipartRequest.getFile("reference_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/reference_picture/" + orderId);
-			File file = FileOperateUtil.Upload(request, filedir, null,
+			File file = FileOperateUtil.Upload(request, UPLOAD_DIR_REFERENCE+orderId, "1",
 					"reference_picture");
-			order.setReferencePicture("/upload/reference_picture/" + orderId
-					+ "/" + file.getName());
+			order.setReferencePicture(file.getAbsolutePath());
 		}
 
 		orderDAO.attachDirty(order);

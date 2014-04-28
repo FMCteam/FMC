@@ -1,7 +1,9 @@
 package nju.software.controller;
 
 import net.sf.json.JSONObject;
+import nju.software.dao.impl.OrderDAO;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Order;
 import nju.software.service.impl.BuyServiceImpl;
 import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.FinanceServiceImpl;
@@ -11,7 +13,10 @@ import nju.software.service.impl.ProduceServiceImpl;
 import nju.software.service.impl.QualityServiceImpl;
 import nju.software.util.JbpmAPIUtil;
 
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,7 +104,7 @@ public class CommonController {
 	@RequestMapping(value = "/common/getTaskNumber.do")
 	@Transactional(rollbackFor = Exception.class)
 	@ResponseBody
-	public void verifyPurchaseList(HttpServletRequest request,
+	public void getTaskNumber(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String actorId = getActorId(request);
 		Integer number = getTaskNumber(actorId);
@@ -110,7 +115,6 @@ public class CommonController {
 		}
 		// jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,
 		// getTaskNumber(actorId));
-
 		if (isMarketStaff(request)) {
 			map.put(MarketServiceImpl.TASK_MODIFY_ORDER, actorId);
 			map.put(MarketServiceImpl.TASK_MERGE_QUOTE, actorId);
@@ -125,10 +129,42 @@ public class CommonController {
 		for (String task : map.keySet()) {
 			jsonobj.put(task, getTaskNumber((String) map.get(task), task));
 		}
-
 		sendJson(response, jsonobj);
 	}
 
+	@RequestMapping(value = "/common/getPic.do")
+	@Transactional(rollbackFor = Exception.class)
+	public void getPic(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		response.setContentType("image/jpg"); // 设置返回的文件类型
+		Integer orderId =Integer.parseInt(request.getParameter("orderId"));
+		Order order=orderDAO.findById(orderId);
+		String type = request.getParameter("type");
+		String file = null;
+		if (type.equals("sample")) {
+			file = order.getSampleClothesPicture();
+		} else {
+			file = order.getReferencePicture();
+		}
+		try {
+			DataInputStream in = new DataInputStream(new FileInputStream(file));
+			OutputStream os = response.getOutputStream();
+			byte[] b = new byte[2048];
+			while ((in.read(b)) != -1) {
+				os.write(b);
+				os.flush();
+			}
+			in.close();
+			os.close();
+			os.flush();
+			os.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
 	private String getActorId(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
@@ -181,4 +217,6 @@ public class CommonController {
 
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private OrderDAO orderDAO;
 }

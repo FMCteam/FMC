@@ -17,6 +17,7 @@
 					<thead>
 						<tr>
 							<th>订单号</th>
+							<th>样衣图片</th>
 							<th>市场专员</th>
 							<th>客户姓名</th>
 							<th>客户公司</th>
@@ -28,6 +29,11 @@
 						<c:forEach var="model" items="${scanList}">
 							<tr>
 								<td>${model.orderId}</td>
+								<td style="padding:8px 0px 0px 0px;"><c:if
+										test="${model.order.sampleClothesPicture!=null}">
+										<img width="60px" height="100%"
+											src="${ctx}/common/getPic.do?type=sample&orderId=${model.order.orderId}"></img>
+									</c:if></td>
 								<td>${model.employee.employeeName}</td>
 								<td>${model.order.customerName}</td>
 								<td>${model.order.customerCompany}</td>
@@ -40,6 +46,11 @@
 						<c:forEach var="model" items="${sendList}">
 							<tr>
 								<td>${model.orderId}</td>
+								<td style="padding:8px 0px 0px 0px;"><c:if
+										test="${model.order.sampleClothesPicture!=null}">
+										<img width="60px" height="100%"
+											src="${ctx}/common/getPic.do?type=sample&orderId=${model.order.orderId}"></img>
+									</c:if></td>
 								<td>${model.employee.employeeName}</td>
 								<td>${model.order.customerName}</td>
 								<td>${model.order.customerCompany}</td>
