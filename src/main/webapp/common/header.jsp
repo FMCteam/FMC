@@ -44,8 +44,7 @@
 										${USER_user_name }</small>
 								</h5>
 								<ul>
-									<li><a href="${ctx }/account.do">查看详情</a></li>
-									<li><a href="${ctx }/account/modify.do">修改账户</a></li>
+									<li><a href="${ctx }/account/modifyEmployeeDetail.do">修改账户</a></li>
 									<li><a href="${ctx }/logout.do">退出</a></li>
 								</ul>
 							</div>
