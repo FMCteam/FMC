@@ -132,8 +132,10 @@ public class AccountController {
 		}
 
 		if (success) {
+			model.addAttribute("notify", "添加员工成功！");
 			return "forward:/account/employeeList.do";
 		} else {
+			model.addAttribute("notify", "添加员工失败！");
 			return "forward:/account/addEmployeeDetail.do";
 		}
 	}
@@ -212,8 +214,7 @@ public class AccountController {
 
 		// 两次输入密码不相同
 		if (!password1.equals(password2)) {
-			request.setAttribute("msg", "两次输入密码不相同！");
-			// session.setAttribute("msg", "两次输入密码不相同！");
+			model.addAttribute("notify", "两次输入密码不相同！");
 			System.out.println("password");
 			return "forward:/account/modifyEmployeeDetail.do";
 		}
@@ -223,15 +224,13 @@ public class AccountController {
 		// Account account = accountService.getAccountByUsername(username);
 		if (account == null) {
 			// 用户不存在，无法修改
-			request.setAttribute("msg", "用户不存在！");
-			// session.setAttribute("msg", "用户不存在！");
+			model.addAttribute("notify", "用户不存在！");
 			System.out.println("no user");
 			success = false;
 		} else if (!account.getUserName().equals(username)
 				&& !account.getUserRole().equals("ADMIN")) {
 			// 当前用户不是管理员，且修改的不是当前用户，无法修改
-			request.setAttribute("msg", "用户名与当前用户不同！");
-			// session.setAttribute("msg", "用户不存在！");
+			model.addAttribute("notify", "用户名与当前用户不同！");
 			System.out.println("wrong username");
 			success = false;
 		} else {
@@ -281,6 +280,7 @@ public class AccountController {
 			}
 			accountService.updateAccount(accountToModify);
 
+			model.addAttribute("notify", "修改成功！");
 			success = true;
 		}
 
@@ -325,9 +325,11 @@ public class AccountController {
 		}
 
 		if (success) {
+			model.addAttribute("notify", "删除成功！");
 			System.out.println("employee delete success");
 			return "forward:/account/employeeList.do";
 		} else {
+			model.addAttribute("notify", "删除失败！");
 			System.out.println("employee delete failed");
 			return "forward:/account/employeeList.do";
 		}
