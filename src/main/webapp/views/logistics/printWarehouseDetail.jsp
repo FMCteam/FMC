@@ -47,19 +47,39 @@ td {
 	<h2>智造链-装包单</h2>
 	<table border="1">
 		<tr>
-			<td>订单号：</td>
+			<td>订单号</td>
 			<td>${orderInfo.orderId}</td>
 		</tr>
 		<tr>
-			<td>装包号：</td>
+			<td>客户</td>
+			<td>${orderInfo.order.customerName}</td>
+		</tr>
+		<tr>
+			<td>公司</td>
+			<td>${orderInfo.order.customerCompany}</td>
+		</tr>
+		<tr>
+			<td>收件人</td>
+			<td>${orderInfo.logistics.sampleClothesName}</td>
+		</tr>
+		<tr>
+			<td>联系电话</td>
+			<td>${orderInfo.logistics.sampleClothesPhone}</td>
+		</tr>
+		<tr>
+			<td>收件地址</td>
+			<td>${orderInfo.logistics.sampleClothesAddress}</td>
+		</tr>
+		<tr>
+			<td>装包号</td>
 			<td>${orderInfo.pack.packageId}</td>
 		</tr>
 		<tr>
-			<td>条形码：</td>
+			<td>条形码</td>
 			<td><span id="bar"></span></td>
 		</tr>
 		<tr>
-			<td>详情：</td>
+			<td>详情</td>
 			<td>
 				<table>
 					<tr>

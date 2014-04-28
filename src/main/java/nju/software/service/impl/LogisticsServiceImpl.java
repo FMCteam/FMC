@@ -147,6 +147,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		Map<String, Object> model = new HashMap<>();
 		Order order = orderDAO.findById(orderId);
 		model.put("order", order);
+		model.put("logistics",logisticsDAO.findById(orderId));
 		model.put("pack", packageDAO.findById(packageId));
 		model.put("packDetails", packageDetailDAO.findByPackageId(packageId));
 		model.put("orderId", service.getOrderId(order));

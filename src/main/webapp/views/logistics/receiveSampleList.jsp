@@ -5,7 +5,6 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
-
 			<section class="list">
 				<table class="list tablesorter">
 					<caption>
@@ -23,6 +22,7 @@
 							<th>操作</th>
 						</tr>
 					</thead>
+					<tbody>
 					<c:forEach var="task" items="${list}">
 						<tr>
 							<td>${task.orderId}</td>
@@ -35,6 +35,7 @@
 							</a></td>
 						</tr>
 					</c:forEach>
+					</tbody>
 				</table>
 			</section>
 		</div>

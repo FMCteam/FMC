@@ -36,6 +36,10 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			</div>
+			<div class="action">
+				<a class="btn btn-primary"
+					href="${ctx}/image.do?pid=${orderInfo.order.orderId}">订单进度</a>
+			</div>
 		</div>
 	</div>
 	<!--row-fluid-->

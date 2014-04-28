@@ -13,7 +13,10 @@
 <script type="text/javascript" src="${ctx}/js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("table.tablesorter").tablesorter();
+	//	if($("table.tablesorter tbody tr").length!=0){
+			$("table.tablesorter").tablesorter();
+	//	}
+		
 		$.ajax({
 			url : "${ctx}/common/getTaskNumber.do",
 			success : function(msg) {
