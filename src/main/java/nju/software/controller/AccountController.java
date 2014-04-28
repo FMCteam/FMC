@@ -45,7 +45,7 @@ public class AccountController {
 		model.addAttribute("employee_list", list);
 		model.addAttribute("page_number", pageNumber);
 		model.addAttribute("page", page);
-
+		//model.addAttribute("notify", page);
 		return "/account/employeeList";
 	}
 

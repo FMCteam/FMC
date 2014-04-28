@@ -137,17 +137,6 @@
 
 
 <%@include file="/common/js_file.jsp"%>
-<script type="text/javascript"
-	src="${ctx}/js/jquery.noty.packaged.min.js"></script>
-<script>
-	if ('${notify}' != null && '${notify}' != "") {
-		noty({
-			text : '${notify}',
-			layout : 'topCenter',
-			timeout : 2000
-		});
-	}
-</script>
 <!-- 这里引入你需要的js文件 -->
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
