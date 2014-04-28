@@ -14,6 +14,7 @@
 <script type="text/javascript"
 	src="${ctx}/js/jquery.noty.packaged.min.js"></script>
 <script>
+$(document).ready(function() {
 	if ('${notify}' != null && '${notify}' != "") {
 		noty({
 			text : '${notify}',
@@ -21,6 +22,7 @@
 			timeout : 2000
 		});
 	}
+});
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {

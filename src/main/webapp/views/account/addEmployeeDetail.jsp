@@ -21,33 +21,33 @@
 						action="${ctx}/account/addEmployeeSubmit.do" method="post">
 						<table>
 							<tr>
-								<td><label>用户名</label> <span class="field"><input type="text"
+								<td><label>用户名</label> <span class="field"><input type="text" required="required"
 									name="employee_id" class="input-large" placeholder="用户名" />&nbsp;<span
 									style="color:#ff0000;">*</span>(必填)</span></td>
-								<td><label>姓名</label> <span class="field"><input type="text"
+								<td><label>姓名</label> <span class="field"><input type="text" required="required"
 									name="employee_name" class="input-large" placeholder="姓名" />&nbsp;<span
 									style="color:#ff0000;">*</span>(必填)</span></td>
 							</tr>
 							
 							<tr>
-								<td><label>性别</label> <span class="formwrapper"> <input
+								<td><label>性别</label> <span class="formwrapper"> <input required="required"
 										type="radio" name="radiofield" value="1" checked="checked" /> 男
 										&nbsp; &nbsp; <input type="radio" name="radiofield" value="2" />
 										女 &nbsp; &nbsp; <input type="radio" name="radiofield" value="3" />
 										保密 &nbsp; &nbsp;<span style=" color:#ff0000;">*</span>(必填)
 									</span></td>
-								<td><label>部门</label> <span class="field"><input type="text"
+								<td><label>部门</label> <span class="field"><input type="text" required="required"
 										name="department" class="input-large" placeholder="部门" />&nbsp;
 										<span style="color:#ff0000;">*</span>(必填)</span></td>
 							</tr>
 							
 							<tr>
 								<td><label>年龄</label> <span class="field"><input type="text"
-									id="spinner" name="employee_age"
+									id="spinner" name="employee_age" required="required"
 									class="input-small input-spinner" />&nbsp;<span
 									style="color:#ff0000;">*</span>(必填)</span></td>
 								<td><label>身份证号码</label> <span class="field"><input
-									type="text" name="id_card" class="input-large"
+									type="text" name="id_card" class="input-large" required="required"
 									placeholder="身份证号码" />&nbsp;
 									<span style="color:#ff0000;">*</span>(必填)</span></td>
 							</tr>
@@ -66,7 +66,7 @@
 									</select> &nbsp;<span style="color:#ff0000;">*</span>(必填)
 									</span></td>
 								<td><div class="par">
-									<label>入职时间</label> <span class="field"><input
+									<label>入职时间</label> <span class="field"><input required="required"
 									id="datepicker" type="text" name="in_date" class="input-small" />&nbsp;<span
 									style="color:#ff0000;">*</span>(必填)</span>
 									</div></td>

@@ -4,13 +4,16 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import nju.software.service.DesignService;
 import nju.software.service.OrderService;
 import nju.software.service.impl.JbpmTest;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class DesignController {
+	
+	private final static String CAD_URL = "D:/fmc/cad/";
 
 	// ===========================设计验证=================================
 	@RequestMapping(value = "/design/verifyDesignList.do")
@@ -91,7 +96,7 @@ public class DesignController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
-		String url = "D:/fmc/" + orderId;
+		String url = CAD_URL + orderId;
 		String fileid = "CADFile";
 		FileOperateUtil.Upload(request, url, null, fileid);
 //		FileOperateUtil.Upload(file, url);
@@ -134,7 +139,7 @@ public class DesignController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
-		String url = "D:/fmc/" + orderId;
+		String url = CAD_URL + orderId;
 		String fileid = "CADFile";
 		FileOperateUtil.Upload(request, url, null, fileid);
 //		FileOperateUtil.Upload(file, url);
@@ -178,7 +183,7 @@ public class DesignController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
-		String url = "D:/fmc/" + orderId;
+		String url = CAD_URL + orderId;
 		String fileid = "CADFile";
 		FileOperateUtil.Upload(request, url, null, fileid);
 //		FileOperateUtil.Upload(file, url);
