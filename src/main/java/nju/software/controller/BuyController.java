@@ -64,10 +64,10 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService
 				.getComputePurchaseCostList();
-		if (list.size() == 0) {
+		/*if (list.size() == 0) {
 			jbpmTest.completeVerify("1", true);
 			list = buyService.getComputePurchaseCostList();
-		}
+		}*/
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "采购成本核算");
 		model.addAttribute("url", "/buy/computePurchaseCostDetail.do");

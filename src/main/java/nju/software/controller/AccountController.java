@@ -45,7 +45,7 @@ public class AccountController {
 		model.addAttribute("employee_list", list);
 		model.addAttribute("page_number", pageNumber);
 		model.addAttribute("page", page);
-
+		//model.addAttribute("notify", page);
 		return "/account/employeeList";
 	}
 
@@ -361,7 +361,7 @@ public class AccountController {
 				((HashMap<String, Object>) o.get(1)).get("page_number"));
 		model.addAttribute("page",
 				((HashMap<String, Object>) o.get(1)).get("page"));
-		model.addAttribute("notify", "顾客列表~");
+		model.addAttribute("notify", "顾客列表");
 		return "/account/customerList";
 	}
 

@@ -32,6 +32,33 @@
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
 				<div class="tab-pane active" id="warehouse">
+
+
+					<table class="table table-bordered detail package">
+						<tr>
+							<td class="span3">颜色</td>
+							<td class="span3">大小</td>
+							<td class="span3">件数</td>
+							<td class="span2">操作</td>
+						</tr>
+						<tr class="addrow">
+							<td><input type="text" class="color" /></td>
+							<td><input type="text" class="size" /></td>
+							<td><input type="number" class="number" /></td>
+							<td><a>添加</a></td>
+						</tr>
+					</table>
+
+					<div class="action">
+						<form action="${ctx}/logistics/addPackage.do" method="post"
+							onsubmit="return dealString()">
+							<input type="hidden" name="color" /> <input type="hidden"
+								name="size" /> <input type="hidden" name="number" /> <input
+								type="hidden" name="orderId" value="${orderInfo.order.orderId}" />
+							<input class="btn btn-primary" type="submit" value="添加箱号" />
+						</form>
+					</div>
+
 					<table class="table table-bordered detail" id="pack">
 						<tr>
 							<td>箱号</td>
@@ -50,8 +77,9 @@
 								<td>${orderInfo.packageDetails[status.index][0].clothesAmount}</td>
 								<td
 									rowspan="${fn:length(orderInfo.packageDetails[status.index])}">
-									<a target="_blank"
-									href="${ctx}/logistics/printWarehouseDetail.do?orderId=${orderInfo.order.orderId}&packageId=${pack.packageId}">打印</a>
+									<a
+									href="${ctx}/logistics/removePackage.do?orderId=${orderInfo.order.orderId}&packageId=${pack.packageId}">删除</a>
+
 								</td>
 							</tr>
 							<c:forEach var="detail" begin="1"
@@ -62,12 +90,21 @@
 									<td>${detail.clothesAmount}</td>
 								</tr>
 							</c:forEach>
+
 						</c:forEach>
 					</table>
+
+					<div class="action">
+						<a class="btn btn-primary" onclick="return confirmPackageSubmit()"
+							href="${ctx}/logistics/packageSubmit.do?orderId=${orderInfo.order.orderId}">完成装箱</a>
+					</div>
+
 				</div>
 			</div>
 		</div>
 	</div>
+
+
 	<div class="footer">
 		<div class="footer-left">
 			<span>&copy; 2014. 江苏南通智造链有限公司.</span>

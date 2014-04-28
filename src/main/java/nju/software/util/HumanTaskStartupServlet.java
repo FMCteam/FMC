@@ -71,7 +71,7 @@ public class HumanTaskStartupServlet extends HttpServlet {
 			taskSession.addUser(new User(FinanceServiceImpl.ACTOR_FINANCE_MANAGER));
 			taskSession.addUser(new User(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER));
 			taskSession.addUser(new User(QualityServiceImpl.ACTOR_QUALITY_MANAGER));
-
+			taskSession.addUser(new User("1"));
 			
 			// 添加管理员
 			if (accountService.getAccountByUsername("admin") == null) {

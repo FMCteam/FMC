@@ -8,35 +8,44 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<section class="list">
-				<table class="list">
+				<table class="list tablesorter">
 					<caption>
-						<span class="text-vertical">待发货收取列表:<span class="number">${fn:length(list)}</span>件任务
+						<span class="text-vertical">待发货列表:<span class="number">${fn:length(scanList)+fn:length(sendList)}</span>件任务
 						</span><input type="text" class="search-query float-right"
 							placeholder="输入检索条件">
 					</caption>
 					<thead>
 						<tr>
 							<th>订单号</th>
-							<th>业务员</th>
+							<th>市场专员</th>
 							<th>客户姓名</th>
 							<th>客户公司</th>
-							<th>款式</th>
-							<th>件数</th>
-							<th>交货时间</th>
+							<th>任务开始时间</th>
 							<th>操作</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="task" items="${list}">
-							<tr class="gradeA">
-								<td>${task.order.orderId}</td>
-								<td>${task.order.employeeId}</td>
-								<td>${task.order.customerName}</td>
-								<td>${task.order.customerCompany}</td>
-								<td>${task.order.styleName}</td>
-								<td>${task.order.askAmount}</td>
-								<td>${fn:substring(task.order.askDeliverDate,0,10)}</td>
-								<td><a href="${ctx }/logistics/sendClothesDetail.do?orderId=${task.order.orderId}">详情</a>
+						<c:forEach var="model" items="${scanList}">
+							<tr>
+								<td>${model.orderId}</td>
+								<td>${model.employee.employeeName}</td>
+								<td>${model.order.customerName}</td>
+								<td>${model.order.customerCompany}</td>
+								<td>${model.taskTime}</td>
+								<td><a
+									href="${ctx}/logistics/scanClothesDetail.do?orderId=${model.order.orderId}">待发货</a>
+								</td>
+							</tr>
+						</c:forEach>
+						<c:forEach var="model" items="${sendList}">
+							<tr>
+								<td>${model.orderId}</td>
+								<td>${model.employee.employeeName}</td>
+								<td>${model.order.customerName}</td>
+								<td>${model.order.customerCompany}</td>
+								<td>${model.taskTime}</td>
+								<td><a
+									href="${ctx}/logistics/sendClothesDetail.do?orderId=${model.order.orderId}">已发货</a>
 								</td>
 							</tr>
 						</c:forEach>

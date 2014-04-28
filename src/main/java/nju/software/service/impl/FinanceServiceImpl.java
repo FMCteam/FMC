@@ -1,10 +1,20 @@
 package nju.software.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.drools.command.Context;
+import org.drools.command.impl.GenericCommand;
+import org.drools.command.impl.KnowledgeCommandContext;
+import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.process.NodeInstance;
+import org.drools.runtime.process.ProcessInstance;
+import org.drools.runtime.process.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
@@ -39,19 +49,19 @@ public class FinanceServiceImpl implements FinanceService {
 	public Map<String, Object> getConfirmSampleMoneyDetail(String actorId,
 			Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String, Object> model = service.getBasicOrderModelWithQuote(actorId,
-				TASK_CONFIRM_SAMPLE_MONEY, orderId);
-		Order order=(Order) model.get("order");
-		Float price=(float)0;
-		if(order.getStyleSeason().equals("春夏")){
-			price=(float)200;
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(
+				actorId, TASK_CONFIRM_SAMPLE_MONEY, orderId);
+		Order order = (Order) model.get("order");
+		Float price = (float) 0;
+		if (order.getStyleSeason().equals("春夏")) {
+			price = (float) 200;
 			model.put("price", price);
-		}else{
-			price=(float)400;
+		} else {
+			price = (float) 400;
 			model.put("price", price);
 		}
 		model.put("number", order.getSampleAmount());
-		model.put("total", order.getSampleAmount()*price);
+		model.put("total", order.getSampleAmount() * price);
 		model.put("taskName", "确认样衣制作金");
 		model.put("tabName", "制版费用");
 		model.put("type", "样衣制作金");
@@ -91,14 +101,14 @@ public class FinanceServiceImpl implements FinanceService {
 			Integer orderId) {
 		// TODO Auto-generated method stub
 
-		Map<String, Object> model = service.getBasicOrderModelWithQuote(actorId,
-				TASK_CONFIRM_DEPOSIT, orderId);
-		Order order=(Order) model.get("order");
-		Quote quote=(Quote) model.get("quote");
-		Float price=quote.getOuterPrice();
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(
+				actorId, TASK_CONFIRM_DEPOSIT, orderId);
+		Order order = (Order) model.get("order");
+		Quote quote = (Quote) model.get("quote");
+		Float price = quote.getOuterPrice();
 		model.put("price", price);
 		model.put("number", order.getAskAmount());
-		model.put("total", order.getAskAmount()*price*0.3);
+		model.put("total", order.getAskAmount() * price * 0.3);
 		model.put("taskName", "确认大货定金");
 		model.put("tabName", "大货定金");
 		model.put("type", "大货定金");
@@ -137,22 +147,21 @@ public class FinanceServiceImpl implements FinanceService {
 	public Map<String, Object> getConfirmFinalPaymentDetail(String actorId,
 			Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String, Object> model = service.getBasicOrderModelWithQuote(actorId,
-				TASK_CONFIRM_FINAL_PAYMENT, orderId);
-		Order order=(Order) model.get("order");
-		Quote quote=(Quote) model.get("quote");
-		Float price=quote.getOuterPrice();
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(
+				actorId, TASK_CONFIRM_FINAL_PAYMENT, orderId);
+		Order order = (Order) model.get("order");
+		Quote quote = (Quote) model.get("quote");
+		Float price = quote.getOuterPrice();
 		model.put("price", price);
 		model.put("number", order.getAskAmount());
-		model.put("total", order.getAskAmount()*price*0.7);
+		model.put("total", order.getAskAmount() * price * 0.7);
 		model.put("taskName", "确认大货尾款");
 		model.put("tabName", "大货尾款");
 		model.put("type", "大货尾款");
 		model.put("url", "/finance/confirmFinalPaymentSubmit.do");
 		model.put("moneyName", "70%尾款");
 		return model;
-		
-		
+
 	}
 
 	@Override
@@ -172,6 +181,35 @@ public class FinanceServiceImpl implements FinanceService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public List<Map<String, Object>> getProcessState(final long pid) {
+		// //System.out.println("size:"+jbpmAPIUtil.getKsession().getProcessInstances().size());
+		final List<Map<String, Object>> list = new ArrayList<>();
+		jbpmAPIUtil.getKsession().execute(new GenericCommand<String>() {
+			public String execute(Context context) {
+				StatefulKnowledgeSession ksession = ((KnowledgeCommandContext) context)
+						.getStatefulKnowledgesession();
+				System.out.println(ksession.getProcessInstances().size());
+
+				org.jbpm.process.instance.ProcessInstance processInstance = (org.jbpm.process.instance.ProcessInstance) ksession
+						.getProcessInstance(pid);
+				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
+						.getNodeInstances()) {
+					Map<String, Object> data = nodeInstance.getNode()
+							.getMetaData();
+					Map<String, Object> data2 = new HashMap<String, Object>();
+					data2.put("x", data.get("x"));
+					data2.put("y", data.get("y"));
+					data2.put("width", data.get("width"));
+					data2.put("height", data.get("height"));
+					list.add(data2);
+				}
+				return null;
+			}
+		});
+		return list;
 	}
 
 	@Autowired

@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <section class="list">
-	<table class="list">
+	<table class="list tablesorter">
 		<caption>
 			<span class="text-vertical">${taskName}:<span class="number">${fn:length(list)}</span>件任务
 			</span><input type="text" class="search-query float-right"
@@ -21,9 +21,10 @@
 			<c:forEach var="model" items="${list}">
 				<tr>
 					<td>${model.orderId}</td>
-					<td style="padding:8px 0px 0px 0px;"><c:if test="${model.order.sampleClothesPicture!=null}">
-							<img width="60px" height="100%" src="${ctx}/${model.order.sampleClothesPicture}"
-								alt="样衣图片"></img>
+					<td style="padding:8px 0px 0px 0px;"><c:if
+							test="${model.order.sampleClothesPicture!=null}">
+							<img width="60px" height="100%"
+								src="${ctx}/${model.order.sampleClothesPicture}"></img>
 						</c:if></td>
 					<td>${model.employee.employeeName}</td>
 					<td>${model.order.customerName}</td>

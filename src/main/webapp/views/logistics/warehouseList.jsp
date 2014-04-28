@@ -10,9 +10,9 @@
 
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<section class="list">
-				<table class="list">
+				<table class="list tablesorter">
 					<caption>
-						<span class="text-vertical">待入库列表:<span class="number">${fn:length(list)}</span>件任务
+						<span class="text-vertical">待入库列表:<span class="number">${fn:length(warehouseList)+fn:length(packageList)}</span>件任务
 						</span><input type="text" class="search-query float-right"
 							placeholder="输入检索条件">
 					</caption>
@@ -29,25 +29,25 @@
 					<tbody>
 						<c:forEach var="model" items="${packageList}">
 							<tr>
-								<td>${model.order.orderId}</td>
+								<td>${model.orderId}</td>
 								<td>${model.employee.employeeName}</td>
 								<td>${model.order.customerName}</td>
 								<td>${model.order.customerCompany}</td>
-								<td>${model.task.createdOn}</td>
+								<td>${model.taskTime}</td>
 								<td><a
-									href="${ctx}/logistics/warehouseDetail.do?orderId=${model.order.orderId}&warehouse=0">装箱</a>
+									href="${ctx}/logistics/packageDetail.do?orderId=${model.order.orderId}">装箱</a>
 								</td>
 							</tr>
 						</c:forEach>
 						<c:forEach var="model" items="${warehouseList}">
 							<tr>
-								<td>${model.order.orderId}</td>
+								<td>${model.orderId}</td>
 								<td>${model.employee.employeeName}</td>
 								<td>${model.order.customerName}</td>
 								<td>${model.order.customerCompany}</td>
-								<td>${model.task.createdOn}</td>
+								<td>${model.taskTime}</td>
 								<td><a
-									href="${ctx}/logistics/warehouseDetail.do?orderId=${model.order.orderId}&warehouse=1">入库</a>
+									href="${ctx}/logistics/warehouseDetail.do?orderId=${model.order.orderId}">入库</a>
 								</td>
 							</tr>
 						</c:forEach>

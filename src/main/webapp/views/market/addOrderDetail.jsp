@@ -117,7 +117,7 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="span2">面料<input id="fabric_name" type="hidden"
+								<td class="span4">面料<input id="fabric_name" type="hidden"
 									name="fabric_name" /> <input id="fabric_amount" type="hidden"
 									name="fabric_amount" /></td>
 								<td class="innertable span12"><table
@@ -170,8 +170,16 @@
 									name="has_posted_sample_clothes" value="0" /> 否</td>
 								<td><input class="span12" type="date"
 									name="in_post_sample_clothes_time" /></td>
-								<td><input class="span12" type="text"
-									name="in_post_sample_clothes_type" /></td>
+								<td><select name="in_post_sample_clothes_type"
+									style="margin: 0px">
+										<option value="顺丰">顺丰</option>
+										<option value="韵达">韵达</option>
+										<option value="圆通">圆通</option>
+										<option value="中通">中通</option>
+										<option value="申通">申通</option>
+										<option value="汇通">汇通</option>
+										<option value="EMS">EMS</option>
+								</select></td>
 								<td><input class="span12" type="text"
 									name="in_post_sample_clothes_number" /></td>
 							</tr>
@@ -226,9 +234,10 @@
 								<td class="span2" colspan="2"><input class="span4"
 									type="number" name="ask_produce_period" /></td>
 							</tr>
-							
-							</table>
-							<table class="table table-striped table-bordered table-hover detail">
+
+						</table>
+						<table
+							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span2">大货加工 <input id="produce_color"
 									type="hidden" name="produce_color" /> <input id="produce_xs"
@@ -369,11 +378,11 @@
 							</tr>
 							<tr>
 								<td class="span1">版型</td>
-								<td class="span3"><textarea class="span12" name="cadVersionData"
-										style="resize:none" rows="2"></textarea></td>
+								<td class="span3"><textarea class="span12"
+										name="cadVersionData" style="resize:none" rows="2"></textarea></td>
 								<td class="span1">装箱</td>
-								<td class="span3"><textarea class="span12" name="cadPackage"
-										style="resize:none" rows="2"></textarea></td>
+								<td class="span3"><textarea class="span12"
+										name="cadPackage" style="resize:none" rows="2"></textarea></td>
 
 							</tr>
 							<tr>
