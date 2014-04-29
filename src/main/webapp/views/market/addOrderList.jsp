@@ -32,7 +32,9 @@
 							<td>${customer.companyAddress }</td>
 							<td>${customer.companyPhone }</td>
 							<td><a
-								href="${ctx}/market/addOrderDetail.do?cid=${customer.customerId}">下单</a></td>
+								href="${ctx}/market/addOrderDetail.do?cid=${customer.customerId}">下单</a>
+								<a
+								href="${ctx}/market/addMoreOrderList.do?cid=${customer.customerId}">下翻单</a></td>
 						</tr>
 					</c:forEach>
 				</table>

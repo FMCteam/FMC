@@ -670,6 +670,50 @@ public class MarketServiceImpl implements MarketService {
 		return model;
 	}
 
+	@Override
+	public List<Map<String, Object>> getAddMoreOrderList(int customerId) {
+		// TODO Auto-generated method stub
+		Order o = new Order();
+		o.setCustomerId(customerId);
+		List<Order> orderList = orderDAO.findByExample(o);
+		List<Map<String, Object>> list = new ArrayList<>();
+		for(Order order: orderList){
+			Integer orderId = order.getOrderId();
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("taskTime", order.getOrderTime());
+			model.put("orderId", orderId);
+			list.add(model);
+		}
+		return list;
+	}
+
+	@Override
+	public Map<String, Object> getAddMoreOrderDetail(int orderId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> model = new HashMap<String, Object>();
+		Order order = orderDAO.findById(orderId);
+		model.put("order", order);
+		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+		model.put("logistics", logisticsDAO.findById(orderId));
+		model.put("fabrics", fabricDAO.findByOrderId(orderId));
+		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
+		model.put("designCad", cadDAO.findByOrderId(orderId));
+		model.put("orderId", orderId);
+
+		Produce produce = new Produce();
+		produce.setOid(orderId);
+		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
+		model.put("sample", produceDAO.findByExample(produce));
+
+		produce.setType(Produce.TYPE_PRODUCE);
+		model.put("produce", produceDAO.findByExample(produce));
+
+		model.put("versions", versionDataDAO.findByOrderId(orderId));
+		return model;
+	}
+
 	/*
 	 * @Override public List<QuoteConfirmTaskSummary>
 	 * getQuoteModifyTaskSummaryList( Integer employeeId) { // TODO

@@ -54,14 +54,17 @@
 							<tr>
 								<td rowspan="6">款式信息</td>
 								<td><label>款式名称<span class="required">*</span></label></td>
-								<td colspan="2">款式性别<span class="required">*</span></td>
+								<td>衣服类型<span class="required">*</span></td>
+								<td>款式性别<span class="required">*</span></td>
 								<td colspan="2">款式季节<span class="required">*</span></td>
 								<td>订单来源<span class="required">*</span></td>
 							</tr>
 							<tr>
 								<td><input type="text" class="span12" name="style_name"
 									value="${orderModel.order.styleName }" /></td>
-								<td colspan="2"><input type="radio" name="style_sex"
+								<td><input type="text" class="span12" name="clothes_type"
+									value="${orderModel.order.clothesType }" /></td>	
+								<td><input type="radio" name="style_sex"
 									${orderModel.order.styleSex eq '男'?'checked="checked"':'' }
 									value="男" /> <span>男</span> <input type="radio"
 									name="style_sex" value="女"
@@ -134,7 +137,7 @@
 							</tr>
 							<tr>
 								<td>参考链接</td>
-								<td colspan="5"><input class="span12" type="url" /></td>
+								<td colspan="5"><input class="span12" type="url" name="reference_url" value="${orderModel.order.referenceUrl }"/></td>
 							</tr>
 						</table>
 					</div>

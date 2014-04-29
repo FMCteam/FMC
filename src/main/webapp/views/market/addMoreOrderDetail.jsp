@@ -3,24 +3,24 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form onSubmit="return verify()" method="post"
+		<form method="post" onsubmit="return verify();"
 			action="${ctx }/market/addOrderSubmit.do"
 			enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
 				<!--  如果是其它页面，这里是填充具体的内容。 -->
 				<ul class="nav nav-tabs detail" id="tab">
-					<li class="task-name">客户下单</li>
+					<li class="task-name">下翻单</li>
 					<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 					<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 					<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
 					<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 					<li class="active"><a href="#basic" data-toggle="tab">基本信息</a></li>
 				</ul>
-
 				<div class="tab-content">
 					<div class="tab-pane active" id="basic">
 						<table
 							class="table table-striped table-bordered table-hover detail">
+							
 							<tr>
 								<td class="span2" rowspan="2">业务信息</td>
 								<td class="span2">业务编号</td>
@@ -35,30 +35,29 @@
 									required="required" /></td>
 								<td>${employee_name}</td>
 								<td><input type="text" class="span12" name="order_source"
-									required="required" /></td>
-								<td>否</td>
+									value="${orderModel.order.orderSource }" /></td>
+								<td>是</td>
 							</tr>
-
 							<tr>
 								<td rowspan="3">客户信息</td>
 								<td>客户编号</td>
-								<td class="span2">姓名</td>
-								<td class="span2">公司</td>
+								<td>姓名</td>
+								<td>公司</td>
 								<td>传真</td>
 								<td>手机1</td>
 								<td>手机2</td>
 							</tr>
 							<tr>
-								<td>${customer.customerId}</td>
-								<td>${customer.customerName}</td>
-								<td>${customer.companyName}</td>
-								<td>${customer.companyFax}</td>
-								<td>${customer.contactPhone1}</td>
-								<td>${customer.contactPhone2}</td>
+								<td>${orderModel.order.customerId }</td>
+								<td>${orderModel.order.customerName }</td>
+								<td>${orderModel.order.customerCompany }</td>
+								<td>${orderModel.order.customerCompanyFax}</td>
+								<td>${orderModel.order.customerPhone1}</td>
+								<td>${orderModel.order.customerPhone2}</td>
 							</tr>
 							<tr>
 								<td>公司地址</td>
-								<td colspan="5">${customer.companyAddress}</td>
+								<td colspan="5">${orderModel.order.customerCompanyAddress}</td>
 							</tr>
 							<tr>
 								<td rowspan="6">款式信息</td>
@@ -69,62 +68,93 @@
 							</tr>
 							<tr>
 								<td><input type="text" class="span12" name="style_name"
-									required="required" /></td>
+									value="${orderModel.order.styleName }" /></td>
 								<td><input type="text" class="span12" name="clothes_type"
-									required="required" /></td>	
+									value="${orderModel.order.clothesType }" /></td>	
 								<td colspan="2"><input type="radio" name="style_sex"
-									checked="checked" value="男" /> <span>男</span> <input
-									type="radio" name="style_sex" value="女" /> <span>女</span> <input
-									type="radio" name="style_sex" value="儿童" /> <span>儿童</span></td>
+									${orderModel.order.styleSex eq '男'?'checked="checked"':'' }
+									value="男" /> <span>男</span> <input type="radio"
+									name="style_sex" value="女"
+									${orderModel.order.styleSex eq '女'?'checked="checked"':'' } />
+									<span>女</span> <input type="radio" name="style_sex" value="儿童"
+									${orderModel.order.styleSex eq '儿童'?'checked="checked"':'' } />
+									<span>儿童</span></td>
 								<td colspan="2"><input type="radio" name="style_season"
-									checked="checked" value="春夏" /> <span>春夏</span> <input
-									type="radio" name="style_season" value="秋冬" /> <span>秋冬</span></td>
+									${orderModel.order.styleSeason eq '春夏'?'checked="checked"':'' }
+									value="春夏" /> <span>春夏</span> <input type="radio"
+									name="style_season" value="秋冬"
+									${orderModel.order.styleSeason eq '秋冬'?'checked="checked"':'' } />
+									<span>秋冬</span></td>
 							</tr>
 							<tr>
 								<td>面料类型</td>
 								<td colspan="5"><input type="radio" name="fabric_type"
-									checked="checked" value="梭织" /> <span>梭织</span> <input
-									type="radio" name="fabric_type" value="梭织" /> <span>针织</span>
-									<input type="radio" name="fabric_type" value="编织"> <span>编织</span>
-									<input type="radio" name="fabric_type" value="梭针混合" /> <span>梭针混合</span>
-									<input type="radio" name="fabric_type" value="针编混合" /> <span>针编混合</span>
-									<input type="radio" name="fabric_type" value="梭编混合" /> <span>梭编混合</span></td>
+									${orderModel.order.fabricType eq '梭织'?'checked="checked"':'' }
+									value="梭织" /> <span>梭织</span> <input type="radio"
+									name="fabric_type" value="针织"
+									${orderModel.order.fabricType eq '针织'?'checked="checked"':'' } />
+									<span>针织</span> <input type="radio" name="fabric_type"
+									value="编织"
+									${orderModel.order.fabricType eq '编织'?'checked="checked"':'' } />
+									<span>编织</span> <input type="radio" name="fabric_type"
+									value="梭针混合"
+									${orderModel.order.fabricType eq '梭针混合'?'checked="checked"':'' } />
+									<span>梭针混合</span> <input type="radio" name="fabric_type"
+									value="针编混合"
+									${orderModel.order.fabricType eq '针编混合'?'checked="checked"':'' } />
+									<span>针编混合</span> <input type="radio" name="fabric_type"
+									value="梭编混合"
+									${orderModel.order.fabricType eq '梭编混合'?'checked="checked"':'' } />
+									<span>梭编混合</span></td>
 							</tr>
 							<tr>
 								<td>特殊工艺</td>
 								<td colspan="5"><input type="checkbox"
-									name="special_process" value="水洗" checked="checked" /> <span>水洗</span>
-									<input type="checkbox" name="special_process" value="激光" /> <span>激光</span>
-									<input type="checkbox" name="special_process" value="压皱" /> <span>压皱</span>
-									<input type="checkbox" name="special_process" value="其他" /> <input
-									type="text" name="other_special_process" class="span2"
+									name="special_process" value="水洗"
+									${fn:contains(orderModel.order.specialProcess,'水洗')?'checked="checked"':'' } />
+									<span>水洗</span> <input type="checkbox" name="special_process"
+									value="激光"
+									${fn:contains(orderModel.order.specialProcess,'激光')?'checked="checked"':'' } />
+									<span>激光</span> <input type="checkbox" name="special_process"
+									value="压皱"
+									${fn:contains(orderModel.order.specialProcess,'压皱')?'checked="checked"':'' } />
+									<span>压皱</span> <input type="checkbox" name="special_process"
+									value="其他"
+									${fn:contains(orderModel.order.specialProcess,'其他')?'checked="checked"':'' } />
+									<input type="text" name="other_special_process" class="span2"
 									placeholder="其他" /></td>
 							</tr>
 							<tr>
 								<td>其他说明</td>
 								<td colspan="5"><input type="checkbox"
-									name="other_requirements" value="有主标" checked="checked" /> 有主标
-									<input type="checkbox" name="other_requirements" value="有吊牌" />
+									name="other_requirements" value="有主标"
+									${fn:contains(orderModel.order.otherRequirements,'有主标')?'checked="checked"':'' } />
+									有主标 <input type="checkbox" name="other_requirements"
+									value="有吊牌"
+									${fn:contains(orderModel.order.otherRequirements,'有吊牌')?'checked="checked"':'' } />
 									有吊牌 <input type="checkbox" name="other_requirements"
-									value="有水洗" /> 有水洗 <input type="checkbox"
-									name="other_requirements" value="其他" /> <input type="text"
-									class="span2" name="other_other_requirements" placeholder="其他" /></td>
+									value="有水洗"
+									${fn:contains(orderModel.order.otherRequirements,'有水洗')?'checked="checked"':'' } />
+									有水洗 <input type="checkbox" name="other_requirements" value="其他"
+									${fn:contains(orderModel.order.otherRequirements,'其他')?'checked="checked"':'' } />
+									<input type="text" class="span2"
+									name="other_other_requirements" placeholder="其他" /></td>
 							</tr>
 							<tr>
 								<td>参考链接</td>
-								<td colspan="5"><input class="span12" type="url" name="reference_url"/></td>
+								<td colspan="5"><input class="span12" type="url" name="reference_url" value="${orderModel.order.referenceUrl }"/></td>
 							</tr>
 						</table>
 					</div>
+					
 					<div class="tab-pane" id="material">
-						<table
-							class="table table-striped table-bordered table-hover detail">
+						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span4">面料<input id="fabric_name" type="hidden"
 									name="fabric_name" /> <input id="fabric_amount" type="hidden"
 									name="fabric_amount" /></td>
 								<td class="innertable span12"><table
-										class="span12 table fabric_table span12">
+										class="span12 table accessory_table">
 										<tr>
 											<td class="span5">面料名称</td>
 											<td class="span5">面料克重</td>
@@ -135,6 +165,13 @@
 											<td><input class="span12" type="text" /></td>
 											<td><a>添加</a></td>
 										</tr>
+										<c:forEach var="fabricRow" items="${orderModel.fabrics }">
+											<tr>
+												<td class='fabric_name'>${fabricRow.fabricName }</td>
+												<td class='fabric_amount'>${fabricRow.fabricAmount }</td>
+												<td><a onclick="deleteRow(this,'fabric_table')">删除</a></td>
+											</tr>
+										</c:forEach>
 									</table></td>
 							</tr>
 							<tr>
@@ -153,6 +190,14 @@
 											<td><input class="span12" type="text" /></td>
 											<td><a>添加</a></td>
 										</tr>
+										<c:forEach var="accessoryRow"
+											items="${orderModel.accessorys }">
+											<tr>
+												<td class='accessory_name'>${accessoryRow.accessoryName }</td>
+												<td class='accessory_query'>${accessoryRow.accessoryQuery }</td>
+												<td><a onclick="deleteRow(this,'accessory_table')">删除</a></td>
+											</tr>
+										</c:forEach>
 									</table></td>
 							</tr>
 						</table>
@@ -161,62 +206,118 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="span2" rowspan="2">客户样衣</td>
-								<td class="span2">提供样衣<span class="required">*</span></td>
-								<td class="span3">邮寄时间</td>
-								<td class="span2">快递名称</td>
-								<td class="span3">快递单号</td>
+								<td rowspan="2">客户样衣</td>
+								<td>提供样衣</td>
+								<td colspan="2">邮寄时间</td>
+								<td>快递名称</td>
+								<td colspan="2">快递单号</td>
 							</tr>
 							<tr>
 								<td><input type="radio" name="has_posted_sample_clothes"
-									checked="checked" value="1" /> 是 <input type="radio"
+									value="1" /> 是 <input type="radio" checked="checked"
 									name="has_posted_sample_clothes" value="0" /> 否</td>
-								<td><input class="span12" type="date"
-									name="in_post_sample_clothes_time" /></td>
+								<td colspan="2"><input class="span6" type="date"
+									name="in_post_sample_clothes_time"
+									value="${fn:substring(orderModel.logistics.inPostSampleClothesTime,0,10) }" /></td>
 								<td><select name="in_post_sample_clothes_type"
 									style="margin: 0px">
-										<option value="顺丰">顺丰</option>
-										<option value="韵达">韵达</option>
-										<option value="圆通">圆通</option>
-										<option value="中通">中通</option>
-										<option value="申通">申通</option>
-										<option value="汇通">汇通</option>
-										<option value="EMS">EMS</option>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType!='顺丰'}">
+											<option value="顺丰">顺丰</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType=='顺丰'}">
+											<option value="顺丰" selected="selected">顺丰</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType!='韵达'}">
+											<option value="韵达">韵达</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType=='韵达'}">
+											<option value="韵达" selected="selected">韵达</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType!='圆通'}">
+											<option value="圆通">圆通</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType=='圆通'}">
+											<option value="圆通" selected="selected">圆通</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType!='中通'}">
+											<option value="中通">中通</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType=='中通'}">
+											<option value="中通" selected="selected">中通</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType!='申通'}">
+											<option value="申通">申通</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType=='申通'}">
+											<option value="申通" selected="selected">申通</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType!='汇通'}">
+											<option value="汇通">汇通</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType=='汇通'}">
+											<option value="汇通" selected="selected">汇通</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType!='EMS'}">
+											<option value="EMS">EMS</option>
+										</c:if>
+										<c:if
+											test="${orderModel.logistics.inPostSampleClothesType=='EMS'}">
+											<option value="EMS" selected="selected">EMS</option>
+										</c:if>
 								</select></td>
-								<td><input class="span12" type="text"
-									name="in_post_sample_clothes_number" /></td>
+								<td colspan="2"><input class="span12" type="text"
+									name="in_post_sample_clothes_number"
+									value="${orderModel.logistics.inPostSampleClothesNumber }" /></td>
 							</tr>
 							<tr>
-								<td rowspan="3">生产样衣</td>
+								<td rowspan="5">生产样衣</td>
 								<td>制作样衣</td>
 								<td>邮寄人</td>
 								<td>手机</td>
-								<td>邮寄地址</td>
+								<td colspan="3">邮寄地址</td>
 							</tr>
 							<tr>
 								<td><input type="radio" name="is_need_sample_clothes"
-									checked="checked" value="1" /> 是 <input type="radio"
+									value="1" /> 是 <input type="radio" checked="checked"
 									name="is_need_sample_clothes" value="0" /> 否</td>
 								<td><input class="span12" type="text"
-									name="sample_clothes_name" /></td>
+									name="sample_clothes_name"
+									value="${orderModel.logistics.sampleClothesName }" /></td>
 								<td><input class="span12" type="text"
-									name="sample_clothes_phone" /></td>
-								<td><input class="span12" type="text"
-									name="sample_clothes_address" /></td>
+									name="sample_clothes_phone"
+									value="${orderModel.logistics.sampleClothesPhone }" /></td>
+								<td colspan="3"><input class="span12" type="text"
+									name="sample_clothes_address"
+									value="${orderModel.logistics.sampleClothesAddress }" /></td>
 							</tr>
 							<tr>
 								<td>其他备注</td>
-								<td colspan="3"><input class="span12" type="text"
-									name="sample_clothes_remark" /></td>
+								<td colspan="5"><input class="span12" type="text"
+									name="sample_clothes_remark"
+									value="${orderModel.logistics.sampleClothesRemark }" /></td>
 							</tr>
 							<tr>
 								<td>样衣信息</td>
 								<td>样衣图片</td>
-								<td><input type="file" value="选择文件"
-									name="sample_clothes_picture" /></td>
+								<td colspan="2"><input type="file"
+									name="sample_clothes_picture"
+									value="${orderModel.order.sampleClothesPicture }" /></td>
 								<td>参考图片</td>
-								<td><input type="file" value="选择文件"
-									name="reference_picture" /></td>
+								<td colspan="2"><input type="file" name="reference_picture"
+									value="${orderModel.order.referencePicture }" /></td>
 							</tr>
 						</table>
 					</div>
@@ -231,25 +332,24 @@
 							</tr>
 							<tr>
 								<td class="span2" colspan="2"><input class="span6"
-									type="number" name="ask_amount" required="required"/></td>
+									type="number" name="ask_amount" required="required" /></td>
 								<td class="span2" colspan="2"><input class="span8"
 									type="date" name="ask_deliver_date" required="required"/></td>
 								<td class="span2" colspan="2"><input class="span4"
-									type="number" name="ask_produce_period" required="required"/></td>
+									type="number" name="ask_produce_period" required="required" /></td>
 							</tr>
-
 						</table>
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="span2">大货加工 <input id="produce_color"
-									type="hidden" name="produce_color" /> <input id="produce_xs"
-									type="hidden" name="produce_xs" /> <input id="produce_s"
-									type="hidden" name="produce_s" /> <input id="produce_m"
-									type="hidden" name="produce_m" /> <input id="produce_l"
-									type="hidden" name="produce_l" /> <input id="produce_xl"
-									type="hidden" name="produce_xl" /> <input id="produce_xxl"
-									type="hidden" name="produce_xxl" /></td>
+								<td>大货加工具体要求 <input id="produce_color" type="hidden"
+									name="produce_color" /> <input id="produce_xs" type="hidden"
+									name="produce_xs" /> <input id="produce_s" type="hidden"
+									name="produce_s" /> <input id="produce_m" type="hidden"
+									name="produce_m" /> <input id="produce_l" type="hidden"
+									name="produce_l" /> <input id="produce_xl" type="hidden"
+									name="produce_xl" /> <input id="produce_xxl" type="hidden"
+									name="produce_xxl" /></td>
 								<td colspan="8" class="innertable">
 									<table class="span12 table produce_table">
 										<tr>
@@ -276,16 +376,16 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="span2">样衣加工 <input id="sample_produce_color"
-									type="hidden" name="sample_produce_color" /> <input
-									id="sample_produce_xs" type="hidden" name="sample_produce_xs" />
-									<input id="sample_produce_s" type="hidden"
-									name="sample_produce_s" /> <input id="sample_produce_m"
-									type="hidden" name="sample_produce_m" /> <input
-									id="sample_produce_l" type="hidden" name="sample_produce_l" />
-									<input id="sample_produce_xl" type="hidden"
-									name="sample_produce_xl" /> <input id="sample_produce_xxl"
-									type="hidden" name="sample_produce_xxl" /></td>
+								<td>样衣加工具体要求 <input id="sample_produce_color" type="hidden"
+									name="sample_produce_color" /> <input id="sample_produce_xs"
+									type="hidden" name="sample_produce_xs" /> <input
+									id="sample_produce_s" type="hidden" name="sample_produce_s" />
+									<input id="sample_produce_m" type="hidden"
+									name="sample_produce_m" /> <input id="sample_produce_l"
+									type="hidden" name="sample_produce_l" /> <input
+									id="sample_produce_xl" type="hidden" name="sample_produce_xl" />
+									<input id="sample_produce_xxl" type="hidden"
+									name="sample_produce_xxl" /></td>
 								<td colspan="8" class="innertable">
 									<table class="span12 table sample_produce_table">
 										<tr>
@@ -322,7 +422,7 @@
 										class="span12 table table-striped table-hover detail version_table">
 										<tbody>
 											<tr>
-												<td colspan="11">版型数据 <input id="version_size"
+												<td colspan="11">版型数据信息 <input id="version_size"
 													type="hidden" name="version_size" /> <input
 													id="version_centerBackLength" type="hidden"
 													name="version_centerBackLength" /> <input
@@ -363,6 +463,21 @@
 												<td><input type="text" class="span12" /></td>
 												<td><a>添加</a></td>
 											</tr>
+											<c:forEach var="versionRow" items="${orderModel.versions }">
+												<tr>
+													<td class='version_size'>${versionRow.size }</td>
+													<td class='version_centerBackLength'>${versionRow.centerBackLength }</td>
+													<td class='version_bust'>${versionRow.bust }</td>
+													<td class='version_waistLine'>${versionRow.waistline }</td>
+													<td class='version_shoulder'>${versionRow.shoulder }</td>
+													<td class='version_buttock'>${versionRow.buttock }</td>
+													<td class='version_hem'>${versionRow.hem }</td>
+													<td class='version_trousers'>${versionRow.trousers }</td>
+													<td class='version_skirt'>${versionRow.skirt }</td>
+													<td class='version_sleeves'>${versionRow.sleeves }</td>
+													<td><a onclick="deleteRow(this,'version_table')">删除</a></td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 								</td>
@@ -374,34 +489,35 @@
 								<td class="span1" rowspan="4">版型数据</td>
 								<td class="span1">面料</td>
 								<td class="span3"><textarea class="span12" name="cadFabric"
-										style="resize:none" rows="2"></textarea></td>
+										style="resize:none" rows="2">${orderModel.designCad[0].cadFabric }</textarea></td>
 								<td class="span1">包装</td>
 								<td class="span3"><textarea class="span12" name="cadBox"
-										style="resize:none" rows="2"></textarea></td>
+										style="resize:none" rows="2">${orderModel.designCad[0].cadBox }</textarea></td>
 							</tr>
 							<tr>
 								<td class="span1">版型</td>
 								<td class="span3"><textarea class="span12"
-										name="cadVersionData" style="resize:none" rows="2"></textarea></td>
+										name="cadVersionData" style="resize:none" rows="2">${orderModel.designCad[0].cadVersionData }</textarea></td>
 								<td class="span1">装箱</td>
 								<td class="span3"><textarea class="span12"
-										name="cadPackage" style="resize:none" rows="2"></textarea></td>
+										name="cadPackage" style="resize:none" rows="2">${orderModel.designCad[0].cadPackage }</textarea></td>
 
 							</tr>
 							<tr>
 								<td class="span1">工艺</td>
 								<td class="span3"><textarea class="span12" name="cadTech"
-										style="resize:none" rows="2"></textarea></td>
+										style="resize:none" rows="2">${orderModel.designCad[0].cadTech }</textarea></td>
 								<td class="span1">其他</td>
 								<td class="span3"><textarea class="span12" name="cadOther"
-										style="resize:none" rows="2"></textarea></td>
+										style="resize:none" rows="2">${orderModel.designCad[0].cadOther }</textarea></td>
 							</tr>
 						</table>
 					</div>
 				</div>
-				<input type="hidden" name="customerId"
-					value="${customer.customerId}" />
 
+				<input type="hidden" name="customerId"
+					value="${orderModel.order.customerId}" />
+				<!--widgetcontent-->
 				<!--row-fluid-->
 			</div>
 			<div class="action">
@@ -433,3 +549,4 @@
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>
+
