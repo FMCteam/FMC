@@ -41,27 +41,27 @@
 		
 		$("input[name='has_posted_sample_clothes']").change(function(){
 			if($('input:radio[name="has_posted_sample_clothes"]:checked').val()=="0"){
-				$("input[name='in_post_sample_clothes_time']").attr("readonly","readonly");
-				$("input[name='in_post_sample_clothes_type']").attr("readonly","readonly");
-				$("input[name='in_post_sample_clothes_number']").attr("readonly","readonly");
+				$("input[name='in_post_sample_clothes_time']").attr("disabled","disabled");
+				$("select[name='in_post_sample_clothes_type']").attr("disabled","disabled");
+				$("input[name='in_post_sample_clothes_number']").attr("disabled","disabled");
 			}else{
-				$("input[name='in_post_sample_clothes_time']").removeAttr("readonly");
-				$("input[name='in_post_sample_clothes_type']").removeAttr("readonly");
-				$("input[name='in_post_sample_clothes_number']").removeAttr("readonly");
+				$("input[name='in_post_sample_clothes_time']").removeAttr("disabled");
+				$("select[name='in_post_sample_clothes_type']").removeAttr("disabled");
+				$("input[name='in_post_sample_clothes_number']").removeAttr("disabled");
 			}
 		});
 
 		$("input[name='is_need_sample_clothes']").change(function(){
 			if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
-				$("input[name='sample_clothes_name']").attr("readonly","readonly");
-				$("input[name='sample_clothes_phone']").attr("readonly","readonly");
-				$("input[name='sample_clothes_address']").attr("readonly","readonly");
-				$("input[name='sample_clothes_remark']").attr("readonly","readonly");
+				$("input[name='sample_clothes_name']").attr("disabled","disabled");
+				$("input[name='sample_clothes_phone']").attr("disabled","disabled");
+				$("input[name='sample_clothes_address']").attr("disabled","disabled");
+				$("input[name='sample_clothes_remark']").attr("disabled","disabled");
 			}else{
-				$("input[name='sample_clothes_name']").removeAttr("readonly");
-				$("input[name='sample_clothes_phone']").removeAttr("readonly");
-				$("input[name='sample_clothes_address']").removeAttr("readonly");
-				$("input[name='sample_clothes_remark']").removeAttr("readonly");
+				$("input[name='sample_clothes_name']").removeAttr("disabled");
+				$("input[name='sample_clothes_phone']").removeAttr("disabled");
+				$("input[name='sample_clothes_address']").removeAttr("disabled");
+				$("input[name='sample_clothes_remark']").removeAttr("disabled");
 			}
 		});
 
@@ -261,15 +261,15 @@ function init(){
 //	$("input[name='sample_clothes_remark']").val("");
 //	
 	if($('input:radio[name="has_posted_sample_clothes"]:checked').val()=="0"){
-		$("input[name='in_post_sample_clothes_time']").attr("readonly","readonly");
-		$("input[name='in_post_sample_clothes_type']").attr("readonly","readonly");
-		$("input[name='in_post_sample_clothes_number']").attr("readonly","readonly");
+		$("input[name='in_post_sample_clothes_time']").attr("disabled","disabled");
+		$("select[name='in_post_sample_clothes_type']").attr("disabled","disabled");
+		$("input[name='in_post_sample_clothes_number']").attr("disabled","disabled");
 	}
 	
 	if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
-		$("input[name='sample_clothes_name']").attr("readonly","readonly");
-		$("input[name='sample_clothes_phone']").attr("readonly","readonly");
-		$("input[name='sample_clothes_address']").attr("readonly","readonly");
-		$("input[name='sample_clothes_remark']").attr("readonly","readonly");
+		$("input[name='sample_clothes_name']").attr("disabled","disabled");
+		$("input[name='sample_clothes_phone']").attr("disabled","disabled");
+		$("input[name='sample_clothes_address']").attr("disabled","disabled");
+		$("input[name='sample_clothes_remark']").attr("disabled","disabled");
 	}
 }
