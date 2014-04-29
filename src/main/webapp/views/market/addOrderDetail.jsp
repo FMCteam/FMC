@@ -159,7 +159,7 @@
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span2" rowspan="2">客户样衣</td>
-								<td class="span2">提供样衣</td>
+								<td class="span2">提供样衣<span class="required">*</span></td>
 								<td class="span3">邮寄时间</td>
 								<td class="span2">快递名称</td>
 								<td class="span3">快递单号</td>
@@ -223,16 +223,16 @@
 							<tr>
 								<td rowspan="2">加工信息</td>
 								<td class="span2" colspan="2">大货总数<span class="required">*</span></td>
-								<td class="span2" colspan="2">最迟交货时间</td>
-								<td class="span2" colspan="2">完工时间（天）</td>
+								<td class="span2" colspan="2">最迟交货时间<span class="required">*</span></td>
+								<td class="span2" colspan="2">完工时间（天）<span class="required">*</span></td>
 							</tr>
 							<tr>
 								<td class="span2" colspan="2"><input class="span6"
-									type="number" name="ask_amount" /></td>
+									type="number" name="ask_amount" required="required"/></td>
 								<td class="span2" colspan="2"><input class="span8"
-									type="date" name="ask_deliver_date" /></td>
+									type="date" name="ask_deliver_date" required="required"/></td>
 								<td class="span2" colspan="2"><input class="span4"
-									type="number" name="ask_produce_period" /></td>
+									type="number" name="ask_produce_period" required="required"/></td>
 							</tr>
 
 						</table>

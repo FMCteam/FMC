@@ -144,8 +144,8 @@ public class MarketController {
 		Integer askAmount = Integer
 				.parseInt(request.getParameter("ask_amount"));
 		String askProducePeriod = request.getParameter("ask_produce_period");
-		Timestamp askDeliverDate = getTime(request
-				.getParameter("ask_deliver_date"));
+		String ask_deliver_date = request.getParameter("ask_deliver_date");
+		Timestamp askDeliverDate = ask_deliver_date.equals("")?null:getTime(ask_deliver_date);
 		String askCodeNumber = request.getParameter("ask_code_number");
 		Short hasPostedSampleClothes = Short.parseShort(request
 				.getParameter("has_posted_sample_clothes"));
@@ -1042,6 +1042,7 @@ public class MarketController {
 	}
 
 	public static Timestamp getTime(String time) {
+		if(time.equals("")) return null;
 		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
 		return new Timestamp(outDate.getTime());
 	}
