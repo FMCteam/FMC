@@ -33,7 +33,7 @@ public class AccessFilter implements Filter {
 		accessTable.put("design", "ADMIN,designManager");
 		accessTable.put("finance", "ADMIN,financeManager");
 		accessTable.put("market", "ADMIN,marketStaff,marketManager");
-		accessTable.put("order", "ADMIN, designManager, marketManager");
+		accessTable.put("order", "ADMIN, marketStaff,designManager, marketManager");
 		accessTable.put("produce", "ADMIN,produceManager");
 		accessTable.put("logistics", "ADMIN,logisticsManager");
 		accessTable.put("quality", "ADMIN,qualityManager");
