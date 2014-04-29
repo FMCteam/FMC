@@ -24,7 +24,7 @@
 					<td style="padding:8px 0px 0px 0px;"><c:if
 							test="${model.order.sampleClothesPicture!=null}">
 							<img width="60px" height="100%"
-								src="${ctx}/${model.order.sampleClothesPicture}"></img>
+								src="${ctx}/common/getPic.do?type=sample&orderId=${model.order.orderId}"></img>
 						</c:if></td>
 					<td>${model.employee.employeeName}</td>
 					<td>${model.order.customerName}</td>

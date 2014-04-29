@@ -15,6 +15,7 @@
 					<thead>
 						<tr>
 							<th>询单编号</th>
+							<th>样衣图片</th>
 							<th>客户姓名</th>
 							<th>快递名称</th>
 							<th>快递单号</th>
@@ -23,18 +24,23 @@
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="task" items="${list}">
-						<tr>
-							<td>${task.orderId}</td>
-							<td>${task.order.customerName}</td>
-							<td>${task.logistics.inPostSampleClothesType}</td>
-							<td>${task.logistics.inPostSampleClothesNumber}</td>
-							<td>${fn:substring(task.logistics.inPostSampleClothesTime,0,10)}</td>
-							<td><a
-								href="${ctx}/logistics/receiveSampleDetail.do?orderId=${task.order.orderId}">详情
-							</a></td>
-						</tr>
-					</c:forEach>
+						<c:forEach var="task" items="${list}">
+							<tr>
+								<td>${task.orderId}</td>
+								<td style="padding:8px 0px 0px 0px;"><c:if
+										test="${task.order.sampleClothesPicture!=null}">
+										<img width="60px" height="100%"
+											src="${ctx}/common/getPic.do?type=sample&orderId=${task.order.orderId}"></img>
+									</c:if></td>
+								<td>${task.order.customerName}</td>
+								<td>${task.logistics.inPostSampleClothesType}</td>
+								<td>${task.logistics.inPostSampleClothesNumber}</td>
+								<td>${fn:substring(task.logistics.inPostSampleClothesTime,0,10)}</td>
+								<td><a
+									href="${ctx}/logistics/receiveSampleDetail.do?orderId=${task.order.orderId}">详情
+								</a></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</section>
