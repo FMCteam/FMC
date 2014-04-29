@@ -38,7 +38,7 @@
 			</div>
 			<div class="action">
 				<a class="btn btn-primary"
-					href="${ctx}/image.do?pid=${orderInfo.order.orderId}">订单进度</a>
+					href="${ctx}/image.do?orderId=${orderInfo.order.orderId}">订单进度</a>
 			</div>
 		</div>
 	</div>

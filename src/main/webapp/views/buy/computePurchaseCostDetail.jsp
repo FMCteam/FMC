@@ -42,7 +42,7 @@
 								<td class="span3">面料名</td>
 								<td class="span3">单件米耗</td>
 								<td class="span3">每米价格</td>
-								<td class="span3">单件成本</td>
+							
 							</tr>
 
 							<c:forEach var="fabric" items="${orderInfo.fabrics}">
@@ -53,7 +53,7 @@
 										type="text" /></td>
 									<td><input class="span12" name="cost_per_meter"
 										type="text" /></td>
-									<td><input class="span12" name="fabric_price" type="text" /></td>
+									
 								</tr>
 							</c:forEach>
 
@@ -62,7 +62,7 @@
 								<td>辅料名</td>
 								<td>单件耗数</td>
 								<td>辅料单价</td>
-								<td>单件成本</td>
+								
 							</tr>
 
 							<c:forEach var="accessory" items="${orderInfo.accessorys}">
@@ -73,11 +73,10 @@
 										type="text" /></td>
 									<td><input class="span12" name="cost_per_piece"
 										type="text" /></td>
-									<td><input class="span12" name="accessory_price"
-										type="text" /></td>
+								
 								</tr>
 							</c:forEach>
-							<tr>
+						<!-- 	<tr>
 								<td>面辅总计</td>
 								<td>面料总计</td>
 								<td><input class="span12" name="all_fabric_prices"
@@ -86,6 +85,7 @@
 								<td><input class="span12" name="accessory_prices"
 									id="accessory_prices" type="text" /></td>
 							</tr>
+							 -->
 						</table>
 						<input class="btn btn-primary" type="submit" value="提交报价"
 							style="float:right;"> <input type="hidden" name="orderId"

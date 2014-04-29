@@ -136,10 +136,8 @@ function getTdString(col){
 
 
 function verify(){
-	/*alert(getTdString("fabric_name"));
-	alert(getTdString("fabric_amount"));
-	alert(getTdString("accessory_name"));
-	alert(getTdString("accessory_query"));*/
+	
+	
 	$("#fabric_name").val(getTdString("fabric_name"));
 	$("#fabric_amount").val(getTdString("fabric_amount"));
 	$("#accessory_name").val(getTdString("accessory_name"));

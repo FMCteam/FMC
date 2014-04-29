@@ -38,8 +38,18 @@ public class Order implements java.io.Serializable {
 	private String referencePicture;
 	private Integer askAmount;
 	private Integer sampleAmount;
+	private Long processId;
 	
 	
+	@Column(name = "processId", nullable = true)
+	public Long getProcessId() {
+		return processId;
+	}
+
+	public void setProcessId(Long processId) {
+		this.processId = processId;
+	}
+
 	@Column(name = "sample_amount")
 	public Integer getSampleAmount() {
 		return sampleAmount;
