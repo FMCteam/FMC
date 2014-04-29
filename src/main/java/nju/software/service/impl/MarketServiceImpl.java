@@ -624,7 +624,8 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getOrderList(Integer employeeId) {
 		// TODO Auto-generated method stub
-		List<Order> orders = orderDAO.findByEmployeeId(employeeId);
+		//List<Order> orders = orderDAO.findByEmployeeId(employeeId);
+		List<Order> orders = orderDAO.findAll();
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
 			Map<String, Object> model = new HashMap<String, Object>();
