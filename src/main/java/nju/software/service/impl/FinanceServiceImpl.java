@@ -184,17 +184,16 @@ public class FinanceServiceImpl implements FinanceService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getProcessState(final long pid) {
+	public List<Map<String, Object>> getProcessState(final Integer orderId) {
 		// //System.out.println("size:"+jbpmAPIUtil.getKsession().getProcessInstances().size());
 		final List<Map<String, Object>> list = new ArrayList<>();
 		jbpmAPIUtil.getKsession().execute(new GenericCommand<String>() {
 			public String execute(Context context) {
 				StatefulKnowledgeSession ksession = ((KnowledgeCommandContext) context)
 						.getStatefulKnowledgesession();
-				System.out.println(ksession.getProcessInstances().size());
-
+				long processId=orderDAO.findById(orderId).getProcessId();
 				org.jbpm.process.instance.ProcessInstance processInstance = (org.jbpm.process.instance.ProcessInstance) ksession
-						.getProcessInstance(pid);
+						.getProcessInstance(processId);
 				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
 						.getNodeInstances()) {
 					Map<String, Object> data = nodeInstance.getNode()

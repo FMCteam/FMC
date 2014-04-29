@@ -9,7 +9,7 @@
 		<td>翻单</td>
 	</tr>
 	<tr>
-		<td>${orderInfo.order.orderId}</td>
+		<td>${orderInfo.orderId}</td>
 		<td colspan="2">${fn:substring(orderInfo.order.orderTime,0,19)}</td>
 		<td>${orderInfo.employee.employeeName}</td>
 		<td>${orderInfo.order.orderSource }</td>

@@ -72,7 +72,9 @@ public class ServiceUtil {
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));
 		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
 		model.put("designCad", cadDAO.findByOrderId(orderId));
-
+		model.put("orderId", getOrderId(order));
+		
+		
 		Produce produce = new Produce();
 		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);

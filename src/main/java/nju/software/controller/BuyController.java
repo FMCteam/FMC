@@ -96,6 +96,8 @@ public class BuyController {
 		String[] fabric_names = request.getParameterValues("fabricName");
 		String[] tear_per_meters = request.getParameterValues("tear_per_meter");
 		String[] cost_per_meters = request.getParameterValues("cost_per_meter");
+		
+		
 		String[] fabric_prices = request.getParameterValues("fabric_price");
 
 		String[] accessory_names = request.getParameterValues("accessoryName");
@@ -105,9 +107,9 @@ public class BuyController {
 				.getParameterValues("accessory_price");
 
 		buyService.computePurchaseCostSubmit(orderId, taskId, fabric_names,
-				tear_per_meters, cost_per_meters, fabric_prices,
-				accessory_names, tear_per_piece, cost_per_piece,
-				accessory_prices);
+				tear_per_meters, cost_per_meters,
+				accessory_names, tear_per_piece, cost_per_piece
+				);
 
 		return "forward:/buy/computePurchaseCostList.do";
 

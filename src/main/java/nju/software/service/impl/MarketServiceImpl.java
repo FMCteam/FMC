@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.process.ProcessInstance;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,9 +65,8 @@ public class MarketServiceImpl implements MarketService {
 	public final static String RESULT_QUOTE = "quote";
 	public final static String RESULT_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder";
 	public final static String RESULT_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
-	public final static String UPLOAD_DIR_SAMPLE="D:/fmc/sample/";
-	public final static String UPLOAD_DIR_REFERENCE="D:/fmc/reference/";
-	
+	public final static String UPLOAD_DIR_SAMPLE = "D:/fmc/sample/";
+	public final static String UPLOAD_DIR_REFERENCE = "D:/fmc/reference/";
 
 	@Autowired
 	private ProductDAO productDAO;
@@ -115,7 +115,8 @@ public class MarketServiceImpl implements MarketService {
 	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
-			List<VersionData> versions, DesignCad cad, HttpServletRequest request) {
+			List<VersionData> versions, DesignCad cad,
+			HttpServletRequest request) {
 		// TODO Auto-generated method stub
 
 		// 添加订单信息
@@ -127,15 +128,15 @@ public class MarketServiceImpl implements MarketService {
 		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/sampleClothesPicture/" + orderId);
-			File file = FileOperateUtil.Upload(request, UPLOAD_DIR_SAMPLE+orderId, "1",
-					"sample_clothes_picture");
+			File file = FileOperateUtil.Upload(request, UPLOAD_DIR_SAMPLE
+					+ orderId, "1", "sample_clothes_picture");
 			order.setSampleClothesPicture(file.getAbsolutePath());
 		}
 		if (!multipartRequest.getFile("reference_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/reference_picture/" + orderId);
-			File file = FileOperateUtil.Upload(request, UPLOAD_DIR_REFERENCE+orderId, "1",
-					"reference_picture");
+			File file = FileOperateUtil.Upload(request, UPLOAD_DIR_REFERENCE
+					+ orderId, "1", "reference_picture");
 			order.setReferencePicture(file.getAbsolutePath());
 		}
 
@@ -175,7 +176,7 @@ public class MarketServiceImpl implements MarketService {
 		logistics.setOrderId(orderId);
 		logisticsDAO.save(logistics);
 
-		//cad
+		// cad
 		cad.setOrderId(orderId);
 		cadDAO.save(cad);
 		// 启动流程
@@ -183,26 +184,29 @@ public class MarketServiceImpl implements MarketService {
 		params.put("orderId", orderId);
 		params.put("marketStaff", order.getEmployeeId());
 		params.put(LogisticsServiceImpl.RESULT_RECEIVE_SAMPLE,
-				(int)order.getHasPostedSampleClothes() );
+				(int) order.getHasPostedSampleClothes());
 		params.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
-				(int)order.getIsNeedSampleClothes() );
+				(int) order.getIsNeedSampleClothes());
 		params.put(RESULT_REORDER, false);
-		doTMWorkFlowStart(params);
-
-		return false;
+		long processId=doTMWorkFlowStart(params);
+		order.setProcessId(processId);
+		orderDAO.attachDirty(order);
+		return true;
 	}
 
 	/**
 	 * 启动流程
 	 */
-	private void doTMWorkFlowStart(Map<String, Object> params) {
+	private long doTMWorkFlowStart(Map<String, Object> params) {
 		try {
 			jbpmAPIUtil.setParams(params);
-			jbpmAPIUtil.startWorkflowProcess();
-			System.out.println("流程启动成功！");
+			ProcessInstance instance = jbpmAPIUtil.startWorkflowProcess();
+			System.out.println("流程instance"+instance.getId()+"启动成功！");
+			return instance.getId();
 		} catch (Exception ex) {
 			System.out.println("流程启动失败");
 			ex.printStackTrace();
+			return 0;
 		}
 	}
 
@@ -226,8 +230,8 @@ public class MarketServiceImpl implements MarketService {
 	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
-			List<VersionData> versions, DesignCad cad, boolean editok, long taskId,
-			Integer accountId) {
+			List<VersionData> versions, DesignCad cad, boolean editok,
+			long taskId, Integer accountId) {
 		// TODO Auto-generated method stub
 		// 添加订单信息
 		orderDAO.merge(order);
@@ -266,9 +270,9 @@ public class MarketServiceImpl implements MarketService {
 		logistics.setOrderId(orderId);
 		logisticsDAO.merge(logistics);
 
-		//cad
+		// cad
 		cadDAO.merge(cad);
-		
+
 		// 启动流程
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put(RESULT_MODIFY_ORDER, editok);
@@ -437,7 +441,7 @@ public class MarketServiceImpl implements MarketService {
 		// TODO Auto-generated method stub
 		Map<String, Object> data = new HashMap<String, Object>();
 
-		data.put(RESULT_QUOTE,Integer.parseInt(result));
+		data.put(RESULT_QUOTE, Integer.parseInt(result));
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
 			return true;
@@ -626,6 +630,7 @@ public class MarketServiceImpl implements MarketService {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
 			list.add(model);
 		}
 		return list;
@@ -637,6 +642,7 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Order order = orderDAO.findById(orderId);
 		model.put("order", order);
+		model.put("orderId", service.getOrderId(order));
 		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 		model.put("logistics", logisticsDAO.findById(orderId));
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));

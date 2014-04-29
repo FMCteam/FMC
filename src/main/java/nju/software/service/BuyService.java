@@ -26,9 +26,9 @@ public interface BuyService {
 	
 	public void computePurchaseCostSubmit(int orderId, long taskId,
 			String[] fabric_names, String[] tear_per_meters,
-			String[] cost_per_meters, String[] fabric_prices,
+			String[] cost_per_meters, 
 			String[] accessory_names, String[] tear_per_piece,
-			String[] cost_per_piece, String[] accessory_prices);
+			String[] cost_per_piece);
 	
 	//===========================采购样衣原料=================================
 	public List<Map<String,Object>> getPurchaseSampleMaterialList();

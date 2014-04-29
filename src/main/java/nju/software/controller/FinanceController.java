@@ -181,8 +181,8 @@ public class FinanceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String image(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		long pid=Long.parseLong(request.getParameter("pid"));
-		List<Map<String, Object>> list=financeService.getProcessState(pid);
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		List<Map<String, Object>> list=financeService.getProcessState(orderId);
 		model.addAttribute("list", list);
 		return "/image";
 	}
