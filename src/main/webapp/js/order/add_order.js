@@ -41,27 +41,27 @@
 		
 		$("input[name='has_posted_sample_clothes']").change(function(){
 			if($('input:radio[name="has_posted_sample_clothes"]:checked').val()=="0"){
-				$("input[name='in_post_sample_clothes_time']").attr("readonly","readonly");
-				$("input[name='in_post_sample_clothes_type']").attr("readonly","readonly");
-				$("input[name='in_post_sample_clothes_number']").attr("readonly","readonly");
+				$("input[name='in_post_sample_clothes_time']").attr("disabled","disabled");
+				$("select[name='in_post_sample_clothes_type']").attr("disabled","disabled");
+				$("input[name='in_post_sample_clothes_number']").attr("disabled","disabled");
 			}else{
-				$("input[name='in_post_sample_clothes_time']").removeAttr("readonly");
-				$("input[name='in_post_sample_clothes_type']").removeAttr("readonly");
-				$("input[name='in_post_sample_clothes_number']").removeAttr("readonly");
+				$("input[name='in_post_sample_clothes_time']").removeAttr("disabled");
+				$("select[name='in_post_sample_clothes_type']").removeAttr("disabled");
+				$("input[name='in_post_sample_clothes_number']").removeAttr("disabled");
 			}
 		});
 
 		$("input[name='is_need_sample_clothes']").change(function(){
 			if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
-				$("input[name='sample_clothes_name']").attr("readonly","readonly");
-				$("input[name='sample_clothes_phone']").attr("readonly","readonly");
-				$("input[name='sample_clothes_address']").attr("readonly","readonly");
-				$("input[name='sample_clothes_remark']").attr("readonly","readonly");
+				$("input[name='sample_clothes_name']").attr("disabled","disabled");
+				$("input[name='sample_clothes_phone']").attr("disabled","disabled");
+				$("input[name='sample_clothes_address']").attr("disabled","disabled");
+				$("input[name='sample_clothes_remark']").attr("disabled","disabled");
 			}else{
-				$("input[name='sample_clothes_name']").removeAttr("readonly");
-				$("input[name='sample_clothes_phone']").removeAttr("readonly");
-				$("input[name='sample_clothes_address']").removeAttr("readonly");
-				$("input[name='sample_clothes_remark']").removeAttr("readonly");
+				$("input[name='sample_clothes_name']").removeAttr("disabled");
+				$("input[name='sample_clothes_phone']").removeAttr("disabled");
+				$("input[name='sample_clothes_address']").removeAttr("disabled");
+				$("input[name='sample_clothes_remark']").removeAttr("disabled");
 			}
 		});
 
@@ -136,10 +136,8 @@ function getTdString(col){
 
 
 function verify(){
-	/*alert(getTdString("fabric_name"));
-	alert(getTdString("fabric_amount"));
-	alert(getTdString("accessory_name"));
-	alert(getTdString("accessory_query"));*/
+	
+	
 	$("#fabric_name").val(getTdString("fabric_name"));
 	$("#fabric_amount").val(getTdString("fabric_amount"));
 	$("#accessory_name").val(getTdString("accessory_name"));
@@ -190,88 +188,88 @@ function verify(){
 }
 
 function init(){
-	$("#fabric_name").val("name1,name2,name3");
-	$("#fabric_amount").val("11,12,13");
-	$("#accessory_name").val("name1,name2,name3");
-	$("#accessory_query").val("name1,name2,name3");
-	$("#produce_color").val("红,黄,绿");
-	$("#produce_xs").val("1,2,3");
-	$("#produce_s").val("1,2,3");
-	$("#produce_m").val("1,2,3");
-	$("#produce_l").val("1,2,3");
-	$("#produce_xl").val("1,2,3");
-	$("#produce_xxl").val("1,2,3");
-	$("#sample_produce_color").val("红,黄,绿");
-	$("#sample_produce_xs").val("1,1,2");
-	$("#sample_produce_s").val("1,1,2");
-	$("#sample_produce_m").val("1,1,2");
-	$("#sample_produce_l").val("1,1,2");
-	$("#sample_produce_xl").val("1,1,2");
-	$("#sample_produce_xxl").val("1,1,2");
-	$("#version_size").val("21,22,23");
-	$("#version_centerBackLength").val("21,22,23");
-	$("#version_bust").val("21,22,23");
-	$("#version_waistLine").val("21,22,23");
-	$("#version_shoulder").val("21,22,23");
-	$("#version_buttock").val("21,22,23");
-	$("#version_hem").val("21,22,23");
-	$("#version_trousers").val("21,22,23");
-	$("#version_skirt").val("21,22,23");
-	$("#version_sleeves").val("21,22,23");
-	
-	$("input[name='tear_per_meter']").val("1");
-	$("input[name='cost_per_meter']").val("2");
-	$("input[name='fabric_price']").val("3");
-	
-	$("input[name='tear_per_piece']").val("4");
-	$("input[name='cost_per_piece']").val("5");
-	$("input[name='accessory_price']").val("6");
-	
-	
-	$("input[name='cut_cost']").val("0");
-	$("input[name='manage_cost']").val("0");
-	$("input[name='nail_cost']").val("0");
-	$("input[name='ironing_cost']").val("0");
-	
-	
-	$("input[name='swing_cost']").val("0");
-	$("input[name='package_cost']").val("0");
-	$("input[name='other_cost']").val("0");
-	$("input[name='design_cost']").val("0");
-	
-	
-	
-	$("input[name='style_name']").val("");
-	$("input[name='order_source']").val("");
-	$("input[name='ask_amount']").val("20");
-	$("input[name='ask_produce_period']").val("10");
-	$("input[name='ask_deliver_date']").val("");
-
-	
-	
-	
-	$("input[name='in_post_sample_clothes_time']").val();
-	$("input[name='in_post_sample_clothes_type']").val("顺丰");
-	$("input[name='in_post_sample_clothes_number']").val("");
-	
-	$("input[name='sample_clothes_time']").val("");
-	$("input[name='sample_clothes_type']").val("申通");
-	$("input[name='sample_clothes_number']").val("");
-	$("input[name='sample_clothes_name']").val("");
-	$("input[name='sample_clothes_phone']").val("");
-	$("input[name='sample_clothes_address']").val("");
-	$("input[name='sample_clothes_remark']").val("");
-	
+//	$("#fabric_name").val("name1,name2,name3");
+//	$("#fabric_amount").val("11,12,13");
+//	$("#accessory_name").val("name1,name2,name3");
+//	$("#accessory_query").val("name1,name2,name3");
+//	$("#produce_color").val("红,黄,绿");
+//	$("#produce_xs").val("1,2,3");
+//	$("#produce_s").val("1,2,3");
+//	$("#produce_m").val("1,2,3");
+//	$("#produce_l").val("1,2,3");
+//	$("#produce_xl").val("1,2,3");
+//	$("#produce_xxl").val("1,2,3");
+//	$("#sample_produce_color").val("红,黄,绿");
+//	$("#sample_produce_xs").val("1,1,2");
+//	$("#sample_produce_s").val("1,1,2");
+//	$("#sample_produce_m").val("1,1,2");
+//	$("#sample_produce_l").val("1,1,2");
+//	$("#sample_produce_xl").val("1,1,2");
+//	$("#sample_produce_xxl").val("1,1,2");
+//	$("#version_size").val("21,22,23");
+//	$("#version_centerBackLength").val("21,22,23");
+//	$("#version_bust").val("21,22,23");
+//	$("#version_waistLine").val("21,22,23");
+//	$("#version_shoulder").val("21,22,23");
+//	$("#version_buttock").val("21,22,23");
+//	$("#version_hem").val("21,22,23");
+//	$("#version_trousers").val("21,22,23");
+//	$("#version_skirt").val("21,22,23");
+//	$("#version_sleeves").val("21,22,23");
+//	
+//	$("input[name='tear_per_meter']").val("1");
+//	$("input[name='cost_per_meter']").val("2");
+//	$("input[name='fabric_price']").val("3");
+//	
+//	$("input[name='tear_per_piece']").val("4");
+//	$("input[name='cost_per_piece']").val("5");
+//	$("input[name='accessory_price']").val("6");
+//	
+//	
+//	$("input[name='cut_cost']").val("0");
+//	$("input[name='manage_cost']").val("0");
+//	$("input[name='nail_cost']").val("0");
+//	$("input[name='ironing_cost']").val("0");
+//	
+//	
+//	$("input[name='swing_cost']").val("0");
+//	$("input[name='package_cost']").val("0");
+//	$("input[name='other_cost']").val("0");
+//	$("input[name='design_cost']").val("0");
+//	
+//	
+//	
+//	$("input[name='style_name']").val("");
+//	$("input[name='order_source']").val("");
+//	$("input[name='ask_amount']").val("20");
+//	$("input[name='ask_produce_period']").val("10");
+//	$("input[name='ask_deliver_date']").val("");
+//
+//	
+//	
+//	
+//	$("input[name='in_post_sample_clothes_time']").val();
+//	$("input[name='in_post_sample_clothes_type']").val("顺丰");
+//	$("input[name='in_post_sample_clothes_number']").val("");
+//	
+//	$("input[name='sample_clothes_time']").val("");
+//	$("input[name='sample_clothes_type']").val("申通");
+//	$("input[name='sample_clothes_number']").val("");
+//	$("input[name='sample_clothes_name']").val("");
+//	$("input[name='sample_clothes_phone']").val("");
+//	$("input[name='sample_clothes_address']").val("");
+//	$("input[name='sample_clothes_remark']").val("");
+//	
 	if($('input:radio[name="has_posted_sample_clothes"]:checked').val()=="0"){
-		$("input[name='in_post_sample_clothes_time']").attr("readonly","readonly");
-		$("input[name='in_post_sample_clothes_type']").attr("readonly","readonly");
-		$("input[name='in_post_sample_clothes_number']").attr("readonly","readonly");
+		$("input[name='in_post_sample_clothes_time']").attr("disabled","disabled");
+		$("select[name='in_post_sample_clothes_type']").attr("disabled","disabled");
+		$("input[name='in_post_sample_clothes_number']").attr("disabled","disabled");
 	}
 	
 	if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
-		$("input[name='sample_clothes_name']").attr("readonly","readonly");
-		$("input[name='sample_clothes_phone']").attr("readonly","readonly");
-		$("input[name='sample_clothes_address']").attr("readonly","readonly");
-		$("input[name='sample_clothes_remark']").attr("readonly","readonly");
+		$("input[name='sample_clothes_name']").attr("disabled","disabled");
+		$("input[name='sample_clothes_phone']").attr("disabled","disabled");
+		$("input[name='sample_clothes_address']").attr("disabled","disabled");
+		$("input[name='sample_clothes_remark']").attr("disabled","disabled");
 	}
 }

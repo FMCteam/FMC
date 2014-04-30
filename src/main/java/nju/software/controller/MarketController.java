@@ -135,17 +135,19 @@ public class MarketController {
 		String customerCompanyAddress = customer.getCompanyAddress();
 		String styleName = request.getParameter("style_name");
 		String fabricType = request.getParameter("fabric_type");
+		String clothesType = request.getParameter("clothes_type");
 		String styleSex = request.getParameter("style_sex");
 		String styleSeason = request.getParameter("style_season");
 		String specialProcess = StringUtils.join(
 				request.getParameterValues("special_process"), "|");
 		String otherRequirements = StringUtils.join(
 				request.getParameterValues("other_requirements"), "|");
+		String referenceUrl = request.getParameter("reference_url");
 		Integer askAmount = Integer
 				.parseInt(request.getParameter("ask_amount"));
 		String askProducePeriod = request.getParameter("ask_produce_period");
-		Timestamp askDeliverDate = getTime(request
-				.getParameter("ask_deliver_date"));
+		String ask_deliver_date = request.getParameter("ask_deliver_date");
+		Timestamp askDeliverDate = getTime(ask_deliver_date);
 		String askCodeNumber = request.getParameter("ask_code_number");
 		Short hasPostedSampleClothes = Short.parseShort(request
 				.getParameter("has_posted_sample_clothes"));
@@ -364,10 +366,12 @@ public class MarketController {
 		order.setCustomerCompanyAddress(customerCompanyAddress);
 		order.setStyleName(styleName);
 		order.setFabricType(fabricType);
+		order.setClothesType(clothesType);
 		order.setStyleSex(styleSex);
 		order.setStyleSeason(styleSeason);
 		order.setSpecialProcess(specialProcess);
 		order.setOtherRequirements(otherRequirements);
+		order.setReferenceUrl(referenceUrl);
 		order.setAskAmount(askAmount);
 		order.setSampleAmount(0);
 		order.setAskProducePeriod(askProducePeriod);
@@ -383,6 +387,33 @@ public class MarketController {
 		JavaMailUtil.send();
 
 		return "forward:/market/addOrderList.do";
+	}
+
+	@RequestMapping(value = "/market/addMoreOrderList.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String addMoreOrderList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String cid = request.getParameter("cid");
+		List<Map<String, Object>> list = marketService.getAddMoreOrderList(Integer.parseInt(cid));
+		model.put("list", list);
+		model.addAttribute("taskName", "下翻单");
+		model.addAttribute("url", "/market/addMoreOrderDetail.do");
+		return "/market/addMoreOrderList";
+	}
+	
+	@RequestMapping(value = "/market/addMoreOrderDetail.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String addMoreOrderDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String s_id = request.getParameter("orderId");
+		int id = Integer.parseInt(s_id);
+		
+		Map<String, Object> orderModel = marketService.getAddMoreOrderDetail(id);
+		model.addAttribute("orderModel", orderModel);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		model.addAttribute("employee_name", account.getNickName());
+		return "/market/addMoreOrderDetail";
 	}
 
 	// test precondition
@@ -783,12 +814,14 @@ public class MarketController {
 		String orderState = "A";
 		String styleName = request.getParameter("style_name");
 		String fabricType = request.getParameter("fabric_type");
+		String clothesType = request.getParameter("clothes_type");
 		String styleSex = request.getParameter("style_sex");
 		String styleSeason = request.getParameter("style_season");
 		String specialProcess = StringUtils.join(
 				request.getParameterValues("special_process"), "|");
 		String otherRequirements = StringUtils.join(
 				request.getParameterValues("other_requirements"), "|");
+		String referenceUrl = request.getParameter("reference_url");
 		Calendar calendar = Calendar.getInstance();
 
 		Integer askAmount = Integer
@@ -1007,10 +1040,12 @@ public class MarketController {
 		// order.setCustomerCompanyAddress(customerCompanyAddress);
 		order.setStyleName(styleName);
 		order.setFabricType(fabricType);
+		order.setClothesType(clothesType);
 		order.setStyleSex(styleSex);
 		order.setStyleSeason(styleSeason);
 		order.setSpecialProcess(specialProcess);
 		order.setOtherRequirements(otherRequirements);
+		order.setReferenceUrl(referenceUrl);
 		// order.setSampleClothesPicture(sampleClothesPicture);
 		// order.setReferencePicture(referencePicture);
 		order.setAskAmount(askAmount);
@@ -1028,20 +1063,11 @@ public class MarketController {
 		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, sample_produces, versions, cad, editok, task_id,
 				account.getUserId());
-		// WorkflowProcessInstance process = (WorkflowProcessInstance)
-		// jbpmAPIUtil
-		// .getKsession().getProcessInstance(Long.parseLong(s_process_id));
-		// String buyComment = process.getVariable("buyComment").toString();
-		// String designComment =
-		// process.getVariable("designComment").toString();
-		// // String
-		// // productComment=process.getVariable("productComment").toString();
-		// orderService.verify(id, task_id, process_id, true, buyComment,
-		// designComment, null);
 		return "redirect:/market/modifyOrderList.do";
 	}
 
 	public static Timestamp getTime(String time) {
+		if(time.equals("")) return null;
 		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
 		return new Timestamp(outDate.getTime());
 	}

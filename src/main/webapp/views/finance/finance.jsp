@@ -1,6 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<form id="verify_form" action="${ctx}${orderInfo.url}" method="post"
-	onsubmit="return verifyFinance()">
+<form id="verify_form" action="${ctx}${orderInfo.url}" method="post">
 	<input type="hidden" name="money_state" value="已收到" /> <input
 		id="verify_val" type="hidden" name="val" value="已收到" /> <input
 		type="hidden" name="money_type" value="${orderInfo.type}" /> <input
@@ -48,11 +47,13 @@
 		</tr>
 	</table>
 	<div class="action">
+	<input type="submit" />
 		<a id="agree_detail" class="btn btn-primary btn-rounded"><i
 			class="icon-ok icon-white"></i>已确认收款</a> <a
 			class="btn btn-danger btn-rounded"
 			href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
-			onclick="return confirmFinanceSubmit()" style="color: white; margin-left: 20px"><i
+			onclick="return confirmFinanceSubmit()"
+			style="color: white; margin-left: 20px"><i
 			class="icon-remove icon-white"></i>未收到汇款</a>
 	</div>
 </form>

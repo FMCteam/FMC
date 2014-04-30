@@ -10,7 +10,12 @@ function verifyFinance() {
 	var money_remark = $("input[name='money_remark']").val();
 	if (money_name == "" || money_number == "" || money_bank == ""
 			|| money_amount == "" || isNaN(money_amount)) {
-		alert("请填入正确数据内容");
+		//alert("请填入正确数据内容");
+		noty({
+			text : '请填入正确数据内容',
+			layout : 'topCenter',
+			timeout : 2000
+		});
 		return false;
 	}
 	return confirmFinanceSubmit();
