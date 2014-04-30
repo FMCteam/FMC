@@ -32,10 +32,10 @@ public class FinanceController {
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
 		List<Map<String, Object>> list = financeService
 				.getConfirmSampleMoneyList(actorId);
-		if (list.size() == 0) {
-			jbpmTest.completeConfirmQuote(FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
-			list = financeService.getConfirmSampleMoneyList(actorId);
-		}
+//		if (list.size() == 0) {
+//			jbpmTest.completeConfirmQuote(FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
+//			list = financeService.getConfirmSampleMoneyList(actorId);
+//		}
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "确认样衣制作金");
 		model.addAttribute("url", "/finance/confirmSampleMoneyDetail.do");

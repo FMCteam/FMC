@@ -44,7 +44,7 @@
 						<tr class="addrow">
 							<td><input type="text" class="color" /></td>
 							<td><input type="text" class="size" /></td>
-							<td><input type="number" class="number" /></td>
+							<td><input type="number" class="number" min="0"/></td>
 							<td><a>添加</a></td>
 						</tr>
 					</table>
