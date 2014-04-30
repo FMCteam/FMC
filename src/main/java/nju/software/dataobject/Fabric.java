@@ -3,7 +3,9 @@ package nju.software.dataobject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -34,6 +36,7 @@ public class Fabric implements java.io.Serializable {
 		this.fabricAmount = fabricAmount;
 	}
 
+	
 	// Property accessors
 	@Id
 	@GeneratedValue(strategy = IDENTITY)

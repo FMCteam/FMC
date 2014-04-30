@@ -31,6 +31,8 @@
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
 			</div>
+			
+			
 			<div>
 				<form id="verify_form" method="post" class="verify"
 					action="${ctx }/buy/verifyPurchaseSubmit.do">

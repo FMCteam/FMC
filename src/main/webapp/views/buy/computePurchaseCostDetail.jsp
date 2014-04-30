@@ -14,7 +14,7 @@
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
-
+	
 			<div class="tab-content">
 				<div class="tab-pane" id="basic">
 					<%@include file="/views/common/basic.jsp"%>
@@ -31,62 +31,73 @@
 				<div class="tab-pane" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
-				<div class="tab-pane active" id="quote">
-
+				
+				
 					<form id="costAccounting_form" method="post"
 						action="${ctx}/buy/computePurchaseCostSubmit.do">
+				<div class="tab-pane active" id="quote">
+
+			
+						
+						
 						<table
-							class="table table-striped table-bordered table-hover detail">
+							class="table table-striped table-bordered table-hover">
 							<tr>
-								<td class="span2" rowspan="${fn:length(orderInfo.fabrics)+1}">面料报价</td>
-								<td class="span3">面料名</td>
-								<td class="span3">单件米耗</td>
-								<td class="span3">每米价格</td>
-							
+								<td class="span2">面料报价
+								<input id="fabric_name" type="hidden"name="fabric_name" />
+								<input id="tear_per_meter" type="hidden"name="tear_per_meter" /></td>
+								<input id="cost_per_meter" type="hidden"name="cost_per_meter" /></td>
+								<td class="innertable span12"><table class="span12 table fabric_table">
+										<tr>
+											<td class="span5">面料名称</td>
+											<td class="span5">单件米耗</td>
+											<td class="span5">每米价格</td>
+											<td class="span3">操作</td>
+										</tr>
+										<tr class="addrow">
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
+											<td><a>添加</a></td>
+										</tr>
+									</table>
+									</td>
 							</tr>
-
-							<c:forEach var="fabric" items="${orderInfo.fabrics}">
-								<tr>
-									<td>${fabric.fabricName}<input type="hidden"
-										name="fabricName" value="${fabric.fabricName}" /></td>
-									<td><input class="span12" name="tear_per_meter"
-										type="text" /></td>
-									<td><input class="span12" name="cost_per_meter"
-										type="text" /></td>
-									
-								</tr>
-							</c:forEach>
-
 							<tr>
-								<td rowspan="${fn:length(orderInfo.accessorys)+1}">辅料报价</td>
-								<td>辅料名</td>
-								<td>单件耗数</td>
-								<td>辅料单价</td>
-								
+								<td class="span2">辅料报价
+								<input id="accessory_name" type="hidden" name="accessory_name" /> 
+								<input id="tear_per_piece" type="hidden" name="tear_per_piece" /></td>
+								<input id="cost_per_piece" type="hidden" name="cost_per_piece" /></td>
+								<td class="innertable span12"><table
+										class="span12 table accessory_table">
+										<tr>
+											<td class="span5">辅料名称</td>
+											<td class="span5">单件耗数</td>
+											<td class="span5">辅料单价</td>
+											<td class="span3">操作</td>
+										</tr>
+										<tr class="addrow">
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
+												<td><input class="span12" type="text" /></td>
+											<td><a>添加</a></td>
+										</tr>
+									</table></td>
 							</tr>
-
-							<c:forEach var="accessory" items="${orderInfo.accessorys}">
-								<tr>
-									<td>${accessory.accessoryName}<input type="hidden"
-										name="accessoryName" value="${accessory.accessoryName}" /></td>
-									<td><input class="span12" name="tear_per_piece"
-										type="text" /></td>
-									<td><input class="span12" name="cost_per_piece"
-										type="text" /></td>
-								
-								</tr>
-							</c:forEach>
-						<!-- 	<tr>
-								<td>面辅总计</td>
-								<td>面料总计</td>
-								<td><input class="span12" name="all_fabric_prices"
-									id="all_fabric_prices" type="text" /></td>
-								<td>辅料总计</td>
-								<td><input class="span12" name="accessory_prices"
-									id="accessory_prices" type="text" /></td>
-							</tr>
-							 -->
 						</table>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						<input class="btn btn-primary" type="submit" value="提交报价"
 							style="float:right;"> <input type="hidden" name="orderId"
 							value="${orderInfo.order.orderId }" /> <input type="hidden"
@@ -117,6 +128,6 @@
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx}/views/buy/cost.js"></script>
-<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
+<script type="text/javascript" src="${ctx}/js/order/add_fabric.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>

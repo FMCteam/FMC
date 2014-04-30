@@ -1,5 +1,6 @@
 package nju.software.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Fabric;
+import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.model.OrderInfo;
 import nju.software.service.BuyService;
@@ -85,23 +87,85 @@ public class BuyController {
 	public String computePurchaseCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-	
-		
-		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
+	    Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		long taskId = Long.parseLong(request.getParameter("taskId"));
-
-		String[] fabric_names = request.getParameterValues("fabricName");
-		String[] tear_per_meters = request.getParameterValues("tear_per_meter");
-		String[] cost_per_meters = request.getParameterValues("cost_per_meter");
 		
 		
-		String[] fabric_prices = request.getParameterValues("fabric_price");
+		// 面料数据
+				String fabric_name = request.getParameter("fabric_name");
+				String tear_per_meter = request.getParameter("tear_per_meter");
+				String cost_per_meter = request.getParameter("cost_per_meter");
+				String fabric_names_temp[] = fabric_name.split(",");
+				String tear_per_meters_temp[] = tear_per_meter.split(",");
+				String cost_per_meters_temp[] = cost_per_meter.split(",");
+				
+				
+				
+				System.out.println("================================");
+				System.out.println(fabric_name);
+				System.out.println("================================");
+				
+				
+//				List<Fabric> fabrics = new ArrayList<Fabric>();
+				List<String> fabric_names_list=new ArrayList<String>();
+				List<String> cost_per_meters_list=new ArrayList<String>();
+				List<String> tear_per_meters_list=new ArrayList<String>();
+//				List<FabricCost> fabricCosts=new ArrayList<FabricCost>();
+				for (int i = 0; i < fabric_names_temp.length; i++) {
+					
+					if (fabric_names_temp[i].equals(""))
+						continue;
+					fabric_names_list.add(fabric_names_temp[i]);
+					System.out.println("================================");
+					System.out.println(fabric_names_temp[i]);
+					System.out.println("================================");
+					tear_per_meters_list.add(tear_per_meters_temp[i]);
+					cost_per_meters_list.add(cost_per_meters_temp[i]);
+				}
 
-		String[] accessory_names = request.getParameterValues("accessoryName");
-		String[] tear_per_piece = request.getParameterValues("tear_per_piece");
-		String[] cost_per_piece = request.getParameterValues("cost_per_piece");
-		String[] accessory_prices = request
-				.getParameterValues("accessory_price");
+				 int size=fabric_names_list.size();  
+			        String[] fabric_names = (String[])fabric_names_list.toArray(new String[size]);  
+			        String[] tear_per_meters = (String[])tear_per_meters_list.toArray(new String[size]);  
+			        String[] cost_per_meters = (String[])cost_per_meters_list.toArray(new String[size]);  
+				
+				
+				// 辅料数据
+				String accessory_name = request.getParameter("accessory_name");
+				String tear_per_pieces = request.getParameter("tear_per_piece");
+				String cost_per_pieces = request.getParameter("cost_per_piece");
+				String accessory_names_temp[] = accessory_name.split(",");
+				String tear_per_piece_temp[] = tear_per_pieces.split(",");
+				String cost_per_piece_temp[] = cost_per_pieces.split(",");
+
+				List<String> accessory_names_list=new ArrayList<String>();
+				List<String> tear_per_piece_list=new ArrayList<String>();
+				List<String> cost_per_piece_list=new ArrayList<String>();
+	          for (int i = 0; i < accessory_names_temp.length; i++) {
+					
+					if (accessory_names_temp[i].equals(""))
+						continue;
+					accessory_names_list.add(accessory_names_temp[i]);
+					tear_per_piece_list.add(tear_per_piece_temp[i]);
+					cost_per_piece_list.add(cost_per_piece_temp[i]);
+				}
+				
+	          int accessory_size=accessory_names_list.size();  
+		        String[] accessory_names = (String[])accessory_names_list.toArray(new String[accessory_size]);  
+		        String[] tear_per_piece = (String[])tear_per_piece_list.toArray(new String[accessory_size]);  
+		        String[] cost_per_piece = (String[])cost_per_piece_list.toArray(new String[accessory_size]);  
+				
+//		String[] fabric_names = request.getParameterValues("fabricName");
+//		String[] tear_per_meters = request.getParameterValues("tear_per_meter");
+//		String[] cost_per_meters = request.getParameterValues("cost_per_meter");
+		
+		
+//		String[] fabric_prices = request.getParameterValues("fabric_price");
+
+//		String[] accessory_names = request.getParameterValues("accessoryName");
+//		String[] tear_per_piece = request.getParameterValues("tear_per_piece");
+//		String[] cost_per_piece = request.getParameterValues("cost_per_piece");
+//		String[] accessory_prices = request
+//				.getParameterValues("accessory_price");
 
 		buyService.computePurchaseCostSubmit(orderId, taskId, fabric_names,
 				tear_per_meters, cost_per_meters,
