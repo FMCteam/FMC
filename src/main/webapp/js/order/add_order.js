@@ -16,7 +16,8 @@
 		
 		$("table.produce_table a").click(function(){
 			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
-			table_addrow_onclick("produce_table",colName,7);
+			var old = $("input[name='ask_amount']").val()==""?0:parseInt($("input[name='ask_amount']").val());
+			$("input[name='ask_amount']").val(table_addrow_onclick("produce_table",colName,7)+old);
 		});
 		
 		$("table.sample_produce_table a").click(function(){
@@ -72,47 +73,29 @@
 
 
 	function table_addrow_onclick(table_name,col_name,col_sum){
-//		    //检查第一列是否为空
-//			var col1=$("table."+table_name+" tr.addrow input").eq(0).val();
-//			if(col1==""){
-//				alert("不能为空");
-//				return;
-//			}
-//			
-//			//检查第二列是否为空
-//			var col2=$("table."+table_name+" tr.addrow input").eq(1).val();
-//			if(col2==""){
-//				alert("不能为空");
-//				return;
-//			}
-//			
+	
 			var content = new Array();
 			for(var i=0;i<col_sum;i++){
 				var col=$("table."+table_name+" tr.addrow input").eq(i).val();
 				content[i] = col;
 				if(col==""){
-					alert("不能为空");
+					alert("请把信息填写完整");
 					return;
 				}
 			}
-			//清空第一二列
-//			$("table."+table_name+" tr.addrow input").eq(0).val("");
-//			$("table."+table_name+" tr.addrow input").eq(1).val("");
-
-			//添加行
-//			var item="<td class='span12 "+col1_name+"'>"+col1+"</td>";
-//			item+="<td class='span12 "+col2_name+"'>"+col2+"</td>";
 
 			var item = "";
+			var amount = 0;
 			for(var j=0;j<col_sum;j++){
 				$("table."+table_name+" tr.addrow input").eq(j).val("");
 				item+="<td class='"+col_name[j]+"'>"+content[j]+"</td>";
+				if(j>0) amount+=parseInt(content[j]);
 			}
 			item+="<td><a onclick=\"deleteRow(this,'"+table_name+"')\">删除</a></td>";
 			item="<tr>"+item+"</tr>";
 			$("table."+table_name+" tr.addrow").after(item);
 			
-			
+			return amount;
 	}
 
 
