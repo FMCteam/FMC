@@ -16,8 +16,10 @@
 		
 		$("table.produce_table a").click(function(){
 			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
-			var old = $("input[name='ask_amount']").val()==""?0:parseInt($("input[name='ask_amount']").val());
-			$("input[name='ask_amount']").val(table_addrow_onclick("produce_table",colName,7)+old);
+			if(checkNum("produce_table",colName,7)){
+				table_addrow_onclick("produce_table",colName,7);
+				$("input[name='ask_amount']").val(calculate("produce_table",colName,7));
+			}
 		});
 		
 		$("table.sample_produce_table a").click(function(){
@@ -85,26 +87,50 @@
 			}
 
 			var item = "";
-			var amount = 0;
 			for(var j=0;j<col_sum;j++){
 				$("table."+table_name+" tr.addrow input").eq(j).val("");
 				item+="<td class='"+col_name[j]+"'>"+content[j]+"</td>";
-				if(j>0) amount+=parseInt(content[j]);
 			}
 			item+="<td><a onclick=\"deleteRow(this,'"+table_name+"')\">删除</a></td>";
 			item="<tr>"+item+"</tr>";
 			$("table."+table_name+" tr.addrow").after(item);
 			
-			return amount;
 	}
 
 
 	
 })(jQuery);
 
+function checkNum(table_name,col_name,col_sum){
+	for(var i=0;i<col_sum;i++){
+		var col=$("table."+table_name+" tr.addrow input").eq(i).val();
+		if(isNaN(parseInt(col))){
+			if(i>0){
+				alert("请正确填写数量");
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+function calculate(table_name,col_name,col_sum){
+	var sum = 0;
+	for(var i = 1; i < col_sum; i++){
+		for(var j = 0; j < $("td."+col_name[i]).length; j++){
+			sum += parseInt($("td."+col_name[i]).eq(j).text());
+		}
+	}
+	return sum;
+}
+
 function deleteRow(a,table){
 	//alert($(a).parents('.'+table+' tr').length);
 	$(a).parents('.'+table+' tr').remove();
+	if(table=="produce_table"){
+		var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
+		$("input[name='ask_amount']").val(calculate("produce_table",colName,7));
+	}
 }
 
 function getTdString(col){

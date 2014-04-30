@@ -211,9 +211,9 @@
 							</tr>
 							<tr>
 								<td>样衣信息</td>
-								<td>样衣图片</td>
+								<td>样衣图片<span class="required">*</span></td>
 								<td><input type="file" value="选择文件"
-									name="sample_clothes_picture" /></td>
+									name="sample_clothes_picture" required="required" /></td>
 								<td>参考图片</td>
 								<td><input type="file" value="选择文件"
 									name="reference_picture" /></td>

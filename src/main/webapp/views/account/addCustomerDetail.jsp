@@ -93,7 +93,7 @@
 							<tr>
 								<td><label>采购联系人电话<b>1</b></label> <span class="field"><input
 										type="text" name="contact_phone_1" class="input-medium"
-										></span></td>
+										/></span></td>
 								<td><label>采购联系人电话<b>2</b></label> <span class="field"><input
 										type="text" name="contact_phone_2" class="input-medium"
 										></span></td>
@@ -197,6 +197,7 @@
 				company_id : "required",
 				company_name : "required",
 				province : "required",
+				contact_phone_1 : "required",
 
 				register_date : {
 					date : true,
@@ -211,7 +212,8 @@
 				company_id : "请输入公司编号",
 				company_name : "请输入公司姓名",
 				province : "请输入客户的省份",
-				register_date : "请输入正确的注册日期"
+				register_date : "请输入正确的注册日期",
+				contact_phone_1 : "请输入采购联系人电话"
 
 			}
 
