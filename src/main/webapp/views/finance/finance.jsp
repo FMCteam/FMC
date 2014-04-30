@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<form id="verify_form" action="${ctx}${orderInfo.url}" method="post">
+<form id="verify_form" action="${ctx}${orderInfo.url}" method="post"
+	onsubmit="return verifyFinance();">
 	<input type="hidden" name="money_state" value="已收到" /> <input
 		id="verify_val" type="hidden" name="val" value="已收到" /> <input
 		type="hidden" name="money_type" value="${orderInfo.type}" /> <input
@@ -29,10 +30,10 @@
 			<td>汇款金额</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="money_name" /></td>
-			<td><input type="text" name="money_number" /></td>
-			<td><input type="text" name="money_bank" /></td>
-			<td><input type="text" name="money_amount" /></td>
+			<td><input type="text" name="money_name" required="required" /></td>
+			<td><input type="text" name="money_number" required="required"/></td>
+			<td><input type="text" name="money_bank" required="required"/></td>
+			<td><input type="text" name="money_amount"  required="required"/></td>
 		</tr>
 		<tr>
 			<td>收款时间</td>
@@ -47,8 +48,8 @@
 		</tr>
 	</table>
 	<div class="action">
-	<input type="submit" />
-		<a id="agree_detail" class="btn btn-primary btn-rounded"><i
+		<input type="submit" id="financeSubmit" hidden="hidden" /> <a
+			id="financeButton" class="btn btn-primary btn-rounded"><i
 			class="icon-ok icon-white"></i>已确认收款</a> <a
 			class="btn btn-danger btn-rounded"
 			href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"

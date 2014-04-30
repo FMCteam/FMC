@@ -108,7 +108,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Float price = quote.getOuterPrice();
 		model.put("price", price);
 		model.put("number", order.getAskAmount());
-		model.put("total", order.getAskAmount() * price * 0.3);
+		model.put("total", order.getTotalMoney() * 0.3);
 		model.put("taskName", "确认大货定金");
 		model.put("tabName", "大货定金");
 		model.put("type", "大货定金");
@@ -154,7 +154,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Float price = quote.getOuterPrice();
 		model.put("price", price);
 		model.put("number", order.getAskAmount());
-		model.put("total", order.getAskAmount() * price * 0.7);
+		model.put("total",  order.getTotalMoney() * 0.7);
 		model.put("taskName", "确认大货尾款");
 		model.put("tabName", "大货尾款");
 		model.put("type", "大货尾款");
