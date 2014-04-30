@@ -63,13 +63,16 @@
 							<tr>
 								<td rowspan="6">款式信息</td>
 								<td><label>款式名称<span class="required">*</span></label></td>
-								<td colspan="3">款式性别<span class="required">*</span></td>
+								<td>衣服类型<span class="required">*</span></td>
+								<td colspan="2">款式性别<span class="required">*</span></td>
 								<td colspan="2">款式季节<span class="required">*</span></td>
 							</tr>
 							<tr>
 								<td><input type="text" class="span12" name="style_name"
 									required="required" /></td>
-								<td colspan="3"><input type="radio" name="style_sex"
+								<td><input type="text" class="span12" name="clothes_type"
+									required="required" /></td>	
+								<td colspan="2"><input type="radio" name="style_sex"
 									checked="checked" value="男" /> <span>男</span> <input
 									type="radio" name="style_sex" value="女" /> <span>女</span> <input
 									type="radio" name="style_sex" value="儿童" /> <span>儿童</span></td>
@@ -109,19 +112,19 @@
 							</tr>
 							<tr>
 								<td>参考链接</td>
-								<td colspan="5"><input class="span12" type="url" /></td>
+								<td colspan="5"><input class="span12" type="url" name="reference_url"/></td>
 							</tr>
 						</table>
 					</div>
 					<div class="tab-pane" id="material">
 						<table
-							class="table table-striped table-bordered table-hover">
+							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="span2">面料<input id="fabric_name" type="hidden"
+								<td class="span4">面料<input id="fabric_name" type="hidden"
 									name="fabric_name" /> <input id="fabric_amount" type="hidden"
 									name="fabric_amount" /></td>
 								<td class="innertable span12"><table
-										class="span12 table fabric_table">
+										class="span12 table fabric_table span12">
 										<tr>
 											<td class="span5">面料名称</td>
 											<td class="span5">面料克重</td>
@@ -159,7 +162,7 @@
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span2" rowspan="2">客户样衣</td>
-								<td class="span2">提供样衣</td>
+								<td class="span2">提供样衣<span class="required">*</span></td>
 								<td class="span3">邮寄时间</td>
 								<td class="span2">快递名称</td>
 								<td class="span3">快递单号</td>
@@ -170,40 +173,35 @@
 									name="has_posted_sample_clothes" value="0" /> 否</td>
 								<td><input class="span12" type="date"
 									name="in_post_sample_clothes_time" /></td>
-								<td><input class="span12" type="text"
-									name="in_post_sample_clothes_type" /></td>
+								<td><select name="in_post_sample_clothes_type"
+									style="margin: 0px">
+										<option value="顺丰">顺丰</option>
+										<option value="韵达">韵达</option>
+										<option value="圆通">圆通</option>
+										<option value="中通">中通</option>
+										<option value="申通">申通</option>
+										<option value="汇通">汇通</option>
+										<option value="EMS">EMS</option>
+								</select></td>
 								<td><input class="span12" type="text"
 									name="in_post_sample_clothes_number" /></td>
 							</tr>
 							<tr>
-								<td rowspan="5">生产样衣</td>
+								<td rowspan="3">生产样衣</td>
 								<td>制作样衣</td>
-								<td>邮寄时间</td>
-								<td>快递名称</td>
-								<td>快递单号</td>
+								<td>邮寄人</td>
+								<td>手机</td>
+								<td>邮寄地址</td>
 							</tr>
 							<tr>
 								<td><input type="radio" name="is_need_sample_clothes"
 									checked="checked" value="1" /> 是 <input type="radio"
 									name="is_need_sample_clothes" value="0" /> 否</td>
-								<td><input class="span12" type="date"
-									name="sample_clothes_time" /></td>
-								<td><input class="span12" type="text"
-									name="sample_clothes_type" /></td>
-								<td><input class="span12" type="text"
-									name="sample_clothes_number" /></td>
-							</tr>
-							<tr>
-								<td>邮寄人</td>
-								<td>手机</td>
-								<td colspan="2">邮寄地址</td>
-							</tr>
-							<tr>
 								<td><input class="span12" type="text"
 									name="sample_clothes_name" /></td>
 								<td><input class="span12" type="text"
 									name="sample_clothes_phone" /></td>
-								<td colspan="2"><input class="span12" type="text"
+								<td><input class="span12" type="text"
 									name="sample_clothes_address" /></td>
 							</tr>
 							<tr>
@@ -213,9 +211,9 @@
 							</tr>
 							<tr>
 								<td>样衣信息</td>
-								<td>样衣图片</td>
+								<td>样衣图片<span class="required">*</span></td>
 								<td><input type="file" value="选择文件"
-									name="sample_clothes_picture" /></td>
+									name="sample_clothes_picture" required="required" /></td>
 								<td>参考图片</td>
 								<td><input type="file" value="选择文件"
 									name="reference_picture" /></td>
@@ -227,24 +225,22 @@
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td rowspan="2">加工信息</td>
-								<td class="span2" colspan="2">样衣总数<span class="required">*</span></td>
 								<td class="span2" colspan="2">大货总数<span class="required">*</span></td>
-								<td class="span2" colspan="2">最迟交货时间</td>
-								<td class="span2" colspan="2">完工时间（天）</td>
+								<td class="span2" colspan="2">最迟交货时间<span class="required">*</span></td>
+								<td class="span2" colspan="2">完工时间（天）<span class="required">*</span></td>
 							</tr>
 							<tr>
 								<td class="span2" colspan="2"><input class="span6"
-									type="number" name="sample_amount" /></td>
-								<td class="span2" colspan="2"><input class="span6"
-									type="number" name="ask_amount" /></td>
+									type="number" name="ask_amount" required="required"/></td>
 								<td class="span2" colspan="2"><input class="span8"
-									type="date" name="ask_deliver_date" /></td>
+									type="date" name="ask_deliver_date" required="required"/></td>
 								<td class="span2" colspan="2"><input class="span4"
-									type="number" name="ask_produce_period" /></td>
+									type="number" name="ask_produce_period" required="required"/></td>
 							</tr>
-							
-							</table>
-							<table class="table table-striped table-bordered table-hover detail">
+
+						</table>
+						<table
+							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span2">大货加工 <input id="produce_color"
 									type="hidden" name="produce_color" /> <input id="produce_xs"
@@ -377,27 +373,27 @@
 							<tr>
 								<td class="span1" rowspan="4">版型数据</td>
 								<td class="span1">面料</td>
-								<td class="span3"><textarea class="span12"
+								<td class="span3"><textarea class="span12" name="cadFabric"
 										style="resize:none" rows="2"></textarea></td>
 								<td class="span1">包装</td>
-								<td class="span3"><textarea class="span12"
+								<td class="span3"><textarea class="span12" name="cadBox"
 										style="resize:none" rows="2"></textarea></td>
 							</tr>
 							<tr>
 								<td class="span1">版型</td>
 								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="2"></textarea></td>
+										name="cadVersionData" style="resize:none" rows="2"></textarea></td>
 								<td class="span1">装箱</td>
 								<td class="span3"><textarea class="span12"
-										style="resize:none" rows="2"></textarea></td>
+										name="cadPackage" style="resize:none" rows="2"></textarea></td>
 
 							</tr>
 							<tr>
 								<td class="span1">工艺</td>
-								<td class="span3"><textarea class="span12"
+								<td class="span3"><textarea class="span12" name="cadTech"
 										style="resize:none" rows="2"></textarea></td>
 								<td class="span1">其他</td>
-								<td class="span3"><textarea class="span12"
+								<td class="span3"><textarea class="span12" name="cadOther"
 										style="resize:none" rows="2"></textarea></td>
 							</tr>
 						</table>

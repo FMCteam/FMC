@@ -29,17 +29,29 @@ public class Order implements java.io.Serializable {
 	private String customerPhone2;
 	private String customerCompanyAddress;
 	private String styleName;
+	private String clothesType;
 	private String fabricType;
 	private String styleSex;
 	private String styleSeason;
 	private String specialProcess;
 	private String otherRequirements;
+	private String referenceUrl;
 	private String sampleClothesPicture;
 	private String referencePicture;
 	private Integer askAmount;
 	private Integer sampleAmount;
+	private Long processId;
 	
 	
+	@Column(name = "processId", nullable = true)
+	public Long getProcessId() {
+		return processId;
+	}
+
+	public void setProcessId(Long processId) {
+		this.processId = processId;
+	}
+
 	@Column(name = "sample_amount")
 	public Integer getSampleAmount() {
 		return sampleAmount;
@@ -58,7 +70,7 @@ public class Order implements java.io.Serializable {
 	private String payAccountInfo;
 	private double discount;
 	private double totalMoney;
-	private double sampleMoney;
+	private double sampleMoney=0;
 	private int logisticsState; //物流状态：0,未装包。1，装包未入库，2，入库待扫描，3已扫描待发货。4发货
 	
 	@Column(name = "sampleMoney", nullable = true, precision = 22, scale = 0)
@@ -425,6 +437,24 @@ public class Order implements java.io.Serializable {
 
 	public void setLogisticsState(int logisticsState) {
 		this.logisticsState = logisticsState;
+	}
+
+	@Column(name = "clothes_type", length = 250)
+	public String getClothesType() {
+		return clothesType;
+	}
+
+	public void setClothesType(String clothesType) {
+		this.clothesType = clothesType;
+	}
+
+	@Column(name = "reference_url", length = 250)
+	public String getReferenceUrl() {
+		return referenceUrl;
+	}
+
+	public void setReferenceUrl(String referenceUrl) {
+		this.referenceUrl = referenceUrl;
 	}
 	
 

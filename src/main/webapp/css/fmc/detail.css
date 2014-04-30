@@ -5,6 +5,9 @@
 table.detail.table.table-bordered{
 	border-top:1px solid #dddddd ;
 }
+table.detail.table-bordered table.table td{
+	border-top: 1px solid #dddddd;
+}
 table.detail.table.table-bordered input{
 	margin-bottom: 0px;;
 }

@@ -13,6 +13,7 @@ import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.model.OrderInfo;
 import nju.software.service.BuyService;
+import nju.software.service.impl.JbpmTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,6 +66,10 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService
 				.getComputePurchaseCostList();
+		/*if (list.size() == 0) {
+			jbpmTest.completeVerify("1", true);
+			list = buyService.getComputePurchaseCostList();
+		}*/
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "采购成本核算");
 		model.addAttribute("url", "/buy/computePurchaseCostDetail.do");
@@ -137,6 +142,7 @@ public class BuyController {
 				String tear_per_piece_temp[] = tear_per_pieces.split(",");
 				String cost_per_piece_temp[] = cost_per_pieces.split(",");
 
+
 				List<String> accessory_names_list=new ArrayList<String>();
 				List<String> tear_per_piece_list=new ArrayList<String>();
 				List<String> cost_per_piece_list=new ArrayList<String>();
@@ -160,6 +166,7 @@ public class BuyController {
 		
 		
 //		String[] fabric_prices = request.getParameterValues("fabric_price");
+
 
 //		String[] accessory_names = request.getParameterValues("accessoryName");
 //		String[] tear_per_piece = request.getParameterValues("tear_per_piece");
@@ -278,4 +285,6 @@ public class BuyController {
 
 	@Autowired
 	private BuyService buyService;
+	@Autowired
+	private JbpmTest jbpmTest;
 }

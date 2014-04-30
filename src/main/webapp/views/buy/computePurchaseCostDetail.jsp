@@ -35,7 +35,7 @@
 				
 					<form id="costAccounting_form" method="post"
 						action="${ctx}/buy/computePurchaseCostSubmit.do">
-				<div class="tab-pane active" id="quote">
+
 
 			
 						
@@ -43,10 +43,12 @@
 						<table
 							class="table table-striped table-bordered table-hover">
 							<tr>
+
 								<td class="span2">面料报价
 								<input id="fabric_name" type="hidden"name="fabric_name" />
 								<input id="tear_per_meter" type="hidden"name="tear_per_meter" /></td>
 								<input id="cost_per_meter" type="hidden"name="cost_per_meter" /></td>
+								
 								<td class="innertable span12"><table class="span12 table fabric_table">
 										<tr>
 											<td class="span5">面料名称</td>
@@ -83,7 +85,8 @@
 											<td><a>添加</a></td>
 										</tr>
 									</table></td>
-							</tr>
+
+							
 						</table>
 						
 						

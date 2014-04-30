@@ -91,9 +91,11 @@ public class BuyServiceImpl implements BuyService {
 		// TODO Auto-generated method stub
 		if (fabric_names != null) {
 			for (int i = 0; i < fabric_names.length; i++) {
+
 				Fabric fabric=new Fabric();
 				fabric.setOrderId(orderId);
 				fabric.setFabricName(fabric_names[i]);
+
 				
 				FabricCost fabricCost = new FabricCost();
 				fabricCost.setOrderId(orderId);
@@ -287,11 +289,12 @@ public class BuyServiceImpl implements BuyService {
 	@Autowired
 	private FabricDAO fabricDAO;
 	@Autowired
+	private QuoteDAO quoteDAO;
+	@Autowired
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private ProductDAO productDAO;
-	@Autowired
-	private QuoteDAO quoteDAO;
+	
 	@Autowired
 	private AccessoryCostDAO AccessoryCostDAO;
 	@Autowired

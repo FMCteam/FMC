@@ -14,9 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import nju.software.dataobject.Account;
+import nju.software.util.JbpmAPIUtil;
 
 public class AccessFilter implements Filter {
+	
+	@Autowired
+	private JbpmAPIUtil jbpmAPIUtil;
 	
 	private FilterConfig filterConfig = null;
 	public static HashMap<String, String> accessTable = new HashMap<String, String>();
@@ -26,11 +32,11 @@ public class AccessFilter implements Filter {
 		accessTable.put("buy", "CAIGOUZHUGUAN");
 		accessTable.put("design", "SHEJIZHUGUAN");
 		accessTable.put("finance", "CAIWUZHUGUAN");
-		accessTable.put("market", "SHICHANGZHUANYUAN, SHICHANGZHUGUAN");
-		accessTable.put("order", "ADMIN, SHICHANGZHUANYUAN, SHICHANGZHUGUAN");
+		accessTable.put("market", "marketStaff, ma");
+		accessTable.put("order", "ADMIN, designManager, marketManager");
 		accessTable.put("produce", "SHENGCHANZHUGUAN");
-		accessTable.put("logistics", "WULIUZHUGUAN");
-		accessTable.put("quality", "ZHIJIANZHUGUAN");
+		accessTable.put("logistics", "logisticsManager");
+		accessTable.put("quality", "qualityManager");
 		accessTable.put("other", "ALL");
 		accessTable.put("account", "ALL");
 //		accessTable.put("other", "ADMIN, SHICHANGZHUANYUAN, SHICHANGZHUGUAN");
@@ -86,6 +92,22 @@ public class AccessFilter implements Filter {
 			
 			request.setAttribute("USER_nick_name", curUser.getNickName());
 			request.setAttribute("USER_user_name", curUser.getUserName());
+//			
+//			if(jbpmAPIUtil==null){
+//				System.out.println("jbpm null");
+//			}
+//			if(curUser.getUserRole().equals("marketStaff")){
+//				System.out.println(jbpmAPIUtil.getAssignedTasks(curUser.getUserId()+""));
+//				int taskNumber=jbpmAPIUtil.getAssignedTasks(curUser.getUserId()+"").size();
+//				request.setAttribute("taskNumber", taskNumber);
+//			}else{
+//				
+//				System.out.println(jbpmAPIUtil.getAssignedTasks(curUser.getUserId()+""));
+//				int taskNumber=jbpmAPIUtil.getAssignedTasks(curUser.getUserRole()).size();
+//				request.setAttribute("taskNumber", taskNumber);
+//			}
+			
+			//request.setAttribute(, arg1);
 		} else {
 			response.sendRedirect(request.getContextPath() + "/login.do");
 		}

@@ -8,7 +8,6 @@
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">大货入库</li>
 				<li class="active"><a href="#warehouse" data-toggle="tab">入库信息</a></li>
-				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
@@ -32,40 +31,7 @@
 				<div class="tab-pane" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
-				<div class="tab-pane" id="quote">
-					<%@include file="/views/common/quote.jsp"%>
-				</div>
 				<div class="tab-pane active" id="warehouse">
-
-					<c:if test="${warehouse==0}">
-						<table class="table table-bordered detail package">
-							<tr>
-								<td class="span3">颜色</td>
-								<td class="span3">大小</td>
-								<td class="span3">件数</td>
-								<td class="span2">操作</td>
-							</tr>
-							<tr class="addrow">
-								<td><input type="text" class="color" /></td>
-								<td><input type="text" class="size" /></td>
-								<td><input type="number" class="number" /></td>
-								<td><a>添加</a></td>
-							</tr>
-						</table>
-
-						<div class="action">
-							<form action="${ctx}/logistics/warehouseDetail.do" method="post"
-								onsubmit="return dealString()">
-								<input type="hidden" name="warehouse" value="0" /> <input
-									type="hidden" name="color" /> <input type="hidden" name="size" />
-								<input type="hidden" name="number" /> <input type="hidden"
-									name="orderId" value="${orderInfo.order.orderId}" /> <input
-									class="btn btn-primary" type="submit" value="添加箱号" />
-							</form>
-						</div>
-
-					</c:if>
-
 					<table class="table table-bordered detail" id="pack">
 						<tr>
 							<td>箱号</td>
@@ -84,13 +50,8 @@
 								<td>${orderInfo.packageDetails[status.index][0].clothesAmount}</td>
 								<td
 									rowspan="${fn:length(orderInfo.packageDetails[status.index])}">
-									<c:if test="${warehouse==0}">
-										<a
-											href="${ctx}/logistics/warehouseDetail.do?orderId=${orderInfo.order.orderId}&warehouse=0&packageId=${pack.packageId}">删除</a>
-									</c:if> <c:if test="${warehouse!=0}">
-										<a target="_blank"
-											href="${ctx}/logistics/printPackage.do?order_id=${orderInfo.order.orderId}&package_id=${pack.packageId}">打印</a>
-									</c:if>
+									<a target="_blank"
+									href="${ctx}/logistics/printWarehouseDetail.do?orderId=${orderInfo.order.orderId}&packageId=${pack.packageId}">打印</a>
 								</td>
 							</tr>
 							<c:forEach var="detail" begin="1"
@@ -101,22 +62,12 @@
 									<td>${detail.clothesAmount}</td>
 								</tr>
 							</c:forEach>
-
 						</c:forEach>
 					</table>
-					<c:if test="${warehouse==0}">
-						<div class="action">
-							<a class="btn btn-primary"
-								onclick="return confirmPackageSubmit()"
-								href="${ctx}/logistics/packageSubmit.do?orderId=${orderInfo.order.orderId}">完成装箱</a>
-						</div>
-					</c:if>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
 	<div class="footer">
 		<div class="footer-left">
 			<span>&copy; 2014. 江苏南通智造链有限公司.</span>

@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.process.ProcessInstance;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
@@ -31,6 +33,7 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
@@ -62,6 +65,8 @@ public class MarketServiceImpl implements MarketService {
 	public final static String RESULT_QUOTE = "quote";
 	public final static String RESULT_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder";
 	public final static String RESULT_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
+	public final static String UPLOAD_DIR_SAMPLE = "D:/fmc/sample/";
+	public final static String UPLOAD_DIR_REFERENCE = "D:/fmc/reference/";
 
 	@Autowired
 	private ProductDAO productDAO;
@@ -79,6 +84,8 @@ public class MarketServiceImpl implements MarketService {
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private FabricDAO fabricDAO;
+	@Autowired
+	private DesignCadDAO cadDAO;
 	@Autowired
 	private ProduceDAO produceDAO;
 	@Autowired
@@ -108,7 +115,8 @@ public class MarketServiceImpl implements MarketService {
 	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
-			List<VersionData> versions, HttpServletRequest request) {
+			List<VersionData> versions, DesignCad cad,
+			HttpServletRequest request) {
 		// TODO Auto-generated method stub
 
 		// 添加订单信息
@@ -120,18 +128,16 @@ public class MarketServiceImpl implements MarketService {
 		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/sampleClothesPicture/" + orderId);
-			File file = FileOperateUtil.Upload(request, filedir, null,
-					"sample_clothes_picture");
-			order.setSampleClothesPicture("/upload/sampleClothesPicture/"
-					+ orderId + "/" + file.getName());
+			File file = FileOperateUtil.Upload(request, UPLOAD_DIR_SAMPLE
+					+ orderId, "1", "sample_clothes_picture");
+			order.setSampleClothesPicture(file.getAbsolutePath());
 		}
 		if (!multipartRequest.getFile("reference_picture").isEmpty()) {
 			String filedir = request.getSession().getServletContext()
 					.getRealPath("/upload/reference_picture/" + orderId);
-			File file = FileOperateUtil.Upload(request, filedir, null,
-					"reference_picture");
-			order.setReferencePicture("/upload/reference_picture/" + orderId
-					+ "/" + file.getName());
+			File file = FileOperateUtil.Upload(request, UPLOAD_DIR_REFERENCE
+					+ orderId, "1", "reference_picture");
+			order.setReferencePicture(file.getAbsolutePath());
 		}
 
 		orderDAO.attachDirty(order);
@@ -170,31 +176,37 @@ public class MarketServiceImpl implements MarketService {
 		logistics.setOrderId(orderId);
 		logisticsDAO.save(logistics);
 
+		// cad
+		cad.setOrderId(orderId);
+		cadDAO.save(cad);
 		// 启动流程
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("orderId", orderId);
 		params.put("marketStaff", order.getEmployeeId());
 		params.put(LogisticsServiceImpl.RESULT_RECEIVE_SAMPLE,
-				(int) order.getIsNeedSampleClothes());
-		params.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
 				(int) order.getHasPostedSampleClothes());
+		params.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
+				(int) order.getIsNeedSampleClothes());
 		params.put(RESULT_REORDER, false);
-		doTMWorkFlowStart(params);
-
-		return false;
+		long processId=doTMWorkFlowStart(params);
+		order.setProcessId(processId);
+		orderDAO.attachDirty(order);
+		return true;
 	}
 
 	/**
 	 * 启动流程
 	 */
-	private void doTMWorkFlowStart(Map<String, Object> params) {
+	private long doTMWorkFlowStart(Map<String, Object> params) {
 		try {
 			jbpmAPIUtil.setParams(params);
-			jbpmAPIUtil.startWorkflowProcess();
-			System.out.println("流程启动成功！");
+			ProcessInstance instance = jbpmAPIUtil.startWorkflowProcess();
+			System.out.println("流程instance"+instance.getId()+"启动成功！");
+			return instance.getId();
 		} catch (Exception ex) {
 			System.out.println("流程启动失败");
 			ex.printStackTrace();
+			return 0;
 		}
 	}
 
@@ -218,8 +230,8 @@ public class MarketServiceImpl implements MarketService {
 	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
-			List<VersionData> versions, boolean editok, long taskId,
-			Integer accountId) {
+			List<VersionData> versions, DesignCad cad, boolean editok,
+			long taskId, Integer accountId) {
 		// TODO Auto-generated method stub
 		// 添加订单信息
 		orderDAO.merge(order);
@@ -257,6 +269,9 @@ public class MarketServiceImpl implements MarketService {
 		// 添加物流信息
 		logistics.setOrderId(orderId);
 		logisticsDAO.merge(logistics);
+
+		// cad
+		cadDAO.merge(cad);
 
 		// 启动流程
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -426,7 +441,7 @@ public class MarketServiceImpl implements MarketService {
 		// TODO Auto-generated method stub
 		Map<String, Object> data = new HashMap<String, Object>();
 
-		data.put(RESULT_QUOTE,Integer.parseInt(result));
+		data.put(RESULT_QUOTE, Integer.parseInt(result));
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
 			return true;
@@ -609,12 +624,14 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getOrderList(Integer employeeId) {
 		// TODO Auto-generated method stub
-		List<Order> orders = orderDAO.findByEmployeeId(employeeId);
+		//List<Order> orders = orderDAO.findByEmployeeId(employeeId);
+		List<Order> orders = orderDAO.findAll();
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
 			list.add(model);
 		}
 		return list;
@@ -626,6 +643,7 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Order order = orderDAO.findById(orderId);
 		model.put("order", order);
+		model.put("orderId", service.getOrderId(order));
 		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 		model.put("logistics", logisticsDAO.findById(orderId));
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));
@@ -649,6 +667,50 @@ public class MarketServiceImpl implements MarketService {
 		List<AccessoryCost> accessoryCosts = accessoryCostDAO
 				.findByOrderId(orderId);
 		model.put("accessoryCosts", accessoryCosts);
+		return model;
+	}
+
+	@Override
+	public List<Map<String, Object>> getAddMoreOrderList(int customerId) {
+		// TODO Auto-generated method stub
+		Order o = new Order();
+		o.setCustomerId(customerId);
+		List<Order> orderList = orderDAO.findByExample(o);
+		List<Map<String, Object>> list = new ArrayList<>();
+		for(Order order: orderList){
+			Integer orderId = order.getOrderId();
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("taskTime", order.getOrderTime());
+			model.put("orderId", orderId);
+			list.add(model);
+		}
+		return list;
+	}
+
+	@Override
+	public Map<String, Object> getAddMoreOrderDetail(int orderId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> model = new HashMap<String, Object>();
+		Order order = orderDAO.findById(orderId);
+		model.put("order", order);
+		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+		model.put("logistics", logisticsDAO.findById(orderId));
+		model.put("fabrics", fabricDAO.findByOrderId(orderId));
+		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
+		model.put("designCad", cadDAO.findByOrderId(orderId));
+		model.put("orderId", orderId);
+
+		Produce produce = new Produce();
+		produce.setOid(orderId);
+		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
+		model.put("sample", produceDAO.findByExample(produce));
+
+		produce.setType(Produce.TYPE_PRODUCE);
+		model.put("produce", produceDAO.findByExample(produce));
+
+		model.put("versions", versionDataDAO.findByOrderId(orderId));
 		return model;
 	}
 

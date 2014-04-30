@@ -1,9 +1,9 @@
-table.list th,table.list td {
+section table.list th,section table.list td {
 	color: #000;
 	margin: 0;
 	padding: 8px 20px;
 	text-align: center;
-	
+	vertical-align: middle;
 }
 
 table.list tr {

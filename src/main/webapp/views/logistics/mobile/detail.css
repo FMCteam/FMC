@@ -1,0 +1,32 @@
+table#scan {
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+table#scan tr td:first-child {
+	width: 20%;
+	padding: 0px;
+	line-height: 36px;
+	font-size: 18px;
+	vertical-align: middle;
+}
+
+table#scan tr td:eq(1) {
+	width: 80%;
+	vertical-align: middle;
+}
+
+table#scan input {
+	margin: 2px 0px;
+}
+
+form {
+	margin-bottom: 25px;
+}
+
+table#pack {
+	margin-bottom: 5px;
+}
+h4{
+	text-align: center;
+}

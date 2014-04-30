@@ -82,7 +82,6 @@ public class QualityServiceImpl implements QualityService {
 		// TODO Auto-generated method stub
 		Map<String,Object> oi=service.getBasicOrderModel(
 				ACTOR_QUALITY_MANAGER, TASK_CHECK_QUALITY, orderId);
-		Order o = orderDAO.findById(orderId);
 		Produce produce = new Produce();
 		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_PRODUCED);

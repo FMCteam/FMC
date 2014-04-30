@@ -74,19 +74,19 @@
 							<c:forEach var="produce" items="${orderInfo.produce}">
 								<tr>
 									<td><input class="span12 produce_color" type="text"
-										value="${produce.color}" /></td>
-									<td><input class="span12 produce_xs" type="text"
-										value="${produce.xs}" /></td>
-									<td><input class="span12 produce_s" type="text"
-										value="${produce.s}" /></td>
-									<td><input class="span12 produce_m" type="text"
-										value="${produce.m}" /></td>
-									<td><input class="span12 produce_l" type="text"
-										value="${produce.l}" /></td>
-									<td><input class="span12 produce_xl" type="text"
-										value="${produce.xl}" /></td>
-									<td><input class="span12 produce_xxl" type="text"
-										value="${produce.xxl}" /></td>
+										value="${produce.color}" readonly="readonly"/></td>
+									<td><input class="span12 produce_xs" type="number"
+										min="0" value="${produce.xs}" required="required"/></td>
+									<td><input class="span12 produce_s" type="number"
+										min="0" value="${produce.s}" required="required"/></td>
+									<td><input class="span12 produce_m" type="number"
+										min="0" value="${produce.m}" required="required"/></td>
+									<td><input class="span12 produce_l" type="number"
+										min="0" value="${produce.l}" required="required"/></td>
+									<td><input class="span12 produce_xl" type="number"
+										min="0" value="${produce.xl}" required="required"/></td>
+									<td><input class="span12 produce_xxl" type="number"
+										min="0" value="${produce.xxl}" required="required"/></td>
 								</tr>
 							</c:forEach>
 							<tr>
