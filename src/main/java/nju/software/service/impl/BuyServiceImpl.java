@@ -17,7 +17,9 @@ import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.QuoteDAO;
+import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
@@ -73,6 +75,10 @@ public class BuyServiceImpl implements BuyService {
 				TASK_COMPUTE_PURCHASE_COST, orderId);
 	}
 
+	
+	
+	
+	
 	@Override
 	public void computePurchaseCostSubmit(int orderId, long taskId,
 			String[] fabric_names, String[] tear_per_meters,
@@ -85,6 +91,11 @@ public class BuyServiceImpl implements BuyService {
 		// TODO Auto-generated method stub
 		if (fabric_names != null) {
 			for (int i = 0; i < fabric_names.length; i++) {
+
+				Fabric fabric=new Fabric();
+				fabric.setOrderId(orderId);
+				fabric.setFabricName(fabric_names[i]);
+
 				
 				FabricCost fabricCost = new FabricCost();
 				fabricCost.setOrderId(orderId);
@@ -102,10 +113,17 @@ public class BuyServiceImpl implements BuyService {
 			
 				fabricCost.setPrice(fabric_price);
 				FabricCostDAO.save(fabricCost);
+				fabricDAO.save(fabric);
 			}
 		}
 		if (accessory_names != null) {
 			for (int i = 0; i < accessory_names.length; i++) {
+				
+				Accessory accessory = new Accessory();
+				
+				accessory.setOrderId(orderId);
+				accessory.setAccessoryName(accessory_names[i]);
+				
 				AccessoryCost accessoryCost = new AccessoryCost();
 				accessoryCost.setOrderId(orderId);
 				accessoryCost.setAccessoryName(accessory_names[i]);
@@ -122,6 +140,7 @@ public class BuyServiceImpl implements BuyService {
 				
 				accessoryCost.setPrice(accessory_price);
 				AccessoryCostDAO.save(accessoryCost);
+				accessoryDAO.save(accessory);
 			}
 		}
 		
@@ -275,6 +294,7 @@ public class BuyServiceImpl implements BuyService {
 	private AccessoryDAO accessoryDAO;
 	@Autowired
 	private ProductDAO productDAO;
+	
 	@Autowired
 	private AccessoryCostDAO AccessoryCostDAO;
 	@Autowired
