@@ -53,10 +53,9 @@
 								<td colspan="3">收件地址</td>
 							</tr>
 							<tr>
-								<td>${orderInfo.logistics.sampleClothesName }</td>
-								<td>${orderInfo.logistics.sampleClothesPhone }</td>
-								<td colspan="3">${orderInfo.logistics.sampleClothesAddress }</td>
-
+								<td>${orderInfo.logistics.sampleClothesName}&nbsp</td>
+								<td>${orderInfo.logistics.sampleClothesPhone}&nbsp</td>
+								<td colspan="3">${orderInfo.logistics.sampleClothesAddress}&nbsp</td>
 							</tr>
 							<tr>
 								<td rowspan="2">${orderInfo.order.isNeedSampleClothes==0?'否':'是' }</td>
@@ -65,7 +64,7 @@
 								<td colspan="3">快递单号</td>
 							</tr>
 							<tr>
-								<td><input type="date" name="time" /></td>
+								<td><input type="date" name="time" required="required"/></td>
 								<td><select name="name" style="margin: 0px">
 										<option value="顺丰">顺丰</option>
 										<option value="韵达">韵达</option>
@@ -76,7 +75,7 @@
 										<option value="EMS">EMS</option>
 								</select></td>
 								<td colspan="3"><input class="span12" type="text"
-									name="number" /></td>
+									name="number" required="required" /></td>
 							</tr>
 							<tr>
 								<td>其他备注</td>
@@ -87,14 +86,16 @@
 								<td>样衣图片</td>
 								<td><c:if
 										test="${orderInfo.order.sampleClothesPicture!=null}">
-										<img src="${ctx}/${orderInfo.order.sampleClothesPicture}"
-											alt="样衣图片"></img>
+										<img
+											src="${ctx}/common/getPic.do?type=sample&orderId=${orderInfo.order.orderId}"
+											style="max-height: 300px;" alt="样衣图片"></img>
 									</c:if></td>
 								<td>参考图片</td>
 								<td colspan="2"><c:if
 										test="${orderInfo.order.referencePicture!=null}">
-										<img src="${ctx}/${orderInfo.order.referencePicture}"
-											alt="参考图片"></img>
+										<img
+											src="${ctx}/common/getPic.do?type=reference&orderId=${orderInfo.order.orderId}"
+											style="max-height: 300px;" alt="参考图片"></img>
 									</c:if></td>
 							</tr>
 						</table>

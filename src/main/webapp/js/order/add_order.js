@@ -16,7 +16,10 @@
 		
 		$("table.produce_table a").click(function(){
 			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
-			table_addrow_onclick("produce_table",colName,7);
+			if(checkNum("produce_table",colName,7)){
+				table_addrow_onclick("produce_table",colName,7);
+				$("input[name='ask_amount']").val(calculate("produce_table",colName,7));
+			}
 		});
 		
 		$("table.sample_produce_table a").click(function(){
@@ -72,36 +75,16 @@
 
 
 	function table_addrow_onclick(table_name,col_name,col_sum){
-//		    //检查第一列是否为空
-//			var col1=$("table."+table_name+" tr.addrow input").eq(0).val();
-//			if(col1==""){
-//				alert("不能为空");
-//				return;
-//			}
-//			
-//			//检查第二列是否为空
-//			var col2=$("table."+table_name+" tr.addrow input").eq(1).val();
-//			if(col2==""){
-//				alert("不能为空");
-//				return;
-//			}
-//			
+	
 			var content = new Array();
 			for(var i=0;i<col_sum;i++){
 				var col=$("table."+table_name+" tr.addrow input").eq(i).val();
 				content[i] = col;
 				if(col==""){
-					alert("不能为空");
+					alert("请把信息填写完整");
 					return;
 				}
 			}
-			//清空第一二列
-//			$("table."+table_name+" tr.addrow input").eq(0).val("");
-//			$("table."+table_name+" tr.addrow input").eq(1).val("");
-
-			//添加行
-//			var item="<td class='span12 "+col1_name+"'>"+col1+"</td>";
-//			item+="<td class='span12 "+col2_name+"'>"+col2+"</td>";
 
 			var item = "";
 			for(var j=0;j<col_sum;j++){
@@ -112,16 +95,42 @@
 			item="<tr>"+item+"</tr>";
 			$("table."+table_name+" tr.addrow").after(item);
 			
-			
 	}
 
 
 	
 })(jQuery);
 
+function checkNum(table_name,col_name,col_sum){
+	for(var i=0;i<col_sum;i++){
+		var col=$("table."+table_name+" tr.addrow input").eq(i).val();
+		if(isNaN(parseInt(col))){
+			if(i>0){
+				alert("请正确填写数量");
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+function calculate(table_name,col_name,col_sum){
+	var sum = 0;
+	for(var i = 1; i < col_sum; i++){
+		for(var j = 0; j < $("td."+col_name[i]).length; j++){
+			sum += parseInt($("td."+col_name[i]).eq(j).text());
+		}
+	}
+	return sum;
+}
+
 function deleteRow(a,table){
 	//alert($(a).parents('.'+table+' tr').length);
 	$(a).parents('.'+table+' tr').remove();
+	if(table=="produce_table"){
+		var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
+		$("input[name='ask_amount']").val(calculate("produce_table",colName,7));
+	}
 }
 
 function getTdString(col){
