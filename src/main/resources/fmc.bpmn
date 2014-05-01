@@ -548,12 +548,6 @@
         <flowNodeRef>_80</flowNodeRef>
         <flowNodeRef>_110</flowNodeRef>
       </lane>
-      <lane name="logisticsManager" >
-        <flowNodeRef>_7</flowNodeRef>
-        <flowNodeRef>_59</flowNodeRef>
-        <flowNodeRef>_107</flowNodeRef>
-        <flowNodeRef>_115</flowNodeRef>
-      </lane>
       <lane name="marketStaff" >
         <flowNodeRef>_19</flowNodeRef>
         <flowNodeRef>_28</flowNodeRef>
@@ -562,6 +556,12 @@
         <flowNodeRef>_62</flowNodeRef>
         <flowNodeRef>_74</flowNodeRef>
         <flowNodeRef>_75</flowNodeRef>
+      </lane>
+      <lane name="logisticsManager" >
+        <flowNodeRef>_7</flowNodeRef>
+        <flowNodeRef>_59</flowNodeRef>
+        <flowNodeRef>_107</flowNodeRef>
+        <flowNodeRef>_115</flowNodeRef>
       </lane>
       <lane name="produceManager" >
         <flowNodeRef>_12</flowNodeRef>
@@ -572,8 +572,11 @@
       <lane name="marketManager" >
         <flowNodeRef>_29</flowNodeRef>
       </lane>
-      <lane name="qualityManager" >
-        <flowNodeRef>_103</flowNodeRef>
+      <lane name="designManager" >
+        <flowNodeRef>_11</flowNodeRef>
+        <flowNodeRef>_48</flowNodeRef>
+        <flowNodeRef>_70</flowNodeRef>
+        <flowNodeRef>_88</flowNodeRef>
       </lane>
       <lane name="purchaseManager" >
         <flowNodeRef>_10</flowNodeRef>
@@ -581,11 +584,8 @@
         <flowNodeRef>_47</flowNodeRef>
         <flowNodeRef>_69</flowNodeRef>
       </lane>
-      <lane name="designManager" >
-        <flowNodeRef>_11</flowNodeRef>
-        <flowNodeRef>_48</flowNodeRef>
-        <flowNodeRef>_70</flowNodeRef>
-        <flowNodeRef>_88</flowNodeRef>
+      <lane name="qualityManager" >
+        <flowNodeRef>_103</flowNodeRef>
       </lane>
     </laneSet>
     <!-- nodes -->
@@ -1594,9 +1594,6 @@
     <sequenceFlow id="_37-_135" sourceRef="_37" targetRef="_135" name="不制作样衣" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return sendSample==0;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_136-_135" sourceRef="_136" targetRef="_135" name="是翻单" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return reorder;</conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="_10-_15" sourceRef="_10" targetRef="_15" />
     <sequenceFlow id="_11-_15" sourceRef="_11" targetRef="_15" />
     <sequenceFlow id="_12-_15" sourceRef="_12" targetRef="_15" />
@@ -1697,6 +1694,9 @@ return true;
     </sequenceFlow>
     <sequenceFlow id="_68-_66" sourceRef="_68" targetRef="_66" name="修改完成" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return modifyProduceOrder;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_136-_66" sourceRef="_136" targetRef="_66" name="是翻单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >return  reorder;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_66-_67" sourceRef="_66" targetRef="_67" />
     <sequenceFlow id="_72-_76" sourceRef="_72" targetRef="_76" />
@@ -2051,14 +2051,6 @@ return false;</conditionExpression>
         <di:waypoint x="3305" y="403" />
         <di:waypoint x="3303" y="139" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_136-_135" >
-        <di:waypoint x="185" y="198" />
-        <di:waypoint x="187" y="438" />
-        <di:waypoint x="1562" y="432" />
-        <di:waypoint x="3245" y="432" />
-        <di:waypoint x="3272" y="308" />
-        <di:waypoint x="3303" y="139" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_10-_15" >
         <di:waypoint x="659" y="257" />
         <di:waypoint x="792" y="323" />
@@ -2226,6 +2218,14 @@ return false;</conditionExpression>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_68-_66" >
         <di:waypoint x="3643" y="130" />
+        <di:waypoint x="3644" y="268" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_136-_66" >
+        <di:waypoint x="185" y="198" />
+        <di:waypoint x="187" y="438" />
+        <di:waypoint x="1562" y="432" />
+        <di:waypoint x="3245" y="432" />
+        <di:waypoint x="3643" y="432" />
         <di:waypoint x="3644" y="268" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_66-_67" >
