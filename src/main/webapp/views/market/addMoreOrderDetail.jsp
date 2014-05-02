@@ -4,7 +4,7 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<form method="post" onsubmit="return verify();"
-			action="${ctx }/market/addOrderSubmit.do"
+			action="${ctx }/market/addMoreOrderSubmit.do"
 			enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
 				<!--  如果是其它页面，这里是填充具体的内容。 -->

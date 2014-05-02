@@ -194,6 +194,85 @@ public class MarketServiceImpl implements MarketService {
 		return true;
 	}
 
+	@Override
+	public void addMoreOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			List<Produce> produces, List<Produce> sample_produces,
+			List<VersionData> versions, DesignCad cad,
+			HttpServletRequest request){
+		// 添加订单信息
+				orderDAO.save(order);
+
+				Integer orderId = order.getOrderId();
+				MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
+				if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
+					String filedir = request.getSession().getServletContext()
+							.getRealPath("/upload/sampleClothesPicture/" + orderId);
+					File file = FileOperateUtil.Upload(request, UPLOAD_DIR_SAMPLE
+							+ orderId, "1", "sample_clothes_picture");
+					order.setSampleClothesPicture(file.getAbsolutePath());
+				}
+				if (!multipartRequest.getFile("reference_picture").isEmpty()) {
+					String filedir = request.getSession().getServletContext()
+							.getRealPath("/upload/reference_picture/" + orderId);
+					File file = FileOperateUtil.Upload(request, UPLOAD_DIR_REFERENCE
+							+ orderId, "1", "reference_picture");
+					order.setReferencePicture(file.getAbsolutePath());
+				}
+
+				orderDAO.attachDirty(order);
+
+				// 添加面料信息
+				for (Fabric fabric : fabrics) {
+					fabric.setOrderId(orderId);
+					fabricDAO.save(fabric);
+				}
+
+				// 添加辅料信息
+				for (Accessory accessory : accessorys) {
+					accessory.setOrderId(orderId);
+					accessoryDAO.save(accessory);
+				}
+
+				// 添加大货加工单信息
+				for (Produce produce : produces) {
+					produce.setOid(orderId);
+					produceDAO.save(produce);
+				}
+
+				// 添加样衣加工单信息
+				for (Produce produce : sample_produces) {
+					produce.setOid(orderId);
+					produceDAO.save(produce);
+				}
+
+				// 添加版型信息
+				for (VersionData versionData : versions) {
+					versionData.setOrderId(orderId);
+					versionDataDAO.save(versionData);
+				}
+
+				// 添加物流信息
+				logistics.setOrderId(orderId);
+				logisticsDAO.save(logistics);
+
+				// cad
+				cad.setOrderId(orderId);
+				cadDAO.save(cad);
+				// 启动流程
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("orderId", orderId);
+				params.put("marketStaff", order.getEmployeeId());
+				params.put(LogisticsServiceImpl.RESULT_RECEIVE_SAMPLE,
+						(int) order.getHasPostedSampleClothes());
+				params.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
+						(int) order.getIsNeedSampleClothes());
+				params.put(RESULT_REORDER, true);
+				long processId=doTMWorkFlowStart(params);
+				order.setProcessId(processId);
+				orderDAO.attachDirty(order);
+	}
 	/**
 	 * 启动流程
 	 */

@@ -115,6 +115,8 @@ function produce_verify(){
 	$("#produce_l").val(getTdString("produce_l"));
 	$("#produce_xl").val(getTdString("produce_xl"));
 	$("#produce_xxl").val(getTdString("produce_xxl"));
+	
+	return true;
 }
 
 function init(){
