@@ -548,6 +548,12 @@
         <flowNodeRef>_80</flowNodeRef>
         <flowNodeRef>_110</flowNodeRef>
       </lane>
+      <lane name="logisticsManager" >
+        <flowNodeRef>_7</flowNodeRef>
+        <flowNodeRef>_59</flowNodeRef>
+        <flowNodeRef>_107</flowNodeRef>
+        <flowNodeRef>_115</flowNodeRef>
+      </lane>
       <lane name="marketStaff" >
         <flowNodeRef>_19</flowNodeRef>
         <flowNodeRef>_28</flowNodeRef>
@@ -556,12 +562,6 @@
         <flowNodeRef>_62</flowNodeRef>
         <flowNodeRef>_74</flowNodeRef>
         <flowNodeRef>_75</flowNodeRef>
-      </lane>
-      <lane name="logisticsManager" >
-        <flowNodeRef>_7</flowNodeRef>
-        <flowNodeRef>_59</flowNodeRef>
-        <flowNodeRef>_107</flowNodeRef>
-        <flowNodeRef>_115</flowNodeRef>
       </lane>
       <lane name="produceManager" >
         <flowNodeRef>_12</flowNodeRef>
@@ -572,11 +572,8 @@
       <lane name="marketManager" >
         <flowNodeRef>_29</flowNodeRef>
       </lane>
-      <lane name="designManager" >
-        <flowNodeRef>_11</flowNodeRef>
-        <flowNodeRef>_48</flowNodeRef>
-        <flowNodeRef>_70</flowNodeRef>
-        <flowNodeRef>_88</flowNodeRef>
+      <lane name="qualityManager" >
+        <flowNodeRef>_103</flowNodeRef>
       </lane>
       <lane name="purchaseManager" >
         <flowNodeRef>_10</flowNodeRef>
@@ -584,8 +581,11 @@
         <flowNodeRef>_47</flowNodeRef>
         <flowNodeRef>_69</flowNodeRef>
       </lane>
-      <lane name="qualityManager" >
-        <flowNodeRef>_103</flowNodeRef>
+      <lane name="designManager" >
+        <flowNodeRef>_11</flowNodeRef>
+        <flowNodeRef>_48</flowNodeRef>
+        <flowNodeRef>_70</flowNodeRef>
+        <flowNodeRef>_88</flowNodeRef>
       </lane>
     </laneSet>
     <!-- nodes -->
@@ -1696,7 +1696,7 @@ return true;
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return modifyProduceOrder;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_136-_66" sourceRef="_136" targetRef="_66" name="ÊÇ·­µ¥" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >return  reorder;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  reorder;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_66-_67" sourceRef="_66" targetRef="_67" />
     <sequenceFlow id="_72-_76" sourceRef="_72" targetRef="_76" />
