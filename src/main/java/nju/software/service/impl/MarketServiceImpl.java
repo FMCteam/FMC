@@ -265,16 +265,17 @@ public class MarketServiceImpl implements MarketService {
 				
 				//报价
 				String sourceId = request.getParameter("sourceId");
-				Quote quote = quoteDAO.findById(Integer.parseInt(sourceId));
+				Integer source = Integer.parseInt(sourceId);
+				Quote quote = quoteDAO.findById(source);
 				try {
 					Quote newQuote = (Quote)copy(quote);
 					newQuote.setOrderId(orderId);
-					quoteDAO.save(quote);
+					quoteDAO.save(newQuote);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(sourceId);
+				List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(source);
 				for(FabricCost fc : fabricCosts){
 					FabricCost newFC = new FabricCost();
 					newFC.setCostPerMeter(fc.getCostPerMeter());
@@ -284,7 +285,7 @@ public class MarketServiceImpl implements MarketService {
 					newFC.setTearPerMeter(fc.getTearPerMeter());
 					fabricCostDAO.save(newFC);
 				}
-				List<AccessoryCost> accessoryCosts = accessoryCostDAO.findByOrderId(sourceId);
+				List<AccessoryCost> accessoryCosts = accessoryCostDAO.findByOrderId(source);
 				for(AccessoryCost ac : accessoryCosts){
 					AccessoryCost newAC = new AccessoryCost();
 					newAC.setAccessoryName(ac.getAccessoryName());
