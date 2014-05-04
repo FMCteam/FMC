@@ -31,7 +31,7 @@
 							</tr>
 							<tr>
 								<td>待生成</td>
-								<td colspan="2"><input class="span8" type="date"
+								<td colspan="2"><input class="span8" type="date"required="required"
 									required="required" /></td>
 								<td>${employee_name}</td>
 								<td><input type="text" class="span12" name="order_source"
@@ -73,17 +73,17 @@
 								<td><input type="text" class="span12" name="clothes_type"
 									required="required" /></td>	
 								<td colspan="2"><input type="radio" name="style_sex"
-									checked="checked" value="男" /> <span>男</span> <input
+									checked="checked" value="男" required="required" /> <span>男</span> <input
 									type="radio" name="style_sex" value="女" /> <span>女</span> <input
 									type="radio" name="style_sex" value="儿童" /> <span>儿童</span></td>
 								<td colspan="2"><input type="radio" name="style_season"
-									checked="checked" value="春夏" /> <span>春夏</span> <input
+									checked="checked" value="春夏" required="required" /> <span>春夏</span> <input
 									type="radio" name="style_season" value="秋冬" /> <span>秋冬</span></td>
 							</tr>
 							<tr>
 								<td>面料类型</td>
 								<td colspan="5"><input type="radio" name="fabric_type"
-									checked="checked" value="梭织" /> <span>梭织</span> <input
+									checked="checked" value="梭织" required="required" /> <span>梭织</span> <input
 									type="radio" name="fabric_type" value="梭织" /> <span>针织</span>
 									<input type="radio" name="fabric_type" value="编织"> <span>编织</span>
 									<input type="radio" name="fabric_type" value="梭针混合" /> <span>梭针混合</span>
@@ -112,7 +112,7 @@
 							</tr>
 							<tr>
 								<td>参考链接</td>
-								<td colspan="5"><input class="span12" type="url" name="reference_url"/></td>
+								<td colspan="5"><input class="span12" type="url" name="reference_url" required="required" /></td>
 							</tr>
 						</table>
 					</div>
@@ -169,10 +169,10 @@
 							</tr>
 							<tr>
 								<td><input type="radio" name="has_posted_sample_clothes"
-									checked="checked" value="1" /> 是 <input type="radio"
+									checked="checked" value="1" required="required" /> 是 <input type="radio"
 									name="has_posted_sample_clothes" value="0" /> 否</td>
 								<td><input class="span12" type="date"
-									name="in_post_sample_clothes_time" /></td>
+									name="in_post_sample_clothes_time" required="required" /></td>
 								<td><select name="in_post_sample_clothes_type"
 									style="margin: 0px">
 										<option value="顺丰">顺丰</option>
@@ -184,7 +184,7 @@
 										<option value="EMS">EMS</option>
 								</select></td>
 								<td><input class="span12" type="text"
-									name="in_post_sample_clothes_number" /></td>
+									name="in_post_sample_clothes_number" required="required" /></td>
 							</tr>
 							<tr>
 								<td rowspan="3">生产样衣</td>
@@ -195,19 +195,19 @@
 							</tr>
 							<tr>
 								<td><input type="radio" name="is_need_sample_clothes"
-									checked="checked" value="1" /> 是 <input type="radio"
+									checked="checked" value="1" required="required" /> 是 <input type="radio"
 									name="is_need_sample_clothes" value="0" /> 否</td>
 								<td><input class="span12" type="text"
-									name="sample_clothes_name" /></td>
+									name="sample_clothes_name" required="required" /></td>
 								<td><input class="span12" type="text"
-									name="sample_clothes_phone" /></td>
+									name="sample_clothes_phone" required="required" /></td>
 								<td><input class="span12" type="text"
-									name="sample_clothes_address" /></td>
+									name="sample_clothes_address" required="required" /></td>
 							</tr>
 							<tr>
 								<td>其他备注</td>
 								<td colspan="3"><input class="span12" type="text"
-									name="sample_clothes_remark" /></td>
+									name="sample_clothes_remark" required="required" /></td>
 							</tr>
 							<tr>
 								<td>样衣信息</td>
@@ -216,7 +216,7 @@
 									name="sample_clothes_picture" required="required" /></td>
 								<td>参考图片</td>
 								<td><input type="file" value="选择文件"
-									name="reference_picture" /></td>
+									name="reference_picture" required="required" /></td>
 							</tr>
 						</table>
 					</div>

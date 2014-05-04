@@ -35,7 +35,7 @@
 									required="required" /></td>
 								<td>${employee_name}</td>
 								<td><input type="text" class="span12" name="order_source"
-									value="${orderModel.order.orderSource }" /></td>
+									value="${orderModel.order.orderSource }" required="required" /></td>
 								<td>是</td>
 							</tr>
 							<tr>

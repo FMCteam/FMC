@@ -790,6 +790,13 @@ public class MarketServiceImpl implements MarketService {
 		model.put("produce", produceDAO.findByExample(produce));
 
 		model.put("versions", versionDataDAO.findByOrderId(orderId));
+		
+		Quote quote = quoteDAO.findById(orderId);
+		model.put("quote", quote);
+		List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(orderId);
+		model.put("fabricCosts", fabricCosts);
+		List<AccessoryCost> accessoryCosts = accessoryCostDAO.findByOrderId(orderId);
+		model.put("accessoryCosts", accessoryCosts);
 		return model;
 	}
 
