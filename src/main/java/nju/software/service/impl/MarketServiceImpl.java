@@ -1,6 +1,8 @@
 ﻿package nju.software.service.impl;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -194,6 +196,119 @@ public class MarketServiceImpl implements MarketService {
 		return true;
 	}
 
+	@Override
+	public void addMoreOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			List<Produce> produces, List<Produce> sample_produces,
+			List<VersionData> versions, DesignCad cad,
+			HttpServletRequest request){
+		// 添加订单信息
+				orderDAO.save(order);
+
+				Integer orderId = order.getOrderId();
+				MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
+				if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
+					String filedir = request.getSession().getServletContext()
+							.getRealPath("/upload/sampleClothesPicture/" + orderId);
+					File file = FileOperateUtil.Upload(request, UPLOAD_DIR_SAMPLE
+							+ orderId, "1", "sample_clothes_picture");
+					order.setSampleClothesPicture(file.getAbsolutePath());
+				}
+				if (!multipartRequest.getFile("reference_picture").isEmpty()) {
+					String filedir = request.getSession().getServletContext()
+							.getRealPath("/upload/reference_picture/" + orderId);
+					File file = FileOperateUtil.Upload(request, UPLOAD_DIR_REFERENCE
+							+ orderId, "1", "reference_picture");
+					order.setReferencePicture(file.getAbsolutePath());
+				}
+
+				orderDAO.attachDirty(order);
+
+				// 添加面料信息
+				for (Fabric fabric : fabrics) {
+					fabric.setOrderId(orderId);
+					fabricDAO.save(fabric);
+				}
+
+				// 添加辅料信息
+				for (Accessory accessory : accessorys) {
+					accessory.setOrderId(orderId);
+					accessoryDAO.save(accessory);
+				}
+
+				// 添加大货加工单信息
+				for (Produce produce : produces) {
+					produce.setOid(orderId);
+					produceDAO.save(produce);
+				}
+
+				// 添加样衣加工单信息
+				for (Produce produce : sample_produces) {
+					produce.setOid(orderId);
+					produceDAO.save(produce);
+				}
+
+				// 添加版型信息
+				for (VersionData versionData : versions) {
+					versionData.setOrderId(orderId);
+					versionDataDAO.save(versionData);
+				}
+
+				// 添加物流信息
+				logistics.setOrderId(orderId);
+				logisticsDAO.save(logistics);
+
+				// cad
+				cad.setOrderId(orderId);
+				cadDAO.save(cad);
+				
+				//报价
+				String sourceId = request.getParameter("sourceId");
+				Integer source = Integer.parseInt(sourceId);
+				Quote quote = quoteDAO.findById(source);
+				try {
+					Quote newQuote = (Quote)copy(quote);
+					newQuote.setOrderId(orderId);
+					quoteDAO.save(newQuote);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(source);
+				for(FabricCost fc : fabricCosts){
+					FabricCost newFC = new FabricCost();
+					newFC.setCostPerMeter(fc.getCostPerMeter());
+					newFC.setFabricName(fc.getFabricName());
+					newFC.setOrderId(orderId);
+					newFC.setPrice(fc.getPrice());
+					newFC.setTearPerMeter(fc.getTearPerMeter());
+					fabricCostDAO.save(newFC);
+				}
+				List<AccessoryCost> accessoryCosts = accessoryCostDAO.findByOrderId(source);
+				for(AccessoryCost ac : accessoryCosts){
+					AccessoryCost newAC = new AccessoryCost();
+					newAC.setAccessoryName(ac.getAccessoryName());
+					newAC.setCostPerPiece(ac.getCostPerPiece());
+					newAC.setOrderId(orderId);
+					newAC.setPrice(ac.getPrice());
+					newAC.setTearPerPiece(ac.getTearPerPiece());
+					accessoryCostDAO.save(newAC);
+				}
+				
+				// 启动流程
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("orderId", orderId);
+				params.put("marketStaff", order.getEmployeeId());
+				params.put(LogisticsServiceImpl.RESULT_RECEIVE_SAMPLE,
+						(int) order.getHasPostedSampleClothes());
+				params.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
+						(int) order.getIsNeedSampleClothes());
+				params.put(RESULT_REORDER, true);
+				long processId=doTMWorkFlowStart(params);
+				order.setProcessId(processId);
+				orderDAO.attachDirty(order);
+	}
 	/**
 	 * 启动流程
 	 */
@@ -711,9 +826,33 @@ public class MarketServiceImpl implements MarketService {
 		model.put("produce", produceDAO.findByExample(produce));
 
 		model.put("versions", versionDataDAO.findByOrderId(orderId));
+		
+		Quote quote = quoteDAO.findById(orderId);
+		model.put("quote", quote);
+		List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(orderId);
+		model.put("fabricCosts", fabricCosts);
+		List<AccessoryCost> accessoryCosts = accessoryCostDAO.findByOrderId(orderId);
+		model.put("accessoryCosts", accessoryCosts);
 		return model;
 	}
 
+	public static Object copy(Object object) throws Exception {
+		Class<?> classType = object.getClass();
+		Object objectCopy = classType.getConstructor(new Class[] {}).newInstance(new Object[] {});
+		Field fields[] = classType.getDeclaredFields();
+		for (int i = 0; i < fields.length; i++) {
+			Field field = fields[i];
+			String fieldName = field.getName();
+			String firstLetter = fieldName.substring(0, 1).toUpperCase();
+			String getMethodName = "get" + firstLetter + fieldName.substring(1);
+			String setMethodName = "set" + firstLetter + fieldName.substring(1);
+			Method getMethod = classType.getMethod(getMethodName,new Class[] {});
+			Method setMethod = classType.getMethod(setMethodName,new Class[] { field.getType() });
+			Object value = getMethod.invoke(object, new Object[] {});
+			setMethod.invoke(objectCopy, new Object[] { value });
+		}
+		return objectCopy;
+	}
 	/*
 	 * @Override public List<QuoteConfirmTaskSummary>
 	 * getQuoteModifyTaskSummaryList( Integer employeeId) { // TODO

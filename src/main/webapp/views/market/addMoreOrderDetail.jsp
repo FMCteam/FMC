@@ -4,7 +4,7 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<form method="post" onsubmit="return verify();"
-			action="${ctx }/market/addOrderSubmit.do"
+			action="${ctx }/market/addMoreOrderSubmit.do"
 			enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
 				<!--  如果是其它页面，这里是填充具体的内容。 -->
@@ -35,7 +35,7 @@
 									required="required" /></td>
 								<td>${employee_name}</td>
 								<td><input type="text" class="span12" name="order_source"
-									value="${orderModel.order.orderSource }" /></td>
+									value="${orderModel.order.orderSource }" required="required" /></td>
 								<td>是</td>
 							</tr>
 							<tr>
@@ -517,6 +517,8 @@
 
 				<input type="hidden" name="customerId"
 					value="${orderModel.order.customerId}" />
+				<input type="hidden" name="sourceId"
+					value="${orderModel.orderId}" />	
 				<!--widgetcontent-->
 				<!--row-fluid-->
 			</div>

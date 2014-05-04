@@ -117,5 +117,11 @@ public interface MarketService {
 	public List<Map<String, Object>> getAddMoreOrderList(int customerId);
 
 	public Map<String, Object> getAddMoreOrderDetail(int id);
+
+	public void addMoreOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			List<Produce> produces, List<Produce> sample_produces,
+			List<VersionData> versions, DesignCad cad,
+			HttpServletRequest request);
 	
 }
