@@ -31,31 +31,31 @@
 	<tr>
 		<td class="span2" rowspan="7">版型数据信息</td>
 		<td class="span3">面料</td>
-		<td class="span6" colspan="3">${orderInfo.designCad[0].cadFabric}</td>
+		<td class="span6" colspan="3">${orderInfo.designCad.cadFabric}</td>
 	</tr>
 	<tr>
 		<td class="span3">包装</td>
-		<td class="span6" colspan="2">${orderInfo.designCad[0].cadBox }</td>
+		<td class="span6" colspan="2">${orderInfo.designCad.cadBox }</td>
 	</tr>
 	<tr>
 		<td class="span3">版型</td>
-		<td colspan="3">${orderInfo.designCad[0].cadVersionData }</td>
+		<td colspan="3">${orderInfo.designCad.cadVersionData }</td>
 	</tr>
 	<tr>
 		<td class="span1">装箱</td>
-		<td colspan="2">${orderInfo.designCad[0].cadPackage }</td>
+		<td colspan="2">${orderInfo.designCad.cadPackage }</td>
 	</tr>
 	<tr>
 		<td class="span1">工艺</td>
-		<td colspan="6">${orderInfo.designCad[0].cadTech }</td>
+		<td colspan="6">${orderInfo.designCad.cadTech }</td>
 	</tr>
 	<tr>
 		<td class="span1">其他</td>
-		<td colspan="6">${orderInfo.designCad[0].cadOther}</td>
+		<td colspan="6">${orderInfo.designCad.cadOther}</td>
 	</tr>
 	</tr>
 	<tr>
 		<td class="span1">CAD</td>
-		<td colspan="6">${orderInfo.designCad[0].cadOther}</td>
+		<td colspan="6">${orderInfo.designCad.cadOther}</td>
 	</tr>
 </table>
