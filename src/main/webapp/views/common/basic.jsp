@@ -55,6 +55,6 @@
 	</tr>
 	<tr>
 		<td>参考链接</td>
-		<td colspan="5"></td>
+		<td colspan="5">${orderInfo.order.referenceUrl }</td>
 	</tr>
 </table>
