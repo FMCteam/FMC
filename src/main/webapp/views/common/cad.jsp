@@ -29,9 +29,9 @@
 </table>
 <table class="table table-striped table-bordered table-hover detail">
 	<tr>
-		<td class="span2" rowspan="5">版型数据信息</td>
+		<td class="span2" rowspan="7">版型数据信息</td>
 		<td class="span3">面料</td>
-		<td class="span6" colspan="3">${orderInfo.designCad[0].cadFabric }</td>
+		<td class="span6" colspan="3">${orderInfo.designCad[0].cadFabric}</td>
 	</tr>
 	<tr>
 		<td class="span3">包装</td>
@@ -48,5 +48,14 @@
 	<tr>
 		<td class="span1">工艺</td>
 		<td colspan="6">${orderInfo.designCad[0].cadTech }</td>
+	</tr>
+	<tr>
+		<td class="span1">其他</td>
+		<td colspan="6">${orderInfo.designCad[0].cadOther}</td>
+	</tr>
+	</tr>
+	<tr>
+		<td class="span1">CAD</td>
+		<td colspan="6">${orderInfo.designCad[0].cadOther}</td>
 	</tr>
 </table>

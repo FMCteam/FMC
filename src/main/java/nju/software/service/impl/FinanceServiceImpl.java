@@ -194,6 +194,9 @@ public class FinanceServiceImpl implements FinanceService {
 				long processId=orderDAO.findById(orderId).getProcessId();
 				org.jbpm.process.instance.ProcessInstance processInstance = (org.jbpm.process.instance.ProcessInstance) ksession
 						.getProcessInstance(processId);
+				if(processInstance==null){
+					return null;
+				}
 				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
 						.getNodeInstances()) {
 					Map<String, Object> data = nodeInstance.getNode()
