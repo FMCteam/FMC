@@ -8,7 +8,7 @@
 		<td class="span1" colspan="2">完工时间（天）</td>
 	</tr>
 	<tr>
-		<td class="span1" colspan="2">${orderInfo.order.askAmount}</td>
+		<td class="span1" colspan="2">${orderInfo.order.sampleAmount}</td>
 		<td class="span1" colspan="2">${orderInfo.order.askAmount}</td>
 		<td class="span1" colspan="2">${fn:substring(orderInfo.order.askDeliverDate,0,10)}</td>
 		<td class="span1" colspan="2">${orderInfo.order.askProducePeriod}</td>

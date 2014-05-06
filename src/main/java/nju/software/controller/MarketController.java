@@ -386,7 +386,7 @@ public class MarketController {
 
 		JavaMailUtil.send();
 
-		return "forward:/market/addOrderList.do";
+		return "redirect:/market/addOrderList.do";
 	}
 
 	@RequestMapping(value = "/market/addMoreOrderList.do")
@@ -678,7 +678,7 @@ public class MarketController {
 
 		JavaMailUtil.send();
 
-		return "forward:/market/addOrderList.do";
+		return "redirect:/market/addOrderList.do";
 	}
 
 	
