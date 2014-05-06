@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
@@ -23,6 +24,7 @@ import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Package;
@@ -71,10 +73,12 @@ public class ServiceUtil {
 		model.put("logistics", logisticsDAO.findById(orderId));
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));
 		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
-		model.put("designCad", cadDAO.findByOrderId(orderId));
+		List<DesignCad> cads = cadDAO.findByOrderId(orderId);
+		if (cads != null && cads.size() != 0) {
+			model.put("designCad", cads.get(0));
+		}
 		model.put("orderId", getOrderId(order));
-		
-		
+
 		Produce produce = new Produce();
 		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
@@ -100,17 +104,16 @@ public class ServiceUtil {
 		model.put("accessoryCosts", accessoryCosts);
 		return model;
 	}
-	
+
 	public Map<String, Object> getBasicOrderModelWithWareHouse(String actorId,
 			String taskName, Integer orderId) {
-		Map<String, Object> model = getBasicOrderModelWithQuote(actorId, taskName,
-				orderId);
-		List<Package> packageList= packageDAO.findByOrderId(orderId);
-		model.put("packs",packageList);
+		Map<String, Object> model = getBasicOrderModelWithQuote(actorId,
+				taskName, orderId);
+		List<Package> packageList = packageDAO.findByOrderId(orderId);
+		model.put("packs", packageList);
 		model.put("packDetails", findByPackageList(packageList));
 		return model;
 	}
-	
 
 	public String getOrderId(Order order) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -124,18 +127,19 @@ public class ServiceUtil {
 		return dateFormat.format(date);
 	}
 
-	
-	private List<List<PackageDetail>> findByPackageList(List<Package> packageList) {
+	private List<List<PackageDetail>> findByPackageList(
+			List<Package> packageList) {
 		// TODO Auto-generated method stub
 		List<List<PackageDetail>> dList = new ArrayList<List<PackageDetail>>();
-		for(int i=0;i<packageList.size();i++) {
+		for (int i = 0; i < packageList.size(); i++) {
 			Package pk = packageList.get(i);
-			List<PackageDetail> pList = packageDetailDAO.findByPackageId(pk.getPackageId());
+			List<PackageDetail> pList = packageDetailDAO.findByPackageId(pk
+					.getPackageId());
 			dList.add(pList);
 		}
 		return dList;
 	}
-	
+
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired

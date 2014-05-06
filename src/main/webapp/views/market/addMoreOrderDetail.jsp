@@ -10,6 +10,7 @@
 				<!--  如果是其它页面，这里是填充具体的内容。 -->
 				<ul class="nav nav-tabs detail" id="tab">
 					<li class="task-name">下翻单</li>
+					<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 					<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 					<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 					<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
@@ -312,12 +313,15 @@
 							<tr>
 								<td>样衣信息</td>
 								<td>样衣图片</td>
-								<td colspan="2"><input type="file"
-									name="sample_clothes_picture"
-									value="${orderModel.order.sampleClothesPicture }" /></td>
+								<td colspan="2"><c:if test="${orderModel.order.sampleClothesPicture!=null}">
+									<img src="${ctx}/common/getPic.do?type=sample&orderId=${orderModel.order.orderId}"
+										style="max-height: 300px;" alt="样衣图片"></img>
+								</c:if></td>
 								<td>参考图片</td>
-								<td colspan="2"><input type="file" name="reference_picture"
-									value="${orderModel.order.referencePicture }" /></td>
+								<td colspan="2"><c:if test="${orderModel.order.referencePicture!=null}">
+									<img src="${ctx}/common/getPic.do?type=reference&orderId=${orderModel.order.orderId}"
+										style="max-height: 300px;" alt="参考图片"></img>
+								</c:if></td>
 							</tr>
 						</table>
 					</div>
@@ -511,6 +515,88 @@
 								<td class="span3"><textarea class="span12" name="cadOther"
 										style="resize:none" rows="2">${orderModel.designCad[0].cadOther }</textarea></td>
 							</tr>
+						</table>
+					</div>
+					<div class="tab-pane" id="quote">
+						<table class="table table-striped table-bordered detail">
+							<tr>
+								<td rowspan="${fn:length(orderModel.fabricCosts)+1}">面料报价</td>
+								<td>面料名</td>
+								<td>单件米耗</td>
+								<td>价格</td>
+								<td>单件成本</td>
+							</tr>
+						
+							<c:forEach var="fabric" items="${orderModel.fabricCosts}">
+								<tr>
+									<td>${fabric.fabricName}</td>
+									<td>${fabric.tearPerMeter}</td>
+									<td>${fabric.price}</td>
+									<td>${fabric.costPerMeter}</td>
+								</tr>
+							</c:forEach>
+							<tr>
+								<td rowspan="${fn:length(orderModel.accessoryCosts)+1}">辅料报价</td>
+								<td>辅料名</td>
+								<td>单件耗数</td>
+								<td>价格</td>
+								<td>单件成本</td>
+							</tr>
+							<c:forEach var="accessory" items="${orderModel.accessoryCosts}">
+								<tr>
+									<td>${accessory.accessoryName}</td>
+									<td>${accessory.tearPerPiece}</td>
+									<td>${accessory.price}</td>
+									<td>${accessory.costPerPiece}</td>
+								</tr>
+							</c:forEach>
+							<tr>
+								<td>面辅总计</td>
+								<td>面料总计</td>
+								<td>${orderModel.quote.fabricCost}</td>
+								<td>辅料总计</td>
+								<td>${orderModel.quote.accessoryCost}</td>
+							</tr>
+							<tr>
+								<td rowspan="4">其他成本</td>
+								<td>裁剪费用</td>
+								<td>管理费用</td>
+								<td>缝制费用</td>
+								<td>整烫费用</td>
+							</tr>
+						
+							<tr>
+								<td>${orderModel.quote.cutCost}</td>
+								<td>${orderModel.quote.manageCost}</td>
+								<td>${orderModel.quote.swingCost}</td>
+								<td>${orderModel.quote.ironingCost}</td>
+							</tr>
+							<tr>
+								<td>锁订费用</td>
+								<td>包装费用</td>
+								<td>其他费用</td>
+								<td>设计费用</td>
+							</tr>
+							<tr>
+								<td>${orderModel.quote.nailCost}</td>
+								<td>${orderModel.quote.packageCost}</td>
+								<td>${orderModel.quote.otherCost}</td>
+								<td>${orderModel.quote.designCost}</td>
+							</tr>
+							<tr>
+								<td rowspan="2">费用核算</td>
+								<td>成本总计</td>
+								<td>生产报价</td>
+								<td>单件利润</td>
+								<td>客户报价</td>
+							</tr>
+							<tr>
+								<td>${orderModel.quote.singleCost}</td>
+								<td>${orderModel.quote.innerPrice}</td>
+								<td>${orderModel.quote.profitPerPiece}</td>
+								<td>${orderModel.quote.outerPrice}</td>
+							</tr>
+						
 						</table>
 					</div>
 				</div>

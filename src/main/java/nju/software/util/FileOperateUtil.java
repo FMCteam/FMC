@@ -1,6 +1,8 @@
 package nju.software.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -206,7 +208,27 @@ public class FileOperateUtil {
     }       
 
 
-	
+    //复制文件
+	public static File CopyAndPaste(String source, String target){
+		try {
+			File sourceFile = new File(source);
+			FileInputStream fis = new FileInputStream(sourceFile);
+			File targetDir = new File(target);
+			targetDir.mkdirs();
+			File targetFile = new File(target, sourceFile.getName());
+			targetFile.createNewFile();
+			SaveFileFromInputStream(fis, target, sourceFile.getName());
+			return targetFile;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 	

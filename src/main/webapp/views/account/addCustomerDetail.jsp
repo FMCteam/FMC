@@ -24,20 +24,20 @@
 							<tr>
 								<td><label for="user_name">客户登录名：</label> <span
 									class="field"><input type="text" name="user_name"
-										class="input-medium"></span></td>
+										class="input-medium"><span style="color:#ff0000;">*</span>(必填)</span></td>
 								<td><label>客户密码：</label> <span class="field"><input
 										type="text" name="user_password" value="123456"
-										class="input-medium"></span></td>
+										class="input-medium"><span style="color:#ff0000;">*</span>(必填)</span></td>
 							</tr>
 
 
 							<tr>
 								<td><label>客户姓名：</label> <span class="field"><input
 										type="text" name="customer_name" class="input-medium"
-										></span></td>
+										><span style="color:#ff0000;">*</span>(必填)</span></td>
 								<td><label>客户电话：</label> <span class="field"><input
 										type="text" name="customer_phone" class="input-medium"
-										></span></td>
+										><span style="color:#ff0000;">*</span>(必填)</span></td>
 							</tr>
 
 
@@ -67,7 +67,7 @@
 										></span></td>
 								<td><label>公司名称</label> <span class="field"><input
 										type="text" name="company_name" class="input-large"
-										></span></td>
+										><span style="color:#ff0000;">*</span>(必填)</span></td>
 
 							</tr>
 							<tr>
@@ -86,14 +86,14 @@
 										></span></td>
 								<td><label>采购联系人</label> <span class="field"><input
 										type="text" name="buy_contact" class="input-medium"
-										></span></td>
+										><span style="color:#ff0000;">*</span>(必填)</span></td>
 							</tr>
 
 
 							<tr>
 								<td><label>采购联系人电话<b>1</b></label> <span class="field"><input
 										type="text" name="contact_phone_1" class="input-medium"
-										/></span></td>
+										/><span style="color:#ff0000;">*</span>(必填)</span></td>
 								<td><label>采购联系人电话<b>2</b></label> <span class="field"><input
 										type="text" name="contact_phone_2" class="input-medium"
 										></span></td>
@@ -129,7 +129,7 @@
 									<div class="par">
 										<label>注册日期</label> <span class="field"><input
 											id="datepicker" type="text" name="register_date"
-											class="input-medium "></span>
+											class="input-medium "><span style="color:#ff0000;">*</span>(必填)</span>
 									</div>
 								</td>
 								<td><label>注册业务员</label> <span class="field"><input
@@ -194,11 +194,11 @@
 			rules : {
 				user_name : "required",
 				customer_name : "required",
-				company_id : "required",
+				
 				company_name : "required",
-				province : "required",
+			
 				contact_phone_1 : "required",
-
+                 buy_contact:"required",
 				register_date : {
 					date : true,
 					required : true
@@ -209,9 +209,9 @@
 			messages : {
 				user_name : "请输入用户登录名称",
 				customer_name : "请输入用户真实姓名",
-				company_id : "请输入公司编号",
+				buy_contact:"请输入采购联系人姓名",
 				company_name : "请输入公司姓名",
-				province : "请输入客户的省份",
+			
 				register_date : "请输入正确的注册日期",
 				contact_phone_1 : "请输入采购联系人电话"
 

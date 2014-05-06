@@ -37,8 +37,10 @@
 				</div>
 				<div class="tab-pane active" id="produceList">
 					<form method="post" id="verify_form"
-					action="${ctx}/produce/produceSubmit.do" onsubmit="return getProduce()">
-						<table class="table table-striped table-bordered table-hover detail">
+						action="${ctx}/produce/produceSubmit.do"
+						onsubmit="return getProduce()">
+						<table
+							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span1" rowspan="${fn:length(orderInfo.produce)+1}">计划生产数量</td>
 								<td class="span1">颜色</td>
@@ -60,7 +62,6 @@
 									<td>${produce.xxl}</td>
 								</tr>
 							</c:forEach>
-
 							<tr>
 								<td class="span1" rowspan="${fn:length(orderInfo.produce)+1}">实际生产数量</td>
 								<td class="span1">颜色</td>
@@ -74,33 +75,32 @@
 							<c:forEach var="produce" items="${orderInfo.produce}">
 								<tr>
 									<td><input class="span12 produce_color" type="text"
-										value="${produce.color}" readonly="readonly"/></td>
-									<td><input class="span12 produce_xs" type="number"
-										min="0" value="${produce.xs}" required="required"/></td>
-									<td><input class="span12 produce_s" type="number"
-										min="0" value="${produce.s}" required="required"/></td>
-									<td><input class="span12 produce_m" type="number"
-										min="0" value="${produce.m}" required="required"/></td>
-									<td><input class="span12 produce_l" type="number"
-										min="0" value="${produce.l}" required="required"/></td>
-									<td><input class="span12 produce_xl" type="number"
-										min="0" value="${produce.xl}" required="required"/></td>
+										value="${produce.color}" readonly="readonly" /></td>
+									<td><input class="span12 produce_xs" type="number" min="0"
+										value="${produce.xs}" required="required" /></td>
+									<td><input class="span12 produce_s" type="number" min="0"
+										value="${produce.s}" required="required" /></td>
+									<td><input class="span12 produce_m" type="number" min="0"
+										value="${produce.m}" required="required" /></td>
+									<td><input class="span12 produce_l" type="number" min="0"
+										value="${produce.l}" required="required" /></td>
+									<td><input class="span12 produce_xl" type="number" min="0"
+										value="${produce.xl}" required="required" /></td>
 									<td><input class="span12 produce_xxl" type="number"
-										min="0" value="${produce.xxl}" required="required"/></td>
+										min="0" value="${produce.xxl}" required="required" /></td>
 								</tr>
 							</c:forEach>
-							<tr>
-								<td>操作</td>
-								<td colspan="7"><input type="hidden" name="orderId"
-									value="${orderInfo.order.orderId }" /> <input type="hidden"
-									name="taskId" value="${orderInfo.taskId }" /> <input
-									id="verify_val" type="hidden" name="result" value="" /> <a
-									id="agree_detail" class="btn btn-primary btn-rounded"><i
-										class="icon-ok icon-white"></i>加工完成</a> <a id="disagree_detail"
-									class="btn btn-danger btn-rounded"><i
-										class="icon-remove icon-white"></i>加工失败</a></td>
-							</tr>
 						</table>
+						<div class="action">
+							 <input type="hidden" name="orderId"
+								value="${orderInfo.order.orderId }" /> <input type="hidden"
+								name="taskId" value="${orderInfo.taskId }" /> <input
+								id="verify_val" type="hidden" name="result" value="" /> <a
+								id="agree_detail" class="btn btn-primary btn-rounded"><i
+								class="icon-ok icon-white"></i>加工完成</a> <a id="disagree_detail"
+								class="btn btn-danger btn-rounded"><i
+								class="icon-remove icon-white"></i>加工失败</a>
+						</div>
 						<input id="produce_color" name="produce_color" type="hidden" /> <input
 							id="produce_xs" name="produce_xs" type="hidden" /> <input
 							id="produce_s" name="produce_s" type="hidden" /> <input

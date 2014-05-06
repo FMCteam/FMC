@@ -206,24 +206,6 @@ public class MarketServiceImpl implements MarketService {
 				orderDAO.save(order);
 
 				Integer orderId = order.getOrderId();
-				MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-
-				if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
-					String filedir = request.getSession().getServletContext()
-							.getRealPath("/upload/sampleClothesPicture/" + orderId);
-					File file = FileOperateUtil.Upload(request, UPLOAD_DIR_SAMPLE
-							+ orderId, "1", "sample_clothes_picture");
-					order.setSampleClothesPicture(file.getAbsolutePath());
-				}
-				if (!multipartRequest.getFile("reference_picture").isEmpty()) {
-					String filedir = request.getSession().getServletContext()
-							.getRealPath("/upload/reference_picture/" + orderId);
-					File file = FileOperateUtil.Upload(request, UPLOAD_DIR_REFERENCE
-							+ orderId, "1", "reference_picture");
-					order.setReferencePicture(file.getAbsolutePath());
-				}
-
-				orderDAO.attachDirty(order);
 
 				// 添加面料信息
 				for (Fabric fabric : fabrics) {
@@ -295,6 +277,13 @@ public class MarketServiceImpl implements MarketService {
 					newAC.setTearPerPiece(ac.getTearPerPiece());
 					accessoryCostDAO.save(newAC);
 				}
+				
+				//图片
+				Order sourceOrder = orderDAO.findById(source);
+				File newSamplePic = FileOperateUtil.CopyAndPaste(sourceOrder.getSampleClothesPicture(), UPLOAD_DIR_SAMPLE + orderId);
+				File newRefPic = FileOperateUtil.CopyAndPaste(sourceOrder.getReferencePicture(), UPLOAD_DIR_REFERENCE + orderId);
+				order.setSampleClothesPicture(newSamplePic.getAbsolutePath());
+				order.setReferencePicture(newRefPic.getAbsolutePath());
 				
 				// 启动流程
 				Map<String, Object> params = new HashMap<String, Object>();
