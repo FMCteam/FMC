@@ -32,7 +32,7 @@ public class AccessFilter implements Filter {
 		accessTable.put("buy", "CAIGOUZHUGUAN");
 		accessTable.put("design", "SHEJIZHUGUAN");
 		accessTable.put("finance", "CAIWUZHUGUAN");
-		accessTable.put("market", "marketStaff, ma");
+		accessTable.put("market", "marketStaff, marketManager");
 		accessTable.put("order", "ADMIN, designManager, marketManager");
 		accessTable.put("produce", "SHENGCHANZHUGUAN");
 		accessTable.put("logistics", "logisticsManager");
@@ -66,16 +66,16 @@ public class AccessFilter implements Filter {
 			//todo 从cookie读取数据，看看是否是记住密码用户。
 			has_access = false;
 		}  else {
-//			String user_role = curUser.getUserRole();		
-//				String access = accessTable.get(type);
-//				if(access != null && (
-//						(access.equals("ALL") && !user_role.equals("CUSTOMER")) || access.contains(user_role))
-//				){
-//					has_access = true;
-//				} else {
-//					has_access = false;
-//				}
-			has_access = true;
+			String user_role = curUser.getUserRole();		
+				String access = accessTable.get(type);
+				if(access != null && (
+						(access.equals("ALL") && !user_role.equals("CUSTOMER")) || access.contains(user_role))
+				){
+					has_access = true;
+				} else {
+					has_access = false;
+				}
+//			has_access = true;
 
 		}
 		
@@ -86,7 +86,10 @@ public class AccessFilter implements Filter {
 				
 //				System.out.println(acc.getKey() + "," + acc.getValue().contains(curUser.getUserRole()));
 				
-				request.setAttribute("ROLE_" + acc.getKey(), true); // acc.getValue().contains(curUser.getUserRole()));
+				if (acc.getValue().contains(curUser.getUserRole())) {
+					request.setAttribute("ROLE_" + acc.getKey(), true); 
+				}
+				// acc.getValue().contains(curUser.getUserRole()));
 				
 			}
 			
@@ -106,8 +109,8 @@ public class AccessFilter implements Filter {
 //				int taskNumber=jbpmAPIUtil.getAssignedTasks(curUser.getUserRole()).size();
 //				request.setAttribute("taskNumber", taskNumber);
 //			}
-			
-			//request.setAttribute(, arg1);
+//			
+//			request.setAttribute(, arg1);
 		} else {
 			response.sendRedirect(request.getContextPath() + "/login.do");
 		}
