@@ -386,7 +386,7 @@ public class MarketController {
 
 		JavaMailUtil.send();
 
-		return "forward:/market/addOrderList.do";
+		return "redirect:/market/addOrderList.do";
 	}
 
 	@RequestMapping(value = "/market/addMoreOrderList.do")
@@ -457,9 +457,6 @@ public class MarketController {
 		Short isNeedSampleClothes = Short.parseShort(request
 				.getParameter("is_need_sample_clothes"));
 		String orderSource = request.getParameter("order_source");
-		String sampleClothesPicture = request
-				.getParameter("sample_clothes_picture");
-		String refPicture = request.getParameter("reference_picture");
 		// 面料数据
 		String fabric_names = request.getParameter("fabric_name");
 		String fabric_amounts = request.getParameter("fabric_amount");
@@ -615,12 +612,7 @@ public class MarketController {
 					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
 		}
 		if (isNeedSampleClothes == 1) {
-			// String sample_clothes_time = request
-			// .getParameter("sample_clothes_time");
-			// String sample_clothes_type = request
-			// .getParameter("sample_clothes_type");
-			// String sample_clothes_number = request
-			// .getParameter("sample_clothes_number");
+
 			String sample_clothes_name = request
 					.getParameter("sample_clothes_name");
 			String sample_clothes_phone = request
@@ -630,9 +622,6 @@ public class MarketController {
 			String sample_clothes_remark = request
 					.getParameter("sample_clothes_remark");
 
-			// logistics.setSampleClothesTime(getTime(sample_clothes_time));
-			// logistics.setSampleClothesType(sample_clothes_type);
-			// logistics.setSampleClothesNumber(sample_clothes_number);
 			logistics.setSampleClothesName(sample_clothes_name);
 			logistics.setSampleClothesPhone(sample_clothes_phone);
 			logistics.setSampleClothesAddress(sample_clothes_address);
@@ -689,7 +678,7 @@ public class MarketController {
 
 		JavaMailUtil.send();
 
-		return "forward:/market/addOrderList.do";
+		return "redirect:/market/addOrderList.do";
 	}
 
 	
