@@ -35,9 +35,9 @@
 		<td>快递单号</td>
 	</tr>
 	<tr>
-		<td>${fn:substring(orderInfo.logistics.sampleClothesTime,0,10)}</td>
-		<td>${orderInfo.logistics.sampleClothesType }</td>
-		<td>${orderInfo.logistics.sampleClothesNumber }</td>
+		<td>${fn:substring(orderInfo.logistics.sampleClothesTime,0,10)}&nbsp</td>
+		<td>${orderInfo.logistics.sampleClothesType}</td>
+		<td>${orderInfo.logistics.sampleClothesNumber}</td>
 	</tr>
 	<tr>
 		<td>其他备注</td>
