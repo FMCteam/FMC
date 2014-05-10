@@ -771,6 +771,11 @@ public class MarketServiceImpl implements MarketService {
 		List<AccessoryCost> accessoryCosts = accessoryCostDAO
 				.findByOrderId(orderId);
 		model.put("accessoryCosts", accessoryCosts);
+		
+		List<DesignCad> cads = cadDAO.findByOrderId(orderId);
+		if (cads != null && cads.size() != 0) {
+			model.put("designCad", cads.get(0));
+		}
 		return model;
 	}
 
