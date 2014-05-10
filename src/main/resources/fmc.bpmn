@@ -548,12 +548,6 @@
         <flowNodeRef>_80</flowNodeRef>
         <flowNodeRef>_110</flowNodeRef>
       </lane>
-      <lane name="logisticsManager" >
-        <flowNodeRef>_7</flowNodeRef>
-        <flowNodeRef>_59</flowNodeRef>
-        <flowNodeRef>_107</flowNodeRef>
-        <flowNodeRef>_115</flowNodeRef>
-      </lane>
       <lane name="marketStaff" >
         <flowNodeRef>_19</flowNodeRef>
         <flowNodeRef>_28</flowNodeRef>
@@ -562,6 +556,12 @@
         <flowNodeRef>_62</flowNodeRef>
         <flowNodeRef>_74</flowNodeRef>
         <flowNodeRef>_75</flowNodeRef>
+      </lane>
+      <lane name="logisticsManager" >
+        <flowNodeRef>_7</flowNodeRef>
+        <flowNodeRef>_59</flowNodeRef>
+        <flowNodeRef>_107</flowNodeRef>
+        <flowNodeRef>_115</flowNodeRef>
       </lane>
       <lane name="produceManager" >
         <flowNodeRef>_12</flowNodeRef>
@@ -572,8 +572,11 @@
       <lane name="marketManager" >
         <flowNodeRef>_29</flowNodeRef>
       </lane>
-      <lane name="qualityManager" >
-        <flowNodeRef>_103</flowNodeRef>
+      <lane name="designManager" >
+        <flowNodeRef>_11</flowNodeRef>
+        <flowNodeRef>_48</flowNodeRef>
+        <flowNodeRef>_70</flowNodeRef>
+        <flowNodeRef>_88</flowNodeRef>
       </lane>
       <lane name="purchaseManager" >
         <flowNodeRef>_10</flowNodeRef>
@@ -581,11 +584,8 @@
         <flowNodeRef>_47</flowNodeRef>
         <flowNodeRef>_69</flowNodeRef>
       </lane>
-      <lane name="designManager" >
-        <flowNodeRef>_11</flowNodeRef>
-        <flowNodeRef>_48</flowNodeRef>
-        <flowNodeRef>_70</flowNodeRef>
-        <flowNodeRef>_88</flowNodeRef>
+      <lane name="qualityManager" >
+        <flowNodeRef>_103</flowNodeRef>
       </lane>
     </laneSet>
     <!-- nodes -->
@@ -595,6 +595,8 @@
     <endEvent id="_138" name="End" >
         <terminateEventDefinition />
     </endEvent>
+    <businessRuleTask id="_141" name="Rule" g:ruleFlowGroup="" >
+    </businessRuleTask>
     <exclusiveGateway id="_140" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
     <userTask id="_7" name="ÊÕÈ¡ÑùÒÂ" >
@@ -1774,6 +1776,9 @@ return false;</conditionExpression>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_138" >
         <dc:Bounds x="584" y="69" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_141" >
+        <dc:Bounds x="828" y="382" width="80" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_140" >
         <dc:Bounds x="1443" y="177" width="48" height="48" />

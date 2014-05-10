@@ -6,12 +6,12 @@
 		//$.log("添加事件");
 		$("table.fabric_table a").click(function(){
 			var colName = ["fabric_name","tear_per_meter","cost_per_meter"];
-			table_addrow_onclick("fabric_table",colName,2);
+			table_addrow_onclick("fabric_table",colName,3);
 		});
 
 		$("table.accessory_table a").click(function(){
 			var colName = ["accessory_name","tear_per_piece","cost_per_piece"];
-			table_addrow_onclick("accessory_table",colName,2);
+			table_addrow_onclick("accessory_table",colName,3);
 		});
 		
 		$("table.produce_table a").click(function(){
@@ -149,10 +149,12 @@ function verify(){
 	
 	$("#fabric_name").val(getTdString("fabric_name"));
 	$("#tear_per_meter").val(getTdString("tear_per_meter"));
-	$("cost_per_meter").val(getTdString("cost_per_meter"));
+	$("#cost_per_meter").val(getTdString("cost_per_meter"));
 	$("#accessory_name").val(getTdString("accessory_name"));
-	$("tear_per_piece").val(getTdString("tear_per_piece"));
-	$("cost_per_piece").val(getTdString("cost_per_piece"));
+	$("#tear_per_piece").val(getTdString("tear_per_piece"));
+	$("#cost_per_piece").val(getTdString("cost_per_piece"));
+	alert($("#fabric_name").val());
+	
 	$("#produce_color").val(getTdString("produce_color"));
 	$("#produce_xs").val(getTdString("produce_xs"));
 	$("#produce_s").val(getTdString("produce_s"));

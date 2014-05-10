@@ -33,7 +33,7 @@
 				</div>
 				
 				
-					<form id="costAccounting_form" method="post"
+					<form id="costAccounting_form" onSubmit="return verify()" method="post"
 						action="${ctx}/buy/computePurchaseCostSubmit.do">
 
 
@@ -49,7 +49,8 @@
 								<input id="tear_per_meter" type="hidden"name="tear_per_meter" /></td>
 								<input id="cost_per_meter" type="hidden"name="cost_per_meter" /></td>
 								
-								<td class="innertable span12"><table class="span12 table fabric_table">
+								<td class="innertable span12">
+								<table class="span12 table fabric_table">
 										<tr>
 											<td class="span5">面料名称</td>
 											<td class="span5">单件米耗</td>

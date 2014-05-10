@@ -54,7 +54,8 @@
 					</table>
 					<input type="hidden" name="orderId"
 						value="${orderInfo.order.orderId }" /> <input type="hidden"
-						name="taskId" value="${orderInfo.task.id }" /> <input
+						name="taskId" value="${orderInfo.task.id }" />
+						 <input
 						id="verify_val" type="hidden" name="result" value="false" />
 				</form>
 			</div>
