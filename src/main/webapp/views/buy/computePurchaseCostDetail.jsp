@@ -32,6 +32,7 @@
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
 				
+				<div class="tab-pane  active" id="quote">
 				
 					<form id="costAccounting_form" onSubmit="return verify()" method="post"
 						action="${ctx}/buy/computePurchaseCostSubmit.do">
@@ -107,6 +108,7 @@
 							value="${orderInfo.order.orderId }" /> <input type="hidden"
 							name="taskId" value="${orderInfo.task.id}" />
 					</form>
+					</div>
 				</div>
 			</div>
 		</div>

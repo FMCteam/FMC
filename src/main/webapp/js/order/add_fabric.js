@@ -153,7 +153,7 @@ function verify(){
 	$("#accessory_name").val(getTdString("accessory_name"));
 	$("#tear_per_piece").val(getTdString("tear_per_piece"));
 	$("#cost_per_piece").val(getTdString("cost_per_piece"));
-	alert($("#fabric_name").val());
+	
 	
 	$("#produce_color").val(getTdString("produce_color"));
 	$("#produce_xs").val(getTdString("produce_xs"));
