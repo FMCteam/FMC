@@ -38,10 +38,10 @@
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td rowspan="4">生产成本</td>
-								<td>裁剪费用</td>
-								<td>管理费用</td>
-								<td>缝制费用</td>
-								<td>整烫费用</td>
+								<td>裁剪费用（单位：元）</td>
+								<td>管理费用（单位：元）</td>
+								<td>缝制费用（单位：元）</td>
+								<td>整烫费用（单位：元）</td>
 							</tr>
 
 							<tr>
@@ -56,10 +56,10 @@
 							</tr>
 
 							<tr>
-								<td>锁订费用</td>
-								<td>包装费用</td>
-								<td>其他费用</td>
-								<td>设计费用</td>
+								<td>锁订费用（单位：元）</td>
+								<td>包装费用（单位：元）</td>
+								<td>其他费用（单位：元）</td>
+								<td>设计费用（单位：元）</td>
 							</tr>
 
 							<tr>
