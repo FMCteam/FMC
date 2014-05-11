@@ -95,6 +95,7 @@ public class BuyServiceImpl implements BuyService {
 				Fabric fabric=new Fabric();
 				fabric.setOrderId(orderId);
 				fabric.setFabricName(fabric_names[i]);
+				fabric.setFabricAmount("1");
 
 				
 				FabricCost fabricCost = new FabricCost();
@@ -123,6 +124,7 @@ public class BuyServiceImpl implements BuyService {
 				
 				accessory.setOrderId(orderId);
 				accessory.setAccessoryName(accessory_names[i]);
+				accessory.setAccessoryQuery("empty");
 				
 				AccessoryCost accessoryCost = new AccessoryCost();
 				accessoryCost.setOrderId(orderId);

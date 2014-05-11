@@ -104,26 +104,15 @@ public class BuyController {
 				String tear_per_meters_temp[] = tear_per_meter.split(",");
 				String cost_per_meters_temp[] = cost_per_meter.split(",");
 				
-				
-				
-				System.out.println("================================");
-				System.out.println(fabric_name);
-				System.out.println("================================");
-				
-				
-//				List<Fabric> fabrics = new ArrayList<Fabric>();
-				List<String> fabric_names_list=new ArrayList<String>();
+			   List<String> fabric_names_list=new ArrayList<String>();
 				List<String> cost_per_meters_list=new ArrayList<String>();
 				List<String> tear_per_meters_list=new ArrayList<String>();
-//				List<FabricCost> fabricCosts=new ArrayList<FabricCost>();
+
 				for (int i = 0; i < fabric_names_temp.length; i++) {
 					
 					if (fabric_names_temp[i].equals(""))
 						continue;
 					fabric_names_list.add(fabric_names_temp[i]);
-					System.out.println("================================");
-					System.out.println(fabric_names_temp[i]);
-					System.out.println("================================");
 					tear_per_meters_list.add(tear_per_meters_temp[i]);
 					cost_per_meters_list.add(cost_per_meters_temp[i]);
 				}
@@ -132,7 +121,6 @@ public class BuyController {
 			        String[] fabric_names = (String[])fabric_names_list.toArray(new String[size]);  
 			        String[] tear_per_meters = (String[])tear_per_meters_list.toArray(new String[size]);  
 			        String[] cost_per_meters = (String[])cost_per_meters_list.toArray(new String[size]);  
-				
 				
 				// 辅料数据
 				String accessory_name = request.getParameter("accessory_name");
