@@ -98,9 +98,11 @@ public class AccessFilter implements Filter {
 
 				// System.out.println(acc.getKey() + "," +
 				// acc.getValue().contains(curUser.getUserRole()));
-
+				//if(acc.getValue().contains(curUser.getUserRole())){
+					
+				
 				request.setAttribute("ROLE_" + acc.getKey(), true); // acc.getValue().contains(curUser.getUserRole()));
-
+				//}
 			}
 
 			request.setAttribute("USER_nick_name", curUser.getNickName());

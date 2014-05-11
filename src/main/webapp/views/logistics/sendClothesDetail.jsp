@@ -44,10 +44,10 @@
 								<td>${orderInfo.logistics.sampleClothesAddress }</td>
 							</tr>
 							<tr>
-								<td>邮寄时间</td>
-								<td>快递名称</td>
-								<td>快递单号</td>
-								<td>快递价格</td>
+								<td>邮寄时间<span style="color: red">*</span></td>
+								<td>快递名称<span style="color: red">*</span></td>
+								<td>快递单号<span style="color: red">*</span></td>
+								<td>快递价格<span style="color: red">*</span></td>
 							</tr>
 							<tr>
 								<td><input type="date" name="time" required="required" /></td>
