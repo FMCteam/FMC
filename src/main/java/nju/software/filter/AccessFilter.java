@@ -96,7 +96,7 @@ public class AccessFilter implements Filter {
 				} else {
 					has_access = false;
 				}
-//			has_access = true;
+			//has_access = true;
 
 		}
 		

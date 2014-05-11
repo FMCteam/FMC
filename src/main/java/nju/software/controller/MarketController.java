@@ -69,6 +69,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class MarketController {
+	private final static String CONTRACT_URL = "D:/fmc/contract/";
 	@Autowired
 	private OrderService orderService;
 	@Autowired
@@ -377,7 +378,6 @@ public class MarketController {
 		order.setReferenceUrl(referenceUrl);
 		order.setSampleAmount(sample_amount);
 		order.setAskAmount(askAmount);
-		order.setSampleAmount(0);
 		order.setAskProducePeriod(askProducePeriod);
 		order.setAskDeliverDate(askDeliverDate);
 		order.setAskCodeNumber(askCodeNumber);
@@ -673,7 +673,6 @@ public class MarketController {
 		order.setReferenceUrl(referenceUrl);
 		order.setAskAmount(askAmount);
 		order.setSampleAmount(sample_amount);
-		order.setSampleAmount(0);
 		order.setAskProducePeriod(askProducePeriod);
 		order.setAskDeliverDate(askDeliverDate);
 		order.setAskCodeNumber(askCodeNumber);
@@ -1199,6 +1198,7 @@ public class MarketController {
 		String sample_produce_xl[] = sample_produce_xls.split(",");
 		String sample_produce_xxl[] = sample_produce_xxls.split(",");
 		List<Produce> sample_produces = new ArrayList<Produce>();
+		int sample_amount = 0;
 		for (int i = 0; i < sample_produce_color.length; i++) {
 			if (sample_produce_color[i].equals(""))
 				continue;
@@ -1218,7 +1218,9 @@ public class MarketController {
 			p.setXs(xs);
 			p.setXxl(xxl);
 			p.setType(Produce.TYPE_SAMPLE_PRODUCE);
-			p.setProduceAmount(l + m + s + xs + xl + xxl);
+			int temp = l + m + s + xs + xl + xxl;
+			p.setProduceAmount(temp);
+			sample_amount+=temp;
 			sample_produces.add(p);
 		}
 
@@ -1335,6 +1337,7 @@ public class MarketController {
 		// order.setSampleClothesPicture(sampleClothesPicture);
 		// order.setReferencePicture(referencePicture);
 		order.setAskAmount(askAmount);
+		order.setSampleAmount(sample_amount);
 		order.setAskProducePeriod(askProducePeriod);
 		order.setAskDeliverDate(askDeliverDate);
 		order.setAskCodeNumber(askCodeNumber);
@@ -1602,13 +1605,21 @@ public class MarketController {
 		String total = request.getParameter("totalmoney");
 		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile file = multipartRequest.getFile("contractFile");
+		String filename = file.getOriginalFilename();
+		String url = CONTRACT_URL + orderId;
+		String fileid = "contractFile";
+		FileOperateUtil.Upload(request, url, null, fileid);
+		url = url + "/" + filename;
+		
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
 		String actorId = account.getUserId() + "";
 
 		marketService.signContractSubmit(actorId, Long.parseLong(taskId),
 				Integer.parseInt(orderId), Double.parseDouble(discount),
-				Double.parseDouble(total));
+				Double.parseDouble(total), url);
 		return "redirect:/market/signContractList.do";
 	}
 

@@ -41,7 +41,7 @@
 	<tr>
 		<td class="span2">大货加工 </td>
 		<td colspan="8" class="innertable">
-			<table class="span12 table produce_table">
+			<table class="span12 table table-bordered table-hover produce_table">
 				<tr>
 					<td class="span1">颜色</td>
 					<td class="span1">XS</td>
