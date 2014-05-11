@@ -96,7 +96,6 @@ public class ProduceController {
 	
 	/**
 	 * 生产成本核算跳转链接
-	 * @author WangJian
 	 * @param request
 	 * @param response
 	 * @param model
