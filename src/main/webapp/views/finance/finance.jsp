@@ -24,10 +24,10 @@
 		</tr>
 		<tr>
 			<td rowspan="4">汇款信息</td>
-			<td>汇款人</td>
-			<td>汇款卡号</td>
-			<td>汇款银行</td>
-			<td>汇款金额</td>
+			<td>汇款人<span style="color: red">*</span></td>
+			<td>汇款卡号<span style="color: red">*</span></td>
+			<td>汇款银行<span style="color: red">*</span></td>
+			<td>汇款金额<span style="color: red">*</span></td>
 		</tr>
 		<tr>
 			<td><input type="text" name="money_name" required="required" /></td>
@@ -36,8 +36,8 @@
 			<td><input type="text" name="money_amount"  required="required"/></td>
 		</tr>
 		<tr>
-			<td>收款时间</td>
-			<td>收款账号</td>
+			<td>收款时间<span style="color: red">*</span></td>
+			<td>收款账号<span style="color: red">*</span></td>
 			<td colspan="2">备注</td>
 		</tr>
 		<tr>

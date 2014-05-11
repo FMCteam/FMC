@@ -59,9 +59,9 @@
 							</tr>
 							<tr>
 								<td rowspan="2">${orderInfo.order.isNeedSampleClothes==0?'否':'是' }</td>
-								<td>邮寄时间</td>
-								<td>快递名称</td>
-								<td colspan="3">快递单号</td>
+								<td>邮寄时间<span style="color: red">*</span></td>
+								<td>快递名称<span style="color: red">*</span></td>
+								<td colspan="3">快递单号<span style="color: red">*</span></td>
 							</tr>
 							<tr>
 								<td><input type="date" name="time" required="required"/></td>
