@@ -239,6 +239,7 @@ public class MarketController {
 		String sample_produce_xl[] = sample_produce_xls.split(",");
 		String sample_produce_xxl[] = sample_produce_xxls.split(",");
 		List<Produce> sample_produces = new ArrayList<Produce>();
+		int sample_amount = 0;
 		for (int i = 0; i < sample_produce_color.length; i++) {
 			if (sample_produce_color[i].equals(""))
 				continue;
@@ -258,7 +259,9 @@ public class MarketController {
 			p.setXs(xs);
 			p.setXxl(xxl);
 			p.setType(Produce.TYPE_SAMPLE_PRODUCE);
-			p.setProduceAmount(l + m + s + xs + xl + xxl);
+			int temp = l + m + s + xs + xl + xxl;
+			p.setProduceAmount(temp);
+			sample_amount+=temp;
 			sample_produces.add(p);
 		}
 
@@ -372,6 +375,7 @@ public class MarketController {
 		order.setSpecialProcess(specialProcess);
 		order.setOtherRequirements(otherRequirements);
 		order.setReferenceUrl(referenceUrl);
+		order.setSampleAmount(sample_amount);
 		order.setAskAmount(askAmount);
 		order.setSampleAmount(0);
 		order.setAskProducePeriod(askProducePeriod);
@@ -539,6 +543,7 @@ public class MarketController {
 		String sample_produce_xl[] = sample_produce_xls.split(",");
 		String sample_produce_xxl[] = sample_produce_xxls.split(",");
 		List<Produce> sample_produces = new ArrayList<Produce>();
+		int sample_amount = 0;
 		for (int i = 0; i < sample_produce_color.length; i++) {
 			if (sample_produce_color[i].equals(""))
 				continue;
@@ -558,7 +563,9 @@ public class MarketController {
 			p.setXs(xs);
 			p.setXxl(xxl);
 			p.setType(Produce.TYPE_SAMPLE_PRODUCE);
-			p.setProduceAmount(l + m + s + xs + xl + xxl);
+			int temp = l + m + s + xs + xl + xxl;
+			p.setProduceAmount(temp);
+			sample_amount+=temp;
 			sample_produces.add(p);
 		}
 
@@ -665,6 +672,7 @@ public class MarketController {
 		order.setOtherRequirements(otherRequirements);
 		order.setReferenceUrl(referenceUrl);
 		order.setAskAmount(askAmount);
+		order.setSampleAmount(sample_amount);
 		order.setSampleAmount(0);
 		order.setAskProducePeriod(askProducePeriod);
 		order.setAskDeliverDate(askDeliverDate);
@@ -732,10 +740,14 @@ public class MarketController {
 		String orderId = request.getParameter("order_id");
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
-		float profit = Float.parseFloat(s_profit);
-		float inner = Float.parseFloat(innerPrice);
-		float outer = Float.parseFloat(outerPrice);
-		float single = Float.parseFloat(s_single);
+		float profit = 0;
+		float inner = 0;
+		float outer = 0;
+		float single = 0;
+		if(!s_profit.equals("")) profit = Float.parseFloat(s_profit);
+		if(!innerPrice.equals("")) inner = Float.parseFloat(innerPrice);
+		if(!outerPrice.equals("")) outer = Float.parseFloat(outerPrice);
+		if(!s_single.equals("")) single = Float.parseFloat(s_single);
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
@@ -891,10 +903,14 @@ public class MarketController {
 		String orderId = request.getParameter("order_id");
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
-		float profit = Float.parseFloat(s_profit);
-		float inner = Float.parseFloat(innerPrice);
-		float outer = Float.parseFloat(outerPrice);
-		float single = Float.parseFloat(s_single);
+		float profit = 0;
+		float inner = 0;
+		float outer = 0;
+		float single = 0;
+		if(!s_profit.equals("")) profit = Float.parseFloat(s_profit);
+		if(!innerPrice.equals("")) inner = Float.parseFloat(innerPrice);
+		if(!outerPrice.equals("")) outer = Float.parseFloat(outerPrice);
+		if(!s_single.equals("")) single = Float.parseFloat(s_single);
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
@@ -967,10 +983,14 @@ public class MarketController {
 		String orderId = request.getParameter("order_id");
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
-		float profit = Float.parseFloat(s_profit);
-		float inner = Float.parseFloat(innerPrice);
-		float outer = Float.parseFloat(outerPrice);
-		float single = Float.parseFloat(s_single);
+		float profit = 0;
+		float inner = 0;
+		float outer = 0;
+		float single = 0;
+		if(!s_profit.equals("")) profit = Float.parseFloat(s_profit);
+		if(!innerPrice.equals("")) inner = Float.parseFloat(innerPrice);
+		if(!outerPrice.equals("")) outer = Float.parseFloat(outerPrice);
+		if(!s_single.equals("")) single = Float.parseFloat(s_single);
 		int id = Integer.parseInt(orderId);
 		long taskId = Long.parseLong(s_taskId);
 		long processId = Long.parseLong(s_processId);
