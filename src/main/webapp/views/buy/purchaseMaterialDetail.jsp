@@ -46,7 +46,7 @@
 								<td colspan="2">${fabricCost.fabricName }</td>
 								<td colspan="1">${fabricCost.tearPerMeter }</td>
 								<td colspan="1">${orderInfo.order.askAmount}</td>
-								<td colspan="2">${fabricCost.tearPerMeter*orderInfo.order.askAmount}</td>
+								<td colspan="2">${(fabricCost.tearPerMeter)*(orderInfo.order.askAmount)}</td>
 							</tr>
 						</c:forEach>
 						<tr>
@@ -60,8 +60,11 @@
 							<tr>
 								<td colspan="2">${accessoryCost.accessoryName }</td>
 								<td colspan="1">${accessoryCost.tearPerPiece }</td>
-								<td colspan="1">${orderInfo.order.askAmount}</td>
+								<td colspan="1">${orderInfo.order.askAmount}</td> <<<<<<< HEAD
 								<td colspan="2">${accessoryCost.tearPerPiece*orderInfo.order.askAmount}</td>
+								=======
+								<td colspan="2">${(accessoryCost.tearPerPiece)*(orderInfo.order.askAmount)}</td>
+								>>>>>>> 8e19026d187cbdd36f5ec78dec448d74fe2133ed
 							</tr>
 						</c:forEach>
 					</table>
