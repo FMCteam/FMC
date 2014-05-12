@@ -45,8 +45,8 @@
 							<tr>
 								<td colspan="2">${fabricCost.fabricName }</td>
 								<td colspan="1">${fabricCost.tearPerMeter }</td>
-								<td colspan="1">${orderInfo.data.SampleAmount}</td>
-								<td colspan="2">${fabricCost.tearPerMeter*orderInfo.data.SampleAmount}</td>
+								<td colspan="1">${orderInfo.number}</td>
+								<td colspan="2">${fabricCost.tearPerMeter*orderInfo.number}</td>
 							</tr>
 						</c:forEach>
 						<tr>
