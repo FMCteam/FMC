@@ -12,6 +12,7 @@
 		<!--row-fluid-->
 
 		<div class="footer">
+		
 			<div class="footer-left">
 				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
 			</div>
