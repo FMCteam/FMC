@@ -18,8 +18,6 @@
 			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
 			if(checkNum("produce_table",colName,7)){
 				table_addrow_onclick("produce_table",colName,7);
-				$("table.produce_table td.produce_height").attr("rowspan",
-						parseInt($("table.produce_table td.produce_height").attr("rowspan"))+1);
 				$("input[name='ask_amount']").val(calculate("produce_table",colName,7));
 			}
 		});

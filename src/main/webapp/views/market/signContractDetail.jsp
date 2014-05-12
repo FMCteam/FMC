@@ -36,13 +36,23 @@
 				</div>
 			</div>
 		</div>
-		<form action="${ctx}/market/signContractSubmit.do" method="post">
-			<div class="action">
+		<form action="${ctx}/market/signContractSubmit.do" method="post" enctype="multipart/form-data">
+			
 				<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
-				<input type="hidden" name="orderId"
-					value="${orderInfo.order.orderId }" /> <label>优惠金额：</label><input
-					name="discount" type="text" /> <label>总金额：</label><input
-					name="totalmoney" type="text" />
+				<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
+				<table class="table table-striped table-bordered table-hover detail">
+					<tr>
+						<td>优惠金额</td>
+						<td>总金额</td>
+						<td>上传合同</td>
+					</tr>
+					<tr>
+						<td><input name="discount" type="number" /></td>
+						<td><input name="totalmoney" type="number" /></td>
+						<td><input name="contractFile" type="file" value="选择文件"/></td>
+					</tr>
+				</table>
+			<div class="action">
 				<button class="btn btn-primary btn-rounded">
 					<i class="icon-ok icon-white"></i>签订
 				</button>

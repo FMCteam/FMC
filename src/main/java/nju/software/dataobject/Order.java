@@ -71,6 +71,7 @@ public class Order implements java.io.Serializable {
 	private double discount;
 	private double totalMoney;
 	private double sampleMoney=0;
+	private String contractFile;
 	private int logisticsState; //物流状态：0,未装包。1，装包未入库，2，入库待扫描，3已扫描待发货。4发货
 	
 	@Column(name = "sampleMoney", nullable = true, precision = 22, scale = 0)
@@ -455,6 +456,15 @@ public class Order implements java.io.Serializable {
 
 	public void setReferenceUrl(String referenceUrl) {
 		this.referenceUrl = referenceUrl;
+	}
+
+	@Column(name = "contract_file", length = 250)
+	public String getContractFile() {
+		return contractFile;
+	}
+
+	public void setContractFile(String contractFile) {
+		this.contractFile = contractFile;
 	}
 	
 

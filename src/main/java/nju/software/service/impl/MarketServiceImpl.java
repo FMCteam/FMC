@@ -432,12 +432,17 @@ public class MarketServiceImpl implements MarketService {
 
 		if (orderId == orderId_process) {
 			// 如果通过，创建合同加工单
+			int ask_amount = 0;
 			produceDAO.deleteProduceByProperty("oid", orderId);
 			if (comfirmworksheet) {
 				for (Produce produce : productList) {
 					produce.setOid(orderId);
 					produceDAO.save(produce);
+					ask_amount+=produce.getProduceAmount();
 				}
+				Order order = orderDAO.findById(orderId);
+				order.setAskAmount(ask_amount);
+				orderDAO.merge(order);
 			}
 			// 修改流程参数
 			Map<String, Object> data = new HashMap<>();
@@ -652,11 +657,12 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	public boolean signContractSubmit(String actorId, long taskId, int orderId,
-			double discount, double total) {
+			double discount, double total, String url) {
 		// TODO Auto-generated method stub
 		Order order = orderDAO.findById(orderId);
 		order.setDiscount(discount);
 		order.setTotalMoney(total);
+		order.setContractFile(url);
 		orderDAO.merge(order);
 		Map<String, Object> data = new HashMap<>();
 		try {

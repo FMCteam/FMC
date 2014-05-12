@@ -38,7 +38,7 @@ public interface MarketService {
 	
 	public Map<String, Object> getSignContractDetail(String arctorId,Integer orderId);
 	
-	public boolean signContractSubmit(String actorId,long taskId,int i,double d,double discount);
+	public boolean signContractSubmit(String actorId,long taskId,int i,double d,double discount, String url);
 	
 	
 	

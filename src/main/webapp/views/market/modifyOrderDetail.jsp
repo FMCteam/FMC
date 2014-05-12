@@ -390,7 +390,7 @@
 							<tr>
 								<td class="span2" colspan="2"><input class="span6"
 									type="number" name="sample_amount"
-									value="${orderModel.order.askAmount }" /></td>
+									value="${orderModel.order.sampleAmount }" /></td>
 								<td class="span2" colspan="2"><input class="span6"
 									type="number" name="ask_amount"
 									value="${orderModel.order.askAmount }" /></td>
@@ -576,27 +576,27 @@
 								<td class="span1" rowspan="4">版型数据</td>
 								<td class="span1">面料</td>
 								<td class="span3"><textarea class="span12" name="cadFabric"
-										style="resize:none" rows="2">${orderModel.designCad[0].cadFabric }</textarea></td>
+										style="resize:none" rows="2">${orderModel.designCad.cadFabric }</textarea></td>
 								<td class="span1">包装</td>
 								<td class="span3"><textarea class="span12" name="cadBox"
-										style="resize:none" rows="2">${orderModel.designCad[0].cadBox }</textarea></td>
+										style="resize:none" rows="2">${orderModel.designCad.cadBox }</textarea></td>
 							</tr>
 							<tr>
 								<td class="span1">版型</td>
 								<td class="span3"><textarea class="span12"
-										name="cadVersionData" style="resize:none" rows="2">${orderModel.designCad[0].cadVersionData }</textarea></td>
+										name="cadVersionData" style="resize:none" rows="2">${orderModel.designCad.cadVersionData }</textarea></td>
 								<td class="span1">装箱</td>
 								<td class="span3"><textarea class="span12"
-										name="cadPackage" style="resize:none" rows="2">${orderModel.designCad[0].cadPackage }</textarea></td>
+										name="cadPackage" style="resize:none" rows="2">${orderModel.designCad.cadPackage }</textarea></td>
 
 							</tr>
 							<tr>
 								<td class="span1">工艺</td>
 								<td class="span3"><textarea class="span12" name="cadTech"
-										style="resize:none" rows="2">${orderModel.designCad[0].cadTech }</textarea></td>
+										style="resize:none" rows="2">${orderModel.designCad.cadTech }</textarea></td>
 								<td class="span1">其他</td>
 								<td class="span3"><textarea class="span12" name="cadOther"
-										style="resize:none" rows="2">${orderModel.designCad[0].cadOther }</textarea></td>
+										style="resize:none" rows="2">${orderModel.designCad.cadOther }</textarea></td>
 							</tr>
 						</table>
 					</div>

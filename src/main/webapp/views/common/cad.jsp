@@ -56,6 +56,18 @@
 	</tr>
 	<tr>
 		<td class="span1">CAD</td>
-		<td colspan="6">${orderInfo.designCad.cadOther}</td>
+		<td colspan="6">
+			<c:if test="${orderInfo.cad!=null}">
+			<form action="${ctx }/design/downloadCadSubmit.do" method="post" 
+				nctype="multipart/form-data">
+				<span style="margin-right: 80px">版本：${orderInfo.cad.cadVersion}</span>
+				<span>上传时间：${orderInfo.cad.uploadTime}</span>
+				<input style="margin-left: 80px" type="submit" class="btn btn-primary btn-rounded" value="下载"/>
+				<input type="hidden" name="cadUrl" value="${orderInfo.cad.cadUrl}" />
+				<input type="hidden" name="orderId" value="${orderInfo.order.orderId}"/>
+				<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
+			</form>
+			</c:if>
+		</td>
 	</tr>
 </table>
