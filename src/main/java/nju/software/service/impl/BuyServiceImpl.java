@@ -86,6 +86,24 @@ public class BuyServiceImpl implements BuyService {
 			String[] cost_per_piece) {
 		
 		
+		List<Fabric> FabricList = fabricDAO.findByOrderId(orderId);
+		
+		List<Accessory> AccessoryList = accessoryDAO
+				.findByOrderId(orderId);
+		
+		for (Fabric fabric : FabricList) {
+		
+			fabricDAO.delete(fabric);
+			
+		}
+		
+		for (Accessory accessory : AccessoryList) {
+			
+			accessoryDAO.delete(accessory);
+			
+		}
+		
+		
 		float all_fabric_prices=0.0f;
 		float all_accessory_prices=0.0f;
 		// TODO Auto-generated method stub
