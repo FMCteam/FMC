@@ -379,6 +379,7 @@
 									</table>
 								</td>
 							</tr>
+  <!-- 
 							<tr>
 								<td>样衣加工具体要求 <input id="sample_produce_color" type="hidden"
 									name="sample_produce_color" /> <input id="sample_produce_xs"
@@ -415,6 +416,7 @@
 									</table>
 								</td>
 							</tr>
+							-->
 						</table>
 					</div>
 					<div class="tab-pane" id="cad">

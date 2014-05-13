@@ -96,7 +96,7 @@ public class AccessFilter implements Filter {
 			} else {
 				has_access = false;
 			}
-		//	 has_access = true;
+			 //has_access = true;
 
 		}
 
@@ -110,6 +110,7 @@ public class AccessFilter implements Filter {
 				if (acc.getValue().contains(curUser.getUserRole())) {
 					request.setAttribute("ROLE_" + acc.getKey(), true);
 				}
+
 				// acc.getValue().contains(curUser.getUserRole()));
 				// if(acc.getValue().contains(curUser.getUserRole())){
 

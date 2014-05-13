@@ -18,6 +18,7 @@ public class Order implements java.io.Serializable {
 	// Fields
 
 	private Integer orderId;
+	private Short reorder;
 	private Integer customerId;
 	private Integer employeeId;
 	private String orderState;
@@ -403,6 +404,15 @@ public class Order implements java.io.Serializable {
 
 	public void setHasPostedSampleClothes(Short hasPostedSampleClothes) {
 		this.hasPostedSampleClothes = hasPostedSampleClothes;
+	}
+
+	@Column(name = "reorder", nullable = false)
+	public Short getReorder() {
+		return reorder;
+	}
+
+	public void setReorder(Short reorder) {
+		this.reorder = reorder;
 	}
 
 	@Column(name = "is_need_sample_clothes", nullable = false)

@@ -13,7 +13,7 @@
 		<td colspan="2">${fn:substring(orderInfo.order.orderTime,0,19)}</td>
 		<td>${orderInfo.employee.employeeName}</td>
 		<td>${orderInfo.order.orderSource }</td>
-		<td>否</td>
+		<td>${orderInfo.order.reorder==0?"否":"是" }</td>
 	</tr>
 	<tr>
 		<td rowspan="3">客户信息</td>

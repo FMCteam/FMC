@@ -54,7 +54,7 @@
 					id="produce_l" type="hidden" name="produce_l" /> <input
 					id="produce_xl" type="hidden" name="produce_xl" /> <input
 					id="produce_xxl" type="hidden" name="produce_xxl" />
-			</div>
+		</div>
 		</form>
 		<!--row-fluid-->
 

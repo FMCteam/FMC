@@ -315,7 +315,7 @@ public class MarketController {
 			logistics
 					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
 		}
-		if (isNeedSampleClothes == 1) {
+		//if (isNeedSampleClothes == 1) {
 			// String sample_clothes_time = request
 			// .getParameter("sample_clothes_time");
 			// String sample_clothes_type = request
@@ -338,7 +338,7 @@ public class MarketController {
 			logistics.setSampleClothesPhone(sample_clothes_phone);
 			logistics.setSampleClothesAddress(sample_clothes_address);
 			logistics.setSampleClothesRemark(sample_clothes_remark);
-		}
+		//}
 
 		// CAD
 		DesignCad cad = new DesignCad();
@@ -358,6 +358,7 @@ public class MarketController {
 		cad.setCadVersionData(cad_version_data);
 		// Order
 		Order order = new Order();
+		order.setReorder((short) 0);
 		order.setEmployeeId(employeeId);
 		order.setCustomerId(customerId);
 		order.setOrderState(orderState);
@@ -527,7 +528,7 @@ public class MarketController {
 		}
 
 		// 样衣加工要求
-		String sample_produce_colors = request
+		/*String sample_produce_colors = request
 				.getParameter("sample_produce_color");
 		String sample_produce_xss = request.getParameter("sample_produce_xs");
 		String sample_produce_ss = request.getParameter("sample_produce_s");
@@ -568,7 +569,7 @@ public class MarketController {
 			sample_amount+=temp;
 			sample_produces.add(p);
 		}
-
+*/
 		// 版型数据
 		String version_sizes = request.getParameter("version_size");
 		String version_centerBackLengths = request
@@ -618,7 +619,7 @@ public class MarketController {
 			logistics
 					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
 		}
-		if (isNeedSampleClothes == 1) {
+		//if (isNeedSampleClothes == 1) {
 
 			String sample_clothes_name = request
 					.getParameter("sample_clothes_name");
@@ -633,7 +634,7 @@ public class MarketController {
 			logistics.setSampleClothesPhone(sample_clothes_phone);
 			logistics.setSampleClothesAddress(sample_clothes_address);
 			logistics.setSampleClothesRemark(sample_clothes_remark);
-		}
+		//}
 
 		// CAD
 		DesignCad cad = new DesignCad();
@@ -653,6 +654,7 @@ public class MarketController {
 		cad.setCadVersionData(cad_version_data);
 		// Order
 		Order order = new Order();
+		order.setReorder((short) 1);
 		order.setEmployeeId(employeeId);
 		order.setCustomerId(customerId);
 		order.setOrderState(orderState);
@@ -672,7 +674,7 @@ public class MarketController {
 		order.setOtherRequirements(otherRequirements);
 		order.setReferenceUrl(referenceUrl);
 		order.setAskAmount(askAmount);
-		order.setSampleAmount(sample_amount);
+		order.setSampleAmount(0);
 		order.setAskProducePeriod(askProducePeriod);
 		order.setAskDeliverDate(askDeliverDate);
 		order.setAskCodeNumber(askCodeNumber);
@@ -681,7 +683,7 @@ public class MarketController {
 		order.setOrderSource(orderSource);
 
 		marketService.addMoreOrderSubmit(order, fabrics, accessorys, logistics,
-				produces, sample_produces, versions, cad, request);
+				produces, versions, cad, request);
 
 		JavaMailUtil.send();
 
@@ -1274,13 +1276,13 @@ public class MarketController {
 			logistics
 					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
 		}
-		if (isNeedSampleClothes == 1) {
-			String sample_clothes_time = request
-					.getParameter("sample_clothes_time");
-			String sample_clothes_type = request
-					.getParameter("sample_clothes_type");
-			String sample_clothes_number = request
-					.getParameter("sample_clothes_number");
+		//if (isNeedSampleClothes == 1) {
+//			String sample_clothes_time = request
+//					.getParameter("sample_clothes_time");
+//			String sample_clothes_type = request
+//					.getParameter("sample_clothes_type");
+//			String sample_clothes_number = request
+//					.getParameter("sample_clothes_number");
 			String sample_clothes_name = request
 					.getParameter("sample_clothes_name");
 			String sample_clothes_phone = request
@@ -1290,14 +1292,14 @@ public class MarketController {
 			String sample_clothes_remark = request
 					.getParameter("sample_clothes_remark");
 
-			logistics.setSampleClothesTime(getTime(sample_clothes_time));
-			logistics.setSampleClothesType(sample_clothes_type);
-			logistics.setSampleClothesNumber(sample_clothes_number);
+//			logistics.setSampleClothesTime(getTime(sample_clothes_time));
+//			logistics.setSampleClothesType(sample_clothes_type);
+//			logistics.setSampleClothesNumber(sample_clothes_number);
 			logistics.setSampleClothesName(sample_clothes_name);
 			logistics.setSampleClothesPhone(sample_clothes_phone);
 			logistics.setSampleClothesAddress(sample_clothes_address);
 			logistics.setSampleClothesRemark(sample_clothes_remark);
-		}
+		//}
 		
 		// CAD
 		DesignCad cad = cadService.findByOrderId(s_id);
@@ -1334,8 +1336,6 @@ public class MarketController {
 		order.setSpecialProcess(specialProcess);
 		order.setOtherRequirements(otherRequirements);
 		order.setReferenceUrl(referenceUrl);
-		// order.setSampleClothesPicture(sampleClothesPicture);
-		// order.setReferencePicture(referencePicture);
 		order.setAskAmount(askAmount);
 		order.setSampleAmount(sample_amount);
 		order.setAskProducePeriod(askProducePeriod);
@@ -1344,13 +1344,44 @@ public class MarketController {
 		order.setHasPostedSampleClothes(hasPostedSampleClothes);
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
+		
+		String sampleClothesPicture = request.getParameter("sample_clothes_picture");
+		if(!sampleClothesPicture.equals("")){
+			File file = new File(order.getSampleClothesPicture());
+			if(file.exists()){
+				file.delete();
+			}
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile mfile = multipartRequest.getFile("sample_clothes_picture");
+			String filename = mfile.getOriginalFilename();
+			String url = MarketServiceImpl.UPLOAD_DIR_SAMPLE + order.getOrderId();
+			String fileid = "sample_clothes_picture";
+			FileOperateUtil.Upload(request, url, null, fileid);
+			url = url + "/" + filename;
+			order.setSampleClothesPicture(url);
+		}
+		String refPicture = request.getParameter("reference_picture");
+		if(!refPicture.equals("")){
+			File file = new File(order.getReferencePicture());
+			if(file.exists()){
+				file.delete();
+			}
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile mfile = multipartRequest.getFile("reference_picture");
+			String filename = mfile.getOriginalFilename();
+			String url = MarketServiceImpl.UPLOAD_DIR_REFERENCE + order.getOrderId();
+			String fileid = "reference_picture";
+			FileOperateUtil.Upload(request, url, null, fileid);
+			url = url + "/" + filename;
+			order.setReferencePicture(url);
+		}
 
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		boolean editok = request.getParameter("editok").equals("true") ? true
 				: false;
 		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
-				produces, sample_produces, versions, cad, editok, task_id,
+				produces, sample_produces, versions, cad, editok, task_id,  
 				account.getUserId());
 		return "redirect:/market/modifyOrderList.do";
 	}
