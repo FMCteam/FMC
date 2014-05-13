@@ -49,16 +49,16 @@ public class AccessFilter implements Filter {
 		accessTable.put("customer", "ADMIN,"
 				+ MarketServiceImpl.ACTOR_MARKET_MANAGER + ","
 				+ MarketServiceImpl.ACTOR_MARKET_STAFF);
-		accessTable.put("buy", BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
-		accessTable.put("design", DesignServiceImpl.ACTOR_DESIGN_MANAGER);
-		accessTable.put("finance", FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
-		accessTable.put("market", MarketServiceImpl.ACTOR_MARKET_MANAGER + ","
+		accessTable.put("buy", "ADMIN,"+BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
+		accessTable.put("design", "ADMIN,"+DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+		accessTable.put("finance","ADMIN,"+ FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
+		accessTable.put("market","ADMIN,"+ MarketServiceImpl.ACTOR_MARKET_MANAGER + ","
 				+ MarketServiceImpl.ACTOR_MARKET_STAFF);
 		accessTable.put("order", "ALL");
-		accessTable.put("produce", ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
+		accessTable.put("produce", "ADMIN,"+ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
 		accessTable.put("logistics",
 				LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
-		accessTable.put("quality", QualityServiceImpl.ACTOR_QUALITY_MANAGER);
+		accessTable.put("quality", "ADMIN,"+QualityServiceImpl.ACTOR_QUALITY_MANAGER);
 		accessTable.put("other", "ALL");
 		accessTable.put("account", "ALL");
 		// accessTable.put("other",
