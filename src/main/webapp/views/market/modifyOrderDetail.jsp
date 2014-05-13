@@ -24,7 +24,7 @@
 							<tr>
 								<td>业务信息</td>
 								<td>业务编号</td>
-								<td>${orderModel.order.orderId }</td>
+								<td>${orderModel.orderId }</td>
 								<td>接单时间</td>
 								<td>${fn:substring(orderModel.order.orderTime,0,10) }</td>
 								<td>接单业务员</td>
@@ -281,9 +281,9 @@
 							<tr>
 								<td rowspan="5">生产样衣</td>
 								<td>制作样衣</td>
-								<td colspan="2">邮寄时间</td>
-								<td>快递名称</td>
-								<td colspan="2">快递单号</td>
+								<td>邮寄人</td>
+								<td>手机</td>
+								<td colspan="3">邮寄地址</td>
 							</tr>
 							<tr>
 								<td><input type="radio" name="is_need_sample_clothes"
@@ -291,71 +291,13 @@
 									value="1" /> 是 <input type="radio"
 									${orderModel.order.isNeedSampleClothes==0?'checked="checked"':'' }
 									name="is_need_sample_clothes" value="0" /> 否</td>
-								<td colspan="2"><input class="span6" type="date"
-									name="sample_clothes_time"
-									value="${fn:substring(orderModel.logistics.sampleClothesTime,0,10) }" /></td>
-								<td><select name="in_post_sample_clothes_type"
-									style="margin: 0px">
-										<c:if test="${orderModel.logistics.sampleClothesType!='顺丰'}">
-											<option value="顺丰">顺丰</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType=='顺丰'}">
-											<option value="顺丰" selected="selected">顺丰</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType!='韵达'}">
-											<option value="韵达">韵达</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType=='韵达'}">
-											<option value="韵达" selected="selected">韵达</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType!='圆通'}">
-											<option value="圆通">圆通</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType=='圆通'}">
-											<option value="圆通" selected="selected">圆通</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType!='中通'}">
-											<option value="中通">中通</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType=='中通'}">
-											<option value="中通" selected="selected">中通</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType!='申通'}">
-											<option value="申通">申通</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType=='申通'}">
-											<option value="申通" selected="selected">申通</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType!='汇通'}">
-											<option value="汇通">汇通</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType=='汇通'}">
-											<option value="汇通" selected="selected">汇通</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType!='EMS'}">
-											<option value="EMS">EMS</option>
-										</c:if>
-										<c:if test="${orderModel.logistics.sampleClothesType=='EMS'}">
-											<option value="EMS" selected="selected">EMS</option>
-										</c:if>
-								</select></td>
-								<td colspan="2"><input class="span12" type="text"
-									name="sample_clothes_number"
-									value="${orderModel.logistics.sampleClothesNumber }" /></td>
-							</tr>
-							<tr>
-								<td>邮寄人</td>
-								<td>手机</td>
-								<td colspan="4">邮寄地址</td>
-							</tr>
-							<tr>
 								<td><input class="span12" type="text"
 									name="sample_clothes_name"
 									value="${orderModel.logistics.sampleClothesName }" /></td>
 								<td><input class="span12" type="text"
 									name="sample_clothes_phone"
 									value="${orderModel.logistics.sampleClothesPhone }" /></td>
-								<td colspan="4"><input class="span12" type="text"
+								<td colspan="3"><input class="span12" type="text"
 									name="sample_clothes_address"
 									value="${orderModel.logistics.sampleClothesAddress }" /></td>
 							</tr>
@@ -366,14 +308,24 @@
 									value="${orderModel.logistics.sampleClothesRemark }" /></td>
 							</tr>
 							<tr>
-								<td>样衣信息</td>
-								<td>样衣图片</td>
-								<td colspan="2"><input type="file"
-									name="sample_clothes_picture"
-									value="${orderModel.order.sampleClothesPicture }" /></td>
-								<td>参考图片</td>
-								<td colspan="2"><input type="file" name="reference_picture"
-									value="${orderModel.order.referencePicture }" /></td>
+								<td colspan="3">样衣图片</td>
+								<td colspan="3">参考图片</td>
+							</tr>
+							<tr>
+								<td colspan="3">
+									<c:if test="${orderInfo.order.sampleClothesPicture!=null}">
+										<img src="${ctx}/common/getPic.do?type=sample&orderId=${orderInfo.order.orderId}"
+											style="max-height: 300px;" alt="样衣图片"></img><br/>
+									</c:if>
+									<input type="file" name="sample_clothes_picture"
+										value="" /></td>
+								<td colspan="3">
+									<c:if test="${orderInfo.order.referencePicture!=null}">
+										<img src="${ctx}/common/getPic.do?type=reference&orderId=${orderInfo.order.orderId}"
+											style="max-height: 300px;" alt="参考图片"></img><br/>
+									</c:if>
+									<input type="file" name="reference_picture"
+										value="" /></td>
 							</tr>
 						</table>
 					</div>

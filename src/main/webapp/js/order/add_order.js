@@ -19,6 +19,9 @@
 			if(checkNum("produce_table",colName,7)){
 				table_addrow_onclick("produce_table",colName,7);
 				$("input[name='ask_amount']").val(calculate("produce_table",colName,7));
+				for(var i=0;i<$("td.ask_amount").length;i++){
+					$("td.ask_amount").eq(i).text(calculate("produce_table",colName,7));
+				}
 			}
 		});
 		
@@ -54,7 +57,7 @@
 			}
 		});
 
-		$("input[name='is_need_sample_clothes']").change(function(){
+		/*$("input[name='is_need_sample_clothes']").change(function(){
 			if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
 				$("input[name='sample_clothes_name']").attr("disabled","disabled");
 				$("input[name='sample_clothes_phone']").attr("disabled","disabled");
@@ -66,7 +69,7 @@
 				$("input[name='sample_clothes_address']").removeAttr("disabled");
 				$("input[name='sample_clothes_remark']").removeAttr("disabled");
 			}
-		});
+		});*/
 
 		init();
 		
@@ -275,10 +278,10 @@ function init(){
 		$("input[name='in_post_sample_clothes_number']").attr("disabled","disabled");
 	}
 	
-	if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
+	/*if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
 		$("input[name='sample_clothes_name']").attr("disabled","disabled");
 		$("input[name='sample_clothes_phone']").attr("disabled","disabled");
 		$("input[name='sample_clothes_address']").attr("disabled","disabled");
 		$("input[name='sample_clothes_remark']").attr("disabled","disabled");
-	}
+	}*/
 }

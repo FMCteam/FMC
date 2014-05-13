@@ -199,7 +199,7 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public void addMoreOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
-			List<Produce> produces, List<Produce> sample_produces,
+			List<Produce> produces, 
 			List<VersionData> versions, DesignCad cad,
 			HttpServletRequest request){
 		// 添加订单信息
@@ -226,10 +226,10 @@ public class MarketServiceImpl implements MarketService {
 				}
 
 				// 添加样衣加工单信息
-				for (Produce produce : sample_produces) {
-					produce.setOid(orderId);
-					produceDAO.save(produce);
-				}
+//				for (Produce produce : sample_produces) {
+//					produce.setOid(orderId);
+//					produceDAO.save(produce);
+//				}
 
 				// 添加版型信息
 				for (VersionData versionData : versions) {
@@ -579,7 +579,7 @@ public class MarketServiceImpl implements MarketService {
 	public Map<String, Object> getModifyProductDetail(int orderId,
 			Integer accountId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModel(accountId + "",
+		return service.getBasicOrderModelWithQuote(accountId + "",
 				TASK_MODIFY_PRODUCE_ORDER, orderId);
 	}
 
