@@ -57,7 +57,7 @@
 	<tr>
 		<td class="span1">CAD</td>
 		<td colspan="6">
-			<c:if test="${orderInfo.designCad!=null}">
+			<c:if test="${orderInfo.designCad.cadUrl!=null}">
 			<form action="${ctx }/design/downloadCadSubmit.do" method="post" 
 				nctype="multipart/form-data">
 				<span style="margin-right: 80px">版本：${orderInfo.designCad.cadVersion}</span>
