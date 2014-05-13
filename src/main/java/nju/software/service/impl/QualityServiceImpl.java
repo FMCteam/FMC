@@ -80,7 +80,7 @@ public class QualityServiceImpl implements QualityService {
 	@Override
 	public Map<String,Object> getCheckQualityDetail(int orderId) {
 		// TODO Auto-generated method stub
-		Map<String,Object> oi=service.getBasicOrderModel(
+		Map<String,Object> oi=service.getBasicOrderModelWithQuote(
 				ACTOR_QUALITY_MANAGER, TASK_CHECK_QUALITY, orderId);
 		Produce produce = new Produce();
 		produce.setOid(orderId);

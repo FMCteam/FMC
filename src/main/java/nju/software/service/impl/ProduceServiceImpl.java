@@ -37,7 +37,7 @@ public class ProduceServiceImpl implements ProduceService {
 	@Override
 	public Map<String, Object> getVerifyProduceDetail(int orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER,
+		return service.getBasicOrderModelWithQuote(ACTOR_PRODUCE_MANAGER,
 				TASK_VERIFY_PRODUCE, orderId);
 	}
 
@@ -66,7 +66,7 @@ public class ProduceServiceImpl implements ProduceService {
 
 	@Override
 	public Map<String, Object> getComputeProduceCostInfo(Integer orderId) {
-		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER,
+		return service.getBasicOrderModelWithQuote(ACTOR_PRODUCE_MANAGER,
 				TASK_COMPUTE_PRODUCE_COST, orderId);
 	}
 
@@ -126,7 +126,7 @@ public class ProduceServiceImpl implements ProduceService {
 	@Override
 	public Map<String, Object> getProduceSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER,
+		return service.getBasicOrderModelWithQuote(ACTOR_PRODUCE_MANAGER,
 				TASK_PRODUCE_SAMPLE, orderId);
 	}
 
@@ -155,7 +155,7 @@ public class ProduceServiceImpl implements ProduceService {
 	@Override
 	public Map<String, Object> getProduceDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModel(ACTOR_PRODUCE_MANAGER, TASK_PRODUCE,
+		return service.getBasicOrderModelWithQuote(ACTOR_PRODUCE_MANAGER, TASK_PRODUCE,
 				orderId);
 	}
 
