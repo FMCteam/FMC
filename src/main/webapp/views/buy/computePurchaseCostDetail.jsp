@@ -37,16 +37,13 @@
 					<form id="costAccounting_form" onSubmit="return verify()" method="post"
 						action="${ctx}/buy/computePurchaseCostSubmit.do">
 
-
-			
-						
-						
-						<table
+<table
 							class="table table-striped table-bordered table-hover">
 							<tr>
 
 								<td class="span2">面料报价
 								<input id="fabric_name" type="hidden"name="fabric_name" />
+								<input id="fabric_amount" type="hidden"name="fabric_amount" />
 								<input id="tear_per_meter" type="hidden"name="tear_per_meter" /></td>
 								<input id="cost_per_meter" type="hidden"name="cost_per_meter" /></td>
 								
@@ -54,15 +51,17 @@
 								<table class="span12 table fabric_table">
 										<tr>
 											<td class="span5">面料名称</td>
-											<td class="span5">单件米耗</td>
-											<td class="span5">每米价格</td>
+											<td class="span5">面料克重</td>
+											<td class="span5">单件米耗（单位：米）</td>
+											<td class="span5">每米价格（单位：元）</td>
 											<td class="span3">操作</td>
 										</tr>
 										<tr class="addrow">
 											<td><input class="span12" type="text" /></td>
 											<td><input class="span12" type="text" /></td>
 											<td><input class="span12" type="text" /></td>
-											<td><a>添加</a></td>
+											<td><input class="span12" type="text" /></td>
+											<td><a>添加</a><span class="required">（点击添加之后数据生效）</span></td>
 										</tr>
 									</table>
 									</td>
@@ -70,21 +69,24 @@
 							<tr>
 								<td class="span2">辅料报价
 								<input id="accessory_name" type="hidden" name="accessory_name" /> 
+								<input id="accessory_query" type="hidden" name="accessory_query" /> 
 								<input id="tear_per_piece" type="hidden" name="tear_per_piece" /></td>
 								<input id="cost_per_piece" type="hidden" name="cost_per_piece" /></td>
 								<td class="innertable span12"><table
 										class="span12 table accessory_table">
 										<tr>
 											<td class="span5">辅料名称</td>
-											<td class="span5">单件耗数</td>
-											<td class="span5">辅料单价</td>
+											<td class="span5">辅料要求</td>
+											<td class="span5">单件耗数（单位：个）</td>
+											<td class="span5">辅料单价（单位：元）</td>
 											<td class="span3">操作</td>
 										</tr>
 										<tr class="addrow">
 											<td><input class="span12" type="text" /></td>
 											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
 												<td><input class="span12" type="text" /></td>
-											<td><a>添加</a></td>
+											<td><a>添加</a><span class="required">（点击添加之后数据生效）</span></td>
 										</tr>
 									</table></td>
 
