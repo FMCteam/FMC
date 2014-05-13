@@ -8,7 +8,7 @@
 
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">${orderInfo.taskName}</li>
-				<li  class="active"><a href="#finance" data-toggle="tab">${orderInfo.tabName}</a></li>
+				<li class="active"><a href="#finance" data-toggle="tab">${orderInfo.tabName}</a></li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
@@ -37,7 +37,94 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 				<div class="tab-pane  active" id="finance">
-					<%@include file="/views/finance/finance.jsp"%>
+					<form id="verify_form" action="${ctx}${orderInfo.url}"
+						method="post" onsubmit="return verifyFinance();">
+						<input type="hidden" name="money_state" value="已收到" /> <input
+							id="verify_val" type="hidden" name="val" value="已收到" /> <input
+							type="hidden" name="money_type" value="${orderInfo.type}" /> <input
+							type="hidden" name="orderId" value="${orderInfo.order.orderId}" />
+						<input type="hidden" name="taskId" value="${orderInfo.taskId}" /><input
+							type="hidden" name="result" value="1" />
+
+						<table class="table table-bordered detail finance">
+							<tr>
+								<td class="span2" rowspan="6">费用信息</td>
+								<td>金额类型</td>
+								<td>优惠金额</td>
+								<td>应收金额</td>
+							</tr>
+							<tr>
+								<td>${orderInfo.moneyName}</td>
+								<td>${orderInfo.order.discount}</td>
+								<td>(${(orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price}-${orderInfo.order.sampleAmount*orderInfo.samplePrice}-${orderInfo.order.discount})*0.7=${((orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price-orderInfo.order.sampleAmount*orderInfo.samplePrice-orderInfo.order.discount)*0.7}</td>
+							</tr>
+							<tr>
+								<td>大货件数</td>
+								<td>大货单价</td>
+								<td>大货总价</td>
+							</tr>
+							<tr>
+								<td>${orderInfo.number}+${orderInfo.order.sampleAmount}</td>
+								<td>${orderInfo.price}</td>
+								<td>${(orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price}</td>
+							</tr>
+							<tr>
+								<td>样衣件数</td>
+								<td>样衣单价</td>
+								<td>样衣总价</td>
+							</tr>
+							<tr>
+								<td>${orderInfo.order.sampleAmount}</td>
+								<td>${orderInfo.samplePrice}</td>
+								<td>${orderInfo.order.sampleAmount*orderInfo.samplePrice}</td>
+							</tr>
+							<tr>
+								<td rowspan="5">汇款信息</td>
+								<td>汇款人<span style="color: red">*</span></td>
+								<td>汇款卡号<span style="color: red">*</span></td>
+								<td>汇款银行<span style="color: red">*</span></td>
+
+							</tr>
+							<tr>
+								<td><input type="text" name="money_name"
+									required="required" /></td>
+								<td><input type="text" name="money_number"
+									required="required" /></td>
+								<td><input type="text" name="money_bank"
+									required="required" /></td>
+
+							</tr>
+							<tr>
+								<td>汇款金额<span style="color: red">*</span></td>
+								<td>收款账号<span style="color: red">*</span></td>
+								<td>收款时间<span style="color: red">*</span></td>
+
+							</tr>
+							<tr>
+								<td><input type="text" name="money_amount"
+									required="required" /></td>
+								<td><input type="text" required="required" name="account" /></td>
+								<td><input type="date" required="required" name="time" /></td>
+
+							</tr>
+							<tr>
+								<td colspan="1">备注</td>
+								<td colspan="2"><input type="text" name="money_remark"
+									class="span12" /></td>
+							</tr>
+
+						</table>
+						<div class="action">
+							<input type="submit" id="financeSubmit" hidden="hidden" /> <a
+								id="financeButton" class="btn btn-primary btn-rounded"><i
+								class="icon-ok icon-white"></i>已确认收款</a> <a
+								class="btn btn-danger btn-rounded"
+								href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
+								onclick="return confirmFinanceSubmit()"
+								style="color: white; margin-left: 20px"><i
+								class="icon-remove icon-white"></i>未收到汇款</a>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
