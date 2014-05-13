@@ -43,7 +43,7 @@ public class DesignServiceImpl implements DesignService {
 	@Override
 	public Map<String, Object> getVerifyDesignDetail(int orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModel(ACTOR_DESIGN_MANAGER,
+		return service.getBasicOrderModelWithQuote(ACTOR_DESIGN_MANAGER,
 				TASK_VERIFY_DESIGN, orderId);
 	}
 
@@ -73,7 +73,7 @@ public class DesignServiceImpl implements DesignService {
 	@Override
 	public Map<String, Object> getUploadDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModel(ACTOR_DESIGN_MANAGER,
+		return service.getBasicOrderModelWithQuote(ACTOR_DESIGN_MANAGER,
 				TASK_UPLOAD_DESIGN, orderId);
 	}
 
@@ -116,7 +116,7 @@ public class DesignServiceImpl implements DesignService {
 	@Override
 	public Map<String, Object> getModifyDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String, Object> model = service.getBasicOrderModel(
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(
 				ACTOR_DESIGN_MANAGER, TASK_MODIFY_DESIGN, orderId);
 
 		
