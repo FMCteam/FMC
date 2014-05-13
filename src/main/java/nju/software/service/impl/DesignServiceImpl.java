@@ -170,7 +170,7 @@ public class DesignServiceImpl implements DesignService {
 	@Override
 	public Map<String, Object> getConfirmDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String, Object> model = service.getBasicOrderModel(
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(
 				ACTOR_DESIGN_MANAGER, TASK_CONFIRM_DESIGN, orderId);
 		model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
 		return model;

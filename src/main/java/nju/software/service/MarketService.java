@@ -120,8 +120,7 @@ public interface MarketService {
 
 	public void addMoreOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
-			List<Produce> produces, List<Produce> sample_produces,
-			List<VersionData> versions, DesignCad cad,
+			List<Produce> produces, List<VersionData> versions, DesignCad cad,
 			HttpServletRequest request);
 	
 }
