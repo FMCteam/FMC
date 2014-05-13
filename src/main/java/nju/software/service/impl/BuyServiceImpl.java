@@ -81,22 +81,45 @@ public class BuyServiceImpl implements BuyService {
 	
 	@Override
 	public void computePurchaseCostSubmit(int orderId, long taskId,
-			String[] fabric_names, String[] tear_per_meters,
-			String[] cost_per_meters,String[] accessory_names, String[] tear_per_piece,
+			String[] fabric_names, String[] fabric_amounts,String[] tear_per_meters,
+			String[] cost_per_meters,String[] accessory_names,String[] accessory_querys, String[] tear_per_piece,
 			String[] cost_per_piece) {
 		
 		
-		float all_fabric_prices=0.0f;
-		float all_accessory_prices=0.0f;
+		
+		List<Fabric> FabricList = fabricDAO.findByOrderId(orderId);
+		
+		List<Accessory> AccessoryList = accessoryDAO
+				.findByOrderId(orderId);
+		
+		for (Fabric fabric : FabricList) {
+		
+			
+			fabricDAO.delete(fabric);
+			
+		}
+		
+		for (Accessory accessory : AccessoryList) {
+			
+			accessoryDAO.delete(accessory);
+			
+		}
+		
+		
+		float all_fabric_prices=0;
+		float all_accessory_prices=0;
 		// TODO Auto-generated method stub
 		if (fabric_names != null) {
 			for (int i = 0; i < fabric_names.length; i++) {
 
+				
+				
 				Fabric fabric=new Fabric();
 				fabric.setOrderId(orderId);
 				fabric.setFabricName(fabric_names[i]);
-				fabric.setFabricAmount("1");
+				fabric.setFabricAmount(fabric_amounts[i]);
 
+				
 				
 				FabricCost fabricCost = new FabricCost();
 				fabricCost.setOrderId(orderId);
@@ -124,7 +147,7 @@ public class BuyServiceImpl implements BuyService {
 				
 				accessory.setOrderId(orderId);
 				accessory.setAccessoryName(accessory_names[i]);
-				accessory.setAccessoryQuery("empty");
+				accessory.setAccessoryQuery(accessory_querys[i]);
 				
 				AccessoryCost accessoryCost = new AccessoryCost();
 				accessoryCost.setOrderId(orderId);
