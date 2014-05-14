@@ -52,12 +52,12 @@
 
 
 							<tr>
-								<td><label>省份</label> <span class="field"><input
-										type="text" name="province" class="input-medium"
-										></span></td>
-								<td><label>城市</label> <span class="field"><input
-										type="text" name="city" class="input-medium"
-										></span></td>
+								<td><label>省份</label> <span class="field">
+								<select id="province" name="province" class="uniformselect"></select>
+								</span></td>
+								<td><label>城市</label> <span class="field">
+								<select id="city" name="city" class="uniformselect"></select>
+								</span></td>
 							</tr>
 
 
@@ -185,6 +185,7 @@
 
 <!-- 这里引入你需要的js文件 -->
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript" src="${ctx }/js/addcustomer.js"></script>
 <script src="${ctx }/js/messages_cn.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$().ready(function() {

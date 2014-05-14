@@ -1341,8 +1341,8 @@ public class MarketController {
 		order.setAskProducePeriod(askProducePeriod);
 		order.setAskDeliverDate(askDeliverDate);
 		order.setAskCodeNumber(askCodeNumber);
-		order.setHasPostedSampleClothes(hasPostedSampleClothes);
-		order.setIsNeedSampleClothes(isNeedSampleClothes);
+		//order.setHasPostedSampleClothes(hasPostedSampleClothes);
+		//order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 		
 		String sampleClothesPicture = request.getParameter("sample_clothes_picture");
