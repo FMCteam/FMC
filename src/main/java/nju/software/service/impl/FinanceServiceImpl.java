@@ -114,6 +114,14 @@ public class FinanceServiceImpl implements FinanceService {
 		model.put("type", "大货定金");
 		model.put("url", "/finance/confirmDepositSubmit.do");
 		model.put("moneyName", "30%定金");
+		Float samplePrice = (float) 0;
+		if (order.getStyleSeason().equals("春夏")) {
+			samplePrice = (float) 200;
+			model.put("samplePrice", samplePrice);
+		} else {
+			samplePrice = (float) 400;
+			model.put("samplePrice", samplePrice);
+		}
 		return model;
 	}
 
@@ -160,6 +168,14 @@ public class FinanceServiceImpl implements FinanceService {
 		model.put("type", "大货尾款");
 		model.put("url", "/finance/confirmFinalPaymentSubmit.do");
 		model.put("moneyName", "70%尾款");
+		Float samplePrice = (float) 0;
+		if (order.getStyleSeason().equals("春夏")) {
+			samplePrice = (float) 200;
+			model.put("samplePrice", samplePrice);
+		} else {
+			samplePrice = (float) 400;
+			model.put("samplePrice", samplePrice);
+		}
 		return model;
 
 	}

@@ -91,7 +91,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public Map<String, Object> getSendSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModel(ACTOR_LOGISTICS_MANAGER,
+		return service.getBasicOrderModelWithQuote(ACTOR_LOGISTICS_MANAGER,
 				TASK_SEND_SAMPLE, orderId);
 	}
 
@@ -101,7 +101,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		Logistics logistics = logisticsDAO.findById(orderId);
 		logistics.setSampleClothesTime(getTime((String) map.get("time")));
 		logistics.setSampleClothesNumber((String) map.get("number"));
-		logistics.setSampleClothesName((String) map.get("name"));
+		logistics.setSampleClothesType((String) map.get("name"));
 		logisticsDAO.attachDirty(logistics);
 		long taskId = (long) map.get("taskId");
 		Map<String, Object> data = new HashMap<String, Object>();

@@ -65,10 +65,10 @@ public class LogisticsController {
 	public String sendSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = logisticsService.getSendSampleList();
-		/*if (list.size() == 0) {
-			jbpmTest.completeProduceSample("1");
-			list = logisticsService.getSendSampleList();
-		}*/
+//		if (list.size() == 0) {
+//			jbpmTest.completeProduceSample("1");
+//			list = logisticsService.getSendSampleList();
+//		}
 		model.put("list", list);
 		model.addAttribute("taskName", "样衣发货");
 		model.addAttribute("url", "/logistics/sendSampleDetail.do");
