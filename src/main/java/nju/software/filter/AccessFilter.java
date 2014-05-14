@@ -109,7 +109,7 @@ public class AccessFilter implements Filter {
 				// System.out.println(acc.getKey() + "," +
 				// acc.getValue().contains(curUser.getUserRole()));
 
-				if (acc.getValue().contains(curUser.getUserRole())) {
+				if (acc.getValue().contains(curUser.getUserRole())||acc.getValue().equals("ALL")) {
 					request.setAttribute("ROLE_" + acc.getKey(), true);
 				}
 
