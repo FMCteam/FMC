@@ -54,13 +54,13 @@ public class AccessFilter implements Filter {
 		accessTable.put("finance","ADMIN,"+ FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
 		accessTable.put("market","ADMIN,"+ MarketServiceImpl.ACTOR_MARKET_MANAGER + ","
 				+ MarketServiceImpl.ACTOR_MARKET_STAFF);
-		accessTable.put("order", "ALL");
+		accessTable.put("order", "ADMIN,"+"ALL");
 		accessTable.put("produce", "ADMIN,"+ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
 		accessTable.put("logistics",
-				LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
+				"ADMIN,"+LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
 		accessTable.put("quality", "ADMIN,"+QualityServiceImpl.ACTOR_QUALITY_MANAGER);
-		accessTable.put("other", "ALL");
-		accessTable.put("account", "ALL");
+		accessTable.put("other","ADMIN,"+ "ALL");
+		accessTable.put("account", "ADMIN,"+"ALL");
 		// accessTable.put("other",
 		// "ADMIN, SHICHANGZHUANYUAN, SHICHANGZHUGUAN");
 	};
