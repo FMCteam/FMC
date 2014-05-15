@@ -125,7 +125,7 @@ table.tablesorter thead tr .headerSortDown {
 						<li class="dropdown"><a href=""><span
 								class="iconfa-pencil"></span> 订单管理</a>
 							<ul>
-								<li><a href="${ctx}/market/orderList.do">查看订单</a></li>
+								<li><a href="${ctx}/order/orderList.do">查看订单</a></li>
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_market==true}">
@@ -168,9 +168,9 @@ table.tablesorter thead tr .headerSortDown {
 										class="verifyDesign"></span></a></li>
 								<li><a href="${ctx}/design/getUploadDesignList.do">样衣版型<span
 										class="uploadDegisn"></span></a></li>
-								<li><a href="${ctx}/design/getModifyDesignList.do">生产验证<span
+								<li><a href="${ctx}/design/getModifyDesignList.do">大货生产验证<span
 										class="modifyDesign"></span></a></li>
-								<li><a href="${ctx}/design/getConfirmDesignList.do">生产版型<span
+								<li><a href="${ctx}/design/getConfirmDesignList.do">大货生产版型<span
 										class="confirmDesign"></span></a></li>
 							</ul></li>
 					</c:if>
@@ -202,7 +202,7 @@ table.tablesorter thead tr .headerSortDown {
 										class="computeProduceCost"></span></a></li>
 								<li><a href="${ctx }/produce/produceSampleList.do">样衣生产<span
 										class="produceSample"></span></a></li>
-								<li><a href="${ctx }/produce/produceList.do">批量生产<span
+								<li><a href="${ctx }/produce/produceList.do">大货批量生产<span
 										class="produce"></span></a></li>
 							</ul></li>
 					</c:if>

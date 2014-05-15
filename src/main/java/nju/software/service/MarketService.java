@@ -110,7 +110,7 @@ public interface MarketService {
 
 	public Map<String, Object> getConfirmProductDetail(Integer userId, int id);
 	
-	public List<Map<String, Object>>getOrderList(Integer employeeId);
+	public List<Map<String, Object>>getOrderList();
 	
 	public Map<String, Object>getOrderDetail(Integer orderId);
 

@@ -1341,8 +1341,8 @@ public class MarketController {
 		order.setAskProducePeriod(askProducePeriod);
 		order.setAskDeliverDate(askDeliverDate);
 		order.setAskCodeNumber(askCodeNumber);
-		order.setHasPostedSampleClothes(hasPostedSampleClothes);
-		order.setIsNeedSampleClothes(isNeedSampleClothes);
+		//order.setHasPostedSampleClothes(hasPostedSampleClothes);
+		//order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 		
 		String sampleClothesPicture = request.getParameter("sample_clothes_picture");
@@ -1654,21 +1654,21 @@ public class MarketController {
 		return "redirect:/market/signContractList.do";
 	}
 
-	@RequestMapping(value = "/market/orderList.do")
+	@RequestMapping(value = "/order/orderList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String orderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		List<Map<String, Object>> list = marketService.getOrderList(account
-				.getUserId());
+		List<Map<String, Object>> list = marketService.getOrderList();
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
-		model.addAttribute("url", "/market/orderDetail.do");
+		model.addAttribute("url", "/order/orderDetail.do");
+		System.out.println("===========ok:"+list.size());
 		return "/market/orderList";
 	}
 
-	@RequestMapping(value = "/market/orderDetail.do")
+	@RequestMapping(value = "/order/orderDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String orderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
