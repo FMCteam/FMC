@@ -54,13 +54,13 @@ public class AccessFilter implements Filter {
 		accessTable.put("finance","ADMIN,"+ FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
 		accessTable.put("market","ADMIN,"+ MarketServiceImpl.ACTOR_MARKET_MANAGER + ","
 				+ MarketServiceImpl.ACTOR_MARKET_STAFF);
-		accessTable.put("order", "ADMIN,"+"ALL");
+		accessTable.put("order", "ALL");
 		accessTable.put("produce", "ADMIN,"+ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
 		accessTable.put("logistics",
 				"ADMIN,"+LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
 		accessTable.put("quality", "ADMIN,"+QualityServiceImpl.ACTOR_QUALITY_MANAGER);
-		accessTable.put("other","ADMIN,"+ "ALL");
-		accessTable.put("account", "ADMIN,"+"ALL");
+		accessTable.put("other","ALL");
+		accessTable.put("account", "ALL");
 		// accessTable.put("other",
 		// "ADMIN, SHICHANGZHUANYUAN, SHICHANGZHUGUAN");
 	};
@@ -81,14 +81,16 @@ public class AccessFilter implements Filter {
 		HttpSession session = request.getSession();
 
 		Account curUser = (Account) session.getAttribute("cur_user");
-
+		System.out.println("null "+type);
 		if (curUser == null) {
 			// System.out.println("no user");
 			// todo 从cookie读取数据，看看是否是记住密码用户。
 			has_access = false;
+			System.out.println("null "+type);
 		} else {
 			String user_role = curUser.getUserRole();
 			String access = accessTable.get(type);
+			System.out.println("null "+access);
 			if (access != null
 					&& ((access.equals("ALL") && !user_role.equals("CUSTOMER")) || access
 							.contains(user_role))) {
@@ -99,7 +101,7 @@ public class AccessFilter implements Filter {
 			 //has_access = true;
 
 		}
-
+		System.out.println("//============ "+curUser.getUserRole()+" "+has_access);
 		if (has_access) {
 			// System.out.println(curUser.getUserRole());
 
@@ -119,7 +121,7 @@ public class AccessFilter implements Filter {
 				//request.setAttribute("ROLE_" + acc.getKey(), true); // acc.getValue().contains(curUser.getUserRole()));
 				// }
 			}
-
+			System.out.println("//============filter.do");
 			request.setAttribute("USER_nick_name", curUser.getNickName());
 			request.setAttribute("USER_user_name", curUser.getUserName());
 
