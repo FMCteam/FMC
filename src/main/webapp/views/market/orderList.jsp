@@ -44,6 +44,15 @@
 					</tbody>
 				</table>
 			</section>
+			<div style="float: right;margin-top:20px;margin-right:0px">
+
+				<select style=" width: 100px;margin: 0px 10px" id="orderPager">
+					<c:forEach var="number" begin="1" end="${pages}">
+						<option value="${number}" ${page eq number ?'selected':'' }>第${number}页
+						</option>
+					</c:forEach>
+				</select> 
+			</div>
 		</div>
 		<!--row-fluid-->
 
@@ -66,5 +75,11 @@
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script>
+	$("#orderPager").change(function() {
+		var p = $("#orderPager").children("option:selected").val();
+		window.location.href = "${ctx}/order/orderList.do?page=" + p;
+	});
+</script>
 <%@include file="/common/footer.jsp"%>
 

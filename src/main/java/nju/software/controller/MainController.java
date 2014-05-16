@@ -84,7 +84,7 @@ public class MainController {
 			if("ADMIN, WULIUZHUGUAN".contains(account.getUserRole()) && is_wm) {
 				return "redirect:/logistics/mobile/index.do";
 			}
-			System.out.println("//============doLogin.do");
+		//	System.out.println("//============doLogin.do");
 			return "redirect:default.do";
 		} else {
 			model.addAttribute("state", "wrong");
@@ -105,7 +105,7 @@ public class MainController {
 		
 //		List<Teacher> t_list = teacherService.getAllTeachers();
 //		model.addAttribute("teacherList", t_list);
-		System.out.println("//============default.do");
+	//	System.out.println("//============default.do");
 		return "/index";
 	}
 

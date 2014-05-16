@@ -1660,11 +1660,17 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		List<Map<String, Object>> list = marketService.getOrderList();
+		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
+		Integer page=Integer.parseInt(string_page);
+		List<Map<String, Object>> list = marketService.getOrderList(page);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
-		System.out.println("===========ok:"+list.size());
+		model.addAttribute("page", page);
+		if(list!=null&&list.size()!=0){
+			model.addAttribute("pages", list.get(0).get("pages"));
+		}
+		//System.out.println("===========ok:"+list.size());
 		return "/market/orderList";
 	}
 

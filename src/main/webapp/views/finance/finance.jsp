@@ -27,13 +27,13 @@
 			<td>汇款人<span style="color: red">*</span></td>
 			<td>汇款卡号<span style="color: red">*</span></td>
 			<td>汇款银行<span style="color: red">*</span></td>
-			<td>汇款金额<span style="color: red">*</span></td>
+			<td>汇款金额</td>
 		</tr>
 		<tr>
 			<td><input type="text" name="money_name" required="required" /></td>
 			<td><input type="text" name="money_number" required="required"/></td>
 			<td><input type="text" name="money_bank" required="required"/></td>
-			<td><input type="text" name="money_amount"  required="required"/></td>
+			<td><input type="text" name="money_amount"  readonly="readonly" value="${orderInfo.total}"/></td>
 		</tr>
 		<tr>
 			<td>收款时间<span style="color: red">*</span></td>
