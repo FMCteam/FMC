@@ -57,10 +57,10 @@
 											<td class="span3">操作</td>
 										</tr>
 										<tr class="addrow">
-											<td><input class="span12" type="text" required="required"/></td>
-											<td><input class="span12" type="text" required="required" /></td>
-											<td><input class="span12" type="text" required="required" /></td>
-											<td><input class="span12" type="text" required="required" /></td>
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text"  /></td>
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
 											<td><a>添加</a><span class="required">（点击添加之后数据生效）</span></td>
 										</tr>
 									</table>
@@ -82,10 +82,10 @@
 											<td class="span3">操作</td>
 										</tr>
 										<tr class="addrow">
-											<td><input class="span12" type="text" required="required" /></td>
-											<td><input class="span12" type="text" required="required"/></td>
-											<td><input class="span12" type="text" required="required"/></td>
-												<td><input class="span12" type="text" required="required"/></td>
+											<td><input class="span12" type="text"  /></td>
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
+												<td><input class="span12" type="text" /></td>
 											<td><a>添加</a><span class="required">（点击添加之后数据生效）</span></td>
 										</tr>
 									</table></td>

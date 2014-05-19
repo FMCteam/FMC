@@ -157,31 +157,16 @@ function verify(){
 	$("#cost_per_piece").val(getTdString("cost_per_piece"));
 	
 	
-	$("#produce_color").val(getTdString("produce_color"));
-	$("#produce_xs").val(getTdString("produce_xs"));
-	$("#produce_s").val(getTdString("produce_s"));
-	$("#produce_m").val(getTdString("produce_m"));
-	$("#produce_l").val(getTdString("produce_l"));
-	$("#produce_xl").val(getTdString("produce_xl"));
-	$("#produce_xxl").val(getTdString("produce_xxl"));
-	$("#sample_produce_color").val(getTdString("sample_produce_color"));
-	$("#sample_produce_xs").val(getTdString("sample_produce_xs"));
-	$("#sample_produce_s").val(getTdString("sample_produce_s"));
-	$("#sample_produce_m").val(getTdString("sample_produce_m"));
-	$("#sample_produce_l").val(getTdString("sample_produce_l"));
-	$("#sample_produce_xl").val(getTdString("sample_produce_xl"));
-	$("#sample_produce_xxl").val(getTdString("sample_produce_xxl"));
-	$("#version_size").val(getTdString("version_size"));
-	$("#version_centerBackLength").val(getTdString("version_centerBackLength"));
-	$("#version_bust").val(getTdString("version_bust"));
-	$("#version_waistLine").val(getTdString("version_waistLine"));
-	$("#version_shoulder").val(getTdString("version_shoulder"));
-	$("#version_buttock").val(getTdString("version_buttock"));
-	$("#version_hem").val(getTdString("version_hem"));
-	$("#version_trousers").val(getTdString("version_trousers"));
-	$("#version_skirt").val(getTdString("version_skirt"));
-	$("#version_sleeves").val(getTdString("version_sleeves"));
 	
+	
+	var FabricName=jQuery("input[name='fabric_name']").val();
+	var FabricAmount=jQuery("input[name='fabric_amount']").val();
+	var TearPerMeter=jQuery("input[name='tear_per_meter']").val();
+	var CostPerMeter=jQuery("input[name='cost_per_meter']").val();
+	var AccessoryName=jQuery("input[name='accessory_name']").val();
+	var AccessoryQuery=jQuery("input[name='accessory_query']").val();
+	var TearPerPiece=jQuery("input[name='tear_per_piece']").val();
+	var CostPerPiece=jQuery("input[name='cost_per_piece']").val();
 /*	var employee_id=jQuery("input[name='employee_id']").val();
 	var order_source=jQuery("input[name='order_source']").val();
 	var customer_id=jQuery("input[name='customer_id']").val();
@@ -196,10 +181,22 @@ function verify(){
 	hint+="ask_amount:"+ask_amount+"\n";
 	hint+="ask_deliver_date:"+ask_deliver_date+"\n";
 	hint+="ask_produce_period:"+ask_produce_period+"\n";
-	alert(hint);*/
-
 	
-	return true;
+	alert(hint);*/
+ if((FabricName== "")||(FabricAmount== "")||(TearPerMeter== "")||(CostPerMeter== "")||(AccessoryName== "")
+		 ||(AccessoryQuery== "")||(TearPerPiece== "")||(CostPerPiece== "")){
+	 
+	
+	  return false;
+	
+ }
+	
+ 
+ else{
+	 
+	 return true;
+ }
+	
 }
 
 function init(){
