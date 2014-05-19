@@ -80,5 +80,9 @@ public interface IOrderDAO {
 	
 	public int coutSampleOrder();
 	
+	public List getOrderList(Integer page);
+	
+	public Integer getPageNumber();
+	
 
 }

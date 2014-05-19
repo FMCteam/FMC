@@ -9,6 +9,11 @@ import java.util.Map;
 
 
 
+
+
+
+
+
 import nju.software.dao.IOrderDAO;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Order;
@@ -17,6 +22,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -503,6 +509,33 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		}
 
 	}
+
+	@Override
+	public List getOrderList(Integer page) {
+		// TODO Auto-generated method stub
+		//Integer number_per_page=2;
+		DetachedCriteria criteria = DetachedCriteria.forClass(Order.class);
+		//criteria.add(Restrictions.eq(propertyName,value));
+		int start=number_per_page*(page-1);
+		criteria.addOrder(org.hibernate.criterion.Order.asc("orderId"));
+		List<Order> orderList = getHibernateTemplate().findByCriteria(criteria,start, number_per_page);
+		return orderList;
+	}
+
+	@Override
+	public Integer getPageNumber() {
+		// TODO Auto-generated method stub
+		String queryString = "select count(*) from Order";
+		long count = (Long) getHibernateTemplate().find(queryString).get(0);
+		//Integer number_per_page=10;
+		Integer pages=(int) Math.ceil((double)count/number_per_page);
+		//System.out.println(count+" "+pages);
+		return pages;
+	}
+	
+	
+	private Integer number_per_page=10;
+	
 
 	
 }

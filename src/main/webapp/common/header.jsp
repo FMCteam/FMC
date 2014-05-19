@@ -125,7 +125,7 @@ table.tablesorter thead tr .headerSortDown {
 						<li class="dropdown"><a href=""><span
 								class="iconfa-pencil"></span> 订单管理</a>
 							<ul>
-								<li><a href="${ctx}/market/orderList.do">查看订单</a></li>
+								<li><a href="${ctx}/order/orderList.do">查看订单</a></li>
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_market==true}">

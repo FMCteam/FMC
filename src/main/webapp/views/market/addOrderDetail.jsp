@@ -189,9 +189,9 @@
 							<tr>
 								<td rowspan="3">生产样衣</td>
 								<td>制作样衣</td>
-								<td>邮寄人</td>
-								<td>手机</td>
-								<td>邮寄地址</td>
+								<td>邮寄人<span class="required">*</span></td>
+								<td>手机<span class="required">*</span></td>
+								<td>邮寄地址<span class="required">*</span></td>
 							</tr>
 							<tr>
 								<td><input type="radio" name="is_need_sample_clothes"
@@ -205,7 +205,7 @@
 									name="sample_clothes_address" required="required" /></td>
 							</tr>
 							<tr>
-								<td>其他备注</td>
+								<td>其他备注<span class="required">*</span></td>
 								<td colspan="3"><input class="span12" type="text"
 									name="sample_clothes_remark" required="required" /></td>
 							</tr>
@@ -214,7 +214,7 @@
 								<td>样衣图片<span class="required">*</span></td>
 								<td><input type="file" value="选择文件"
 									name="sample_clothes_picture" required="required" /></td>
-								<td>参考图片</td>
+								<td>参考图片<span class="required">*</span></td>
 								<td><input type="file" value="选择文件"
 									name="reference_picture" required="required" /></td>
 							</tr>

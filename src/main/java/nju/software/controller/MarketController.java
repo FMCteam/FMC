@@ -1341,40 +1341,40 @@ public class MarketController {
 		order.setAskProducePeriod(askProducePeriod);
 		order.setAskDeliverDate(askDeliverDate);
 		order.setAskCodeNumber(askCodeNumber);
-		order.setHasPostedSampleClothes(hasPostedSampleClothes);
-		order.setIsNeedSampleClothes(isNeedSampleClothes);
+		//order.setHasPostedSampleClothes(hasPostedSampleClothes);
+		//order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 		
-		String sampleClothesPicture = request.getParameter("sample_clothes_picture");
-		if(!sampleClothesPicture.equals("")){
-			File file = new File(order.getSampleClothesPicture());
-			if(file.exists()){
-				file.delete();
-			}
-			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-			MultipartFile mfile = multipartRequest.getFile("sample_clothes_picture");
-			String filename = mfile.getOriginalFilename();
-			String url = MarketServiceImpl.UPLOAD_DIR_SAMPLE + order.getOrderId();
-			String fileid = "sample_clothes_picture";
-			FileOperateUtil.Upload(request, url, null, fileid);
-			url = url + "/" + filename;
-			order.setSampleClothesPicture(url);
-		}
-		String refPicture = request.getParameter("reference_picture");
-		if(!refPicture.equals("")){
-			File file = new File(order.getReferencePicture());
-			if(file.exists()){
-				file.delete();
-			}
-			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-			MultipartFile mfile = multipartRequest.getFile("reference_picture");
-			String filename = mfile.getOriginalFilename();
-			String url = MarketServiceImpl.UPLOAD_DIR_REFERENCE + order.getOrderId();
-			String fileid = "reference_picture";
-			FileOperateUtil.Upload(request, url, null, fileid);
-			url = url + "/" + filename;
-			order.setReferencePicture(url);
-		}
+//		String sampleClothesPicture = request.getParameter("sample_clothes_picture");
+//		if(!sampleClothesPicture.equals("")){
+//			File file = new File(order.getSampleClothesPicture());
+//			if(file.exists()){
+//				file.delete();
+//			}
+//			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+//			MultipartFile mfile = multipartRequest.getFile("sample_clothes_picture");
+//			String filename = mfile.getOriginalFilename();
+//			String url = MarketServiceImpl.UPLOAD_DIR_SAMPLE + order.getOrderId();
+//			String fileid = "sample_clothes_picture";
+//			FileOperateUtil.Upload(request, url, null, fileid);
+//			url = url + "/" + filename;
+//			order.setSampleClothesPicture(url);
+//		}
+//		String refPicture = request.getParameter("reference_picture");
+//		if(!refPicture.equals("")){
+//			File file = new File(order.getReferencePicture());
+//			if(file.exists()){
+//				file.delete();
+//			}
+//			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+//			MultipartFile mfile = multipartRequest.getFile("reference_picture");
+//			String filename = mfile.getOriginalFilename();
+//			String url = MarketServiceImpl.UPLOAD_DIR_REFERENCE + order.getOrderId();
+//			String fileid = "reference_picture";
+//			FileOperateUtil.Upload(request, url, null, fileid);
+//			url = url + "/" + filename;
+//			order.setReferencePicture(url);
+//		}
 
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
@@ -1654,21 +1654,27 @@ public class MarketController {
 		return "redirect:/market/signContractList.do";
 	}
 
-	@RequestMapping(value = "/market/orderList.do")
+	@RequestMapping(value = "/order/orderList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String orderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		List<Map<String, Object>> list = marketService.getOrderList(account
-				.getUserId());
+		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
+		Integer page=Integer.parseInt(string_page);
+		List<Map<String, Object>> list = marketService.getOrderList(page);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
-		model.addAttribute("url", "/market/orderDetail.do");
+		model.addAttribute("url", "/order/orderDetail.do");
+		model.addAttribute("page", page);
+		if(list!=null&&list.size()!=0){
+			model.addAttribute("pages", list.get(0).get("pages"));
+		}
+		//System.out.println("===========ok:"+list.size());
 		return "/market/orderList";
 	}
 
-	@RequestMapping(value = "/market/orderDetail.do")
+	@RequestMapping(value = "/order/orderDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String orderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {

@@ -95,14 +95,14 @@
 
 							</tr>
 							<tr>
-								<td>汇款金额<span style="color: red">*</span></td>
+								<td>汇款金额</td>
 								<td>收款账号<span style="color: red">*</span></td>
 								<td>收款时间<span style="color: red">*</span></td>
 
 							</tr>
 							<tr>
 								<td><input type="text" name="money_amount"
-									required="required" /></td>
+									readonly="readonly" value="${((orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price-orderInfo.order.sampleAmount*orderInfo.samplePrice-orderInfo.order.discount)*0.3}"/></td>
 								<td><input type="text" required="required" name="account" /></td>
 								<td><input type="date" required="required" name="time" /></td>
 
