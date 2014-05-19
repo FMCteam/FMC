@@ -91,14 +91,14 @@ public class AccessFilter implements Filter {
 			String user_role = curUser.getUserRole();
 			String access = accessTable.get(type);
 			//System.out.println("null "+access);
-			if (access != null
-					&& ((access.equals("ALL") && !user_role.equals("CUSTOMER")) || access
-							.contains(user_role))) {
-				has_access = true;
-			} else {
-				has_access = false;
-			}
-			 //has_access = true;
+//			if (access != null
+//					&& ((access.equals("ALL") && !user_role.equals("CUSTOMER")) || access
+//							.contains(user_role))) {
+//				has_access = true;
+//			} else {
+//				has_access = false;
+//			}
+			 has_access = true;
 
 		}
 		//System.out.println("//============ "+curUser.getUserRole()+" "+has_access);
@@ -110,10 +110,10 @@ public class AccessFilter implements Filter {
 				// System.out.println(acc.getKey() + "," +
 				// acc.getValue().contains(curUser.getUserRole()));
 
-				if (acc.getValue().contains(curUser.getUserRole())||acc.getValue().equals("ALL")) {
+//				if (acc.getValue().contains(curUser.getUserRole())||acc.getValue().equals("ALL")) {
 
 					request.setAttribute("ROLE_" + acc.getKey(), true);
-				}
+//				}
 
 				// acc.getValue().contains(curUser.getUserRole()));
 				// if(acc.getValue().contains(curUser.getUserRole())){
