@@ -46,13 +46,13 @@
 
 							<tr>
 								<td><input class="span12" name="cut_cost" id="cut_cost"
-									type="text" /></td>
+									type="text" required="required" /></td>
 								<td><input class="span12" name="manage_cost"
-									id="manage_cost" type="text" /></td>
+									id="manage_cost" type="text" required="required" /></td>
 								<td><input class="span12" name="nail_cost" id="nail_cost"
-									type="text" /></td>
+									type="text" required="required" /></td>
 								<td><input class="span12" name="ironing_cost"
-									id="ironing_cost" type="text" /></td>
+									id="ironing_cost" type="text" required="required" /></td>
 							</tr>
 
 							<tr>
@@ -64,13 +64,13 @@
 
 							<tr>
 								<td><input class="span12" name="swing_cost" id="swing_cost"
-									type="text" /></td>
+									type="text" required="required" /></td>
 								<td><input class="span12" name="package_cost"
-									id="package_cost" type="text" /></td>
+									id="package_cost" type="text" required="required" /></td>
 								<td><input class="span12" name="other_cost" id="other_cost"
-									type="text" /></td>
+									type="text" required="required" /></td>
 								<td><input class="span12" name="design_cost"
-									id="design_cost" type="text" /></td>
+									id="design_cost" type="text" required="required" /></td>
 							</tr>
 						</table>
 						<input type="hidden" name="orderId"

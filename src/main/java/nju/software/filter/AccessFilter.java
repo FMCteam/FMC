@@ -98,7 +98,7 @@ public class AccessFilter implements Filter {
 			} else {
 				has_access = false;
 			}
-			 //has_access = true;
+//			 has_access = true;
 
 		}
 		//System.out.println("//============ "+curUser.getUserRole()+" "+has_access);
