@@ -6,7 +6,7 @@ jQuery(document).ready(function(){
 			&&checkIsNumber("ironing_cost")&&checkIsNumber("design_cost")){
 			return confirm("确认操作？");
 		}else{
-			alert("报价必须填写并且是数字哦~喵");
+			alert("报价必须填写并且是数字");
 			return false;
 		}
 	});
