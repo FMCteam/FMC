@@ -27,13 +27,17 @@
 		
 		$("table.sample_produce_table a").click(function(){
 			var colName = ["sample_produce_color","sample_produce_xs","sample_produce_s","sample_produce_m","sample_produce_l","sample_produce_xl","sample_produce_xxl"];
-			table_addrow_onclick("sample_produce_table",colName,7);
+			if(checkNum("sample_produce_table",colName,7)){
+				table_addrow_onclick("sample_produce_table",colName,7);
+			}
 		});
 		
 		$("table.version_table a").click(function(){
 			var colName = ["version_size","version_centerBackLength","version_bust","version_waistLine","version_shoulder",
 			               "version_buttock","version_hem","version_trousers","version_skirt","version_sleeves"];
-			table_addrow_onclick("version_table",colName,10);
+			if(checkFloat("version_table",colName,10)){
+				table_addrow_onclick("version_table",colName,10);
+			}
 		});
 		
 		$("#sample_clothes_picture_button").click(function(){
@@ -57,6 +61,18 @@
 			}
 		});
 
+		$("input[name='ask_deliver_date']").change(function(){ 
+			var date = new Date();
+			var input_date = new Date($("input[name='ask_deliver_date']").val());
+			if(input_date.valueOf()<date.valueOf()){
+				alert("输入日期不能在今天之前");
+				$("input[name='ask_deliver_date']").val("");
+				return;
+			}
+			var max = (input_date - date)/86400000;
+			$("input[name='ask_deliver_date']").attr("max",Math.abs(max));
+			
+		});
 		/*$("input[name='is_need_sample_clothes']").change(function(){
 			if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
 				$("input[name='sample_clothes_name']").attr("disabled","disabled");
@@ -75,7 +91,6 @@
 		
 		
 	});
-
 
 	function table_addrow_onclick(table_name,col_name,col_sum){
 	
@@ -108,6 +123,19 @@ function checkNum(table_name,col_name,col_sum){
 	for(var i=0;i<col_sum;i++){
 		var col=$("table."+table_name+" tr.addrow input").eq(i).val();
 		if(isNaN(parseInt(col))){
+			if(i>0){
+				alert("请正确填写数量");
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+function checkFloat(table_name,col_name,col_sum){
+	for(var i=0;i<col_sum;i++){
+		var col=$("table."+table_name+" tr.addrow input").eq(i).val();
+		if(isNaN(parseFloat(col))){
 			if(i>0){
 				alert("请正确填写数量");
 				return false;
