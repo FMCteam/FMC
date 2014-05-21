@@ -10,11 +10,11 @@
 
 	<table class="table table-bordered detail finance">
 		<tr>
-			<td class="span2" rowspan="2">样衣信息</td>
-			<td>金额类型</td>
-			<td>件数</td>
-			<td>单价</td>
-			<td>应收金额</td>
+			<td class="span2 title" rowspan="2">样衣信息</td>
+			<td class="title">金额类型</td>
+			<td class="title">件数</td>
+			<td class="title">单价</td>
+			<td class="title">应收金额</td>
 		</tr>
 		<tr>
 			<td>${orderInfo.moneyName}</td>
@@ -23,11 +23,11 @@
 			<td>${orderInfo.total}</td>
 		</tr>
 		<tr>
-			<td rowspan="4">汇款信息</td>
-			<td>汇款人<span style="color: red">*</span></td>
-			<td>汇款卡号<span style="color: red">*</span></td>
-			<td>汇款银行<span style="color: red">*</span></td>
-			<td>汇款金额</td>
+			<td class="title" rowspan="4">汇款信息</td>
+			<td class="title">汇款人<span style="color: red">*</span></td>
+			<td class="title">汇款卡号<span style="color: red">*</span></td>
+			<td class="title">汇款银行<span style="color: red">*</span></td>
+			<td class="title">汇款金额</td>
 		</tr>
 		<tr>
 			<td><input type="text" name="money_name" required="required" /></td>
@@ -36,9 +36,9 @@
 			<td><input type="text" name="money_amount"  readonly="readonly" value="${orderInfo.total}"/></td>
 		</tr>
 		<tr>
-			<td>收款时间<span style="color: red">*</span></td>
-			<td>收款账号<span style="color: red">*</span></td>
-			<td colspan="2">备注</td>
+			<td class="title">收款时间<span style="color: red">*</span></td>
+			<td class="title">收款账号<span style="color: red">*</span></td>
+			<td class="title" colspan="2">备注</td>
 		</tr>
 		<tr>
 			<td><input type="date" required="required" name="time" /></td>

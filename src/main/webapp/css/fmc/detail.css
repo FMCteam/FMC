@@ -27,6 +27,15 @@ ul.nav.nav-tabs li.task-name{
 	padding: 9px 80px;
 }
 
+table.table.detail td.title{
+	font-weight: bold;
+	background-color: #EEEEEE;
+}
+
+table.table.detail td:hover:not(.title){
+	
+}
+
 div.tab-content{
 	clear: both;	
 }
