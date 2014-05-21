@@ -71,7 +71,7 @@ public class AccountController {
 		String inTime = request.getParameter("in_date");
 		Timestamp entryTime = null;
 		if (inTime != null && inTime != "") {
-			Date inDate = DateUtil.parse(inTime, DateUtil.zbFormat);
+			Date inDate = DateUtil.parse(inTime, DateUtil.newFormat);
 			entryTime = new Timestamp(inDate.getTime());
 		}
 		int directLeader = -1;
@@ -81,7 +81,7 @@ public class AccountController {
 		String outTime = request.getParameter("out_date");
 		Timestamp leaveTime = null;
 		if (outTime != null && outTime != "") {
-			Date outDate = DateUtil.parse(outTime, DateUtil.zbFormat);
+			Date outDate = DateUtil.parse(outTime, DateUtil.newFormat);
 			leaveTime = new Timestamp(outDate.getTime());
 		}
 		String employeeState = request.getParameter("state");
@@ -188,7 +188,7 @@ public class AccountController {
 		String employeeRole = request.getParameter("role");
 		// System.out.println(request.getParameter("in_date"));
 		String inTime = request.getParameter("in_date");
-		Date inDate = DateUtil.parse(inTime, DateUtil.zbFormat);
+		Date inDate = DateUtil.parse(inTime, DateUtil.newFormat);
 		Timestamp entryTime = new Timestamp(inDate.getTime());
 		int directLeader = -1;
 		String employeeLevel = "-1";
@@ -198,7 +198,7 @@ public class AccountController {
 		Timestamp leaveTime = null;
 		// System.out.println("outDate: " + request.getParameter("out_date"));
 		if (outTime != null && outTime != "") {
-			Date outDate = DateUtil.parse(outTime, DateUtil.zbFormat);
+			Date outDate = DateUtil.parse(outTime, DateUtil.newFormat);
 			leaveTime = new Timestamp(outDate.getTime());
 		}
 		String employeeState = request.getParameter("state");
@@ -403,7 +403,7 @@ public class AccountController {
 
 		System.out.println(request.getParameter("register_date"));
 		Date d = DateUtil.parse(request.getParameter("register_date"),
-				DateUtil.zbFormat);
+				DateUtil.newFormat);
 
 		Timestamp registerDate = new Timestamp(d.getTime());
 

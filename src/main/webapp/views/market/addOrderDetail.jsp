@@ -235,7 +235,7 @@
 								<td class="span2" colspan="2"><input class="span8"
 									id="datepicker" type="text" name="ask_deliver_date" required="required"/></td>
 								<td class="span2" colspan="2"><input class="span4"
-									type="number" name="ask_produce_period" required="required"/></td>
+									type="number" min="1" name="ask_produce_period" required="required"/></td>
 							</tr>
 
 						</table>

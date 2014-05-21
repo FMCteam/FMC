@@ -70,7 +70,7 @@
 				return;
 			}
 			var max = (input_date - date)/86400000;
-			$("input[name='ask_deliver_date']").attr("max",Math.abs(max));
+			$("input[name='ask_deliver_date']").attr("max",""+parseInt(Math.abs(max)));
 			
 		});
 		/*$("input[name='is_need_sample_clothes']").change(function(){
