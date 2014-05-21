@@ -233,7 +233,7 @@
 								<td class="span2" colspan="2"><input class="span6"
 									type="number" name="ask_amount" required="required"/></td>
 								<td class="span2" colspan="2"><input class="span8"
-									type="date" name="ask_deliver_date" required="required"/></td>
+									id="datepicker" type="text" name="ask_deliver_date" required="required"/></td>
 								<td class="span2" colspan="2"><input class="span4"
 									type="number" name="ask_produce_period" required="required"/></td>
 							</tr>

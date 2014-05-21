@@ -72,9 +72,15 @@
 		<td>客户报价</td>
 	</tr>
 	<tr>
-		<td><input class="span12" type="text" name="single_cost" value="${merge_w eq null ? orderInfo.quote.singleCost : '' }" />
+		<td><input class="span12" type="text" name="single_cost" value="${merge_w eq null ? orderInfo.quote.singleCost : 
+			orderInfo.quote.fabricCost + orderInfo.quote.accessoryCost + orderInfo.quote.cutCost + orderInfo.quote.manageCost +
+			orderInfo.quote.swingCost + orderInfo.quote.ironingCost + orderInfo.quote.nailCost + orderInfo.quote.packageCost +
+			orderInfo.quote.otherCost + orderInfo.quote.designCost + 0.0 }" />
 		</td>
-		<td><input class="span12" type="text" name="inner_price" value="${merge_w eq null ? orderInfo.quote.innerPrice : '' }" />	
+		<td><input class="span12" type="text" name="inner_price" value="${merge_w eq null ? orderInfo.quote.innerPrice : 
+			orderInfo.quote.fabricCost + orderInfo.quote.accessoryCost + orderInfo.quote.cutCost + orderInfo.quote.manageCost +
+			orderInfo.quote.swingCost + orderInfo.quote.ironingCost + orderInfo.quote.nailCost + orderInfo.quote.packageCost +
+			orderInfo.quote.otherCost + orderInfo.quote.designCost }" />
 		</td>
 		<td><input class="span12" type="text" name="profitPerPiece" value="${merge_w eq null ? orderInfo.quote.profitPerPiece : '' }" />	
 		</td>
