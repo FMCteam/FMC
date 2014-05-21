@@ -69,9 +69,8 @@
 				$("input[name='ask_deliver_date']").val("");
 				return;
 			}
-			var max = (input_date - date)/86400000;
-			$("input[name='ask_deliver_date']").attr("max",""+parseInt(Math.abs(max)));
-			
+			var max = parseInt(Math.abs((input_date - date)/86400000));
+			$("input[name='ask_produce_period']").attr("max",""+parseInt(max));
 		});
 		/*$("input[name='is_need_sample_clothes']").change(function(){
 			if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){

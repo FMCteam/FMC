@@ -800,7 +800,7 @@ public class MarketServiceImpl implements MarketService {
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("taskTime", order.getOrderTime());
-			model.put("orderId", orderId);
+			model.put("orderId", service.getOrderId(order));
 			list.add(model);
 		}
 		return list;
@@ -817,7 +817,7 @@ public class MarketServiceImpl implements MarketService {
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));
 		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
 		model.put("designCad", cadDAO.findByOrderId(orderId));
-		model.put("orderId", orderId);
+		model.put("orderId", service.getOrderId(order));
 
 		Produce produce = new Produce();
 		produce.setOid(orderId);

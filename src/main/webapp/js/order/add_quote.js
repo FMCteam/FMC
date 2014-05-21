@@ -40,3 +40,22 @@ function calculate(){
 	var s_profit = $("input[name='inner_price']").val();
 	
 }
+
+function checkNum(input){
+	var re = /^[0-9]+.?[0-9]*$/; 
+	return re.test(input);
+}
+
+function quote_verify(){
+	var s_inner = $("input[name='inner_price']").val();
+	var s_profit = $("input[name='profitPerPiece']").val();
+	var s_cost = $("input[name='single_cost']").val();
+	var s_outer = $("input[name='outer_price']").val();
+	
+	if(checkNum(s_inner) && checkNum(s_profit) && checkNum(s_cost) && checkNum(s_outer)){
+		return true;
+	}else{
+		alert("请填写数字");
+		return false;
+	}
+}
