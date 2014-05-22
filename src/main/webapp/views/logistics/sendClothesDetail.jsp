@@ -38,7 +38,7 @@
 								<td class="span3 title">收货地址</td>
 							</tr>
 							<tr>
-								<td>10</td>
+								<td>${orderInfo.packageNumber}</td>
 								<td>${orderInfo.logistics.sampleClothesName }</td>
 								<td>${orderInfo.logistics.sampleClothesPhone }</td>
 								<td>${orderInfo.logistics.sampleClothesAddress }</td>

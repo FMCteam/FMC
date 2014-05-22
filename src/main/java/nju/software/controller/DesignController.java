@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -199,12 +200,12 @@ FileOperateUtil.Upload(request, url, null, fileid);
 
 	
 	@RequestMapping(value = "design/downloadCadSubmit.do", method = RequestMethod.POST)
+	@ResponseBody
 	@Transactional(rollbackFor = Exception.class)
-	public String downloadCadSubmit(HttpServletRequest request,
+	public void downloadCadSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String url = request.getParameter("cadUrl");
 		FileOperateUtil.Download(response, url);
-		return null;
 	}
 
 
