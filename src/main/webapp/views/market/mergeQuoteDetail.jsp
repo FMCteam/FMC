@@ -3,7 +3,7 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form method="post" action="${ctx}/market/mergeQuoteSubmit.do">
+		<form method="post" action="${ctx}/market/mergeQuoteSubmit.do" onSubmit="return quote_verify()">
 			<div class="row-fluid" style="min-height:300px;">
 				<!--  如果是其它页面，这里是填充具体的内容。 -->
 				<ul class="nav nav-tabs detail" id="tab">

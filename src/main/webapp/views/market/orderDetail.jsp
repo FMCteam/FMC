@@ -8,20 +8,15 @@
 
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">订单详情</li>
-				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
-				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 				<li class="active"><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
 
 			<div class="tab-content">
 				<div class="tab-pane active" id="basic">
 					<%@include file="/views/common/basic.jsp"%>
-				</div>
-				<div class="tab-pane" id="material">
-					<%@include file="/views/common/material.jsp"%>
 				</div>
 				<div class="tab-pane" id="sample">
 					<%@include file="/views/common/sample.jsp"%>
@@ -31,9 +26,6 @@
 				</div>
 				<div class="tab-pane" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
-				</div>
-				<div class="tab-pane" id="quote">
-					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			</div>
 			<div class="action">

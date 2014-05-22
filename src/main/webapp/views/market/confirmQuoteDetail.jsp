@@ -32,7 +32,7 @@
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
 				<div class="tab-pane active" id="quote">
-					<%@include file="/views/common/quote_w.jsp"%>
+					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			</div>
 		</div>
