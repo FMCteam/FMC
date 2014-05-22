@@ -31,23 +31,23 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="span2" rowspan="5">物流信息</td>
-								<td class="span1">衣服箱数</td>
-								<td class="span1">收货人</td>
-								<td class="span3">手机</td>
-								<td class="span3">收货地址</td>
+								<td class="span2 title" rowspan="5">物流信息</td>
+								<td class="span1 title">衣服箱数</td>
+								<td class="span1 title">收货人</td>
+								<td class="span3 title">手机</td>
+								<td class="span3 title">收货地址</td>
 							</tr>
 							<tr>
-								<td>10</td>
+								<td>${orderInfo.packageNumber}</td>
 								<td>${orderInfo.logistics.sampleClothesName }</td>
 								<td>${orderInfo.logistics.sampleClothesPhone }</td>
 								<td>${orderInfo.logistics.sampleClothesAddress }</td>
 							</tr>
 							<tr>
-								<td>邮寄时间<span style="color: red">*</span></td>
-								<td>快递名称<span style="color: red">*</span></td>
-								<td>快递单号<span style="color: red">*</span></td>
-								<td>快递价格<span style="color: red">*</span></td>
+								<td class="title">邮寄时间<span style="color: red">*</span></td>
+								<td class="title">快递名称<span style="color: red">*</span></td>
+								<td class="title">快递单号<span style="color: red">*</span></td>
+								<td class="title">快递价格<span style="color: red">*</span></td>
 							</tr>
 							<tr>
 								<td><input type="date" name="time" required="required" /></td>
@@ -64,7 +64,7 @@
 								<td><input type="text" name="price" required="required" /></td>
 							</tr>
 							<tr>
-								<td>其他备注</td>
+								<td class="title">其他备注</td>
 								<td colspan="4"><input class="span12" type="text"
 									name="remark" /></td>
 							</tr>

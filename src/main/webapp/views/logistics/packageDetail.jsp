@@ -36,10 +36,10 @@
 
 					<table class="table table-bordered detail package">
 						<tr>
-							<td class="span3">颜色</td>
-							<td class="span3">大小</td>
-							<td class="span3">件数</td>
-							<td class="span2">操作</td>
+							<td class="span3 title">颜色</td>
+							<td class="span3 title">大小</td>
+							<td class="span3 title">件数</td>
+							<td class="span2 title">操作</td>
 						</tr>
 						<tr class="addrow">
 							<td><input type="text" class="color" /></td>
@@ -61,11 +61,11 @@
 
 					<table class="table table-bordered detail" id="pack">
 						<tr>
-							<td>箱号</td>
-							<td>颜色</td>
-							<td>大小</td>
-							<td>件数</td>
-							<td>操作</td>
+							<td class="title">箱号</td>
+							<td class="title">颜色</td>
+							<td class="title">大小</td>
+							<td class="title">件数</td>
+							<td class="title">操作</td>
 						</tr>
 						<c:forEach var="pack" items="${orderInfo.packages}"
 							varStatus="status">

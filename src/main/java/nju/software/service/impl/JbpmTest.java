@@ -64,6 +64,7 @@ public class JbpmTest {
 		order.setIsNeedSampleClothes((short) 1);
 		order.setOrderSource("客户推荐 老王");
 		order.setLogisticsState(0);
+		order.setReorder((short)0);
 		orderDAO.save(order);
 		orderId = order.getOrderId();
 

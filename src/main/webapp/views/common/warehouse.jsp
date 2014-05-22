@@ -1,13 +1,13 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <table class="table table-striped table-bordered table-hover detail">
 	<tr>
-		<td>箱号</td>
-		<td>仓库</td>
-		<td>货架</td>
-		<td>位置</td>
-		<td>颜色</td>
-		<td>大小</td>
-		<td>件数</td>
+		<td class="title">箱号</td>
+		<td class="title">仓库</td>
+		<td class="title">货架</td>
+		<td class="title">位置</td>
+		<td class="title">颜色</td>
+		<td class="title">大小</td>
+		<td class="title">件数</td>
 	</tr>
 	<c:forEach var="pack" items="${orderInfo.packs}" varStatus="status">
 		<tr>
