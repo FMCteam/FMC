@@ -8,7 +8,7 @@
 			var colName = ["fabric_name","fabric_amount"];
 			table_addrow_onclick("fabric_table",colName,2);
 		});
-
+		
 		$("table.accessory_table a").click(function(){
 			var colName = ["accessory_name","accessory_query"];
 			table_addrow_onclick("accessory_table",colName,2);
@@ -88,6 +88,7 @@
 					return;
 				}
 			}
+			
 
 			var item = "";
 			for(var j=0;j<col_sum;j++){

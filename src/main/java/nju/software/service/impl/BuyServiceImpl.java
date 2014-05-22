@@ -106,8 +106,8 @@ public class BuyServiceImpl implements BuyService {
 		}
 		
 		
-		float all_fabric_prices=0;
-		float all_accessory_prices=0;
+		float all_fabric_prices=0.0f;
+		float all_accessory_prices=0.0f;
 		// TODO Auto-generated method stub
 		if (fabric_names != null) {
 			for (int i = 0; i < fabric_names.length; i++) {

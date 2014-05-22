@@ -37,8 +37,8 @@
 					<form id="costAccounting_form" onSubmit="return verify()" method="post"
 						action="${ctx}/buy/computePurchaseCostSubmit.do">
 
-<table
-							class="table table-striped table-bordered table-hover">
+                        <table
+							class="table table-striped table-bordered table-hover detail">
 							<tr>
 
 								<td class="span2">面料报价
@@ -72,7 +72,7 @@
 								<input id="accessory_query" type="hidden" name="accessory_query" /> 
 								<input id="tear_per_piece" type="hidden" name="tear_per_piece" /></td>
 								<input id="cost_per_piece" type="hidden" name="cost_per_piece" /></td>
-								<td class="innertable span12"><table
+								<td class="innertable span12 "><table
 										class="span12 table accessory_table">
 										<tr>
 											<td class="span5">辅料名称</td>
@@ -132,9 +132,10 @@
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
-<link rel="stylesheet" href="${ctx}/css/fmc/table.css">
-<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
+
+
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
+<link rel="stylesheet" href="${ctx}/css/order/add_order.css">
 <script type="text/javascript" src="${ctx}/views/buy/cost.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_fabric.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
