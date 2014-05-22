@@ -42,9 +42,16 @@
 							<td class="span2 title">操作</td>
 						</tr>
 						<tr class="addrow">
-							<td><input type="text" class="color" /></td>
-							<td><input type="text" class="size" /></td>
-							<td><input type="number" class="number" min="0"/></td>
+							<td><input type="text" class="color" style="width:80px"/></td>
+							<td><select class="size" style="margin:0px;width:80px">
+									<option value="XS">XS</option>
+									<option value="S">S</option>
+									<option value="M">M</option>
+									<option value="L">L</option>
+									<option value="XL">XL</option>
+									<option value="XXL">XXL</option>
+							</select></td>
+							<td><input type="number" class="number" min="1" style="width:80px" /></td>
 							<td><a>添加</a></td>
 						</tr>
 					</table>

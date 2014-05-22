@@ -117,11 +117,11 @@ public class LogisticsController {
 				.getPackageList();
 		List<Map<String, Object>> warehouseList = logisticsService
 				.getWarehouseList();
-//		if (packageList.size() == 0) {
-//			jbpmTest.completeCheckQuality("1");
-//			packageList = logisticsService.getPackageList();
-//			warehouseList = logisticsService.getWarehouseList();
-//		}
+		if (packageList.size() == 0) {
+			jbpmTest.completeCheckQuality("1");
+			packageList = logisticsService.getPackageList();
+			warehouseList = logisticsService.getWarehouseList();
+		}
 		model.put("packageList", packageList);
 		model.put("warehouseList", warehouseList);
 		return "/logistics/warehouseList";
