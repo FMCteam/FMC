@@ -26,4 +26,8 @@ $(document).ready(function() {
 	$("a#financeButton").click(function() {
 		$("input#financeSubmit").click();
 	});
+	var text=$("#pay").text();
+	$("#pay").text(parseFloat(text).toFixed(2));
+	$("input[name='money_amount']").val(parseFloat(text).toFixed(2));
+	
 });

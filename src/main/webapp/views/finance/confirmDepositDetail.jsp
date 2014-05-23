@@ -56,7 +56,7 @@
 							<tr>
 								<td>${orderInfo.moneyName}</td>
 								<td>${orderInfo.order.discount}</td>
-								<td>(${(orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price}-${orderInfo.order.sampleAmount*orderInfo.samplePrice}-${orderInfo.order.discount})*0.3=${((orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price-orderInfo.order.sampleAmount*orderInfo.samplePrice-orderInfo.order.discount)*0.3}</td>
+								<td>(${(orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price}-${orderInfo.order.sampleAmount*orderInfo.samplePrice}-${orderInfo.order.discount})*0.3=<span id="pay">${((orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price-orderInfo.order.sampleAmount*orderInfo.samplePrice-orderInfo.order.discount)*0.3}</span></td>
 							</tr>
 							<tr>
 								<td class="title">大货件数</td>

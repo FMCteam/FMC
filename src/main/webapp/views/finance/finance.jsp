@@ -20,7 +20,7 @@
 			<td>${orderInfo.moneyName}</td>
 			<td>${orderInfo.number}</td>
 			<td>${orderInfo.price}</td>
-			<td>${orderInfo.total}</td>
+			<td><span id="pay">${orderInfo.total}</span></td>
 		</tr>
 		<tr>
 			<td class="title" rowspan="4">汇款信息</td>

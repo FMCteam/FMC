@@ -1,5 +1,6 @@
 package nju.software.service.impl;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,8 +107,8 @@ public class BuyServiceImpl implements BuyService {
 		}
 		
 		
-		float all_fabric_prices=0;
-		float all_accessory_prices=0;
+		float all_fabric_prices=0.0f;
+		float all_accessory_prices=0.0f;
 		// TODO Auto-generated method stub
 		if (fabric_names != null) {
 			for (int i = 0; i < fabric_names.length; i++) {
@@ -129,7 +130,13 @@ public class BuyServiceImpl implements BuyService {
 				fabricCost
 						.setCostPerMeter(Float.parseFloat(cost_per_meters[i]));
 				
-			float fabric_price=Float.parseFloat(tear_per_meters[i])*Float.parseFloat(cost_per_meters[i]);
+//			float fabric_price=Float.parseFloat(tear_per_meters[i])*Float.parseFloat(cost_per_meters[i]);
+			
+			
+			 BigDecimal  fabric_price_temp =   
+					 new BigDecimal((Float.parseFloat(tear_per_meters[i]))*(Float.parseFloat(cost_per_meters[i])));  
+			 float  fabric_price = fabric_price_temp.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();  
+			
 			
 			all_fabric_prices+=fabric_price;
 			

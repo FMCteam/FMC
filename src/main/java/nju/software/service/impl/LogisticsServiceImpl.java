@@ -277,8 +277,15 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public Map<String, Object> getSendClothesDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithWareHouse(ACTOR_LOGISTICS_MANAGER,
+		Map<String, Object> model=service.getBasicOrderModelWithWareHouse(ACTOR_LOGISTICS_MANAGER,
 				TASK_SEND_CLOTHES, orderId);
+		List<Package>packages=packageDAO.findByOrderId(orderId);
+		if(packages==null){
+			model.put("packageNumber", 0);
+		}else{
+			model.put("packageNumber", packages.size());
+		}	
+		return model;
 	}
 
 	@Override
