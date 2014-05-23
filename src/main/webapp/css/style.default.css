@@ -125,7 +125,7 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 
 .header { background: #0866c6; clear: both; height: 110px; }
 .headerinner { margin-left: 260px; }
-.header .logo { width: 260px; text-align: center; padding-top: 40px; float: left; }
+.header .logo { width: 260px; text-align: center; padding-top: 0px; float: left;height:110px; }
 
 .headmenu { list-style: none; }
 .headmenu .dropdown-menu { border: 2px solid #0866c6; border-top: 0; margin: 0; }
