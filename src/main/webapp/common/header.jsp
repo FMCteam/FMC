@@ -71,7 +71,7 @@ table.tablesorter thead tr .headerSortDown {
 	<div id="mainwrapper" class="mainwrapper">
 		<div class="header">
 			<div class="logo">
-					<img src="images/logo2.png" alt="" />	<!-- <span>智造链</span> -->
+					<img src="${ctx}/images/logo2.png" alt="" />	<!-- <span>智造链</span> -->
 			
 			</div>
 			<div class="headerinner">
