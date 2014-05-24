@@ -22,22 +22,22 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td>业务信息</td>
-								<td>业务编号</td>
+								<td class="title">业务信息</td>
+								<td class="title">业务编号</td>
 								<td>${orderModel.orderId }</td>
-								<td>接单时间</td>
+								<td class="title">接单时间</td>
 								<td>${fn:substring(orderModel.order.orderTime,0,10) }</td>
-								<td>接单业务员</td>
+								<td class="title">接单业务员</td>
 								<td>${orderModel.employee.employeeName }</td>
 							</tr>
 							<tr>
-								<td rowspan="3">客户信息</td>
-								<td>客户编号</td>
-								<td>姓名</td>
-								<td>公司</td>
-								<td>传真</td>
-								<td>手机1</td>
-								<td>手机2</td>
+								<td class="title" rowspan="3">客户信息</td>
+								<td class="title">客户编号</td>
+								<td class="title">姓名</td>
+								<td class="title">公司</td>
+								<td class="title">传真</td>
+								<td class="title">手机1</td>
+								<td class="title">手机2</td>
 							</tr>
 							<tr>
 								<td>${orderModel.order.customerId }</td>
@@ -48,16 +48,16 @@
 								<td>${orderModel.order.customerPhone2}</td>
 							</tr>
 							<tr>
-								<td>公司地址</td>
+								<td class="title">公司地址</td>
 								<td colspan="5">${orderModel.order.customerCompanyAddress}</td>
 							</tr>
 							<tr>
-								<td rowspan="6">款式信息</td>
-								<td><label>款式名称<span class="required">*</span></label></td>
-								<td>衣服类型<span class="required">*</span></td>
-								<td>款式性别<span class="required">*</span></td>
-								<td colspan="2">款式季节<span class="required">*</span></td>
-								<td>订单来源<span class="required">*</span></td>
+								<td class="title" rowspan="6">款式信息</td>
+								<td class="title">款式名称<span class="required">*</span></td>
+								<td class="title">衣服类型<span class="required">*</span></td>
+								<td class="title">款式性别<span class="required">*</span></td>
+								<td class="title" colspan="2">款式季节<span class="required">*</span></td>
+								<td class="title">订单来源<span class="required">*</span></td>
 							</tr>
 							<tr>
 								<td><input type="text" class="span12" name="style_name"
@@ -82,7 +82,7 @@
 									value="${orderModel.order.orderSource }" /></td>
 							</tr>
 							<tr>
-								<td>面料类型</td>
+								<td class="title">面料类型</td>
 								<td colspan="5"><input type="radio" name="fabric_type"
 									${orderModel.order.fabricType eq '梭织'?'checked="checked"':'' }
 									value="梭织" /> <span>梭织</span> <input type="radio"
@@ -103,7 +103,7 @@
 									<span>梭编混合</span></td>
 							</tr>
 							<tr>
-								<td>特殊工艺</td>
+								<td class="title">特殊工艺</td>
 								<td colspan="5"><input type="checkbox"
 									name="special_process" value="水洗"
 									${fn:contains(orderModel.order.specialProcess,'水洗')?'checked="checked"':'' } />
@@ -120,7 +120,7 @@
 									placeholder="其他" /></td>
 							</tr>
 							<tr>
-								<td>其他说明</td>
+								<td class="title">其他说明</td>
 								<td colspan="5"><input type="checkbox"
 									name="other_requirements" value="有主标"
 									${fn:contains(orderModel.order.otherRequirements,'有主标')?'checked="checked"':'' } />
@@ -136,7 +136,7 @@
 									name="other_other_requirements" placeholder="其他" /></td>
 							</tr>
 							<tr>
-								<td>参考链接</td>
+								<td class="title">参考链接</td>
 								<td colspan="5"><input class="span12" type="url" name="reference_url" value="${orderModel.order.referenceUrl }"/></td>
 							</tr>
 						</table>
@@ -144,15 +144,15 @@
 					<div class="tab-pane" id="material">
 						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="span4">面料<input id="fabric_name" type="hidden"
+								<td class="span4 title">面料<input id="fabric_name" type="hidden"
 									name="fabric_name" /> <input id="fabric_amount" type="hidden"
 									name="fabric_amount" /></td>
 								<td class="innertable span12"><table
 										class="span12 table accessory_table">
 										<tr>
-											<td class="span5">面料名称</td>
-											<td class="span5">面料克重</td>
-											<td class="span3">操作</td>
+											<td class="span5 title">面料名称</td>
+											<td class="span5 title">面料克重</td>
+											<td class="span3 title">操作</td>
 										</tr>
 										<tr class="addrow">
 											<td><input class="span12" type="text" /></td>
@@ -169,15 +169,15 @@
 									</table></td>
 							</tr>
 							<tr>
-								<td class="span2">辅料<input id="accessory_name"
+								<td class="span2 title">辅料<input id="accessory_name"
 									type="hidden" name="accessory_name" /> <input
 									id="accessory_query" type="hidden" name="accessory_query" /></td>
 								<td class="innertable span12"><table
 										class="span12 table accessory_table">
 										<tr>
-											<td class="span5">辅料名称</td>
-											<td class="span5">辅料要求</td>
-											<td class="span3">操作</td>
+											<td class="span5 title">辅料名称</td>
+											<td class="span5 title">辅料要求</td>
+											<td class="span3 title">操作</td>
 										</tr>
 										<tr class="addrow">
 											<td><input class="span12" type="text" /></td>
@@ -200,11 +200,11 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td rowspan="2">客户样衣</td>
-								<td>提供样衣</td>
-								<td colspan="2">邮寄时间</td>
-								<td>快递名称</td>
-								<td colspan="2">快递单号</td>
+								<td class="title" rowspan="2">客户样衣</td>
+								<td class="title">提供样衣</td>
+								<td class="title" colspan="2">邮寄时间</td>
+								<td class="title">快递名称</td>
+								<td class="title" colspan="2">快递单号</td>
 							</tr>
 							<tr>
 								<td><input type="radio" name="has_posted_sample_clothes"
@@ -279,11 +279,11 @@
 									value="${orderModel.logistics.inPostSampleClothesNumber }" /></td>
 							</tr>
 							<tr>
-								<td rowspan="5">生产样衣</td>
-								<td>制作样衣</td>
-								<td>邮寄人</td>
-								<td>手机</td>
-								<td colspan="3">邮寄地址</td>
+								<td class="title" rowspan="5">生产样衣</td>
+								<td class="title">制作样衣</td>
+								<td class="title">邮寄人</td>
+								<td class="title">手机</td>
+								<td class="title" colspan="3">邮寄地址</td>
 							</tr>
 							<tr>
 								<td><input type="radio" name="is_need_sample_clothes"
@@ -302,14 +302,14 @@
 									value="${orderModel.logistics.sampleClothesAddress }" /></td>
 							</tr>
 							<tr>
-								<td>其他备注</td>
+								<td class="title">其他备注</td>
 								<td colspan="5"><input class="span12" type="text"
 									name="sample_clothes_remark"
 									value="${orderModel.logistics.sampleClothesRemark }" /></td>
 							</tr>
 							<tr>
-								<td colspan="3">样衣图片</td>
-								<td colspan="3">参考图片</td>
+								<td class="title" colspan="3">样衣图片</td>
+								<td class="title" colspan="3">参考图片</td>
 							</tr>
 							<tr>
 								<td colspan="3">
@@ -333,11 +333,11 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td rowspan="2">加工信息</td>
-								<td class="span2" colspan="2">样衣总数<span class="required">*</span></td>
-								<td class="span2" colspan="2">大货总数<span class="required">*</span></td>
-								<td class="span2" colspan="2">最迟交货时间</td>
-								<td class="span2" colspan="2">完工时间（天）</td>
+								<td class="title" rowspan="2">加工信息</td>
+								<td class="span2 title" colspan="2">样衣总数<span class="required">*</span></td>
+								<td class="span2 title" colspan="2">大货总数<span class="required">*</span></td>
+								<td class="span2 title" colspan="2">最迟交货时间</td>
+								<td class="span2 title" colspan="2">完工时间（天）</td>
 							</tr>
 							<tr>
 								<td class="span2" colspan="2"><input class="span6"
@@ -357,7 +357,7 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td>大货加工具体要求 <input id="produce_color" type="hidden"
+								<td class="title">大货加工具体要求 <input id="produce_color" type="hidden"
 									name="produce_color" /> <input id="produce_xs" type="hidden"
 									name="produce_xs" /> <input id="produce_s" type="hidden"
 									name="produce_s" /> <input id="produce_m" type="hidden"
@@ -368,14 +368,14 @@
 								<td colspan="8" class="innertable">
 									<table class="span12 table produce_table">
 										<tr>
-											<td class="span1">颜色</td>
-											<td class="span1">XS</td>
-											<td class="span1">S</td>
-											<td class="span1">M</td>
-											<td class="span1">L</td>
-											<td class="span1">XL</td>
-											<td class="span1">XXL</td>
-											<td class="span1">操作</td>
+											<td class="span1 title">颜色</td>
+											<td class="span1 title">XS</td>
+											<td class="span1 title">S</td>
+											<td class="span1 title">M</td>
+											<td class="span1 title">L</td>
+											<td class="span1 title">XL</td>
+											<td class="span1 title">XXL</td>
+											<td class="span1 title">操作</td>
 										</tr>
 										<tr class="addrow">
 											<td><input type="text" class="span12" /></td>
@@ -403,7 +403,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td>样衣加工具体要求 <input id="sample_produce_color" type="hidden"
+								<td class="title">样衣加工具体要求 <input id="sample_produce_color" type="hidden"
 									name="sample_produce_color" /> <input id="sample_produce_xs"
 									type="hidden" name="sample_produce_xs" /> <input
 									id="sample_produce_s" type="hidden" name="sample_produce_s" />
@@ -416,14 +416,14 @@
 								<td colspan="8" class="innertable">
 									<table class="span12 table sample_produce_table">
 										<tr>
-											<td class="span1">颜色</td>
-											<td class="span1">XS</td>
-											<td class="span1">S</td>
-											<td class="span1">M</td>
-											<td class="span1">L</td>
-											<td class="span1">XL</td>
-											<td class="span1">XXL</td>
-											<td class="span1">操作</td>
+											<td class="span1 title">颜色</td>
+											<td class="span1 title">XS</td>
+											<td class="span1 title">S</td>
+											<td class="span1 title">M</td>
+											<td class="span1 title">L</td>
+											<td class="span1 title">XL</td>
+											<td class="span1 title">XXL</td>
+											<td class="span1 title">操作</td>
 										</tr>
 										<tr class="addrow">
 											<td><input type="text" class="span12" /></td>
@@ -461,7 +461,7 @@
 										class="span12 table table-striped table-hover detail version_table">
 										<tbody>
 											<tr>
-												<td colspan="11">版型数据信息 <input id="version_size"
+												<td class="title" colspan="11">版型数据信息 <input id="version_size"
 													type="hidden" name="version_size" /> <input
 													id="version_centerBackLength" type="hidden"
 													name="version_centerBackLength" /> <input
@@ -477,17 +477,17 @@
 													id="version_sleeves" type="hidden" name="version_sleeves" /></td>
 											</tr>
 											<tr>
-												<td class="span1">尺寸表/部位</td>
-												<td class="span1">后中长</td>
-												<td class="span1">胸围</td>
-												<td class="span1">腰围</td>
-												<td class="span1">肩宽</td>
-												<td class="span1">臀围</td>
-												<td class="span1">下摆</td>
-												<td class="span1">裤长</td>
-												<td class="span1">裙长</td>
-												<td class="span1">袖长</td>
-												<td class="span1">操作</td>
+												<td class="span1 title">尺寸表/部位</td>
+												<td class="span1 title">后中长</td>
+												<td class="span1 title">胸围</td>
+												<td class="span1 title">腰围</td>
+												<td class="span1 title">肩宽</td>
+												<td class="span1 title">臀围</td>
+												<td class="span1 title">下摆</td>
+												<td class="span1 title">裤长</td>
+												<td class="span1 title">裙长</td>
+												<td class="span1 title">袖长</td>
+												<td class="span1 title">操作</td>
 											</tr>
 											<tr class="addrow">
 												<td><input type="text" class="span12" /></td>
@@ -525,28 +525,28 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="span1" rowspan="4">版型数据</td>
-								<td class="span1">面料</td>
+								<td class="span1 title" rowspan="4">版型数据</td>
+								<td class="span1 title">面料</td>
 								<td class="span3"><textarea class="span12" name="cadFabric"
 										style="resize:none" rows="2">${orderModel.designCad.cadFabric }</textarea></td>
-								<td class="span1">包装</td>
+								<td class="span1 title">包装</td>
 								<td class="span3"><textarea class="span12" name="cadBox"
 										style="resize:none" rows="2">${orderModel.designCad.cadBox }</textarea></td>
 							</tr>
 							<tr>
-								<td class="span1">版型</td>
+								<td class="span1 title">版型</td>
 								<td class="span3"><textarea class="span12"
 										name="cadVersionData" style="resize:none" rows="2">${orderModel.designCad.cadVersionData }</textarea></td>
-								<td class="span1">装箱</td>
+								<td class="span1 title">装箱</td>
 								<td class="span3"><textarea class="span12"
 										name="cadPackage" style="resize:none" rows="2">${orderModel.designCad.cadPackage }</textarea></td>
 
 							</tr>
 							<tr>
-								<td class="span1">工艺</td>
+								<td class="span1 title">工艺</td>
 								<td class="span3"><textarea class="span12" name="cadTech"
 										style="resize:none" rows="2">${orderModel.designCad.cadTech }</textarea></td>
-								<td class="span1">其他</td>
+								<td class="span1 title">其他</td>
 								<td class="span3"><textarea class="span12" name="cadOther"
 										style="resize:none" rows="2">${orderModel.designCad.cadOther }</textarea></td>
 							</tr>
@@ -556,15 +556,15 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td>设计部意见</td>
+								<td class="title">设计部意见</td>
 								<td colspan="5">${designComment }</td>
 							</tr>
 							<tr>
-								<td>采购部意见</td>
+								<td class="title">采购部意见</td>
 								<td colspan="5">${purchaseComment }</td>
 							</tr>
 							<tr>
-								<td>生产部意见</td>
+								<td class="title">生产部意见</td>
 								<td colspan="5">${produceComment }</td>
 							</tr>
 						</table>
