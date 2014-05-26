@@ -3,7 +3,7 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form method="post" action="${ctx}/market/modifyQuoteSubmit.do" >
+		<form method="post" action="${ctx}/market/modifyQuoteSubmit.do" onSubmit="return quote_verify()">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
@@ -67,5 +67,6 @@
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
+<script type="text/javascript" src="${ctx}/js/order/add_quote.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>

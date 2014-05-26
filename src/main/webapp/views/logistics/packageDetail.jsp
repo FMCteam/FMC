@@ -36,15 +36,22 @@
 
 					<table class="table table-bordered detail package">
 						<tr>
-							<td class="span3">颜色</td>
-							<td class="span3">大小</td>
-							<td class="span3">件数</td>
-							<td class="span2">操作</td>
+							<td class="span3 title">颜色</td>
+							<td class="span3 title">大小</td>
+							<td class="span3 title">件数</td>
+							<td class="span2 title">操作</td>
 						</tr>
 						<tr class="addrow">
-							<td><input type="text" class="color" /></td>
-							<td><input type="text" class="size" /></td>
-							<td><input type="number" class="number" min="0"/></td>
+							<td><input type="text" class="color" style="width:80px"/></td>
+							<td><select class="size" style="margin:0px;width:80px">
+									<option value="XS">XS</option>
+									<option value="S">S</option>
+									<option value="M">M</option>
+									<option value="L">L</option>
+									<option value="XL">XL</option>
+									<option value="XXL">XXL</option>
+							</select></td>
+							<td><input type="number" class="number" min="1" style="width:80px" /></td>
 							<td><a>添加</a></td>
 						</tr>
 					</table>
@@ -61,11 +68,11 @@
 
 					<table class="table table-bordered detail" id="pack">
 						<tr>
-							<td>箱号</td>
-							<td>颜色</td>
-							<td>大小</td>
-							<td>件数</td>
-							<td>操作</td>
+							<td class="title">箱号</td>
+							<td class="title">颜色</td>
+							<td class="title">大小</td>
+							<td class="title">件数</td>
+							<td class="title">操作</td>
 						</tr>
 						<c:forEach var="pack" items="${orderInfo.packages}"
 							varStatus="status">

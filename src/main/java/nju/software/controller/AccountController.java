@@ -133,10 +133,10 @@ public class AccountController {
 
 		if (success) {
 			model.addAttribute("notify", "添加员工成功！");
-			return "forward:/account/employeeList.do";
+			return "redirect:/account/employeeList.do";
 		} else {
 			model.addAttribute("notify", "添加员工失败！");
-			return "forward:/account/addEmployeeDetail.do";
+			return "redirect:/account/addEmployeeDetail.do";
 		}
 	}
 
@@ -216,7 +216,7 @@ public class AccountController {
 		if (!password1.equals(password2)) {
 			model.addAttribute("notify", "两次输入密码不相同！");
 			System.out.println("password");
-			return "forward:/account/modifyEmployeeDetail.do";
+			return "redirect:/account/modifyEmployeeDetail.do";
 		}
 
 		boolean success = false;
@@ -285,9 +285,9 @@ public class AccountController {
 		}
 
 		if (success) {
-			return "forward:/account/employeeList.do";
+			return "redirect:/account/employeeList.do";
 		} else {
-			return "forward:/account/modifyEmployeeDetail.do";
+			return "redirect:/account/modifyEmployeeDetail.do";
 		}
 	}
 
@@ -327,11 +327,11 @@ public class AccountController {
 		if (success) {
 			model.addAttribute("notify", "删除成功！");
 			System.out.println("employee delete success");
-			return "forward:/account/employeeList.do";
+			return "redirect:/account/employeeList.do";
 		} else {
 			model.addAttribute("notify", "删除失败！");
 			System.out.println("employee delete failed");
-			return "forward:/account/employeeList.do";
+			return "redirect:/account/employeeList.do";
 		}
 	}
 
@@ -562,7 +562,7 @@ public class AccountController {
 		boolean sucess = customerService.deleteCustomerById(Integer
 				.parseInt(customer_id));
 		System.out.println("customer delete successfully" + sucess);
-		return "forward:/account/customerList.do";
+		return "redirect:/account/customerList.do";
 	}
 	
 	@RequestMapping(value = "customer/viewCustomer.do", method = RequestMethod.GET)

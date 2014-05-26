@@ -36,9 +36,18 @@
 										女 &nbsp; &nbsp; <input type="radio" name="radiofield" value="3" />
 										保密 &nbsp; &nbsp;<span style=" color:#ff0000;">*</span>(必填)
 									</span></td>
-								<td><label>部门</label> <span class="field"><input type="text" required="required"
-										name="department" class="input-large" placeholder="部门" />&nbsp;
-										<span style="color:#ff0000;">*</span>(必填)</span></td>
+								<td><label>部门</label> <span class="field"><select id="department"
+									name="department" class="uniformselect">
+								<!--	<option value="市场部">市场部</option>
+									<option value="设计部">设计部</option>
+									<option value="采购部">采购部</option>
+									<option value="生产部">生产部</option>
+									<option value="财务部">财务部</option>
+									<option value="物流部">物流部</option>
+									<option value="质检部">质检部</option>
+									<option value="人事部">人事部</option> -->
+									</select>
+								<span style="color:#ff0000;">*</span>(必填)</span></td>
 							</tr>
 							
 							<tr>
@@ -53,16 +62,16 @@
 							</tr>
 							
 							<tr>
-								<td><label>角色</label> <span class="field"> <select name="role"
+								<td><label>角色</label> <span class="field"> <select name="role" id="role"
 									class="uniformselect">
-									<option value="marketManager">市场主管</option>
+							<!--	<option value="marketManager">市场主管</option>
 									<option value="marketStaff">市场专员</option>
 									<option value="produceManager">生产主管</option>
 									<option value="purchaseManager">采购主管</option>
 									<option value="qualityManager">质检主管</option>
 									<option value="financeManager">财务主管</option>
 									<option value="logisticsManager">物流主管</option>
-									<option value="designManager">设计主管</option>
+									<option value="designManager">设计主管</option> -->
 									</select> &nbsp;<span style="color:#ff0000;">*</span>(必填)
 									</span></td>
 								<td><div class="par">
@@ -169,4 +178,5 @@
 <%@include file="/common/js_form_file.jsp"%>
 <!-- 这里引入你需要的js文件 -->
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript" src="${ctx }/js/addemployee.js"></script>
 <%@include file="/common/footer.jsp"%>

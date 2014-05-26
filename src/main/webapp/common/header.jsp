@@ -71,9 +71,8 @@ table.tablesorter thead tr .headerSortDown {
 	<div id="mainwrapper" class="mainwrapper">
 		<div class="header">
 			<div class="logo">
-				<a href="#" style="color:white;font-size:55px;font-family:"MiscrosoftYaHei"">
-					<!-- <img src="images/logo.png" alt="" /> --> <span>智造链</span>
-				</a>
+					<img src="${ctx}/images/logo2.png" alt="" />	<!-- <span>智造链</span> -->
+			
 			</div>
 			<div class="headerinner">
 				<ul class="headmenu">
@@ -185,9 +184,9 @@ table.tablesorter thead tr .headerSortDown {
 										class="computePurchaseCost"></span></a></li>
 								<li><a href="${ctx }/buy/purchaseSampleMaterialList.do">样衣采购<span
 										class="purchaseSampleMaterial"></span></a></li>
-								<li><a href="${ctx }/buy/confirmPurchaseList.do">采购确认<span
+								<li><a href="${ctx }/buy/confirmPurchaseList.do">大货采购确认<span
 										class="confirmPurchase"></span></a></li>
-								<li><a href="${ctx }/buy/purchaseMaterialList.do">生产采购<span
+								<li><a href="${ctx }/buy/purchaseMaterialList.do">大货生产原料采购<span
 										class="purchaseMaterial"></span></a></li>
 							</ul></li>
 					</c:if>
