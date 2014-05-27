@@ -42,7 +42,7 @@
 					</tbody>
 				</table>
 			</section>
-			<div class="dataTables_paginate paging_full_numbers"
+		<!--	<div class="dataTables_paginate paging_full_numbers"
 				id="dyntable_paginate" style="float:right;margin-top: 20px">
 				<c:if test="${page==1 }">
 					<a tabindex="0"
@@ -126,7 +126,7 @@
 						class="last paginate_button paginate_button_disabled"
 						id="dyntable_last">尾页</a>
 				</c:if>
-			</div>
+			</div> -->
 
 		</div>
 		<!--row-fluid-->
