@@ -34,7 +34,7 @@
 									href="${ctx}/account/modifyCustomerDetail.do?customer_id=${customer.customerId}"
 									class="btn btn-info" title="修改"><i
 										class="iconsweets-create iconsweets-white"></i></a> <a
-									href="${ctx}/account/deleteCustomerSubmit.do?customer_id=${customer.customerId}"
+									href="javascript:confirmDeleteCustomer(${customer.customerId})"
 									class="btn btn-danger" title="删除"><i
 										class="iconsweets-trashcan iconsweets-white"></i></a></td>
 							</tr>
@@ -141,4 +141,11 @@
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
+<script type="text/javascript">
+function confirmDeleteCustomer(id){
+	if(confirm("确定删除该客户？")) {
+		window.location.href="${ctx }/account/deleteCustomerSubmit.do?customer_id="+id;
+	}
+}
+</script>
 <%@include file="/common/footer.jsp"%>
