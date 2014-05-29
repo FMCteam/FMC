@@ -34,7 +34,7 @@
 									href="${ctx}/account/modifyCustomerDetail.do?customer_id=${customer.customerId}"
 									class="btn btn-info" title="修改"><i
 										class="iconsweets-create iconsweets-white"></i></a> <a
-									href="${ctx}/account/deleteCustomerSubmit.do?customer_id=${customer.customerId}"
+									href="javascript:confirmDeleteCustomer(${customer.customerId})"
 									class="btn btn-danger" title="删除"><i
 										class="iconsweets-trashcan iconsweets-white"></i></a></td>
 							</tr>
@@ -42,7 +42,7 @@
 					</tbody>
 				</table>
 			</section>
-			<div class="dataTables_paginate paging_full_numbers"
+		<!--	<div class="dataTables_paginate paging_full_numbers"
 				id="dyntable_paginate" style="float:right;margin-top: 20px">
 				<c:if test="${page==1 }">
 					<a tabindex="0"
@@ -126,7 +126,7 @@
 						class="last paginate_button paginate_button_disabled"
 						id="dyntable_last">尾页</a>
 				</c:if>
-			</div>
+			</div> -->
 
 		</div>
 		<!--row-fluid-->
@@ -141,4 +141,11 @@
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
+<script type="text/javascript">
+function confirmDeleteCustomer(id){
+	if(confirm("确定删除该客户？")) {
+		window.location.href="${ctx }/account/deleteCustomerSubmit.do?customer_id="+id;
+	}
+}
+</script>
 <%@include file="/common/footer.jsp"%>

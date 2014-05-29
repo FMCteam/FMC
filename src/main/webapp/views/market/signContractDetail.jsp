@@ -48,7 +48,7 @@
 					</tr>
 					<tr>
 						<td><input name="discount" type="number" /></td>
-						<td><input name="totalmoney" type="number" /></td>
+						<td><input name="totalmoney" type="number" readonly="readonly" /></td>
 						<td><input name="contractFile" type="file" value="选择文件"/></td>
 					</tr>
 				</table>
