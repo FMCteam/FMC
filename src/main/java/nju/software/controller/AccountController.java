@@ -285,7 +285,7 @@ public class AccountController {
 		}
 
 		if (success) {
-			return "redirect:/account/employeeList.do";
+			return "index";
 		} else {
 			return "redirect:/account/modifyEmployeeDetail.do";
 		}
