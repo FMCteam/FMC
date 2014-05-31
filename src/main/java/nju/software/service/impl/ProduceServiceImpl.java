@@ -102,7 +102,7 @@ public class ProduceServiceImpl implements ProduceService {
 		}
 
 		float producecost = cut_cost + manage_cost + swing_cost + ironing_cost
-				+ nali_cost + package_cost + other_cost + design_cost
+				+ nali_cost + package_cost + other_cost
 				+ quote.getFabricCost() + quote.getAccessoryCost();
 		quote.setSingleCost(producecost);
 		QuoteDAO.attachDirty(quote);

@@ -1462,10 +1462,10 @@ public class MarketController {
 		String actorId = account.getUserId() + "";
 		List<Map<String, Object>> orderList = marketService
 				.getConfirmProductList(actorId);
-		/*if (orderList.size() == 0) {
-			jbpmTest.completeProduceConfirm("1", true);
-			orderList = marketService.getConfirmProductList(actorId);
-		}*/
+//		if (orderList.size() == 0) {
+//			jbpmTest.completeProduceConfirm("1", true);
+//			orderList = marketService.getConfirmProductList(actorId);
+//		}
 		model.put("list", orderList);
 		model.addAttribute("taskName", "确认合同加工单");
 		model.addAttribute("url", "/market/confirmProduceOrderDetail.do");
