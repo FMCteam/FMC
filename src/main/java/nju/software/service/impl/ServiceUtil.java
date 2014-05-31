@@ -70,6 +70,7 @@ public class ServiceUtil {
 		model.put("task", task);
 		model.put("taskId", task.getId());
 		model.put("order", order);
+		model.put("customer",customerDAO.findById(order.getCustomerId()));
 		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 		model.put("logistics", logisticsDAO.findById(orderId));
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));

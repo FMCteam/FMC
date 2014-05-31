@@ -53,7 +53,7 @@
 								<td>${customer.customerName}</td>
 								<td>${customer.companyName}</td>
 								<td>${customer.companyFax}</td>
-								<td>${customer.contactPhone1}</td>
+								<td>${customer.customerPhone}</td>
 								<td>${customer.contactPhone2}</td>
 							</tr>
 							<tr>
