@@ -17,6 +17,28 @@
 			$("input[name='tof']").val("true");
 			$("form").submit();
 		});
+		
+		$("input[name='discount']").keyup(function(){
+			var dis = $("input[name='discount']").val();
+			if(!checkNum(dis)){
+				alert("优惠金额必须是数字");
+				$("input[name='discount']").val("");
+				return;
+			}
+			var origin = parseFloat($("input[name='sum']").val());
+			var discount = parseFloat(dis);
+			var now = origin - discount;
+			if(now<0){
+				alert("优惠金额不能大于总金额");
+				$("input[name='discount']").val("");
+				$("input[name='totalmoney']").val(origin);
+				return;
+			}else{
+				$("input[name='totalmoney']").val(now);
+			}
+			
+			 
+		}
 //		init();
 	});
 
@@ -64,7 +86,10 @@
 	
 })(jQuery);
 
-
+function checkNum(input){
+	var re = /^[0-9]+.?[0-9]*$/; 
+	return re.test(input);
+}
 
 function getTdString(col){
 	var tdString="";
