@@ -15,23 +15,23 @@
             <div class="maincontentinner">
                 <div class="row-fluid" style="min-height:300px;">
                 <tr>
-                <form action="${ctx }/order/downloadCadSubmit.do" method="post" 
+                <form action="${ctx }/design/downloadCadSubmit.do" method="post" 
 				nctype="multipart/form-data">
-				<span style="margin-right: 20px;font-size: 20px">智造链询价单原始单据</span>
+				<span style="margin-right:80px;font-size: 20px">智造链询价单下载</span>
 				<span>上传时间:2014-06-01</span>
 				<input style="margin-left: 80px" type="submit" class="btn btn-primary btn-rounded" value="下载"/>
+				<input type="hidden" name="cadUrl" value="D:/fmc/message/inquirySheet.wps" />
 				</form>
                 </tr>
                  <tr>
-                <form action="${ctx }/order/downloadCadSubmit.do" method="post" 
+                <form action="${ctx }/design/downloadCadSubmit.do" method="post" 
 				nctype="multipart/form-data">
-				<span style="margin-right: 20px;font-size: 20px">智造链</span>
+				<span style="margin-right: 80px;font-size: 20px">智造链报价单下载</span>
 				<span>上传时间:2014-06-01</span>
 				<input style="margin-left: 80px" type="submit" class="btn btn-primary btn-rounded" value="下载"/>
-				<input type="hidden" name="cadUrl" value="${orderInfo.designCad.cadUrl}" />
+				<input type="hidden" name="cadUrl" value="D:/fmc/message/priceSheet.wps" />
 				</form>
                 </tr>
-        			这里是公司介绍等。
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
                 </div><!--row-fluid-->
                 
@@ -49,7 +49,9 @@
         
         <!-- 这里引入你需要的js文件 -->
         <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-        
+        <script type="text/javascript">
+
+		</script>
         
         <%@include file="/common/footer.jsp" %>
     

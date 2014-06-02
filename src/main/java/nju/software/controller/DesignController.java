@@ -205,6 +205,7 @@ FileOperateUtil.Upload(request, url, null, fileid);
 	public void downloadCadSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String url = request.getParameter("cadUrl");
+		System.out.println(url+"------------------------");
 		FileOperateUtil.Download(response, url);
 	}
 
