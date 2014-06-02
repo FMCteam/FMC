@@ -613,7 +613,7 @@
 				<!--row-fluid-->
 			</div>
 			<div class="action">
-				<button class="btn btn-primary btn-rounded">
+				<button class="btn btn-primary btn-rounded norepeat">
 					<i class="icon-ok icon-white"></i>提交翻单
 				</button>
 			</div>

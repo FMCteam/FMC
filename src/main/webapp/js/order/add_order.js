@@ -223,7 +223,7 @@ function verify(){
 	hint+="ask_produce_period:"+ask_produce_period+"\n";
 	alert(hint);*/
 
-	
+	$("button.norepeat").attr("disabled","disabled");
 	return true;
 }
 
