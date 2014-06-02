@@ -86,12 +86,25 @@
 
 							</tr>
 							<tr>
-								<td><input type="text" name="money_name"
-									required="required" /></td>
-								<td><input type="text" name="money_number"
-									required="required" /></td>
-								<td><input type="text" name="money_bank"
-									required="required" /></td>
+								<td>
+									<select name="money_name" required="required" >
+									<option selected="selected">周莉</option >
+									</select>
+									</td>
+								<td>
+									<select name="money_number" required="required">
+									<option selected="selected">
+									11111111111111
+									</option>
+									</select>
+									</td>
+								<td>
+									<select name="money_bank" required="required">
+									<option selected="selected">
+										农业银行
+									</option>
+									</select>
+									</td>
 
 							</tr>
 							<tr>

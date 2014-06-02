@@ -14,6 +14,23 @@
         <div class="maincontent">
             <div class="maincontentinner">
                 <div class="row-fluid" style="min-height:300px;">
+                <tr>
+                <form action="${ctx }/order/downloadCadSubmit.do" method="post" 
+				nctype="multipart/form-data">
+				<span style="margin-right: 20px;font-size: 20px">智造链询价单原始单据</span>
+				<span>上传时间:2014-06-01</span>
+				<input style="margin-left: 80px" type="submit" class="btn btn-primary btn-rounded" value="下载"/>
+				</form>
+                </tr>
+                 <tr>
+                <form action="${ctx }/order/downloadCadSubmit.do" method="post" 
+				nctype="multipart/form-data">
+				<span style="margin-right: 20px;font-size: 20px">智造链</span>
+				<span>上传时间:2014-06-01</span>
+				<input style="margin-left: 80px" type="submit" class="btn btn-primary btn-rounded" value="下载"/>
+				<input type="hidden" name="cadUrl" value="${orderInfo.designCad.cadUrl}" />
+				</form>
+                </tr>
         			这里是公司介绍等。
                     <!--  如果是其它页面，这里是填充具体的内容。 -->
                 </div><!--row-fluid-->
