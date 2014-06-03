@@ -40,10 +40,10 @@
 	</tr>
 	<tr>
 		<td class="title" rowspan="4">其他成本</td>
-		<td class="title">裁剪费用</td>
-		<td class="title">管理费用</td>
-		<td class="title">缝制费用</td>
-		<td class="title">整烫费用</td>
+		<td class="title">裁剪费用（单件）</td>
+		<td class="title">管理费用（单件）</td>
+		<td class="title">缝制费用（单件）</td>
+		<td class="title">整烫费用（单件）</td>
 	</tr>
 
 	<tr>
@@ -53,10 +53,10 @@
 		<td>${orderInfo.quote.ironingCost}</td>
 	</tr>
 	<tr>
-		<td class="title">锁订费用</td>
-		<td class="title">包装费用</td>
-		<td class="title">其他费用</td>
-		<td class="title">设计费用</td>
+		<td class="title">锁订费用（单件）</td>
+		<td class="title">包装费用（单件）</td>
+		<td class="title">其他费用（单件）</td>
+		<td class="title">设计费用（整体）</td>
 	</tr>
 	<tr>
 		<td>${orderInfo.quote.nailCost}</td>
