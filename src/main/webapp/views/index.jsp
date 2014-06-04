@@ -15,12 +15,18 @@
             <div class="maincontentinner">
                 <div class="row-fluid" style="min-height:300px;">
                 <tr>
+                <a class="btn btn-primary btn-rounded">公用支付宝帐号：36933145@qq.com</a>
+                </tr>
+                <tr>
+                <a class="btn btn-primary btn-rounded">公用农业银行帐号：6228480424649506013</a>
+                </tr>
+                <tr>
                 <form action="${ctx }/design/downloadCadSubmit.do" method="post" 
 				nctype="multipart/form-data">
 				<span style="margin-right:80px;font-size: 20px">智造链询价单下载</span>
 				<span>上传时间:2014-06-01</span>
 				<input style="margin-left: 80px" type="submit" class="btn btn-primary btn-rounded" value="下载"/>
-				<input type="hidden" name="cadUrl" value="D:/fmc/message/inquirySheet.wps" />
+				<input type="hidden" name="cadUrl" value="D:/fmc/message/inquirySheet.doc" />
 				</form>
                 </tr>
                  <tr>
@@ -29,7 +35,7 @@
 				<span style="margin-right: 80px;font-size: 20px">智造链报价单下载</span>
 				<span>上传时间:2014-06-01</span>
 				<input style="margin-left: 80px" type="submit" class="btn btn-primary btn-rounded" value="下载"/>
-				<input type="hidden" name="cadUrl" value="D:/fmc/message/priceSheet.wps" />
+				<input type="hidden" name="cadUrl" value="D:/fmc/message/priceSheet.doc" />
 				</form>
                 </tr>
                     <!--  如果是其它页面，这里是填充具体的内容。 -->

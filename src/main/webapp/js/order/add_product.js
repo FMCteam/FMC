@@ -38,9 +38,10 @@
 			}
 			
 			 
-		}
+		});
 //		init();
 	});
+		
 
 
 	function table_addrow_onclick(table_name,col1_name,col2_name,col3_name){
