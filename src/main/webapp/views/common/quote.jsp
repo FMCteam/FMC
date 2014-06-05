@@ -72,8 +72,8 @@
 		<td class="title">客户报价</td>
 	</tr>
 	<tr>
-		<td>${orderInfo.quote.singleCost*orderInfo.order.askAmount+orderInfo.quote.designCost}</td>
-		<td>${orderInfo.quote.innerPrice}</td>
+		<td>${orderInfo.quote.singleCost*orderInfo.order.askAmount}</td>
+		<td>${orderInfo.quote.singleCost*orderInfo.order.askAmount}</td>
 		<td>${orderInfo.quote.profitPerPiece}</td>
 		<td>${orderInfo.quote.outerPrice}</td>
 	</tr>
