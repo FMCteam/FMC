@@ -1,21 +1,39 @@
 package nju.software.service.impl;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.DesignCadDAO;
+import nju.software.dao.impl.EmployeeDAO;
+import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
+import nju.software.dao.impl.MoneyDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.PackageDAO;
+import nju.software.dao.impl.PackageDetailDAO;
+import nju.software.dao.impl.ProduceDAO;
+import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
+import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.Accessory;
+import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
+import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.VersionData;
 import nju.software.model.OrderModel;
 import nju.software.model.QuoteModel;
 import nju.software.service.OrderService;
@@ -33,18 +51,9 @@ import org.springframework.stereotype.Service;
  */
 @Service("orderServiceImpl")
 public class OrderServiceImpl implements OrderService {
-	@Autowired
-	private OrderDAO orderDAO;
-	@Autowired
-	private QuoteDAO quoteDAO;
+	
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
-	private AccessoryDAO accessoryDAO;
-	@Autowired
-	private FabricDAO fabricDAO;
-	@Autowired
-	private LogisticsDAO logisticsDAO;
 
 	// 新增订单
 	public void addOrder(Order order) {
@@ -383,5 +392,158 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return null;
 	}
+
+	@Override
+	public List<Map<String, Object>> getModifyOrderList() {
+		// TODO Auto-generated method stub
+		Order o = new Order();
+		
+		List<Order> orderList = orderDAO.findByExample(o);
+		List<Map<String, Object>> list = new ArrayList<>();
+
+		for (Order order : orderList) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("taskTime", getTaskTime(order.getOrderTime()));
+			model.put("orderId", getOrderId(order));
+			list.add(model);
+		}
+		return list;
+	}
+	
+	public String getOrderId(Order order) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		return dateFormat.format(order.getOrderTime())
+				+ String.format("%06d", order.getOrderId());
+	}
+
+	public String getTaskTime(Date date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss");
+		return dateFormat.format(date);
+	}
+
+	@Autowired
+	private LogisticsDAO logisticsDAO;
+	@Autowired
+	private OrderDAO orderDAO;
+	@Autowired
+	private EmployeeDAO employeeDAO;
+	@Autowired
+	private CustomerDAO customerDAO;
+	@Autowired
+	private ProductDAO productDAO;
+	@Autowired
+	private PackageDAO packageDAO;
+	@Autowired
+	private PackageDetailDAO packageDetailDAO;
+	@Autowired
+	private AccessoryDAO accessoryDAO;
+	@Autowired
+	private FabricDAO fabricDAO;
+	@Autowired
+	private ProduceDAO produceDAO;
+	@Autowired
+	private MoneyDAO moneyDAO;
+	@Autowired
+	private VersionDataDAO versionDataDAO;
+	@Autowired
+	private DesignCadDAO cadDAO;
+	@Autowired
+	private QuoteDAO quoteDAO;
+	@Autowired
+	private FabricCostDAO fabricCostDAO;
+	@Autowired
+	private AccessoryCostDAO accessoryCostDAO;
+
+	@Override
+	public Map<String, Object> getModifyOrderDetail(Integer userId, int orderId) {
+		// TODO Auto-generated method stub
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		//TaskSummary task = jbpmAPIUtil.getTask(actorId, taskName, orderId);
+		Order order = orderDAO.findById(orderId);
+		//model.put("task", task);
+		//model.put("taskId", task.getId());
+		model.put("order", order);
+		model.put("customer",customerDAO.findById(order.getCustomerId()));
+		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+		model.put("logistics", logisticsDAO.findById(orderId));
+		model.put("fabrics", fabricDAO.findByOrderId(orderId));
+		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
+		List<DesignCad> cads = cadDAO.findByOrderId(orderId);
+		if (cads != null && cads.size() != 0) {
+			model.put("designCad", cads.get(0));
+		}
+		model.put("orderId", getOrderId(order));
+
+		Produce produce = new Produce();
+		produce.setOid(orderId);
+		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
+		model.put("sample", produceDAO.findByExample(produce));
+
+		produce.setType(Produce.TYPE_PRODUCE);
+		model.put("produce", produceDAO.findByExample(produce));
+
+		model.put("versions", versionDataDAO.findByOrderId(orderId));
+		Quote quote = quoteDAO.findById(orderId);
+		model.put("quote", quote);
+		List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(orderId);
+		model.put("fabricCosts", fabricCosts);
+		List<AccessoryCost> accessoryCosts = accessoryCostDAO
+				.findByOrderId(orderId);
+		model.put("accessoryCosts", accessoryCosts);
+		return model;
+	}
+
+	@Override
+	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			List<Produce> produces, List<Produce> sample_produces,
+			List<VersionData> versions, DesignCad cad, int userId) {
+		// TODO Auto-generated method stub
+		// 添加订单信息
+		orderDAO.merge(order);
+		Integer orderId = order.getOrderId();
+		// 添加面料信息
+		fabricDAO.deleteByProperty("orderId", orderId);
+		for (Fabric fabric : fabrics) {
+			fabric.setOrderId(orderId);
+			fabricDAO.save(fabric);
+		}
+		// 添加辅料信息
+		accessoryDAO.deleteByProperty("orderId", orderId);
+		for (Accessory accessory : accessorys) {
+			accessory.setOrderId(orderId);
+			accessoryDAO.save(accessory);
+		}
+		// 添加大货加工单信息
+		produceDAO.deleteProduceByProperty("oid", orderId);
+		for (Produce produce : produces) {
+			produce.setOid(orderId);
+			produceDAO.save(produce);
+		}
+		// 添加样衣加工单信息
+		produceDAO.deleteSampleProduceByProperty("oid", orderId);
+		for (Produce produce : sample_produces) {
+			produce.setOid(orderId);
+			produceDAO.save(produce);
+		}
+		// 添加版型数据
+		versionDataDAO.deleteByProperty("orderId", orderId);
+		for (VersionData version : versions) {
+			version.setOrderId(orderId);
+			versionDataDAO.save(version);
+		}
+		// 添加物流信息
+		logistics.setOrderId(orderId);
+		logisticsDAO.merge(logistics);
+
+		// cad
+		cadDAO.merge(cad);
+
+	}
+
 
 }
