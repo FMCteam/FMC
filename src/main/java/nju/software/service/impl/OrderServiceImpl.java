@@ -11,13 +11,13 @@ import java.util.Map;
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
-<<<<<<< HEAD
+
 import nju.software.dao.impl.EmployeeDAO;
-=======
+
 import nju.software.dao.impl.DesignCadDAO;
-import nju.software.dao.impl.EmployeeDAO;
+
 import nju.software.dao.impl.FabricCostDAO;
->>>>>>> df0db7029d4d0953ec03726682f750bd698ee0ff
+
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.MoneyDAO;
@@ -398,7 +398,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-<<<<<<< HEAD
+
 	public void endOrder(Integer orderId) {
 		// TODO Auto-generated method stub
 		Order order=orderDAO.findById(orderId);
@@ -417,7 +417,13 @@ public class OrderServiceImpl implements OrderService {
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
-=======
+			list.add(model);
+		}
+		return list;
+	}
+			
+			
+			
 	public List<Map<String, Object>> getModifyOrderList() {
 		// TODO Auto-generated method stub
 		Order o = new Order();
@@ -431,19 +437,15 @@ public class OrderServiceImpl implements OrderService {
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("taskTime", getTaskTime(order.getOrderTime()));
 			model.put("orderId", getOrderId(order));
->>>>>>> df0db7029d4d0953ec03726682f750bd698ee0ff
+
 			list.add(model);
 		}
 		return list;
 	}
-<<<<<<< HEAD
-	@Autowired
-	private CustomerDAO customerDAO;
-	@Autowired
-	private EmployeeDAO employeeDAO;
-	@Autowired
+
+
 	private ServiceUtil service;
-=======
+
 	
 	public String getOrderId(Order order) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -579,5 +581,5 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 
->>>>>>> df0db7029d4d0953ec03726682f750bd698ee0ff
+
 }
