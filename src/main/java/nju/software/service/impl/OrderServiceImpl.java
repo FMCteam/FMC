@@ -444,7 +444,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 
-	private ServiceUtil service;
+	
 
 	
 	public String getOrderId(Order order) {
@@ -481,6 +481,8 @@ public class OrderServiceImpl implements OrderService {
 	private ProduceDAO produceDAO;
 	@Autowired
 	private MoneyDAO moneyDAO;
+	@Autowired
+	private ServiceUtil service;
 	@Autowired
 	private VersionDataDAO versionDataDAO;
 	@Autowired
