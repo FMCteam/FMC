@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
@@ -384,4 +386,33 @@ public class OrderServiceImpl implements OrderService {
 		return null;
 	}
 
+	@Override
+	public void endOrder(Integer orderId) {
+		// TODO Auto-generated method stub
+		Order order=orderDAO.findById(orderId);
+		order.setOrderState("1");
+		orderDAO.attachDirty(order);
+		jbpmAPIUtil.abortProcess(order.getProcessId());
+	}
+
+	@Override
+	public List<Map<String,Object>> findByProperty(String propertyName, Object value) {
+		// TODO Auto-generated method stub
+		List<Order> orders = orderDAO.findByProperty(propertyName, value);
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orders) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+			list.add(model);
+		}
+		return list;
+	}
+	@Autowired
+	private CustomerDAO customerDAO;
+	@Autowired
+	private EmployeeDAO employeeDAO;
+	@Autowired
+	private ServiceUtil service;
 }

@@ -65,8 +65,13 @@
 						</c:forEach>
 					</table>
 				</div>
+				<div class="action">
+					<a class="btn btn-primary"
+						href="${ctx}/logistics/mobile/warehouseDetail.do?orderId=${orderInfo.order.orderId}">入库</a>
+				</div>
 			</div>
 		</div>
+
 	</div>
 	<div class="footer">
 		<div class="footer-left">

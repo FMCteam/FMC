@@ -125,6 +125,7 @@ table.tablesorter thead tr .headerSortDown {
 								class="iconfa-pencil"></span> 订单管理</a>
 							<ul>
 								<li><a href="${ctx}/order/orderList.do">查看订单</a></li>
+								<li><a href="${ctx}/order/endList.do">被终止订单</a></li>
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_market==true}">

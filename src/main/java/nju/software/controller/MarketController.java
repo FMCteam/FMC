@@ -1670,6 +1670,7 @@ public class MarketController {
 		if(list!=null&&list.size()!=0){
 			model.addAttribute("pages", list.get(0).get("pages"));
 		}
+		
 		//System.out.println("===========ok:"+list.size());
 		return "/market/orderList";
 	}
@@ -1678,9 +1679,12 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String orderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		Map<String, Object> orderInfo = marketService.getOrderDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
+		model.addAttribute("role",account.getUserRole());
 		return "/market/orderDetail";
 	}
 }

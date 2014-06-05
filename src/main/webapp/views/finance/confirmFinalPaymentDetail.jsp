@@ -56,17 +56,17 @@
 							<tr>
 								<td>${orderInfo.moneyName}</td>
 								<td>${orderInfo.order.discount}</td>
-								<td>(${(orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price}-${orderInfo.order.sampleAmount*orderInfo.samplePrice}-${orderInfo.order.discount})*0.7=<span id="pay">${((orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price-orderInfo.order.sampleAmount*orderInfo.samplePrice-orderInfo.order.discount)*0.7}</span></td>
+								<td>${(orderInfo.number)*orderInfo.price}-${orderInfo.order.discount}-${orderInfo.deposit}=<span id="pay">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
 							</tr>
 							<tr>
-								<td class="title">大货件数</td>
+								<td class="title">实际大货件数</td>
 								<td class="title">大货单价</td>
 								<td class="title">大货总价</td>
 							</tr>
 							<tr>
-								<td>${orderInfo.number}+${orderInfo.order.sampleAmount}</td>
+								<td>${orderInfo.number}</td>
 								<td>${orderInfo.price}</td>
-								<td>${(orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price}</td>
+								<td>${(orderInfo.number)*orderInfo.price}</td>
 							</tr>
 							<tr>
 								<td class="title">样衣件数</td>

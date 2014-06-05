@@ -28,6 +28,8 @@ public interface OrderService {
 	
 	public Order getOrderById(int orderId);
 	
+	public List<Map<String,Object>>findByProperty(String propertyName, Object value);
+	
 	public boolean updateOrder(Order order);
 	public List<Order> findAll();
 	public String addOrder(Order order,List<Fabric>fabrics,List<Accessory>accessorys,Logistics logistics);
@@ -44,4 +46,6 @@ public interface OrderService {
 	public List<QuoteModel> getQuoteByActorAndTask(String actor,String taskName);
 	
 	public QuoteModel getQuoteByOrderAndPro(String actor,String taskName,int orderId);
+	
+	public void endOrder(Integer orderId);
 }
