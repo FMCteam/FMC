@@ -1345,37 +1345,34 @@ public class MarketController {
 		//order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 		
-//		String sampleClothesPicture = request.getParameter("sample_clothes_picture");
-//		if(!sampleClothesPicture.equals("")){
-//			File file = new File(order.getSampleClothesPicture());
-//			if(file.exists()){
-//				file.delete();
-//			}
-//			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-//			MultipartFile mfile = multipartRequest.getFile("sample_clothes_picture");
-//			String filename = mfile.getOriginalFilename();
-//			String url = MarketServiceImpl.UPLOAD_DIR_SAMPLE + order.getOrderId();
-//			String fileid = "sample_clothes_picture";
-//			FileOperateUtil.Upload(request, url, null, fileid);
-//			url = url + "/" + filename;
-//			order.setSampleClothesPicture(url);
-//		}
-//		String refPicture = request.getParameter("reference_picture");
-//		if(!refPicture.equals("")){
-//			File file = new File(order.getReferencePicture());
-//			if(file.exists()){
-//				file.delete();
-//			}
-//			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-//			MultipartFile mfile = multipartRequest.getFile("reference_picture");
-//			String filename = mfile.getOriginalFilename();
-//			String url = MarketServiceImpl.UPLOAD_DIR_REFERENCE + order.getOrderId();
-//			String fileid = "reference_picture";
-//			FileOperateUtil.Upload(request, url, null, fileid);
-//			url = url + "/" + filename;
-//			order.setReferencePicture(url);
-//		}
-
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
+			File file = new File(order.getSampleClothesPicture());
+			if(file.exists()){
+				file.delete();
+			}
+			MultipartFile mfile = multipartRequest.getFile("sample_clothes_picture");
+			String filename = mfile.getOriginalFilename();
+			String url = MarketServiceImpl.UPLOAD_DIR_SAMPLE + order.getOrderId();
+			String fileid = "sample_clothes_picture";
+			FileOperateUtil.Upload(request, url, null, fileid);
+			url = url + "/" + filename;
+			order.setSampleClothesPicture(url);
+		}
+		if (!multipartRequest.getFile("reference_picture").isEmpty()) {
+			File file = new File(order.getReferencePicture());
+			if(file.exists()){
+				file.delete();
+			}
+			MultipartFile mfile = multipartRequest.getFile("reference_picture");
+			String filename = mfile.getOriginalFilename();
+			String url = MarketServiceImpl.UPLOAD_DIR_REFERENCE + order.getOrderId();
+			String fileid = "reference_picture";
+			FileOperateUtil.Upload(request, url, null, fileid);
+			url = url + "/" + filename;
+			order.setReferencePicture(url);
+		}
+		
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		boolean editok = request.getParameter("editok").equals("true") ? true

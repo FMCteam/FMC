@@ -4,13 +4,13 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<form id="verify_form" method="post" onsubmit="return verify();"
-			action="${ctx }/market/modifyOrderSubmit.do"
+			action="${ctx }/account/modifyOrderSubmit.do"
 			enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
 				<!--  如果是其它页面，这里是填充具体的内容。 -->
 				<ul class="nav nav-tabs detail" id="tab">
-					<li class="task-name">修改询单</li>
-					<li><a href="#comment" data-toggle="tab">修改意见</a></li>
+					<li class="task-name">修改订单</li>
+					<!-- <li><a href="#quote" data-toggle="tab">报价信息</a></li> -->
 					<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 					<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 					<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
@@ -60,11 +60,11 @@
 								<td class="title">订单来源<span class="required">*</span></td>
 							</tr>
 							<tr>
-								<td><input type="text" class="span12" name="style_name"
+								<td><input type="text" class="span12" name="style_name" required="required"
 									value="${orderModel.order.styleName }" /></td>
-								<td><input type="text" class="span12" name="clothes_type"
+								<td><input type="text" class="span12" name="clothes_type" required="required"
 									value="${orderModel.order.clothesType }" /></td>	
-								<td><input type="radio" name="style_sex"
+								<td><input type="radio" name="style_sex" 
 									${orderModel.order.styleSex eq '男'?'checked="checked"':'' }
 									value="男" /> <span>男</span> <input type="radio"
 									name="style_sex" value="女"
@@ -78,7 +78,7 @@
 									name="style_season" value="秋冬"
 									${orderModel.order.styleSeason eq '秋冬'?'checked="checked"':'' } />
 									<span>秋冬</span></td>
-								<td><input type="text" class="span12" name="order_source"
+								<td><input type="text" class="span12" name="order_source" required="required"
 									value="${orderModel.order.orderSource }" /></td>
 							</tr>
 							<tr>
@@ -137,7 +137,7 @@
 							</tr>
 							<tr>
 								<td class="title">参考链接</td>
-								<td colspan="5"><input class="span12" type="url" name="reference_url" value="${orderModel.order.referenceUrl }"/></td>
+								<td colspan="5"><input class="span12" type="url" name="reference_url" value="${orderModel.order.referenceUrl }" required="required" /></td>
 							</tr>
 						</table>
 					</div>
@@ -212,7 +212,7 @@
 									value="1" /> 是 <input type="radio"
 									${orderModel.order.hasPostedSampleClothes==0?'checked="checked"':'' }
 									name="has_posted_sample_clothes" value="0" /> 否</td>
-								<td colspan="2"><input class="span6" type="date"
+								<td colspan="2"><input class="span6" type="date" required="required"
 									name="in_post_sample_clothes_time"
 									value="${fn:substring(orderModel.logistics.inPostSampleClothesTime,0,10) }" /></td>
 								<td><select name="in_post_sample_clothes_type"
@@ -275,7 +275,7 @@
 										</c:if>
 								</select></td>
 								<td colspan="2"><input class="span12" type="text"
-									name="in_post_sample_clothes_number"
+									name="in_post_sample_clothes_number" required="required"
 									value="${orderModel.logistics.inPostSampleClothesNumber }" /></td>
 							</tr>
 							<tr>
@@ -292,19 +292,19 @@
 									${orderModel.order.isNeedSampleClothes==0?'checked="checked"':'' }
 									name="is_need_sample_clothes" value="0" /> 否</td>
 								<td><input class="span12" type="text"
-									name="sample_clothes_name"
+									name="sample_clothes_name" required="required"
 									value="${orderModel.logistics.sampleClothesName }" /></td>
 								<td><input class="span12" type="text"
-									name="sample_clothes_phone"
+									name="sample_clothes_phone" required="required"
 									value="${orderModel.logistics.sampleClothesPhone }" /></td>
 								<td colspan="3"><input class="span12" type="text"
-									name="sample_clothes_address"
+									name="sample_clothes_address" required="required"
 									value="${orderModel.logistics.sampleClothesAddress }" /></td>
 							</tr>
 							<tr>
 								<td class="title">其他备注</td>
 								<td colspan="5"><input class="span12" type="text"
-									name="sample_clothes_remark"
+									name="sample_clothes_remark" required="required"
 									value="${orderModel.logistics.sampleClothesRemark }" /></td>
 							</tr>
 							<tr>
@@ -334,23 +334,23 @@
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="title" rowspan="2">加工信息</td>
-								<td class="span2 title" colspan="2">样衣总数<span class="required">*</span></td>
+								<!--<td class="span2 title" colspan="2">样衣总数<span class="required">*</span></td>-->
 								<td class="span2 title" colspan="2">大货总数<span class="required">*</span></td>
 								<td class="span2 title" colspan="2">最迟交货时间</td>
 								<td class="span2 title" colspan="2">完工时间（天）</td>
 							</tr>
 							<tr>
-								<td class="span2" colspan="2"><input class="span6"
+								<!-- <td class="span2" colspan="2"><input class="span6"
 									type="number" name="sample_amount"
-									value="${orderModel.order.sampleAmount }" /></td>
+									value="${orderModel.order.sampleAmount }" /></td> -->
 								<td class="span2" colspan="2"><input class="span6"
-									type="number" name="ask_amount"
+									type="number" name="ask_amount" required="required"
 									value="${orderModel.order.askAmount }" /></td>
 								<td class="span2" colspan="2"><input class="span8"
-									type="date" name="ask_deliver_date"
+									type="date" name="ask_deliver_date" required="required"
 									value="${fn:substring(orderModel.order.askDeliverDate,0,10) }" /></td>
 								<td class="span2" colspan="2"><input class="span4"
-									type="number" name="ask_produce_period"
+									type="number" name="ask_produce_period" required="required"
 									value="${orderModel.order.askProducePeriod }" /></td>
 							</tr>
 						</table>
@@ -552,41 +552,26 @@
 							</tr>
 						</table>
 					</div>
-					<div class="tab-pane" id="comment">
-						<table
-							class="table table-striped table-bordered table-hover detail">
-							<tr>
-								<td class="title">设计部意见</td>
-								<td colspan="5">${designComment }</td>
-							</tr>
-							<tr>
-								<td class="title">采购部意见</td>
-								<td colspan="5">${purchaseComment }</td>
-							</tr>
-							<tr>
-								<td class="title">生产部意见</td>
-								<td colspan="5">${produceComment }</td>
-							</tr>
-						</table>
-					</div>
+					<!-- <div class="tab-pane" id="quote">
+						
+					</div> -->
 				</div>
 
 				<input type="hidden" name="customerId"
 					value="${orderModel.order.customerId}" /> <input type="hidden"
 					name="id" value="${orderModel.order.orderId}" /> <input
-					id="verify_val" type="hidden" name="editok" value="" /> <input
-					type="hidden" name="task_id" value="${orderModel.task.id}" />
+					id="verify_val" type="hidden" name="editok" value="" /> 
 
 				<!--widgetcontent-->
 				<!--row-fluid-->
 			</div>
 			<div class="action">
 				<button id="agree_detail" class="btn btn-primary btn-rounded">
-					<i class="icon-ok icon-white"></i>保存
+					<i class="icon-ok icon-white"></i>保存修改
 				</button>
-				<button id="disagree_detail" class="btn btn-danger btn-rounded">
+				<!-- <button id="disagree_detail" class="btn btn-danger btn-rounded">
 					<i class="icon-remove icon-white"></i>删除
-				</button>
+				</button> -->
 			</div>
 		</form>
 
