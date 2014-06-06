@@ -29,7 +29,12 @@
 				</div>
 				<div class="tab-pane active" id="warehouse">
 					<%@include file="/views/common/warehouse.jsp"%>
+					<div class="action">
+						<a class="btn btn-primary"
+							href="${ctx}/logistics/mobile/sendClothesDetail.do?orderId=${orderInfo.order.orderId}">发货</a>
+					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>

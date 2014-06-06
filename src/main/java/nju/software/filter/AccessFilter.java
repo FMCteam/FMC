@@ -83,7 +83,7 @@ public class AccessFilter implements Filter {
 		Account curUser = (Account) session.getAttribute("cur_user");
 		//System.out.println("null "+type);
 		if (curUser == null) {
-			// System.out.println("no user");
+			 System.out.println("no user");
 			// todo 从cookie读取数据，看看是否是记住密码用户。
 			has_access = false;
 			//System.out.println("null "+type);

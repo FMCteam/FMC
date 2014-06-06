@@ -28,10 +28,16 @@
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
 			</div>
+			<c:if test="${orderInfo.order.orderState!='1'}">
 			<div class="action">
 				<a class="btn btn-primary"
 					href="${ctx}/image.do?orderId=${orderInfo.order.orderId}">订单进度</a>
+				<c:if test="${role=='ADMIN'}">
+					<a class="btn btn-danger" style="color: white" onclick="return confirm('确定终止订单？');"
+						href="${ctx}/order/end.do?orderId=${orderInfo.order.orderId}">终止订单</a>
+				</c:if>
 			</div>
+			</c:if>
 		</div>
 	</div>
 	<!--row-fluid-->

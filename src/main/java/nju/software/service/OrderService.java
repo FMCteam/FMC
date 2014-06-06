@@ -5,11 +5,14 @@ import java.util.Map;
 
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.VersionData;
 import nju.software.model.OrderModel;
 import nju.software.model.QuoteModel;
 
@@ -28,6 +31,8 @@ public interface OrderService {
 	
 	public Order getOrderById(int orderId);
 	
+	public List<Map<String,Object>>findByProperty(String propertyName, Object value);
+	
 	public boolean updateOrder(Order order);
 	public List<Order> findAll();
 	public String addOrder(Order order,List<Fabric>fabrics,List<Accessory>accessorys,Logistics logistics);
@@ -44,4 +49,18 @@ public interface OrderService {
 	public List<QuoteModel> getQuoteByActorAndTask(String actor,String taskName);
 	
 	public QuoteModel getQuoteByOrderAndPro(String actor,String taskName,int orderId);
+
+	
+	public void endOrder(Integer orderId);
+
+
+	public List<Map<String, Object>> getModifyOrderList();
+
+	public Map<String, Object> getModifyOrderDetail(Integer userId, int id);
+
+	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			List<Produce> produces, List<Produce> sample_produces,
+			List<VersionData> versions, DesignCad cad, int user_id);
+
 }

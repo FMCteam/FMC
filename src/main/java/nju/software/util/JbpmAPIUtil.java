@@ -340,5 +340,8 @@ public class JbpmAPIUtil {
 					hornetQHTWorkItemHandler);
 		}
 	}
-
+	
+	public void abortProcess(long processId){
+		ksession.abortProcessInstance(processId);
+	}
 }

@@ -36,6 +36,7 @@ public class MainController {
 		
 //		List<Teacher> t_list = teacherService.getAllTeachers();
 //		model.addAttribute("teacherList", t_list);
+		//System.out.println("hree");
 		HttpSession session = request.getSession();
 		Account cur_user = (Account) session.getAttribute("cur_user");
 		 
@@ -45,9 +46,9 @@ public class MainController {
 			String user_agent = request.getHeader("user-agent").toLowerCase();
 			
 			if(user_agent.contains("windows phone") || user_agent.contains("android") || user_agent.contains("iphone")) {
-				return "login";
+				return "/login";
 			} else {
-				return "login";
+				return "/login";
 			}
 			
 		}
