@@ -18,7 +18,7 @@
                 <a class="btn btn-primary btn-rounded">公用支付宝帐号：36933145@qq.com</a>
                 </tr>
                 <tr>
-                <a class="btn btn-primary btn-rounded">公用农业银行帐号：6228480424649506013</a>
+                <a class="btn btn-primary btn-rounded">公用农业银行帐号：6228480424649506013 &nbsp&nbsp&nbsp  开户人:葛祖民</a>
                 </tr>
                 <tr>
                 <form action="${ctx }/design/downloadCadSubmit.do" method="post" 
