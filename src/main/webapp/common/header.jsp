@@ -126,8 +126,9 @@ table.tablesorter thead tr .headerSortDown {
 							<ul>
 								<li><a href="${ctx}/order/orderList.do">查看订单</a></li>
 								<li><a href="${ctx}/order/endList.do">被终止订单</a></li>
-								<li><a href="${ctx}/account/modifyOrderList.do">修改订单</a></li>
-
+								<c:if test="${USER_user_name eq 'admin'}">
+									<li><a href="${ctx}/account/modifyOrderList.do">修改订单</a></li>
+								</c:if>
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_market==true}">
