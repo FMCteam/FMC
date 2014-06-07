@@ -97,6 +97,11 @@ public class OrderController {
 		public String modifyOrderSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 
+			HttpSession session = request.getSession();
+			Account account = (Account) session.getAttribute("cur_user");
+			if(!account.getUserName().equals("admin")){
+				return "redirect:/account/modifyOrderList.do";
+			}
 			String s_id = request.getParameter("id");
 			//String s_task_id = request.getParameter("task_id");
 			int id = Integer.parseInt(s_id);
@@ -383,8 +388,6 @@ public class OrderController {
 				order.setReferencePicture(url);
 			}
 
-			HttpSession session = request.getSession();
-			Account account = (Account) session.getAttribute("cur_user");
 //			boolean editok = request.getParameter("editok").equals("true") ? true
 //					: false;
 			orderService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
