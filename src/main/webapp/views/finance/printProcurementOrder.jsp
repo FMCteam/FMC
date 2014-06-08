@@ -27,15 +27,21 @@ body {
 	text-align: center;
 	padding-left: 50px;
 	padding-right: 50px;
+	margin-top: 2px;
 }
 
-h2.title {
+* {
+	
+}
+
+h3.title {
 	font-weight: bold;
 	text-align: center;
+	margin: 0px 0px 2px 0px;
 }
 
 td {
-	padding: 5px;
+	padding: 2px;
 	text-align: left;
 }
 
@@ -49,13 +55,17 @@ table.table td.center {
 	text-align: center;
 	vertical-align: middle;
 }
+
+table.table.table-bordered{
+	margin: 13px 0px 10px 0px;
+}
 </style>
 </head>
 
 <body>
 	<div style="position: relative;">
-		<span style="position:absolute;bottom: 5px;right: 0px;">编号
-			:______________</span>
+		<span style="position:absolute;bottom: 5px;right: 0px;">订单编号:${orderInfo.orderId}
+		</span>
 		<h3 class="title">好多衣裁剪补货单</h3>
 	</div>
 	<table class="table table-bordered">
@@ -129,35 +139,27 @@ table.table td.center {
 			<td style="width: 30%">签字：</td>
 			<td style="width: 20% ;text-align: center;">共______张</td>
 		</tr>
-		<tr>
-			<td>&nbsp</td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
+
 	</table>
 	<table class="table table-bordered">
 		<tr>
 			<td rowspan="3" class="center span2">面料出库</td>
 			<td class="center span2">名称</td>
-			<td class="center span2"></td>
-			<td class="center span2"></td>
-			<td class="center span2"></td>
-			<td class="center span2"></td>
+			<c:forEach var="fabric" items="${orderInfo.fabrics}">
+				<td class="center span2">${fabric.fabricName}</td>
+			</c:forEach>
 		</tr>
 		<tr>
 			<td class="center">出库米数</td>
-			<td class="center"></td>
-			<td class="center"></td>
-			<td class="center"></td>
-			<td class="center"></td>
+			<c:forEach var="fabric" items="${orderInfo.fabrics}">
+				<td class="center span2"></td>
+			</c:forEach>
 		</tr>
 		<tr>
 			<td class="center">实际裁剪数</td>
-			<td class="center"></td>
-			<td class="center"></td>
-			<td class="center"></td>
-			<td class="center"></td>
+			<c:forEach var="fabric" items="${orderInfo.fabrics}">
+				<td class="center span2"></td>
+			</c:forEach>
 		</tr>
 	</table>
 	<table class="table table-bordered">
@@ -192,7 +194,7 @@ table.table td.center {
 	</table>
 
 	<p id="info">
-		<textarea class="input" rows="5">备注:</textarea>
+		<textarea class="input" rows="3">备注:</textarea>
 	</p>
 
 </body>
