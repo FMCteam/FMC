@@ -8,7 +8,7 @@
 
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">${orderInfo.taskName}</li>
-				<li  class="active"><a href="#finance" data-toggle="tab">${orderInfo.tabName}</a></li>
+				<li class="active"><a href="#finance" data-toggle="tab">${orderInfo.tabName}</a></li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
@@ -39,6 +39,9 @@
 				<div class="tab-pane  active" id="finance">
 					<%@include file="/views/finance/finance.jsp"%>
 				</div>
+				<a
+					href="${ctx}/finance/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
+					class="btn btn-primary btn-rounded" target="_blank">打印补货单</a>
 			</div>
 		</div>
 	</div>

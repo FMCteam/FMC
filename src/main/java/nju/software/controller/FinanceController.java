@@ -72,6 +72,17 @@ public class FinanceController {
 		financeService.confirmSampleMoneySubmit(actorId, taskId, result, money);
 		return "forward:/finance/confirmSampleMoneyList.do";
 	}
+	
+	
+	@RequestMapping(value = "/finance/printProcurementOrder.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String printProcurementOrder(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		Map<String,Object>orderInfo=financeService.getPrintProcurementOrderDetail(orderId);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/finance/printProcurementOrder";
+	}
 
 	// ===========================定金确认===================================
 	@RequestMapping(value = "/finance/confirmDepositList.do")
