@@ -42,7 +42,7 @@
 					</tbody>
 				</table>
 			</section>
-		<!--	<div class="dataTables_paginate paging_full_numbers"
+	    	<div class="dataTables_paginate paging_full_numbers"
 				id="dyntable_paginate" style="float:right;margin-top: 20px">
 				<c:if test="${page==1 }">
 					<a tabindex="0"
@@ -54,20 +54,20 @@
 				</c:if>
 				<c:if test="${page>1 }">
 					<a tabindex="0" class="first paginate_button" id="dyntable_first"
-						href="${ctx }/customer/search.do?page=1&number_per_page=1">首页</a>
+						href="${ctx }/account/customerList.do?page=1&number_per_page=10">首页</a>
 					<a tabindex="0" class="previous paginate_button"
 						id="dyntable_previous"
-						href="${ctx }/customer/search.do?page=${page-1 }&number_per_page=1">上一页</a>
+						href="${ctx }/account/customerList.do?page=${page-1 }&number_per_page=10">上一页</a>
 				</c:if>
 				<c:if test="${page_number<6&&page_number>0}">
 					<c:forEach var="i" begin="1" end="${page_number }">
 						<c:if test="${page!=i }">
 							<a tabindex="0" class="paginate_button"
-								href="${ctx }/customer/search.do?page=${i }&number_per_page=1">${i }</a>
+								href="${ctx }/account/customerList.do?page=${i}&number_per_page=10">${i}</a>
 						</c:if>
 						<c:if test="${page==i }">
 							<a tabindex="0" class="paginate_active"
-								href="${ctx }/customer/search.do?page=${i }&number_per_page=1">${i }</a>
+								href="${ctx }/account/customerList.do?page=${i}&number_per_page=10">${i}</a>
 						</c:if>
 					</c:forEach>
 				</c:if>
@@ -77,11 +77,11 @@
 							<c:forEach var="i" begin="1" end="5">
 								<c:if test="${page!=i }">
 									<a tabindex="0" class="paginate_button"
-										href="${ctx }/customer/search.do?page=${i }&number_per_page=1">${i }</a>
+										href="${ctx }/account/customerList.do?page=${i}&number_per_page=10">${i}</a>
 								</c:if>
 								<c:if test="${page==i }">
 									<a tabindex="0" class="paginate_active"
-										href="${ctx }/customer/search.do?page=${i }&number_per_page=1">${i }</a>
+										href="${ctx }/account/customerList.do?page=${i}&number_per_page=10">${i}</a>
 								</c:if>
 							</c:forEach>
 						</c:when>
@@ -90,11 +90,11 @@
 								end="${page_number }">
 								<c:if test="${page!=i }">
 									<a tabindex="0" class="paginate_button"
-										href="${ctx }/customer/search.do?page=${i }&number_per_page=1">${i }</a>
+										href="${ctx }/account/customerList.do?page=${i }&number_per_page=10">${i }</a>
 								</c:if>
 								<c:if test="${page==i }">
 									<a tabindex="0" class="paginate_active"
-										href="${ctx }/customer/search.do?page=${i }&number_per_page=1">${i }</a>
+										href="${ctx }/account/customerList.do?page=${i }&number_per_page=10">${i }</a>
 								</c:if>
 							</c:forEach>
 						</c:when>
@@ -102,11 +102,11 @@
 							<c:forEach var="i" begin="${page-2 }" end="${page+2 }">
 								<c:if test="${page!=i }">
 									<a tabindex="0" class="paginate_button"
-										href="${ctx }/customer/search.do?page=${i }&number_per_page=1">${i }</a>
+										href="${ctx }/account/customerList.do?page=${i }&number_per_page=10">${i }</a>
 								</c:if>
 								<c:if test="${page==i }">
 									<a tabindex="0" class="paginate_active"
-										href="${ctx }/customer/search.do?page=${i }&number_per_page=1">${i }</a>
+										href="${ctx }/account/customerList.do?page=${i }&number_per_page=10">${i }</a>
 								</c:if>
 							</c:forEach>
 						</c:otherwise>
@@ -114,9 +114,9 @@
 				</c:if>
 				<c:if test="${page<page_number }">
 					<a tabindex="0" class="next paginate_button" id="dyntable_next"
-						href="${ctx }/customer/search.do?page=${page+1 }&number_per_page=1">下一页</a>
+						href="${ctx }/account/customerList.do?page=${page+1 }&number_per_page=10">下一页</a>
 					<a tabindex="0" class="last paginate_button" id="dyntable_last"
-						href="${ctx }/customer/search.do?page=${page_number }&number_per_page=1">尾页</a>
+						href="${ctx }/account/customerList.do?page=${page_number }&number_per_page=10">尾页</a>
 				</c:if>
 				<c:if test="${page==page_number&&page_number>0 }">
 					<a tabindex="0"
@@ -126,7 +126,7 @@
 						class="last paginate_button paginate_button_disabled"
 						id="dyntable_last">尾页</a>
 				</c:if>
-			</div> -->
+			</div> 
 
 		</div>
 		<!--row-fluid-->

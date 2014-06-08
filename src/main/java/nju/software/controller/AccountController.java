@@ -339,28 +339,30 @@ public class AccountController {
 	@Transactional(rollbackFor = Exception.class)
 	public String customerList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
+		int page;
+		int numberPerPage=10;
 		String s_page = request.getParameter("page");
-		String s_number = request.getParameter("number_per_page");
-		System.out.println("page: " + s_page);
-		System.out.println("number: " + s_number);
 		if (s_page == null || s_page.equals("")) {
+			s_page = "1";
+		}
+		//String s_number = request.getParameter("number_per_page");
+		/*if (s_page == null || s_page.equals("")) {
 			s_page = "1";
 		}
 		if (s_number == null || s_number.equals("")) {
 			s_number = "10";
-		}
+		}*/
+		//int pageNumber = (employeeService.getcount() - 1) / numberPerPage + 1;
 		System.out.println("page: " + s_page);
-		System.out.println("number: " + s_number);
+		//System.out.println("number: " + s_number);
 		Map<String, Object> m = new HashMap<String, Object>();
 		m.put("page", Integer.parseInt(s_page));
-		m.put("number_per_page", Integer.parseInt(s_number));
+		m.put("number_per_page", numberPerPage);
 		List<Object> o = this.customerService.listCustomer(m);
 		model.addAttribute("customer_list", o.get(0));
 		model.addAttribute("page_number",
 				((HashMap<String, Object>) o.get(1)).get("page_number"));
-		model.addAttribute("page",
-				((HashMap<String, Object>) o.get(1)).get("page"));
+		model.addAttribute("page",s_page);
 		model.addAttribute("notify", "顾客列表");
 		return "/account/customerList";
 	}
