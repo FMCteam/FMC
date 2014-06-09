@@ -21,7 +21,7 @@
                 <a class="btn btn-primary btn-rounded">公用农业银行帐号：6228480424649506013 &nbsp&nbsp&nbsp  开户人:葛祖民</a>
                 </tr>
                 <tr>
-                <form action="${ctx }/design/downloadCadSubmit.do" method="post" 
+                <form action="${ctx }/downloadCadSubmit.do" method="post" 
 				nctype="multipart/form-data">
 				<span style="margin-right:80px;font-size: 20px">智造链询价单下载</span>
 				<span>上传时间:2014-06-01</span>
@@ -30,7 +30,7 @@
 				</form>
                 </tr>
                  <tr>
-                <form action="${ctx }/design/downloadCadSubmit.do" method="post" 
+                <form action="${ctx }/downloadCadSubmit.do" method="post" 
 				nctype="multipart/form-data">
 				<span style="margin-right: 80px;font-size: 20px">智造链报价单下载</span>
 				<span>上传时间:2014-06-01</span>

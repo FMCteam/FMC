@@ -199,7 +199,7 @@ FileOperateUtil.Upload(request, url, null, fileid);
 	}
 
 	
-	@RequestMapping(value = "design/downloadCadSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/downloadCadSubmit.do", method = RequestMethod.POST)
 	@ResponseBody
 	@Transactional(rollbackFor = Exception.class)
 	public void downloadCadSubmit(HttpServletRequest request,
