@@ -265,7 +265,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public List<Map<String, Object>> getScanClothesList() {
 		// TODO Auto-generated method stub
-		return getLogisticsList(TASK_SEND_CLOTHES, 2);
+		return getLogisticsList(TASK_SEND_CLOTHES, 1);
 	}
 
 	@Override

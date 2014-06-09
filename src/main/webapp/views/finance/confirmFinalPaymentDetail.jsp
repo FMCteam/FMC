@@ -107,6 +107,7 @@
 								<select name="account" required="required" >
 										<option selected="selected">36933145@qq.com</option>
 										<option>6228480424649506013</option>
+										<option>872104037@qq.com</option>
 								</select>
 								</td>
 								<td><input type="date" required="required" name="time" /></td>

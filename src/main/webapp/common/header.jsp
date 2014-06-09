@@ -150,12 +150,12 @@ table.tablesorter thead tr .headerSortDown {
 
 								<li><a href="${ctx }/market/modifyQuoteList.do">修改报价<span
 										class="modifyQuote"></span></a></li>
-								<li><a href="${ctx }/market/confirmProduceOrderList.do">商定合同<span
+								<li><a href="${ctx }/market/confirmProduceOrderList.do">确认大货加工单<span
 										class="confirmProduceOrder"></span></a></li>
 
-								<li><a href="${ctx }/market/modifyProductList.do">修改合同<span
+								<li><a href="${ctx }/market/modifyProductList.do">修改大货合同<span
 										class="modifyProduceOrder"></span></a></li>
-								<li><a href="${ctx }/market/signContractList.do">签订合同<span
+								<li><a href="${ctx }/market/signContractList.do">签订大货合同<span
 										class="signContract"></span></a></li>
 
 								<li><a href="#">订单回访</a></li>

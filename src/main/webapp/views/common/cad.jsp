@@ -58,7 +58,7 @@
 		<td class="span1 title">CAD</td>
 		<td colspan="6">
 			<c:if test="${orderInfo.designCad.cadUrl!=null}">
-			<form action="${ctx }/design/downloadCadSubmit.do" method="post" 
+			<form action="${ctx }/downloadCadSubmit.do" method="post" 
 				nctype="multipart/form-data">
 				<span style="margin-right: 80px">版本：${orderInfo.designCad.cadVersion}</span>
 				<span>上传时间：${orderInfo.designCad.uploadTime}</span>
