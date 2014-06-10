@@ -41,6 +41,7 @@
 					<tr>
 						<td>选择文件</td>
 						<td colspan="3">
+							<a style="color: red;">*</a>
 							<input name="CADFile" id="CADFile" type="file" required="required"/> 
 							<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
 							<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
@@ -49,6 +50,7 @@
 							class="btn btn-primary btn-rounded"></td>
 					</tr>
 				</table>
+				<button class="btn btn-primary" onclick="history.back();">返回</button>
 			</form>
 
 		</div>

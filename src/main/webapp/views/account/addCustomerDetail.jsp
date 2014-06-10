@@ -141,7 +141,9 @@
 								<td>
 									<p class="stdformbutton">
 										<button class="btn btn-primary">添加</button>
+										<button class="btn btn-primary" onclick="history.back();">返回</button>
 									</p>
+										
 								</td>
 							</tr>
 

@@ -55,6 +55,7 @@
 					</tr>
 				</table>
 			</form>
+			 <button class="btn btn-primary" onclick="history.back();">返回</button>
 
 		</div>
 		<!--row-fluid-->

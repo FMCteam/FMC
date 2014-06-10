@@ -54,6 +54,7 @@
 				</table>
 			</form>
 		</div>
+		<button class="btn btn-primary" onclick="history.back();">返回</button>
 		<div style="width: 100%"></div>
 	</div>
 

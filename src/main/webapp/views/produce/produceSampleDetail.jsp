@@ -24,8 +24,10 @@
 				<div class="tab-pane" id="sample">
 					<%@include file="/views/common/sample.jsp"%>
 				</div>
+				
 				<div class="tab-pane active" id="produce">
 					<%@include file="/views/common/produce.jsp"%>
+			    <button class="btn btn-primary" onclick="history.back();">返回</button>
 					<div class="action">
 						<a
 							href="${ctx}/produce/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1"

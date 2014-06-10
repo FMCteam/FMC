@@ -109,7 +109,7 @@
 						
 						
 						
-						
+						<button class="btn btn-primary" onclick="history.back();">返回</button>
 						<input class="btn btn-primary" type="submit" value="提交报价"
 							style="float:right;"> <input type="hidden" name="orderId"
 							value="${orderInfo.order.orderId }" /> <input type="hidden"

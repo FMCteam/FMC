@@ -99,6 +99,7 @@
 									</c:if></td>
 							</tr>
 						</table>
+						 <button class="btn btn-primary" onclick="history.back();">返回</button>
 						<div class="action">
 							<input class="btn btn-primary" type="submit" value="发货完成" />
 						</div>

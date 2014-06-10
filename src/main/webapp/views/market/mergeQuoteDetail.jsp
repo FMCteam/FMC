@@ -46,9 +46,9 @@
 					<i class="icon-ok icon-white"></i>确定
 				</button>
 			</div>
+			 <button class="btn btn-primary" onclick="history.back();">返回</button>
 		</form>
 	</div>
-
 
 	<div class="footer">
 		<div class="footer-left">

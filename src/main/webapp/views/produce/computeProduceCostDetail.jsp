@@ -73,6 +73,7 @@
 									id="design_cost" type="text" required="required" /></td>
 							</tr>
 						</table>
+	                  <button class="btn btn-primary" onclick="history.back();">返回</button>
 						<input type="hidden" name="orderId"
 							value="${orderInfo.order.orderId}" /> <input type="hidden"
 							name="taskId" value="${orderInfo.task.id}" /> <input

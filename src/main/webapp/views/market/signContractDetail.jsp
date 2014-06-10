@@ -49,9 +49,10 @@
 					<tr>
 						<td><input name="discount" type="text" /><input name="sum" type="hidden" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }"/></td>
 						<td><input name="totalmoney" type="text" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }" readonly="readonly" /></td>
-						<td><input name="contractFile" type="file" value="选择文件"/></td>
+						<td><input name="contractFile" type="file" value="选择文件" required="required"/></td>
 					</tr>
 				</table>
+		    <button class="btn btn-primary" onclick="history.back();">返回</button>
 			<div class="action">
 				<button class="btn btn-primary btn-rounded">
 					<i class="icon-ok icon-white"></i>签订
