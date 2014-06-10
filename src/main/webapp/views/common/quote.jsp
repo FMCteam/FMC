@@ -12,8 +12,8 @@
 		<tr>
 			<td>${fabric.fabricName}</td>
 			<td>${fabric.tearPerMeter}</td>
-			<td>${fabric.price}</td>
 			<td>${fabric.costPerMeter}</td>
+			<td>${fabric.price}</td>
 		</tr>
 	</c:forEach>
 	<tr>
@@ -27,8 +27,8 @@
 		<tr>
 			<td>${accessory.accessoryName}</td>
 			<td>${accessory.tearPerPiece}</td>
-			<td>${accessory.price}</td>
 			<td>${accessory.costPerPiece}</td>
+			<td>${accessory.price}</td>
 		</tr>
 	</c:forEach>
 	<tr>
@@ -49,7 +49,7 @@
 	<tr>
 		<td>${orderInfo.quote.cutCost}</td>
 		<td>${orderInfo.quote.manageCost}</td>
-		<td>${orderInfo.quote.swingCost}</td>
+		<td>${orderInfo.quote.nailCost}</td>
 		<td>${orderInfo.quote.ironingCost}</td>
 	</tr>
 	<tr>
@@ -59,7 +59,7 @@
 		<td class="title">设计费用（整体）</td>
 	</tr>
 	<tr>
-		<td>${orderInfo.quote.nailCost}</td>
+		<td>${orderInfo.quote.swingCost}</td>
 		<td>${orderInfo.quote.packageCost}</td>
 		<td>${orderInfo.quote.otherCost}</td>
 		<td>${orderInfo.quote.designCost}</td>

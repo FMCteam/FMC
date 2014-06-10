@@ -20,6 +20,9 @@
                 <tr>
                 <a class="btn btn-primary btn-rounded">公用农业银行帐号：6228480424649506013 &nbsp&nbsp&nbsp  开户人:葛祖民</a>
                 </tr>
+                 <tr>
+                <a class="btn btn-primary btn-rounded">公用的PAYPAL帐号：872104037@qq.com</a>
+                </tr>
                 <tr>
                 <form action="${ctx }/downloadCadSubmit.do" method="post" 
 				nctype="multipart/form-data">
