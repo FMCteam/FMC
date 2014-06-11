@@ -208,4 +208,19 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	public static IFabricCostDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (IFabricCostDAO) ctx.getBean("FabricCostDAO");
 	}
+
+	@Override
+	public void deleteByProperty(String propertyName, Object orderId) {
+		// TODO Auto-generated method stub
+		log.debug("deleting FabricCost instance with property: " + propertyName
+				+ ", value: " + orderId);
+		try {
+			String queryString = "delete from FabricCost as model where model."
+					+ propertyName + "= ?";
+			 getHibernateTemplate().bulkUpdate(queryString, orderId);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
 }

@@ -75,5 +75,6 @@ public interface IAccessoryCostDAO {
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#attachClean(nju.software.dataobject.AccessoryCost)
 	 */
 	public abstract void attachClean(AccessoryCost instance);
+	public void deleteByProperty(String propertyName,Object orderId);
 
 }

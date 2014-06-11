@@ -11,6 +11,8 @@
 				<ul class="nav nav-tabs detail" id="tab">
 					<li class="task-name">修改订单</li>
 					<!-- <li><a href="#quote" data-toggle="tab">报价信息</a></li> -->
+					
+					<li><a href="#price" data-toggle="tab">生产报价信息</a> </li>
 					<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 					<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 					<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
@@ -148,7 +150,7 @@
 									name="fabric_name" /> <input id="fabric_amount" type="hidden"
 									name="fabric_amount" /></td>
 								<td class="innertable span12"><table
-										class="span12 table accessory_table">
+										class="span12 table fabric_table">
 										<tr>
 											<td class="span5 title">面料名称</td>
 											<td class="span5 title">面料克重</td>
@@ -329,6 +331,134 @@
 							</tr>
 						</table>
 					</div>
+					<div class="tab-pane" id="price">
+					<table
+							class="table table-striped table-bordered table-hover detail">
+							<tr>
+								<td rowspan="4">生产成本</td>
+								<td>裁剪费用（单位：元）</td>
+								<td>管理费用（单位：元）</td>
+								<td>缝制费用（单位：元）</td>
+								<td>整烫费用（单位：元）</td>
+							</tr>
+
+							<tr>
+								<td><input class="span12" name="cut_cost" id="cut_cost"
+									type="text" value="${orderModel.quote.cutCost }"  required="required" /></td>
+								<td><input class="span12" name="manage_cost"
+									id="manage_cost" type="text" value="${orderModel.quote.manageCost }"  required="required" /></td>
+								<td><input class="span12" name="swing_cost" id="swing_cost"
+									type="text" value="${orderModel.quote.swingCost }" required="required" /></td>
+								<td><input class="span12" name="ironing_cost"
+									id="ironing_cost" type="text" value="${orderModel.quote.ironingCost }" required="required" /></td>
+							</tr>
+
+							<tr>
+								<td>锁订费用（单位：元）</td>
+								<td>包装费用（单位：元）</td>
+								<td>其他费用（单位：元）</td>
+								<td>设计费用（单位：元）</td>
+							</tr>
+
+							<tr>
+								<td><input class="span12" name="nail_cost" id="nail_cost"
+									type="text"  value="${orderModel.quote.nailCost }" required="required" /></td>
+								<td><input class="span12" name="package_cost"
+									id="package_cost" type="text" value="${orderModel.quote.packageCost }" required="required" /></td>
+								<td><input class="span12" name="other_cost" id="other_cost"
+									type="text" value="${orderModel.quote.otherCost }" required="required" /></td>
+								<td><input class="span12" name="design_cost"
+									id="design_cost"  type="text" value="${orderModel.quote.designCost }" required="required" /></td>
+							</tr>
+						</table>
+					
+					
+						<table class="table table-striped table-bordered table-hover detail">
+							<tr>
+								<td class="span4 title">面料<input id="fabric_cost_name" type="hidden"
+									name="fabric_cost_name" /> <input id="cost_per_meter" type="hidden"
+									name="cost_per_meter" /> <input id="tearpermeter" type="hidden"
+									name="tearpermeter" /></td>
+								<td class="innertable span12"><table
+										class="span12 table fabric_cost_table">
+										<tr>
+											<td class="span5 title">面料名称</td>
+											<td class="span5 title">每米价格(单位：元)</td>
+											<td class="span5 title">单件米耗(单位：米)</td>
+											<td class="span3 title">操作</td>
+										</tr>
+						                <tr class="addrow">
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
+											<td><a>添加</a></td>
+										</tr>
+										<c:forEach var="fabricRow" items="${orderModel.fabricCosts }">
+											<tr>
+												<td class='fabric_cost_name'>
+												<input class="span12" name="fabric_cost_name" 
+									type="text" value="${fabricRow.fabricName }" required="required" readonly="readonly" />
+												</td>
+												<td class='cost_per_meter'>
+												
+												<input class="span12" name="cost_per_meter" 
+									type="text" value="${fabricRow.costPerMeter}" required="required" />
+												</td>		
+												<td class='tearpermeter'>
+												
+												<input class="span12" name="tearpermeter" 
+									type="text" value="${fabricRow.tearPerMeter}" required="required" />
+												</td>	
+												<td><a onclick="deleteRow(this,'fabric_cost_table')">删除</a></td>
+											</tr>
+										</c:forEach>
+									</table></td>
+							</tr>
+							<tr>
+								<td class="span2 title">辅料<input id="accessory_cost_name"
+									type="hidden" name="accessory_cost_name" /> <input
+									id="costperpiece" type="hidden" name="costperpiece" /></td>
+								<td class="innertable span12"><table
+										class="span12 table accessory_cost_table">
+										<tr>
+											<td class="span5 title">辅料名称</td>
+											<td class="span5 title">辅料单价(单位：元)</td>
+											<td class="span5 title">单件耗数(单位：个)</td>
+											<td class="span3 title">操作</td>
+											
+										</tr>
+										<tr class="addrow">
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
+											<td><input class="span12" type="text" /></td>
+											
+											<td><a>添加</a></td>
+										</tr>						
+										<c:forEach var="accessoryRow"
+											items="${orderModel.accessoryCosts }">
+											<tr>
+												<td class='accessory_cost_name'>
+												<input class="span12" name="accessory_cost_name" 
+									type="text" value="${accessoryRow.accessoryName }" required="required"  readonly="readonly" />
+												</td>
+												<td class='costperpiece' >
+												<input class="span12" name="costperpiece"
+									type="text" value="${accessoryRow.costPerPiece }" required="required" />
+												</td>
+												<td class='tearperpiece'>
+												<input class="span12" name="tearperpiece"
+									type="text" value="${accessoryRow.tearPerPiece }" required="required" />
+												</td>
+												<td><a onclick="deleteRow(this,'accessory_cost_table')">删除</a></td>												
+ 											</tr>
+										</c:forEach>
+									</table></td>
+							</tr>
+						</table>
+					</div>
+					
+					
+					
 					<div class="tab-pane" id="produce">
 						<table
 							class="table table-striped table-bordered table-hover detail">

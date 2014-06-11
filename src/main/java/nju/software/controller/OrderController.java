@@ -7,23 +7,30 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import nju.software.dataobject.Order;
 import nju.software.service.OrderService;
+
 import javax.servlet.http.HttpSession;
 
 import nju.software.dataobject.Accessory;
+import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
+import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
+import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.service.DesignCadService;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
+import nju.software.service.QuoteService;
 import nju.software.service.impl.BuyServiceImpl;
 import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.MarketServiceImpl;
@@ -33,7 +40,6 @@ import nju.software.util.FileOperateUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.jbpm.task.query.TaskSummary;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,7 +62,8 @@ public class OrderController {
 	private DesignCadService cadService;
 	@Autowired
 	private LogisticsService logisticsService;
-	
+	@Autowired
+	private QuoteService quoteService;	
 	public static Timestamp getTime(String time) {
 		if(time.equals("")) return null;
 		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
@@ -144,6 +151,37 @@ public class OrderController {
 				fabrics.add(new Fabric(0, fabric_name[i], fabric_amount[i]));
 			}
 
+			//面料价格数据
+			
+ 			String fabric_cost_name[] = request.getParameterValues("fabric_cost_name");
+ 			System.out.println("length: "+fabric_cost_name.length);
+ 			
+ 			for(int k=0;k<fabric_cost_name.length;k++){
+ 				System.out.println("lll"+fabric_cost_name[k]);
+ 			}
+ 			String cost_per_meter[] = request.getParameterValues("cost_per_meter");
+ 			System.out.println("length: "+cost_per_meter.length);
+
+ 			for(int k=0;k<cost_per_meter.length;k++){
+ 				System.out.println("lll"+cost_per_meter[k]);
+ 			}
+ 			String tear_per_meter[] = request.getParameterValues("tearpermeter");
+ 			System.out.println("length: "+tear_per_meter.length);
+ 			for(int k=0;k<tear_per_meter.length;k++){
+ 				System.out.println("lll"+tear_per_meter[k]);
+ 			}
+ 			System.out.println("hhhh");
+ 			System.out.println(fabric_cost_name.toString() );
+ 			System.out.println(cost_per_meter.toString());
+ 			List<FabricCost> fabricCosts = new ArrayList<FabricCost>();
+			for(int i=1;i<fabric_cost_name.length;i++){
+				System.out.println(fabric_cost_name[i]+cost_per_meter[i]+"kkkkkkkk");
+				FabricCost fc = new FabricCost();
+				fc.setFabricName(fabric_cost_name[i]);
+				fc.setCostPerMeter(Float.parseFloat(cost_per_meter[i]));
+				fc.setTearPerMeter(Float.parseFloat(tear_per_meter[i]));				
+				fabricCosts.add(fc);
+			}
 			// 辅料数据
 			String accessory_names = request.getParameter("accessory_name");
 			String accessory_querys = request.getParameter("accessory_query");
@@ -154,7 +192,25 @@ public class OrderController {
 				accessorys.add(new Accessory(0, accessory_name[i],
 						accessory_query[i]));
 			}
+            //辅料价格数据
+			String accessory_cost_name[] = request.getParameterValues("accessory_cost_name");
+			String cost_per_piece[] = request.getParameterValues("costperpiece");
+			String tear_per_piece[] = request.getParameterValues("tearperpiece");	
+			System.out.println("whhlength1"+tear_per_piece.length);
+			System.out.println("whhlength2"+cost_per_piece.length);
+			System.out.println("whhlength3"+accessory_cost_name.length);
 
+			for(int k =0;k<tear_per_piece.length;k++){
+				System.out.println(tear_per_piece[k]);
+			}
+			List<AccessoryCost> accessoryCosts = new ArrayList<AccessoryCost>();
+			for(int i = 1;i<accessory_cost_name.length;i++){
+				AccessoryCost ac = new AccessoryCost();
+				ac.setAccessoryName(accessory_cost_name[i]);
+				ac.setCostPerPiece(Float.parseFloat(cost_per_piece[i]));
+				ac.setTearPerPiece(Float.parseFloat(tear_per_piece[i-1]));
+				accessoryCosts.add(ac);
+ 			}
 			// 大货加工要求
 			String produce_colors = request.getParameter("produce_color");
 			String produce_xss = request.getParameter("produce_xs");
@@ -360,6 +416,29 @@ public class OrderController {
 			order.setIsNeedSampleClothes(isNeedSampleClothes);
 			order.setOrderSource(orderSource);
 			
+			//保存Quote
+			Quote quote = quoteService.findByOrderId(s_id);
+
+			String cut_cost = request.getParameter("cut_cost");
+			String manage_cost = request.getParameter("manage_cost");
+			String swing_cost = request.getParameter("swing_cost");
+			String ironing_cost = request.getParameter("ironing_cost");
+			String nail_cost = request.getParameter("nail_cost");
+			String package_cost = request.getParameter("package_cost");
+			String other_cost = request.getParameter("other_cost");
+			String design_cost = request.getParameter("design_cost");
+			
+			quote.setCutCost(Float.parseFloat(cut_cost));
+			quote.setManageCost(Float.parseFloat(manage_cost));
+			quote.setSwingCost(Float.parseFloat(swing_cost));
+			quote.setIroningCost(Float.parseFloat(ironing_cost));
+			quote.setNailCost(Float.parseFloat(nail_cost));
+			quote.setPackageCost(Float.parseFloat(package_cost));
+			quote.setOtherCost(Float.parseFloat(other_cost));
+			quote.setDesignCost(Float.parseFloat(design_cost));
+			
+			
+			
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
 				File file = new File(order.getSampleClothesPicture());
@@ -391,7 +470,7 @@ public class OrderController {
 //			boolean editok = request.getParameter("editok").equals("true") ? true
 //					: false;
 			orderService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
-					produces, sample_produces, versions, cad, account.getUserId());
+					produces, sample_produces, versions, cad, account.getUserId(),fabricCosts,accessoryCosts,quote);
 			return "redirect:/account/modifyOrderList.do";
 		}
 
