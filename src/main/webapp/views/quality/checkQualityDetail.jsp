@@ -119,6 +119,7 @@
 						<input id="bad_xl" name="bad_xl" type="hidden" /> 
 						<input id="bad_xxl" name="bad_xxl" type="hidden" />
 					</form>
+						<button class="btn btn-primary" onclick="history.back();">返回</button>
 				</div>
 			</div>
 

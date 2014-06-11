@@ -91,6 +91,7 @@
 								</tr>
 							</c:forEach>
 						</table>
+					    <button class="btn btn-primary" onclick="history.back();">返回</button>
 						<div class="action">
 							 <input type="hidden" name="orderId"
 								value="${orderInfo.order.orderId }" /> <input type="hidden"
