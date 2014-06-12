@@ -13,6 +13,43 @@
 //			$("input[name='single_cost']").val(inner_price+0);
 //		}
 //	});
+	var merge_w =  $("input[name='merge_w']").val();
+	var orderInfoquoteFabricCost = $("input[name='orderInfoquoteFabricCost']").val();
+	var orderInfoquoteAccessoryCost = $("input[name='orderInfoquoteAccessoryCost']").val();
+	var orderInfoquoteCutCost = $("input[name='orderInfoquoteCutCost']").val();
+	var orderInfoquoteManageCost = $("input[name='orderInfoquoteManageCost']").val();
+	var orderInfoquoteSwingCost = $("input[name='orderInfoquoteSwingCost']").val();
+	var orderInfoquoteIroningCost = $("input[name='orderInfoquoteIroningCost']").val();
+	var orderInfoquoteNailCost = $("input[name='orderInfoquoteNailCost']").val();
+	var orderInfoquotePackageCost = $("input[name='orderInfoquotePackageCost']").val();
+	var orderInfoquoteOtherCost = $("input[name='orderInfoquoteOtherCost']").val();
+	var orderInfoquoteSingleCost = $("input[name='orderInfoquoteSingleCost']").val();
+	var orderInfoquoteInnerPrice = $("input[name='orderInfoquoteInnerPrice']").val();
+
+ 	if(merge_w==null){
+
+		$("input[name='single_cost']").val(orderInfoquoteSingleCost);
+		$("input[name='inner_price']").val(orderInfoquoteInnerPrice);
+
+	}else{
+		
+		var number1 = accAdd(orderInfoquoteFabricCost,orderInfoquoteAccessoryCost);
+		var number2 = accAdd(number1,orderInfoquoteCutCost);
+		var number3 = accAdd(number2,orderInfoquoteManageCost);
+		var number4 = accAdd(number3,orderInfoquoteSwingCost);
+		var number5 = accAdd(number4,orderInfoquoteIroningCost);
+		var number6 = accAdd(number5,orderInfoquoteNailCost);
+        var number7 = accAdd(number6,orderInfoquotePackageCost);
+        var number = accAdd(number7,orderInfoquoteOtherCost);
+
+//        var number	= orderInfoquoteFabricCost + orderInfoquoteAccessoryCost + orderInfoquoteCutCost + orderInfoquoteManageCost +
+//        orderInfoquoteSwingCost + orderInfoquoteIroningCost +orderInfoquoteNailCost + orderInfoquotePackageCost +
+//        orderInfoquoteOtherCost + 0.0;
+//        alert(number);
+        $("input[name='single_cost']").val(number.toFixed(2));
+		$("input[name='inner_price']").val(number.toFixed(2));
+
+	}
 	
 	$("input[name='profitPerPiece']").keyup(function(){
 		var s_profit = $("input[name='profitPerPiece']").val();
@@ -59,3 +96,12 @@ function quote_verify(){
 		return false;
 	}
 }
+
+
+function accAdd(arg1,arg2){ 
+	var r1,r2,m; 
+	try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0} 
+	try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0} 
+	m=Math.pow(10,Math.max(r1,r2)) 
+	return (arg1*m+arg2*m)/m 
+} 
