@@ -10,8 +10,17 @@
 					<caption>
 						<span class="text-vertical">${taskName}:<span
 							class="number">${fn:length(list)}</span>条订单
-						</span><input type="text" class="search-query float-right"
+						</span>
+						<input type="button" class="search-query float-right" value="查询">
+						<input type="text" class="search-query float-right"
 							placeholder="输入检索条件">
+							<span class="search-query float-right">款式名称：</span>
+					    <input type="text" class="search-query float-right"
+							placeholder="输入检索条件">
+						<span class="search-query float-right">客户名称：</span>
+					   <input type="text" class="search-query float-right"
+							placeholder="输入检索条件">
+							<span class="search-query float-right">订单编号：</span>
 					</caption>
 					<thead>
 						<tr>
