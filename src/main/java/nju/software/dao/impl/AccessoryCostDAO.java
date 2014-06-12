@@ -251,4 +251,20 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 			ApplicationContext ctx) {
 		return (IAccessoryCostDAO) ctx.getBean("AccessoryCostDAO");
 	}
+
+	@Override
+	public void deleteByProperty(String propertyName, Object orderId) {
+		// TODO Auto-generated method stub
+		log.debug("deleting AccessoryCost instance with property: " + propertyName
+				+ ", value: " + orderId);
+		try {
+			String queryString = "delete from AccessoryCost as model where model."
+					+ propertyName + "= ?";
+			 getHibernateTemplate().bulkUpdate(queryString, orderId);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+		
+	}
 }

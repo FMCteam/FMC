@@ -33,5 +33,6 @@ public interface IFabricCostDAO {
 	public abstract void attachDirty(FabricCost instance);
 
 	public abstract void attachClean(FabricCost instance);
+	public void deleteByProperty(String propertyName,Object orderId);
 
 }

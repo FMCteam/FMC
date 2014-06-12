@@ -71,17 +71,38 @@
 		<td class="title">单件利润</td>
 		<td class="title">客户报价</td>
 	</tr>
+	
 	<tr>
-		<td><input class="span12" type="text" name="single_cost" required="required" value="${merge_w eq null ? orderInfo.quote.singleCost : 
-			orderInfo.quote.fabricCost + orderInfo.quote.accessoryCost + orderInfo.quote.cutCost + orderInfo.quote.manageCost +
+		<td>
+		<input class="span12" type="hidden" name="merge_w" value="${merge_w }" />
+		<input class="span12" type="hidden" name="orderInfoquoteFabricCost" value="${orderInfo.quote.fabricCost }" />
+		<input class="span12" type="hidden" name="orderInfoquoteAccessoryCost" value="${orderInfo.quote.accessoryCost }" />
+		<input class="span12" type="hidden" name="orderInfoquoteCutCost" value="${orderInfo.quote.cutCost }" />
+		<input class="span12" type="hidden" name="orderInfoquoteManageCost" value="${orderInfo.quote.manageCost }" />
+		<input class="span12" type="hidden" name="orderInfoquoteSwingCost" value="${orderInfo.quote.swingCost }" />
+		<input class="span12" type="hidden" name="orderInfoquoteIroningCost" value="${orderInfo.quote.ironingCost }" />
+		<input class="span12" type="hidden" name="orderInfoquoteNailCost" value="${orderInfo.quote.nailCost }" />
+		<input class="span12" type="hidden" name="orderInfoquotePackageCost" value="${orderInfo.quote.packageCost }" />
+		<input class="span12" type="hidden" name="orderInfoquoteOtherCost" value="${orderInfo.quote.otherCost }" />
+		<input class="span12" type="hidden" name="orderInfoquoteSingleCost" value="${orderInfo.quote.singleCost }" />
+		<input class="span12" type="hidden" name="orderInfoquoteInnerPrice" value="${orderInfo.quote.innerPrice }" />
+		  
+		<input class="span12" type="text" name="single_cost" required="required"  readonly="readonly" />
+		</td>
+		<td><input class="span12" type="text" name="inner_price" required="required"  readonly="readonly" />
+		</td>
+		<!-- 
+		<input class="span12" type="text" name="single_cost" required="required" value="${merge_w eq null ? orderInfo.quote.singleCost :  
+			(orderInfo.quote.fabricCost + orderInfo.quote.accessoryCost + orderInfo.quote.cutCost + orderInfo.quote.manageCost +
 			orderInfo.quote.swingCost + orderInfo.quote.ironingCost + orderInfo.quote.nailCost + orderInfo.quote.packageCost +
-			orderInfo.quote.otherCost + 0.0 }" readonly="readonly" />
+			orderInfo.quote.otherCost + 0.0) }" readonly="readonly" />
 		</td>
 		<td><input class="span12" type="text" name="inner_price" required="required" value="${merge_w eq null ? orderInfo.quote.innerPrice : 
 			orderInfo.quote.fabricCost + orderInfo.quote.accessoryCost + orderInfo.quote.cutCost + orderInfo.quote.manageCost +
 			orderInfo.quote.swingCost + orderInfo.quote.ironingCost + orderInfo.quote.nailCost + orderInfo.quote.packageCost +
 			orderInfo.quote.otherCost }" readonly="readonly" />
-		</td>
+		</td> />
+		 -->                                                          
 		<td><input class="span12" type="text" name="profitPerPiece" required="required" value="${merge_w eq null ? orderInfo.quote.profitPerPiece : '' }" />	
 		</td>
 		<td><input class="span12" type="text" name="outer_price" required="required" value="${merge_w eq null ? orderInfo.quote.outerPrice : '' }" readonly="readonly" />	

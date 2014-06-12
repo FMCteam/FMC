@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import nju.software.dataobject.Accessory;
+import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
+import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
@@ -61,6 +63,7 @@ public interface OrderService {
 	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
-			List<VersionData> versions, DesignCad cad, int user_id);
+			List<VersionData> versions, DesignCad cad, int user_id,
+			List<FabricCost> fabricCosts,List<AccessoryCost> accessoryCosts,Quote quote);
 
 }

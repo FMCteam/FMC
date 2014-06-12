@@ -8,12 +8,18 @@
 			var colName = ["fabric_name","fabric_amount"];
 			table_addrow_onclick("fabric_table",colName,2);
 		});
-		
+		$("table.fabric_cost_table a").click(function(){
+			var colName = ["fabric_cost_name","cost_per_meter","tearpermeter"];
+			table_addrow_onclick2("fabric_cost_table",colName,3);
+		});		
 		$("table.accessory_table a").click(function(){
 			var colName = ["accessory_name","accessory_query"];
 			table_addrow_onclick("accessory_table",colName,2);
 		});
-		
+		$("table.accessory_cost_table a").click(function(){
+			var colName = ["accessory_cost_name","costperpiece","tearperpiece"];
+			table_addrow_onclick2("accessory_cost_table",colName,3);
+		});	
 		$("table.produce_table a").click(function(){
 			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
 			if(checkNum("produce_table",colName,7)){
@@ -114,8 +120,44 @@
 			$("table."+table_name+" tr.addrow").after(item);
 			
 	}
+	function table_addrow_onclick2(table_name,col_name,col_sum){
+		
+		var content = new Array();
+		for(var i=0;i<col_sum;i++){
+			var col=$("table."+table_name+" tr.addrow input").eq(i).val();
+			content[i] = col;
+			if(col==""){
+				alert("请把信息填写完整");
+				return;
+			}
+		}
+		
 
+		var item = "";
+		for(var j=0;j<col_sum;j++){
+			if(j==0){
+				$("table."+table_name+" tr.addrow input").eq(j).val("");
+				item+="<td class='"+col_name[j]+"'>"+
+				"<input class=\"span12\" name=  \""+col_name[j]+"\" type=\"text\" value="+content[j]+ " required=\"required\"  readonly=\"readonly\"/>"+"</td>";
 
+			}else{
+				$("table."+table_name+" tr.addrow input").eq(j).val("");
+				item+="<td class='"+col_name[j]+"'>"+
+				"<input class=\"span12\" name= \""+col_name[j]+"\" type=\"text\" value="+content[j]+ " required=\"required\" />"+"</td>";
+
+			}
+			
+/*			
+			$("table."+table_name+" tr.addrow input").eq(j).val("");
+			item+="<td class='"+col_name[j]+"'>"+
+			"<input class=\"span12\" name="+col_name[j]+" type=\"text\" value="+content[j]+ " required=\"required\"  readonly=\"readonly\"/>"+"</td>";
+			*/
+		}
+		item+="<td><a onclick=\"deleteRow(this,'"+table_name+"')\">删除</a></td>";
+		item="<tr>"+item+"</tr>";
+		$("table."+table_name+" tr.addrow").after(item);
+		
+}
 	
 })(jQuery);
 

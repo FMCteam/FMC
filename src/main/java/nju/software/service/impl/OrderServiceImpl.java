@@ -1,6 +1,7 @@
 package nju.software.service.impl;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,13 +12,9 @@ import java.util.Map;
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
-
 import nju.software.dao.impl.EmployeeDAO;
-
 import nju.software.dao.impl.DesignCadDAO;
-
 import nju.software.dao.impl.FabricCostDAO;
-
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.MoneyDAO;
@@ -538,7 +535,8 @@ public class OrderServiceImpl implements OrderService {
 	public void modifyOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
-			List<VersionData> versions, DesignCad cad, int userId) {
+			List<VersionData> versions, DesignCad cad, int userId,
+			List<FabricCost> fabricCosts,List<AccessoryCost> accessoryCosts,Quote quote) {
 		// TODO Auto-generated method stub
 		// 添加订单信息
 		orderDAO.merge(order);
@@ -550,11 +548,60 @@ public class OrderServiceImpl implements OrderService {
 			fabricDAO.save(fabric);
 		}
 		// 添加辅料信息
+
 		accessoryDAO.deleteByProperty("orderId", orderId);
 		for (Accessory accessory : accessorys) {
 			accessory.setOrderId(orderId);
 			accessoryDAO.save(accessory);
 		}
+		//添加面料价格信息
+		fabricCostDAO.deleteByProperty("orderId", orderId);
+		float all_fabric_prices=0.0f;
+		for(FabricCost fabricCost : fabricCosts){
+			fabricCost.setOrderId(orderId);
+			BigDecimal  fabric_price_temp =   
+					 new BigDecimal((fabricCost.getTearPerMeter())*(fabricCost.getCostPerMeter()));  
+			float  fabric_price = fabric_price_temp.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue(); 
+			fabricCost.setPrice(fabric_price);
+			all_fabric_prices+=fabric_price;
+			fabricCostDAO.save(fabricCost);
+			
+		}
+
+		//添加辅料价格信息
+		accessoryCostDAO.deleteByProperty("orderId", orderId);
+		float all_accessory_prices=0.0f;
+		for(AccessoryCost accessoryCost : accessoryCosts){
+			accessoryCost.setOrderId(orderId);
+			float accessory_price= accessoryCost.getTearPerPiece()*(accessoryCost.getCostPerPiece());
+			accessoryCost.setPrice(accessory_price);      	
+        	all_accessory_prices+=accessory_price;
+        	accessoryCostDAO.save(accessoryCost);
+			
+		}
+		//添加Quote
+        
+        Quote originalQuote =quoteDAO.findById(orderId);	
+        originalQuote.setCutCost(quote.getCutCost());
+        originalQuote.setManageCost(quote.getManageCost());
+        originalQuote.setSwingCost(quote.getSwingCost());
+        originalQuote.setIroningCost(quote.getIroningCost());
+        originalQuote.setNailCost(quote.getNailCost());
+        originalQuote.setPackageCost(quote.getPackageCost());
+        originalQuote.setOtherCost(quote.getOtherCost());
+        originalQuote.setDesignCost(quote.getDesignCost());
+
+        originalQuote.setAccessoryCost(all_accessory_prices);
+        originalQuote.setFabricCost(all_fabric_prices);
+			
+			float singleCost=originalQuote.getCutCost()+originalQuote.getManageCost()+originalQuote.getDesignCost()+
+					originalQuote.getIroningCost()+originalQuote.getNailCost()+originalQuote.getPackageCost()+
+					originalQuote.getSwingCost()+originalQuote.getOtherCost()+all_accessory_prices+all_fabric_prices;
+			
+			originalQuote.setSingleCost(singleCost);
+			quoteDAO.merge(originalQuote);
+//			quoteDAO.attachDirty(originalQuote);
+		
 		// 添加大货加工单信息
 		produceDAO.deleteProduceByProperty("oid", orderId);
 		for (Produce produce : produces) {
