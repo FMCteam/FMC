@@ -30,5 +30,11 @@
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script>
+	$("#orderPager").change(function() {
+		var p = $("#orderPager").children("option:selected").val();
+		window.location.href = "${ctx}/order/orderList.do?page=" + p;
+	});
+</script>
 <%@include file="/common/footer.jsp"%>
 

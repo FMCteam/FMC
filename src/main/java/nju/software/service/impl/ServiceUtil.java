@@ -44,6 +44,7 @@ public class ServiceUtil {
 			String taskName) {
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				actorId, taskName);
+		
 		List<Map<String, Object>> list = new ArrayList<>();
 
 		for (TaskSummary task : tasks) {
@@ -61,7 +62,43 @@ public class ServiceUtil {
 		}
 		return list;
 	}
+	public List<Map<String, Object>> getSearchOrderList(String actorId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate,Integer[] employeeIds, String taskName) {
+		
+		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
+				 customername,  stylename,  startdate,enddate,employeeIds);
+		
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				actorId, taskName);
+		
+		List<Map<String, Object>> list = new ArrayList<>();
 
+		for (TaskSummary task : tasks) {
+			boolean isSearched = false;
+			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task, "orderId");
+			for(int k =0;k<orders.size();k++){
+				if(orderId==orders.get(k).getOrderId()){
+					isSearched = true;
+					break;
+				}
+			}
+			if(isSearched==true){
+				
+				Order order = orderDAO.findById(orderId);
+				System.out.println(orderId);
+				
+				Map<String, Object> model = new HashMap<String, Object>();
+				model.put("order", order);
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+				model.put("task", task);
+				model.put("taskTime", getTaskTime(task.getCreatedOn()));
+				model.put("orderId", getOrderId(order));
+				list.add(model);
+			}
+		}		
+		return list;
+	}
 	public Map<String, Object> getBasicOrderModel(String actorId,
 			String taskName, Integer orderId) {
 		Map<String, Object> model = new HashMap<String, Object>();
@@ -178,5 +215,6 @@ public class ServiceUtil {
 	private FabricCostDAO fabricCostDAO;
 	@Autowired
 	private AccessoryCostDAO accessoryCostDAO;
+
 
 }

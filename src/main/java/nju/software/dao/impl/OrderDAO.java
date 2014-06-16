@@ -2,8 +2,14 @@ package nju.software.dao.impl;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+
+
+
+
 
 
 
@@ -17,12 +23,15 @@ import java.util.Map;
 import nju.software.dao.IOrderDAO;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Order;
+import nju.software.util.DateUtil;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -535,6 +544,37 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	
 	
 	private Integer number_per_page=10;
+	
+	@Override
+	public List<Order> getSearchOrderList(String ordernumber,
+			String customername, String stylename, String startdate,String enddate,
+			Integer[] employeeIds) {
+      
+		Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Order.class);
+ 		if (ordernumber != null)
+ 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
+		if (customername != null)
+			criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
+	    if (stylename != null)
+			criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
+		if (startdate != null&& enddate!=null){
+			String strformat = "yyyy-MM-dd HH:mm:ss";
+	        DateUtil du = new DateUtil();
+			if(startdate.length()==10&&enddate.length()==10){
+				startdate = startdate+" 00:00:00";
+				enddate = enddate+" 23:59:59";
+			}
+	        Date begindate1 = du.parse(startdate, strformat);
+	        Date enddate1 = du.parse(enddate, strformat);
+			criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
+		}
+		if(employeeIds!=null&&employeeIds.length !=0){
+			criteria.add(Restrictions.in("employeeId",employeeIds));
+		}
+	    List<Order> orderList = criteria.list();		
+		return orderList;
+	}
 	
 
 	
