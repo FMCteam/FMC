@@ -3,6 +3,7 @@
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -246,8 +247,9 @@ public class MarketServiceImpl implements MarketService {
 				cadDAO.save(cad);
 				
 				//报价
-				String sourceId = request.getParameter("sourceId");
+				/*String sourceId = request.getParameter("sourceId");
 				Integer source = Integer.parseInt(sourceId);
+*/				Integer source = orderId;
 				Quote quote = quoteDAO.findById(source);
 				try {
 					Quote newQuote = (Quote)copy(quote);

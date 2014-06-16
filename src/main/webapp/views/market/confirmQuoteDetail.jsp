@@ -36,7 +36,8 @@
 				</div>
 			</div>
 		</div>
-					 <button class="btn btn-primary" onclick="history.back();">返回</button>
+		<a href="${ctx}/market/confirmQuoteSubmit.do?result=2&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
+				class="btn btn-danger btn-rounded" id="resetNew"><i class="icon-white"></i>取消订单</a>
 		<div class="action">
 			<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
 			<input type="hidden" name="order_id" value="${orderInfo.quote.orderId }" />
@@ -45,8 +46,7 @@
 			class="btn btn-primary btn-rounded"><i class="icon-white"></i>确认</a> 
 				<a href="${ctx}/market/confirmQuoteSubmit.do?result=1&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
 				class="btn btn-primary btn-rounded"><i class="icon-white"></i>修改</a>
-				<a href="${ctx}/market/confirmQuoteSubmit.do?result=2&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
-				class="btn btn-danger btn-rounded"><i class="icon-white"></i>取消订单</a>
+				 <button class="btn btn-primary" onclick="history.back();">返回</button>
 		</div>
 	</div>
 
