@@ -122,5 +122,13 @@ public interface MarketService {
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<VersionData> versions, DesignCad cad,
 			HttpServletRequest request);
+
+	public List<Map<String, Object>> getSearchOrderList(String ordernumber,
+			String customername, String stylename, String startdate,String enddate,
+			Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchModifyOrderList(Integer userId,
+			String ordernumber, String customername, String stylename,
+			String startdate,String enddate, Integer[] employeeIds);
 	
 }

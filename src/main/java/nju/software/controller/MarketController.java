@@ -24,6 +24,7 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.DesignCad;
+import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Money;
@@ -38,6 +39,7 @@ import nju.software.model.QuoteModel;
 import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
 import nju.software.service.DesignCadService;
+import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
 import nju.software.service.MarketService;
 import nju.software.service.OrderService;
@@ -1056,6 +1058,49 @@ public class MarketController {
 		return "market/modifyOrderList";
 	}
 
+//	@RequestMapping(value = "/order/modifyOrderSearch.do")
+//	@Transactional(rollbackFor = Exception.class)
+//	public String modifyOrderSearch(HttpServletRequest request,
+//			HttpServletResponse response, ModelMap model) {
+//		String ordernumber = request.getParameter("ordernumber");
+//		String customername = request.getParameter("customername");
+//		String stylename = request.getParameter("stylename");
+//		String employeename = request.getParameter("employeename");
+//		String startdate = request.getParameter("startdate");
+//
+//		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+//		customername = customername == null || customername.length() == 0 ? null: customername;
+//		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+//		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+//		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+//
+//		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+//		Integer[] employeeIds = new Integer[employees.size()];
+//		for(int i=0;i<employeeIds.length;i++){
+//			employeeIds[i] = employees.get(i).getEmployeeId();
+//		}
+//		List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,employeeIds);
+//         
+//		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
+//		Integer page=Integer.parseInt(string_page);
+//		
+//		
+//		
+//		HttpSession session = request.getSession();
+//		Account account = (Account) session.getAttribute("cur_user");
+////		List<Map<String, Object>> list = marketService.getSearchModifyOrderList(account.getUserId(),ordernumber,customername,stylename,startdate,employeeIds);
+//		model.addAttribute("list", list);
+//		model.addAttribute("taskName", "修改询单");
+//		model.addAttribute("url", "/market/modifyOrderDetail.do");
+//		model.addAttribute("page", page);
+//		
+//		if(list!=null&&list.size()!=0){
+//			model.addAttribute("pages", list.get(0).get("pages"));
+//		}
+//		System.out.println("===========ok:"+list.size());
+//		return "market/modifyOrderList";
+//	}
+
 	// 询单的修改界面
 	@RequestMapping(value = "market/modifyOrderDetail.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -1671,7 +1716,52 @@ public class MarketController {
 		//System.out.println("===========ok:"+list.size());
 		return "/market/orderList";
 	}
+	
+	@Autowired
+	private EmployeeService employeeService;
+	
+	@RequestMapping(value = "/order/orderSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String orderSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
 
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+        
+		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
+		Integer page=Integer.parseInt(string_page);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "订单列表");
+		model.addAttribute("url", "/order/orderDetail.do");
+		model.addAttribute("page", page);
+		
+		if(list!=null&&list.size()!=0){
+			model.addAttribute("pages", list.get(0).get("pages"));
+		}
+		System.out.println("===========ok:"+list.size());
+		return "/market/orderList";
+	}
+	
+	
+	
 	@RequestMapping(value = "/order/orderDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String orderDetail(HttpServletRequest request,

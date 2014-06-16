@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.DesignCad;
+import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
@@ -28,7 +30,9 @@ import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.service.DesignCadService;
+import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
+import nju.software.service.MarketService;
 import nju.software.service.OrderService;
 import nju.software.service.QuoteService;
 import nju.software.service.impl.BuyServiceImpl;
@@ -64,6 +68,10 @@ public class OrderController {
 	private LogisticsService logisticsService;
 	@Autowired
 	private QuoteService quoteService;	
+	@Autowired
+	private EmployeeService employeeService;
+	@Autowired
+	private MarketService marketService;
 	public static Timestamp getTime(String time) {
 		if(time.equals("")) return null;
 		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
@@ -82,6 +90,49 @@ public class OrderController {
 		model.addAttribute("url", "/account/modifyOrderDetail.do");
 		return "account/modifyOrderList";
 	}
+	
+	@RequestMapping(value = "account/modifyOrderSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String modifyOrderSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+         
+		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
+		Integer page=Integer.parseInt(string_page);
+
+//		HttpSession session = request.getSession();
+//		Account account = (Account) session.getAttribute("cur_user");
+//		List<Map<String, Object>> list = marketService.getSearchModifyOrderList(account.getUserId(),ordernumber,customername,stylename,startdate,employeeIds);
+		model.put("list", list);
+		model.addAttribute("taskName", "修改订单");
+		model.addAttribute("url", "/account/modifyOrderDetail.do");
+		model.addAttribute("page", page);
+		
+		if(list!=null&&list.size()!=0){
+			model.addAttribute("pages", list.get(0).get("pages"));
+		}
+		System.out.println("===========ok:"+list.size());
+		return "account/modifyOrderList";
+	}	
 	
 	@RequestMapping(value = "account/modifyOrderDetail.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -485,7 +536,54 @@ public class OrderController {
 			model.addAttribute("url", "/order/orderDetail.do");
 			return "/order/endList";
 		}
-		
+		// =======================被终止订单列表搜索=================================
+		@RequestMapping(value = "/order/endListSearch.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String endListSearch(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			
+			String ordernumber = request.getParameter("ordernumber");
+			String customername = request.getParameter("customername");
+			String stylename = request.getParameter("stylename");
+			String employeename = request.getParameter("employeename");
+			String startdate = request.getParameter("startdate");
+			String enddate = request.getParameter("enddate");
+
+			ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+			customername = customername == null || customername.length() == 0 ? null: customername;
+			stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+			startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+			enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+			employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+			List<Employee> employees = employeeService.getEmployeeByName(employeename);
+			Integer[] employeeIds = new Integer[employees.size()];
+			for(int i=0;i<employeeIds.length;i++){
+				employeeIds[i] = employees.get(i).getEmployeeId();
+			}
+			List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+			List<Map<String,Object>> resultlist =  new ArrayList<>();
+			for(int i =0;i<list.size();i++){
+				Map<String, Object> model1  = list.get(i);
+				Order order = (Order) model1.get("order");
+				if(order.getOrderState().equals("1")){
+					resultlist.add(model1);
+				}
+			}
+			String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
+			Integer page=Integer.parseInt(string_page);
+//			List<Map<String,Object>>list=orderService.findByProperty("orderState","1");
+			model.put("list", resultlist);
+			model.addAttribute("taskName", "被终止订单列表");
+			model.addAttribute("url", "/order/orderDetail.do");
+			model.addAttribute("page", page);
+			
+			if(resultlist!=null&&resultlist.size()!=0){
+				model.addAttribute("pages", resultlist.get(0).get("pages"));
+			}
+			return "/order/endList";
+		}		
 		
 		
 		// ===========================结束订单=================================

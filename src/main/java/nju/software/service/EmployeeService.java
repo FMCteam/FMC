@@ -20,4 +20,6 @@ public interface EmployeeService {
 	
 	public int getcount();
 
+	public List<Employee> getEmployeeByName(String employeename);
+
 }

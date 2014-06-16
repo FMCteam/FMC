@@ -114,4 +114,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+	@Override
+	public List<Employee> getEmployeeByName(String employeename) {
+		List<Employee> employees = employeeDAO.findByEmployeeName(employeename);
+		return employees;
+	}
+
 }

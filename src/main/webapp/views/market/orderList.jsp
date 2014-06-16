@@ -6,13 +6,31 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<section class="list">
+				<form id="orderSearch"  method="post" action="${ctx}/order/orderSearch.do">
 				<table class="list tablesorter">
 					<caption>
 						<span class="text-vertical">${taskName}:<span
 							class="number">${fn:length(list)}</span>条订单
 						</span>
-					   <input type="text" class="search-query float-right"
-							placeholder="输入检索条件">
+						<br>
+						
+						<span >输入起始日期:</span>
+						<input class="search-query" type="text" name="startdate" placeholder="输入订单起始日期">
+						<span >输入截止日期:</span>
+						<input class="search-query" type="text" name="enddate" placeholder="输入订单截止日期">
+						<br>
+						<!-- 
+						<input type="text" class="search-query float-right" placeholder="输入检索条件">
+						 -->
+						<input class="btn btn-primary" type="submit" value="查询" style="float:right;">
+						<span >输入订单编号:</span>
+						<input type="text" class="search-query " name="ordernumber" placeholder="输入订单编号">
+						<span >市场专员名称:</span>
+						<input type="text" class="search-query " name="employeename" placeholder="输入市场专员名称">
+						<span >款式名称:</span>
+						<input type="text" class="search-query " name="stylename" placeholder="输入款式名称">
+						<span >客户名称:</span>
+						<input type="text" class="search-query " name="customername" placeholder="输入客户名称">
 					</caption>
 					<thead>
 						<tr>
@@ -28,7 +46,11 @@
 					<tbody>
 						<c:forEach var="model" items="${list}">
 							<tr>
-								<td>${model.orderId}</td>
+								<td>
+								
+								${model.orderId}
+								${model.order.styleName}
+								</td>
 								<td style="padding:8px 0px 0px 0px;"><c:if
 										test="${model.order.sampleClothesPicture!=null}">
 										<img width="60px" height="100%"
@@ -44,6 +66,7 @@
 						</c:forEach>
 					</tbody>
 				</table>
+				</form>
 			</section>
 			<div style="float: right;margin-top:20px;margin-right:0px">
 
