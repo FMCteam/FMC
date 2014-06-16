@@ -71,7 +71,7 @@ table.tablesorter thead tr .headerSortDown {
 	<div id="mainwrapper" class="mainwrapper">
 		<div class="header">
 			<div class="logo">
-					<img src="${ctx}/images/logo2.png" alt="" />	<!-- <span>智造链</span> -->
+					<a href="http://localhost:8080/fmc/default.do"><img src="${ctx}/images/logo2.png" alt=""  /></a>	<!-- <span>智造链</span> -->
 			
 			</div>
 			<div class="headerinner">

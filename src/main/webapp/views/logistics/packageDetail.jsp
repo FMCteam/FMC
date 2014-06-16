@@ -100,7 +100,7 @@
 
 						</c:forEach>
 					</table>
-
+					<button class="btn btn-primary" onclick="history.back();">返回</button>
 					<div class="action">
 						<a class="btn btn-primary" onclick="return confirmPackageSubmit()"
 							href="${ctx}/logistics/packageSubmit.do?orderId=${orderInfo.order.orderId}">完成装箱</a>
