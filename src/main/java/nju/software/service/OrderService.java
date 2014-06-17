@@ -66,4 +66,8 @@ public interface OrderService {
 			List<VersionData> versions, DesignCad cad, int user_id,
 			List<FabricCost> fabricCosts,List<AccessoryCost> accessoryCosts,Quote quote);
 
+	public List<Map<String, Object>> getSearchOrderList(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate, Integer[] employeeIds);
+
 }

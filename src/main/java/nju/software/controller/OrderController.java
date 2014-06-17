@@ -106,7 +106,6 @@ public class OrderController {
 		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
 		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
 		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
 		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
 
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
@@ -114,7 +113,7 @@ public class OrderController {
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-		List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		List<Map<String, Object>> list = orderService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
          
 		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
 		Integer page=Integer.parseInt(string_page);
@@ -123,7 +122,7 @@ public class OrderController {
 //		Account account = (Account) session.getAttribute("cur_user");
 //		List<Map<String, Object>> list = marketService.getSearchModifyOrderList(account.getUserId(),ordernumber,customername,stylename,startdate,employeeIds);
 		model.put("list", list);
-		model.addAttribute("taskName", "修改订单");
+		model.addAttribute("taskName", "修改订单查找");
 		model.addAttribute("url", "/account/modifyOrderDetail.do");
 		model.addAttribute("page", page);
 		
@@ -247,13 +246,10 @@ public class OrderController {
 			String accessory_cost_name[] = request.getParameterValues("accessory_cost_name");
 			String cost_per_piece[] = request.getParameterValues("costperpiece");
 			String tear_per_piece[] = request.getParameterValues("tearperpiece");	
-			System.out.println("whhlength1"+tear_per_piece.length);
-			System.out.println("whhlength2"+cost_per_piece.length);
-			System.out.println("whhlength3"+accessory_cost_name.length);
+//			System.out.println("whhlength1"+tear_per_piece.length);
+//			System.out.println("whhlength2"+cost_per_piece.length);
+//			System.out.println("whhlength3"+accessory_cost_name.length);
 
-			for(int k =0;k<tear_per_piece.length;k++){
-				System.out.println(tear_per_piece[k]);
-			}
 			List<AccessoryCost> accessoryCosts = new ArrayList<AccessoryCost>();
 			for(int i = 1;i<accessory_cost_name.length;i++){
 				AccessoryCost ac = new AccessoryCost();

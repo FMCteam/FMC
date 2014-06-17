@@ -323,17 +323,17 @@ public class MarketServiceImpl implements MarketService {
 				TASK_MODIFY_ORDER);
 		return temp;
 	}
-	@Override
-	public List<Map<String, Object>> getSearchModifyOrderList(Integer userId,
-			String ordernumber, String customername, String stylename,
-			String startdate,String enddate, Integer[] employeeIds) {
-		// TODO Auto-generated method stub
-		List<Map<String, Object>> temp = service.getSearchOrderList(userId + "",
-				 ordernumber,  customername,  stylename,
-				 startdate,enddate,  employeeIds,
-				TASK_MODIFY_ORDER);
-		return temp;
-	} 
+//	@Override
+//	public List<Map<String, Object>> getSearchModifyOrderList(Integer userId,
+//			String ordernumber, String customername, String stylename,
+//			String startdate,String enddate, Integer[] employeeIds) {
+//		// TODO Auto-generated method stub
+//		List<Map<String, Object>> temp = service.getSearchOrderList(userId + "",
+//				 ordernumber,  customername,  stylename,
+//				 startdate,enddate,  employeeIds,
+//				TASK_MODIFY_ORDER);
+//		return temp;
+//	} 
 	@Override
 	public Map<String, Object> getModifyOrderDetail(int accountId, int id) {
 		// TODO Auto-generated method stub
@@ -887,21 +887,22 @@ public class MarketServiceImpl implements MarketService {
 			Integer[] employeeIds) {
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
 				 customername,stylename,startdate,enddate,employeeIds);
- 		Integer number_per_page=10;
-		Integer pages=(int) Math.ceil(orders.size()/number_per_page);
+// 		Integer number_per_page=10;
+ 		int orderslength = orders.size();
+// 		int pages2 = (int) Math.ceil(orderslength/10);
+		Integer pages=(int) Math.ceil((double)orderslength/10);
+
+// 		System.out.println("page is "+pages2);
+//		Integer pages=(int) Math.ceil(orders.size()/number_per_page);
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
 			Map<String, Object> model = new HashMap<String, Object>();
-			
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
 			model.put("pages", pages);
 			model.put("taskTime", getTaskTime(order.getOrderTime()));
 			list.add(model);
-			
-			
-			
  		}
 		return list;
  	}

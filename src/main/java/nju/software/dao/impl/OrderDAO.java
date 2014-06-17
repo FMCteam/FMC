@@ -560,13 +560,16 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
 		if (startdate != null&& enddate!=null){
 			String strformat = "yyyy-MM-dd HH:mm:ss";
+			String strformat2 = "yyyy-MM-dd";
 	        DateUtil du = new DateUtil();
+	        Date begindate1 = null;
+	        Date enddate1 = null;
 			if(startdate.length()==10&&enddate.length()==10){
 				startdate = startdate+" 00:00:00";
 				enddate = enddate+" 23:59:59";
+	        begindate1 = du.parse(startdate, strformat);
+	        enddate1 = du.parse(enddate, strformat);
 			}
-	        Date begindate1 = du.parse(startdate, strformat);
-	        Date enddate1 = du.parse(enddate, strformat);
 			criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
 		}
 		if(employeeIds!=null&&employeeIds.length !=0){

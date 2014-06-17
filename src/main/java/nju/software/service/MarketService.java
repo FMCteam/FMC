@@ -127,8 +127,8 @@ public interface MarketService {
 			String customername, String stylename, String startdate,String enddate,
 			Integer[] employeeIds);
 
-	public List<Map<String, Object>> getSearchModifyOrderList(Integer userId,
-			String ordernumber, String customername, String stylename,
-			String startdate,String enddate, Integer[] employeeIds);
+//	public List<Map<String, Object>> getSearchModifyOrderList(Integer userId,
+//			String ordernumber, String customername, String stylename,
+//			String startdate,String enddate, Integer[] employeeIds);
 	
 }

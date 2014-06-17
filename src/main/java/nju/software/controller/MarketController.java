@@ -1749,17 +1749,17 @@ public class MarketController {
 		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
 		Integer page=Integer.parseInt(string_page);
 		model.addAttribute("list", list);
-		model.addAttribute("taskName", "订单列表");
+		model.addAttribute("taskName", "订单列表查找");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("page", page);
 		
 		if(list!=null&&list.size()!=0){
 			model.addAttribute("pages", list.get(0).get("pages"));
 		}
-		System.out.println("===========ok:"+list.size());
+		System.out.println("===========ok:"+list.size()+list.get(0).get("pages"));
+		
 		return "/market/orderList";
 	}
-	
 	
 	
 	@RequestMapping(value = "/order/orderDetail.do")
