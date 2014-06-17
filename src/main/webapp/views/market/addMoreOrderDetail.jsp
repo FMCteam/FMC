@@ -608,7 +608,7 @@
 				<input type="hidden" name="customerId"
 					value="${orderModel.order.customerId}" />
 				<input type="hidden" name="sourceId"
-					value="${orderModel.orderId}" />	
+					value="${initId}" />	
 				<!--widgetcontent-->
 				<!--row-fluid-->
 			</div>

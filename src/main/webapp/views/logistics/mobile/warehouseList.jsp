@@ -38,7 +38,7 @@ $(function() {
 		</table>
 	</section>
 </body>
-
+<button class="btn btn-primary" onclick="window.location.href='http://localhost:8080/fmc/default.do';">返回到首页</button>
 <script type="text/javascript" src="${ctx}/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${ctx}/css/bootstrap.min.css">
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">

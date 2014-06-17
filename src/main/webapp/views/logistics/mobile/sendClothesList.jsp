@@ -37,9 +37,7 @@ $(function() {
 			</c:forEach>
 		</table>
 	</section>
-
-
-
+<button class="btn btn-primary" onclick="window.location.href='http://localhost:8080/fmc/default.do';">返回到首页</button>
 </body>
 
 <script type="text/javascript" src="${ctx}/js/bootstrap.min.js"></script>

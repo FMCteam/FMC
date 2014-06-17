@@ -122,6 +122,7 @@
 							</tr>
 
 						</table>
+						<button class="btn btn-primary" onclick="history.back();">返回</button>
 						<div class="action">
 							<input type="submit" id="financeSubmit" hidden="hidden" /> <a
 								id="financeButton" class="btn btn-primary btn-rounded"><i

@@ -249,7 +249,10 @@ public class MarketServiceImpl implements MarketService {
 				
 				//报价
 				String sourceId = request.getParameter("sourceId");
+				System.out.println("sourceId:-------->"+sourceId);
+				System.out.println("orderId:-------->"+orderId);
 				Integer source = Integer.parseInt(sourceId);
+				
 				Quote quote = quoteDAO.findById(source);
 				try {
 					Quote newQuote = (Quote)copy(quote);
