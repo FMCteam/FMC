@@ -417,6 +417,7 @@ public class MarketController {
 		
 		Map<String, Object> orderModel = marketService.getAddMoreOrderDetail(id);
 		model.addAttribute("orderModel", orderModel);
+		model.addAttribute("initId",id);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		model.addAttribute("employee_name", account.getNickName());

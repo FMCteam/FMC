@@ -248,9 +248,11 @@ public class MarketServiceImpl implements MarketService {
 				cadDAO.save(cad);
 				
 				//报价
-				/*String sourceId = request.getParameter("sourceId");
+				String sourceId = request.getParameter("sourceId");
+				System.out.println("sourceId:-------->"+sourceId);
+				System.out.println("orderId:-------->"+orderId);
 				Integer source = Integer.parseInt(sourceId);
-*/				Integer source = orderId;
+				
 				Quote quote = quoteDAO.findById(source);
 				try {
 					Quote newQuote = (Quote)copy(quote);

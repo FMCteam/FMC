@@ -10,9 +10,9 @@
 			<br>
 						
 						<span >输入起始日期:</span>
-						<input class="search-query" type="text" name="startdate" placeholder="输入订单起始日期">
-						<span >输入截止日期:</span>
-						<input class="search-query" type="text" name="enddate" placeholder="输入订单截止日期">
+						<input class="search-query" style="width: 210px" type="date" name="startdate" placeholder="输入订单起始日期">
+						<span >&nbsp; 输入截止日期:</span>
+						<input class="search-query" style="width: 210px" type="date" name="enddate" placeholder="输入订单截止日期">
 						<br>
 						<!-- 
 						<input type="text" class="search-query float-right" placeholder="输入检索条件">
@@ -42,7 +42,11 @@
 		<tbody>
 			<c:forEach var="model" items="${list}">
 				<tr>
-					<td>${model.orderId}${model.order.styleName}</td>
+					<td>${model.orderId}
+					<div>
+					${model.order.styleName}
+					</div>
+					</td>
 					<td style="padding:8px 0px 0px 0px;"><c:if
 							test="${model.order.sampleClothesPicture!=null}">
 							<img width="60px" height="100%"
