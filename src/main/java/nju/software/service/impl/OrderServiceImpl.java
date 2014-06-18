@@ -441,18 +441,43 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return list;
 	}
-	
+	public boolean ownToOrderList(Order o1,List<Order> orderList){
+		
+		for(int i =0;i<orderList.size();i++){
+			if(o1.getOrderId().equals(orderList.get(i).getOrderId())){
+				return true;				
+			}
+		}
+		return false;
+	}
 	public List<Map<String, Object>> getSearchOrderList(String ordernumber,
 			String customername, String stylename, String startdate,String enddate,
 			Integer[] employeeIds) {
+		
+        Order o = new Order();
+		
+		List<Order> orderList = orderDAO.findByExample(o);
+		List<Order> searchResults = new ArrayList();
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
 				 customername,stylename,startdate,enddate,employeeIds);
+		
+		for(int j =0;j<orders.size();j++){
+			Order ord =  orders.get(j);
+			
+			if(ownToOrderList(ord, orderList)){
+				searchResults.add(ord);
+				System.out.println("hehehehehhehehe"+ord.getOrderId());
+			}else{
+				System.out.println("hahahahahaha");
+			}
+		}
+		
 // 		Integer number_per_page=10;
 //		Integer pages=(int) Math.ceil(orders.size()/number_per_page);
 		int orderslength = orders.size();
 		Integer pages=(int) Math.ceil((double)orderslength/10);
 		List<Map<String, Object>> list = new ArrayList<>();
-		for (Order order : orders) {
+		for (Order order : searchResults) {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
