@@ -476,6 +476,32 @@ public class Order implements java.io.Serializable {
 	public void setContractFile(String contractFile) {
 		this.contractFile = contractFile;
 	}
-	
-
+    public boolean equals(Order obj) { 
+//        if (this == obj) 
+//            return true; 
+//        if (obj == null) 
+//            return false; 
+//        if (getClass() != obj.getClass()) 
+//            return false; 
+//        final Order other = (Order) obj; 
+         if(this.getOrderId()!=obj.getOrderId()) 
+            return false; 
+        return true;
+//	public boolean equals(Order obj) {
+//		if(this.orderId == obj.getOrderId())
+//			return true;
+//		
+//		return false;
+////        if (this == obj) 
+////            return true; 
+////        if (obj == null) 
+////            return false; 
+////        if (getClass() != obj.getClass()) 
+////            return false; 
+////        final Order other = (Order) obj; 
+////         if(this.getOrderid()!=other.getOrderid()) 
+////            return false; 
+////        return true; 
+//   } 
+}
 }
