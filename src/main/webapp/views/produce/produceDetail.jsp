@@ -91,6 +91,9 @@
 								</tr>
 							</c:forEach>
 						</table>
+							<div>
+							<span>加工方:</span><input  id="processing_side" name="processing_side" type="text" />
+							</div>
 					    <button class="btn btn-primary" onclick="history.back();">返回</button>
 						<div class="action">
 							 <input type="hidden" name="orderId"
