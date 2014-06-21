@@ -62,4 +62,9 @@
 			<td>${produce.produceAmount}</td>
 		</tr>
 	</c:forEach>
+	<tr>
+	<td>加工方：</td>
+	<td colspan="7"><input class="span12 bad_color" type="text"
+	    value="${orderInfo.order.payAccountInfo}" readonly="readonly"/></td>
+	</tr>	
 </table>
