@@ -6,9 +6,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nju.software.dataobject.Order;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
+import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.impl.JbpmTest;
 import nju.software.service.impl.ProduceServiceImpl;
@@ -25,6 +27,8 @@ public class ProduceController {
 
 	@Autowired
 	private ProduceService produceService;
+	@Autowired
+	private OrderService orderService;
 	@Autowired
 	private JbpmTest jbpmTest;
 	
@@ -268,6 +272,10 @@ public class ProduceController {
 			String produceL = request.getParameter("produce_l");
 			String produceXL = request.getParameter("produce_xl");
 			String produceXXL = request.getParameter("produce_xxl");
+			String processing_side = request.getParameter("processing_side");
+			Order torder = orderService.findByOrderId(orderId+"");
+			torder.setPayAccountInfo(processing_side);
+			orderService.updateOrder(torder);
 			produceList = produceService.getProduceList(orderId, produceColor, produceXS, 
 					produceS, produceM, produceL, produceXL, produceXXL, Produce.TYPE_PRODUCED);
 		}
