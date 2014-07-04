@@ -41,6 +41,15 @@ public class DesignServiceImpl implements DesignService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchVerifyDesignList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		// TODO Auto-generated method stub
+		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER, ordernumber,customername,stylename,
+				 startdate,enddate,employeeIds,TASK_VERIFY_DESIGN);
+	}
+	
+	@Override
 	public Map<String, Object> getVerifyDesignDetail(int orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModelWithQuote(ACTOR_DESIGN_MANAGER,
@@ -70,6 +79,14 @@ public class DesignServiceImpl implements DesignService {
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_UPLOAD_DESIGN);
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchUploadDesignList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER, ordernumber,customername,stylename,
+				 startdate,enddate,employeeIds, TASK_UPLOAD_DESIGN);
+	}
+	
 	@Override
 	public Map<String, Object> getUploadDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
@@ -113,6 +130,15 @@ public class DesignServiceImpl implements DesignService {
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_MODIFY_DESIGN);
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchModifyDesignList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		// TODO Auto-generated method stub
+		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER,ordernumber,customername,stylename,
+				 startdate,enddate,employeeIds,TASK_MODIFY_DESIGN);
+	}
+	
 	@Override
 	public Map<String, Object> getModifyDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
@@ -168,6 +194,17 @@ public class DesignServiceImpl implements DesignService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchConfirmDesignList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER,
+				 ordernumber,  customername,  stylename,startdate,  enddate,  employeeIds,
+				TASK_CONFIRM_DESIGN);
+
+	}
+
+	
+	@Override
 	public Map<String, Object> getConfirmDesignDetail(Integer orderId) {
 		// TODO Auto-generated method stub
 		Map<String, Object> model = service.getBasicOrderModelWithQuote(
@@ -191,4 +228,7 @@ public class DesignServiceImpl implements DesignService {
 	private ServiceUtil service;
 	@Autowired
 	private DesignCadDAO designCadDAO;
+
+
+
 }

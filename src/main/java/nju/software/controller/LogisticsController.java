@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import nju.software.model.OrderInfo;
+import nju.software.dataobject.Employee;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
+import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
 import nju.software.service.impl.JbpmTest;
@@ -34,9 +36,11 @@ public class LogisticsController {
 		List<Map<String, Object>> list = logisticsService
 				.getReceiveSampleList();
 		model.addAttribute("list", list);
+ 
 		return "/logistics/receiveSampleList";
 	}
-
+ 
+	
 	@RequestMapping(value = "/logistics/receiveSampleDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String receiveSampleDetail(HttpServletRequest request,
@@ -72,9 +76,48 @@ public class LogisticsController {
 		model.put("list", list);
 		model.addAttribute("taskName", "样衣发货");
 		model.addAttribute("url", "/logistics/sendSampleDetail.do");
+		model.addAttribute("searchurl", "/logistics/sendSampleListSearch.do");
+
 		return "/logistics/sendSampleList";
 	}
+	@Autowired
+	private EmployeeService employeeService;
+	@RequestMapping(value = "/logistics/sendSampleListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String sendSampleListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
 
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String, Object>> list = logisticsService.getSearchSendSampleList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+//		if (list.size() == 0) {
+//			jbpmTest.completeProduceSample("1");
+//			list = logisticsService.getSendSampleList();
+//		}
+		model.put("list", list);
+		model.addAttribute("taskName", "样衣发货");
+		model.addAttribute("url", "/logistics/sendSampleDetail.do");
+		model.addAttribute("searchurl", "/logistics/sendSampleListSearch.do");
+
+		return "/logistics/sendSampleList";
+	}
+	
 	@RequestMapping(value = "/logistics/sendSampleDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sendSampleDetail(HttpServletRequest request,
@@ -122,11 +165,13 @@ public class LogisticsController {
 //			packageList = logisticsService.getPackageList();
 //			warehouseList = logisticsService.getWarehouseList();
 //		}
+
 		model.put("packageList", packageList);
 		model.put("warehouseList", warehouseList);
 		return "/logistics/warehouseList";
 	}
 
+	
 	@RequestMapping(value = "/logistics/packageDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String packageDetail(HttpServletRequest request,

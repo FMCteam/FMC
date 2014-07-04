@@ -50,4 +50,24 @@ public interface BuyService {
 	public Map<String, Object> getPurchaseMaterialDetail(Integer orderId);
 
 	public boolean purchaseMaterialSubmit(long taskId, boolean result);
+
+	public List<Map<String, Object>> getSearchVerifyPurchaseList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchComputePurchaseCostList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchPurchaseSampleMaterialList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchConfirmPurchaseList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchPurchaseMaterialList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
 }

@@ -88,6 +88,8 @@ public class OrderController {
 		model.put("list", orderModelList);
 		model.addAttribute("taskName", "修改订单");
 		model.addAttribute("url", "/account/modifyOrderDetail.do");
+		model.addAttribute("searchurl", "/account/modifyOrderSearch.do");
+
 		return "account/modifyOrderList";
 	}
 	
@@ -124,6 +126,8 @@ public class OrderController {
 		model.put("list", list);
 		model.addAttribute("taskName", "修改订单查找");
 		model.addAttribute("url", "/account/modifyOrderDetail.do");
+		model.addAttribute("searchurl", "/account/modifyOrderSearch.do");
+
 		model.addAttribute("page", page);
 		
 		if(list!=null&&list.size()!=0){

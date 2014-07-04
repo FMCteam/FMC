@@ -56,6 +56,41 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchReceiveSampleList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		// TODO Auto-generated method stub
+		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
+				 customername,  stylename,  startdate,enddate,employeeIds);
+		
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_LOGISTICS_MANAGER, TASK_RECEIVE_SAMPLE);	
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (TaskSummary task : tasks) {
+			boolean isSearched = false;
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			for(int k =0;k<orders.size();k++){
+				if(orderId.equals(orders.get(k).getOrderId())){
+					isSearched = true;
+					break;
+				}
+			}
+			if(isSearched==true){
+			Map<String, Object> model = new HashMap<String, Object>();
+			Order order = orderDAO.findById(orderId);
+			model.put("order",order);
+			model.put("logistics", logisticsDAO.findById(orderId));
+			model.put("task", task);
+			model.put("taskTime", service.getTaskTime(task.getCreatedOn()));
+			model.put("orderId", service.getOrderId(order));
+			list.add(model);
+			}
+		}
+		return list;
+ 	}
+	
+	@Override
 	public Map<String, Object> getReceiveSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModel(ACTOR_LOGISTICS_MANAGER,
@@ -88,6 +123,16 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return service.getOrderList(ACTOR_LOGISTICS_MANAGER, TASK_SEND_SAMPLE);
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchSendSampleList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_LOGISTICS_MANAGER, ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds, TASK_SEND_SAMPLE);
+
+	}
+
+	
 	@Override
 	public Map<String, Object> getSendSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
@@ -437,5 +482,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 		// TODO Auto-generated method stub
 		return logisticsDAO.findById(Integer.parseInt(s_id));
 	}
+
+
+
 
 }

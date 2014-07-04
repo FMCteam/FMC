@@ -40,4 +40,20 @@ public interface ProduceService {
 			String produceXS, String produceS, String produceM,
 			String produceL, String produceXL, String produceXXL, String type);
 
+	public List<Map<String, Object>> getSearchVerifyProduceList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchComputeProduceCostList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchProduceSampleList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchProduceList(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate, Integer[] employeeIds);
+
 }

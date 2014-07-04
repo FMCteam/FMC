@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import nju.software.dataobject.Accessory;
+import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
 import nju.software.model.OrderInfo;
 import nju.software.service.BuyService;
+import nju.software.service.EmployeeService;
 import nju.software.service.impl.JbpmTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +36,48 @@ public class BuyController {
 		model.put("list", list);
 		model.addAttribute("taskName", "采购验证");
 		model.addAttribute("url", "/buy/verifyPurchaseDetail.do");
+		model.addAttribute("searchurl", "/buy/verifyPurchaseListSearch.do");
+
 		return "/buy/verifyPurchaseList";
 	}
+	@Autowired
+	private EmployeeService employeeService;
+	// ===========================采购验证搜索订单=================================
+	@RequestMapping(value = "/buy/verifyPurchaseListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String verifyPurchaseListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
 
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		List<Map<String, Object>> list = buyService.getSearchVerifyPurchaseList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.put("list", list);
+		model.addAttribute("taskName", "采购验证");
+		model.addAttribute("url", "/buy/verifyPurchaseDetail.do");
+		model.addAttribute("searchurl", "/buy/verifyPurchaseListSearch.do");
+
+		return "/buy/verifyPurchaseList";
+	}
+	
 	@RequestMapping(value = "/buy/verifyPurchaseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyPurchaseDetail(HttpServletRequest request,
@@ -73,9 +114,54 @@ public class BuyController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "采购成本核算");
 		model.addAttribute("url", "/buy/computePurchaseCostDetail.do");
+		model.addAttribute("searchurl", "/buy/computePurchaseCostListSearch.do");
+
 		return "/buy/computePurchaseCostList";
 	}
 
+	// ===========================采购成本核算=================================
+	@RequestMapping(value = "/buy/computePurchaseCostListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String computePurchaseCostListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		
+		
+		List<Map<String, Object>> list = buyService
+				.getSearchComputePurchaseCostList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		/*if (list.size() == 0) {
+			jbpmTest.completeVerify("1", true);
+			list = buyService.getComputePurchaseCostList();
+		}*/
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "采购成本核算");
+		model.addAttribute("url", "/buy/computePurchaseCostDetail.do");
+		model.addAttribute("searchurl", "/buy/computePurchaseCostListSearch.do");
+
+		return "/buy/computePurchaseCostList";
+	}
+	
 	@RequestMapping(value = "/buy/computePurchaseCostDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String computePurchaseCostDetail(HttpServletRequest request,
@@ -192,9 +278,47 @@ public class BuyController {
 		model.put("list", list);
 		model.addAttribute("taskName", "样衣原料采购");
 		model.addAttribute("url", "/buy/purchaseSampleMaterialDetail.do");
+		model.addAttribute("searchurl", "/buy/purchaseSampleMaterialListSearch.do");
+
 		return "/buy/purchaseSampleMaterialList";
 	}
 
+	@RequestMapping(value = "/buy/purchaseSampleMaterialListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String purchaseSampleMaterialListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		List<Map<String, Object>> list = buyService
+				.getSearchPurchaseSampleMaterialList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.put("list", list);
+		model.addAttribute("taskName", "样衣原料采购");
+		model.addAttribute("url", "/buy/purchaseSampleMaterialDetail.do");
+		model.addAttribute("searchurl", "/buy/purchaseSampleMaterialListSearch.do");
+
+		return "/buy/purchaseSampleMaterialList";
+	}
+	
 	@RequestMapping(value = "/buy/purchaseSampleMaterialDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String purchaseSampleMaterialDetail(HttpServletRequest request,
@@ -225,9 +349,47 @@ public class BuyController {
 		model.put("list", list);
 		model.addAttribute("taskName", "确认生产原料");
 		model.addAttribute("url", "/buy/confirmPurchaseDetail.do");
+		model.addAttribute("searchurl", "/buy/confirmPurchaseListSearch.do");
+
 		return "/buy/confirmPurchaseList";
 	}
 
+	@RequestMapping(value = "/buy/confirmPurchaseListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmPurchaseListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		List<Map<String, Object>> list = buyService.getSearchConfirmPurchaseList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.put("list", list);
+		model.addAttribute("taskName", "确认生产原料");
+		model.addAttribute("url", "/buy/confirmPurchaseDetail.do");
+		model.addAttribute("searchurl", "/buy/confirmPurchaseListSearch.do");
+
+		return "/buy/confirmPurchaseList";
+	}
+
+	
 	@RequestMapping(value = "/buy/confirmPurchaseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmPurchaseDetail(HttpServletRequest request,
@@ -258,9 +420,46 @@ public class BuyController {
 		model.put("list", list);
 		model.addAttribute("taskName", "生产采购");
 		model.addAttribute("url", "/buy/purchaseMaterialDetail.do");
+		model.addAttribute("searchurl", "/buy/purchaseMaterialListSearch.do");
+
 		return "/buy/purchaseMaterialList";
 	}
 
+	@RequestMapping(value = "/buy/purchaseMaterialListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String purchaseMaterialListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		List<Map<String, Object>> list = buyService.getSearchPurchaseMaterialList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.put("list", list);
+		model.addAttribute("taskName", "生产采购");
+		model.addAttribute("url", "/buy/purchaseMaterialDetail.do");
+		model.addAttribute("searchurl", "/buy/purchaseMaterialListSearch.do");
+
+		return "/buy/purchaseMaterialList";
+	}
+	
 	@RequestMapping(value = "/buy/purchaseMaterialDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String purchaseMaterialDetail(HttpServletRequest request,

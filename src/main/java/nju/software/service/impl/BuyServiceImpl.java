@@ -38,6 +38,15 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchVerifyPurchaseList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_PURCHASE_MANAGER, ordernumber, customername, stylename,
+				 startdate, enddate, employeeIds,
+				TASK_VERIFY_PURCHASE);
+	}
+	
+	@Override
 	public Map<String, Object> getVerifyPurchaseDetail(Integer orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModel(ACTOR_PURCHASE_MANAGER,
@@ -68,7 +77,16 @@ public class BuyServiceImpl implements BuyService {
 		return service.getOrderList(ACTOR_PURCHASE_MANAGER,
 				TASK_COMPUTE_PURCHASE_COST);
 	}
-
+	
+	@Override
+	public List<Map<String, Object>> getSearchComputePurchaseCostList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_PURCHASE_MANAGER, ordernumber,  customername,  stylename,
+				 startdate,  enddate, employeeIds,
+				TASK_COMPUTE_PURCHASE_COST);
+	}
+	
 	@Override
 	public Map<String, Object> getComputePurchaseCostDetail(Integer orderId) {
 		// TODO Auto-generated method stub
@@ -229,6 +247,15 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchPurchaseSampleMaterialList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_PURCHASE_MANAGER, ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				TASK_PURCHASE_SAMPLE_MATERIAL);
+	}
+	
+	@Override
 	public Map<String,Object> getPurchaseSampleMaterialDetail(Integer orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModelWithQuote(ACTOR_PURCHASE_MANAGER,
@@ -259,6 +286,15 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchConfirmPurchaseList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_PURCHASE_MANAGER, ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				TASK_CONFIRM_PURCHASE);
+	}
+	
+	@Override
 	public Map<String, Object> getConfirmPurchaseDetail(Integer orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModelWithQuote(ACTOR_PURCHASE_MANAGER,
@@ -288,6 +324,15 @@ public class BuyServiceImpl implements BuyService {
 				TASK_PURCHASE_MATERIAL);
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchPurchaseMaterialList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_PURCHASE_MANAGER, ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				TASK_PURCHASE_MATERIAL);
+	}
+	
 	@Override
 	public Map<String, Object> getPurchaseMaterialDetail(Integer orderId) {
 		// TODO Auto-generated method stub
@@ -342,4 +387,9 @@ public class BuyServiceImpl implements BuyService {
 	public final static String TASK_PURCHASE_MATERIAL = "purchaseMaterial";
 	public final static String RESULT_PURCHASE = "purchase";
 	public final static String RESULT_PURCHASE_COMMENT = "purchaseComment";
+
+
+
+
+
 }

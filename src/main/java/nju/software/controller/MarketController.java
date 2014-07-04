@@ -800,9 +800,49 @@ public class MarketController {
 		model.put("list", tasks);
 		model.addAttribute("taskName", "修改报价");
 		model.addAttribute("url", "/market/modifyQuoteDetail.do");
+		model.addAttribute("searchurl", "/market/modifyQuoteListSearch.do");
+
 		return "market/modifyQuoteList";
 	}
 
+	// 专员修改报价列表搜索
+	@RequestMapping(value = "market/modifyQuoteListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String modifyQuoteListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		List<Map<String, Object>> tasks = marketService
+				.getSearchModifyQuoteList(account.getUserId(),ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		model.put("list", tasks);
+		model.addAttribute("taskName", "修改报价订单搜索");
+		model.addAttribute("url", "/market/modifyQuoteDetail.do");
+		model.addAttribute("searchurl", "/market/modifyQuoteListSearch.do");
+
+		return "market/modifyQuoteList";
+	}
+	
 	// 专员修改加工单列表
 	@RequestMapping(value = "market/modifyProductList.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
@@ -817,9 +857,49 @@ public class MarketController {
 		model.put("list", tasks);
 		model.addAttribute("taskName", "修改合同加工单");
 		model.addAttribute("url", "/market/modifyProductDetail.do");
+		model.addAttribute("searchurl", "/market/modifyProductListSearch.do");
+
 		return "market/modifyProductList";
 	}
 
+	// 专员修改加工单列表搜索
+	@RequestMapping(value = "market/modifyProductListSearch.do" )
+	@Transactional(rollbackFor = Exception.class)
+	public String modifyProductListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		List<Map<String, Object>> tasks = marketService
+				.getSearchModifyProductList(account.getUserId(),ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		model.put("list", tasks);
+		model.addAttribute("taskName", "修改合同加工单搜索");
+		model.addAttribute("url", "/market/modifyProductDetail.do");
+		model.addAttribute("searchurl", "/market/modifyProductListSearch.do");
+
+		return "market/modifyProductList";
+	}
+	
 	// 专员修改加工单详情
 	@RequestMapping(value = "market/modifyProductDetail.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
@@ -966,9 +1046,50 @@ public class MarketController {
 		model.put("list", list);
 		model.addAttribute("taskName", "合并报价");
 		model.addAttribute("url", "/market/mergeQuoteDetail.do");
+		model.addAttribute("searchurl", "/market/mergeQuoteListSearch.do");
 		return "market/mergeQuoteList";
 	}
+	// 专员合并报价ListSearch
+	@RequestMapping(value = "market/mergeQuoteListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String mergeQuoteListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
 
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		List<Map<String, Object>> list = marketService.getSearchMergeQuoteList(account.getUserId(),ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		/*if (list.size() == 0) {
+			jbpmTest.completeComputeCost(account.getAccountId() + "");
+			list = marketService.getMergeQuoteList(account.getAccountId());
+		}*/
+
+		model.put("list", list);
+		model.addAttribute("taskName", "合并报价订单查找");
+		model.addAttribute("url", "/market/mergeQuoteDetail.do");
+		model.addAttribute("searchurl", "/market/mergeQuoteListSearch.do");
+
+		return "market/mergeQuoteList";
+	}
 	// 主管审核报价
 	@RequestMapping(value = "market/verifyQuoteSubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
@@ -1035,10 +1156,53 @@ public class MarketController {
 		model.put("list", list);
 		model.addAttribute("taskName", "审核报价");
 		model.addAttribute("url", "/market/verifyQuoteDetail.do");
+		model.addAttribute("searchurl", "/market/verifyQuoteListSearch.do");
+
 		return "market/verifyQuoteList";
 
 	}
+	
+	// 主管审核报价List搜索
+	@RequestMapping(value = "market/verifyQuoteListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String verifyQuoteListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
 
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		    
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		List<Map<String, Object>> list = marketService
+				.getSearchVerifyQuoteList(account.getUserId(),ordernumber,customername,stylename,startdate,enddate,employeeIds);
+//		List<Map<String, Object>> list = marketService
+//				.getVerifyQuoteList(account.getUserId());
+		
+		model.put("list", list);
+		model.addAttribute("taskName", "审核报价订单查询");
+		model.addAttribute("url", "/market/verifyQuoteDetail.do");
+		model.addAttribute("searchurl", "/market/verifyQuoteListSearch.do");
+
+		return "market/verifyQuoteList";
+
+	}
+	
 	// 修改询单的列表
 	@RequestMapping(value = "market/modifyOrderList.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
@@ -1056,51 +1220,59 @@ public class MarketController {
 		model.put("list", orderModelList);
 		model.addAttribute("taskName", "修改询单");
 		model.addAttribute("url", "/market/modifyOrderDetail.do");
+		model.addAttribute("searchurl", "/market/modifyOrderListSearch.do");
+
 		return "market/modifyOrderList";
 	}
+   
+	@RequestMapping(value = "/market/modifyOrderListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String modifyOrderSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
 
-//	@RequestMapping(value = "/order/modifyOrderSearch.do")
-//	@Transactional(rollbackFor = Exception.class)
-//	public String modifyOrderSearch(HttpServletRequest request,
-//			HttpServletResponse response, ModelMap model) {
-//		String ordernumber = request.getParameter("ordernumber");
-//		String customername = request.getParameter("customername");
-//		String stylename = request.getParameter("stylename");
-//		String employeename = request.getParameter("employeename");
-//		String startdate = request.getParameter("startdate");
-//
-//		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-//		customername = customername == null || customername.length() == 0 ? null: customername;
-//		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-//		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-//		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-//
-//		List<Employee> employees = employeeService.getEmployeeByName(employeename);
-//		Integer[] employeeIds = new Integer[employees.size()];
-//		for(int i=0;i<employeeIds.length;i++){
-//			employeeIds[i] = employees.get(i).getEmployeeId();
-//		}
-//		List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,employeeIds);
-//         
-//		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
-//		Integer page=Integer.parseInt(string_page);
-//		
-//		
-//		
-//		HttpSession session = request.getSession();
-//		Account account = (Account) session.getAttribute("cur_user");
-////		List<Map<String, Object>> list = marketService.getSearchModifyOrderList(account.getUserId(),ordernumber,customername,stylename,startdate,employeeIds);
-//		model.addAttribute("list", list);
-//		model.addAttribute("taskName", "修改询单");
-//		model.addAttribute("url", "/market/modifyOrderDetail.do");
-//		model.addAttribute("page", page);
-//		
-//		if(list!=null&&list.size()!=0){
-//			model.addAttribute("pages", list.get(0).get("pages"));
-//		}
-//		System.out.println("===========ok:"+list.size());
-//		return "market/modifyOrderList";
-//	}
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String, Object>> list = null;
+//		list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,employeeIds);
+         
+		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
+		Integer page=Integer.parseInt(string_page);
+		
+		
+		
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		Integer userId = account.getUserId();
+        list = marketService.getSearchModifyOrderList(userId,ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "修改询单");
+		model.addAttribute("url", "/market/modifyOrderDetail.do");
+		model.addAttribute("searchurl", "/market/modifyOrderListSearch.do");
+
+		model.addAttribute("page", page);
+		
+		if(list!=null&&list.size()!=0){
+			model.addAttribute("pages", list.get(0).get("pages"));
+		}
+		System.out.println("===========ok:"+list.size());
+		return "market/modifyOrderList";
+	}
 
 	// 询单的修改界面
 	@RequestMapping(value = "market/modifyOrderDetail.do")
@@ -1446,9 +1618,48 @@ public class MarketController {
 		model.put("list", list);
 		model.addAttribute("taskName", "确认报价");
 		model.addAttribute("url", "/market/confirmQuoteDetail.do");
+		model.addAttribute("searchurl", "/market/confirmQuoteListSearch.do");
+
 		return "market/confirmQuoteList";
 	}
 
+	@RequestMapping(value = "/market/confirmQuoteListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmQuoteListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		
+		
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		List<Map<String, Object>> list = marketService
+				.getSearchConfirmQuoteList(account.getUserId() + "",ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.put("list", list);
+		model.addAttribute("taskName", "确认报价搜索");
+		model.addAttribute("url", "/market/confirmQuoteDetail.do");
+		model.addAttribute("searchurl", "/market/confirmQuoteListSearch.do");
+
+		return "market/confirmQuoteList";
+	}
+	
 	@RequestMapping(value = "/market/confirmQuoteDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteDetail(HttpServletRequest request,
@@ -1512,9 +1723,55 @@ public class MarketController {
 		model.put("list", orderList);
 		model.addAttribute("taskName", "确认合同加工单");
 		model.addAttribute("url", "/market/confirmProduceOrderDetail.do");
+		model.addAttribute("searchurl", "/market/confirmProduceOrderListSearch.do");
+
 		return "market/confirmProductList";
 	}
 
+	@RequestMapping(value = "market/confirmProduceOrderListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmProduceOrderListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+        
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
+		String actorId = account.getUserId() + "";
+		List<Map<String, Object>> orderList = marketService.getSearchConfirmProductList(actorId,ordernumber,customername,stylename,startdate,enddate,employeeIds);
+//		List<Map<String, Object>> orderList = marketService
+//				.getConfirmProductList(actorId);
+//		if (orderList.size() == 0) {
+//			jbpmTest.completeProduceConfirm("1", true);
+//			orderList = marketService.getConfirmProductList(actorId);
+//		}
+		model.put("list", orderList);
+		model.addAttribute("taskName", "确认合同加工单");
+		model.addAttribute("url", "/market/confirmProduceOrderDetail.do");
+		model.addAttribute("searchurl", "/market/confirmProduceOrderListSearch.do");
+
+		return "market/confirmProductList";
+	}
+	
+	
 	/**
 	 * 确认合同加工单
 	 * 
@@ -1655,9 +1912,53 @@ public class MarketController {
 		model.put("list", list);
 		model.addAttribute("taskName", "签订合同");
 		model.addAttribute("url", "/market/signContractDetail.do");
+		model.addAttribute("searchurl", "/market/signContractListSearch.do");
+
 		return "/market/signContractList";
 	}
 
+	@RequestMapping(value = "/market/signContractListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String signContractListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+         
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
+		List<Map<String, Object>> list = marketService
+				.getSearchSignContractList(account.getUserId() + "",ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		/*if (list.size() == 0) {
+			jbpmTest.completeProduceConfirm(account.getUserId() + "", true);
+			marketService.getSignContractList(account.getUserId() + "");
+		}*/
+		model.put("list", list);
+		model.addAttribute("taskName", "签订合同");
+		model.addAttribute("url", "/market/signContractDetail.do");
+		model.addAttribute("searchurl", "/market/signContractListSearch.do");
+
+		return "/market/signContractList";
+	}
+	
 	@RequestMapping(value = "/market/signContractDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String signContractDetail(HttpServletRequest request,
@@ -1703,16 +2004,18 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
-		Integer page=Integer.parseInt(string_page);
-		List<Map<String, Object>> list = marketService.getOrderList(page);
+//		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
+//		Integer page=Integer.parseInt(string_page);
+//		List<Map<String, Object>> list = marketService.getOrderList(page);
+		List<Map<String, Object>> list = marketService.getOrders();
+
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
-		model.addAttribute("page", page);
-		if(list!=null&&list.size()!=0){
-			model.addAttribute("pages", list.get(0).get("pages"));
-		}
+//		model.addAttribute("page", page);
+//		if(list!=null&&list.size()!=0){
+//			model.addAttribute("pages", list.get(0).get("pages"));
+//		}
 		
 		//System.out.println("===========ok:"+list.size());
 		return "/market/orderList";

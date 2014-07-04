@@ -13,6 +13,17 @@
 //			$("input[name='single_cost']").val(inner_price+0);
 //		}
 //	});
+	var fabricCostTearPerMeter = $("input[name='fabricCostTearPerMeter']").val();
+	var orderInfoOrderSampleAmount = $("input[name='orderInfoOrderSampleAmount']").val();
+	var allpurchasemeters = fabricCostTearPerMeter * orderInfoOrderSampleAmount;
+	$("input[name='allpurchasemeters']").val(allpurchasemeters.toFixed(2));
+
+	var accessoryCostTearPerPiece = $("input[name='accessoryCostTearPerPiece']").val();
+	var orderInfoOrderSampleAmount2 = $("input[name='orderInfoOrderSampleAmount2']").val();
+	var allpurchasepieces = accessoryCostTearPerPiece * orderInfoOrderSampleAmount2;
+	$("input[name='allpurchasepieces']").val(allpurchasepieces.toFixed(2));
+	
+	
 	var merge_w =  $("input[name='merge_w']").val();
 	var orderInfoquoteFabricCost = $("input[name='orderInfoquoteFabricCost']").val();
 	var orderInfoquoteAccessoryCost = $("input[name='orderInfoquoteAccessoryCost']").val();

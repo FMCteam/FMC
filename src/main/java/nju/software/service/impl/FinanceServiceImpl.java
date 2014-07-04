@@ -47,6 +47,16 @@ public class FinanceServiceImpl implements FinanceService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchConfirmSampleMoneyList(
+			String actorId, String ordernumber, String customername,
+			String stylename, String startdate, String enddate,
+			Integer[] employeeIds) {
+		return service.getSearchOrderList(actorId,  ordernumber,  customername,
+				 stylename,  startdate,  enddate,employeeIds, TASK_CONFIRM_SAMPLE_MONEY);
+
+	}
+	
+	@Override
 	public Map<String, Object> getConfirmSampleMoneyDetail(String actorId,
 			Integer orderId) {
 		// TODO Auto-generated method stub
@@ -97,6 +107,17 @@ public class FinanceServiceImpl implements FinanceService {
 		return service.getOrderList(actorId, TASK_CONFIRM_DEPOSIT);
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchConfirmDepositList(
+			String actorId, String ordernumber, String customername,
+			String stylename, String startdate, String enddate,
+			Integer[] employeeIds) {
+		return service.getSearchOrderList(actorId, ordernumber,  customername,
+				 stylename,  startdate,  enddate,
+				 employeeIds,TASK_CONFIRM_DEPOSIT);
+	}
+
+	
 	@Override
 	public Map<String, Object> getConfirmDepositDetail(String actorId,
 			Integer orderId) {
@@ -152,6 +173,16 @@ public class FinanceServiceImpl implements FinanceService {
 		return service.getOrderList(actorId, TASK_CONFIRM_FINAL_PAYMENT);
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchConfirmFinalPaymentList(
+			String actorId, String ordernumber, String customername,
+			String stylename, String startdate, String enddate,
+			Integer[] employeeIds) {
+		return service.getSearchOrderList(actorId, ordernumber, customername,
+				 stylename, startdate, enddate,employeeIds, TASK_CONFIRM_FINAL_PAYMENT);
+ 	}
+
+	
 	@Override
 	public Map<String, Object> getConfirmFinalPaymentDetail(String actorId,
 			Integer orderId) {
@@ -301,4 +332,8 @@ public class FinanceServiceImpl implements FinanceService {
 		return model;
 
 	}
+
+
+
+
 }

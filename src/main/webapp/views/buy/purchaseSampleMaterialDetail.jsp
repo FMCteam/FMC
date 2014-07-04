@@ -43,10 +43,18 @@
 						</tr>
 						<c:forEach var="fabricCost" items="${orderInfo.fabricCosts}">
 							<tr>
+							
 								<td colspan="2">${fabricCost.fabricName }</td>
 								<td colspan="1">${fabricCost.tearPerMeter }</td>
 								<td colspan="1">${orderInfo.order.sampleAmount}</td>
-								<td colspan="2">${(fabricCost.tearPerMeter)*(orderInfo.order.sampleAmount)}</td>
+								<td colspan="2">
+							<input class="span12" type="hidden" name="fabricCostTearPerMeter" value="${fabricCost.tearPerMeter }" />
+		                    <input class="span12" type="hidden" name="orderInfoOrderSampleAmount" value="${orderInfo.order.sampleAmount}" />
+							<input class="span12" type="text" name="allpurchasemeters" required="required"  readonly="readonly" />	
+							<!-- 
+								${(fabricCost.tearPerMeter)*(orderInfo.order.sampleAmount)}
+							 -->
+								</td>
 							</tr>
 						</c:forEach>
 						<tr>
@@ -61,7 +69,15 @@
 								<td colspan="2">${accessoryCost.accessoryName }</td>
 								<td colspan="1">${accessoryCost.tearPerPiece }</td>
 								<td colspan="1">${orderInfo.order.sampleAmount}</td>
-								<td colspan="2">${(accessoryCost.tearPerPiece)*(orderInfo.order.sampleAmount)}</td>
+								<td colspan="2">
+							<input class="span12" type="hidden" name="accessoryCostTearPerPiece" value="${accessoryCost.tearPerPiece }" />
+		                    <input class="span12" type="hidden" name="orderInfoOrderSampleAmount2" value="${orderInfo.order.sampleAmount}" />
+							<input class="span12" type="text" name="allpurchasepieces" required="required"  readonly="readonly" />	
+								
+								<!-- 
+								${(accessoryCost.tearPerPiece)*(orderInfo.order.sampleAmount)}
+								 -->
+								</td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -103,5 +119,6 @@
 <link rel="stylesheet" href="${ctx}/views/buy/buy.css">
 <script type="text/javascript" src="${ctx}/views/buy/cost.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
+<script type="text/javascript" src="${ctx}/js/order/add_quote.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>

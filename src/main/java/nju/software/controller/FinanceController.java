@@ -4,13 +4,18 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import nju.software.dataobject.Employee;
 import nju.software.dataobject.Money;
+import nju.software.service.EmployeeService;
 import nju.software.service.FinanceService;
 import nju.software.service.impl.FinanceServiceImpl;
 import nju.software.service.impl.JbpmTest;
 import nju.software.util.DateUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,9 +44,54 @@ public class FinanceController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "确认样衣制作金");
 		model.addAttribute("url", "/finance/confirmSampleMoneyDetail.do");
+		model.addAttribute("searchurl", "/finance/confirmSampleMoneyListSearch.do");
+
 		return "/finance/confirmSampleMoneyList";
 	}
+	@Autowired
+	private EmployeeService employeeService;
+	@RequestMapping(value = "/finance/confirmSampleMoneyListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmSampleMoneyListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
 
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		
+		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
+		List<Map<String, Object>> list = financeService
+				.getSearchConfirmSampleMoneyList(actorId,ordernumber,customername,stylename,startdate,enddate,employeeIds);
+//		if (list.size() == 0) {
+//			jbpmTest.completeConfirmQuote(FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
+//			list = financeService.getConfirmSampleMoneyList(actorId);
+//		}
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "确认样衣制作金");
+		model.addAttribute("url", "/finance/confirmSampleMoneyDetail.do");
+		model.addAttribute("searchurl", "/finance/confirmSampleMoneyListSearch.do");
+
+		return "/finance/confirmSampleMoneyList";
+	}
+	
 	@RequestMapping(value = "/finance/confirmSampleMoneyDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmSampleMoneyDetail(HttpServletRequest request,
@@ -95,9 +145,49 @@ public class FinanceController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "确认大货定金");
 		model.addAttribute("url", "/finance/confirmDepositDetail.do");
+		model.addAttribute("searchurl", "/finance/confirmDepositListSearch.do");
+
 		return "/finance/confirmDepositList";
 	}
 
+	@RequestMapping(value = "/finance/confirmDepositListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmDepositListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
+		List<Map<String, Object>> list = financeService
+				.getSearchConfirmDepositList(actorId,ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "确认大货定金");
+		model.addAttribute("url", "/finance/confirmDepositDetail.do");
+		model.addAttribute("searchurl", "/finance/confirmDepositListSearch.do");
+
+		return "/finance/confirmDepositList";
+	}
+
+	
 	@RequestMapping(value = "/finance/confirmDepositDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositDetail(HttpServletRequest request,
@@ -143,10 +233,50 @@ public class FinanceController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "确认大货尾款");
 		model.addAttribute("url", "/finance/confirmFinalPaymentDetail.do");
+		model.addAttribute("searchurl", "/finance/confirmFinalPaymentListSearch.do");
+
 		return "/finance/confirmFinalPaymentList";
 
 	}
 
+	@RequestMapping(value = "finance/confirmFinalPaymentListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmFinalPaymentListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
+		List<Map<String, Object>> list = financeService
+				.getSearchConfirmFinalPaymentList(actorId,ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "确认大货尾款");
+		model.addAttribute("url", "/finance/confirmFinalPaymentDetail.do");
+		model.addAttribute("searchurl", "/finance/confirmFinalPaymentListSearch.do");
+
+		return "/finance/confirmFinalPaymentList";
+
+	}
+	
 	@RequestMapping(value = "/finance/confirmFinalPaymentDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentDetail(HttpServletRequest request,

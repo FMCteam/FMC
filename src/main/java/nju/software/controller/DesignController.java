@@ -8,7 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nju.software.dataobject.Employee;
 import nju.software.service.DesignService;
+import nju.software.service.EmployeeService;
 import nju.software.service.OrderService;
 import nju.software.service.impl.JbpmTest;
 import nju.software.util.FileOperateUtil;
@@ -39,9 +41,48 @@ public class DesignController {
 		model.addAttribute("list", orderList);
 		model.addAttribute("taskName", "设计验证");
 		model.addAttribute("url", "/design/verifyDesignDetail.do");
+		model.addAttribute("searchurl", "/design/verifyDesignListSearch.do");
+		
 		return "/design/verifyDesignList";
 	}
+	@Autowired
+	private EmployeeService employeeService;
+	// ===========================设计验证订单搜索=================================
+	@RequestMapping(value = "/design/verifyDesignListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String verifyDesignListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
 
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String, Object>> orderList = designService
+				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", orderList);
+		model.addAttribute("taskName", "设计验证订单搜索");
+		model.addAttribute("url", "/design/verifyDesignDetail.do");
+		model.addAttribute("searchurl", "/design/verifyDesignListSearch.do");
+		
+		return "/design/verifyDesignList";
+	}
+	
+	
 	@RequestMapping(value = "/design/verifyDesignDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDesignDetail(HttpServletRequest request,
@@ -74,9 +115,47 @@ public class DesignController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "录入版型数据");
 		model.addAttribute("url", "/design/getUploadDesignDetail.do");
+		model.addAttribute("searchurl", "/design/getUploadDesignListSearch.do");
+
 		return "/design/getUploadDesignList";
 	}
 
+	// ===========================上传版型搜索=================================
+	@RequestMapping(value = "/design/getUploadDesignListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String getUploadDesignListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		List<Map<String, Object>> list = designService.getSearchUploadDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "录入版型数据");
+		model.addAttribute("url", "/design/getUploadDesignDetail.do");
+		model.addAttribute("searchurl", "/design/getUploadDesignListSearch.do");
+
+		return "/design/getUploadDesignList";
+	}
+	
 	@RequestMapping(value = "/design/getUploadDesignDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String getUploadDesignDetail(HttpServletRequest request,
@@ -117,9 +196,47 @@ public class DesignController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "设计部确认");
 		model.addAttribute("url", "/design/getModifyDesignDetail.do");
+		model.addAttribute("searchurl", "/design/getModifyDesignListSearch.do");
+
 		return "/design/getModifyDesignList";
 	}
 
+	// ===========================修改版型=================================
+	@RequestMapping(value = "/design/getModifyDesignListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String getModifyDesignListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		List<Map<String, Object>> list = designService.getSearchModifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "设计部确认");
+		model.addAttribute("url", "/design/getModifyDesignDetail.do");
+		model.addAttribute("searchurl", "/design/getModifyDesignListSearch.do");
+
+		return "/design/getModifyDesignList";
+	}
+	
 	@RequestMapping(value = "/design/getModifyDesignDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String getModifyDesignDetail(HttpServletRequest request,
@@ -161,6 +278,44 @@ public class DesignController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "设计生产确认");
 		model.addAttribute("url", "/design/getConfirmDesignDetail.do");
+		model.addAttribute("searchurl", "/design/getConfirmDesignListSearch.do");
+
+		return "/design/getConfirmDesignList";
+	}
+	
+	@RequestMapping(value = "/design/getConfirmDesignListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String getConfirmDesignListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		
+		List<Map<String, Object>> list = designService.getSearchConfirmDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "设计生产确认");
+		model.addAttribute("url", "/design/getConfirmDesignDetail.do");
+		model.addAttribute("searchurl", "/design/getConfirmDesignListSearch.do");
+
 		return "/design/getConfirmDesignList";
 	}
 	

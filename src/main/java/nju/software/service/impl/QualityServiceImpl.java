@@ -47,6 +47,15 @@ public class QualityServiceImpl implements QualityService {
 		return service.getOrderList(ACTOR_QUALITY_MANAGER, TASK_CHECK_QUALITY);
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchCheckQualityList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_QUALITY_MANAGER,  ordernumber,  customername,  stylename,
+				 startdate,  enddate, employeeIds,TASK_CHECK_QUALITY);
+
+	}
+	
 	public Object getVariable(String name, TaskSummary task) {
 		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
 		long processId = task.getProcessInstanceId();
@@ -88,4 +97,6 @@ public class QualityServiceImpl implements QualityService {
 		oi.put("produced", produceDAO.findByExample(produce));
 		return oi;
 	}
+
+
 }

@@ -7,6 +7,11 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 	<div class="row-fluid" style="min-height:300px;">
+	<!-- 
+	include file="/views/search/accountModifyOrderListSearch.jsp"
+	 -->
+ 	<%@include file="/views/common/list.jsp"%>
+	<!-- 
     <section class="list">
 	<form id="orderSearch"  method="post" action="${ctx}/account/modifyOrderSearch.do">
 	<table class="list tablesorter">
@@ -71,6 +76,7 @@
 					</c:forEach>
 				</select> 
 			</div>
+	 -->
 			</div>
 		
 		

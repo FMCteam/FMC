@@ -424,7 +424,6 @@ public class OrderServiceImpl implements OrderService {
 	public List<Map<String, Object>> getModifyOrderList() {
 		// TODO Auto-generated method stub
 		Order o = new Order();
-		
 		List<Order> orderList = orderDAO.findByExample(o);
 		List<Map<String, Object>> list = new ArrayList<>();
 		int orderslength = orderList.size();
@@ -457,13 +456,12 @@ public class OrderServiceImpl implements OrderService {
         Order o = new Order();
 		
 		List<Order> orderList = orderDAO.findByExample(o);
-		List<Order> searchResults = new ArrayList();
-		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
-				 customername,stylename,startdate,enddate,employeeIds);
-		
+		List<Order> searchResults = new ArrayList<Order>();
+		List<Order> orders = orderDAO.getSearchOrderList(ordernumber,
+		    customername,stylename,startdate,enddate,employeeIds);
+		 
 		for(int j =0;j<orders.size();j++){
-			Order ord =  orders.get(j);
-			
+			Order ord =  orders.get(j);			
 			if(ownToOrderList(ord, orderList)){
 				searchResults.add(ord);
 				System.out.println("hehehehehhehehe"+ord.getOrderId());

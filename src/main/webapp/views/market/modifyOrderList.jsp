@@ -1,12 +1,14 @@
 
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-
-<%@include file="/common/header.jsp"%>
+ <%@include file="/common/header.jsp"%>
 
 
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
+		<!-- 
+		include file="/views/search/marketModifyOrderListSearch.jsp"
+ 		 -->
 			<%@include file="/views/common/list.jsp"%>
 		</div>
 		<!--row-fluid-->
