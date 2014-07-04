@@ -95,6 +95,10 @@
 										min="0" value="0" required="required"/></td>
 								</tr>
 							</c:forEach>
+						        <tr>
+								<td>加工方：</td>
+								<td colspan="7">${orderInfo.order.payAccountInfo}</td>
+							</tr>		
 							<tr>
 								<td>加工方：</td>
 								<td colspan="7"><input class="span12" type="text"

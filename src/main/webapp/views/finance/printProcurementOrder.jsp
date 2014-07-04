@@ -66,7 +66,7 @@ table.table.table-bordered{
 	<div style="position: relative;">
 		<span style="position:absolute;bottom: 5px;right: 0px;">订单编号:${orderInfo.orderId}
 		</span>
-		<h3 class="title">好多衣裁剪补货单</h3>
+		<h3 class="title">智造链裁剪补货单</h3>
 	</div>
 	<table class="table table-bordered">
 		<tr>
@@ -80,7 +80,7 @@ table.table.table-bordered{
 			<td>下单日期：${fn:substring(orderInfo.order.orderTime,0,10)}</td>
 		</tr>
 	</table>
-	<p style="font-size: 20px">${orderInfo.order.styleName}</p>
+	<p style="font-size: 20px;text-align: left">${orderInfo.order.styleName}</p>
 	<table class="table table-bordered">
 		<tr>
 			<td

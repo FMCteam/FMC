@@ -101,7 +101,7 @@
 								name="taskId" value="${orderInfo.taskId }" /> <input
 								id="verify_val" type="hidden" name="result" value="" /> <a
 								id="agree_detail" class="btn btn-primary btn-rounded"><i
-								class="icon-ok icon-white"></i>加工完成</a> <a id="disagree_detail"
+								class="icon-ok icon-white"></i>开始加工</a> <a id="disagree_detail"
 								class="btn btn-danger btn-rounded"><i
 								class="icon-remove icon-white"></i>加工失败</a>
 						</div>

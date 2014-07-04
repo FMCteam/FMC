@@ -3,7 +3,7 @@
 function getInputString(col){
 	var inputString="";
 	var i=0;
-	for(;i<$("input."+col).length-1;i++){
+	for(;i<$("input."+col).length-2;i++){
 		inputString+=$("input."+col).eq(i).val()+",";
 	}
 	inputString+=$("input."+col).eq(i).val();
