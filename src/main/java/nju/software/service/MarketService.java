@@ -127,8 +127,39 @@ public interface MarketService {
 			String customername, String stylename, String startdate,String enddate,
 			Integer[] employeeIds);
 
-//	public List<Map<String, Object>> getSearchModifyOrderList(Integer userId,
-//			String ordernumber, String customername, String stylename,
-//			String startdate,String enddate, Integer[] employeeIds);
+	public List<Map<String, Object>> getSearchModifyOrderList(Integer userId,
+			String ordernumber, String customername, String stylename,
+			String startdate,String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchMergeQuoteList(Integer userId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchVerifyQuoteList(Integer userId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchConfirmQuoteList(String string,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchModifyQuoteList(Integer userId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchConfirmProductList(
+			String actorId, String ordernumber, String customername,
+			String stylename, String startdate, String enddate,
+			Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchModifyProductList(Integer userId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchSignContractList(String actorId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getOrders();
 	
 }

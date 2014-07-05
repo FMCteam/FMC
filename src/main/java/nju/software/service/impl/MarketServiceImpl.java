@@ -326,17 +326,18 @@ public class MarketServiceImpl implements MarketService {
 				TASK_MODIFY_ORDER);
 		return temp;
 	}
-//	@Override
-//	public List<Map<String, Object>> getSearchModifyOrderList(Integer userId,
-//			String ordernumber, String customername, String stylename,
-//			String startdate,String enddate, Integer[] employeeIds) {
-//		// TODO Auto-generated method stub
-//		List<Map<String, Object>> temp = service.getSearchOrderList(userId + "",
-//				 ordernumber,  customername,  stylename,
-//				 startdate,enddate,  employeeIds,
-//				TASK_MODIFY_ORDER);
-//		return temp;
-//	} 
+	
+	@Override
+	public List<Map<String, Object>> getSearchModifyOrderList(Integer userId,
+			String ordernumber, String customername, String stylename,
+			String startdate,String enddate, Integer[] employeeIds) {
+		// TODO Auto-generated method stub
+		List<Map<String, Object>> temp = service.getSearchOrderList(userId + "",
+				 ordernumber,  customername,  stylename,
+				 startdate,enddate,  employeeIds,
+				TASK_MODIFY_ORDER);
+		return temp;
+	} 
 	@Override
 	public Map<String, Object> getModifyOrderDetail(int accountId, int id) {
 		// TODO Auto-generated method stub
@@ -510,6 +511,17 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchModifyProductList(Integer userId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		List<Map<String, Object>> temp = service.getSearchOrderList(userId + "", ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				TASK_MODIFY_PRODUCE_ORDER);
+		return temp;
+	}
+
+	
+	@Override
 	public boolean modifyProductSubmit(String userId, int id, long taskId,
 			long processId, boolean editworksheetok, List<Produce> productList) {
 		// TODO Auto-generated method stub
@@ -550,6 +562,17 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchConfirmQuoteList(String string,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		List<Map<String, Object>> temp = service.getSearchOrderList(string,
+				 ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				TASK_CONFIRM_QUOTE);
+		return temp;
+	}
+	
+	@Override
 	public OrderInfo getConfirmQuoteDetail(String arctorId, Integer orderId) {
 		// TODO Auto-generated method stub
 		TaskSummary task = jbpmAPIUtil.getTask(arctorId, TASK_CONFIRM_QUOTE,
@@ -584,6 +607,17 @@ public class MarketServiceImpl implements MarketService {
 		return temp;
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchModifyQuoteList(Integer userId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		List<Map<String, Object>> temp = service.getSearchOrderList(userId + "",
+				 ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				TASK_MODIFY_QUOTE);
+		return temp;
+	}
+	
 	public Map<String, Object> getModifyQuoteDetail(int orderId, int accountId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModelWithQuote(accountId + "",
@@ -608,6 +642,17 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchSignContractList(String actorId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		List<Map<String, Object>> temp = service.getSearchOrderList(actorId,
+				 ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				TASK_SIGN_CONTRACT);
+		return temp;
+	}
+	
+	@Override
 	public Map<String, Object> getSignContractDetail(String actorId,
 			Integer orderId) {
 		// TODO Auto-generated method stub
@@ -624,6 +669,19 @@ public class MarketServiceImpl implements MarketService {
 		return temp;
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchMergeQuoteList(Integer userId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		// TODO Auto-generated method stub
+		List<Map<String, Object>> temp = service.getSearchOrderList(userId + "",
+				 ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				TASK_MERGE_QUOTE);
+		return temp;
+		 
+	}
+	
 	@Override
 	public void mergeQuoteSubmit(int accountId, Quote q, int id, long taskId,
 			long processId) {
@@ -653,6 +711,18 @@ public class MarketServiceImpl implements MarketService {
 		return temp;
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchVerifyQuoteList(Integer userId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		List<Map<String, Object>> temp = service.getSearchOrderList(
+				ACTOR_MARKET_MANAGER,  ordernumber,  customername,  stylename,
+				 startdate,  enddate,employeeIds,TASK_VERIFY_QUOTE);
+		return temp;		
+	}
+	
+	
+	
 	@Override
 	public void verifyQuoteSubmit(Quote q, int id, long taskId, long processId) {
 		// TODO Auto-generated method stub
@@ -739,6 +809,17 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchConfirmProductList(
+			String actorId, String ordernumber, String customername,
+			String stylename, String startdate, String enddate,
+			Integer[] employeeIds) {
+		List<Map<String, Object>> temp = service.getSearchOrderList(actorId, ordernumber,  customername,
+				 stylename,  startdate,  enddate, employeeIds,
+				TASK_CONFIRM_PRODUCE_ORDER);
+		return temp;
+	}
+	
+	@Override
 	public Map<String, Object> getConfirmProductDetail(Integer userId,
 			int orderId) {
 		// TODO Auto-generated method stub
@@ -764,6 +845,23 @@ public class MarketServiceImpl implements MarketService {
 		return list;
 	}
 
+	@Override
+	public List<Map<String, Object>> getOrders() {
+		List<Order> orders = orderDAO.getOrders();
+		Integer pages=orderDAO.getPageNumber();
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orders) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+			model.put("pages", pages);
+			list.add(model);
+		}
+		return list;
+	}
+
+	
 	@Override
 	public Map<String, Object> getOrderDetail(Integer orderId) {
 		// TODO Auto-generated method stub
@@ -805,12 +903,17 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getAddMoreOrderList(int customerId) {
 		// TODO Auto-generated method stub
+
+		System.out.println("客户的ID是："+customerId);
 //		Order o = new Order();
 //		o.setCustomerId(customerId);
 //		List<Order> orderList = orderDAO.findByExample(o);
-		List<Order> orderList=orderDAO.findResultsByCustomerId(customerId);
+		List<Order> orderList = orderDAO.findResultsByCustomerId(customerId);
 		List<Map<String, Object>> list = new ArrayList<>();
+		System.out.println("翻单数量："+orderList.size());
 		for(Order order: orderList){
+			System.out.println("翻单数量客户姓名："+order.getCustomerName());
+
 			Integer orderId = order.getOrderId();
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
@@ -916,6 +1019,20 @@ public class MarketServiceImpl implements MarketService {
 				"yyyy-MM-dd HH:mm:ss");
 		return dateFormat.format(date);
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/*
 	 * @Override public void completeQuoteConfirmTaskSummary(long taskId, String

@@ -54,6 +54,40 @@ public class QualityController {
 		model.addAttribute("list", orderList);
 		model.addAttribute("taskName", "设计验证");
 		model.addAttribute("url", "/quality/checkQualityDetail.do");
+		model.addAttribute("searchurl", "/quality/checkQualityListSearch.do");
+
+		return "quality/checkQualityList";
+	}
+
+	@RequestMapping(value = "quality/checkQualityListSearch.do" )
+	@Transactional(rollbackFor = Exception.class)
+	public String checkQualityListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String,Object>> orderList = qualityService.getSearchCheckQualityList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", orderList);
+		model.addAttribute("taskName", "设计验证");
+		model.addAttribute("url", "/quality/checkQualityDetail.do");
+		model.addAttribute("searchurl", "/quality/checkQualityListSearch.do");
+
 		return "quality/checkQualityList";
 	}
 	

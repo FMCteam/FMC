@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
@@ -34,6 +36,15 @@ public class ProduceServiceImpl implements ProduceService {
 		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_VERIFY_PRODUCE);
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchVerifyProduceList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_PRODUCE_MANAGER,  ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				TASK_VERIFY_PRODUCE);
+	}
+	
 	@Override
 	public Map<String, Object> getVerifyProduceDetail(int orderId) {
 		// TODO Auto-generated method stub
@@ -64,6 +75,15 @@ public class ProduceServiceImpl implements ProduceService {
 				TASK_COMPUTE_PRODUCE_COST);
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchComputeProduceCostList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_PRODUCE_MANAGER, ordernumber,  customername,  stylename,
+				 startdate,  enddate, employeeIds,
+				TASK_COMPUTE_PRODUCE_COST);
+	}
+	
 	@Override
 	public Map<String, Object> getComputeProduceCostInfo(Integer orderId) {
 		return service.getBasicOrderModelWithQuote(ACTOR_PRODUCE_MANAGER,
@@ -124,6 +144,17 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getSearchProduceSampleList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_PRODUCE_MANAGER, ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				TASK_PRODUCE_SAMPLE);
+
+	}
+
+	
+	@Override
 	public Map<String, Object> getProduceSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModelWithQuote(ACTOR_PRODUCE_MANAGER,
@@ -152,6 +183,15 @@ public class ProduceServiceImpl implements ProduceService {
 		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_PRODUCE);
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchProduceList(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_PRODUCE_MANAGER, ordernumber, customername,  stylename,  startdate,
+				 enddate,employeeIds,TASK_PRODUCE);
+
+	}
+	
 	@Override
 	public Map<String, Object> getProduceDetail(Integer orderId) {
 		// TODO Auto-generated method stub
@@ -242,4 +282,7 @@ public class ProduceServiceImpl implements ProduceService {
 	private PackageDetailDAO packageDetailDAO;
 	@Autowired
 	private ServiceUtil service;
+
+
+
 }

@@ -8,8 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Employee;
+import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
+
+import nju.software.service.EmployeeService;
+
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.impl.JbpmTest;
@@ -46,8 +51,51 @@ public class ProduceController {
 		model.addAttribute("list", orderList);
 		model.addAttribute("taskName", "生产验证");
 		model.addAttribute("url", "/produce/verifyProduceDetail.do");
+		model.addAttribute("searchurl", "/produce/verifyProduceListSearch.do");
+
 		return "produce/verifyProduceList";
 	}
+	@Autowired
+	private EmployeeService employeeService;
+	@RequestMapping(value = "produce/verifyProduceListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String verifyProduceListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		System.out.println("produce verify ================ show task");
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+//		String actorId = account.getUserRole();
+
+		List<Map<String,Object>> orderList = produceService.getSearchVerifyProduceList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", orderList);
+		model.addAttribute("taskName", "生产验证");
+		model.addAttribute("url", "/produce/verifyProduceDetail.do");
+		model.addAttribute("searchurl", "/produce/verifyProduceListSearch.do");
+
+		return "produce/verifyProduceList";
+	}
+	
 	/**
 	 * 生产验证
 	 * @param request
@@ -114,11 +162,46 @@ public class ProduceController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "生产成本核算");
 		model.addAttribute("url", "/produce/computeProduceCostDetail.do");
-		
+		model.addAttribute("searchurl", "/produce/computeProduceCostListSearch.do");
+
 		return "/produce/computeProduceCostList";
 	}
 	
+	@RequestMapping(value = "produce/computeProduceCostListSearch.do" )
+	@Transactional(rollbackFor = Exception.class)
+	public String computeProduceCostListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
 
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		List<Map<String,Object>> list=produceService.getSearchComputeProduceCostList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "生产成本核算");
+		model.addAttribute("url", "/produce/computeProduceCostDetail.do");
+		model.addAttribute("searchurl", "/produce/computeProduceCostListSearch.do");
+
+		return "/produce/computeProduceCostList";
+	}
+	
 	
 	/**
 	 * 显示成本核算详细信息
@@ -202,9 +285,45 @@ public class ProduceController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "样衣生产");
 		model.addAttribute("url", "/produce/produceSampleDetail.do");
+		model.addAttribute("searchurl", "/produce/produceSampleListSearch.do");
+
 		return "/produce/produceSampleList";
 	}
 	
+	@RequestMapping(value = "/produce/produceSampleListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String produceSampleListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		List<Map<String,Object>> list = produceService.getSearchProduceSampleList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "样衣生产");
+		model.addAttribute("url", "/produce/produceSampleDetail.do");
+		model.addAttribute("searchurl", "/produce/produceSampleListSearch.do");
+
+		return "/produce/produceSampleList";
+	}
 	
 	@RequestMapping(value = "/produce/produceSampleDetail.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -241,9 +360,49 @@ public class ProduceController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "批量生产");
 		model.addAttribute("url", "/produce/produceDetail.do");
+		model.addAttribute("searchurl", "/produce/produceListSearch.do");
+
 		return "/produce/produceList";
 	}
-	
+
+	@RequestMapping(value = "/produce/produceListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String produceListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+
+		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
+		customername = customername == null || customername.length() == 0 ? null: customername;
+		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
+		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
+		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+//		List<Map<String, Object>> orderList = designService
+//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+
+		List<Map<String,Object>> list=produceService.getSearchProduceList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		/*if(list.size()==0){
+			jbpmTest.completeBeforeProduce(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
+			list=produceService.getProduceList();
+		}*/
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "批量生产");
+		model.addAttribute("url", "/produce/produceDetail.do");
+		model.addAttribute("searchurl", "/produce/produceListSearch.do");
+
+		return "/produce/produceList";
+	}
 	
 	@RequestMapping(value = "/produce/produceDetail.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -276,6 +435,7 @@ public class ProduceController {
 			Order torder = orderService.findByOrderId(orderId+"");
 			torder.setPayAccountInfo(processing_side);
 			orderService.updateOrder(torder);
+
 			produceList = produceService.getProduceList(orderId, produceColor, produceXS, 
 					produceS, produceM, produceL, produceXL, produceXXL, Produce.TYPE_PRODUCED);
 		}

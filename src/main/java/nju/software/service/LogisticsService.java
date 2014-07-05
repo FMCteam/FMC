@@ -73,4 +73,12 @@ public interface LogisticsService {
 
 	public Logistics findByOrderId(String s_id);
 
+	public List<Map<String, Object>> getSearchReceiveSampleList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchSendSampleList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
 }

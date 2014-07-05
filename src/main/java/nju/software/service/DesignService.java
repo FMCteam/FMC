@@ -34,4 +34,20 @@ public interface DesignService {
 	public List<Map<String, Object>> getConfirmDesignList();
 
 	public Map<String, Object> getConfirmDesignDetail(Integer orderId);
+
+	public List<Map<String, Object>> getSearchVerifyDesignList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchUploadDesignList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchModifyDesignList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchConfirmDesignList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
 }

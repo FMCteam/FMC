@@ -486,7 +486,19 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	public static IOrderDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (IOrderDAO) ctx.getBean("OrderDAO");
 	}
+	public List<Order> findResultsByCustomerId(int customerId) {
+		try {
+			String query = "from Order as model where model.customerId ="+customerId;
+			
+			List<Order> c= getHibernateTemplate().find(query);
+			
 
+			return c;
+		} catch (RuntimeException re) {
+			log.error("attach failed", re);
+			throw re;
+		}
+	}
 	public List<Order> findSampleOrderAndPage(final int off_set,
 			final int length) {
 		// TODO Auto-generated method stub
@@ -518,6 +530,9 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		}
 	}
 
+	
+	
+	
 	public int coutSampleOrder() {
 		// TODO Auto-generated method stub
 		log.debug("find the order that need sample and that need confirm, while pageing the total count");
@@ -544,9 +559,18 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		int start=number_per_page*(page-1);
 		criteria.addOrder(org.hibernate.criterion.Order.asc("orderId"));
 		List<Order> orderList = getHibernateTemplate().findByCriteria(criteria,start, number_per_page);
+//		List<Order> orderList1 = getHibernateTemplate().findByCriteria(criteria);
+
 		return orderList;
 	}
 
+	public List<Order> getOrders() {
+		DetachedCriteria criteria = DetachedCriteria.forClass(Order.class);
+		List<Order> orderList = getHibernateTemplate().findByCriteria(criteria);
+
+		return orderList;
+	}
+	
 	@Override
 	public Integer getPageNumber() {
 		// TODO Auto-generated method stub
@@ -558,6 +582,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		return pages;
 	}
 	
+
 	
 	private Integer number_per_page=10;
 	
@@ -585,6 +610,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 				enddate = enddate+" 23:59:59";
 	        begindate1 = du.parse(startdate, strformat);
 	        enddate1 = du.parse(enddate, strformat);
+	        System.out.println("bengin date is:"+begindate1+"end date is :"+enddate1);
 			}
 			criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
 		}
@@ -594,7 +620,6 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	    List<Order> orderList = criteria.list();		
 		return orderList;
 	}
-	
 
-	
+
 }

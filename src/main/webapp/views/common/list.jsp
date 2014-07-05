@@ -1,12 +1,34 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<section class="list">
+<script type="text/javascript" src="${ctx}/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/jquery.tablePagination.0.5.js"></script>
 
-	<table class="list tablesorter">
+<script type="text/javascript">
+ $(function(){
+ $('table#grid').tablePagination();
+ 
+ })
+</script>
+<style>
+/*
+#tablePagination{
+text-align : center;
+font-size:12px;
+margin:6px auto;
+height:20px;
+line-height:20px;
+
+}
+*/
+</style>
+<section class="list">
+	<form id="orderSearch"  method="post" action="${ctx}${searchurl}">
+
+	<table class="list tablesorter" id="grid">
+				<!-- 
 		<caption>
 			<span class="text-vertical">${taskName}:<span class="number">${fn:length(list)}</span>件任务
 			</span> <input type="text" class="search-query float-right" placeholder="输入检索条件">		 
 
-				<!-- 
 						<span >输入起始日期:</span>
 						<input class="search-query" style="width: 210px" type="date" name="startdate" placeholder="输入订单起始日期">
 						<span >&nbsp; 输入截止日期:</span>
@@ -20,8 +42,28 @@
 						<span >款式名称:</span>
 						<input type="text" class="search-query " name="stylename" placeholder="输入款式名称">
 						<span >客户名称:</span>
-						<input type="text" class="search-query " name="customername" placeholder="输入客户名称">
+						<input type="text" class="search-query " name="customername" placeholder="输入客户名称">			 
+		</caption>
 				 -->		
+		<caption>
+			<span class="text-vertical">${taskName}:<span class="number">${fn:length(list)}</span>件任务
+			</span>
+			<br>
+ 		
+						<span >输入起始日期:</span>
+						<input class="search-query" style="width: 210px" type="date" name="startdate" placeholder="输入订单起始日期">
+						<span >&nbsp; 输入截止日期:</span>
+						<input class="search-query" style="width: 210px" type="date" name="enddate" placeholder="输入订单截止日期">
+			<br>
+						<input class="btn btn-primary" type="submit" value="查询" style="float:right;">
+						<span >输入订单编号:</span>
+						<input type="text" class="search-query " name="ordernumber" placeholder="输入订单编号">
+						<span >市场专员名称:</span>
+						<input type="text" class="search-query " name="employeename" placeholder="输入市场专员名称">
+						<span >款式名称:</span>
+						<input type="text" class="search-query " name="stylename" placeholder="输入款式名称">
+						<span >客户名称:</span>
+						<input type="text" class="search-query " name="customername" placeholder="输入客户名称">
 			 
 		</caption>
 		<thead>
@@ -58,7 +100,9 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	</form>
 </section>
+<!-- 
 			<div style="float: right;margin-top:20px;margin-right:0px">
 
 				<select style=" width: 100px;margin: 0px 10px" id="orderPager">
@@ -68,3 +112,4 @@
 					</c:forEach>
 				</select> 
 			</div>
+ -->

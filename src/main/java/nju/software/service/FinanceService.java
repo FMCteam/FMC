@@ -32,4 +32,19 @@ public interface FinanceService {
 	public boolean confirmFinalPaymentSubmit(String actorId,long taskId,boolean result, Money money);
 	
 	public  List<Map<String, Object>> getProcessState(Integer orderId);
+
+	public List<Map<String, Object>> getSearchConfirmSampleMoneyList(
+			String actorId, String ordernumber, String customername,
+			String stylename, String startdate, String enddate,
+			Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchConfirmDepositList(
+			String actorId, String ordernumber, String customername,
+			String stylename, String startdate, String enddate,
+			Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchConfirmFinalPaymentList(
+			String actorId, String ordernumber, String customername,
+			String stylename, String startdate, String enddate,
+			Integer[] employeeIds);
 }
