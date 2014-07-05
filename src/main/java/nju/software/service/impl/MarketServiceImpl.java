@@ -805,9 +805,10 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getAddMoreOrderList(int customerId) {
 		// TODO Auto-generated method stub
-		Order o = new Order();
-		o.setCustomerId(customerId);
-		List<Order> orderList = orderDAO.findByExample(o);
+//		Order o = new Order();
+//		o.setCustomerId(customerId);
+//		List<Order> orderList = orderDAO.findByExample(o);
+		List<Order> orderList=orderDAO.findResultsByCustomerId(customerId);
 		List<Map<String, Object>> list = new ArrayList<>();
 		for(Order order: orderList){
 			Integer orderId = order.getOrderId();

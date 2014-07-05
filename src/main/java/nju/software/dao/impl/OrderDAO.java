@@ -150,7 +150,23 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			throw re;
 		}
 	}
-
+	
+	
+	
+	public List<Order>findResultsByCustomerId(int customerId){
+		try {
+			String query="from Order as t where t.customerId="+customerId;
+			List<Order> list =getHibernateTemplate().find(query);
+			return list;
+		} catch (RuntimeException e) {
+			log.error("find by example failed", e);
+			throw e;
+		}
+	}
+	
+	
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 
