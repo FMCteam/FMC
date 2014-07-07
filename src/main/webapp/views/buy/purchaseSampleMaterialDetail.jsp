@@ -48,12 +48,12 @@
 								<td colspan="1">${fabricCost.tearPerMeter }</td>
 								<td colspan="1">${orderInfo.order.sampleAmount}</td>
 								<td colspan="2">
+							<!-- 
 							<input class="span12" type="hidden" name="fabricCostTearPerMeter" value="${fabricCost.tearPerMeter }" />
 		                    <input class="span12" type="hidden" name="orderInfoOrderSampleAmount" value="${orderInfo.order.sampleAmount}" />
 							<input class="span12" type="text" name="allpurchasemeters" required="required"  readonly="readonly" />	
-							<!-- 
-								${(fabricCost.tearPerMeter)*(orderInfo.order.sampleAmount)}
 							 -->
+								${(fabricCost.tearPerMeter)*(orderInfo.order.sampleAmount)}
 								</td>
 							</tr>
 						</c:forEach>
@@ -70,13 +70,13 @@
 								<td colspan="1">${accessoryCost.tearPerPiece }</td>
 								<td colspan="1">${orderInfo.order.sampleAmount}</td>
 								<td colspan="2">
+								<!-- 
 							<input class="span12" type="hidden" name="accessoryCostTearPerPiece" value="${accessoryCost.tearPerPiece }" />
 		                    <input class="span12" type="hidden" name="orderInfoOrderSampleAmount2" value="${orderInfo.order.sampleAmount}" />
 							<input class="span12" type="text" name="allpurchasepieces" required="required"  readonly="readonly" />	
 								
-								<!-- 
-								${(accessoryCost.tearPerPiece)*(orderInfo.order.sampleAmount)}
 								 -->
+								${(accessoryCost.tearPerPiece)*(orderInfo.order.sampleAmount)}
 								</td>
 							</tr>
 						</c:forEach>
