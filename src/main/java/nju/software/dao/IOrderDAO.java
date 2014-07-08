@@ -87,6 +87,8 @@ public interface IOrderDAO {
 
 	
 	public Integer getPageNumber();
+		
+	 public List<Order>findResultsByCustomerId(int customerId);
 	
 
 }
