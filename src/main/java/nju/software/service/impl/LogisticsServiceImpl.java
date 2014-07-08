@@ -400,8 +400,16 @@ public class LogisticsServiceImpl implements LogisticsService {
 		logistics.setProductClothesTime(getTime(time));
 		logisticsDAO.attachDirty(logistics);
 		Map<String, Object> data = new HashMap<String, Object>();
+		
+		
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+			/*
+			 * whh:设置orderstate字段表示order结束状态
+			 */
+			Order order = orderDAO.findById(orderId);
+			order.setOrderState("Done");
+			orderDAO.merge(order);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

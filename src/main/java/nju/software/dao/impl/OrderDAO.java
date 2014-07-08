@@ -555,6 +555,25 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		return orderList;
 	}
 	
+	public List<Order> getOrdersDoing() {
+		List<Order> orderList = findByOrderState("A");
+		return orderList;
+	}
+
+	public List<Order> getOrdersDone() {
+		// TODO Auto-generated method stub
+//		try {
+//			String query = "from Order as model where model.orderState = "+"Done";
+//			List<Order> c= getHibernateTemplate().find(query);
+//			return c;
+//		} catch (RuntimeException re) {
+//			log.error("attach failed", re);
+//			throw re;
+//		}
+		List<Order> orderList = findByOrderState("Done");
+		return orderList;
+ 	}
+	
 	@Override
 	public Integer getPageNumber() {
 		// TODO Auto-generated method stub
@@ -604,6 +623,9 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	    List<Order> orderList = criteria.list();		
 		return orderList;
 	}
+
+
+
 
 
 }

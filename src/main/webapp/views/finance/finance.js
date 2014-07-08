@@ -27,7 +27,16 @@ $(document).ready(function() {
 		$("input#financeSubmit").click();
 	});
 	var text=$("#pay").text();
-	$("#pay").text(parseFloat(text).toFixed(2));
-	$("input[name='money_amount']").val(parseFloat(text).toFixed(2));
-	
+	$("#pay").val(parseFloat(text).toFixed(2));
+//	$("input[name='orderNumberPriceProduct']").val(parseFloat(text).toFixed(2));	
+	var orderInfoNumber = $("input[name='orderInfoNumber']").val();
+	var orderInfoPrice = $("input[name='orderInfoPrice']").val();
+	var orderInfoOrderDiscount = $("input[name='orderInfoOrderDiscount']").val();
+
+	var orderInfoNumberPriceProduct = orderInfoNumber * orderInfoPrice;
+	var amountReceivable = (orderInfoNumberPriceProduct - orderInfoOrderDiscount)*0.3;
+	$("input[name='amountReceivable']").val(amountReceivable.toFixed(2));
+
+	$("input[name='orderInfoNumberPriceProduct']").val(orderInfoNumberPriceProduct.toFixed(2));
+	$("input[name='money_amount']").val(parseFloat(text).toFixed(2));	
 });

@@ -9,7 +9,7 @@
  $(function(){
  $('table#grid').tablePagination();
  
- })
+ });
 </script>
 
 <div class="maincontent">

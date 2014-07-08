@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*,java.math.*" pageEncoding="utf-8"%>
 <%@include file="/common/header.jsp"%>
 
 <div class="maincontent">
@@ -32,6 +32,9 @@
 					<%@include file="/views/common/cad.jsp"%>
 				</div>
 				<div class="tab-pane active" id="buy">
+				<!--  
+					<input class="span12" type="hidden" name="orderInfoArraySize" value="${orderInfoArraySize}" />	
+				-->
 					<table
 						class="table table-striped table-bordered table-hover detail">
 						<tr>
@@ -41,19 +44,29 @@
 							<td colspan="1">件数</td>
 							<td colspan="2">总采购米数</td>
 						</tr>
-						<c:forEach var="fabricCost" items="${orderInfo.fabricCosts}">
+						<c:forEach var="fabricCost" items="${orderInfo.fabricCosts}" varStatus="status">
+						<!-- 
+							<input class="span12" type="hidden" name="statusIndex" value="${status.index}" />
+						 -->
 							<tr>
-							
+							<!-- 
+							    <td colspan="1">${orderInfo.fabricCosts.size()}</td>
+							 -->
 								<td colspan="2">${fabricCost.fabricName }</td>
 								<td colspan="1">${fabricCost.tearPerMeter }</td>
 								<td colspan="1">${orderInfo.order.sampleAmount}</td>
-								<td colspan="2">
+								<td colspan="2">${fabricCost.tearPerMeterSampleAmountProduct }
+								
+							<!-- 
 							<input class="span12" type="hidden" name="fabricCostTearPerMeter" value="${fabricCost.tearPerMeter }" />
+							
 		                    <input class="span12" type="hidden" name="orderInfoOrderSampleAmount" value="${orderInfo.order.sampleAmount}" />
 							<input class="span12" type="text" name="allpurchasemeters" required="required"  readonly="readonly" />	
-							<!-- 
 								${(fabricCost.tearPerMeter)*(orderInfo.order.sampleAmount)}
+								${(fabricCost.tearPerMeter)*(orderInfo.order.sampleAmount)*100/100}
 							 -->
+							 <%// out.print(1.2f*20); %>
+ 							 
 								</td>
 							</tr>
 						</c:forEach>
@@ -69,13 +82,12 @@
 								<td colspan="2">${accessoryCost.accessoryName }</td>
 								<td colspan="1">${accessoryCost.tearPerPiece }</td>
 								<td colspan="1">${orderInfo.order.sampleAmount}</td>
-								<td colspan="2">
+								<td colspan="2">${accessoryCost.tearPerPieceSampleAmountProduct }
+								<!-- 
 							<input class="span12" type="hidden" name="accessoryCostTearPerPiece" value="${accessoryCost.tearPerPiece }" />
 		                    <input class="span12" type="hidden" name="orderInfoOrderSampleAmount2" value="${orderInfo.order.sampleAmount}" />
-							<input class="span12" type="text" name="allpurchasepieces" required="required"  readonly="readonly" />	
-								
-								<!-- 
-								${(accessoryCost.tearPerPiece)*(orderInfo.order.sampleAmount)}
+							<input class="span12" type="text" name="allpurchasepieces" required="required"  readonly="readonly" />									
+								${((accessoryCost.tearPerPiece)*(orderInfo.order.sampleAmount)*100)/100}
 								 -->
 								</td>
 							</tr>

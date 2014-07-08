@@ -326,6 +326,7 @@ public class BuyController {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		Map<String, Object> orderInfo = buyService
 				.getPurchaseSampleMaterialDetail(orderId);
+		model.addAttribute("orderInfoArraySize", orderInfo.size());
 		model.addAttribute("orderInfo", orderInfo);
 		return "/buy/purchaseSampleMaterialDetail";
 	}

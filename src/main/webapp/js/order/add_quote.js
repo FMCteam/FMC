@@ -13,16 +13,21 @@
 //			$("input[name='single_cost']").val(inner_price+0);
 //		}
 //	});
+
+
+	var text=$("#pay").text();
+	$("#pay").text(parseFloat(text).toFixed(2));
+/*
 	var fabricCostTearPerMeter = $("input[name='fabricCostTearPerMeter']").val();
 	var orderInfoOrderSampleAmount = $("input[name='orderInfoOrderSampleAmount']").val();
 	var allpurchasemeters = fabricCostTearPerMeter * orderInfoOrderSampleAmount;
 	$("input[name='allpurchasemeters']").val(allpurchasemeters.toFixed(2));
 
-	var accessoryCostTearPerPiece = $("input[name='accessoryCostTearPerPiece']").val();
-	var orderInfoOrderSampleAmount2 = $("input[name='orderInfoOrderSampleAmount2']").val();
-	var allpurchasepieces = accessoryCostTearPerPiece * orderInfoOrderSampleAmount2;
-	$("input[name='allpurchasepieces']").val(allpurchasepieces.toFixed(2));
-	
+ */	
+	var orderInfoQuoteSingleCost = $("input[name='orderInfoQuoteSingleCost']").val();
+	var orderInfoOrderAskAmount = $("input[name='orderInfoOrderAskAmount']").val();
+	var quoteSingleCostOrderAskAmountProduct = orderInfoQuoteSingleCost * orderInfoOrderAskAmount;
+	$("input[name='quoteSingleCostOrderAskAmountProduct']").val(quoteSingleCostOrderAskAmountProduct.toFixed(2));
 	
 	var merge_w =  $("input[name='merge_w']").val();
 	var orderInfoquoteFabricCost = $("input[name='orderInfoquoteFabricCost']").val();
@@ -52,14 +57,12 @@
 		var number6 = accAdd(number5,orderInfoquoteNailCost);
         var number7 = accAdd(number6,orderInfoquotePackageCost);
         var number = accAdd(number7,orderInfoquoteOtherCost);
-
-//        var number	= orderInfoquoteFabricCost + orderInfoquoteAccessoryCost + orderInfoquoteCutCost + orderInfoquoteManageCost +
+//        var number = orderInfoquoteFabricCost + orderInfoquoteAccessoryCost + orderInfoquoteCutCost + orderInfoquoteManageCost +
 //        orderInfoquoteSwingCost + orderInfoquoteIroningCost +orderInfoquoteNailCost + orderInfoquotePackageCost +
 //        orderInfoquoteOtherCost + 0.0;
 //        alert(number);
         $("input[name='single_cost']").val(number.toFixed(2));
 		$("input[name='inner_price']").val(number.toFixed(2));
-
 	}
 	
 	$("input[name='profitPerPiece']").keyup(function(){

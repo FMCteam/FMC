@@ -45,6 +45,7 @@
 							type="hidden" name="orderId" value="${orderInfo.order.orderId}" />
 						<input type="hidden" name="taskId" value="${orderInfo.taskId}" /><input
 							type="hidden" name="result" value="1" />
+                         <input name="orderInfoOrderDiscount" type="hidden" value="${orderInfo.order.discount}"/>                                                        />
 
 						<table class="table table-bordered detail finance">
 							<tr>
@@ -56,7 +57,13 @@
 							<tr>
 								<td>${orderInfo.moneyName}</td>
 								<td>${orderInfo.order.discount}</td>
-								<td>(${(orderInfo.number)*orderInfo.price}-${orderInfo.order.discount})*0.3=<span id="pay">${((orderInfo.number)*orderInfo.price-orderInfo.order.discount)*0.3}</span></td>
+<!-- 
+								<span id="pay">${((orderInfo.number)*orderInfo.price-orderInfo.order.discount)*0.3}</span>
+ -->
+								<td>
+								(${(orderInfo.number)*orderInfo.price}-${orderInfo.order.discount})*0.3=
+								<input name="amountReceivable" type="text" readonly="readonly" />
+								</td>
 							</tr>
 							<tr>
 								<td class="title">大货件数</td>
@@ -64,9 +71,19 @@
 								<td class="title">大货总价</td>
 							</tr>
 							<tr>
-								<td>${orderInfo.number}</td>
-								<td>${orderInfo.price}</td>
-								<td>${orderInfo.number*orderInfo.price}</td>
+								<td>
+								<input name="orderInfoNumber" type="text" readonly="readonly"  value="${orderInfo.number}"/>
+								 </td>
+								<td>
+								<input type="text" name="orderInfoPrice" readonly="readonly" value="${orderInfo.price}"/> 			
+								</td>
+								<td>
+								<!-- 
+                                   ${orderInfo.number*orderInfo.price}
+								 -->
+								<input type="text" name="orderInfoNumberPriceProduct" readonly="readonly" /> 			
+								
+								</td>
 							</tr>
 							<tr>
 								<td class="title">样衣件数</td>
@@ -148,7 +165,6 @@
 
 </div>
 <!--maincontentinner-->
-</div>
 <!--maincontent-->
 
 <%@include file="/common/js_file.jsp"%>
