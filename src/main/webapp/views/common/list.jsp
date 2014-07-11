@@ -19,6 +19,13 @@ line-height:20px;
 
 }
 */
+#tablePagination_currPage{
+ width :60px;
+}
+ 
+#tablePagination_rowsPerPage{
+ width:80px;
+}
 </style>
 <section class="list">
 	<form id="orderSearch"  method="post" action="${ctx}${searchurl}">
