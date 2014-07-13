@@ -121,7 +121,7 @@
 							</tr>
 							<tr>
 								<td><input type="text" name="money_amount"
-									readonly="readonly" value="${((orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price-orderInfo.order.sampleAmount*orderInfo.samplePrice-orderInfo.order.discount)*0.3}"/></td>
+									readonly="readonly" /></td>
 								<td>
 									<select name="account" required="required" >
 										<option selected="selected">36933145@qq.com</option>
