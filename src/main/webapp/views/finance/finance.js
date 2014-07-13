@@ -38,5 +38,6 @@ $(document).ready(function() {
 	$("input[name='amountReceivable']").val(amountReceivable.toFixed(2));
 
 	$("input[name='orderInfoNumberPriceProduct']").val(orderInfoNumberPriceProduct.toFixed(2));
-	$("input[name='money_amount']").val(parseFloat(text).toFixed(2));	
+//	$("input[name='money_amount']").val(parseFloat(text).toFixed(2));
+	$("input[name='money_amount']").val(amountReceivable.toFixed(2));
 });
