@@ -22,10 +22,11 @@ public class AccessoryCost implements java.io.Serializable {
 	private Float tearPerPiece;
 	private Float price;
 	private Float costPerPiece;
+	private Float tearPerPieceSampleAmountProduct;
+	private Float tearPerPieceAskAmountProduct;
 
 	// Constructors
-
-	/** default constructor */
+ 	/** default constructor */
 	public AccessoryCost() {
 	}
 
@@ -94,6 +95,26 @@ public class AccessoryCost implements java.io.Serializable {
 
 	public void setCostPerPiece(Float costPerPiece) {
 		this.costPerPiece = costPerPiece;
+	}
+
+ 
+
+	public Float getTearPerPieceSampleAmountProduct() {
+		return tearPerPieceSampleAmountProduct;
+	}
+
+	public void setTearPerPieceSampleAmountProduct(
+			Float tearPerPieceSampleAmountProduct) {
+		this.tearPerPieceSampleAmountProduct = tearPerPieceSampleAmountProduct;
+	}
+
+	public Float getTearPerPieceAskAmountProduct() {
+		return tearPerPieceAskAmountProduct;
+	}
+
+	public void setTearPerPieceAskAmountProduct(
+			Float tearPerPieceAskAmountProduct) {
+		this.tearPerPieceAskAmountProduct = tearPerPieceAskAmountProduct;
 	}
 
 }

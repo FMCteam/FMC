@@ -424,7 +424,9 @@ public class OrderServiceImpl implements OrderService {
 	public List<Map<String, Object>> getModifyOrderList() {
 		// TODO Auto-generated method stub
 		Order o = new Order();
-		List<Order> orderList = orderDAO.findByExample(o);
+		//下面第一种方法new了一个空的Order对象，不知道为什么会查出数据
+//		List<Order> orderList = orderDAO.findByExample(o);
+		List<Order> orderList = orderDAO.findByOrderState("A");//只能够修改正在进行的订单
 		List<Map<String, Object>> list = new ArrayList<>();
 		int orderslength = orderList.size();
 		Integer pages=(int) Math.ceil((double)orderslength/10);

@@ -161,5 +161,9 @@ public interface MarketService {
 			String startdate, String enddate, Integer[] employeeIds);
 
 	public List<Map<String, Object>> getOrders();
+
+	public List<Map<String, Object>> getOrdersDoing();
+
+	public List<Map<String, Object>> getOrdersDone();
 	
 }

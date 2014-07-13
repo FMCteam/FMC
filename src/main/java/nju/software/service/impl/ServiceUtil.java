@@ -107,6 +107,7 @@ public class ServiceUtil {
 		model.put("task", task);
 		model.put("taskId", task.getId());
 		model.put("order", order);
+		model.put("orderSampleAmount", order.getSampleAmount());
 		model.put("customer",customerDAO.findById(order.getCustomerId()));
 		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 		model.put("logistics", logisticsDAO.findById(orderId));
@@ -136,11 +137,38 @@ public class ServiceUtil {
 				orderId);
 		Quote quote = quoteDAO.findById(orderId);
 		model.put("quote", quote);
+		Order getorder = (Order) model.get("order");
+		int orderSampleAmount = getorder.getSampleAmount();
+		int orderAskAmount = getorder.getAskAmount();
+		System.out.println("orderSampleAmount:"+orderSampleAmount+orderAskAmount);
 		List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(orderId);
+		for(int i =0;i<fabricCosts.size();i++){
+			float tearPerMeterSampleAmountProduct = fabricCosts.get(i).getTearPerMeter() * orderSampleAmount;
+			float tearPerMeterAskAmountProduct = fabricCosts.get(i).getTearPerMeter() * orderAskAmount; 
+
+			tearPerMeterSampleAmountProduct = (float)(Math.round(tearPerMeterSampleAmountProduct*100)/100);
+			tearPerMeterAskAmountProduct = (float)(Math.round(tearPerMeterAskAmountProduct*100)/100);
+
+			fabricCosts.get(i).setTearPerMeterSampleAmountProduct(tearPerMeterSampleAmountProduct);
+			fabricCosts.get(i).setTearPerMeterAskAmountProduct(tearPerMeterAskAmountProduct);
+		}
+		
+		
+		
 		model.put("fabricCosts", fabricCosts);
 		List<AccessoryCost> accessoryCosts = accessoryCostDAO
 				.findByOrderId(orderId);
-		
+		for(int i =0;i<accessoryCosts.size();i++){
+			float tearPerPieceSampleAmountProduct = accessoryCosts.get(i).getTearPerPiece() * orderSampleAmount; 
+			float tearPerPieceAskAmountProduct = accessoryCosts.get(i).getTearPerPiece() * orderAskAmount; 
+
+			tearPerPieceSampleAmountProduct = (float)(Math.round(tearPerPieceSampleAmountProduct*100)/100);
+			tearPerPieceAskAmountProduct = (float)(Math.round(tearPerPieceAskAmountProduct*100)/100);
+
+			accessoryCosts.get(i).setTearPerPieceSampleAmountProduct(tearPerPieceSampleAmountProduct);
+			accessoryCosts.get(i).setTearPerPieceAskAmountProduct(tearPerPieceAskAmountProduct);
+
+		}
 		
 		model.put("accessoryCosts", accessoryCosts);
 		return model;

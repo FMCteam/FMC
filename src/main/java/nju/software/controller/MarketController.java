@@ -2078,4 +2078,26 @@ public class MarketController {
 		model.addAttribute("role",account.getUserRole());
 		return "/market/orderDetail";
 	}
+	
+	@RequestMapping(value = "/order/orderListDoing.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String orderListDoing(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<Map<String, Object>> list = marketService.getOrdersDoing();
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "订单列表");
+		model.addAttribute("url", "/order/orderDetail.do");
+		return "/market/orderList";
+	}
+	
+	@RequestMapping(value = "/order/orderListDone.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String orderListDone(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<Map<String, Object>> list = marketService.getOrdersDone();
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "订单列表");
+		model.addAttribute("url", "/order/orderDetail.do");
+		return "/market/orderList";
+	}
 }

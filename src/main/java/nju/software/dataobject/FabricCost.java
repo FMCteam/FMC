@@ -22,8 +22,9 @@ public class FabricCost implements java.io.Serializable {
 	private Float tearPerMeter;
 	private Float price;
 	private Float costPerMeter;
-
-	// Constructors
+    private Float tearPerMeterSampleAmountProduct;
+    private Float tearPerMeterAskAmountProduct;
+  	// Constructors
 
 	/** default constructor */
 	public FabricCost() {
@@ -94,6 +95,26 @@ public class FabricCost implements java.io.Serializable {
 
 	public void setCostPerMeter(Float costPerMeter) {
 		this.costPerMeter = costPerMeter;
+	}
+
+
+
+	public Float getTearPerMeterSampleAmountProduct() {
+		return tearPerMeterSampleAmountProduct;
+	}
+
+	public void setTearPerMeterSampleAmountProduct(
+			Float tearPerMeterSampleAmountProduct) {
+		this.tearPerMeterSampleAmountProduct = tearPerMeterSampleAmountProduct;
+	}
+
+	public Float getTearPerMeterAskAmountProduct() {
+		return tearPerMeterAskAmountProduct;
+	}
+
+	public void setTearPerMeterAskAmountProduct(
+			Float tearPerMeterAskAmountProduct) {
+		this.tearPerMeterAskAmountProduct = tearPerMeterAskAmountProduct;
 	}
 
 }

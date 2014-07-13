@@ -124,7 +124,9 @@ table.tablesorter thead tr .headerSortDown {
 						<li class="dropdown"><a href=""><span
 								class="iconfa-pencil"></span> 订单管理</a>
 							<ul>
-								<li><a href="${ctx}/order/orderList.do">查看订单</a></li>
+								<li><a href="${ctx}/order/orderList.do">查看所有订单</a></li>
+								<li><a href="${ctx}/order/orderListDoing.do">查看正在进行订单</a></li>
+								<li><a href="${ctx}/order/orderListDone.do">已经完成订单</a></li>
 								<li><a href="${ctx}/order/endList.do">被终止订单</a></li>
 								<c:if test="${USER_user_name eq 'admin'}">
 									<li><a href="${ctx}/account/modifyOrderList.do">修改订单</a></li>
@@ -269,3 +271,4 @@ table.tablesorter thead tr .headerSortDown {
 					class="separator"></span></li>
 				<li>欢迎！</li>
 			</ul>
+		

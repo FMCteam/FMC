@@ -72,8 +72,20 @@
 		<td class="title">客户报价</td>
 	</tr>
 	<tr>
-		<td>${orderInfo.quote.singleCost*orderInfo.order.askAmount}</td>
-		<td>${orderInfo.quote.singleCost*orderInfo.order.askAmount}</td>
+		<td>
+		    <input name="orderInfoQuoteSingleCost" type="hidden" value="${orderInfo.quote.singleCost}"/>                                                        />
+		    <input name="orderInfoOrderAskAmount" type="hidden" value="${orderInfo.order.askAmount}"/>                                                        />
+			<input type="text" name="quoteSingleCostOrderAskAmountProduct" readonly="readonly" /> 
+			<!-- 
+		    <span id="pay">${orderInfo.quote.singleCost*orderInfo.order.askAmount}</span>
+			 -->			
+		</td>
+		<td>
+            <input type="text" name="quoteSingleCostOrderAskAmountProduct" readonly="readonly" /> 			
+<!-- 
+		    <span id="pay">${orderInfo.quote.singleCost*orderInfo.order.askAmount}</span>
+ -->
+		</td>
 		<td>${orderInfo.quote.profitPerPiece}</td>
 		<td>${orderInfo.quote.outerPrice}</td>
 	</tr>

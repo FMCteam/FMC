@@ -861,6 +861,34 @@ public class MarketServiceImpl implements MarketService {
 		return list;
 	}
 
+	@Override
+	public List<Map<String, Object>> getOrdersDoing() {
+		List<Order> orders = orderDAO.getOrdersDoing();
+ 		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orders) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+ 			list.add(model);
+		}
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> getOrdersDone() {
+		List<Order> orders = orderDAO.getOrdersDone();
+ 		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orders) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+ 			list.add(model);
+		}
+		return list;
+	}
+
 	
 	@Override
 	public Map<String, Object> getOrderDetail(Integer orderId) {
@@ -1019,6 +1047,7 @@ public class MarketServiceImpl implements MarketService {
 				"yyyy-MM-dd HH:mm:ss");
 		return dateFormat.format(date);
 	}
+
 
 
 

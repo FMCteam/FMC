@@ -21,7 +21,7 @@ public class Order implements java.io.Serializable {
 	private Short reorder;
 	private Integer customerId;
 	private Integer employeeId;
-	private String orderState;
+	private String orderState;//A代表正在进行，Done代表正常结束，1代表被终止订单
 	private Timestamp orderTime;
 	private String customerName;
 	private String customerCompany;
