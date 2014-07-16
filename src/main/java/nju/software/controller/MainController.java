@@ -77,8 +77,11 @@ public class MainController {
 		String user_password = request.getParameter("user_password");
 		HttpSession session = request.getSession();
 		Account account = accountService.vertifyAccount(user_name, user_password);
-		String user_agent = request.getHeader("user-agent").toLowerCase();
+		System.out.println("用户类型是："+account.getUserRole()+account.getUserType());
 		
+		String user_agent = request.getHeader("user-agent").toLowerCase();
+		System.out.println("用户agent是："+user_agent );
+
 		boolean is_wm = user_agent.contains("windows phone") || user_agent.contains("android") || user_agent.contains("iphone");
 		if (account != null) {
 			session.setAttribute("cur_user", account);

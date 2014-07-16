@@ -136,6 +136,7 @@ public class LogisticsController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId_string = request.getParameter("orderId");
 		Integer orderId = Integer.parseInt(orderId_string);
+		
 		String taskId_string = request.getParameter("taskId");
 		long taskId = Long.parseLong(taskId_string);
 		String time = request.getParameter("time");

@@ -142,7 +142,18 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	@Override
 	public boolean sendSampleSubmit(Map<String, Object> map) {
+		/*
+		 * whh测试新建流程分支
+		 */
 		Integer orderId = (Integer) map.get("orderId");
+		Order customerOrder = orderDAO.findById(orderId);
+		Customer cus =  customerDAO.findById(customerOrder.getCustomerId());
+		boolean takeSampleMoney = false;
+		if(cus.getCustomerName().equals("好多衣")){
+			  takeSampleMoney = false; 
+		}else{
+			  takeSampleMoney = true; 
+		}
 		Logistics logistics = logisticsDAO.findById(orderId);
 		logistics.setSampleClothesTime(getTime((String) map.get("time")));
 		logistics.setSampleClothesNumber((String) map.get("number"));
@@ -150,6 +161,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 		logisticsDAO.attachDirty(logistics);
 		long taskId = (long) map.get("taskId");
 		Map<String, Object> data = new HashMap<String, Object>();
+//		data.put(key, value);
+		data.put(RESULT_TAKE_SAMPLE_Money, takeSampleMoney);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
 			return true;
@@ -484,6 +497,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	public final static String TASK_SEND_CLOTHES = "sendClothes";
 	public final static String RESULT_RECEIVE_SAMPLE = "receiveSample";
 	public final static String RESULT_SEND_SAMPLE = "sendSample";
+	public final static String RESULT_TAKE_SAMPLE_Money = "takeSampleMoney";
 
 	@Override
 	public Logistics findByOrderId(String s_id) {
