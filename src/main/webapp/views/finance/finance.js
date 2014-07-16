@@ -46,10 +46,11 @@ $(document).ready(function() {
 	$("input[name='amountReceivable']").val(amountReceivable.toFixed(2));
 
 	$("input[name='orderInfoNumberPriceProduct']").val(orderInfoNumberPriceProduct.toFixed(2));
+ 
 //	value="${((orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price-orderInfo.order.sampleAmount*orderInfo.samplePrice-orderInfo.order.discount)*0.3}
 	var moneyAmount = ((orderInfoNumber+orderInfoOrderSampleAmount)*orderInfoPrice-orderInfoOrderSampleAmount*orderInfoSamplePrice-orderInfoOrderDiscount)*0.3;
 //	$("input[name='money_amount']").val(moneyAmount.toFixed(2));
 	$("input[name='money_amount']").val(amountReceivable.toFixed(2));
 
 
-});
+});  
