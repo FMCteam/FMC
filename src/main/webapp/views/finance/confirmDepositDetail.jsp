@@ -46,7 +46,9 @@
 						<input type="hidden" name="taskId" value="${orderInfo.taskId}" /><input
 							type="hidden" name="result" value="1" />
                          <input name="orderInfoOrderDiscount" type="hidden" value="${orderInfo.order.discount}"/>                                                        />
-
+                         <input name="orderInfoOrderSampleAmount" type="hidden" value="${orderInfo.order.sampleAmount}"/>
+                         <input name="orderInfoSamplePrice" type="hidden" value="${orderInfo.samplePrice}"/>
+                         
 						<table class="table table-bordered detail finance">
 							<tr>
 								<td class="span2 title" rowspan="6">费用信息</td>
@@ -120,6 +122,9 @@
 
 							</tr>
 							<tr>
+							<!-- 
+							value="${((orderInfo.number+orderInfo.order.sampleAmount)*orderInfo.price-orderInfo.order.sampleAmount*orderInfo.samplePrice-orderInfo.order.discount)*0.3}"
+							 -->
 								<td><input type="text" name="money_amount"
 									readonly="readonly" /></td>
 								<td>

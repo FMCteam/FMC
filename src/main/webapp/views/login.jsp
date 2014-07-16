@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 
 <%@ include file="/common/taglibs.jsp"%>
-
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +38,24 @@
 </head>
 
 <body class="loginpage">
-
+			<div class="headerinner">
+				<ul class="headmenu">
+					<li class="right">
+						<div class="userloggedinfo">
+							<div class="userinfo">
+								<ul>
+									<li><a href="${ctx }/account/registCustomer.do">客户注册</a></li>
+									<li><a href="${ctx }/account/findPassword.do">找回密码</a></li>
+								</ul>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<!--headmenu-->
+			</div>
+    <div class="loginfooter">
+		<p>&copy; 2014. 江苏南通智造链有限公司.</p>
+	</div>
 	<div class="loginpanel">
 		<div class="loginpanelinner">
 			<div class="logo animate0 bounceIn"
@@ -66,6 +83,7 @@
 					<input type="password" name="user_password" id="password"
 						placeholder="密码" />
 				</div>
+				
 				<div class="inputwrapper animate3 bounceIn">
 					<button name="submit">登录</button>
 				</div>

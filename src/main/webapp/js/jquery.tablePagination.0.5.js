@@ -126,7 +126,7 @@
         htmlBuffer.push("<img id='tablePagination_firstPage' src='"+defaults.firstArrow+"'>");
         htmlBuffer.push("<img id='tablePagination_prevPage' src='"+defaults.prevArrow+"'>");
         htmlBuffer.push("Page");
-        htmlBuffer.push("<input id='tablePagination_currPage' type='input' value='"+currPageNumber+"' size='1'>");
+        htmlBuffer.push("<input id='tablePagination_currPage' type='input'  value='"+currPageNumber+"' size='1'>");
         htmlBuffer.push("of <span id='tablePagination_totalPages'>"+totalPages+"</span>");
         htmlBuffer.push("<img id='tablePagination_nextPage' src='"+defaults.nextArrow+"'>");
         htmlBuffer.push("<img id='tablePagination_lastPage' src='"+defaults.lastArrow+"'>");
