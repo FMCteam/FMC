@@ -419,7 +419,27 @@ public class OrderServiceImpl implements OrderService {
 		return list;
 	}
 			
-			
+	public List<Map<String, Object>> getOrdersEnd(String userRole, Integer userId) {
+		Order orderExample = new Order();
+		orderExample.setOrderState("1"); //被终止的订单
+		
+		if("CUSTOMER".equals(userRole)){
+			orderExample.setCustomerId(userId);
+		}else if ("marketStaff".equals(userRole)){
+			orderExample.setEmployeeId(userId);
+		}
+		
+		List<Order> orders = orderDAO.findByExample(orderExample);
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orders) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+			list.add(model);
+		}
+		return list;
+	}		
 			
 	public List<Map<String, Object>> getModifyOrderList() {
 		// TODO Auto-generated method stub

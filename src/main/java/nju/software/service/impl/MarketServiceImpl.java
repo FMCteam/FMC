@@ -860,10 +860,56 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Map<String, Object>> getOrders(String userRole, Integer userId) {
+		List<Order> orders = null;
+		
+		if("CUSTOMER".equals(userRole)){
+			orders = orderDAO.findByCustomerId(userId);
+		}else if ("marketStaff".equals(userRole)){
+			orders = orderDAO.findByEmployeeId(userId);
+		}
+		
+		Integer pages=orderDAO.getPageNumber();
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orders) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+			model.put("pages", pages);
+			list.add(model);
+		}
+		return list;
+	}
 
 	@Override
 	public List<Map<String, Object>> getOrdersDoing() {
 		List<Order> orders = orderDAO.getOrdersDoing();
+ 		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orders) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+ 			list.add(model);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getOrdersDoing(String userRole, Integer userId) {		
+		Order orderExample = new Order();
+		orderExample.setOrderState("A"); //正在进行中的订单
+		
+		if("CUSTOMER".equals(userRole)){
+			orderExample.setCustomerId(userId);
+		}else if ("marketStaff".equals(userRole)){
+			orderExample.setEmployeeId(userId);
+		}
+		
+		List<Order> orders = orderDAO.findByExample(orderExample);
  		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
 			Map<String, Object> model = new HashMap<String, Object>();
@@ -888,8 +934,30 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return list;
 	}
-
 	
+	@Override
+	public List<Map<String, Object>> getOrdersDone(String userRole, Integer userId) {
+		Order orderExample = new Order();
+		orderExample.setOrderState("Done"); //已经完成的订单
+		
+		if("CUSTOMER".equals(userRole)){
+			orderExample.setCustomerId(userId);
+		}else if ("marketStaff".equals(userRole)){
+			orderExample.setEmployeeId(userId);
+		}
+				
+		List<Order> orders = orderDAO.findByExample(orderExample);
+ 		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orders) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+ 			list.add(model);
+		}
+		return list;
+	}
+
 	@Override
 	public Map<String, Object> getOrderDetail(Integer orderId) {
 		// TODO Auto-generated method stub
