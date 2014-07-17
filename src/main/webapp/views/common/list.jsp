@@ -6,7 +6,7 @@
  $(function(){
  $('table#grid').tablePagination();
  
- })
+ });
 </script>
 <style>
 /*
@@ -16,8 +16,6 @@ font-size:12px;
 margin:6px auto;
 height:20px;
 line-height:20px;
-
-}
 */
 #tablePagination_currPage{
  width :60px;
@@ -26,6 +24,9 @@ line-height:20px;
 #tablePagination_rowsPerPage{
  width:80px;
 }
+ 
+}
+ 
 </style>
 <section class="list">
 	<form id="orderSearch"  method="post" action="${ctx}${searchurl}">
