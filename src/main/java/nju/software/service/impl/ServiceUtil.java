@@ -67,7 +67,7 @@ public class ServiceUtil {
 			String startdate, String enddate,Integer[] employeeIds, String taskName) {
 		
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
-				 customername,  stylename,  startdate,enddate,employeeIds);
+				 customername,stylename,startdate,enddate,employeeIds);
 		
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				actorId, taskName);

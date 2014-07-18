@@ -7,7 +7,9 @@
 <head>
 <title>智造链</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<!-- 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ -->
 <%@ include file="/common/css_file.jsp"%>
 <script type="text/javascript" src="${ctx }/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery.tablesorter.min.js"></script>
@@ -46,6 +48,7 @@ $(document).ready(function() {
 	});
 </script>
 <style type="text/css">
+
 table.tablesorter thead th {
 	height: 20px;
 }

@@ -2002,11 +2002,10 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String orderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-//		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
-//		Integer page=Integer.parseInt(string_page);
-//		List<Map<String, Object>> list = marketService.getOrderList(page);
+
 		
 		List<Map<String, Object>> list = null;
 		
@@ -2020,12 +2019,7 @@ public class MarketController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
-//		model.addAttribute("page", page);
-//		if(list!=null&&list.size()!=0){
-//			model.addAttribute("pages", list.get(0).get("pages"));
-//		}
-		
-		//System.out.println("===========ok:"+list.size());
+		model.addAttribute("searchurl", "/order/orderSearch.do");
 		return "/market/orderList";
 	}
 	
@@ -2042,34 +2036,22 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
 		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
 		customername = customername == null || customername.length() == 0 ? null: customername;
 		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
 		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
 		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
 		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-        
-		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
-		Integer page=Integer.parseInt(string_page);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表查找");
 		model.addAttribute("url", "/order/orderDetail.do");
-		model.addAttribute("page", page);
-		
-		if(list!=null&&list.size()!=0){
-			model.addAttribute("pages", list.get(0).get("pages"));
-		}
-		System.out.println("===========ok:"+list.size()+list.get(0).get("pages"));
-		
+		model.addAttribute("searchurl", "/order/orderSearch.do");
 		return "/market/orderList";
 	}
 	
@@ -2104,9 +2086,34 @@ public class MarketController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
+		model.addAttribute("searchurl", "/order/orderListDoingSearch.do");
 		return "/market/orderList";
 	}
 	
+	@RequestMapping(value = "/order/orderListDoingSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String orderListDoingSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+//		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String, Object>> list = marketService.getSearchOrdersDoing(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "订单列表");
+		model.addAttribute("url", "/order/orderDetail.do");
+		model.addAttribute("searchurl", "/order/orderListDoingSearch.do");
+		return "/market/orderList";
+	}
+
 	@RequestMapping(value = "/order/orderListDone.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String orderListDone(HttpServletRequest request,
@@ -2124,6 +2131,31 @@ public class MarketController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
+		model.addAttribute("searchurl", "/order/orderListDoneSearch.do");
+		return "/market/orderList";
+	}
+	
+	@RequestMapping(value = "/order/orderListDoneSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String orderListDoneSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+		List<Employee> employees = new ArrayList<Employee>();
+		employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String, Object>> list = marketService.getSearchOrdersDone(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "订单列表");
+		model.addAttribute("url", "/order/orderDetail.do");
+		model.addAttribute("searchurl", "/order/orderListDoneSearch.do");
 		return "/market/orderList";
 	}
 }

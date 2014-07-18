@@ -26,7 +26,6 @@ line-height:20px;
 }
  
 }
- 
 </style>
 <section class="list">
 	<form id="orderSearch"  method="post" action="${ctx}${searchurl}">

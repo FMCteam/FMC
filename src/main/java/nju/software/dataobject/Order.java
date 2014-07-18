@@ -17,6 +17,10 @@ public class Order implements java.io.Serializable {
 
 	// Fields
 
+	private String orderProcessStateName;//订单当前执行到的流程节点的状态
+	
+	
+	
 	private Integer orderId;
 	private Short reorder;
 	private Integer customerId;
@@ -504,4 +508,12 @@ public class Order implements java.io.Serializable {
 ////        return true; 
 //   } 
 }
+
+	public String getOrderProcessStateName() {
+		return orderProcessStateName;
+	}
+
+	public void setOrderProcessStateName(String orderProcessStateName) {
+		this.orderProcessStateName = orderProcessStateName;
+	}
 }

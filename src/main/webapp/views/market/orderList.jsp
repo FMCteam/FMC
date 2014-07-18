@@ -26,7 +26,7 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<section class="list">
-				<form  method="post" action="${ctx}/order/orderSearch.do">
+				<form  method="post" action="${ctx}${searchurl}">
 				<table class="list tablesorter" id="grid">
 					<caption>
 						<span class="text-vertical">${taskName}:<span
@@ -60,6 +60,7 @@
 							<th>客户姓名</th>
 							<th>客户公司</th>
 							<th>订单开始时间</th>
+							<th>订单状态</th>
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -81,6 +82,7 @@
 								<td>${model.order.customerName}</td>
 								<td>${model.order.customerCompany}</td>
 								<td>${model.order.orderTime}</td>
+								<td>${model.order.orderProcessStateName }</td>
 								<td><a href="${ctx}${url}?orderId=${model.order.orderId}">详情</a>
 								</td>
 							</tr>

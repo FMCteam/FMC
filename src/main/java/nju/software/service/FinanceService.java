@@ -1,5 +1,6 @@
 package nju.software.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ public interface FinanceService {
 	public boolean confirmFinalPaymentSubmit(String actorId,long taskId,boolean result, Money money);
 	
 	public  List<Map<String, Object>> getProcessState(Integer orderId);
+	public  ArrayList<String> getProcessStateName(Integer orderId);
 
 	public List<Map<String, Object>> getSearchConfirmSampleMoneyList(
 			String actorId, String ordernumber, String customername,
