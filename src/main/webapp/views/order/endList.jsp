@@ -75,7 +75,7 @@
 								<td><a href="${ctx}${url}?orderId=${model.order.orderId}">详情</a>
 								</td>
 							</tr>
-						</c:forEach>
+						</c:forEach> 
 					</tbody>
 				</table>
 				</form>
@@ -119,13 +119,6 @@
  $('table#grid').tablePagination();
  
  });
-</script>
-
-<script>
-	$("#orderPager").change(function() {
-		var p = $("#orderPager").children("option:selected").val();
-		window.location.href = "${ctx}/order/orderList.do?page=" + p;
-	});
 </script>
 <%@include file="/common/footer.jsp"%>
 

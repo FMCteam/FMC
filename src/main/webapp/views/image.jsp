@@ -23,7 +23,8 @@ a:hover{
 		onload="window.scrollTo(${list[0].x-500},0);">
 	<c:forEach var="node" items="${list}">
 		<div
-			style="position: absolute; border: 2px solid red; left: ${node.x}px; top:${node.y}px; width: ${node.width-3}px; height: ${node.height-3}px; border-radius:13px 13px 15px 13px"></div>
+			style="position: absolute; border: 2px solid red; left: ${node.x}px; top:${node.y}px; width: ${node.width-3}px; height: ${node.height-3}px; border-radius:13px 13px 15px 13px">	
+		</div>
 	</c:forEach>
 	<a
 		style="position: fixed; right:50px;bottom:100px;padding:8px 20px;display: block;background-color:#0866c6;border-color:#0a6bce;color: white"

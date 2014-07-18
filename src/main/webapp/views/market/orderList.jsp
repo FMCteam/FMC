@@ -1,16 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<!-- 
- -->
-<%@include file="/common/header.jsp"%>
-<script type="text/javascript" src="${ctx}/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="${ctx}/js/jquery.tablePagination.0.5.js"></script>
 
-<script type="text/javascript">
- $(function(){
- $('table#grid').tablePagination();
- 
- });
-</script>
+<%@include file="/common/header.jsp"%>
+<!-- 
+<script type="text/javascript" src="${ctx}/js/jquery-1.9.1.min.js"></script>
+ -->
+
 <style>
 
 #tablePagination_currPage{
@@ -128,12 +122,19 @@
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript" src="${ctx}/js/jquery.tablePagination.0.5.js"></script>
 
+<script type="text/javascript">
+ $(function(){
+ $('table#grid').tablePagination();
+ 
+ });
+</script>
 <script>
-//	$("#orderPager").change(function() {
-//		var p = $("#orderPager").children("option:selected").val();
-//		window.location.href = "${ctx}/order/orderList.do?page=" + p;
-//	});
+	$("#orderPager").change(function() {
+		var p = $("#orderPager").children("option:selected").val();
+		window.location.href = "${ctx}/order/orderList.do?page=" + p;
+	});
 </script>
 <%@include file="/common/footer.jsp"%>
 
