@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-
 <%@ include file="/common/taglibs.jsp"%>
  
 <!DOCTYPE html>

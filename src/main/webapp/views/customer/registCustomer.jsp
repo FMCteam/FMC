@@ -1,20 +1,32 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
- 
-<!--  <div class="pageheader">
-           
-            <div class="pageicon"><span class="iconfa-laptop"></span></div>
-            <div class="pagetitle">
-                <h5>服装快速响应供应链</h5>
-                <h1>智造链</h1>
-            </div>
-        </div>pageheader -->
+ <%@ include file="/common/taglibs.jsp"%>
+  <%@ include file="/common/css_file.jsp"%>
+ <script type="text/javascript" src="${ctx }/js/jquery-1.9.1.min.js"></script>
+ <style type="text/css">
 
+table tr td {
+	height:30px;
+}
+input.input-medium{
+height:30px;
+}
+input.input-large{
+height:30px;
+}
+input.input-xlarge{
+height:30px;
+}
+select.uniformselect{
+height:30px;
+}
+</style>
+ 
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 
 			<div class="widget">
-				<h4 class="widgettitle">添加客户</h4>
+				<h4 class="widgettitle">客户注册</h4>
 				<div class="widgetcontent">
 					<form id="customerForm" class="stdform"
 						action="${ctx}/account/addCustomerSubmit.do" method="post">
@@ -51,10 +63,10 @@
 
 
 							<tr>
-								<td><label>省份</label> <span class="field">
+								<td><label>省份：</label> <span class="field">
 								<select id="province" name="province" class="uniformselect"></select>
 								</span></td>
-								<td><label>城市</label> <span class="field">
+								<td><label>城市：</label> <span class="field">
 								<select id="city" name="city" class="uniformselect"></select>
 								</span></td>
 							</tr>
@@ -64,7 +76,7 @@
 								<td><label>公司编号：</label> <span class="field"><input
 										type="text" name="company_id" class="input-medium"
 										></span></td>
-								<td><label>公司名称</label> <span class="field"><input
+								<td><label>公司名称：</label> <span class="field"><input
 										type="text" name="company_name" class="input-large"
 										><span style="color:#ff0000;">*</span>(必填)</span></td>
 
@@ -80,37 +92,37 @@
 
 
 							<tr>
-								<td><label>公司地址</label> <span class="field"><input
+								<td><label>公司地址：</label> <span class="field"><input
 										type="text" name="company_address" class="input-xlarge"
 										></span></td>
-								<td><label>采购联系人</label> <span class="field"><input
+								<td><label>采购联系人：</label> <span class="field"><input
 										type="text" name="buy_contact" class="input-medium"
 										><span style="color:#ff0000;">*</span>(必填)</span></td>
 							</tr>
 
 
 							<tr>
-								<td><label>采购联系人电话<b>1</b></label> <span class="field"><input
+								<td><label>采购联系人电话<b>1</b>：</label> <span class="field"><input
 										type="text" name="contact_phone_1" class="input-medium"
 										/><span style="color:#ff0000;">*</span>(必填)</span></td>
-								<td><label>采购联系人电话<b>2</b></label> <span class="field"><input
+								<td><label>采购联系人电话<b>2</b>：</label> <span class="field"><input
 										type="text" name="contact_phone_2" class="input-medium"
 										></span></td>
 							</tr>
 							<tr>
-								<td><label>老板姓名</label> <span class="field"><input
+								<td><label>老板姓名：</label> <span class="field"><input
 										type="text" name="boss_name" class="input-medium"
 										></span></td>
-								<td><label>老板电话</label> <span class="field"><input
+								<td><label>老板电话：</label> <span class="field"><input
 										type="text" name="boss_phone" class="input-medium"
 										></span></td>
 							</tr>
 
 							<tr>
-								<td><label>网址</label> <span class="field"><input
+								<td><label>网址：</label> <span class="field"><input
 										type="text" name="website_url" class="input-large"
 										></span></td>
-								<td><label>网站类型</label> <span class="field"> <select
+								<td><label>网站类型：</label> <span class="field"> <select
 										name="website_type" class="uniformselect">
 											<option value="独立网站">独立网站</option>
 											<option value="天猫店">天猫店</option>
@@ -126,12 +138,12 @@
 							<tr>
 								<td>
 									<div class="par">
-										<label>注册日期</label> <span class="field"><input
+										<label>注册日期：</label> <span class="field"><input
 											id="datepicker" type="text" name="register_date"
 											class="input-medium "><span style="color:#ff0000;">*</span>(必填)</span>
 									</div>
 								</td>
-								<td><label>注册业务员</label> <span class="field"><input
+								<td><label>注册业务员：</label> <span class="field"><input
 										type="text" disabled="disabled" name="register_employee_id"
 										class="input-large" ></span>
 								</td>
@@ -139,23 +151,12 @@
 							<tr>
 								<td>
 									<p class="stdformbutton">
-										<button class="btn btn-primary">添加</button>
+										<button class="btn btn-primary">注册</button>
 										<button class="btn btn-primary" onclick="history.back();">返回</button>
 									</p>
 										
 								</td>
 							</tr>
-
-
-
-
-
-
-
-
-
-
-
 
 						</table>
 					</form>
@@ -225,3 +226,32 @@
 	
 </script>
 <%@include file="/common/footer.jsp"%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,14 +1,22 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@include file="/common/header.jsp"%>
 
-
+<style>
+#tablePagination_currPage{
+ width :60px;
+}
+#tablePagination_rowsPerPage{
+ width:80px;
+}
+}
+</style>
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<section class="list">
 			<form id="orderSearch"  method="post" action="${ctx}/order/endListSearch.do">
 			
-				<table class="list tablesorter">
+				<table class="list tablesorter" id="grid">
 					<caption>
 						<span class="text-vertical">${taskName}:<span
 							class="number">${fn:length(list)}</span>条订单
@@ -68,15 +76,16 @@
 				</table>
 				</form>
 			</section>
+			<!-- 
 				<div style="float: right;margin-top:20px;margin-right:0px">
-
 				<select style=" width: 100px;margin: 0px 10px" id="orderPager">
 					<c:forEach var="number" begin="1" end="${pages}">
 						<option value="${number}" ${page eq number ?'selected':'' }>第${number}页
 						</option>
 					</c:forEach>
 				</select> 
-			</div>
+			    </div>
+			 -->
 		</div>
 		<!--row-fluid-->
 
@@ -99,6 +108,15 @@
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript" src="${ctx}/js/jquery.tablePagination.0.5.js"></script>
+
+<script type="text/javascript">
+ $(function(){
+ $('table#grid').tablePagination();
+ 
+ });
+</script>
+
 <script>
 	$("#orderPager").change(function() {
 		var p = $("#orderPager").children("option:selected").val();

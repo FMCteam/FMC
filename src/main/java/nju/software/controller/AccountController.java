@@ -56,6 +56,14 @@ public class AccountController {
 		return "/account/addEmployeeDetail";
 	}
 
+	@RequestMapping(value = "/account/registCustomer.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String registCustomer(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		return "/customer/registCustomer";
+	}
+
+	
 	@RequestMapping(value = "/account/addEmployeeSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String addEmployeeSubmit(HttpServletRequest request,
@@ -409,8 +417,7 @@ public class AccountController {
 
 		Timestamp registerDate = new Timestamp(d.getTime());
 
-		HttpSession session = request.getSession();
-		Account registerId = (Account) session.getAttribute("cur_user");
+
 		boolean exist = accountService.checkExit(userName);
 		if (exist) {
 
@@ -439,21 +446,41 @@ public class AccountController {
 			c.setBossName(bossName);
 			c.setBossPhone(bossPhone);
 			c.setRegisterDate(registerDate);
-			c.setRegisterEmployeeId(registerId.getUserId());
-			Account account = new Account();
+			HttpSession session = request.getSession();
+			Account registerId = (Account) session.getAttribute("cur_user");
+			if(registerId!=null){
+				c.setRegisterEmployeeId(registerId.getUserId());				
+			    Account account = new Account();
 
-			boolean test = this.customerService.addCustomer(c, userName,
+			    boolean test = this.customerService.addCustomer(c, userName,
 					userPassword);
 
-			if (test) {
+			    if (test) {
 
-				model.addAttribute("exist", false);
-				model.addAttribute("success", true);
-				return "redirect:/account/customerList.do";
-			} else {
-				model.addAttribute("exist", false);
-				model.addAttribute("success", false);
-				return "redirect:/account/customerList.do";
+				      model.addAttribute("exist", false);
+				      model.addAttribute("success", true);
+				      return "redirect:/account/customerList.do";
+			    } else {
+				      model.addAttribute("exist", false);
+				      model.addAttribute("success", false);
+				      return "redirect:/account/customerList.do";
+			    }
+			}else{
+				c.setRegisterEmployeeId(0);				
+
+				boolean test = this.customerService.addCustomer(c, userName,
+						userPassword);
+
+				    if (test) {
+
+					      model.addAttribute("exist", false);
+					      model.addAttribute("success", true);
+					      return "login";
+				    } else {
+					      model.addAttribute("exist", false);
+					      model.addAttribute("success", false);
+					      return "login";
+				    }
 			}
 		}
 	}

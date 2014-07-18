@@ -37,6 +37,7 @@ import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderModel;
 import nju.software.model.QuoteModel;
+import nju.software.service.FinanceService;
 import nju.software.service.OrderService;
 import nju.software.util.JbpmAPIUtil;
 
@@ -420,7 +421,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 			
 			
-			
+	@Autowired
+	private FinanceService financeService;		
 	public List<Map<String, Object>> getModifyOrderList() {
 		// TODO Auto-generated method stub
 		Order o = new Order();
@@ -432,6 +434,12 @@ public class OrderServiceImpl implements OrderService {
 		Integer pages=(int) Math.ceil((double)orderslength/10);
 
 		for (Order order : orderList) {
+			ArrayList<String>  orderProcessStateNames = financeService.getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -478,6 +486,12 @@ public class OrderServiceImpl implements OrderService {
 		Integer pages=(int) Math.ceil((double)orderslength/10);
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : searchResults) {
+			ArrayList<String>  orderProcessStateNames = financeService.getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));

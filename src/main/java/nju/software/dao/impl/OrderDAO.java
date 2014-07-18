@@ -20,11 +20,15 @@ import java.util.Map;
 
 
 
+
+
+
 import nju.software.dao.IOrderDAO;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Order;
 import nju.software.util.DateUtil;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
@@ -586,8 +590,6 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		return pages;
 	}
 	
-
-	
 	private Integer number_per_page=10;
 	
 	@Override
@@ -597,13 +599,19 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
       
 		Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Order.class);
- 		if (ordernumber != null)
+// 		if (ordernumber != null)
+ 		if(!StringUtils.isEmpty(ordernumber))
  			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
-		if (customername != null)
+//		if (customername != null)
+	 	if(!StringUtils.isEmpty(customername))
 			criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
-	    if (stylename != null)
+//	    if (stylename != null)
+		if(!StringUtils.isEmpty(stylename))
+
 			criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
-		if (startdate != null&& enddate!=null){
+//		if (startdate != null&& enddate!=null)
+		if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
+		{
 			String strformat = "yyyy-MM-dd HH:mm:ss";
 			String strformat2 = "yyyy-MM-dd";
 	        DateUtil du = new DateUtil();
@@ -618,12 +626,97 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			}
 			criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
 		}
-		if(employeeIds!=null&&employeeIds.length !=0){
+		if(employeeIds!=null&&employeeIds.length !=0)
+		{
 			criteria.add(Restrictions.in("employeeId",employeeIds));
 		}
 	    List<Order> orderList = criteria.list();		
 		return orderList;
 	}
+
+	public List<Order> getSearchOrderDoingList(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate, Integer[] employeeIds) {
+	      
+			Session session = getHibernateTemplate().getSessionFactory().openSession();
+	        Criteria criteria = session.createCriteria(Order.class);
+	        criteria.add(Restrictions.eq("orderState", "A"));
+//	 		if (ordernumber != null)
+	 		if(!StringUtils.isEmpty(ordernumber))
+	 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
+//			if (customername != null)
+		 	if(!StringUtils.isEmpty(customername))
+				criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
+//		    if (stylename != null)
+			if(!StringUtils.isEmpty(stylename))
+
+				criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
+//			if (startdate != null&& enddate!=null)
+			if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
+			{
+				String strformat = "yyyy-MM-dd HH:mm:ss";
+				String strformat2 = "yyyy-MM-dd";
+		        DateUtil du = new DateUtil();
+		        Date begindate1 = null;
+		        Date enddate1 = null;
+				if(startdate.length()==10&&enddate.length()==10){
+					startdate = startdate+" 00:00:00";
+					enddate = enddate+" 23:59:59";
+		        begindate1 = du.parse(startdate, strformat);
+		        enddate1 = du.parse(enddate, strformat);
+		        System.out.println("bengin date is:"+begindate1+"end date is :"+enddate1);
+				}
+				criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
+			}
+			if(employeeIds!=null&&employeeIds.length !=0)
+			{
+				criteria.add(Restrictions.in("employeeId",employeeIds));
+			}
+		    List<Order> orderList = criteria.list();		
+			return orderList;
+		}
+
+	public List<Order> getSearchOrderDoneList(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate, Integer[] employeeIds) {
+	      
+			Session session = getHibernateTemplate().getSessionFactory().openSession();
+	        Criteria criteria = session.createCriteria(Order.class);
+	        criteria.add(Restrictions.eq("orderState", "Done"));
+//	 		if (ordernumber != null)
+	 		if(!StringUtils.isEmpty(ordernumber))
+	 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
+//			if (customername != null)
+		 	if(!StringUtils.isEmpty(customername))
+				criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
+//		    if (stylename != null)
+			if(!StringUtils.isEmpty(stylename))
+
+				criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
+//			if (startdate != null&& enddate!=null)
+			if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
+			{
+				String strformat = "yyyy-MM-dd HH:mm:ss";
+				String strformat2 = "yyyy-MM-dd";
+		        DateUtil du = new DateUtil();
+		        Date begindate1 = null;
+		        Date enddate1 = null;
+				if(startdate.length()==10&&enddate.length()==10){
+					startdate = startdate+" 00:00:00";
+					enddate = enddate+" 23:59:59";
+		        begindate1 = du.parse(startdate, strformat);
+		        enddate1 = du.parse(enddate, strformat);
+		        System.out.println("bengin date is:"+begindate1+"end date is :"+enddate1);
+				}
+				criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
+			}
+			if(employeeIds!=null&&employeeIds.length !=0)
+			{
+				criteria.add(Restrictions.in("employeeId",employeeIds));
+			}
+		    List<Order> orderList = criteria.list();		
+			return orderList;
+		}
 
 
 

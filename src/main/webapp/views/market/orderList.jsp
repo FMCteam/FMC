@@ -26,7 +26,7 @@
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
 			<section class="list">
-				<form  method="post" action="${ctx}/order/orderSearch.do">
+				<form  method="post" action="${ctx}${searchurl}">
 				<table class="list tablesorter" id="grid">
 					<caption>
 						<span class="text-vertical">${taskName}:<span
@@ -81,7 +81,7 @@
 								<td>${model.order.customerName}</td>
 								<td>${model.order.customerCompany}</td>
 								<td>${model.order.orderTime}</td>
-								<td><a href="${ctx}${url}?orderId=${model.order.orderId}">详情</a>
+								<td><a href="${ctx}${url}?orderId=${model.order.orderId}">详情(${model.order.orderProcessStateName })</a>
 								</td>
 							</tr>
 						</c:forEach>

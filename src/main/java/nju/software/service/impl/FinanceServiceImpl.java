@@ -254,11 +254,23 @@ public class FinanceServiceImpl implements FinanceService {
 				long processId=orderDAO.findById(orderId).getProcessId();
 				org.jbpm.process.instance.ProcessInstance processInstance = (org.jbpm.process.instance.ProcessInstance) ksession
 						.getProcessInstance(processId);
+				
+				
+				
 				if(processInstance==null){
 					return null;
 				}
+				
+				/*
+				 *get state 
+				 *通过当前的node实例方法获得节点名称：nodeInstance.getNodeName()
+				 */
+				
+				String processName = processInstance.getProcessName();
+
 				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
 						.getNodeInstances()) {
+					System.out.println("状态名称："+nodeInstance.getNodeName());
 					Map<String, Object> data = nodeInstance.getNode()
 							.getMetaData();
 					Map<String, Object> data2 = new HashMap<String, Object>();
@@ -266,6 +278,7 @@ public class FinanceServiceImpl implements FinanceService {
 					data2.put("y", data.get("y"));
 					data2.put("width", data.get("width"));
 					data2.put("height", data.get("height"));
+					data2.put("statename", nodeInstance.getNodeName());
 					list.add(data2);
 				}
 				return null;
@@ -274,6 +287,54 @@ public class FinanceServiceImpl implements FinanceService {
 		return list;
 	}
 
+	@Override
+	public ArrayList<String> getProcessStateName(final Integer orderId) {
+		final List<Map<String, Object>> list = new ArrayList<>();
+        final ArrayList<String> nodeInstanceNames = new ArrayList<>();
+
+		jbpmAPIUtil.getKsession().execute(new GenericCommand<String>() {
+			public String execute(Context context) {
+				StatefulKnowledgeSession ksession = ((KnowledgeCommandContext) context)
+						.getStatefulKnowledgesession();
+				
+				long processId=orderDAO.findById(orderId).getProcessId();
+                
+				if((Long)processId!=null){
+					
+				
+				org.jbpm.process.instance.ProcessInstance processInstance = (org.jbpm.process.instance.ProcessInstance) ksession
+						.getProcessInstance(processId);
+				if(processInstance==null){
+					return null;
+				}
+				/*
+				 *get state 
+				 *通过当前的node实例方法获得节点名称：nodeInstance.getNodeName()
+				 */
+
+				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
+						.getNodeInstances()) {
+					System.out.println("状态名称："+nodeInstance.getNodeName());
+					nodeInstanceNames.add(nodeInstance.getNodeName());
+					
+//					Map<String, Object> data = nodeInstance.getNode()
+//							.getMetaData();
+//					Map<String, Object> data2 = new HashMap<String, Object>();
+//					data2.put("x", data.get("x"));
+//					data2.put("y", data.get("y"));
+//					data2.put("width", data.get("width"));
+//					data2.put("height", data.get("height"));
+//					data2.put("statename", nodeInstance.getNodeName());
+//					list.add(data2);
+				}
+			}
+				return null;
+			}
+		});
+		return nodeInstanceNames;
+	}
+	
+	
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired
@@ -332,6 +393,8 @@ public class FinanceServiceImpl implements FinanceService {
 		return model;
 
 	}
+
+
 
 
 

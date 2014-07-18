@@ -61,6 +61,7 @@ public class AccessFilter implements Filter {
 		accessTable.put("quality", "ADMIN,"+QualityServiceImpl.ACTOR_QUALITY_MANAGER);
 		accessTable.put("other","ALL");
 		accessTable.put("account", "ALL");
+//		accessTable.put("customer", "ALL");
 		// accessTable.put("other",
 		// "ADMIN, SHICHANGZHUANYUAN, SHICHANGZHUGUAN");
 	};
@@ -79,20 +80,29 @@ public class AccessFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) arg0;
 		HttpServletResponse response = (HttpServletResponse) arg1;
 		HttpSession session = request.getSession();
-
+		 String uri = request.getRequestURI();
+		 System.out.println("urrrrrrrrrri== "+uri);
+		 String file[] = uri.split("/");
 		Account curUser = (Account) session.getAttribute("cur_user");
 		//System.out.println("null "+type);
 		if (curUser == null) {
 			 System.out.println("no user");
 			// todo 从cookie读取数据，看看是否是记住密码用户。
-			has_access = false;
+			if(file[file.length-1].equals("registCustomer.do")||file[file.length-1].equals("findPassword.do")){
+				chain.doFilter(request, response);
+
+			}else{
+				has_access = false;
+			}
 			//System.out.println("null "+type);
 		} else {
 			String user_role = curUser.getUserRole();
 			String access = accessTable.get(type);
 			//System.out.println("null "+access);
 			if (access != null
-					&& ((access.equals("ALL") && !user_role.equals("CUSTOMER")) || access
+//					&& ((access.equals("ALL") && !user_role.equals("CUSTOMER")) || access
+							&& ((access.equals("ALL")) || access
+
 							.contains(user_role))) {
 				has_access = true;
 			} else {
@@ -145,7 +155,10 @@ public class AccessFilter implements Filter {
 			// request.setAttribute(, arg1);
 
 		} else {
-			response.sendRedirect(request.getContextPath() + "/login.do");
+			if(!file[file.length-1].equals("registCustomer.do")&&!file[file.length-1].equals("findPassword.do")){
+//				chain.doFilter(request, response);
+				response.sendRedirect(request.getContextPath() + "/login.do");
+			}
 		}
 
 		chain.doFilter(request, response);

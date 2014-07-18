@@ -12,7 +12,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.drools.command.Context;
+import org.drools.command.impl.GenericCommand;
+import org.drools.command.impl.KnowledgeCommandContext;
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.process.NodeInstance;
 import org.drools.runtime.process.ProcessInstance;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
@@ -47,6 +51,7 @@ import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
+import nju.software.service.FinanceService;
 import nju.software.service.MarketService;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
@@ -92,6 +97,8 @@ public class MarketServiceImpl implements MarketService {
 	private DesignCadDAO cadDAO;
 	@Autowired
 	private ProduceDAO produceDAO;
+	@Autowired
+	private FinanceService financeService;
 	@Autowired
 	private VersionDataDAO versionDataDAO;
 	@Autowired
@@ -845,12 +852,48 @@ public class MarketServiceImpl implements MarketService {
 		return list;
 	}
 
+	public ArrayList<String> getProcessStateName(final Integer orderId) {
+         final ArrayList<String> nodeInstanceNames = new ArrayList<>();
+
+		jbpmAPIUtil.getKsession().execute(new GenericCommand<String>() {
+			public String execute(Context context) {
+				StatefulKnowledgeSession ksession = ((KnowledgeCommandContext) context).getStatefulKnowledgesession();
+				long processId=orderDAO.findById(orderId).getProcessId();
+				if((Long)processId!=null){
+				org.jbpm.process.instance.ProcessInstance processInstance = (org.jbpm.process.instance.ProcessInstance) ksession.getProcessInstance(processId);
+				if(processInstance==null){
+					return null;
+				}
+				/*
+				 *get state 
+				 *通过当前的node实例方法获得节点名称：nodeInstance.getNodeName()
+				 */
+				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
+						.getNodeInstances()) {
+					System.out.println("状态名称："+nodeInstance.getNodeName());
+					nodeInstanceNames.add(nodeInstance.getNodeName());
+				}
+			}
+				return null;
+			}
+		});
+		return nodeInstanceNames;
+	}
+	
 	@Override
 	public List<Map<String, Object>> getOrders() {
 		List<Order> orders = orderDAO.getOrders();
 		Integer pages=orderDAO.getPageNumber();
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
+			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
+//			ArrayList<String>  orderProcessStateNames = financeService.getProcessStateName(order.getOrderId());
+//			System.out.println("取到的订单当前状态为："+orderProcessStateNames.get(0)+"数组大小："+orderProcessStateNames.size());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -861,11 +904,20 @@ public class MarketServiceImpl implements MarketService {
 		return list;
 	}
 
+	
+
+
 	@Override
 	public List<Map<String, Object>> getOrdersDoing() {
 		List<Order> orders = orderDAO.getOrdersDoing();
  		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
+			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -880,6 +932,12 @@ public class MarketServiceImpl implements MarketService {
 		List<Order> orders = orderDAO.getOrdersDone();
  		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
+			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -941,7 +999,12 @@ public class MarketServiceImpl implements MarketService {
 		System.out.println("翻单数量："+orderList.size());
 		for(Order order: orderList){
 			System.out.println("翻单数量客户姓名："+order.getCustomerName());
-
+			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
 			Integer orderId = order.getOrderId();
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
@@ -1022,15 +1085,16 @@ public class MarketServiceImpl implements MarketService {
 			Integer[] employeeIds) {
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
 				 customername,stylename,startdate,enddate,employeeIds);
-// 		Integer number_per_page=10;
  		int orderslength = orders.size();
-// 		int pages2 = (int) Math.ceil(orderslength/10);
 		Integer pages=(int) Math.ceil((double)orderslength/10);
-
-// 		System.out.println("page is "+pages2);
-//		Integer pages=(int) Math.ceil(orders.size()/number_per_page);
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
+			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -1048,20 +1112,55 @@ public class MarketServiceImpl implements MarketService {
 		return dateFormat.format(date);
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchOrdersDoing(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate, Integer[] employeeIds) {
+		List<Order> orders = orderDAO.getSearchOrderDoingList( ordernumber,
+				 customername,stylename,startdate,enddate,employeeIds);
+		int orderslength = orders.size();
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orders) {
+			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+			model.put("taskTime", getTaskTime(order.getOrderTime()));
+			list.add(model);
+		}
+		return list;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	@Override
+	public List<Map<String, Object>> getSearchOrdersDone(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate, Integer[] employeeIds) {
+		List<Order> orders = orderDAO.getSearchOrderDoneList( ordernumber,
+				 customername,stylename,startdate,enddate,employeeIds);
+		int orderslength = orders.size();
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orders) {
+			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+			model.put("taskTime", getTaskTime(order.getOrderTime()));
+			list.add(model);
+		}
+		return list;
+	}
 
 	/*
 	 * @Override public void completeQuoteConfirmTaskSummary(long taskId, String
