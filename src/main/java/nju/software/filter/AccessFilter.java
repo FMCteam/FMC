@@ -100,9 +100,9 @@ public class AccessFilter implements Filter {
 			String access = accessTable.get(type);
 			//System.out.println("null "+access);
 			if (access != null
-//					&& ((access.equals("ALL") && !user_role.equals("CUSTOMER")) || access
-							&& ((access.equals("ALL")) || access
 
+//					&& ((access.equals("ALL") && !user_role.equals("CUSTOMER")) || access
+					&& (access.equals("ALL")|| access
 							.contains(user_role))) {
 				has_access = true;
 			} else {

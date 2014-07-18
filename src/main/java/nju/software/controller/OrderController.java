@@ -530,7 +530,16 @@ public class OrderController {
 		@Transactional(rollbackFor = Exception.class)
 		public String endList(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
-			List<Map<String,Object>>list=orderService.findByProperty("orderState","1");
+			Account account = (Account) request.getSession().getAttribute("cur_user");		
+			List<Map<String, Object>> list = null;
+			
+			//客户和市场专员只能看到与自己相关的被终止的订单
+			if("CUSTOMER".equals(account.getUserRole()) || "marketStaff".equals(account.getUserRole())){
+				list = orderService.getOrdersEnd(account.getUserRole(), account.getUserId());
+			} else {
+				list = orderService.findByProperty("orderState", "1");
+			}
+			
 			model.put("list", list);
 			model.addAttribute("taskName", "被终止订单列表");
 			model.addAttribute("url", "/order/orderDetail.do");

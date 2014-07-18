@@ -2002,9 +2002,20 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String orderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
+
 		
-//		Account account = (Account) request.getSession().getAttribute("cur_user");
-		List<Map<String, Object>> list = marketService.getOrders();
+		List<Map<String, Object>> list = null;
+		
+		//客户和市场专员只能看到与自己相关的订单
+		if("CUSTOMER".equals(account.getUserRole()) || "marketStaff".equals(account.getUserRole())){
+			list = marketService.getOrders(account.getUserRole(), account.getUserId());
+		} else {
+			list = marketService.getOrders();
+		}
+
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
@@ -2061,8 +2072,17 @@ public class MarketController {
 	@RequestMapping(value = "/order/orderListDoing.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String orderListDoing(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		List<Map<String, Object>> list = marketService.getOrdersDoing();
+			HttpServletResponse response, ModelMap model) {		
+		Account account = (Account) request.getSession().getAttribute("cur_user");		
+		List<Map<String, Object>> list = null;
+		
+		//客户和市场专员只能看到与自己相关的进行中的订单
+		if("CUSTOMER".equals(account.getUserRole()) || "marketStaff".equals(account.getUserRole())){
+			list = marketService.getOrdersDoing(account.getUserRole(), account.getUserId());
+		} else {
+			list = marketService.getOrdersDoing();
+		}
+		
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
@@ -2098,7 +2118,16 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String orderListDone(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<Map<String, Object>> list = marketService.getOrdersDone();
+		Account account = (Account) request.getSession().getAttribute("cur_user");		
+		List<Map<String, Object>> list = null;
+		
+		//客户和市场专员只能看到与自己相关的已经完成的订单
+		if("CUSTOMER".equals(account.getUserRole()) || "marketStaff".equals(account.getUserRole())){
+			list = marketService.getOrdersDone(account.getUserRole(), account.getUserId());
+		} else {
+			list = marketService.getOrdersDone();
+		}
+		
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");

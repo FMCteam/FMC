@@ -33,6 +33,8 @@ public interface OrderService {
 	
 	public Order getOrderById(int orderId);
 	
+	public List<Map<String, Object>> getOrdersEnd(String userRole, Integer userId);
+	
 	public List<Map<String,Object>>findByProperty(String propertyName, Object value);
 	
 	public boolean updateOrder(Order order);
