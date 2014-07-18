@@ -60,6 +60,7 @@
 							<th>客户姓名</th>
 							<th>客户公司</th>
 							<th>订单开始时间</th>
+							<th>订单状态</th>
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -81,7 +82,8 @@
 								<td>${model.order.customerName}</td>
 								<td>${model.order.customerCompany}</td>
 								<td>${model.order.orderTime}</td>
-								<td><a href="${ctx}${url}?orderId=${model.order.orderId}">详情(${model.order.orderProcessStateName })</a>
+								<td>${model.order.orderProcessStateName }</td>
+								<td><a href="${ctx}${url}?orderId=${model.order.orderId}">详情</a>
 								</td>
 							</tr>
 						</c:forEach>
