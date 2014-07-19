@@ -487,27 +487,23 @@ public class OrderServiceImpl implements OrderService {
 			String customername, String stylename, String startdate,String enddate,
 			Integer[] employeeIds) {
 		
-        Order o = new Order();
-		
-		List<Order> orderList = orderDAO.findByExample(o);
-		List<Order> searchResults = new ArrayList<Order>();
-		List<Order> orders = orderDAO.getSearchOrderList(ordernumber,
-		    customername,stylename,startdate,enddate,employeeIds);
-		 
-		for(int j =0;j<orders.size();j++){
-			Order ord =  orders.get(j);			
-			if(ownToOrderList(ord, orderList)){
-				searchResults.add(ord);
-				System.out.println("hehehehehhehehe"+ord.getOrderId());
-			}else{
-				System.out.println("hahahahahaha");
-			}
-		}
-		
-// 		Integer number_per_page=10;
-//		Integer pages=(int) Math.ceil(orders.size()/number_per_page);
-		int orderslength = orders.size();
-		Integer pages=(int) Math.ceil((double)orderslength/10);
+//        Order o = new Order();
+//		o.setOrderState("A");//只能修改正在进行的订单
+//		List<Order> orderList = orderDAO.findByExample(o);
+//		List<Order> orders = orderDAO.getSearchOrderList(ordernumber,
+//		    customername,stylename,startdate,enddate,employeeIds);
+//		 
+//		for(int j =0;j<orders.size();j++){
+//			Order ord =  orders.get(j);			
+//			if(ownToOrderList(ord, orderList)){
+//				searchResults.add(ord);
+//				System.out.println("hehehehehhehehe"+ord.getOrderId());
+//			}else{
+//				System.out.println("hahahahahaha");
+//			}
+//		}
+		List<Order> searchResults = orderDAO.getSearchOrderDoingList(ordernumber, customername, stylename, startdate, enddate, employeeIds);
+
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : searchResults) {
 			ArrayList<String>  orderProcessStateNames = financeService.getProcessStateName(order.getOrderId());
@@ -520,7 +516,7 @@ public class OrderServiceImpl implements OrderService {
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
-			model.put("pages", pages);
+//			model.put("pages", pages);
 			model.put("taskTime", getTaskTime(order.getOrderTime()));
 			list.add(model);
  		}
@@ -712,7 +708,7 @@ public class OrderServiceImpl implements OrderService {
 
 		// cad
 		cadDAO.merge(cad);
-
+ 
 	}
 
 
