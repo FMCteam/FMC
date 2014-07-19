@@ -33,6 +33,7 @@
 							<td>${customer.companyPhone }</td>
 							<td><a
 								href="${ctx}/market/addOrderDetail.do?cid=${customer.customerId}">下单</a>
+								<br>
 								<a
 								href="${ctx}/market/addMoreOrderList.do?cid=${customer.customerId}">下翻单</a></td>
 						</tr>

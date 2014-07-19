@@ -1,22 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<!-- 
 <script type="text/javascript" src="${ctx}/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="${ctx}/js/jquery.tablePagination.0.5.js"></script>
+ -->
 
-<script type="text/javascript">
- $(function(){
- $('table#grid').tablePagination();
- 
- });
-</script>
 <style>
-/*
-#tablePagination{
-text-align : center;
-font-size:12px;
-margin:6px auto;
-height:20px;
-line-height:20px;
-*/
+
 #tablePagination_currPage{
  width :60px;
 }
@@ -120,3 +108,11 @@ line-height:20px;
 				</select> 
 			</div>
  -->
+<script type="text/javascript" src="${ctx}/js/jquery.tablePagination.0.5.js"></script>
+
+<script type="text/javascript">
+ $(function(){
+ $('table#grid').tablePagination();
+ 
+ });
+</script>

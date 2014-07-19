@@ -143,7 +143,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public boolean sendSampleSubmit(Map<String, Object> map) {
 		/*
-		 * whh测试新建流程分支
+		 * author:whh
+		 * 测试新建流程分支，好多衣走简化流程,流程去掉各种验证
 		 */
 		Integer orderId = (Integer) map.get("orderId");
 		Order customerOrder = orderDAO.findById(orderId);
@@ -162,7 +163,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		long taskId = (long) map.get("taskId");
 		Map<String, Object> data = new HashMap<String, Object>();
 //		data.put(key, value);
-		data.put(RESULT_TAKE_SAMPLE_Money, takeSampleMoney);
+//		data.put(RESULT_TAKE_SAMPLE_Money, takeSampleMoney);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
 			return true;

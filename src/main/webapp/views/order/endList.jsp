@@ -37,12 +37,16 @@
 						<input class="btn btn-primary" type="submit" value="查询" style="float:right;">
 						<span >输入订单编号:</span>
 						<input type="text" class="search-query " name="ordernumber" placeholder="输入订单编号">
-						<span >市场专员名称:</span>
-						<input type="text" class="search-query " name="employeename" placeholder="输入市场专员名称">
+						<c:if test="${USER_user_role ne 'marketStaff'}">
+							<span >市场专员名称:</span>
+							<input type="text" class="search-query " name="employeename" placeholder="输入市场专员名称">
+						</c:if>						
 						<span >款式名称:</span>
-						<input type="text" class="search-query " name="stylename" placeholder="输入款式名称">
-						<span >客户名称:</span>
-						<input type="text" class="search-query " name="customername" placeholder="输入客户名称">
+						<input type="text" class="search-query " name="stylename" placeholder="输入款式名称">						
+						<c:if test="${USER_user_role ne 'CUSTOMER'}">
+							<span >客户名称:</span>
+							<input type="text" class="search-query " name="customername" placeholder="输入客户名称">
+						</c:if>
 					</caption>
 					<thead>
 						<tr>
@@ -71,7 +75,7 @@
 								<td><a href="${ctx}${url}?orderId=${model.order.orderId}">详情</a>
 								</td>
 							</tr>
-						</c:forEach>
+						</c:forEach> 
 					</tbody>
 				</table>
 				</form>
@@ -115,13 +119,6 @@
  $('table#grid').tablePagination();
  
  });
-</script>
-
-<script>
-	$("#orderPager").change(function() {
-		var p = $("#orderPager").children("option:selected").val();
-		window.location.href = "${ctx}/order/orderList.do?page=" + p;
-	});
 </script>
 <%@include file="/common/footer.jsp"%>
 

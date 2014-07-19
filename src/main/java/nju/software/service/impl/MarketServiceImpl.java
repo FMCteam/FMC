@@ -917,6 +917,12 @@ public class MarketServiceImpl implements MarketService {
 		Integer pages=orderDAO.getPageNumber();
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
+			ArrayList<String> orderProcessStateNames = getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size() > 0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -926,9 +932,6 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return list;
 	}
-
-	
-
 
 	@Override
 	public List<Map<String, Object>> getOrdersDoing() {
@@ -964,6 +967,12 @@ public class MarketServiceImpl implements MarketService {
 		List<Order> orders = orderDAO.findByExample(orderExample);
  		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
+			ArrayList<String> orderProcessStateNames = getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size() > 0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -1007,6 +1016,12 @@ public class MarketServiceImpl implements MarketService {
 		List<Order> orders = orderDAO.findByExample(orderExample);
  		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
+			ArrayList<String> orderProcessStateNames = getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size() > 0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));

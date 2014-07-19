@@ -134,6 +134,7 @@ public class AccessFilter implements Filter {
 			//System.out.println("//============filter.do");
 			request.setAttribute("USER_nick_name", curUser.getNickName());
 			request.setAttribute("USER_user_name", curUser.getUserName());
+			request.setAttribute("USER_user_role", curUser.getUserRole());
 
 			//
 			// if(jbpmAPIUtil==null){
