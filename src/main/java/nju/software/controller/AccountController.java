@@ -102,7 +102,9 @@ public class AccountController {
 		String hometown = request.getParameter("hometown");
 		String address = request.getParameter("address");
 		String chinaId = request.getParameter("id_card");
-
+        String jobphone = request.getParameter("jobphone");
+        String email = request.getParameter("email");
+        String qq = request.getParameter("qq");
 		Account account = accountService.getAccountByUsername(username);
 		boolean success = false;
 		if (account == null) {
@@ -126,6 +128,9 @@ public class AccountController {
 				employee.setEduField(eduField);
 				employee.setHometown(hometown);
 				employee.setAddress(address);
+				employee.setJobPhone(jobphone);
+				employee.setEmail(email);
+				employee.setQq(qq);
 				int employeeId = employeeService.addEmployee(employee);
 				String userPassword = SecurityUtil.md5hex("123456");
 				String userType = "EMPLOYEE";
@@ -219,7 +224,9 @@ public class AccountController {
 		String hometown = request.getParameter("hometown");
 		String address = request.getParameter("address");
 		String chinaId = request.getParameter("id_card");
-
+        String jobphone = request.getParameter("jobphone");
+        String email = request.getParameter("email");
+        String qq = request.getParameter("qq");
 		// 两次输入密码不相同
 		if (!password1.equals(password2)) {
 			model.addAttribute("notify", "两次输入密码不相同！");
@@ -271,6 +278,10 @@ public class AccountController {
 			employee.setHometown(hometown);
 			employee.setAddress(address);
 			employee.setChinaId(chinaId);
+			employee.setJobPhone(jobphone);
+			employee.setEmail(email);
+			employee.setQq(qq);
+			
 			employeeService.updateEmployee(employee);
 
 			if (!accountToModify.getUserRole().equals("ADMIN")) {

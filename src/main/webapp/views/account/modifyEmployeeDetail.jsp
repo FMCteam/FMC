@@ -144,7 +144,19 @@
 		                            <label>身份证号码</label>
 		                            <span class="field"><input type="text" name="id_card" class="input-large" value="${employee_to_modify.chinaId }" /></span>
 	                        	</p>
-
+	                        	<p>
+		                            <label>办公电话</label>
+		                            <span class="field"><input type="text" name="jobphone" class="input-large" value="${employee_to_modify.jobPhone }" /></span>
+	                        	</p>
+	                        	<p>
+		                            <label>邮箱</label>
+		                            <span class="field"><input type="text" name="email" class="input-large" value="${employee_to_modify.email }" /></span>
+	                        	</p>
+	                            <p>
+		                            <label>QQ</label>
+		                            <span class="field"><input type="text" name="qq" class="input-large" value="${employee_to_modify.qq }" /></span>
+	                        	</p>
+	                        	
 	                        	<p class="stdformbutton">
                                     <button class="btn btn-primary">修改</button>
                             	</p>
