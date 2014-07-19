@@ -67,23 +67,13 @@ public class ProduceController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
-		System.out.println("produce verify ================ show task");
+    	System.out.println("produce verify ================ show task");
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 //		String actorId = account.getUserRole();
 
@@ -92,7 +82,6 @@ public class ProduceController {
 		model.addAttribute("taskName", "生产验证");
 		model.addAttribute("url", "/produce/verifyProduceDetail.do");
 		model.addAttribute("searchurl", "/produce/verifyProduceListSearch.do");
-
 		return "produce/verifyProduceList";
 	}
 	
@@ -133,19 +122,7 @@ public class ProduceController {
 		model.addAttribute("orderInfo", orderInfo);
 		return "produce/verifyProduceDetail";
 	}
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * 生产成本核算跳转链接
 	 * @param request
@@ -177,28 +154,17 @@ public class ProduceController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
 		List<Map<String,Object>> list=produceService.getSearchComputeProduceCostList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "生产成本核算");
 		model.addAttribute("url", "/produce/computeProduceCostDetail.do");
 		model.addAttribute("searchurl", "/produce/computeProduceCostListSearch.do");
-
 		return "/produce/computeProduceCostList";
 	}
 	
@@ -300,22 +266,12 @@ public class ProduceController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
-		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+	    List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
 		List<Map<String,Object>> list = produceService.getSearchProduceSampleList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "样衣生产");
@@ -375,22 +331,12 @@ public class ProduceController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
 		List<Map<String,Object>> list=produceService.getSearchProduceList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		/*if(list.size()==0){
 			jbpmTest.completeBeforeProduce(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);

@@ -58,15 +58,7 @@ public class DesignController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
@@ -131,22 +123,12 @@ public class DesignController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		List<Map<String, Object>> list = designService.getSearchUploadDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "录入版型数据");
@@ -212,28 +194,17 @@ public class DesignController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
 		List<Map<String, Object>> list = designService.getSearchModifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "设计部确认");
 		model.addAttribute("url", "/design/getModifyDesignDetail.do");
 		model.addAttribute("searchurl", "/design/getModifyDesignListSearch.do");
-
 		return "/design/getModifyDesignList";
 	}
 	
@@ -293,29 +264,17 @@ public class DesignController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
-		
 		List<Map<String, Object>> list = designService.getSearchConfirmDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "设计生产确认");
 		model.addAttribute("url", "/design/getConfirmDesignDetail.do");
 		model.addAttribute("searchurl", "/design/getConfirmDesignListSearch.do");
-
 		return "/design/getConfirmDesignList";
 	}
 	
@@ -339,14 +298,11 @@ public class DesignController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
-
- String url = CAD_URL + orderId;
-
- String fileid = "CADFile";
-FileOperateUtil.Upload(request, url, null, fileid);
+        String url = CAD_URL + orderId;
+        String fileid = "CADFile";
+        FileOperateUtil.Upload(request, url, null, fileid);
 //		FileOperateUtil.Upload(file, url);
 		url = url + "/" + filename;
-
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.uploadDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
@@ -363,7 +319,6 @@ FileOperateUtil.Upload(request, url, null, fileid);
 		System.out.println(url+"------------------------");
 		FileOperateUtil.Download(response, url);
 	}
-
 
 
 	@Autowired
