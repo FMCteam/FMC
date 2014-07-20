@@ -861,7 +861,7 @@ public class MarketServiceImpl implements MarketService {
 			String actorId, String ordernumber, String customername,
 			String stylename, String startdate, String enddate,
 			Integer[] employeeIds) {
-		List<Map<String, Object>> temp = service.getSearchOrderList(actorId, ordernumber,  customername,
+		List<Map<String, Object>> temp = service.getSearchOrderList(actorId, ordernumber,customername,
 				 stylename,  startdate,  enddate, employeeIds,
 				TASK_CONFIRM_PRODUCE_ORDER);
 		return temp;
@@ -927,8 +927,8 @@ public class MarketServiceImpl implements MarketService {
 		Integer pages=orderDAO.getPageNumber();
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
-			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
-//			ArrayList<String>  orderProcessStateNames = financeService.getProcessStateName(order.getOrderId());
+//			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
+			ArrayList<String>  orderProcessStateNames = financeService.getProcessStateName(order.getOrderId());
 //			System.out.println("取到的订单当前状态为："+orderProcessStateNames.get(0)+"数组大小："+orderProcessStateNames.size());
 			if(orderProcessStateNames.size()>0){
 				order.setOrderProcessStateName(orderProcessStateNames.get(0));

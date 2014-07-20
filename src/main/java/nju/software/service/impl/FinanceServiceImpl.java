@@ -254,9 +254,7 @@ public class FinanceServiceImpl implements FinanceService {
 				long processId=orderDAO.findById(orderId).getProcessId();
 				org.jbpm.process.instance.ProcessInstance processInstance = (org.jbpm.process.instance.ProcessInstance) ksession
 						.getProcessInstance(processId);
-				
-				
-				
+
 				if(processInstance==null){
 					return null;
 				}
@@ -296,9 +294,10 @@ public class FinanceServiceImpl implements FinanceService {
 			public String execute(Context context) {
 				StatefulKnowledgeSession ksession = ((KnowledgeCommandContext) context)
 						.getStatefulKnowledgesession();
-				
-				long processId=orderDAO.findById(orderId).getProcessId();
-                
+				Order order = orderDAO.findById(orderId);
+				long processId=order.getProcessId();
+				if((Long)processId==null)
+                return null;
 				if((Long)processId!=null){
 					
 				
@@ -316,16 +315,6 @@ public class FinanceServiceImpl implements FinanceService {
 						.getNodeInstances()) {
 					System.out.println("状态名称："+nodeInstance.getNodeName());
 					nodeInstanceNames.add(nodeInstance.getNodeName());
-					
-//					Map<String, Object> data = nodeInstance.getNode()
-//							.getMetaData();
-//					Map<String, Object> data2 = new HashMap<String, Object>();
-//					data2.put("x", data.get("x"));
-//					data2.put("y", data.get("y"));
-//					data2.put("width", data.get("width"));
-//					data2.put("height", data.get("height"));
-//					data2.put("statename", nodeInstance.getNodeName());
-//					list.add(data2);
 				}
 			}
 				return null;
