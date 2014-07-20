@@ -18,8 +18,8 @@ public class Order implements java.io.Serializable {
 	// Fields
 
 	private String orderProcessStateName;//订单当前执行到的流程节点的状态
-	
-	
+	private String confirmDepositFile;//大货定金收据电子图片
+	private String confirmSampleMoneyFile;//样衣金收据电子图片
 	
 	private Integer orderId;
 	private Short reorder;
@@ -515,5 +515,21 @@ public class Order implements java.io.Serializable {
 
 	public void setOrderProcessStateName(String orderProcessStateName) {
 		this.orderProcessStateName = orderProcessStateName;
+	}
+
+	public String getConfirmDepositFile() {
+		return confirmDepositFile;
+	}
+
+	public void setConfirmDepositFile(String confirmDepositFile) {
+		this.confirmDepositFile = confirmDepositFile;
+	}
+
+	public String getConfirmSampleMoneyFile() {
+		return confirmSampleMoneyFile;
+	}
+
+	public void setConfirmSampleMoneyFile(String confirmSampleMoneyFile) {
+		this.confirmSampleMoneyFile = confirmSampleMoneyFile;
 	}
 }

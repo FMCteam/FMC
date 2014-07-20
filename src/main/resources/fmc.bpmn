@@ -626,9 +626,7 @@
     <endEvent id="_138" name="End" >
         <terminateEventDefinition />
     </endEvent>
-    <inclusiveGateway id="_141" name="needSampleMoney" gatewayDirection="Diverging" />
     <exclusiveGateway id="_140" name="Gateway" gatewayDirection="Converging" />
-    <exclusiveGateway id="_143" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
     <userTask id="_7" name="收取样衣" >
       <ioSpecification>
@@ -1602,17 +1600,8 @@
     <sequenceFlow id="_139-_138" sourceRef="_139" targetRef="_138" name="未收到样衣" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveSample==1;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_37-_141" sourceRef="_37" targetRef="_141" name="制作样衣" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return sendSample!=0;</conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="_28-_140" sourceRef="_28" targetRef="_140" />
     <sequenceFlow id="_33-_140" sourceRef="_33" targetRef="_140" />
-    <sequenceFlow id="_141-_143" sourceRef="_141" targetRef="_143" name="固定用户不需收取样衣金" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  !takeSampleMoney;</conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_44-_143" sourceRef="_44" targetRef="_143" >
-      <conditionExpression xsi:type="tFormalExpression" ></conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="_136-_6" sourceRef="_136" targetRef="_6" name="不是翻单" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  !reorder;</conditionExpression>
     </sequenceFlow>
@@ -1695,8 +1684,8 @@ return true;
     <sequenceFlow id="_36-_40" sourceRef="_36" targetRef="_40" name="放弃订单" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return quote==2;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_141-_41" sourceRef="_141" targetRef="_41" name="非固定用户" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  takeSampleMoney;</conditionExpression>
+    <sequenceFlow id="_37-_41" sourceRef="_37" targetRef="_41" name="制作样衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return sendSample!=0;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_49-_47" sourceRef="_49" targetRef="_47" />
     <sequenceFlow id="_41-_44" sourceRef="_41" targetRef="_44" />
@@ -1704,7 +1693,9 @@ return true;
     <sequenceFlow id="_56-_50" sourceRef="_56" targetRef="_50" name="采购完成" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return purchase;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_143-_49" sourceRef="_143" targetRef="_49" />
+    <sequenceFlow id="_44-_49" sourceRef="_44" targetRef="_49" name="收到样衣金" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveMoney;</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_49-_48" sourceRef="_49" targetRef="_48" />
     <sequenceFlow id="_54-_55" sourceRef="_54" targetRef="_55" />
     <sequenceFlow id="_50-_54" sourceRef="_50" targetRef="_54" />
@@ -1815,14 +1806,8 @@ return false;</conditionExpression>
       <bpmndi:BPMNShape bpmnElement="_138" >
         <dc:Bounds x="584" y="69" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_141" >
-        <dc:Bounds x="2057" y="156" width="48" height="48" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_140" >
         <dc:Bounds x="1443" y="177" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_143" >
-        <dc:Bounds x="2175" y="226" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_6" >
         <dc:Bounds x="296" y="174" width="48" height="48" />
@@ -2043,10 +2028,6 @@ return false;</conditionExpression>
         <di:waypoint x="508" y="92" />
         <di:waypoint x="608" y="93" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_37-_141" >
-        <di:waypoint x="1967" y="98" />
-        <di:waypoint x="2081" y="180" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_28-_140" >
         <di:waypoint x="1468" y="321" />
         <di:waypoint x="1467" y="201" />
@@ -2054,14 +2035,6 @@ return false;</conditionExpression>
       <bpmndi:BPMNEdge bpmnElement="_33-_140" >
         <di:waypoint x="1467" y="97" />
         <di:waypoint x="1467" y="201" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_141-_143" >
-        <di:waypoint x="2081" y="180" />
-        <di:waypoint x="2199" y="250" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_44-_143" >
-        <di:waypoint x="2346" y="97" />
-        <di:waypoint x="2199" y="250" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_136-_6" >
         <di:waypoint x="185" y="198" />
@@ -2190,8 +2163,8 @@ return false;</conditionExpression>
         <di:waypoint x="1799" y="98" />
         <di:waypoint x="1800" y="28" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_141-_41" >
-        <di:waypoint x="2081" y="180" />
+      <bpmndi:BPMNEdge bpmnElement="_37-_41" >
+        <di:waypoint x="1967" y="98" />
         <di:waypoint x="2156" y="98" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_49-_47" >
@@ -2210,8 +2183,8 @@ return false;</conditionExpression>
         <di:waypoint x="2688" y="189" />
         <di:waypoint x="2769" y="249" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_143-_49" >
-        <di:waypoint x="2199" y="250" />
+      <bpmndi:BPMNEdge bpmnElement="_44-_49" >
+        <di:waypoint x="2346" y="97" />
         <di:waypoint x="2346" y="249" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_49-_48" >
