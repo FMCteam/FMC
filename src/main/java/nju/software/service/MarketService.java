@@ -183,4 +183,11 @@ public interface MarketService {
 
 	public List<Map<String, Object>> getOrdersDone(String userRole, Integer userId);
 
+	public boolean signContractSubmit(String actorId, long parseLong,
+			int parseInt, double parseDouble, double parseDouble2, String url,
+			String confirmDepositFileUrl);
+
+	public boolean confirmQuoteSubmit(String actorId, long parseLong,
+			int parseInt, String result, String url);
+
 }

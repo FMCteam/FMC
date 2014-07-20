@@ -45,11 +45,14 @@
 						<td>优惠金额</td>
 						<td>总金额</td>
 						<td>上传合同</td>
+						<td>上传首定金收据</td>
 					</tr>
 					<tr>
 						<td><input name="discount" type="text" /><input name="sum" type="hidden" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }"/></td>
 						<td><input name="totalmoney" type="text" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }" readonly="readonly" /></td>
 						<td><input name="contractFile" type="file" value="选择文件" required="required"/></td>
+						<td><input name="confirmDepositFile" type="file" value="选择文件" required="required"/></td>
+						
 					</tr>
 				</table>
 		    <button class="btn btn-primary" onclick="history.back();">返回</button>
