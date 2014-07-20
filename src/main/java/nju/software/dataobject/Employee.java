@@ -16,7 +16,9 @@ import javax.persistence.Table;
 public class Employee implements java.io.Serializable {
 
 	// Fields
-
+private String jobPhone;
+private String email;
+private String qq;
 	private Integer employeeId;
 	private String employeeName;
 	private Short sex;
@@ -280,6 +282,30 @@ public class Employee implements java.io.Serializable {
 
 	public void setChinaId(String chinaId) {
 		this.chinaId = chinaId;
+	}
+
+	public String getJobPhone() {
+		return jobPhone;
+	}
+
+	public void setJobPhone(String jobPhone) {
+		this.jobPhone = jobPhone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
 	}
 
 }

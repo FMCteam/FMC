@@ -103,13 +103,6 @@ public class OrderController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
@@ -122,8 +115,7 @@ public class OrderController {
 
 //		HttpSession session = request.getSession();
 //		Account account = (Account) session.getAttribute("cur_user");
-//		List<Map<String, Object>> list = marketService.getSearchModifyOrderList(account.getUserId(),ordernumber,customername,stylename,startdate,employeeIds);
-		model.put("list", list);
+ 		model.put("list", list);
 		model.addAttribute("taskName", "修改订单查找");
 		model.addAttribute("url", "/account/modifyOrderDetail.do");
 		model.addAttribute("searchurl", "/account/modifyOrderSearch.do");
@@ -557,16 +549,8 @@ public class OrderController {
 			String employeename = request.getParameter("employeename");
 			String startdate = request.getParameter("startdate");
 			String enddate = request.getParameter("enddate");
-
-			ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-			customername = customername == null || customername.length() == 0 ? null: customername;
-			stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-			startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-			enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
-			employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
-			List<Employee> employees = employeeService.getEmployeeByName(employeename);
+			//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+		    List<Employee> employees = employeeService.getEmployeeByName(employeename);
 			Integer[] employeeIds = new Integer[employees.size()];
 			for(int i=0;i<employeeIds.length;i++){
 				employeeIds[i] = employees.get(i).getEmployeeId();
@@ -580,17 +564,12 @@ public class OrderController {
 					resultlist.add(model1);
 				}
 			}
-			String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
-			Integer page=Integer.parseInt(string_page);
+ 
 //			List<Map<String,Object>>list=orderService.findByProperty("orderState","1");
 			model.put("list", resultlist);
 			model.addAttribute("taskName", "被终止订单列表");
 			model.addAttribute("url", "/order/orderDetail.do");
-			model.addAttribute("page", page);
-			
-			if(resultlist!=null&&resultlist.size()!=0){
-				model.addAttribute("pages", resultlist.get(0).get("pages"));
-			}
+  
 			return "/order/endList";
 		}		
 		

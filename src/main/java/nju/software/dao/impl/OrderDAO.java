@@ -599,18 +599,13 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
       
 		Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Order.class);
-// 		if (ordernumber != null)
- 		if(!StringUtils.isEmpty(ordernumber))
+  		if(!StringUtils.isEmpty(ordernumber))
  			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
-//		if (customername != null)
-	 	if(!StringUtils.isEmpty(customername))
+ 	 	if(!StringUtils.isEmpty(customername))
 			criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
-//	    if (stylename != null)
-		if(!StringUtils.isEmpty(stylename))
-
+ 		if(!StringUtils.isEmpty(stylename))
 			criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
-//		if (startdate != null&& enddate!=null)
-		if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
+ 		if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
 		{
 			String strformat = "yyyy-MM-dd HH:mm:ss";
 			String strformat2 = "yyyy-MM-dd";

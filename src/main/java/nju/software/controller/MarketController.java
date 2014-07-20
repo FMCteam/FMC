@@ -816,14 +816,7 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
@@ -873,13 +866,7 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
@@ -1060,14 +1047,7 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
@@ -1173,14 +1153,7 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
@@ -1191,9 +1164,6 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSearchVerifyQuoteList(account.getUserId(),ordernumber,customername,stylename,startdate,enddate,employeeIds);
-//		List<Map<String, Object>> list = marketService
-//				.getVerifyQuoteList(account.getUserId());
-		
 		model.put("list", list);
 		model.addAttribute("taskName", "审核报价订单查询");
 		model.addAttribute("url", "/market/verifyQuoteDetail.do");
@@ -1235,27 +1205,13 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-		List<Map<String, Object>> list = null;
-//		list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,employeeIds);
-         
-		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
-		Integer page=Integer.parseInt(string_page);
-		
-		
-		
+		List<Map<String, Object>> list = null;         
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		Integer userId = account.getUserId();
@@ -1263,14 +1219,7 @@ public class MarketController {
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "修改询单");
 		model.addAttribute("url", "/market/modifyOrderDetail.do");
-		model.addAttribute("searchurl", "/market/modifyOrderListSearch.do");
-
-		model.addAttribute("page", page);
-		
-		if(list!=null&&list.size()!=0){
-			model.addAttribute("pages", list.get(0).get("pages"));
-		}
-		System.out.println("===========ok:"+list.size());
+		model.addAttribute("searchurl", "/market/modifyOrderListSearch.do");		
 		return "market/modifyOrderList";
 	}
 
@@ -1633,21 +1582,12 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-		
-		
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService
@@ -1738,15 +1678,7 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
@@ -1757,8 +1689,7 @@ public class MarketController {
 				"cur_user");
 		String actorId = account.getUserId() + "";
 		List<Map<String, Object>> orderList = marketService.getSearchConfirmProductList(actorId,ordernumber,customername,stylename,startdate,enddate,employeeIds);
-//		List<Map<String, Object>> orderList = marketService
-//				.getConfirmProductList(actorId);
+ 
 //		if (orderList.size() == 0) {
 //			jbpmTest.completeProduceConfirm("1", true);
 //			orderList = marketService.getConfirmProductList(actorId);
@@ -1928,15 +1859,7 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
@@ -1955,7 +1878,6 @@ public class MarketController {
 		model.addAttribute("taskName", "签订合同");
 		model.addAttribute("url", "/market/signContractDetail.do");
 		model.addAttribute("searchurl", "/market/signContractListSearch.do");
-
 		return "/market/signContractList";
 	}
 	
@@ -2036,12 +1958,7 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
@@ -2100,8 +2017,8 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-//		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+ 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();

@@ -144,7 +144,18 @@
 								<td><label>南通住址</label> <span class="field"><input type="text"
 									name="address" class="input-large" placeholder="南通住址" />
 									</span></td>
+								<td><label>办公电话</label> <span class="field"><input type="text"
+									name="jobphone" class="input-large" placeholder="办公电话" /></span></td>	
 							</tr>
+
+							<tr>
+								<td><label>QQ</label> <span class="field"><input type="text"
+									name="qq" class="input-large" placeholder="QQ" />
+									</span></td>
+								<td><label>邮箱</label> <span class="field"><input type="text"
+									name="email" class="input-large" placeholder="邮箱" /></span></td>	
+							</tr>
+
 							
 							<tr>
 								<td><p class="stdformbutton">

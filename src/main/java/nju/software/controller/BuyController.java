@@ -53,22 +53,12 @@ public class BuyController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
 		List<Map<String, Object>> list = buyService.getSearchVerifyPurchaseList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.put("list", list);
 		model.addAttribute("taskName", "采购验证");
@@ -130,24 +120,12 @@ public class BuyController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
-		
-		
 		List<Map<String, Object>> list = buyService
 				.getSearchComputePurchaseCostList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		/*if (list.size() == 0) {
@@ -293,22 +271,12 @@ public class BuyController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
 		List<Map<String, Object>> list = buyService
 				.getSearchPurchaseSampleMaterialList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.put("list", list);
@@ -365,28 +333,17 @@ public class BuyController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
 		List<Map<String, Object>> list = buyService.getSearchConfirmPurchaseList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.put("list", list);
 		model.addAttribute("taskName", "确认生产原料");
 		model.addAttribute("url", "/buy/confirmPurchaseDetail.do");
 		model.addAttribute("searchurl", "/buy/confirmPurchaseListSearch.do");
-
 		return "/buy/confirmPurchaseList";
 	}
 
@@ -436,22 +393,12 @@ public class BuyController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-
-		ordernumber = ordernumber == null || ordernumber.length() == 0 ? null:  ordernumber;
-		customername = customername == null || customername.length() == 0 ? null: customername;
-		stylename = stylename == null || stylename.length() == 0 ? null: stylename;
-		startdate = startdate == null || startdate.length() == 0 ? null: startdate;
-		enddate = enddate == null || enddate.length() == 0 ? null: enddate;
-		employeename = employeename == null || employeename.length() == 0 ? null: employeename;
-
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-//		List<Map<String, Object>> orderList = designService
-//				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
 		List<Map<String, Object>> list = buyService.getSearchPurchaseMaterialList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.put("list", list);
 		model.addAttribute("taskName", "生产采购");

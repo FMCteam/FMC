@@ -378,13 +378,13 @@
 											<td class="span1 title">操作</td>
 										</tr>
 										<tr class="addrow">
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12"  onclick="if(this.value=='') this.value='0';"  /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
 											<td><a>添加</a></td>
 										</tr>
 										<c:forEach var="produceRow" items="${orderModel.produce }">
