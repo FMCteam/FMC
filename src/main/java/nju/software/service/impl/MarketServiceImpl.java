@@ -609,12 +609,12 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public boolean confirmQuoteSubmit(String actorId, long taskId,
 			int orderId, String result, String url) {
-		
+		if(Integer.parseInt(result)==0){			
 		Order order = orderDAO.findById(orderId);
 		order.setConfirmSampleMoneyFile(url);
-		orderDAO.merge(order);
+		orderDAO.attachDirty(order);
+		}
 		Map<String, Object> data = new HashMap<String, Object>();
-
 		data.put(RESULT_QUOTE, Integer.parseInt(result));
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);

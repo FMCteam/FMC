@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <form id="verify_form" action="${ctx}${orderInfo.url}" method="post"
 	onsubmit="return verifyFinance();">
 	<input type="hidden" name="money_state" value="已收到" /> <input
@@ -52,6 +53,23 @@
 			<td colspan="2"><input type="text" name="money_remark"
 				class="span12" /></td>
 		</tr>
+			<tr>
+		<td class="title">收款信息</td>
+		<td class="title">收款图片</td>
+		<td colspan="3"><c:if test="${orderInfo.order.confirmSampleMoneyFile!=null}">
+				<img src="${ctx}/common/getPic.do?type=confirmSampleMoney&orderId=${orderInfo.order.orderId}"
+					style="max-height: 300px;" alt="收款图片"></img>
+			</c:if></td>
+			<!-- 
+		<td class="title">参考图片</td>
+		<td colspan="2"><c:if
+				test="${orderInfo.order.referencePicture!=null}">
+				<img
+					src="${ctx}/common/getPic.do?type=reference&orderId=${orderInfo.order.orderId}"
+					style="max-height: 300px;" alt="参考图片"></img>
+			</c:if></td>
+			 -->
+	</tr>
 	</table>
 	<div class="action">
 		<input type="submit" id="financeSubmit" hidden="hidden" /> <a

@@ -143,7 +143,9 @@ public class CommonController {
 		String file = null;
 		if (type.equals("sample")) {
 			file = order.getSampleClothesPicture();
-		} else {
+		}else if(type.equals("confirmSampleMoney")){
+			file = order.getConfirmSampleMoneyFile();
+		}else {
 			file = order.getReferencePicture();
 		}
 		try {
