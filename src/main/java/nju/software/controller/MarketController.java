@@ -49,6 +49,7 @@ import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.JbpmTest;
 import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
+import nju.software.service.impl.ServiceUtil;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JavaMailUtil;
@@ -394,7 +395,10 @@ public class MarketController {
 		marketService.addOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, sample_produces, versions, cad, request);
 
-		JavaMailUtil.send();
+		//给客户邮箱发送订单信息
+		marketService.sendOrderInfoViaEmail(order, customer);
+		//给客户手机发送订单信息
+		marketService.sendOrderInfoViaPhone(order, customer);
 
 		return "redirect:/market/addOrderList.do";
 	}
@@ -1935,10 +1939,6 @@ public class MarketController {
 		marketService.signContractSubmit(actorId, Long.parseLong(taskId),
 				Integer.parseInt(orderId), Double.parseDouble(discount),
 				Double.parseDouble(total), url,confirmDepositFileUrl);
-
-//		marketService.signContractSubmit(actorId, Long.parseLong(taskId),
-//				Integer.parseInt(orderId), Double.parseDouble(discount),
-//				Double.parseDouble(total), url);
 		
 		return "redirect:/market/signContractList.do";
 	}

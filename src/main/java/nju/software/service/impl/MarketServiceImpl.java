@@ -1,4 +1,4 @@
-﻿package nju.software.service.impl;
+package nju.software.service.impl;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.drools.command.Context;
 import org.drools.command.impl.GenericCommand;
 import org.drools.command.impl.KnowledgeCommandContext;
+import org.drools.core.util.StringUtils;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.process.NodeInstance;
 import org.drools.runtime.process.ProcessInstance;
@@ -55,6 +56,8 @@ import nju.software.service.FinanceService;
 import nju.software.service.MarketService;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
+import nju.software.util.mail.MailSenderInfo;
+import nju.software.util.mail.SimpleMailSender;
 
 @Service("marketServiceImpl")
 public class MarketServiceImpl implements MarketService {
@@ -1294,7 +1297,44 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return list;
 	}
-
+	
+	@Override
+	public void sendOrderInfoViaEmail(Order order, Customer customer){
+		if(StringUtils.isEmpty(customer.getEmail()))
+			return;
+		
+		String emailTitle = "智造链 - 下单信息";
+        String emailContent = "尊敬的客户，您已成功下单，以下是您具体的订单信息：<br/>" + 
+        		              "<table border='1px' bordercolor='#000000' cellspacing='0px' style='border-collapse:collapse'>" + 					
+        		              	 "<thead>" +
+        		              	 	"<tr>" +
+        		              	 	   "<th>订单号</th>" +
+        		              	 	   "<th>款型</th>" +
+        		              	 	   "<th>件数</th>" +
+        		              	 	   "<th>预期交付日期</th>" +
+        		              	 	 "</tr>" +
+        		              	  "</thead>" +
+        		              	  "<tbody>" + 
+        		              	  	 "<tr>" + 
+        		              	  	   "<td>" + service.getOrderId(order) + "</td>" +				
+        		              	  	   "<td>" + order.getStyleName() + "</td>" +
+        		              	  	   "<td>" + order.getAskAmount() + "</td>" +
+        		              	  	   "<td>" + order.getAskDeliverDate() + "</td>" +							
+        		              	  	 "</tr>" +													
+        		              	  "</tbody>" +
+        		               "</table>";
+        
+        MailSenderInfo mailSenderInfo = new MailSenderInfo();
+        mailSenderInfo.setSubject(emailTitle);
+        mailSenderInfo.setContent(emailContent);
+        mailSenderInfo.setToAddress(customer.getEmail());
+        SimpleMailSender.sendHtmlMail(mailSenderInfo);
+	}
+	
+	@Override
+	public void sendOrderInfoViaPhone(Order order, Customer customer){
+		
+	}
 
 
 
