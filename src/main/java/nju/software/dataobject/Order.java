@@ -19,6 +19,8 @@ public class Order implements java.io.Serializable {
 
 	private String orderProcessStateName;//订单当前执行到的流程节点的状态
 	private String confirmDepositFile;//大货定金收据电子图片
+	private String confirmFinalPaymentFile;//大货尾金收据电子图片
+
 	private String confirmSampleMoneyFile;//样衣金收据电子图片
 	
 	private Integer orderId;
@@ -531,5 +533,13 @@ public class Order implements java.io.Serializable {
 
 	public void setConfirmSampleMoneyFile(String confirmSampleMoneyFile) {
 		this.confirmSampleMoneyFile = confirmSampleMoneyFile;
+	}
+
+	public String getConfirmFinalPaymentFile() {
+		return confirmFinalPaymentFile;
+	}
+
+	public void setConfirmFinalPaymentFile(String confirmFinalPaymentFile) {
+		this.confirmFinalPaymentFile = confirmFinalPaymentFile;
 	}
 }

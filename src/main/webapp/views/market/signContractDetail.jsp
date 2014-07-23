@@ -40,6 +40,10 @@
 			
 				<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
 				<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
+				<!-- 
+				 -->
+				<input type="hidden" name="orderInfoQuoteOuterPrice" value="${orderInfo.quote.outerPrice}"/>
+				<input type="hidden" name="orderInfoOrderAskAmount" value="${orderInfo.order.askAmount }"/>
 				<table class="table table-striped table-bordered table-hover detail">
 					<tr>
 						<td>优惠金额</td>
@@ -88,4 +92,12 @@
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript">
+
+var orderInfoQuoteOuterPrice = $("input[name='orderInfoQuoteOuterPrice']").val();
+var orderInfoOrderAskAmount = $("input[name='orderInfoOrderAskAmount']").val();
+var totalMoney = orderInfoQuoteOuterPrice*orderInfoOrderAskAmount;
+$("input[name='totalmoney']").val(totalMoney.toFixed(2));
+
+</script>
 <%@include file="/common/footer.jsp"%>

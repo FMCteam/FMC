@@ -37,6 +37,8 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 				<div class="tab-pane  active" id="finance">
+				<!-- 
+				 -->
 					<form id="verify_form" action="${ctx}${orderInfo.url}"
 						method="post" onsubmit="return verifyFinance();">
 						<input type="hidden" name="money_state" value="已收到" /> <input
@@ -118,19 +120,48 @@
 								<td colspan="2"><input type="text" name="money_remark"
 									class="span12" /></td>
 							</tr>
-
+		                    <tr>
+		                        <td class="title">收款信息</td>
+		                        <td class="title">收款图片</td>
+		                        <td colspan="3"><c:if test="${orderInfo.order.confirmFinalPaymentFile!=null}">
+				                <img src="${ctx}/common/getPic.do?type=confirmFinalPaymentFile&orderId=${orderInfo.order.orderId}"
+					                 style="max-height: 300px;" alt="收款图片"></img>
+			                    </c:if></td>
+	                        </tr>
 						</table>
+						
+<!-- 
+ -->
 						<div class="action">
-							<input type="submit" id="financeSubmit" hidden="hidden" /> <a
+							<input type="submit" id="financeSubmit" hidden="hidden" /> 
+					
+							<a  
 								id="financeButton" class="btn btn-primary btn-rounded"><i
-								class="icon-ok icon-white"></i>已确认收款</a> <a
+								class="icon-ok icon-white"></i>已确认收款</a> 
+								
+								<a
 								class="btn btn-danger btn-rounded"
 								href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
 								onclick="return confirmFinanceSubmit()"
 								style="color: white; margin-left: 20px"><i
 								class="icon-remove icon-white"></i>未收到汇款</a>
 						</div>
+						<!-- 
+						 -->
 					</form>
+				<form action="${ctx}/finance/confirmFinalPaymentFileSubmit.do?orderId=${orderInfo.order.orderId}" method="post" enctype="multipart/form-data">
+				<table class="table table-striped table-bordered table-hover detail">
+					<tr>
+						<td>选择文件</td>
+						<td colspan="3">
+							<a style="color: red;">*</a>
+			                <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+							<input name="confirmFinalPaymentFile" id="confirmFinalPaymentFile" type="file" required="required"/> 
+							<input  class="btn btn-primary btn-rounded" type="submit" value="上传尾金截图" onclick="return confirm('确认上传？')" />						
+						</td>
+					</tr>
+				</table>
+				</form>
 				</div>
 			</div>
 		</div>
@@ -147,6 +178,15 @@
 <!--maincontentinner-->
 </div>
 <!--maincontent-->
+<script type="text/javascript">
+$(document).ready(function() {
+ var text=$("#pay").text();
+	$("#pay").text(parseFloat(text).toFixed(2));
+// var text=$("#pay2").text();
+//	$("#pay2").text(parseFloat(text).toFixed(2));
+	 
+});  
+</script>
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>

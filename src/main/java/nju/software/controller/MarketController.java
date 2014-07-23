@@ -73,6 +73,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class MarketController {
 	private final static String CONTRACT_URL = "D:/fmc/contract/";
 	private final static String CONFIRM_SAMPLEMONEY_URL="D:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
+	private final static String CONFIRM_DEPOSIT_URL="D:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
 
 	@Autowired
 	private OrderService orderService;
@@ -1913,19 +1914,32 @@ public class MarketController {
 		String taskId = request.getParameter("taskId");
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("contractFile");
+		MultipartFile confirmDepositFile =  multipartRequest.getFile("confirmDepositFile");
 		String filename = file.getOriginalFilename();
+		String confirmDepositFileName = confirmDepositFile.getOriginalFilename();
 		String url = CONTRACT_URL + orderId;
+		String confirmDepositFileUrl = CONFIRM_DEPOSIT_URL + orderId;		
 		String fileid = "contractFile";
+		String confirmDepositFileId = "confirmDepositFile";
+
 		FileOperateUtil.Upload(request, url, null, fileid);
+		FileOperateUtil.Upload(request, confirmDepositFileUrl, null, confirmDepositFileId);
+
 		url = url + "/" + filename;
-		
+		confirmDepositFileUrl = confirmDepositFileUrl + "/" + confirmDepositFileName;
+
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
 		String actorId = account.getUserId() + "";
-
+		//上传合同，上传首定金收据，一般是截图，
 		marketService.signContractSubmit(actorId, Long.parseLong(taskId),
 				Integer.parseInt(orderId), Double.parseDouble(discount),
-				Double.parseDouble(total), url);
+				Double.parseDouble(total), url,confirmDepositFileUrl);
+
+//		marketService.signContractSubmit(actorId, Long.parseLong(taskId),
+//				Integer.parseInt(orderId), Double.parseDouble(discount),
+//				Double.parseDouble(total), url);
+		
 		return "redirect:/market/signContractList.do";
 	}
 

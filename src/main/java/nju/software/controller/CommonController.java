@@ -145,6 +145,10 @@ public class CommonController {
 			file = order.getSampleClothesPicture();
 		}else if(type.equals("confirmSampleMoney")){
 			file = order.getConfirmSampleMoneyFile();
+		}else if(type.equals("confirmDepositFile")){
+			file = order.getConfirmDepositFile();
+		}else if(type.equals("confirmFinalPaymentFile")){
+			file = order.getConfirmFinalPaymentFile();
 		}else {
 			file = order.getReferencePicture();
 		}

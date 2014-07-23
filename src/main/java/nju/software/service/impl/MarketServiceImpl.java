@@ -809,6 +809,15 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
+	public void signConfirmFinalPaymentFileSubmit( 
+			int orderId, String confirmFinalPaymentFileUrl) {
+		Order order = orderDAO.findById(orderId);
+		order.setConfirmFinalPaymentFile(confirmFinalPaymentFileUrl);
+		orderDAO.merge(order);
+		
+	}
+	
+	@Override
 	public Map<String, Object> getMergeQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
 		return service.getBasicOrderModelWithQuote(userId + "",
@@ -1285,6 +1294,8 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return list;
 	}
+
+
 
 
 

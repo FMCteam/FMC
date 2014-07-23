@@ -190,4 +190,6 @@ public interface MarketService {
 	public boolean confirmQuoteSubmit(String actorId, long parseLong,
 			int parseInt, String result, String url);
 
+	public void signConfirmFinalPaymentFileSubmit( int orderId, String confirmFinalPaymentFileUrl);
+
 }
