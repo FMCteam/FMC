@@ -189,5 +189,12 @@ public interface MarketService {
 	public void sendOrderInfoViaPhone(Order order, Customer customer);
 
 	public ArrayList<String> getProcessStateName(Integer orderId);
+	
+		public boolean signContractSubmit(String actorId, long parseLong,
+			int parseInt, double parseDouble, double parseDouble2, String url,
+			String confirmDepositFileUrl);
+
+	public boolean confirmQuoteSubmit(String actorId, long parseLong,
+			int parseInt, String result, String url);
 
 }

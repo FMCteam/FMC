@@ -1,4 +1,4 @@
-﻿package nju.software.service.impl;
+package nju.software.service.impl;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -608,6 +608,25 @@ public class MarketServiceImpl implements MarketService {
 			return false;
 		}
 	}
+	@Override
+	public boolean confirmQuoteSubmit(String actorId, long taskId,
+			int orderId, String result, String url) {
+		if(Integer.parseInt(result)==0){			
+		Order order = orderDAO.findById(orderId);
+		order.setConfirmSampleMoneyFile(url);
+		orderDAO.attachDirty(order);
+		}
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_QUOTE, Integer.parseInt(result));
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			return true;
+		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+			return false;
+		}
+		
+	}
 
 	@Override
 	public List<Map<String, Object>> getModifyQuoteList(Integer userId) {
@@ -770,6 +789,26 @@ public class MarketServiceImpl implements MarketService {
 		}
 	}
 
+	@Override
+	public boolean signContractSubmit(String actorId, long taskId,
+			int orderId, double discount, double total, String url,
+			String confirmDepositFileUrl) {
+		Order order = orderDAO.findById(orderId);
+		order.setDiscount(discount);
+		order.setTotalMoney(total);
+		order.setContractFile(url);
+		order.setConfirmDepositFile(confirmDepositFileUrl);
+		orderDAO.merge(order);
+		Map<String, Object> data = new HashMap<>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 	@Override
 	public Map<String, Object> getMergeQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub

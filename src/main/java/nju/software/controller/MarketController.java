@@ -73,6 +73,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Controller
 public class MarketController {
 	private final static String CONTRACT_URL = "D:/fmc/contract/";
+	private final static String CONFIRM_SAMPLEMONEY_URL="D:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
 	@Autowired
 	private OrderService orderService;
 	@Autowired
@@ -1626,11 +1627,18 @@ public class MarketController {
 		String result = request.getParameter("result");
 		String taskId = request.getParameter("taskId");
 		String orderId = request.getParameter("orderId");
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile file = multipartRequest.getFile("confirmSampleMoneyFile");
+		String filename = file.getOriginalFilename();
+		String url = CONFIRM_SAMPLEMONEY_URL + orderId;
+		String fileid = "confirmSampleMoneyFile";
+		FileOperateUtil.Upload(request, url, null, fileid);
+		url = url + "/" + filename;
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
 		String actorId = account.getUserId() + "";
-		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),
-				result);
+//		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),result);
+		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),Integer.parseInt(orderId),result,url);
 
 		// 1=修改报价
 		if (result.equals("1")) {

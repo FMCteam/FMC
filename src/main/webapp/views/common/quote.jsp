@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <table class="table table-striped table-bordered detail">
+ 
 	<tr>
 		<td class="title" rowspan="${fn:length(orderInfo.fabricCosts)+1}">面料报价</td>
 		<td class="title">面料名</td>
@@ -73,18 +74,10 @@
 	</tr>
 	<tr>
 		<td>
-		    <input name="orderInfoQuoteSingleCost" type="hidden" value="${orderInfo.quote.singleCost}"/>                                                        />
-		    <input name="orderInfoOrderAskAmount" type="hidden" value="${orderInfo.order.askAmount}"/>                                                        />
-			<input type="text" name="quoteSingleCostOrderAskAmountProduct" readonly="readonly" /> 
-			<!-- 
 		    <span id="pay">${orderInfo.quote.singleCost*orderInfo.order.askAmount}</span>
-			 -->			
 		</td>
 		<td>
-            <input type="text" name="quoteSingleCostOrderAskAmountProduct" readonly="readonly" /> 			
-<!-- 
-		    <span id="pay">${orderInfo.quote.singleCost*orderInfo.order.askAmount}</span>
- -->
+            <span id="pay">${orderInfo.quote.singleCost*orderInfo.order.askAmount}</span>		
 		</td>
 		<td>${orderInfo.quote.profitPerPiece}</td>
 		<td>${orderInfo.quote.outerPrice}</td>
