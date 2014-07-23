@@ -44,7 +44,7 @@
 							<div class="userinfo">
 								<ul>
 									<li><a href="${ctx }/account/registCustomer.do">客户注册</a></li>
-									<li><a href="${ctx }/account/findPassword.do">找回密码</a></li>
+									<li><a href="${ctx }/account/forgetPassword.do">找回密码</a></li>
 								</ul>
 							</div>
 						</div>

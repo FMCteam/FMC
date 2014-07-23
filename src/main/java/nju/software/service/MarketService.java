@@ -1,5 +1,6 @@
 package nju.software.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -182,5 +183,11 @@ public interface MarketService {
 	
 
 	public List<Map<String, Object>> getOrdersDone(String userRole, Integer userId);
+
+	public void sendOrderInfoViaEmail(Order order, Customer customer);
+
+	public void sendOrderInfoViaPhone(Order order, Customer customer);
+
+	public ArrayList<String> getProcessStateName(Integer orderId);
 
 }

@@ -5,9 +5,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Employee;
@@ -17,6 +20,9 @@ import nju.software.service.EmployeeService;
 import nju.software.util.Constants;
 import nju.software.util.DateUtil;
 import nju.software.util.SecurityUtil;
+import nju.software.util.mail.*;
+
+import org.drools.core.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -296,6 +302,137 @@ public class AccountController {
 			return "index";
 		} else {
 			return "redirect:/account/modifyEmployeeDetail.do";
+		}
+	}
+	
+	@RequestMapping(value = "/account/forgetPassword.do")
+	@Transactional(rollbackFor = Exception.class)
+    public String forgetPassword(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model){
+		return "/account/forgetPassword";
+    }
+	
+	/**
+	 * 发送找回密码邮件
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/account/sendResetPassMail.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+    public String sendResetPassMail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model){
+		System.out.println("---------------开始发送邮件----------------");
+		String username = request.getParameter("username");		
+		Account account = accountService.getAccountByUsername(username);
+		
+        if(null == account){  //登录名不存在
+            model.addAttribute("notify", "登录名不存在");
+            return "/account/sendEmailSuccess";
+        }
+        
+        Customer customer = customerService.findByCustomerId(account.getUserId());
+        if(null != customer){
+        	try{
+                String secretKey= UUID.randomUUID().toString();  //密钥
+                Timestamp failTime = new Timestamp(System.currentTimeMillis() + 30*60*1000); //30分钟后过期
+                long date = failTime.getTime()/1000*1000;  //忽略毫秒数
+                account.setValidataCode(secretKey);
+                account.setResetLinkFailTime(failTime);
+                accountService.updateAccount(account);    //保存到数据库
+                String key = account.getUserName() + "$" + date + "$" + secretKey;
+                String digitalSignature = SecurityUtil.md5hex(key);  //数字签名
+
+                String emailTitle = "智造链 - 找回您的密码";
+                String path = request.getContextPath();
+                String basePath = request.getScheme() + "://" + request.getServerName() + ":"+request.getServerPort() + path + "/";
+                String resetPassHref =  basePath + "account/checkResetPassLink.do?sid=" + digitalSignature + "&userName=" + account.getUserName();
+                String emailContent = "请勿回复本邮件。点击下面的链接，重设密码<br/><a href=" + resetPassHref + " target='_BLANK'>点击我重新设置密码</a>" +
+                        "<br/>提示：本邮件超过30分钟，链接将会失效，需要重新申请";
+                System.out.println(resetPassHref);
+                MailSenderInfo mailSenderInfo = new MailSenderInfo();
+                mailSenderInfo.setSubject(emailTitle);
+                mailSenderInfo.setContent(emailContent);
+                mailSenderInfo.setToAddress(customer.getEmail());
+                SimpleMailSender.sendHtmlMail(mailSenderInfo);
+                
+                model.addAttribute("notify", "操作成功，已经发送找回密码链接到您邮箱。请在30分钟内重置密码");
+            }catch (Exception e){
+                e.printStackTrace();
+                model.addAttribute("notify", "邮箱不存在？未知错误，请联系管理员。");
+            }
+        }
+        System.out.println("---------------邮件发送完成----------------");
+        return "/account/sendEmailSuccess";
+    }
+	
+	/**
+	 * 验证重设密码链接
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/account/checkResetPassLink.do", method = RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+    public String checkResetLink(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model){
+        String sid = request.getParameter("sid");
+        String userName = request.getParameter("userName");        
+        if(sid.equals("") || userName.equals("")){
+            model.addAttribute("notify", "链接不完整，请重新生成");
+            return "/account/forgetPassword";
+        }
+        
+        Account account = accountService.getAccountByUsername(userName);
+        if(null == account){
+            model.addAttribute("notify", "链接错误，无法找到匹配用户，请重新申请找回密码");
+            return "/account/forgetPassword";
+        }
+        Timestamp failTime = account.getResetLinkFailTime();
+        if(failTime.getTime() <= System.currentTimeMillis()){         //表示已经过期
+            model.addAttribute("notify", "链接已经过期，请重新申请找回密码");
+            return "/account/forgetPassword";
+        }
+        String key = account.getUserName() + "$" + failTime.getTime()/1000*1000 + "$" + account.getValidataCode();          //数字签名
+        String digitalSignature = SecurityUtil.md5hex(key);
+        System.out.println(key + "\t" + digitalSignature);
+        if(!digitalSignature.equals(sid)) {
+            model.addAttribute("notify", "链接不正确，是否已经过期了？请重新申请");
+            return "/account/forgetPassword";
+        }
+        
+        request.getSession().setAttribute("cur_user", account);
+        return "/account/resetPassword";
+    }
+	
+	/**
+	 * 重置密码
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/account/resetPassword.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String resetPassword(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model){
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		if(null != account){
+			String password1 = request.getParameter("new_pass");
+			String password2 = request.getParameter("cfm_new_pass");
+			
+			if(StringUtils.isEmpty(password1) || StringUtils.isEmpty(password2) || !password1.equals(password2)){
+				return "account/resetPassword";
+			}
+			else {
+				account.setUserPassword(SecurityUtil.md5hex(password1));
+				accountService.updateAccount(account);
+				return "login";
+			}
+		}else{
+			return "account/forgetPassword";
 		}
 	}
 
