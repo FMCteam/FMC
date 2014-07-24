@@ -31,6 +31,7 @@
   <itemDefinition id="_verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_7-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_7-marketStaffItem" structureRef="Integer" />
@@ -51,6 +52,7 @@
   <itemDefinition id="_7-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_7-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_7-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_7-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_10-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_10-marketStaffItem" structureRef="Integer" />
@@ -71,6 +73,7 @@
   <itemDefinition id="_10-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_10-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_10-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_10-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_11-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_11-marketStaffItem" structureRef="Integer" />
@@ -91,6 +94,7 @@
   <itemDefinition id="_11-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_11-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_11-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_11-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_12-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_12-marketStaffItem" structureRef="Integer" />
@@ -111,6 +115,7 @@
   <itemDefinition id="_12-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_12-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_12-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_12-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_152-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_152-marketStaffItem" structureRef="Integer" />
@@ -131,6 +136,7 @@
   <itemDefinition id="_152-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_152-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_152-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_152-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_154-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_154-marketStaffItem" structureRef="Integer" />
@@ -151,6 +157,7 @@
   <itemDefinition id="_154-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_154-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_154-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_154-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_19-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_19-marketStaffItem" structureRef="Integer" />
@@ -171,6 +178,7 @@
   <itemDefinition id="_19-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_19-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_19-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_19-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_155-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_155-marketStaffItem" structureRef="Integer" />
@@ -191,6 +199,7 @@
   <itemDefinition id="_155-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_155-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_155-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_155-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_148-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_148-marketStaffItem" structureRef="Integer" />
@@ -211,6 +220,7 @@
   <itemDefinition id="_148-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_148-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_148-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_148-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_29-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_29-marketStaffItem" structureRef="Integer" />
@@ -231,6 +241,7 @@
   <itemDefinition id="_29-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_29-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_29-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_29-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_28-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_28-marketStaffItem" structureRef="Integer" />
@@ -251,6 +262,7 @@
   <itemDefinition id="_28-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_28-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_28-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_28-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_150-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_150-marketStaffItem" structureRef="Integer" />
@@ -271,6 +283,7 @@
   <itemDefinition id="_150-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_150-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_150-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_150-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_34-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_34-marketStaffItem" structureRef="Integer" />
@@ -291,6 +304,7 @@
   <itemDefinition id="_34-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_34-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_34-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_34-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_33-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_33-marketStaffItem" structureRef="Integer" />
@@ -311,6 +325,7 @@
   <itemDefinition id="_33-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_33-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_33-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_33-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_41-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_41-marketStaffItem" structureRef="Integer" />
@@ -331,6 +346,7 @@
   <itemDefinition id="_41-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_41-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_41-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_41-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_47-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_47-marketStaffItem" structureRef="Integer" />
@@ -351,6 +367,7 @@
   <itemDefinition id="_47-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_47-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_47-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_47-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_48-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_48-marketStaffItem" structureRef="Integer" />
@@ -371,6 +388,7 @@
   <itemDefinition id="_48-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_48-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_48-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_48-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_59-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_59-marketStaffItem" structureRef="Integer" />
@@ -391,6 +409,7 @@
   <itemDefinition id="_59-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_59-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_59-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_59-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_62-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_62-marketStaffItem" structureRef="Integer" />
@@ -411,6 +430,7 @@
   <itemDefinition id="_62-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_62-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_62-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_62-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_87-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_87-marketStaffItem" structureRef="Integer" />
@@ -431,6 +451,7 @@
   <itemDefinition id="_87-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_87-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_87-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_87-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_80-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_80-marketStaffItem" structureRef="Integer" />
@@ -451,6 +472,7 @@
   <itemDefinition id="_80-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_80-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_80-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_80-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_103-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_103-marketStaffItem" structureRef="Integer" />
@@ -471,6 +493,7 @@
   <itemDefinition id="_103-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_103-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_103-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_103-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_96-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_96-marketStaffItem" structureRef="Integer" />
@@ -491,6 +514,7 @@
   <itemDefinition id="_96-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_96-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_96-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_96-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_110-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_110-marketStaffItem" structureRef="Integer" />
@@ -511,6 +535,7 @@
   <itemDefinition id="_110-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_110-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_110-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_110-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_107-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_107-marketStaffItem" structureRef="Integer" />
@@ -531,6 +556,7 @@
   <itemDefinition id="_107-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_107-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_107-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_107-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_115-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_115-marketStaffItem" structureRef="Integer" />
@@ -551,6 +577,7 @@
   <itemDefinition id="_115-verifyQuoteSuccessItem" structureRef="Boolean" />
   <itemDefinition id="_115-needCraftItem" structureRef="Boolean" />
   <itemDefinition id="_115-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_115-verifyQuoteCommentItem" structureRef="String" />
 
   <process processType="Private" isExecutable="true" id="nju.software.fmc.bpmn" name="Sample Process" tns:packageName="defaultPackage" >
 
@@ -574,6 +601,7 @@
     <property id="verifyQuoteSuccess" itemSubjectRef="_verifyQuoteSuccessItem"/>
     <property id="needCraft" itemSubjectRef="_needCraftItem"/>
     <property id="pushRestMoney" itemSubjectRef="_pushRestMoneyItem"/>
+    <property id="verifyQuoteComment" itemSubjectRef="_verifyQuoteCommentItem"/>
 
     <laneSet>
       <lane name="financeManager" >
@@ -621,7 +649,7 @@
     <endEvent id="_138" name="End" >
         <terminateEventDefinition />
     </endEvent>
-    <inclusiveGateway id="_141" name="Gateway" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_141" name="isHaoDuoYi" gatewayDirection="Diverging" />
     <exclusiveGateway id="_140" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
     <inclusiveGateway id="_142" name="Gateway" gatewayDirection="Diverging" />
@@ -900,11 +928,13 @@
     <userTask id="_29" name="主管审核报价" >
       <ioSpecification>
         <dataInput id="_29_TaskNameInput" name="TaskName" />
+        <dataOutput id="_29_verifyQuoteCommentOutput" name="verifyQuoteComment" />
         <dataOutput id="_29_verifyQuoteSuccessOutput" name="verifyQuoteSuccess" />
         <inputSet>
           <dataInputRefs>_29_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
+          <dataOutputRefs>_29_verifyQuoteCommentOutput</dataOutputRefs>
           <dataOutputRefs>_29_verifyQuoteSuccessOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
@@ -915,6 +945,10 @@
           <to xsi:type="tFormalExpression">_29_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_29_verifyQuoteCommentOutput</sourceRef>
+        <targetRef>verifyQuoteComment</targetRef>
+      </dataOutputAssociation>
       <dataOutputAssociation>
         <sourceRef>_29_verifyQuoteSuccessOutput</sourceRef>
         <targetRef>verifyQuoteSuccess</targetRef>
@@ -1060,7 +1094,7 @@
       </potentialOwner>
     </userTask>
     <parallelGateway id="_160" name="Gateway" gatewayDirection="Diverging" />
-    <inclusiveGateway id="_167" name="Gateway" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_167" name="isHaoDuoYi" gatewayDirection="Diverging" />
     <userTask id="_47" name="样衣面料采购" >
       <ioSpecification>
         <dataInput id="_47_TaskNameInput" name="TaskName" />
@@ -1089,10 +1123,10 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <inclusiveGateway id="_166" name="Gateway" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_166" name="isHaoDuoYi" gatewayDirection="Diverging" />
     <inclusiveGateway id="_44" name="receivedsamplejin" gatewayDirection="Diverging" />
     <exclusiveGateway id="_165" name="Gateway" gatewayDirection="Converging" />
-    <inclusiveGateway id="_164" name="Gateway" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_164" name="isHaoDuoYi" gatewayDirection="Diverging" />
     <parallelGateway id="_49" name="Gateway" gatewayDirection="Diverging" />
     <userTask id="_48" name="录入版型数据及生产样衣" >
       <ioSpecification>
