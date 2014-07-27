@@ -151,7 +151,6 @@ public class CommonController {
 		response.setContentType("image/jpg"); // 设置返回的文件类型
 		Integer orderId =Integer.parseInt(request.getParameter("orderId"));
 		Order order=orderDAO.findById(orderId);
-		Craft craft = craftDAO.findByOrderId(orderId).get(0);
 		String type = request.getParameter("type");
 		String file = null;
 		if (type.equals("sample")) {
@@ -163,6 +162,7 @@ public class CommonController {
 		}else if(type.equals("confirmFinalPaymentFile")){
 			file = order.getConfirmFinalPaymentFile();
 		}else if(type.equals("craftFileUrl")){
+			Craft craft = craftDAO.findByOrderId(orderId).get(0);
 			file = craft.getCraftFileUrl();
 		}else {
 			file = order.getReferencePicture();

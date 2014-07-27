@@ -109,7 +109,7 @@ public class BuyController {
 			list = buyService.getComputePurchaseCostList();
 		}*/
 		model.addAttribute("list", list);
-		model.addAttribute("taskName", "采购成本核算");
+		model.addAttribute("taskName", "采购成本验证并核算");
 		model.addAttribute("url", "/buy/computePurchaseCostDetail.do");
 		model.addAttribute("searchurl", "/buy/computePurchaseCostListSearch.do");
 

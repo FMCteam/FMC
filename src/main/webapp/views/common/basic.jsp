@@ -60,17 +60,17 @@
 		<td colspan="5"><a href="${orderInfo.order.referenceUrl}"  target="_blank">${orderInfo.order.referenceUrl}</a></td>
 	</tr>
 	<tr>
-		<td class="title" rowspan="6">专员信息</td>
+		<td class="title" rowspan="2">专员信息</td>
 		<td class="title">接单业务员</td>
-		<td class="title">业务员邮箱</td>
+		<td class="title" colspan="2">业务员邮箱</td>
 		<td class="title">业务员手机</td>
 		<td class="title">业务员办公电话</td>
 		<td class="title">业务员QQ</td>
 	 
  	</tr>
-	<tr>
+	<tr >
 		<td>${orderInfo.employee.employeeName}</td>
-		<td>${orderInfo.employee.email}</td>
+		<td colspan="2">${orderInfo.employee.email}</td>
 		<td>${orderInfo.employee.phone1}</td>
 		<td>${orderInfo.employee.jobPhone}</td>
 		<td>${orderInfo.employee.qq}</td>
