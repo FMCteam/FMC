@@ -66,7 +66,7 @@ public class Craft implements Serializable {
 	}
 	
 	@Column(name = "need_craft", nullable = false)	
-	public Short isNeedCraft() {
+	public Short getNeedCraft() {
 		return needCraft;
 	}
 	
