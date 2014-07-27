@@ -25,9 +25,10 @@ public interface BuyService {
 	public Map<String,Object> getComputePurchaseCostDetail(Integer orderId);
 	
 	public void computePurchaseCostSubmit(int orderId, long taskId,
-			String[] fabric_names, String[] fabric_amouts,String[] tear_per_meters,
-			String[] cost_per_meters, 
-			String[] accessory_names, String[] accessory_querys,String[] tear_per_piece,
+			boolean result, String comment, String[] fabric_names,
+			String[] fabric_amouts, String[] tear_per_meters,
+			String[] cost_per_meters, String[] accessory_names,
+			String[] accessory_querys, String[] tear_per_piece,
 			String[] cost_per_piece);
 	
 	//===========================采购样衣原料=================================
@@ -71,4 +72,5 @@ public interface BuyService {
 	public List<Map<String, Object>> getSearchPurchaseMaterialList(
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
+
 }

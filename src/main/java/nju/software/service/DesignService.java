@@ -59,10 +59,6 @@ public interface DesignService {
 
 	public Map<String, Object> getComputeDesignCostInfo(Integer orderId);
 
-	public void computeDesignCostSubmit(int orderId, long taskId, short needCraft,
-			float stampDutyMoney, float washHangDyeMoney, float laserMoney,
-			float embroideryMoney, float crumpleMoney, float openVersionMoney);
-
 	public List<Map<String, Object>> getNeedCraftList();
 
 	public boolean produceSampleSubmit(long taskId, boolean result);
@@ -84,5 +80,10 @@ public interface DesignService {
 	public void needCraftProductSubmit(int orderId, long taskId);
 
 	public void getTypeSettingSliceSubmit(int orderId, long taskId);
+
+	public void computeDesignCostSubmit(int orderId, long taskId, boolean result,
+			String comment, short needCraft, float stampDutyMoney,
+			float washHangDyeMoney, float laserMoney, float embroideryMoney,
+			float crumpleMoney, float openVersionMoney);
 
 }
