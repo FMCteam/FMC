@@ -144,15 +144,12 @@ table.tablesorter thead tr .headerSortDown {
 								<li><a href="${ctx }/market/addOrderList.do">客户下单</a></li>
 								<li><a href="${ctx }/market/modifyOrderList.do">修改询单<span
 										class="modifyOrder"></span></a></li>
-
 								<li><a href="${ctx }/market/mergeQuoteList.do">合并报价<span
 										class="mergeQuote"></span></a></li>
 								<li><a href="${ctx }/market/verifyQuoteList.do">审核报价<span
 										class="verifyQuote"></span></a></li>
-
 								<li><a href="${ctx }/market/confirmQuoteList.do">报价商定<span
 										class="confirmQuote"></span></a></li>
-
 								<li><a href="${ctx }/market/modifyQuoteList.do">修改报价<span
 										class="modifyQuote"></span></a></li>
 								<li><a href="${ctx }/market/confirmProduceOrderList.do">确认大货加工单并签订合同<span
@@ -161,11 +158,12 @@ table.tablesorter thead tr .headerSortDown {
 										class="pushRest"></span></a></li>
 								<li><a href="${ctx }/market/modifyProductList.do">修改大货合同<span
 										class="modifyProduceOrder"></span></a></li>
+										<!-- 
 								<li><a href="${ctx }/market/signContractList.do">签订大货合同<span
 										class="signContract"></span></a></li>
-
 								<li><a href="#">订单回访</a></li>
 								<li><a href="#">提醒缴费</a></li>
+										 -->
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_design==true}">
@@ -189,10 +187,10 @@ table.tablesorter thead tr .headerSortDown {
 										class="modifyDesign"></span></a></li>
 								<li><a href="${ctx}/design/getConfirmDesignList.do">大货生产版型<span
 										class="confirmDesign"></span></a></li>
-								<li><a href="${ctx}/design/getNeedCraftSampleList.do"><span
-										class="craftSample">样衣工艺制作</span></a></li>
-								<li><a href="${ctx}/design/getNeedCraftProductList.do"><span
-										class="craft">大货工艺制作</span></a></li>
+								<li><a href="${ctx}/design/getNeedCraftSampleList.do">样衣工艺制作<span
+										class="craftSample"></span></a></li>
+								<li><a href="${ctx}/design/getNeedCraftProductList.do">大货工艺制作<span
+										class="craft"></span></a></li>
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_buy==true}">
