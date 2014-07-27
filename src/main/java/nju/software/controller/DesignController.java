@@ -182,13 +182,12 @@ public class DesignController {
 		//开版费用
 		String openVersionMoney = request.getParameter("openVersionMoney");
 		
-		
-		//生产验证通过，设置design变量为true
-		designService.verifyDesignSubmit(taskId, result, comment);
 		//生产报价提交
 		designService.computeDesignCostSubmit(
 				orderId,
 				taskId,
+				result,
+				comment,
 				Short.parseShort(needCraft),
 				Float.parseFloat(stampDutyMoney),
 				Float.parseFloat(washHangDyeMoney),

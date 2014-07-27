@@ -99,7 +99,8 @@ public class DesignServiceImpl implements DesignService {
 	
 	//计算设计工艺费用
 	@Override
-	public void computeDesignCostSubmit(int orderId, long taskId, short needCraft,
+	public void computeDesignCostSubmit(int orderId, long taskId,
+			boolean result, String comment, short needCraft,
 			float stampDutyMoney, float washHangDyeMoney, float laserMoney,
 			float embroideryMoney, float crumpleMoney, float openVersionMoney) {
 		
@@ -133,11 +134,13 @@ public class DesignServiceImpl implements DesignService {
 		quoteDAO.attachDirty(quote);
 
 		Map<String, Object> data = new HashMap<String, Object>();
-		boolean result = false;
+		boolean isNeedCraft = false;
 		if (needCraft == 1){
-			result = true;
+			isNeedCraft = true;
 		}
-		data.put(RESULT_NEED_CRAFT, result);
+		data.put(RESULT_NEED_CRAFT, isNeedCraft);
+		data.put(RESULT_DESIGN, result);
+		data.put(RESULT_DESIGN_COMMENT, comment);
 		
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);

@@ -262,11 +262,9 @@ public class BuyController {
 		// .getParameterValues("accessory_price");
 
 		
-		//采购验证通过，设置purchase变量为true
-		buyService.verifyPurchaseSubmit(taskId, result, comment);
-		//采购报价提交
-		buyService.computePurchaseCostSubmit(orderId, taskId, fabric_names,
-				fabric_amounts, tear_per_meters, cost_per_meters,
+		//采购报价提交，默认采购验证通过
+		buyService.computePurchaseCostSubmit(orderId, taskId, result, comment,
+				fabric_names, fabric_amounts, tear_per_meters, cost_per_meters,
 				accessory_names, accessory_querys, tear_per_piece,
 				cost_per_piece);
 

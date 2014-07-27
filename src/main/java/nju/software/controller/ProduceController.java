@@ -226,12 +226,12 @@ public class ProduceController {
 		String design_cost = request.getParameter("design_cost");
 		
 		
-		//生产验证通过，设置produce变量为true
-		produceService.verifyProduceSubmit(taskId, result, comment);
-		//生产报价提交
+		//生产报价提交，默认验证通过
 		produceService.computeProduceCostSubmit(
 				orderId,
-				taskId, 
+				taskId,
+				result, 
+				comment,
 				Float.parseFloat(cut_cost),
 				Float.parseFloat(manage_cost),
 				Float.parseFloat(nail_cost),
