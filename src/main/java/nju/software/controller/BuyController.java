@@ -103,7 +103,7 @@ public class BuyController {
 	public String computePurchaseCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService
-				.getVerifyPurchaseList();
+				.getComputePurchaseCostList();
 		/*if (list.size() == 0) {
 			jbpmTest.completeVerify("1", true);
 			list = buyService.getComputePurchaseCostList();
