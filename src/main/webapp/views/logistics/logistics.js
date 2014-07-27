@@ -24,3 +24,11 @@ function confirmPackageSubmit(){
 		return confirm("确认操作？");
 	}
 }
+
+$(document).ready(function() {
+ var text=$("#pay").text();
+	$("#pay").text(parseFloat(text).toFixed(2));
+ var text=$("#pay2").text();
+	$("#pay2").text(parseFloat(text).toFixed(2));
+	 
+});  

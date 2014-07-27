@@ -16,9 +16,9 @@ import javax.persistence.Table;
 public class Employee implements java.io.Serializable {
 
 	// Fields
-private String jobPhone;
-private String email;
-private String qq;
+	private String jobPhone;
+	private String email;
+	private String qq;
 	private Integer employeeId;
 	private String employeeName;
 	private Short sex;

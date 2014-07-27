@@ -1,5 +1,5 @@
 package nju.software.service;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -183,11 +183,29 @@ public interface MarketService {
 
 	public List<Map<String, Object>> getOrdersDone(String userRole, Integer userId);
 
+	public void sendOrderInfoViaEmail(Order order, Customer customer);
+
+	public void sendOrderInfoViaPhone(Order order, Customer customer);
+
+	public ArrayList<String> getProcessStateName(Integer orderId);
 	public boolean signContractSubmit(String actorId, long parseLong,
 			int parseInt, double parseDouble, double parseDouble2, String url,
 			String confirmDepositFileUrl);
 
 	public boolean confirmQuoteSubmit(String actorId, long parseLong,
 			int parseInt, String result, String url);
+
+	public void signConfirmFinalPaymentFileSubmit( int orderId, String confirmFinalPaymentFileUrl);
+
+	public void verifyQuoteSubmit(Quote quote, int id, long taskId,
+			long processId, boolean result, String comment);
+     
+	public List<Map<String, Object>> getPushRestOrderList(String userId);
+
+	public Map<String, Object> getPushRestOrderDetail(String userId,
+			int orderId);
+
+	public boolean getPushRestOrderSubmit(String actorId, long taskId,
+			boolean result);
 
 }

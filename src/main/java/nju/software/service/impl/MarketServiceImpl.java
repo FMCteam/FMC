@@ -1,4 +1,4 @@
-﻿package nju.software.service.impl;
+package nju.software.service.impl;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.drools.command.Context;
 import org.drools.command.impl.GenericCommand;
 import org.drools.command.impl.KnowledgeCommandContext;
+import org.drools.core.util.StringUtils;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.process.NodeInstance;
 import org.drools.runtime.process.ProcessInstance;
@@ -32,6 +33,7 @@ import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
+import nju.software.dao.impl.MoneyDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
@@ -45,6 +47,7 @@ import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
@@ -55,6 +58,8 @@ import nju.software.service.FinanceService;
 import nju.software.service.MarketService;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
+import nju.software.util.mail.MailSenderInfo;
+import nju.software.util.mail.SimpleMailSender;
 
 @Service("marketServiceImpl")
 public class MarketServiceImpl implements MarketService {
@@ -69,13 +74,20 @@ public class MarketServiceImpl implements MarketService {
 	public final static String TASK_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder";
 	public final static String TASK_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
 	public final static String TASK_SIGN_CONTRACT = "signContract";
+	public final static String TASK_PUSH_REST = "pushRest";
 	public final static String RESULT_REORDER = "reorder";
 	public final static String RESULT_MODIFY_ORDER = "modifyOrder";
 	public final static String RESULT_QUOTE = "quote";
-	public final static String RESULT_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder";
+	public final static String RESULT_CONFIRM_PRODUCE_ORDER = "confirmProduceOrder"; 
+	public final static String RESULT_IS_HAODUOYI = "isHaoDuoYi";
+	public final static String RESULT_CONFIRM_PRODUCE_ORDER_CONTRACT="confirmProduceOrderContract";
 	public final static String RESULT_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
+	public final static String RESULT_PUSH_RESTMONEY = "pushRestMoney";
 	public final static String UPLOAD_DIR_SAMPLE = "D:/fmc/sample/";
 	public final static String UPLOAD_DIR_REFERENCE = "D:/fmc/reference/";
+	public final static String RESULT_VERIFY_QUOTE = "verifyQuoteSuccess";
+	public final static String VERIFY_QUOTE_COMMENT = "verifyQuoteComment";
+	
 
 	@Autowired
 	private ProductDAO productDAO;
@@ -107,6 +119,8 @@ public class MarketServiceImpl implements MarketService {
 	private FabricCostDAO fabricCostDAO;
 	@Autowired
 	private AccessoryCostDAO accessoryCostDAO;
+	@Autowired
+	private MoneyDAO moneyDAO;
 	@Autowired
 	private ServiceUtil service;
 
@@ -469,7 +483,7 @@ public class MarketServiceImpl implements MarketService {
 			}
 			// 修改流程参数
 			Map<String, Object> data = new HashMap<>();
-			data.put(RESULT_CONFIRM_PRODUCE_ORDER, comfirmworksheet);
+			data.put(RESULT_CONFIRM_PRODUCE_ORDER_CONTRACT, comfirmworksheet);
 			// 直接进入到下一个流程时
 			try {
 				jbpmAPIUtil.completeTask(taskId, data, actorId);
@@ -609,12 +623,12 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public boolean confirmQuoteSubmit(String actorId, long taskId,
 			int orderId, String result, String url) {
-		
+		if(Integer.parseInt(result)==0){			
 		Order order = orderDAO.findById(orderId);
 		order.setConfirmSampleMoneyFile(url);
-		orderDAO.merge(order);
+		orderDAO.attachDirty(order);
+		}
 		Map<String, Object> data = new HashMap<String, Object>();
-
 		data.put(RESULT_QUOTE, Integer.parseInt(result));
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
@@ -658,7 +672,9 @@ public class MarketServiceImpl implements MarketService {
 		return service.getBasicOrderModelWithQuote(accountId + "",
 				TASK_MODIFY_PRODUCE_ORDER, orderId);
 	}
+	
 
+	
 	// ==========================签订合同=======================
 	@Override
 	public List<Map<String, Object>> getSignContractList(String actorId) {
@@ -688,6 +704,70 @@ public class MarketServiceImpl implements MarketService {
 
 	}
 
+	// ==========================取得催尾款列表=======================
+	@Override
+	public List<Map<String, Object>> getPushRestOrderList(String userId) {
+		List<Map<String, Object>> model = service.getOrderList(userId,
+				TASK_PUSH_REST);
+		return model;
+	}
+	
+	// ==========================取得催尾款订单=======================
+	@Override
+	public Map<String, Object> getPushRestOrderDetail(String userId, int orderId) {
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(userId,
+				TASK_PUSH_REST, orderId);
+		Order order = (Order) model.get("order");
+		Quote quote = (Quote) model.get("quote");
+		Float price = quote.getOuterPrice();
+		model.put("price", price);
+		Produce p=new Produce();
+		p.setOid(orderId);
+		p.setType(Produce.TYPE_QUALIFIED);
+		List<Produce>list=produceDAO.findByExample(p);
+		Integer amount=0;
+		for(Produce produce:list){
+			amount+=produce.getProduceAmount();
+		}
+		model.put("number", amount);
+		model.put("total",  order.getTotalMoney() * 0.7);
+		model.put("taskName", "催尾款");
+		model.put("tabName", "大货尾款");
+		model.put("type", "大货尾款");
+		model.put("url", "/market/getPushRestOrderSubmit.do");
+
+// 		model.put("moneyName", "70%尾款");
+		model.put("moneyName", "大货尾款");
+		Money money=new Money();
+		money.setOrderId(orderId);
+		money.setMoneyType("大货定金");
+		model.put("deposit", moneyDAO.findByExample(money).get(0).getMoneyAmount()); 
+		Float samplePrice = (float) 0;
+		if (order.getStyleSeason().equals("春夏")) {
+			samplePrice = (float) 200;
+			model.put("samplePrice", samplePrice);
+		} else {
+			samplePrice = (float) 400;
+			model.put("samplePrice", samplePrice);
+		}
+		return model;
+	}
+	@Override
+	public boolean getPushRestOrderSubmit(String actorId, long taskId,
+			boolean result) {
+		// TODO Auto-generated method stub
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_PUSH_RESTMONEY, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
 	@Override
 	public List<Map<String, Object>> getMergeQuoteList(Integer accountId) {
 		// TODO Auto-generated method stub
@@ -708,7 +788,7 @@ public class MarketServiceImpl implements MarketService {
 		return temp;
 		 
 	}
-	
+
 	@Override
 	public void mergeQuoteSubmit(int accountId, Quote q, int id, long taskId,
 			long processId) {
@@ -717,11 +797,16 @@ public class MarketServiceImpl implements MarketService {
 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 				.getKsession().getProcessInstance(processId);
 		int orderId_process = (int) process.getVariable("orderId");
+		Order order = orderDAO.findById(id);
+		String customerName = order.getCustomerName();
+		boolean isHaoDuoYi = (customerName.equals("好多衣"))?true:false;
 		if (id == orderId_process) {
 			Map<String, Object> data = new HashMap<>();
+			
+		    data.put(RESULT_IS_HAODUOYI, isHaoDuoYi);
 			quoteDAO.merge(q);
 			try {
-				jbpmAPIUtil.completeTask(taskId, null, accountId + "");
+				jbpmAPIUtil.completeTask(taskId, data, accountId + "");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -768,6 +853,27 @@ public class MarketServiceImpl implements MarketService {
 		}
 	}
 
+	@Override
+	public void verifyQuoteSubmit(Quote quote, int id, long taskId,
+			long processId, boolean result, String comment) {
+		// TODO Auto-generated method stub
+		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+				.getKsession().getProcessInstance(processId);
+		int orderId_process = (int) process.getVariable("orderId");
+		if (id == orderId_process) {
+			quoteDAO.merge(quote);
+			Map<String, Object> data = new HashMap<>();
+			data.put(RESULT_VERIFY_QUOTE, result);
+			data.put(VERIFY_QUOTE_COMMENT, comment);
+			try {
+				jbpmAPIUtil.completeTask(taskId, data, ACTOR_MARKET_MANAGER);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
+	}
+	
 	public boolean signContractSubmit(String actorId, long taskId, int orderId,
 			double discount, double total, String url) {
 		// TODO Auto-generated method stub
@@ -806,6 +912,15 @@ public class MarketServiceImpl implements MarketService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	@Override
+	public void signConfirmFinalPaymentFileSubmit( 
+			int orderId, String confirmFinalPaymentFileUrl) {
+		Order order = orderDAO.findById(orderId);
+		order.setConfirmFinalPaymentFile(confirmFinalPaymentFileUrl);
+		orderDAO.merge(order);
+		
 	}
 	
 	@Override
@@ -861,7 +976,7 @@ public class MarketServiceImpl implements MarketService {
 			String actorId, String ordernumber, String customername,
 			String stylename, String startdate, String enddate,
 			Integer[] employeeIds) {
-		List<Map<String, Object>> temp = service.getSearchOrderList(actorId, ordernumber,  customername,
+		List<Map<String, Object>> temp = service.getSearchOrderList(actorId, ordernumber,customername,
 				 stylename,  startdate,  enddate, employeeIds,
 				TASK_CONFIRM_PRODUCE_ORDER);
 		return temp;
@@ -927,8 +1042,8 @@ public class MarketServiceImpl implements MarketService {
 		Integer pages=orderDAO.getPageNumber();
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
-			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
-//			ArrayList<String>  orderProcessStateNames = financeService.getProcessStateName(order.getOrderId());
+//			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
+			ArrayList<String>  orderProcessStateNames = financeService.getProcessStateName(order.getOrderId());
 //			System.out.println("取到的订单当前状态为："+orderProcessStateNames.get(0)+"数组大小："+orderProcessStateNames.size());
 			if(orderProcessStateNames.size()>0){
 				order.setOrderProcessStateName(orderProcessStateNames.get(0));
@@ -1285,6 +1400,53 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return list;
 	}
+	
+	@Override
+	public void sendOrderInfoViaEmail(Order order, Customer customer){
+		if(StringUtils.isEmpty(customer.getEmail()))
+			return;
+		
+		String emailTitle = "智造链 - 下单信息";
+        String emailContent = "尊敬的客户，您已成功下单，以下是您具体的订单信息：<br/>" + 
+        		              "<table border='1px' bordercolor='#000000' cellspacing='0px' style='border-collapse:collapse'>" + 					
+        		              	 "<thead>" +
+        		              	 	"<tr>" +
+        		              	 	   "<th>订单号</th>" +
+        		              	 	   "<th>款型</th>" +
+        		              	 	   "<th>件数</th>" +
+        		              	 	   "<th>预期交付日期</th>" +
+        		              	 	 "</tr>" +
+        		              	  "</thead>" +
+        		              	  "<tbody>" + 
+        		              	  	 "<tr>" + 
+        		              	  	   "<td>" + service.getOrderId(order) + "</td>" +				
+        		              	  	   "<td>" + order.getStyleName() + "</td>" +
+        		              	  	   "<td>" + order.getAskAmount() + "</td>" +
+        		              	  	   "<td>" + order.getAskDeliverDate() + "</td>" +							
+        		              	  	 "</tr>" +													
+        		              	  "</tbody>" +
+        		               "</table>";
+        
+        MailSenderInfo mailSenderInfo = new MailSenderInfo();
+        mailSenderInfo.setSubject(emailTitle);
+        mailSenderInfo.setContent(emailContent);
+        mailSenderInfo.setToAddress(customer.getEmail());
+        SimpleMailSender.sendHtmlMail(mailSenderInfo);
+	}
+	
+	@Override
+	public void sendOrderInfoViaPhone(Order order, Customer customer){
+		
+	}
+
+
+
+
+
+
+
+
+
 
 
 

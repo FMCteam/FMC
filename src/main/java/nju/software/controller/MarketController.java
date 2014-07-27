@@ -46,9 +46,11 @@ import nju.software.service.OrderService;
 import nju.software.service.QuoteService;
 import nju.software.service.impl.BuyServiceImpl;
 import nju.software.service.impl.DesignServiceImpl;
+import nju.software.service.impl.FinanceServiceImpl;
 import nju.software.service.impl.JbpmTest;
 import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
+import nju.software.service.impl.ServiceUtil;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JavaMailUtil;
@@ -72,6 +74,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Controller
 public class MarketController {
 	private final static String CONTRACT_URL = "D:/fmc/contract/";
+	private final static String CONFIRM_SAMPLEMONEY_URL="D:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
+	private final static String CONFIRM_DEPOSIT_URL="D:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
+	private final static String CONFIRM_FINALPAYMENT_URL="D:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
+
 	@Autowired
 	private OrderService orderService;
 	@Autowired
@@ -391,7 +397,10 @@ public class MarketController {
 		marketService.addOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, sample_produces, versions, cad, request);
 
-		JavaMailUtil.send();
+		//给客户邮箱发送订单信息
+		marketService.sendOrderInfoViaEmail(order, customer);
+		//给客户手机发送订单信息
+		marketService.sendOrderInfoViaPhone(order, customer);
 
 		return "redirect:/market/addOrderList.do";
 	}
@@ -1009,8 +1018,12 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		Map<String, Object> orderModel = marketService.getMergeQuoteDetail(
 				account.getUserId(), id);
-		model.addAttribute("orderInfo", orderModel);
+		model.addAttribute("orderInfo", orderModel);		
 		model.addAttribute("merge_w", true);
+		String verifyQuoteComment = (String)jbpmAPIUtil.getVariable(
+				(TaskSummary) orderModel.get("task"),
+				MarketServiceImpl.VERIFY_QUOTE_COMMENT);
+		model.addAttribute("verifyQuoteComment", verifyQuoteComment);
 		return "market/mergeQuoteDetail";
 	}
 
@@ -1088,6 +1101,8 @@ public class MarketController {
 		String orderId = request.getParameter("order_id");
 		String s_taskId = request.getParameter("taskId");
 		String s_processId = request.getParameter("processId");
+		
+ 			
 		float profit = 0;
 		float inner = 0;
 		float outer = 0;
@@ -1104,7 +1119,11 @@ public class MarketController {
 		quote.setProfitPerPiece(profit);
 		quote.setInnerPrice(inner);
 		quote.setOuterPrice(outer);
-		marketService.verifyQuoteSubmit(quote, id, taskId, processId);
+		boolean result = Boolean
+				.parseBoolean(request.getParameter("verifyQuoteSuccessVal"));
+		String comment = request.getParameter("suggestion");	
+//		marketService.verifyQuoteSubmit(quote, id, taskId, processId);
+		marketService.verifyQuoteSubmit(quote, id, taskId, processId,result,comment);
 		return "redirect:/market/verifyQuoteList.do";
 	}
 
@@ -1614,7 +1633,7 @@ public class MarketController {
 		return "market/confirmQuoteDetail";
 	}
 
-	@RequestMapping(value = "/market/confirmQuoteSubmit.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/market/confirmQuoteSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -1622,11 +1641,18 @@ public class MarketController {
 		String result = request.getParameter("result");
 		String taskId = request.getParameter("taskId");
 		String orderId = request.getParameter("orderId");
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile file = multipartRequest.getFile("confirmSampleMoneyFile");
+		String filename = file.getOriginalFilename();
+		String url = CONFIRM_SAMPLEMONEY_URL + orderId;
+		String fileid = "confirmSampleMoneyFile";
+		FileOperateUtil.Upload(request, url, null, fileid);
+		url = url + "/" + filename;
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
 		String actorId = account.getUserId() + "";
-		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),
-				result);
+//		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),result);
+		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),Integer.parseInt(orderId),result,url);
 
 		// 1=修改报价
 		if (result.equals("1")) {
@@ -1825,8 +1851,82 @@ public class MarketController {
 		return "redirect:/market/confirmProduceOrderList.do";
 	}
 
-	// =======================================================
+	// ========================市场专员催尾款===============================
+	
+		@RequestMapping(value = "/market/getPushRestOrderList.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String getPushRestOrderList(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			Account account = (Account) request.getSession().getAttribute(
+					"cur_user");
+			List<Map<String, Object>> list = marketService
+					.getPushRestOrderList(account.getUserId()+"");
+			model.put("list", list); 
+			model.addAttribute("taskName", "催尾款");
+			model.addAttribute("url", "/market/getPushRestOrderDetail.do");
+			model.addAttribute("searchurl", "/market/getPushRestOrderListSearch.do");
+			return "/market/getPushRestOrderList";
+		}
+		
+		@RequestMapping(value = "/market/getPushRestOrderDetail.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String getPushRestOrderDetail(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			Account account = (Account) request.getSession().getAttribute(
+					"cur_user");
+			String orderId = request.getParameter("orderId");
+			Map<String, Object> orderInfo = marketService.getPushRestOrderDetail(
+					account.getUserId() + "", Integer.parseInt(orderId));
+			model.addAttribute("orderInfo", orderInfo);
+			return "/market/getPushRestOrderDetail";
+		}
+	    //上传接收尾金截图
+		@RequestMapping(value = "/market/confirmFinalPaymentFileSubmit.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String confirmFinalPaymentFileSubmit(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			String orderId = request.getParameter("orderId");
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile confirmFinalPaymentFile =  multipartRequest.getFile("confirmFinalPaymentFile");
+			String confirmFinalPaymentFileName = confirmFinalPaymentFile.getOriginalFilename();
+			String confirmFinalPaymentFileUrl = CONFIRM_FINALPAYMENT_URL + orderId;		
+			String confirmFinalPaymentFileId = "confirmFinalPaymentFile";
+			FileOperateUtil.Upload(request, confirmFinalPaymentFileUrl, null, confirmFinalPaymentFileId);
+			confirmFinalPaymentFileUrl = confirmFinalPaymentFileUrl + "/" + confirmFinalPaymentFileName;
+			//上传合同，上传首定金收据，一般是截图，
+	 
+			marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId),confirmFinalPaymentFileUrl);
+			Account account = (Account) request.getSession().getAttribute(
+					"cur_user");
+ 			Map<String, Object> orderInfo = marketService.getPushRestOrderDetail(
+					account.getUserId() + "", Integer.parseInt(orderId));
+			model.addAttribute("orderInfo", orderInfo);
+			return "/market/getPushRestOrderDetail";
+ 
+		}
+		@RequestMapping(value = "/market/getPushRestOrderSubmit.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String getPushRestOrderSubmit(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
 
+			String orderId_string = request.getParameter("orderId");
+			int orderId = Integer.parseInt(orderId_string);
+			String taskId_string = request.getParameter("taskId");
+			long taskId = Long.parseLong(taskId_string);
+			boolean result = request.getParameter("result").equals("1");
+//			Money money = null;
+//			if (result) {
+//				money = getMoney(request);
+//				money.setOrderId(orderId);
+//			}
+			Account account = (Account) request.getSession().getAttribute(
+					"cur_user");
+			String actorId = account.getUserId()+"";
+			marketService.getPushRestOrderSubmit(actorId, taskId, result);
+			return "forward:/market/getPushRestOrderList.do";
+		}
+				
+		
 	// ========================签订合同============================
 	@RequestMapping(value = "/market/signContractList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -1904,20 +2004,30 @@ public class MarketController {
 		String taskId = request.getParameter("taskId");
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("contractFile");
+		MultipartFile confirmDepositFile =  multipartRequest.getFile("confirmDepositFile");
 		String filename = file.getOriginalFilename();
+		String confirmDepositFileName = confirmDepositFile.getOriginalFilename();
 		String url = CONTRACT_URL + orderId;
+		String confirmDepositFileUrl = CONFIRM_DEPOSIT_URL + orderId;		
 		String fileid = "contractFile";
+		String confirmDepositFileId = "confirmDepositFile";
 		FileOperateUtil.Upload(request, url, null, fileid);
+		FileOperateUtil.Upload(request, confirmDepositFileUrl, null, confirmDepositFileId);
 		url = url + "/" + filename;
-		
+		confirmDepositFileUrl = confirmDepositFileUrl + "/" + confirmDepositFileName;
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
 		String actorId = account.getUserId() + "";
-
+		//上传合同，上传首定金收据，一般是截图，
 		marketService.signContractSubmit(actorId, Long.parseLong(taskId),
 				Integer.parseInt(orderId), Double.parseDouble(discount),
-				Double.parseDouble(total), url);
-		return "redirect:/market/signContractList.do";
+				Double.parseDouble(total), url,confirmDepositFileUrl);
+
+		Map<String, Object> orderInfo = marketService.getConfirmProductDetail(
+				account.getUserId(), Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "market/confirmProductDetail";
+//		return "redirect:/market/signContractList.do";
 	}
 
 	@RequestMapping(value = "/order/orderList.do")
@@ -1927,8 +2037,6 @@ public class MarketController {
 
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-
-		
 		List<Map<String, Object>> list = null;
 		
 		//客户和市场专员只能看到与自己相关的订单

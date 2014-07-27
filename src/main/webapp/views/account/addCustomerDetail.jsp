@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
- 
+<%@include file="/common/header.jsp"%> 
 <!--  <div class="pageheader">
            
             <div class="pageicon"><span class="iconfa-laptop"></span></div>

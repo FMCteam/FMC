@@ -94,52 +94,34 @@ public class BuyServiceImpl implements BuyService {
 				TASK_COMPUTE_PURCHASE_COST, orderId);
 	}
 
-	
-	
-	
-	
 	@Override
 	public void computePurchaseCostSubmit(int orderId, long taskId,
-			String[] fabric_names, String[] fabric_amounts,String[] tear_per_meters,
-			String[] cost_per_meters,String[] accessory_names,String[] accessory_querys, String[] tear_per_piece,
+			boolean result, String comment, String[] fabric_names,
+			String[] fabric_amounts, String[] tear_per_meters,
+			String[] cost_per_meters, String[] accessory_names,
+			String[] accessory_querys, String[] tear_per_piece,
 			String[] cost_per_piece) {
-		
-		
-		
+
 		List<Fabric> FabricList = fabricDAO.findByOrderId(orderId);
-		
-		List<Accessory> AccessoryList = accessoryDAO
-				.findByOrderId(orderId);
-		
+		List<Accessory> AccessoryList = accessoryDAO.findByOrderId(orderId);
+
 		for (Fabric fabric : FabricList) {
-		
-			
 			fabricDAO.delete(fabric);
-			
 		}
-		
+
 		for (Accessory accessory : AccessoryList) {
-			
 			accessoryDAO.delete(accessory);
-			
 		}
-		
-		
-		float all_fabric_prices=0.0f;
-		float all_accessory_prices=0.0f;
-		// TODO Auto-generated method stub
+
+		float all_fabric_prices = 0.0f;
+		float all_accessory_prices = 0.0f;
 		if (fabric_names != null) {
 			for (int i = 0; i < fabric_names.length; i++) {
-
-				
-				
-				Fabric fabric=new Fabric();
+				Fabric fabric = new Fabric();
 				fabric.setOrderId(orderId);
 				fabric.setFabricName(fabric_names[i]);
 				fabric.setFabricAmount(fabric_amounts[i]);
 
-				
-				
 				FabricCost fabricCost = new FabricCost();
 				fabricCost.setOrderId(orderId);
 				fabricCost.setFabricName(fabric_names[i]);
@@ -147,19 +129,18 @@ public class BuyServiceImpl implements BuyService {
 						.setTearPerMeter(Float.parseFloat(tear_per_meters[i]));
 				fabricCost
 						.setCostPerMeter(Float.parseFloat(cost_per_meters[i]));
-				
-//			float fabric_price=Float.parseFloat(tear_per_meters[i])*Float.parseFloat(cost_per_meters[i]);
-			
-			
-			 BigDecimal  fabric_price_temp =   
-					 new BigDecimal((Float.parseFloat(tear_per_meters[i]))*(Float.parseFloat(cost_per_meters[i])));  
-			 float  fabric_price = fabric_price_temp.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();  
-			
-			
-			all_fabric_prices+=fabric_price;
-			
-			
-			
+
+				// float
+				// fabric_price=Float.parseFloat(tear_per_meters[i])*Float.parseFloat(cost_per_meters[i]);
+
+				BigDecimal fabric_price_temp = new BigDecimal(
+						(Float.parseFloat(tear_per_meters[i]))
+								* (Float.parseFloat(cost_per_meters[i])));
+				float fabric_price = fabric_price_temp.setScale(2,
+						BigDecimal.ROUND_HALF_UP).floatValue();
+
+				all_fabric_prices += fabric_price;
+
 				fabricCost.setPrice(fabric_price);
 				FabricCostDAO.save(fabricCost);
 				fabricDAO.save(fabric);
@@ -167,13 +148,11 @@ public class BuyServiceImpl implements BuyService {
 		}
 		if (accessory_names != null) {
 			for (int i = 0; i < accessory_names.length; i++) {
-				
 				Accessory accessory = new Accessory();
-				
 				accessory.setOrderId(orderId);
 				accessory.setAccessoryName(accessory_names[i]);
 				accessory.setAccessoryQuery(accessory_querys[i]);
-				
+
 				AccessoryCost accessoryCost = new AccessoryCost();
 				accessoryCost.setOrderId(orderId);
 				accessoryCost.setAccessoryName(accessory_names[i]);
@@ -181,55 +160,43 @@ public class BuyServiceImpl implements BuyService {
 						.parseFloat(tear_per_piece[i]));
 				accessoryCost.setCostPerPiece(Float
 						.parseFloat(cost_per_piece[i]));
-				
-				float accessory_price=Float
-						.parseFloat(tear_per_piece[i])*Float
-						.parseFloat(cost_per_piece[i]);
-				
-				all_accessory_prices+=accessory_price;
-				
+
+				float accessory_price = Float.parseFloat(tear_per_piece[i])
+						* Float.parseFloat(cost_per_piece[i]);
+
+				all_accessory_prices += accessory_price;
+
 				accessoryCost.setPrice(accessory_price);
 				AccessoryCostDAO.save(accessoryCost);
 				accessoryDAO.save(accessory);
 			}
 		}
-		
-		Quote quote=quoteDAO.findById(orderId);
-		
-		if(quote==null){
-			quote=new Quote();
+
+		Quote quote = quoteDAO.findById(orderId);
+
+		if (quote == null) {
+			quote = new Quote();
 			quote.setOrderId(orderId);
 			quote.setAccessoryCost(all_accessory_prices);
 			quote.setFabricCost(all_fabric_prices);
 			quoteDAO.save(quote);
-				}
-		else{
+		} else {
 			quote.setAccessoryCost(all_accessory_prices);
 			quote.setFabricCost(all_fabric_prices);
-			
-			float singleCost=quote.getCutCost()+quote.getManageCost()+quote.getDesignCost()+
-					quote.getIroningCost()+quote.getNailCost()+quote.getPackageCost()+
-					quote.getSwingCost()+quote.getOtherCost()+all_accessory_prices+all_fabric_prices;
-			
+
+			float singleCost = quote.getCutCost() + quote.getManageCost()
+					+ quote.getDesignCost() + quote.getIroningCost()
+					+ quote.getNailCost() + quote.getPackageCost()
+					+ quote.getSwingCost() + quote.getOtherCost()
+					+ all_accessory_prices + all_fabric_prices;
+
 			quote.setSingleCost(singleCost);
-			
 			quoteDAO.attachDirty(quote);
-			
-			quoteDAO.attachDirty(quote);
-			
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PURCHASE, result);
+		data.put(RESULT_PURCHASE_COMMENT, comment);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 		} catch (InterruptedException e) {
@@ -267,6 +234,22 @@ public class BuyServiceImpl implements BuyService {
 		// TODO Auto-generated method stub
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PURCHASE, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result,
+			boolean needcraft) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PURCHASE, result);
+		data.put(RESULT_NEED_CRAFT, needcraft);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			return true;
@@ -387,6 +370,7 @@ public class BuyServiceImpl implements BuyService {
 	public final static String TASK_PURCHASE_MATERIAL = "purchaseMaterial";
 	public final static String RESULT_PURCHASE = "purchase";
 	public final static String RESULT_PURCHASE_COMMENT = "purchaseComment";
+    public final static String RESULT_NEED_CRAFT = "needCraft";
 
 
 

@@ -35,6 +35,8 @@ public class Account  implements java.io.Serializable {
      private String smallAvatar;
      private String passwordCookieValue;
      private Timestamp passwordCookieTime;
+     private String validataCode;//找回密码验证密钥
+     private Timestamp resetLinkFailTime;//重置密码链接失效时间
 
 
     /**
@@ -188,13 +190,23 @@ public class Account  implements java.io.Serializable {
     public void setPasswordCookieTime(Timestamp passwordCookieTime) {
         this.passwordCookieTime = passwordCookieTime;
     }
-   
 
+    @Column(name="validate_code", length=250)
+	public String getValidataCode() {
+		return validataCode;
+	}
 
+	public void setValidataCode(String validataCode) {
+		this.validataCode = validataCode;
+	}
 
+	@Column(name="reset_link_fail_time")
+	public Timestamp getResetLinkFailTime() {
+		return resetLinkFailTime;
+	}
 
-
-
-
+	public void setResetLinkFailTime(Timestamp resetLinkFailTime) {
+		this.resetLinkFailTime = resetLinkFailTime;
+	}
 
 }

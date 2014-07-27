@@ -29,6 +29,7 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
+import nju.software.service.CustomerService;
 import nju.software.service.DesignCadService;
 import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
@@ -39,8 +40,11 @@ import nju.software.service.impl.BuyServiceImpl;
 import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
+import nju.software.service.impl.ServiceUtil;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
+import nju.software.util.mail.MailSenderInfo;
+import nju.software.util.mail.SimpleMailSender;
 
 import org.apache.commons.lang.StringUtils;
 import org.jbpm.task.query.TaskSummary;
@@ -72,6 +76,11 @@ public class OrderController {
 	private EmployeeService employeeService;
 	@Autowired
 	private MarketService marketService;
+	@Autowired
+	private CustomerService customerService;
+	@Autowired
+	private ServiceUtil service;
+	
 	public static Timestamp getTime(String time) {
 		if(time.equals("")) return null;
 		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
@@ -582,6 +591,67 @@ public class OrderController {
 			Integer orderId=Integer.parseInt(request.getParameter("orderId"));
 			orderService.endOrder(orderId);
 			return "forward:/order/endList.do";
+		}
+		
+		// ==========================推送订单信息===============================
+		@RequestMapping(value = "/order/pushOrderInfo.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String pushOrderInfo(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model){
+			Integer orderId = Integer.parseInt(request.getParameter("orderId"));
+			ArrayList<String> stateNames = marketService.getProcessStateName(orderId);
+			String orderStateName = null; //订单当前状态
+			if(stateNames != null && stateNames.size() > 0){
+				orderStateName = stateNames.get(0);
+			}
+			
+			Order order = orderService.getOrderById(orderId);
+			
+			Account account = (Account) request.getSession().getAttribute("cur_user");
+			Map<String, Object> orderInfo = marketService.getOrderDetail(orderId);
+			model.addAttribute("role", account.getUserRole());
+			model.addAttribute("orderInfo", orderInfo);
+			
+			String emailAddr = customerService.findByCustomerId(order.getCustomerId()).getEmail();
+			if(StringUtils.isEmpty(emailAddr)){
+				model.addAttribute("notify", "客户未填写邮箱，推动订单信息失败！");
+				return "/market/orderDetail";
+			}
+					
+			//编辑推送邮件的标题和内容
+			String emailTitle = "智造链 - ";
+	        String emailContent = "尊敬的客户：<br/>"
+	        					+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好！您编号为" + service.getOrderId(order) + "的订单当前流水状态为：" + orderStateName + "，";		
+			if(orderStateName.equals("收取样衣")){
+				emailTitle += "请尽快提供样衣";
+				emailContent += "请尽快提供样衣。";
+			}else if(orderStateName.equals("确认样衣制作金")){
+				emailTitle += "请尽快支付样衣制作金";
+				emailContent += "请尽快支付样衣制作金。";
+			}else if(orderStateName.equals("签订合同")){
+				emailTitle += "请尽快签订合同";
+				emailContent += "请尽快签订合同。";
+			}else if(orderStateName.equals("30%定金确认")){
+				emailTitle += "请尽快交清首付款";
+				emailContent += "请尽快交清首付款。";
+			}else if(orderStateName.equals("70%金额确认")){
+				emailTitle += "请尽快支付尾款";
+				emailContent += "请尽快支付尾款。";
+			}else{
+				emailTitle += "订单流水状态";
+				emailContent += "请耐心等待。";
+			}
+			
+			emailContent += "<br/><br/>南通智造链有限公司";
+			MailSenderInfo mailSenderInfo = new MailSenderInfo();
+	        mailSenderInfo.setSubject(emailTitle);
+	        mailSenderInfo.setContent(emailContent);
+	        mailSenderInfo.setToAddress(emailAddr);
+	        SimpleMailSender.sendHtmlMail(mailSenderInfo);	
+			
+	        model.addAttribute("notify", "已向客户邮箱推送订单当前状态信息！");
+	        
+	        return "/market/orderDetail";
 		}
 
 }

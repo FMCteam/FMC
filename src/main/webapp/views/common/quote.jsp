@@ -77,10 +77,19 @@
 		    <span id="pay">${orderInfo.quote.singleCost*orderInfo.order.askAmount}</span>
 		</td>
 		<td>
-            <span id="pay">${orderInfo.quote.singleCost*orderInfo.order.askAmount}</span>		
+            <span id="pay2">${orderInfo.quote.singleCost*orderInfo.order.askAmount}</span>		
 		</td>
 		<td>${orderInfo.quote.profitPerPiece}</td>
 		<td>${orderInfo.quote.outerPrice}</td>
 	</tr>
 
 </table>
+<script type="text/javascript">
+$(document).ready(function() {
+ var text=$("#pay").text();
+	$("#pay").text(parseFloat(text).toFixed(2));
+ var text=$("#pay2").text();
+	$("#pay2").text(parseFloat(text).toFixed(2));
+	 
+});  
+</script>

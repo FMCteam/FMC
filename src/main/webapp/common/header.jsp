@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
  -->
 <%@ include file="/common/css_file.jsp"%>
-<script type="text/javascript" src="${ctx }/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript"
 	src="${ctx}/js/jquery.noty.packaged.min.js"></script>
@@ -144,27 +144,26 @@ table.tablesorter thead tr .headerSortDown {
 								<li><a href="${ctx }/market/addOrderList.do">客户下单</a></li>
 								<li><a href="${ctx }/market/modifyOrderList.do">修改询单<span
 										class="modifyOrder"></span></a></li>
-
 								<li><a href="${ctx }/market/mergeQuoteList.do">合并报价<span
 										class="mergeQuote"></span></a></li>
 								<li><a href="${ctx }/market/verifyQuoteList.do">审核报价<span
 										class="verifyQuote"></span></a></li>
-
 								<li><a href="${ctx }/market/confirmQuoteList.do">报价商定<span
 										class="confirmQuote"></span></a></li>
-
 								<li><a href="${ctx }/market/modifyQuoteList.do">修改报价<span
 										class="modifyQuote"></span></a></li>
-								<li><a href="${ctx }/market/confirmProduceOrderList.do">确认大货加工单<span
+								<li><a href="${ctx }/market/confirmProduceOrderList.do">确认大货加工单并签订合同<span
 										class="confirmProduceOrder"></span></a></li>
-
+								<li><a href="${ctx }/market/getPushRestOrderList.do">催尾款<span
+										class="pushRest"></span></a></li>
 								<li><a href="${ctx }/market/modifyProductList.do">修改大货合同<span
 										class="modifyProduceOrder"></span></a></li>
+										<!-- 
 								<li><a href="${ctx }/market/signContractList.do">签订大货合同<span
 										class="signContract"></span></a></li>
-
 								<li><a href="#">订单回访</a></li>
 								<li><a href="#">提醒缴费</a></li>
+										 -->
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_design==true}">
@@ -172,14 +171,26 @@ table.tablesorter thead tr .headerSortDown {
 								class="iconfa-th-list"></span> 设计部<span
 								class="designManager task"></span></a>
 							<ul>
+								<!-- 
 								<li><a href="${ctx}/design/verifyDesignList.do">设计验证<span
 										class="verifyDesign"></span></a></li>
+								-->
+								<li><a href="${ctx}/design/computeDesignCostList.do">设计工艺验证<span
+										class="computeDesignCost"></span></a></li>
 								<li><a href="${ctx}/design/getUploadDesignList.do">样衣版型<span
 										class="uploadDegisn"></span></a></li>
+								<li><a href="${ctx}/design/getUploadDesignList.do">样衣版型录入及生产<span
+										class="uploadDegisn"></span></a></li>										
+								<li><a href="${ctx}/design/getTypeSettingSliceList.do">排版切片<span
+										class="typeSettingSlice"></span></a></li>
 								<li><a href="${ctx}/design/getModifyDesignList.do">大货生产验证<span
 										class="modifyDesign"></span></a></li>
 								<li><a href="${ctx}/design/getConfirmDesignList.do">大货生产版型<span
 										class="confirmDesign"></span></a></li>
+								<li><a href="${ctx}/design/getNeedCraftSampleList.do">样衣工艺制作<span
+										class="craftSample"></span></a></li>
+								<li><a href="${ctx}/design/getNeedCraftProductList.do">大货工艺制作<span
+										class="craft"></span></a></li>
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_buy==true}">
@@ -187,15 +198,17 @@ table.tablesorter thead tr .headerSortDown {
 								class="iconfa-th-list"></span> 采购部<span
 								class="purchaseManager task"></span></a>
 							<ul>
+								<!--  
 								<li><a href="${ctx }/buy/verifyPurchaseList.do">采购验证<span
 										class="verifyPurchase"></span></a></li>
-								<li><a href="${ctx }/buy/computePurchaseCostList.do">成本合算<span
+								-->
+								<li><a href="${ctx }/buy/computePurchaseCostList.do">采购成本验证并核算<span
 										class="computePurchaseCost"></span></a></li>
 								<li><a href="${ctx }/buy/purchaseSampleMaterialList.do">样衣采购<span
 										class="purchaseSampleMaterial"></span></a></li>
 								<li><a href="${ctx }/buy/confirmPurchaseList.do">大货采购确认<span
 										class="confirmPurchase"></span></a></li>
-								<li><a href="${ctx }/buy/purchaseMaterialList.do">大货生产原料采购<span
+								<li><a href="${ctx }/buy/purchaseMaterialList.do">大货面料采购确认<span
 										class="purchaseMaterial"></span></a></li>
 							</ul></li>
 					</c:if>
@@ -204,9 +217,11 @@ table.tablesorter thead tr .headerSortDown {
 								class="iconfa-th-list"></span> 生产部<span
 								class="produceManager task"></span></a>
 							<ul>
+								<!--  
 								<li><a href="${ctx }/produce/verifyProduceList.do">生产验证<span
 										class="verifyProduce"></span></a></li>
-								<li><a href="${ctx }/produce/computeProduceCostList.do">成本合算<span
+								-->
+								<li><a href="${ctx }/produce/computeProduceCostList.do">生产成本验证并核算<span
 										class="computeProduceCost"></span></a></li>
 								<li><a href="${ctx }/produce/produceSampleList.do">样衣生产<span
 										class="produceSample"></span></a></li>
@@ -223,8 +238,11 @@ table.tablesorter thead tr .headerSortDown {
 										class="confirmSampleMoney"></span></a></li>
 								<li><a href="${ctx}/finance/confirmDepositList.do">首定金确认<span
 										class="confirmDeposit"></span></a></li>
+								<li><a href="${ctx}/finance/returnDepositList.do">退还定金<span
+										class="confirmFinalPayment"></span></a></li>
 								<li><a href="${ctx}/finance/confirmFinalPaymentList.do">尾款金确认<span
 										class="confirmFinalPayment"></span></a></li>
+								
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_logistics==true}">

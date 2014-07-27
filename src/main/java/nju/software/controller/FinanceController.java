@@ -8,19 +8,25 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Money;
+import nju.software.dataobject.Order;
 import nju.software.service.EmployeeService;
 import nju.software.service.FinanceService;
+import nju.software.service.MarketService;
 import nju.software.service.impl.FinanceServiceImpl;
 import nju.software.service.impl.JbpmTest;
 import nju.software.util.DateUtil;
+import nju.software.util.FileOperateUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  * @author 莫其凡
@@ -28,7 +34,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class FinanceController {
-
+	private final static String CONFIRM_FINALPAYMENT_URL="D:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
+	
 	// ===========================样衣金确认=================================
 	@RequestMapping(value = "/finance/confirmSampleMoneyList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -122,7 +129,21 @@ public class FinanceController {
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/printProcurementOrder";
 	}
+	// ===========================退还定金列表===================================
+	@RequestMapping(value = "/finance/returnDepositList.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String returnDepositList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
+		List<Map<String, Object>> list = financeService
+				.getReturnDepositList(actorId);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "退还大货定金");
+		model.addAttribute("url", "/finance/returnDepositDetail.do");
+		model.addAttribute("searchurl", "/finance/returnDepositListSearch.do");
 
+		return "/finance/returnDepositList";
+	}	
 	// ===========================定金确认===================================
 	@RequestMapping(value = "/finance/confirmDepositList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -166,6 +187,19 @@ public class FinanceController {
 	}
 
 	
+	@RequestMapping(value = "/finance/returnDepositDetail.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String returnDepositDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
+		Map<String, Object> orderInfo = financeService.getReturnDepositDetail(
+				actorId, Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/finance/returnDepositDetail";
+	}
+
+	
 	@RequestMapping(value = "/finance/confirmDepositDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositDetail(HttpServletRequest request,
@@ -178,6 +212,21 @@ public class FinanceController {
 		return "/finance/confirmDepositDetail";
 	}
 
+	@RequestMapping(value = "/finance/returnDepositSubmit.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String returnDepositSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+
+		String orderId_string = request.getParameter("orderId");
+		int orderId = Integer.parseInt(orderId_string);
+		String taskId_string = request.getParameter("taskId");
+		long taskId = Long.parseLong(taskId_string);
+
+		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
+		financeService.returnDepositSubmit(actorId, taskId);
+		return "forward:/finance/returnDepositList.do";
+	}
+	
 	@RequestMapping(value = "/finance/confirmDepositSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositSubmit(HttpServletRequest request,
@@ -256,7 +305,32 @@ public class FinanceController {
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/confirmFinalPaymentDetail";
 	}
-
+	
+	@Autowired
+	private MarketService marketService;	
+    //上传接收尾金截图
+	@RequestMapping(value = "/finance/confirmFinalPaymentFileSubmit.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmFinalPaymentFileSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile confirmFinalPaymentFile =  multipartRequest.getFile("confirmFinalPaymentFile");
+		String confirmFinalPaymentFileName = confirmFinalPaymentFile.getOriginalFilename();
+		String confirmFinalPaymentFileUrl = CONFIRM_FINALPAYMENT_URL + orderId;		
+		String confirmFinalPaymentFileId = "confirmFinalPaymentFile";
+		FileOperateUtil.Upload(request, confirmFinalPaymentFileUrl, null, confirmFinalPaymentFileId);
+		confirmFinalPaymentFileUrl = confirmFinalPaymentFileUrl + "/" + confirmFinalPaymentFileName;
+		//上传合同，上传首定金收据，一般是截图，
+ 
+		marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId),confirmFinalPaymentFileUrl);
+		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
+		Map<String, Object> orderInfo = financeService
+				.getConfirmFinalPaymentDetail(actorId,Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/finance/confirmFinalPaymentDetail";
+	}
+	
 	@RequestMapping(value = "/finance/confirmFinalPaymentSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentSubmit(HttpServletRequest request,

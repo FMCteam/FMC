@@ -91,7 +91,7 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public void computeProduceCostSubmit(int orderId, long taskId,
+	public void computeProduceCostSubmit(int orderId, long taskId, boolean result, String comment,
 			float cut_cost, float manage_cost, float nali_cost,
 			float ironing_cost, float swing_cost, float package_cost,
 			float other_cost, float design_cost) {
@@ -128,6 +128,8 @@ public class ProduceServiceImpl implements ProduceService {
 		QuoteDAO.attachDirty(quote);
 
 		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PRODUCE, result);
+		data.put(RESULT_PRODUCE_COMMENT, comment);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 		} catch (InterruptedException e) {

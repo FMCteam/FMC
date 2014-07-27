@@ -3,6 +3,7 @@ package nju.software.controller;
 import java.util.List;
 import java.util.Map;
 import java.math.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,9 +13,7 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
-
 import nju.software.service.EmployeeService;
-
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.impl.JbpmTest;
@@ -137,7 +136,7 @@ public class ProduceController {
 		
 		List<Map<String,Object>> list=produceService.getComputeProduceCostList();
 		model.addAttribute("list", list);
-		model.addAttribute("taskName", "生产成本核算");
+		model.addAttribute("taskName", "生产成本验证并核算");
 		model.addAttribute("url", "/produce/computeProduceCostDetail.do");
 		model.addAttribute("searchurl", "/produce/computeProduceCostListSearch.do");
 
@@ -162,7 +161,7 @@ public class ProduceController {
 		}
 		List<Map<String,Object>> list=produceService.getSearchComputeProduceCostList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.addAttribute("list", list);
-		model.addAttribute("taskName", "生产成本核算");
+		model.addAttribute("taskName", "生产成本验证并核算");
 		model.addAttribute("url", "/produce/computeProduceCostDetail.do");
 		model.addAttribute("searchurl", "/produce/computeProduceCostListSearch.do");
 		return "/produce/computeProduceCostList";
@@ -187,9 +186,6 @@ public class ProduceController {
 		return "/produce/computeProduceCostDetail";
 	}
 	
-	
-	
-	
 	/**
 	 * 成本核算
 	 * @param request
@@ -197,17 +193,21 @@ public class ProduceController {
 	 * @param model
 	 * @return
 	 */
-	
-	
-	
-	
 	@RequestMapping(value = "produce/computeProduceCostSubmit.do", method= RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String computeProduceCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
-		String orderId = (String) request.getParameter("orderId");
-	    String taskId = request.getParameter("taskId");
+		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
+		long taskId = Long.parseLong(request.getParameter("taskId"));
+		
+		boolean result = Boolean.parseBoolean(request.getParameter("result"));// 是否拒绝生产
+		String comment = request.getParameter("suggestion");
+		//如果拒绝，则不进行生产成本的核算，直接返回
+		if (result == false) {
+			produceService.verifyProduceSubmit(taskId, result, comment);
+			return "redirect:/produce/computeProduceCostList.do";
+		}
+		
 		//裁剪费用
 		String cut_cost = request.getParameter("cut_cost");
 		//管理费用
@@ -225,9 +225,13 @@ public class ProduceController {
 	    //设计费用
 		String design_cost = request.getParameter("design_cost");
 		
+		
+		//生产报价提交，默认验证通过
 		produceService.computeProduceCostSubmit(
-				Integer.parseInt(orderId),
-				Long.parseLong(taskId), 
+				orderId,
+				taskId,
+				result, 
+				comment,
 				Float.parseFloat(cut_cost),
 				Float.parseFloat(manage_cost),
 				Float.parseFloat(nail_cost),

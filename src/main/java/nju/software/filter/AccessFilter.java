@@ -88,7 +88,7 @@ public class AccessFilter implements Filter {
 		if (curUser == null) {
 			 System.out.println("no user");
 			// todo 从cookie读取数据，看看是否是记住密码用户。
-			if(file[file.length-1].equals("registCustomer.do")||file[file.length-1].equals("findPassword.do")){
+			if(file[file.length-1].equals("registCustomer.do")||file[file.length-1].equals("forgetPassword.do")||file[file.length-1].equals("sendResetPassMail.do")||file[file.length-1].equals("checkResetPassLink.do")){
 				chain.doFilter(request, response);
 
 			}else{
@@ -156,7 +156,7 @@ public class AccessFilter implements Filter {
 			// request.setAttribute(, arg1);
 
 		} else {
-			if(!file[file.length-1].equals("registCustomer.do")&&!file[file.length-1].equals("findPassword.do")){
+			if(!file[file.length-1].equals("registCustomer.do")&&!file[file.length-1].equals("forgetPassword.do")&&!file[file.length-1].equals("sendResetPassMail.do")||file[file.length-1].equals("checkResetPassLink.do")){
 //				chain.doFilter(request, response);
 				response.sendRedirect(request.getContextPath() + "/login.do");
 			}

@@ -81,7 +81,7 @@
 								</td>
 								<td>
 								<!-- 
-                                   ${orderInfo.number*orderInfo.price}
+                                   <span id="pay">${orderInfo.number*orderInfo.price}</span>
 								 -->
 								<input type="text" name="orderInfoNumberPriceProduct" readonly="readonly" /> 			
 								
@@ -142,7 +142,14 @@
 								<td colspan="2"><input type="text" name="money_remark"
 									class="span12" /></td>
 							</tr>
-
+		                    <tr>
+		                        <td class="title">收款信息</td>
+		                        <td class="title">收款图片</td>
+		                        <td colspan="3"><c:if test="${orderInfo.order.confirmDepositFile!=null}">
+				                <img src="${ctx}/common/getPic.do?type=confirmDepositFile&orderId=${orderInfo.order.orderId}"
+					                 style="max-height: 300px;" alt="收款图片"></img>
+			                    </c:if></td>
+	                        </tr>
 						</table>
 						<a
 					href="${ctx}/finance/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
@@ -181,5 +188,6 @@
 <link rel="stylesheet" href="${ctx}/views/finance/finance.css">
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<script type="text/javascript" src="${ctx}/views/finance/finance.js"></script>
+<!-- 汇款金额操作js -->
+<script type="text/javascript" src="${ctx}/views/finance/remittanceFinance.js"></script>
 <%@include file="/common/footer.jsp"%>

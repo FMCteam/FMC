@@ -16,6 +16,7 @@ public class Quote implements java.io.Serializable {
 
 	private Integer orderId;
 	private Float designCost = (float) 0; // 设计费用
+	private Float craftCost = (float) 0; // 单件工艺费用
 	private Float cutCost = (float) 0; // 裁剪费用
 	private Float manageCost = (float) 0; // 管理费用
 	private Float swingCost = (float) 0; // 缝制费用
@@ -191,6 +192,15 @@ public class Quote implements java.io.Serializable {
 
 	public void setOuterPrice(Float outerPrice) {
 		this.outerPrice = outerPrice;
+	}
+
+	@Column(name = "craft_price", nullable = false, precision = 12, scale = 0)
+	public Float getCraftCost() {
+		return craftCost;
+	}
+
+	public void setCraftCost(Float craftCost) {
+		this.craftCost = craftCost;
 	}
 
 }

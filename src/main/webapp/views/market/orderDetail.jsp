@@ -29,7 +29,13 @@
 				</div>
 			</div>
 			<c:if test="${orderInfo.order.orderState!='1'}">
-			<div class="action">
+			<div class="push-order" style="float:left">
+				<c:if test="${role=='ADMIN' || role=='marketManager' || role=='marketStaff'}">
+				<a class="btn btn-primary"
+					href="${ctx}/order/pushOrderInfo.do?orderId=${orderInfo.order.orderId}">推送订单信息</a>
+				</c:if>
+			</div>
+			<div class="action" style="float:right">
 				<a class="btn btn-primary"
 					href="${ctx}/image.do?orderId=${orderInfo.order.orderId}">订单进度</a>
 				<c:if test="${role=='ADMIN'}">

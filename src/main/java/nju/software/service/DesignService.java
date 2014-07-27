@@ -50,4 +50,40 @@ public interface DesignService {
 	public List<Map<String, Object>> getSearchConfirmDesignList(
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getComputeDesignCostList();
+
+	public List<Map<String, Object>> getSearchComputeDesignCostList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public Map<String, Object> getComputeDesignCostInfo(Integer orderId);
+
+	public List<Map<String, Object>> getNeedCraftList();
+
+	public boolean produceSampleSubmit(long taskId, boolean result);
+
+	public List<Map<String, Object>> getNeedCraftSampleList();
+
+	public List<Map<String, Object>> getTypeSettingSliceList();
+
+	public Map<String, Object> getNeedCraftSampleDetail(int orderId);
+
+	public Map<String, Object> getNeedCraftProductDetail(int orderId);
+
+	public Map<String, Object> getTypeSettingSliceDetail(int orderId);
+
+	public void uploadCraftFileSubmit(int orderId, String craftFileUrl);
+
+	public void needCraftSampleSubmit(int orderId, long taskId);
+
+	public void needCraftProductSubmit(int orderId, long taskId);
+
+	public void getTypeSettingSliceSubmit(int orderId, long taskId);
+
+	public void computeDesignCostSubmit(int orderId, long taskId, boolean result,
+			String comment, short needCraft, float stampDutyMoney,
+			float washHangDyeMoney, float laserMoney, float embroideryMoney,
+			float crumpleMoney, float openVersionMoney);
+
 }

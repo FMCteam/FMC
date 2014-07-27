@@ -140,4 +140,5 @@
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx}/views/logistics/logistics.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+
 <%@include file="/common/footer.jsp"%>

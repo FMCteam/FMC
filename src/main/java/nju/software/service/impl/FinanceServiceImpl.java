@@ -99,7 +99,12 @@ public class FinanceServiceImpl implements FinanceService {
 			return false;
 		}
 	}
-
+	// ===========================退还定金===================================
+	@Override
+	public List<Map<String, Object>> getReturnDepositList(String actorId) {
+		// TODO Auto-generated method stub
+		return service.getOrderList(actorId,TASK_RETURN_DEPOSIT );
+	}
 	// ===========================定金确认===================================
 	@Override
 	public List<Map<String, Object>> getConfirmDepositList(String actorId) {
@@ -116,7 +121,35 @@ public class FinanceServiceImpl implements FinanceService {
 				 stylename,  startdate,  enddate,
 				 employeeIds,TASK_CONFIRM_DEPOSIT);
 	}
+//退还定金订单详情
+	@Override
+	public Map<String, Object> getReturnDepositDetail(String actorId,
+			int orderId) {
+		// TODO Auto-generated method stub
 
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(
+				actorId, TASK_RETURN_DEPOSIT, orderId);
+		Order order = (Order) model.get("order");
+		Quote quote = (Quote) model.get("quote");
+		Float price = quote.getOuterPrice();
+		model.put("price", price);
+		model.put("number", order.getAskAmount());
+		model.put("total", order.getTotalMoney() * 0.3);
+		model.put("taskName", "退还大货定金");
+		model.put("tabName", "大货定金");
+		model.put("type", "大货定金");
+		model.put("url", "/finance/returnDepositSubmit.do");
+		model.put("moneyName", "退还定金");
+		Float samplePrice = (float) 0;
+		if (order.getStyleSeason().equals("春夏")) {
+			samplePrice = (float) 200;
+			model.put("samplePrice", samplePrice);
+		} else {
+			samplePrice = (float) 400;
+			model.put("samplePrice", samplePrice);
+		}
+		return model;
+	}
 	
 	@Override
 	public Map<String, Object> getConfirmDepositDetail(String actorId,
@@ -244,6 +277,17 @@ public class FinanceServiceImpl implements FinanceService {
 	}
 
 	@Override
+	public void returnDepositSubmit(String actorId, long taskId) {
+		Map<String, Object> data = new HashMap<>();
+ 		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+ 		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+ 		}
+		
+	}
+	
+	@Override
 	public List<Map<String, Object>> getProcessState(final Integer orderId) {
 		// //System.out.println("size:"+jbpmAPIUtil.getKsession().getProcessInstances().size());
 		final List<Map<String, Object>> list = new ArrayList<>();
@@ -254,9 +298,7 @@ public class FinanceServiceImpl implements FinanceService {
 				long processId=orderDAO.findById(orderId).getProcessId();
 				org.jbpm.process.instance.ProcessInstance processInstance = (org.jbpm.process.instance.ProcessInstance) ksession
 						.getProcessInstance(processId);
-				
-				
-				
+
 				if(processInstance==null){
 					return null;
 				}
@@ -296,9 +338,10 @@ public class FinanceServiceImpl implements FinanceService {
 			public String execute(Context context) {
 				StatefulKnowledgeSession ksession = ((KnowledgeCommandContext) context)
 						.getStatefulKnowledgesession();
-				
-				long processId=orderDAO.findById(orderId).getProcessId();
-                
+				Order order = orderDAO.findById(orderId);
+				long processId=order.getProcessId();
+				if((Long)processId==null)
+                return null;
 				if((Long)processId!=null){
 					
 				
@@ -316,16 +359,6 @@ public class FinanceServiceImpl implements FinanceService {
 						.getNodeInstances()) {
 					System.out.println("状态名称："+nodeInstance.getNodeName());
 					nodeInstanceNames.add(nodeInstance.getNodeName());
-					
-//					Map<String, Object> data = nodeInstance.getNode()
-//							.getMetaData();
-//					Map<String, Object> data2 = new HashMap<String, Object>();
-//					data2.put("x", data.get("x"));
-//					data2.put("y", data.get("y"));
-//					data2.put("width", data.get("width"));
-//					data2.put("height", data.get("height"));
-//					data2.put("statename", nodeInstance.getNodeName());
-//					list.add(data2);
 				}
 			}
 				return null;
@@ -369,6 +402,7 @@ public class FinanceServiceImpl implements FinanceService {
 	public final static String ACTOR_FINANCE_MANAGER = "financeManager";
 	public final static String TASK_CONFIRM_SAMPLE_MONEY = "confirmSampleMoney";
 	public final static String TASK_CONFIRM_DEPOSIT = "confirmDeposit";
+	public final static String TASK_RETURN_DEPOSIT = "returnDeposit";	
 	public final static String TASK_CONFIRM_FINAL_PAYMENT = "confirmFinalPayment";
 	public final static String RESULT_MONEY = "receiveMoney";
 	
@@ -393,6 +427,12 @@ public class FinanceServiceImpl implements FinanceService {
 		return model;
 
 	}
+
+
+
+
+
+
 
 
 

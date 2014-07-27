@@ -9,12 +9,13 @@
 		<div class="row-fluid" style="min-height:300px;">
 
 			<ul class="nav nav-tabs detail" id="tab">
-				<li class="task-name">录入版型数据</li>
+				<li class="task-name">录入版型数据及生产样衣</li>
+ 				<li class="active"><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
-				<li class="active"><a href="#basic" data-toggle="tab">基本信息</a></li>
+				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
 
 			<div class="tab-content">
@@ -32,6 +33,17 @@
 				</div>
 				<div class="tab-pane" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
+				</div>
+				<div class="tab-pane active" id="produce">
+					<%@include file="/views/common/produce.jsp"%>
+			    <button class="btn btn-primary" onclick="history.back();">返回</button>
+					<div class="action">
+						<a
+							href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1"
+							class="btn btn-primary">加工完成</a> <a
+							href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0"
+							class="btn btn-danger" style="margin-left: 10px">加工失败</a>
+					</div>
 				</div>
 			</div>
 
@@ -69,12 +81,14 @@
 </div>
 <!--maincontent-->
 
+ 
+
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
-<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
+<link rel="stylesheet" href="${ctx}/css/order/add_order.css">
+<script type="text/javascript" src="${ctx}/js/order/add_produce.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>
-

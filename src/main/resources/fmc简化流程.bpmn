@@ -26,9 +26,12 @@
   <itemDefinition id="_modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_quoteItem" structureRef="Integer" />
   <itemDefinition id="_receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_7-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_7-marketStaffItem" structureRef="Integer" />
@@ -44,9 +47,12 @@
   <itemDefinition id="_7-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_7-quoteItem" structureRef="Integer" />
   <itemDefinition id="_7-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_7-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_7-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_7-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_7-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_7-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_7-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_7-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_7-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_7-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_10-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_10-marketStaffItem" structureRef="Integer" />
@@ -62,9 +68,12 @@
   <itemDefinition id="_10-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_10-quoteItem" structureRef="Integer" />
   <itemDefinition id="_10-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_10-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_10-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_10-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_10-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_10-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_10-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_10-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_10-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_10-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_11-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_11-marketStaffItem" structureRef="Integer" />
@@ -80,9 +89,12 @@
   <itemDefinition id="_11-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_11-quoteItem" structureRef="Integer" />
   <itemDefinition id="_11-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_11-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_11-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_11-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_11-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_11-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_11-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_11-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_11-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_11-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_12-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_12-marketStaffItem" structureRef="Integer" />
@@ -98,9 +110,33 @@
   <itemDefinition id="_12-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_12-quoteItem" structureRef="Integer" />
   <itemDefinition id="_12-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_12-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_12-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_12-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_12-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_12-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_12-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_12-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_12-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_12-verifyQuoteCommentItem" structureRef="String" />
+
+  <itemDefinition id="_152-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_152-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_152-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_152-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_152-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_152-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_152-designItem" structureRef="Boolean" />
+  <itemDefinition id="_152-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_152-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_152-designCommentItem" structureRef="String" />
+  <itemDefinition id="_152-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_152-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_152-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_152-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_152-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_152-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_152-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_152-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_152-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_152-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_19-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_19-marketStaffItem" structureRef="Integer" />
@@ -116,45 +152,75 @@
   <itemDefinition id="_19-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_19-quoteItem" structureRef="Integer" />
   <itemDefinition id="_19-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_19-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_19-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_19-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_19-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_19-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_19-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_19-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_19-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_19-verifyQuoteCommentItem" structureRef="String" />
 
-  <itemDefinition id="_23-orderIdItem" structureRef="Integer" />
-  <itemDefinition id="_23-marketStaffItem" structureRef="Integer" />
-  <itemDefinition id="_23-reorderItem" structureRef="Boolean" />
-  <itemDefinition id="_23-receiveSampleItem" structureRef="Integer" />
-  <itemDefinition id="_23-sendSampleItem" structureRef="Integer" />
-  <itemDefinition id="_23-purchaseItem" structureRef="Boolean" />
-  <itemDefinition id="_23-designItem" structureRef="Boolean" />
-  <itemDefinition id="_23-produceItem" structureRef="Boolean" />
-  <itemDefinition id="_23-purchaseCommentItem" structureRef="String" />
-  <itemDefinition id="_23-designCommentItem" structureRef="String" />
-  <itemDefinition id="_23-produceCommentItem" structureRef="String" />
-  <itemDefinition id="_23-modifyOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_23-quoteItem" structureRef="Integer" />
-  <itemDefinition id="_23-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_23-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_23-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_23-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_154-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_154-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_154-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_154-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_154-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_154-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_154-designItem" structureRef="Boolean" />
+  <itemDefinition id="_154-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_154-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_154-designCommentItem" structureRef="String" />
+  <itemDefinition id="_154-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_154-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_154-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_154-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_154-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_154-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_154-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_154-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_154-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_154-verifyQuoteCommentItem" structureRef="String" />
 
-  <itemDefinition id="_25-orderIdItem" structureRef="Integer" />
-  <itemDefinition id="_25-marketStaffItem" structureRef="Integer" />
-  <itemDefinition id="_25-reorderItem" structureRef="Boolean" />
-  <itemDefinition id="_25-receiveSampleItem" structureRef="Integer" />
-  <itemDefinition id="_25-sendSampleItem" structureRef="Integer" />
-  <itemDefinition id="_25-purchaseItem" structureRef="Boolean" />
-  <itemDefinition id="_25-designItem" structureRef="Boolean" />
-  <itemDefinition id="_25-produceItem" structureRef="Boolean" />
-  <itemDefinition id="_25-purchaseCommentItem" structureRef="String" />
-  <itemDefinition id="_25-designCommentItem" structureRef="String" />
-  <itemDefinition id="_25-produceCommentItem" structureRef="String" />
-  <itemDefinition id="_25-modifyOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_25-quoteItem" structureRef="Integer" />
-  <itemDefinition id="_25-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_25-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_25-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_25-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_155-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_155-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_155-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_155-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_155-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_155-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_155-designItem" structureRef="Boolean" />
+  <itemDefinition id="_155-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_155-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_155-designCommentItem" structureRef="String" />
+  <itemDefinition id="_155-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_155-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_155-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_155-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_155-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_155-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_155-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_155-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_155-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_155-verifyQuoteCommentItem" structureRef="String" />
+
+  <itemDefinition id="_148-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_148-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_148-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_148-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_148-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_148-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_148-designItem" structureRef="Boolean" />
+  <itemDefinition id="_148-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_148-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_148-designCommentItem" structureRef="String" />
+  <itemDefinition id="_148-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_148-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_148-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_148-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_148-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_148-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_148-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_148-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_148-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_148-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_29-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_29-marketStaffItem" structureRef="Integer" />
@@ -170,9 +236,12 @@
   <itemDefinition id="_29-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_29-quoteItem" structureRef="Integer" />
   <itemDefinition id="_29-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_29-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_29-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_29-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_29-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_29-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_29-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_29-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_29-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_29-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_28-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_28-marketStaffItem" structureRef="Integer" />
@@ -188,9 +257,33 @@
   <itemDefinition id="_28-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_28-quoteItem" structureRef="Integer" />
   <itemDefinition id="_28-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_28-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_28-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_28-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_28-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_28-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_28-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_28-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_28-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_28-verifyQuoteCommentItem" structureRef="String" />
+
+  <itemDefinition id="_150-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_150-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_150-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_150-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_150-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_150-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_150-designItem" structureRef="Boolean" />
+  <itemDefinition id="_150-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_150-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_150-designCommentItem" structureRef="String" />
+  <itemDefinition id="_150-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_150-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_150-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_150-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_150-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_150-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_150-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_150-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_150-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_150-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_34-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_34-marketStaffItem" structureRef="Integer" />
@@ -206,9 +299,12 @@
   <itemDefinition id="_34-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_34-quoteItem" structureRef="Integer" />
   <itemDefinition id="_34-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_34-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_34-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_34-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_34-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_34-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_34-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_34-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_34-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_34-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_33-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_33-marketStaffItem" structureRef="Integer" />
@@ -224,9 +320,12 @@
   <itemDefinition id="_33-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_33-quoteItem" structureRef="Integer" />
   <itemDefinition id="_33-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_33-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_33-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_33-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_33-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_33-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_33-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_33-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_33-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_33-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_41-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_41-marketStaffItem" structureRef="Integer" />
@@ -242,9 +341,12 @@
   <itemDefinition id="_41-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_41-quoteItem" structureRef="Integer" />
   <itemDefinition id="_41-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_41-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_41-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_41-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_41-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_41-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_41-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_41-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_41-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_41-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_47-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_47-marketStaffItem" structureRef="Integer" />
@@ -260,9 +362,12 @@
   <itemDefinition id="_47-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_47-quoteItem" structureRef="Integer" />
   <itemDefinition id="_47-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_47-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_47-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_47-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_47-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_47-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_47-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_47-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_47-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_47-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_48-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_48-marketStaffItem" structureRef="Integer" />
@@ -278,27 +383,12 @@
   <itemDefinition id="_48-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_48-quoteItem" structureRef="Integer" />
   <itemDefinition id="_48-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_48-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_48-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_48-takeSampleMoneyItem" structureRef="Boolean" />
-
-  <itemDefinition id="_54-orderIdItem" structureRef="Integer" />
-  <itemDefinition id="_54-marketStaffItem" structureRef="Integer" />
-  <itemDefinition id="_54-reorderItem" structureRef="Boolean" />
-  <itemDefinition id="_54-receiveSampleItem" structureRef="Integer" />
-  <itemDefinition id="_54-sendSampleItem" structureRef="Integer" />
-  <itemDefinition id="_54-purchaseItem" structureRef="Boolean" />
-  <itemDefinition id="_54-designItem" structureRef="Boolean" />
-  <itemDefinition id="_54-produceItem" structureRef="Boolean" />
-  <itemDefinition id="_54-purchaseCommentItem" structureRef="String" />
-  <itemDefinition id="_54-designCommentItem" structureRef="String" />
-  <itemDefinition id="_54-produceCommentItem" structureRef="String" />
-  <itemDefinition id="_54-modifyOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_54-quoteItem" structureRef="Integer" />
-  <itemDefinition id="_54-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_54-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_54-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_54-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_48-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_48-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_48-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_48-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_48-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_48-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_59-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_59-marketStaffItem" structureRef="Integer" />
@@ -314,9 +404,12 @@
   <itemDefinition id="_59-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_59-quoteItem" structureRef="Integer" />
   <itemDefinition id="_59-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_59-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_59-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_59-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_59-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_59-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_59-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_59-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_59-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_59-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_62-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_62-marketStaffItem" structureRef="Integer" />
@@ -332,81 +425,12 @@
   <itemDefinition id="_62-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_62-quoteItem" structureRef="Integer" />
   <itemDefinition id="_62-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_62-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_62-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_62-takeSampleMoneyItem" structureRef="Boolean" />
-
-  <itemDefinition id="_69-orderIdItem" structureRef="Integer" />
-  <itemDefinition id="_69-marketStaffItem" structureRef="Integer" />
-  <itemDefinition id="_69-reorderItem" structureRef="Boolean" />
-  <itemDefinition id="_69-receiveSampleItem" structureRef="Integer" />
-  <itemDefinition id="_69-sendSampleItem" structureRef="Integer" />
-  <itemDefinition id="_69-purchaseItem" structureRef="Boolean" />
-  <itemDefinition id="_69-designItem" structureRef="Boolean" />
-  <itemDefinition id="_69-produceItem" structureRef="Boolean" />
-  <itemDefinition id="_69-purchaseCommentItem" structureRef="String" />
-  <itemDefinition id="_69-designCommentItem" structureRef="String" />
-  <itemDefinition id="_69-produceCommentItem" structureRef="String" />
-  <itemDefinition id="_69-modifyOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_69-quoteItem" structureRef="Integer" />
-  <itemDefinition id="_69-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_69-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_69-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_69-takeSampleMoneyItem" structureRef="Boolean" />
-
-  <itemDefinition id="_70-orderIdItem" structureRef="Integer" />
-  <itemDefinition id="_70-marketStaffItem" structureRef="Integer" />
-  <itemDefinition id="_70-reorderItem" structureRef="Boolean" />
-  <itemDefinition id="_70-receiveSampleItem" structureRef="Integer" />
-  <itemDefinition id="_70-sendSampleItem" structureRef="Integer" />
-  <itemDefinition id="_70-purchaseItem" structureRef="Boolean" />
-  <itemDefinition id="_70-designItem" structureRef="Boolean" />
-  <itemDefinition id="_70-produceItem" structureRef="Boolean" />
-  <itemDefinition id="_70-purchaseCommentItem" structureRef="String" />
-  <itemDefinition id="_70-designCommentItem" structureRef="String" />
-  <itemDefinition id="_70-produceCommentItem" structureRef="String" />
-  <itemDefinition id="_70-modifyOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_70-quoteItem" structureRef="Integer" />
-  <itemDefinition id="_70-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_70-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_70-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_70-takeSampleMoneyItem" structureRef="Boolean" />
-
-  <itemDefinition id="_74-orderIdItem" structureRef="Integer" />
-  <itemDefinition id="_74-marketStaffItem" structureRef="Integer" />
-  <itemDefinition id="_74-reorderItem" structureRef="Boolean" />
-  <itemDefinition id="_74-receiveSampleItem" structureRef="Integer" />
-  <itemDefinition id="_74-sendSampleItem" structureRef="Integer" />
-  <itemDefinition id="_74-purchaseItem" structureRef="Boolean" />
-  <itemDefinition id="_74-designItem" structureRef="Boolean" />
-  <itemDefinition id="_74-produceItem" structureRef="Boolean" />
-  <itemDefinition id="_74-purchaseCommentItem" structureRef="String" />
-  <itemDefinition id="_74-designCommentItem" structureRef="String" />
-  <itemDefinition id="_74-produceCommentItem" structureRef="String" />
-  <itemDefinition id="_74-modifyOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_74-quoteItem" structureRef="Integer" />
-  <itemDefinition id="_74-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_74-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_74-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_74-takeSampleMoneyItem" structureRef="Boolean" />
-
-  <itemDefinition id="_75-orderIdItem" structureRef="Integer" />
-  <itemDefinition id="_75-marketStaffItem" structureRef="Integer" />
-  <itemDefinition id="_75-reorderItem" structureRef="Boolean" />
-  <itemDefinition id="_75-receiveSampleItem" structureRef="Integer" />
-  <itemDefinition id="_75-sendSampleItem" structureRef="Integer" />
-  <itemDefinition id="_75-purchaseItem" structureRef="Boolean" />
-  <itemDefinition id="_75-designItem" structureRef="Boolean" />
-  <itemDefinition id="_75-produceItem" structureRef="Boolean" />
-  <itemDefinition id="_75-purchaseCommentItem" structureRef="String" />
-  <itemDefinition id="_75-designCommentItem" structureRef="String" />
-  <itemDefinition id="_75-produceCommentItem" structureRef="String" />
-  <itemDefinition id="_75-modifyOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_75-quoteItem" structureRef="Integer" />
-  <itemDefinition id="_75-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_75-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_75-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_75-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_62-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_62-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_62-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_62-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_62-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_62-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_87-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_87-marketStaffItem" structureRef="Integer" />
@@ -422,9 +446,12 @@
   <itemDefinition id="_87-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_87-quoteItem" structureRef="Integer" />
   <itemDefinition id="_87-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_87-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_87-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_87-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_87-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_87-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_87-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_87-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_87-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_87-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_80-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_80-marketStaffItem" structureRef="Integer" />
@@ -440,27 +467,12 @@
   <itemDefinition id="_80-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_80-quoteItem" structureRef="Integer" />
   <itemDefinition id="_80-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_80-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_80-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_80-takeSampleMoneyItem" structureRef="Boolean" />
-
-  <itemDefinition id="_88-orderIdItem" structureRef="Integer" />
-  <itemDefinition id="_88-marketStaffItem" structureRef="Integer" />
-  <itemDefinition id="_88-reorderItem" structureRef="Boolean" />
-  <itemDefinition id="_88-receiveSampleItem" structureRef="Integer" />
-  <itemDefinition id="_88-sendSampleItem" structureRef="Integer" />
-  <itemDefinition id="_88-purchaseItem" structureRef="Boolean" />
-  <itemDefinition id="_88-designItem" structureRef="Boolean" />
-  <itemDefinition id="_88-produceItem" structureRef="Boolean" />
-  <itemDefinition id="_88-purchaseCommentItem" structureRef="String" />
-  <itemDefinition id="_88-designCommentItem" structureRef="String" />
-  <itemDefinition id="_88-produceCommentItem" structureRef="String" />
-  <itemDefinition id="_88-modifyOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_88-quoteItem" structureRef="Integer" />
-  <itemDefinition id="_88-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_88-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_88-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_88-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_80-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_80-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_80-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_80-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_80-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_80-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_103-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_103-marketStaffItem" structureRef="Integer" />
@@ -476,9 +488,12 @@
   <itemDefinition id="_103-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_103-quoteItem" structureRef="Integer" />
   <itemDefinition id="_103-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_103-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_103-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_103-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_103-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_103-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_103-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_103-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_103-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_103-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_96-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_96-marketStaffItem" structureRef="Integer" />
@@ -494,9 +509,12 @@
   <itemDefinition id="_96-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_96-quoteItem" structureRef="Integer" />
   <itemDefinition id="_96-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_96-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_96-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_96-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_96-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_96-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_96-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_96-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_96-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_96-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_110-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_110-marketStaffItem" structureRef="Integer" />
@@ -512,9 +530,12 @@
   <itemDefinition id="_110-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_110-quoteItem" structureRef="Integer" />
   <itemDefinition id="_110-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_110-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_110-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_110-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_110-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_110-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_110-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_110-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_110-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_110-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_107-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_107-marketStaffItem" structureRef="Integer" />
@@ -530,9 +551,12 @@
   <itemDefinition id="_107-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_107-quoteItem" structureRef="Integer" />
   <itemDefinition id="_107-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_107-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_107-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_107-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_107-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_107-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_107-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_107-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_107-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_107-verifyQuoteCommentItem" structureRef="String" />
 
   <itemDefinition id="_115-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_115-marketStaffItem" structureRef="Integer" />
@@ -548,9 +572,12 @@
   <itemDefinition id="_115-modifyOrderItem" structureRef="Boolean" />
   <itemDefinition id="_115-quoteItem" structureRef="Integer" />
   <itemDefinition id="_115-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_115-confirmProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_115-modifyProduceOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_115-takeSampleMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_115-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_115-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_115-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_115-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_115-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_115-verifyQuoteCommentItem" structureRef="String" />
 
   <process processType="Private" isExecutable="true" id="nju.software.fmc.bpmn" name="Sample Process" tns:packageName="defaultPackage" >
 
@@ -569,24 +596,19 @@
     <property id="modifyOrder" itemSubjectRef="_modifyOrderItem"/>
     <property id="quote" itemSubjectRef="_quoteItem"/>
     <property id="receiveMoney" itemSubjectRef="_receiveMoneyItem"/>
-    <property id="confirmProduceOrder" itemSubjectRef="_confirmProduceOrderItem"/>
-    <property id="modifyProduceOrder" itemSubjectRef="_modifyProduceOrderItem"/>
-    <property id="takeSampleMoney" itemSubjectRef="_takeSampleMoneyItem"/>
+    <property id="confirmProduceOrderContract" itemSubjectRef="_confirmProduceOrderContractItem"/>
+    <property id="isHaoDuoYi" itemSubjectRef="_isHaoDuoYiItem"/>
+    <property id="verifyQuoteSuccess" itemSubjectRef="_verifyQuoteSuccessItem"/>
+    <property id="needCraft" itemSubjectRef="_needCraftItem"/>
+    <property id="pushRestMoney" itemSubjectRef="_pushRestMoneyItem"/>
+    <property id="verifyQuoteComment" itemSubjectRef="_verifyQuoteCommentItem"/>
 
     <laneSet>
       <lane name="financeManager" >
+        <flowNodeRef>_150</flowNodeRef>
         <flowNodeRef>_41</flowNodeRef>
         <flowNodeRef>_80</flowNodeRef>
         <flowNodeRef>_110</flowNodeRef>
-      </lane>
-      <lane name="marketStaff" >
-        <flowNodeRef>_19</flowNodeRef>
-        <flowNodeRef>_28</flowNodeRef>
-        <flowNodeRef>_34</flowNodeRef>
-        <flowNodeRef>_33</flowNodeRef>
-        <flowNodeRef>_62</flowNodeRef>
-        <flowNodeRef>_74</flowNodeRef>
-        <flowNodeRef>_75</flowNodeRef>
       </lane>
       <lane name="logisticsManager" >
         <flowNodeRef>_7</flowNodeRef>
@@ -594,29 +616,34 @@
         <flowNodeRef>_107</flowNodeRef>
         <flowNodeRef>_115</flowNodeRef>
       </lane>
+      <lane name="marketStaff" >
+        <flowNodeRef>_19</flowNodeRef>
+        <flowNodeRef>_155</flowNodeRef>
+        <flowNodeRef>_28</flowNodeRef>
+        <flowNodeRef>_34</flowNodeRef>
+        <flowNodeRef>_33</flowNodeRef>
+        <flowNodeRef>_62</flowNodeRef>
+      </lane>
       <lane name="produceManager" >
         <flowNodeRef>_12</flowNodeRef>
-        <flowNodeRef>_25</flowNodeRef>
-        <flowNodeRef>_54</flowNodeRef>
         <flowNodeRef>_96</flowNodeRef>
       </lane>
       <lane name="marketManager" >
         <flowNodeRef>_29</flowNodeRef>
       </lane>
-      <lane name="designManager" >
-        <flowNodeRef>_11</flowNodeRef>
-        <flowNodeRef>_48</flowNodeRef>
-        <flowNodeRef>_70</flowNodeRef>
-        <flowNodeRef>_88</flowNodeRef>
+      <lane name="qualityManager" >
+        <flowNodeRef>_103</flowNodeRef>
       </lane>
       <lane name="purchaseManager" >
         <flowNodeRef>_10</flowNodeRef>
-        <flowNodeRef>_23</flowNodeRef>
         <flowNodeRef>_47</flowNodeRef>
-        <flowNodeRef>_69</flowNodeRef>
       </lane>
-      <lane name="qualityManager" >
-        <flowNodeRef>_103</flowNodeRef>
+      <lane name="designManager" >
+        <flowNodeRef>_11</flowNodeRef>
+        <flowNodeRef>_152</flowNodeRef>
+        <flowNodeRef>_154</flowNodeRef>
+        <flowNodeRef>_148</flowNodeRef>
+        <flowNodeRef>_48</flowNodeRef>
       </lane>
     </laneSet>
     <!-- nodes -->
@@ -626,8 +653,10 @@
     <endEvent id="_138" name="End" >
         <terminateEventDefinition />
     </endEvent>
+    <inclusiveGateway id="_141" name="isHaoDuoYi" gatewayDirection="Diverging" />
     <exclusiveGateway id="_140" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_142" name="Gateway" gatewayDirection="Diverging" />
     <userTask id="_7" name="收取样衣" >
       <ioSpecification>
         <dataInput id="_7_TaskNameInput" name="TaskName" />
@@ -666,7 +695,7 @@
       </potentialOwner>
     </userTask>
     <exclusiveGateway id="_8" name="enterVerification" gatewayDirection="Converging" />
-    <userTask id="_10" name="采购验证" >
+    <userTask id="_10" name="采购成本验证并核算" >
       <ioSpecification>
         <dataInput id="_10_TaskNameInput" name="TaskName" />
         <dataOutput id="_10_purchaseCommentOutput" name="purchaseComment" />
@@ -703,12 +732,14 @@
     <userTask id="_11" name="设计验证" >
       <ioSpecification>
         <dataInput id="_11_TaskNameInput" name="TaskName" />
+        <dataOutput id="_11_needCraftOutput" name="needCraft" />
         <dataOutput id="_11_designCommentOutput" name="designComment" />
         <dataOutput id="_11_designOutput" name="design" />
         <inputSet>
           <dataInputRefs>_11_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
+          <dataOutputRefs>_11_needCraftOutput</dataOutputRefs>
           <dataOutputRefs>_11_designCommentOutput</dataOutputRefs>
           <dataOutputRefs>_11_designOutput</dataOutputRefs>
         </outputSet>
@@ -720,6 +751,10 @@
           <to xsi:type="tFormalExpression">_11_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_11_needCraftOutput</sourceRef>
+        <targetRef>needCraft</targetRef>
+      </dataOutputAssociation>
       <dataOutputAssociation>
         <sourceRef>_11_designCommentOutput</sourceRef>
         <targetRef>designComment</targetRef>
@@ -734,7 +769,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <userTask id="_12" name="生产验证" >
+    <userTask id="_12" name="生产成本验证并核算" >
       <ioSpecification>
         <dataInput id="_12_TaskNameInput" name="TaskName" />
         <dataOutput id="_12_produceCommentOutput" name="produceComment" />
@@ -772,6 +807,29 @@
     <exclusiveGateway id="_135" name="Gateway" gatewayDirection="Converging" />
     <parallelGateway id="_15" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_17" name="editOrder" gatewayDirection="Diverging" />
+    <userTask id="_152" name="工艺制作" >
+      <ioSpecification>
+        <dataInput id="_152_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_152_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_152_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">craft</from>
+          <to xsi:type="tFormalExpression">_152_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>designManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <exclusiveGateway id="_153" name="Gateway" gatewayDirection="Converging" />
     <userTask id="_19" name="修改询单" >
       <ioSpecification>
         <dataInput id="_19_TaskNameInput" name="TaskName" />
@@ -800,63 +858,148 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+    <userTask id="_154" name="排版切片" >
+      <ioSpecification>
+        <dataInput id="_154_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_154_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_154_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">typeSettingSlice</from>
+          <to xsi:type="tFormalExpression">_154_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>designManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_155" name="催尾款" >
+      <ioSpecification>
+        <dataInput id="_155_TaskNameInput" name="TaskName" />
+        <dataOutput id="_155_pushRestMoneyOutput" name="pushRestMoney" />
+        <inputSet>
+          <dataInputRefs>_155_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_155_pushRestMoneyOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_155_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">pushRest</from>
+          <to xsi:type="tFormalExpression">_155_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_155_pushRestMoneyOutput</sourceRef>
+        <targetRef>pushRestMoney</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <parallelGateway id="_156" name="Gateway" gatewayDirection="Diverging" />
     <endEvent id="_21" name="End" >
         <terminateEventDefinition />
     </endEvent>
-    <userTask id="_23" name="采购成本核算" >
-      <ioSpecification>
-        <dataInput id="_23_TaskNameInput" name="TaskName" />
-        <inputSet>
-          <dataInputRefs>_23_TaskNameInput</dataInputRefs>
-        </inputSet>
-        <outputSet>
-        </outputSet>
-      </ioSpecification>
-      <dataInputAssociation>
-        <targetRef>_23_TaskNameInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">computePurchaseCost</from>
-          <to xsi:type="tFormalExpression">_23_TaskNameInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <potentialOwner>
-        <resourceAssignmentExpression>
-          <formalExpression>purchaseManager</formalExpression>
-        </resourceAssignmentExpression>
-      </potentialOwner>
-    </userTask>
+    <inclusiveGateway id="_157" name="Gateway" gatewayDirection="Diverging" />
+    <endEvent id="_158" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <parallelGateway id="_159" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_22" name="editok" gatewayDirection="Diverging" />
-    <userTask id="_25" name="生产成本核算" >
+    <exclusiveGateway id="_144" name="Gateway" gatewayDirection="Converging" />
+    <exclusiveGateway id="_145" name="Gateway" gatewayDirection="Converging" />
+    <parallelGateway id="_146" name="Gateway" gatewayDirection="Converging" />
+    <inclusiveGateway id="_147" name="needCraft" gatewayDirection="Diverging" />
+    <userTask id="_148" name="工艺制作" >
       <ioSpecification>
-        <dataInput id="_25_TaskNameInput" name="TaskName" />
+        <dataInput id="_148_CommentInput" name="Comment" />
+        <dataInput id="_148_SkippableInput" name="Skippable" />
+        <dataInput id="_148_LocaleInput" name="Locale" />
+        <dataInput id="_148_TaskNameInput" name="TaskName" />
+        <dataInput id="_148_GroupIdInput" name="GroupId" />
+        <dataInput id="_148_PriorityInput" name="Priority" />
         <inputSet>
-          <dataInputRefs>_25_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_148_CommentInput</dataInputRefs>
+          <dataInputRefs>_148_SkippableInput</dataInputRefs>
+          <dataInputRefs>_148_LocaleInput</dataInputRefs>
+          <dataInputRefs>_148_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_148_GroupIdInput</dataInputRefs>
+          <dataInputRefs>_148_PriorityInput</dataInputRefs>
         </inputSet>
         <outputSet>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
-        <targetRef>_25_TaskNameInput</targetRef>
+        <targetRef>_148_CommentInput</targetRef>
         <assignment>
-          <from xsi:type="tFormalExpression">computeProduceCost</from>
-          <to xsi:type="tFormalExpression">_25_TaskNameInput</to>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_148_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_148_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_148_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_148_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_148_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_148_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">craftSample</from>
+          <to xsi:type="tFormalExpression">_148_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_148_GroupIdInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_148_GroupIdInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_148_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_148_PriorityInput</to>
         </assignment>
       </dataInputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
-          <formalExpression>produceManager</formalExpression>
+          <formalExpression>designManager</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <parallelGateway id="_27" name="Gateway" gatewayDirection="Converging" />
-    <parallelGateway id="_26" name="Gateway" gatewayDirection="Diverging" />
     <userTask id="_29" name="主管审核报价" >
       <ioSpecification>
         <dataInput id="_29_TaskNameInput" name="TaskName" />
+        <dataOutput id="_29_verifyQuoteCommentOutput" name="verifyQuoteComment" />
+        <dataOutput id="_29_verifyQuoteSuccessOutput" name="verifyQuoteSuccess" />
         <inputSet>
           <dataInputRefs>_29_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
+          <dataOutputRefs>_29_verifyQuoteCommentOutput</dataOutputRefs>
+          <dataOutputRefs>_29_verifyQuoteSuccessOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -866,19 +1009,30 @@
           <to xsi:type="tFormalExpression">_29_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_29_verifyQuoteCommentOutput</sourceRef>
+        <targetRef>verifyQuoteComment</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_29_verifyQuoteSuccessOutput</sourceRef>
+        <targetRef>verifyQuoteSuccess</targetRef>
+      </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
           <formalExpression>marketManager</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+    <exclusiveGateway id="_149" name="Gateway" gatewayDirection="Converging" />
     <userTask id="_28" name="专员合并报价" >
       <ioSpecification>
         <dataInput id="_28_TaskNameInput" name="TaskName" />
+        <dataOutput id="_28_isHaoDuoYiOutput" name="isHaoDuoYi" />
         <inputSet>
           <dataInputRefs>_28_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
+          <dataOutputRefs>_28_isHaoDuoYiOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -888,12 +1042,39 @@
           <to xsi:type="tFormalExpression">_28_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_28_isHaoDuoYiOutput</sourceRef>
+        <targetRef>isHaoDuoYi</targetRef>
+      </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
           <formalExpression>#{marketStaff}</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+    <userTask id="_150" name="退还定金" >
+      <ioSpecification>
+        <dataInput id="_150_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_150_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_150_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">returnDeposit</from>
+          <to xsi:type="tFormalExpression">_150_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>financeManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_151" name="Gateway" gatewayDirection="Diverging" />
     <userTask id="_34" name="商定报价" >
       <ioSpecification>
         <dataInput id="_34_TaskNameInput" name="TaskName" />
@@ -922,6 +1103,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+    <endEvent id="_168" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
     <userTask id="_33" name="修改报价" >
       <ioSpecification>
         <dataInput id="_33_TaskNameInput" name="TaskName" />
@@ -946,12 +1130,15 @@
     </userTask>
     <inclusiveGateway id="_36" name="confirmquote" gatewayDirection="Diverging" />
     <inclusiveGateway id="_37" name="samplejin" gatewayDirection="Diverging" />
+    <parallelGateway id="_163" name="Gateway" gatewayDirection="Converging" />
     <endEvent id="_43" name="End" >
         <terminateEventDefinition />
     </endEvent>
+    <exclusiveGateway id="_161" name="Gateway" gatewayDirection="Converging" />
     <endEvent id="_40" name="End" >
         <terminateEventDefinition />
     </endEvent>
+    <parallelGateway id="_160" name="Gateway" gatewayDirection="Diverging" />
     <userTask id="_41" name="确认样衣制作金" >
       <ioSpecification>
         <dataInput id="_41_TaskNameInput" name="TaskName" />
@@ -980,7 +1167,9 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <userTask id="_47" name="采购确认" >
+    <inclusiveGateway id="_167" name="isHaoDuoYi" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_166" name="isHaoDuoYi" gatewayDirection="Diverging" />
+    <userTask id="_47" name="样衣面料采购" >
       <ioSpecification>
         <dataInput id="_47_TaskNameInput" name="TaskName" />
         <dataOutput id="_47_purchaseOutput" name="purchase" />
@@ -1008,16 +1197,19 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+    <exclusiveGateway id="_165" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_44" name="receivedsamplejin" gatewayDirection="Diverging" />
-    <parallelGateway id="_50" name="shengchan" gatewayDirection="Converging" />
+    <inclusiveGateway id="_164" name="isHaoDuoYi" gatewayDirection="Diverging" />
     <parallelGateway id="_49" name="Gateway" gatewayDirection="Diverging" />
-    <userTask id="_48" name="录入版型" >
+    <userTask id="_48" name="录入版型数据及生产样衣" >
       <ioSpecification>
         <dataInput id="_48_TaskNameInput" name="TaskName" />
+        <dataOutput id="_48_produceOutput" name="produce" />
         <inputSet>
           <dataInputRefs>_48_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
+          <dataOutputRefs>_48_produceOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -1027,6 +1219,10 @@
           <to xsi:type="tFormalExpression">_48_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_48_produceOutput</sourceRef>
+        <targetRef>produce</targetRef>
+      </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
           <formalExpression>designManager</formalExpression>
@@ -1034,79 +1230,6 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_55" name="producterror" gatewayDirection="Diverging" />
-    <userTask id="_54" name="生产样衣" >
-      <ioSpecification>
-        <dataInput id="_54_CommentInput" name="Comment" />
-        <dataInput id="_54_SkippableInput" name="Skippable" />
-        <dataInput id="_54_LocaleInput" name="Locale" />
-        <dataInput id="_54_TaskNameInput" name="TaskName" />
-        <dataInput id="_54_GroupIdInput" name="GroupId" />
-        <dataInput id="_54_PriorityInput" name="Priority" />
-        <dataOutput id="_54_produceOutput" name="produce" />
-        <inputSet>
-          <dataInputRefs>_54_CommentInput</dataInputRefs>
-          <dataInputRefs>_54_SkippableInput</dataInputRefs>
-          <dataInputRefs>_54_LocaleInput</dataInputRefs>
-          <dataInputRefs>_54_TaskNameInput</dataInputRefs>
-          <dataInputRefs>_54_GroupIdInput</dataInputRefs>
-          <dataInputRefs>_54_PriorityInput</dataInputRefs>
-        </inputSet>
-        <outputSet>
-          <dataOutputRefs>_54_produceOutput</dataOutputRefs>
-        </outputSet>
-      </ioSpecification>
-      <dataInputAssociation>
-        <targetRef>_54_CommentInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression"></from>
-          <to xsi:type="tFormalExpression">_54_CommentInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_54_SkippableInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">false</from>
-          <to xsi:type="tFormalExpression">_54_SkippableInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_54_LocaleInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">en-UK</from>
-          <to xsi:type="tFormalExpression">_54_LocaleInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_54_TaskNameInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">produceSample</from>
-          <to xsi:type="tFormalExpression">_54_TaskNameInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_54_GroupIdInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression"></from>
-          <to xsi:type="tFormalExpression">_54_GroupIdInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_54_PriorityInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression"></from>
-          <to xsi:type="tFormalExpression">_54_PriorityInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataOutputAssociation>
-        <sourceRef>_54_produceOutput</sourceRef>
-        <targetRef>produce</targetRef>
-      </dataOutputAssociation>
-      <potentialOwner>
-        <resourceAssignmentExpression>
-          <formalExpression>produceManager</formalExpression>
-        </resourceAssignmentExpression>
-      </potentialOwner>
-    </userTask>
     <userTask id="_59" name="样衣发货" >
       <ioSpecification>
         <dataInput id="_59_TaskNameInput" name="TaskName" />
@@ -1136,15 +1259,15 @@
         <terminateEventDefinition />
     </endEvent>
     <inclusiveGateway id="_56" name="purchaseerror" gatewayDirection="Diverging" />
-    <userTask id="_62" name="确认加工单" >
+    <userTask id="_62" name="确认加工单并签订合同" >
       <ioSpecification>
         <dataInput id="_62_TaskNameInput" name="TaskName" />
-        <dataOutput id="_62_confirmProduceOrderOutput" name="confirmProduceOrder" />
+        <dataOutput id="_62_confirmProduceOrderContractOutput" name="confirmProduceOrderContract" />
         <inputSet>
           <dataInputRefs>_62_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
-          <dataOutputRefs>_62_confirmProduceOrderOutput</dataOutputRefs>
+          <dataOutputRefs>_62_confirmProduceOrderContractOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -1155,8 +1278,8 @@
         </assignment>
       </dataInputAssociation>
       <dataOutputAssociation>
-        <sourceRef>_62_confirmProduceOrderOutput</sourceRef>
-        <targetRef>confirmProduceOrder</targetRef>
+        <sourceRef>_62_confirmProduceOrderContractOutput</sourceRef>
+        <targetRef>confirmProduceOrderContract</targetRef>
       </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
@@ -1164,171 +1287,12 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <inclusiveGateway id="_68" name="editworksheetok" gatewayDirection="Diverging" />
-    <userTask id="_69" name="采购部确认" >
-      <ioSpecification>
-        <dataInput id="_69_CommentInput" name="Comment" />
-        <dataInput id="_69_SkippableInput" name="Skippable" />
-        <dataInput id="_69_LocaleInput" name="Locale" />
-        <dataInput id="_69_TaskNameInput" name="TaskName" />
-        <dataInput id="_69_GroupIdInput" name="GroupId" />
-        <dataInput id="_69_PriorityInput" name="Priority" />
-        <dataOutput id="_69_purchaseOutput" name="purchase" />
-        <inputSet>
-          <dataInputRefs>_69_CommentInput</dataInputRefs>
-          <dataInputRefs>_69_SkippableInput</dataInputRefs>
-          <dataInputRefs>_69_LocaleInput</dataInputRefs>
-          <dataInputRefs>_69_TaskNameInput</dataInputRefs>
-          <dataInputRefs>_69_GroupIdInput</dataInputRefs>
-          <dataInputRefs>_69_PriorityInput</dataInputRefs>
-        </inputSet>
-        <outputSet>
-          <dataOutputRefs>_69_purchaseOutput</dataOutputRefs>
-        </outputSet>
-      </ioSpecification>
-      <dataInputAssociation>
-        <targetRef>_69_CommentInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression"></from>
-          <to xsi:type="tFormalExpression">_69_CommentInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_69_SkippableInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression"></from>
-          <to xsi:type="tFormalExpression">_69_SkippableInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_69_LocaleInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">en-UK</from>
-          <to xsi:type="tFormalExpression">_69_LocaleInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_69_TaskNameInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">confirmPurchase</from>
-          <to xsi:type="tFormalExpression">_69_TaskNameInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_69_GroupIdInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression"></from>
-          <to xsi:type="tFormalExpression">_69_GroupIdInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_69_PriorityInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression"></from>
-          <to xsi:type="tFormalExpression">_69_PriorityInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataOutputAssociation>
-        <sourceRef>_69_purchaseOutput</sourceRef>
-        <targetRef>purchase</targetRef>
-      </dataOutputAssociation>
-      <potentialOwner>
-        <resourceAssignmentExpression>
-          <formalExpression>purchaseManager</formalExpression>
-        </resourceAssignmentExpression>
-      </potentialOwner>
-    </userTask>
-    <userTask id="_70" name="设计部确认" >
-      <ioSpecification>
-        <dataInput id="_70_TaskNameInput" name="TaskName" />
-        <dataOutput id="_70_designOutput" name="design" />
-        <inputSet>
-          <dataInputRefs>_70_TaskNameInput</dataInputRefs>
-        </inputSet>
-        <outputSet>
-          <dataOutputRefs>_70_designOutput</dataOutputRefs>
-        </outputSet>
-      </ioSpecification>
-      <dataInputAssociation>
-        <targetRef>_70_TaskNameInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">modifyDesign</from>
-          <to xsi:type="tFormalExpression">_70_TaskNameInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataOutputAssociation>
-        <sourceRef>_70_designOutput</sourceRef>
-        <targetRef>design</targetRef>
-      </dataOutputAssociation>
-      <potentialOwner>
-        <resourceAssignmentExpression>
-          <formalExpression>designManager</formalExpression>
-        </resourceAssignmentExpression>
-      </potentialOwner>
-    </userTask>
-    <endEvent id="_71" name="End" >
-        <terminateEventDefinition />
-    </endEvent>
     <inclusiveGateway id="_64" name="comfirmworksheet" gatewayDirection="Diverging" />
     <endEvent id="_65" name="End" >
         <terminateEventDefinition />
     </endEvent>
-    <exclusiveGateway id="_66" name="Gateway" gatewayDirection="Converging" />
-    <parallelGateway id="_67" name="Gateway" gatewayDirection="Diverging" />
-    <inclusiveGateway id="_76" name="isworksheet" gatewayDirection="Diverging" />
-    <parallelGateway id="_72" name="Gateway" gatewayDirection="Converging" />
-    <userTask id="_74" name="签订合同" >
-      <ioSpecification>
-        <dataInput id="_74_TaskNameInput" name="TaskName" />
-        <inputSet>
-          <dataInputRefs>_74_TaskNameInput</dataInputRefs>
-        </inputSet>
-        <outputSet>
-        </outputSet>
-      </ioSpecification>
-      <dataInputAssociation>
-        <targetRef>_74_TaskNameInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">signContract</from>
-          <to xsi:type="tFormalExpression">_74_TaskNameInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <potentialOwner>
-        <resourceAssignmentExpression>
-          <formalExpression>#{marketStaff}</formalExpression>
-        </resourceAssignmentExpression>
-      </potentialOwner>
-    </userTask>
-    <userTask id="_75" name="修改加工单" >
-      <ioSpecification>
-        <dataInput id="_75_TaskNameInput" name="TaskName" />
-        <dataOutput id="_75_modifyProduceOrderOutput" name="modifyProduceOrder" />
-        <inputSet>
-          <dataInputRefs>_75_TaskNameInput</dataInputRefs>
-        </inputSet>
-        <outputSet>
-          <dataOutputRefs>_75_modifyProduceOrderOutput</dataOutputRefs>
-        </outputSet>
-      </ioSpecification>
-      <dataInputAssociation>
-        <targetRef>_75_TaskNameInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">modifyProduceOrder</from>
-          <to xsi:type="tFormalExpression">_75_TaskNameInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataOutputAssociation>
-        <sourceRef>_75_modifyProduceOrderOutput</sourceRef>
-        <targetRef>modifyProduceOrder</targetRef>
-      </dataOutputAssociation>
-      <potentialOwner>
-        <resourceAssignmentExpression>
-          <formalExpression>#{marketStaff}</formalExpression>
-        </resourceAssignmentExpression>
-      </potentialOwner>
-    </userTask>
     <inclusiveGateway id="_84" name="epositok" gatewayDirection="Diverging" />
-    <userTask id="_87" name="生产原料采购" >
+    <userTask id="_87" name="大货面料采购确认" >
       <ioSpecification>
         <dataInput id="_87_TaskNameInput" name="TaskName" />
         <dataOutput id="_87_purchaseOutput" name="purchase" />
@@ -1433,30 +1397,6 @@
       </potentialOwner>
     </userTask>
     <inclusiveGateway id="_94" name="procurementerror" gatewayDirection="Diverging" />
-    <parallelGateway id="_89" name="Gateway" gatewayDirection="Diverging" />
-    <userTask id="_88" name="设计生产确认" >
-      <ioSpecification>
-        <dataInput id="_88_TaskNameInput" name="TaskName" />
-        <inputSet>
-          <dataInputRefs>_88_TaskNameInput</dataInputRefs>
-        </inputSet>
-        <outputSet>
-        </outputSet>
-      </ioSpecification>
-      <dataInputAssociation>
-        <targetRef>_88_TaskNameInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">confirmDesign</from>
-          <to xsi:type="tFormalExpression">_88_TaskNameInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <potentialOwner>
-        <resourceAssignmentExpression>
-          <formalExpression>designManager</formalExpression>
-        </resourceAssignmentExpression>
-      </potentialOwner>
-    </userTask>
-    <parallelGateway id="_91" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_102" name="volumeproduction" gatewayDirection="Diverging" />
     <userTask id="_103" name="质量检测" >
       <ioSpecification>
@@ -1545,10 +1485,12 @@
     <userTask id="_107" name="入库" >
       <ioSpecification>
         <dataInput id="_107_TaskNameInput" name="TaskName" />
+        <dataOutput id="_107_isHaoDuoYiOutput" name="isHaoDuoYi" />
         <inputSet>
           <dataInputRefs>_107_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
+          <dataOutputRefs>_107_isHaoDuoYiOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
@@ -1558,6 +1500,10 @@
           <to xsi:type="tFormalExpression">_107_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_107_isHaoDuoYiOutput</sourceRef>
+        <targetRef>isHaoDuoYi</targetRef>
+      </dataOutputAssociation>
       <potentialOwner>
         <resourceAssignmentExpression>
           <formalExpression>logisticsManager</formalExpression>
@@ -1600,11 +1546,15 @@
     <sequenceFlow id="_139-_138" sourceRef="_139" targetRef="_138" name="未收到样衣" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveSample==1;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_28-_140" sourceRef="_28" targetRef="_140" />
+    <sequenceFlow id="_28-_141" sourceRef="_28" targetRef="_141" />
     <sequenceFlow id="_33-_140" sourceRef="_33" targetRef="_140" />
+    <sequenceFlow id="_141-_140" sourceRef="_141" targetRef="_140" name="非好多衣客户" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !isHaoDuoYi;</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_136-_6" sourceRef="_136" targetRef="_6" name="不是翻单" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  !reorder;</conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_29-_142" sourceRef="_29" targetRef="_142" />
     <sequenceFlow id="_6-_7" sourceRef="_6" targetRef="_7" name="提供样衣" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveSample!=0;</conditionExpression>
     </sequenceFlow>
@@ -1625,10 +1575,20 @@
     <sequenceFlow id="_37-_135" sourceRef="_37" targetRef="_135" name="不制作样衣" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return sendSample==0;</conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_136-_135" sourceRef="_136" targetRef="_135" name="是翻单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  reorder;</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_10-_15" sourceRef="_10" targetRef="_15" />
     <sequenceFlow id="_11-_15" sourceRef="_11" targetRef="_15" />
     <sequenceFlow id="_12-_15" sourceRef="_12" targetRef="_15" />
     <sequenceFlow id="_15-_17" sourceRef="_15" targetRef="_17" />
+    <sequenceFlow id="_151-_152" sourceRef="_151" targetRef="_152" name="需要工艺" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return needCraft;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_152-_153" sourceRef="_152" targetRef="_153" />
+    <sequenceFlow id="_151-_153" sourceRef="_151" targetRef="_153" name="不需要工艺" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !needCraft;</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_17-_19" sourceRef="_17" targetRef="_19" name="验证不通过" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!purchase){
 	return true;
@@ -1644,15 +1604,28 @@ return false;
 
 </conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_165-_154" sourceRef="_165" targetRef="_154" />
+    <sequenceFlow id="_156-_155" sourceRef="_156" targetRef="_155" />
+    <sequenceFlow id="_103-_156" sourceRef="_103" targetRef="_156" />
     <sequenceFlow id="_22-_21" sourceRef="_22" targetRef="_21" name="放弃修改" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !modifyOrder;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_26-_23" sourceRef="_26" targetRef="_23" />
+    <sequenceFlow id="_155-_157" sourceRef="_155" targetRef="_157" />
+    <sequenceFlow id="_157-_158" sourceRef="_157" targetRef="_158" name="催尾款失败" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !pushRestMoney;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_114-_159" sourceRef="_114" targetRef="_159" name="收到大货尾金" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveMoney;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_167-_159" sourceRef="_167" targetRef="_159" name="非好多衣客户" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !isHaoDuoYi;</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_19-_22" sourceRef="_19" targetRef="_22" />
-    <sequenceFlow id="_26-_25" sourceRef="_26" targetRef="_25" />
-    <sequenceFlow id="_23-_27" sourceRef="_23" targetRef="_27" />
-    <sequenceFlow id="_25-_27" sourceRef="_25" targetRef="_27" />
-    <sequenceFlow id="_17-_26" sourceRef="_17" targetRef="_26" name="验证通过" tns:priority="1" >
+    <sequenceFlow id="_44-_144" sourceRef="_44" targetRef="_144" name="收到样衣金" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveMoney;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_160-_144" sourceRef="_160" targetRef="_144" />
+    <sequenceFlow id="_17-_145" sourceRef="_17" targetRef="_145" name="验证通过" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!purchase){
 	return false;
 }
@@ -1668,9 +1641,37 @@ return true;
 
 </conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_142-_145" sourceRef="_142" targetRef="_145" name="审核不通过" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !verifyQuoteSuccess;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_55-_146" sourceRef="_55" targetRef="_146" name="生产完成" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return produce;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_149-_146" sourceRef="_149" targetRef="_146" />
+    <sequenceFlow id="_56-_147" sourceRef="_56" targetRef="_147" name="采购完成" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return purchase;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_147-_148" sourceRef="_147" targetRef="_148" name="需要工艺" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return needCraft;</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_140-_29" sourceRef="_140" targetRef="_29" />
-    <sequenceFlow id="_27-_28" sourceRef="_27" targetRef="_28" />
-    <sequenceFlow id="_29-_34" sourceRef="_29" targetRef="_34" />
+    <sequenceFlow id="_147-_149" sourceRef="_147" targetRef="_149" name="不需要工艺" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !needCraft;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_148-_149" sourceRef="_148" targetRef="_149" />
+    <sequenceFlow id="_145-_28" sourceRef="_145" targetRef="_28" />
+    <sequenceFlow id="_94-_150" sourceRef="_94" targetRef="_150" name="采购失败" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !purchase;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_94-_151" sourceRef="_94" targetRef="_151" name="采购成功" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return purchase;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_142-_34" sourceRef="_142" targetRef="_34" name="审核通过" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return verifyQuoteSuccess;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_167-_168" sourceRef="_167" targetRef="_168" name="是好多衣客户 " tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isHaoDuoYi;</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_36-_33" sourceRef="_36" targetRef="_33" name="报价修改" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return quote==1;</conditionExpression>
     </sequenceFlow>
@@ -1678,29 +1679,42 @@ return true;
     <sequenceFlow id="_36-_37" sourceRef="_36" targetRef="_37" name="报价确认" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return quote==0;</conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_164-_163" sourceRef="_164" targetRef="_163" name="好多衣客户" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isHaoDuoYi;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_166-_163" sourceRef="_166" targetRef="_163" name="好多衣客户" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isHaoDuoYi;</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_44-_43" sourceRef="_44" targetRef="_43" name="未收到制作金" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receiveMoney;</conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_84-_161" sourceRef="_84" targetRef="_161" name="收到大货定金" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveMoney;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_160-_161" sourceRef="_160" targetRef="_161" />
     <sequenceFlow id="_36-_40" sourceRef="_36" targetRef="_40" name="放弃订单" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return quote==2;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_141-_160" sourceRef="_141" targetRef="_160" name="好多衣客户" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isHaoDuoYi;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_37-_41" sourceRef="_37" targetRef="_41" name="制作样衣" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return sendSample!=0;</conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_107-_167" sourceRef="_107" targetRef="_167" />
+    <sequenceFlow id="_146-_166" sourceRef="_146" targetRef="_166" />
     <sequenceFlow id="_49-_47" sourceRef="_49" targetRef="_47" />
+    <sequenceFlow id="_163-_165" sourceRef="_163" targetRef="_165" />
+    <sequenceFlow id="_164-_165" sourceRef="_164" targetRef="_165" name="非好多衣客户" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !isHaoDuoYi;</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_41-_44" sourceRef="_41" targetRef="_44" />
-    <sequenceFlow id="_48-_50" sourceRef="_48" targetRef="_50" />
-    <sequenceFlow id="_56-_50" sourceRef="_56" targetRef="_50" name="采购完成" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return purchase;</conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_44-_49" sourceRef="_44" targetRef="_49" name="收到样衣金" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveMoney;</conditionExpression>
-    </sequenceFlow>
+    <sequenceFlow id="_153-_164" sourceRef="_153" targetRef="_164" />
+    <sequenceFlow id="_144-_49" sourceRef="_144" targetRef="_49" />
     <sequenceFlow id="_49-_48" sourceRef="_49" targetRef="_48" />
-    <sequenceFlow id="_54-_55" sourceRef="_54" targetRef="_55" />
-    <sequenceFlow id="_50-_54" sourceRef="_50" targetRef="_54" />
-    <sequenceFlow id="_55-_59" sourceRef="_55" targetRef="_59" name="生产完成" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return produce;</conditionExpression>
+    <sequenceFlow id="_48-_55" sourceRef="_48" targetRef="_55" />
+    <sequenceFlow id="_166-_59" sourceRef="_166" targetRef="_59" name="非好多衣客户" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !isHaoDuoYi;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_55-_58" sourceRef="_55" targetRef="_58" name="生产失败" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !produce;</conditionExpression>
@@ -1710,64 +1724,19 @@ return true;
     </sequenceFlow>
     <sequenceFlow id="_47-_56" sourceRef="_47" targetRef="_56" />
     <sequenceFlow id="_135-_62" sourceRef="_135" targetRef="_62" />
-    <sequenceFlow id="_75-_68" sourceRef="_75" targetRef="_68" />
-    <sequenceFlow id="_67-_69" sourceRef="_67" targetRef="_69" />
-    <sequenceFlow id="_67-_70" sourceRef="_67" targetRef="_70" />
-    <sequenceFlow id="_68-_71" sourceRef="_68" targetRef="_71" name="放弃订单" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !modifyProduceOrder;</conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="_62-_64" sourceRef="_62" targetRef="_64" />
     <sequenceFlow id="_64-_65" sourceRef="_64" targetRef="_65" name="取消订单" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !confirmProduceOrder;</conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_64-_66" sourceRef="_64" targetRef="_66" name="确认加工单" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return confirmProduceOrder;</conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_68-_66" sourceRef="_68" targetRef="_66" name="修改完成" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return modifyProduceOrder;</conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_136-_66" sourceRef="_136" targetRef="_66" name="是翻单" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  reorder;</conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_66-_67" sourceRef="_66" targetRef="_67" />
-    <sequenceFlow id="_72-_76" sourceRef="_72" targetRef="_76" />
-    <sequenceFlow id="_69-_72" sourceRef="_69" targetRef="_72" />
-    <sequenceFlow id="_70-_72" sourceRef="_70" targetRef="_72" />
-    <sequenceFlow id="_76-_74" sourceRef="_76" targetRef="_74" name="验证通过" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!design){
-	return false;
-}
-if(!purchase){
-	return false;
-}
-return true;
-
-</conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_76-_75" sourceRef="_76" targetRef="_75" name="验证不通过" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!design){
-	return true;
-}
-if(!purchase){
-	return true;
-}
-return false;</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !confirmProduceOrderContract;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_80-_84" sourceRef="_80" targetRef="_84" />
-    <sequenceFlow id="_89-_87" sourceRef="_89" targetRef="_87" />
+    <sequenceFlow id="_161-_87" sourceRef="_161" targetRef="_87" />
     <sequenceFlow id="_84-_86" sourceRef="_84" targetRef="_86" name="未收到大货定金" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receiveMoney;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_74-_80" sourceRef="_74" targetRef="_80" />
+    <sequenceFlow id="_64-_80" sourceRef="_64" targetRef="_80" name="确认成功" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return confirmProduceOrderContract;</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_87-_94" sourceRef="_87" targetRef="_94" />
-    <sequenceFlow id="_84-_89" sourceRef="_84" targetRef="_89" name="收到大货定金" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveMoney;</conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_89-_88" sourceRef="_89" targetRef="_88" />
-    <sequenceFlow id="_88-_91" sourceRef="_88" targetRef="_91" />
-    <sequenceFlow id="_94-_91" sourceRef="_94" targetRef="_91" name="采购完成" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return purchase;</conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="_96-_102" sourceRef="_96" targetRef="_102" />
     <sequenceFlow id="_102-_103" sourceRef="_102" targetRef="_103" name="生产完成" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return produce;</conditionExpression>
@@ -1775,18 +1744,16 @@ return false;</conditionExpression>
     <sequenceFlow id="_102-_100" sourceRef="_102" targetRef="_100" name="生产失败" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !produce;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_94-_99" sourceRef="_94" targetRef="_99" name="采购失败" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !purchase;</conditionExpression>
+    <sequenceFlow id="_150-_99" sourceRef="_150" targetRef="_99" />
+    <sequenceFlow id="_154-_96" sourceRef="_154" targetRef="_96" />
+    <sequenceFlow id="_157-_110" sourceRef="_157" targetRef="_110" name="催尾款成功" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return pushRestMoney;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_91-_96" sourceRef="_91" targetRef="_96" />
-    <sequenceFlow id="_107-_110" sourceRef="_107" targetRef="_110" />
-    <sequenceFlow id="_103-_107" sourceRef="_103" targetRef="_107" />
+    <sequenceFlow id="_156-_107" sourceRef="_156" targetRef="_107" />
     <sequenceFlow id="_114-_116" sourceRef="_114" targetRef="_116" name="未收到大货尾金" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" >return !receiveMoney;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_114-_115" sourceRef="_114" targetRef="_115" name="收到大货尾金" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" >return receiveMoney;</conditionExpression>
-    </sequenceFlow>
+    <sequenceFlow id="_159-_115" sourceRef="_159" targetRef="_115" />
     <sequenceFlow id="_110-_114" sourceRef="_110" targetRef="_114" />
     <sequenceFlow id="_115-_127" sourceRef="_115" targetRef="_127" />
 
@@ -1801,16 +1768,22 @@ return false;</conditionExpression>
         <dc:Bounds x="41" y="174" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_139" >
-        <dc:Bounds x="484" y="68" width="48" height="48" />
+        <dc:Bounds x="486" y="67" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_138" >
-        <dc:Bounds x="584" y="69" width="48" height="48" />
+        <dc:Bounds x="585" y="68" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_141" >
+        <dc:Bounds x="1330" y="162" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_140" >
-        <dc:Bounds x="1443" y="177" width="48" height="48" />
+        <dc:Bounds x="1444" y="162" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_6" >
         <dc:Bounds x="296" y="174" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_142" >
+        <dc:Bounds x="1573" y="303" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_7" >
         <dc:Bounds x="272" y="68" width="100" height="48" />
@@ -1819,13 +1792,13 @@ return false;</conditionExpression>
         <dc:Bounds x="486" y="174" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_10" >
-        <dc:Bounds x="610" y="233" width="99" height="48" />
+        <dc:Bounds x="635" y="233" width="141" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_11" >
-        <dc:Bounds x="608" y="301" width="100" height="52" />
+        <dc:Bounds x="638" y="305" width="145" height="45" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_12" >
-        <dc:Bounds x="608" y="374" width="100" height="47" />
+        <dc:Bounds x="639" y="372" width="139" height="47" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_13" >
         <dc:Bounds x="486" y="302" width="48" height="48" />
@@ -1834,187 +1807,202 @@ return false;</conditionExpression>
         <dc:Bounds x="3279" y="115" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_15" >
-        <dc:Bounds x="768" y="299" width="48" height="48" />
+        <dc:Bounds x="883" y="303" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_17" >
-        <dc:Bounds x="871" y="299" width="48" height="48" />
+        <dc:Bounds x="1013" y="303" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_152" >
+        <dc:Bounds x="4338" y="288" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_153" >
+        <dc:Bounds x="4536" y="286" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_19" >
-        <dc:Bounds x="847" y="174" width="100" height="48" />
+        <dc:Bounds x="987" y="173" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_154" >
+        <dc:Bounds x="4660" y="289" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_155" >
+        <dc:Bounds x="5231" y="187" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_156" >
+        <dc:Bounds x="5202" y="288" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_21" >
         <dc:Bounds x="719" y="71" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_23" >
-        <dc:Bounds x="1114" y="232" width="102" height="48" />
+      <bpmndi:BPMNShape bpmnElement="_157" >
+        <dc:Bounds x="5255" y="55" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_158" >
+        <dc:Bounds x="5128" y="55" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_159" >
+        <dc:Bounds x="5425" y="288" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_22" >
         <dc:Bounds x="720" y="174" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_25" >
-        <dc:Bounds x="1118" y="361" width="100" height="50" />
+      <bpmndi:BPMNShape bpmnElement="_144" >
+        <dc:Bounds x="2184" y="232" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_27" >
-        <dc:Bounds x="1283" y="298" width="48" height="48" />
+      <bpmndi:BPMNShape bpmnElement="_145" >
+        <dc:Bounds x="1181" y="302" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_26" >
-        <dc:Bounds x="999" y="299" width="48" height="48" />
+      <bpmndi:BPMNShape bpmnElement="_146" >
+        <dc:Bounds x="2976" y="116" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_147" >
+        <dc:Bounds x="2689" y="153" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_148" >
+        <dc:Bounds x="2814" y="153" width="100" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_29" >
-        <dc:Bounds x="1570" y="177" width="100" height="48" />
+        <dc:Bounds x="1547" y="162" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_149" >
+        <dc:Bounds x="2838" y="34" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_28" >
-        <dc:Bounds x="1418" y="297" width="100" height="48" />
+        <dc:Bounds x="1156" y="163" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_150" >
+        <dc:Bounds x="4508" y="114" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_151" >
+        <dc:Bounds x="4364" y="200" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_34" >
-        <dc:Bounds x="1751" y="176" width="100" height="48" />
+        <dc:Bounds x="1700" y="303" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_168" >
+        <dc:Bounds x="5426" y="474" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_33" >
-        <dc:Bounds x="1417" y="73" width="100" height="48" />
+        <dc:Bounds x="1419" y="70" width="100" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_36" >
-        <dc:Bounds x="1775" y="74" width="48" height="48" />
+        <dc:Bounds x="1725" y="72" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_37" >
-        <dc:Bounds x="1943" y="74" width="48" height="48" />
+        <dc:Bounds x="1867" y="72" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_163" >
+        <dc:Bounds x="4535" y="493" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_43" >
-        <dc:Bounds x="2323" y="5" width="48" height="48" />
+        <dc:Bounds x="2318" y="71" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_161" >
+        <dc:Bounds x="4002" y="4" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_40" >
-        <dc:Bounds x="1776" y="4" width="48" height="48" />
+        <dc:Bounds x="1725" y="-19" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_160" >
+        <dc:Bounds x="1645" y="4" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_41" >
-        <dc:Bounds x="2093" y="74" width="127" height="48" />
+        <dc:Bounds x="1992" y="71" width="127" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_167" >
+        <dc:Bounds x="5424" y="384" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_166" >
+        <dc:Bounds x="3154" y="494" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_47" >
-        <dc:Bounds x="2475" y="165" width="100" height="48" />
+        <dc:Bounds x="2410" y="154" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_165" >
+        <dc:Bounds x="4684" y="366" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_44" >
-        <dc:Bounds x="2322" y="73" width="48" height="48" />
+        <dc:Bounds x="2182" y="70" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_50" >
-        <dc:Bounds x="2745" y="225" width="48" height="48" />
+      <bpmndi:BPMNShape bpmnElement="_164" >
+        <dc:Bounds x="4535" y="365" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_49" >
-        <dc:Bounds x="2322" y="225" width="48" height="48" />
+        <dc:Bounds x="2310" y="232" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_48" >
-        <dc:Bounds x="2478" y="295" width="100" height="48" />
+        <dc:Bounds x="2374" y="315" width="159" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_55" >
-        <dc:Bounds x="3074" y="225" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_54" >
-        <dc:Bounds x="2868" y="225" width="100" height="48" />
+        <dc:Bounds x="2976" y="314" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_59" >
-        <dc:Bounds x="3048" y="115" width="100" height="48" />
+        <dc:Bounds x="3132" y="117" width="100" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_58" >
-        <dc:Bounds x="3076" y="338" width="48" height="48" />
+        <dc:Bounds x="3105" y="315" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_57" >
-        <dc:Bounds x="2666" y="70" width="48" height="48" />
+        <dc:Bounds x="2582" y="51" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_56" >
-        <dc:Bounds x="2664" y="165" width="48" height="48" />
+        <dc:Bounds x="2581" y="153" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_62" >
-        <dc:Bounds x="3427" y="116" width="93" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_68" >
-        <dc:Bounds x="3619" y="106" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_69" >
-        <dc:Bounds x="3871" y="199" width="100" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_70" >
-        <dc:Bounds x="3869" y="283" width="100" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_71" >
-        <dc:Bounds x="3623" y="33" width="48" height="48" />
+        <dc:Bounds x="3427" y="116" width="156" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_64" >
-        <dc:Bounds x="3452" y="244" width="48" height="48" />
+        <dc:Bounds x="3655" y="114" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_65" >
-        <dc:Bounds x="3453" y="372" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_66" >
-        <dc:Bounds x="3620" y="244" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_67" >
-        <dc:Bounds x="3748" y="244" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_76" >
-        <dc:Bounds x="4036" y="107" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_72" >
-        <dc:Bounds x="4036" y="241" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_74" >
-        <dc:Bounds x="4168" y="108" width="100" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_75" >
-        <dc:Bounds x="3866" y="108" width="100" height="48" />
+        <dc:Bounds x="3656" y="233" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_84" >
-        <dc:Bounds x="4353" y="251" width="48" height="48" />
+        <dc:Bounds x="4003" y="114" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_87" >
-        <dc:Bounds x="4613" y="200" width="100" height="48" />
+        <dc:Bounds x="4133" y="114" width="152" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_86" >
-        <dc:Bounds x="4181" y="252" width="48" height="48" />
+        <dc:Bounds x="4004" y="248" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_80" >
-        <dc:Bounds x="4331" y="110" width="100" height="44" />
+        <dc:Bounds x="3829" y="116" width="100" height="44" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_94" >
-        <dc:Bounds x="4786" y="200" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_89" >
-        <dc:Bounds x="4497" y="251" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_88" >
-        <dc:Bounds x="4614" y="290" width="100" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_91" >
-        <dc:Bounds x="4785" y="289" width="48" height="48" />
+        <dc:Bounds x="4363" y="113" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_102" >
-        <dc:Bounds x="5105" y="288" width="48" height="48" />
+        <dc:Bounds x="4938" y="289" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_103" >
-        <dc:Bounds x="5209" y="289" width="100" height="48" />
+        <dc:Bounds x="5067" y="290" width="100" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_100" >
-        <dc:Bounds x="5106" y="176" width="48" height="48" />
+        <dc:Bounds x="4939" y="177" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_99" >
-        <dc:Bounds x="4784" y="102" width="48" height="48" />
+        <dc:Bounds x="4660" y="114" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_96" >
-        <dc:Bounds x="4936" y="289" width="100" height="48" />
+        <dc:Bounds x="4798" y="289" width="100" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_110" >
-        <dc:Bounds x="5401" y="117" width="100" height="48" />
+        <dc:Bounds x="5399" y="56" width="100" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_107" >
-        <dc:Bounds x="5210" y="118" width="100" height="48" />
+        <dc:Bounds x="5233" y="385" width="100" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_116" >
-        <dc:Bounds x="5424" y="419" width="48" height="48" />
+        <dc:Bounds x="5584" y="158" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_115" >
-        <dc:Bounds x="5597" y="290" width="100" height="48" />
+        <dc:Bounds x="5618" y="287" width="100" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_114" >
-        <dc:Bounds x="5426" y="289" width="48" height="48" />
+        <dc:Bounds x="5425" y="158" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_127" >
-        <dc:Bounds x="5623" y="118" width="48" height="48" />
+        <dc:Bounds x="5645" y="116" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="_1-_136" >
         <di:waypoint x="65" y="198" />
@@ -2022,23 +2010,31 @@ return false;</conditionExpression>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_7-_139" >
         <di:waypoint x="322" y="92" />
-        <di:waypoint x="508" y="92" />
+        <di:waypoint x="510" y="91" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_139-_138" >
-        <di:waypoint x="508" y="92" />
-        <di:waypoint x="608" y="93" />
+        <di:waypoint x="510" y="91" />
+        <di:waypoint x="609" y="92" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_28-_140" >
-        <di:waypoint x="1468" y="321" />
-        <di:waypoint x="1467" y="201" />
+      <bpmndi:BPMNEdge bpmnElement="_28-_141" >
+        <di:waypoint x="1206" y="187" />
+        <di:waypoint x="1354" y="186" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_33-_140" >
-        <di:waypoint x="1467" y="97" />
-        <di:waypoint x="1467" y="201" />
+        <di:waypoint x="1469" y="94" />
+        <di:waypoint x="1468" y="186" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_141-_140" >
+        <di:waypoint x="1354" y="186" />
+        <di:waypoint x="1468" y="186" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_136-_6" >
         <di:waypoint x="185" y="198" />
         <di:waypoint x="320" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_29-_142" >
+        <di:waypoint x="1597" y="186" />
+        <di:waypoint x="1597" y="327" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_6-_7" >
         <di:waypoint x="320" y="198" />
@@ -2053,315 +2049,351 @@ return false;</conditionExpression>
         <di:waypoint x="510" y="198" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_139-_8" >
-        <di:waypoint x="508" y="92" />
+        <di:waypoint x="510" y="91" />
         <di:waypoint x="510" y="198" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_13-_10" >
         <di:waypoint x="510" y="326" />
-        <di:waypoint x="659" y="257" />
+        <di:waypoint x="705" y="257" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_13-_11" >
         <di:waypoint x="510" y="326" />
-        <di:waypoint x="658" y="327" />
+        <di:waypoint x="710" y="327" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_13-_12" >
         <di:waypoint x="510" y="326" />
-        <di:waypoint x="658" y="397" />
+        <di:waypoint x="708" y="395" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_8-_13" >
         <di:waypoint x="510" y="198" />
         <di:waypoint x="510" y="326" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_59-_135" >
-        <di:waypoint x="3098" y="139" />
+        <di:waypoint x="3182" y="141" />
         <di:waypoint x="3303" y="139" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_37-_135" >
-        <di:waypoint x="1967" y="98" />
-        <di:waypoint x="1968" y="403" />
-        <di:waypoint x="3305" y="403" />
+        <di:waypoint x="1891" y="96" />
+        <di:waypoint x="1891" y="396" />
+        <di:waypoint x="3303" y="397" />
+        <di:waypoint x="3303" y="139" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_136-_135" >
+        <di:waypoint x="185" y="198" />
+        <di:waypoint x="187" y="438" />
+        <di:waypoint x="1562" y="432" />
+        <di:waypoint x="3088" y="432" />
         <di:waypoint x="3303" y="139" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_10-_15" >
-        <di:waypoint x="659" y="257" />
-        <di:waypoint x="792" y="323" />
+        <di:waypoint x="705" y="257" />
+        <di:waypoint x="907" y="327" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_11-_15" >
-        <di:waypoint x="658" y="327" />
-        <di:waypoint x="792" y="323" />
+        <di:waypoint x="710" y="327" />
+        <di:waypoint x="907" y="327" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_12-_15" >
-        <di:waypoint x="658" y="397" />
-        <di:waypoint x="792" y="323" />
+        <di:waypoint x="708" y="395" />
+        <di:waypoint x="907" y="327" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_15-_17" >
-        <di:waypoint x="792" y="323" />
-        <di:waypoint x="895" y="323" />
+        <di:waypoint x="907" y="327" />
+        <di:waypoint x="1037" y="327" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_151-_152" >
+        <di:waypoint x="4388" y="224" />
+        <di:waypoint x="4388" y="312" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_152-_153" >
+        <di:waypoint x="4388" y="312" />
+        <di:waypoint x="4560" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_151-_153" >
+        <di:waypoint x="4388" y="224" />
+        <di:waypoint x="4560" y="310" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_17-_19" >
-        <di:waypoint x="895" y="323" />
-        <di:waypoint x="897" y="198" />
+        <di:waypoint x="1037" y="327" />
+        <di:waypoint x="1037" y="197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_165-_154" >
+        <di:waypoint x="4708" y="390" />
+        <di:waypoint x="4710" y="313" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_156-_155" >
+        <di:waypoint x="5226" y="312" />
+        <di:waypoint x="5281" y="211" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_103-_156" >
+        <di:waypoint x="5117" y="314" />
+        <di:waypoint x="5226" y="312" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_22-_21" >
         <di:waypoint x="744" y="198" />
         <di:waypoint x="743" y="95" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_26-_23" >
-        <di:waypoint x="1023" y="323" />
-        <di:waypoint x="1165" y="256" />
+      <bpmndi:BPMNEdge bpmnElement="_155-_157" >
+        <di:waypoint x="5281" y="211" />
+        <di:waypoint x="5279" y="79" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_157-_158" >
+        <di:waypoint x="5279" y="79" />
+        <di:waypoint x="5152" y="79" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_114-_159" >
+        <di:waypoint x="5449" y="182" />
+        <di:waypoint x="5449" y="312" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_167-_159" >
+        <di:waypoint x="5448" y="408" />
+        <di:waypoint x="5449" y="312" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_19-_22" >
-        <di:waypoint x="897" y="198" />
+        <di:waypoint x="1037" y="197" />
         <di:waypoint x="744" y="198" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_26-_25" >
-        <di:waypoint x="1023" y="323" />
-        <di:waypoint x="1168" y="386" />
+      <bpmndi:BPMNEdge bpmnElement="_44-_144" >
+        <di:waypoint x="2206" y="94" />
+        <di:waypoint x="2208" y="256" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_23-_27" >
-        <di:waypoint x="1165" y="256" />
-        <di:waypoint x="1307" y="322" />
+      <bpmndi:BPMNEdge bpmnElement="_160-_144" >
+        <di:waypoint x="1669" y="28" />
+        <di:waypoint x="1669" y="256" />
+        <di:waypoint x="2208" y="256" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_25-_27" >
-        <di:waypoint x="1168" y="386" />
-        <di:waypoint x="1307" y="322" />
+      <bpmndi:BPMNEdge bpmnElement="_17-_145" >
+        <di:waypoint x="1037" y="327" />
+        <di:waypoint x="1205" y="326" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_17-_26" >
-        <di:waypoint x="895" y="323" />
-        <di:waypoint x="1023" y="323" />
+      <bpmndi:BPMNEdge bpmnElement="_142-_145" >
+        <di:waypoint x="1597" y="327" />
+        <di:waypoint x="1205" y="326" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_55-_146" >
+        <di:waypoint x="3000" y="338" />
+        <di:waypoint x="3000" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_149-_146" >
+        <di:waypoint x="2862" y="58" />
+        <di:waypoint x="3000" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_56-_147" >
+        <di:waypoint x="2605" y="177" />
+        <di:waypoint x="2713" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_147-_148" >
+        <di:waypoint x="2713" y="177" />
+        <di:waypoint x="2864" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_140-_29" >
-        <di:waypoint x="1467" y="201" />
-        <di:waypoint x="1620" y="201" />
+        <di:waypoint x="1468" y="186" />
+        <di:waypoint x="1597" y="186" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_27-_28" >
-        <di:waypoint x="1307" y="322" />
-        <di:waypoint x="1369" y="321" />
-        <di:waypoint x="1468" y="321" />
+      <bpmndi:BPMNEdge bpmnElement="_147-_149" >
+        <di:waypoint x="2713" y="177" />
+        <di:waypoint x="2862" y="58" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_29-_34" >
-        <di:waypoint x="1620" y="201" />
-        <di:waypoint x="1801" y="200" />
+      <bpmndi:BPMNEdge bpmnElement="_148-_149" >
+        <di:waypoint x="2864" y="177" />
+        <di:waypoint x="2862" y="58" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_145-_28" >
+        <di:waypoint x="1205" y="326" />
+        <di:waypoint x="1206" y="187" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_94-_150" >
+        <di:waypoint x="4387" y="137" />
+        <di:waypoint x="4558" y="138" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_94-_151" >
+        <di:waypoint x="4387" y="137" />
+        <di:waypoint x="4388" y="224" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_142-_34" >
+        <di:waypoint x="1597" y="327" />
+        <di:waypoint x="1750" y="327" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_167-_168" >
+        <di:waypoint x="5448" y="408" />
+        <di:waypoint x="5450" y="498" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_36-_33" >
-        <di:waypoint x="1799" y="98" />
-        <di:waypoint x="1467" y="97" />
+        <di:waypoint x="1749" y="96" />
+        <di:waypoint x="1469" y="94" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_34-_36" >
-        <di:waypoint x="1801" y="200" />
-        <di:waypoint x="1799" y="98" />
+        <di:waypoint x="1750" y="327" />
+        <di:waypoint x="1749" y="96" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_36-_37" >
-        <di:waypoint x="1799" y="98" />
-        <di:waypoint x="1967" y="98" />
+        <di:waypoint x="1749" y="96" />
+        <di:waypoint x="1891" y="96" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_164-_163" >
+        <di:waypoint x="4559" y="389" />
+        <di:waypoint x="4559" y="517" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_166-_163" >
+        <di:waypoint x="3178" y="518" />
+        <di:waypoint x="4559" y="517" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_44-_43" >
-        <di:waypoint x="2346" y="97" />
-        <di:waypoint x="2347" y="29" />
+        <di:waypoint x="2206" y="94" />
+        <di:waypoint x="2342" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_84-_161" >
+        <di:waypoint x="4027" y="138" />
+        <di:waypoint x="4026" y="28" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_160-_161" >
+        <di:waypoint x="1669" y="28" />
+        <di:waypoint x="4026" y="28" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_36-_40" >
-        <di:waypoint x="1799" y="98" />
-        <di:waypoint x="1800" y="28" />
+        <di:waypoint x="1749" y="96" />
+        <di:waypoint x="1749" y="5" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_141-_160" >
+        <di:waypoint x="1354" y="186" />
+        <di:waypoint x="1356" y="26" />
+        <di:waypoint x="1669" y="28" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_37-_41" >
-        <di:waypoint x="1967" y="98" />
-        <di:waypoint x="2156" y="98" />
+        <di:waypoint x="1891" y="96" />
+        <di:waypoint x="2055" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_107-_167" >
+        <di:waypoint x="5283" y="409" />
+        <di:waypoint x="5448" y="408" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_146-_166" >
+        <di:waypoint x="3000" y="140" />
+        <di:waypoint x="3178" y="518" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_49-_47" >
-        <di:waypoint x="2346" y="249" />
-        <di:waypoint x="2525" y="189" />
+        <di:waypoint x="2334" y="256" />
+        <di:waypoint x="2460" y="178" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_163-_165" >
+        <di:waypoint x="4559" y="517" />
+        <di:waypoint x="4708" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_164-_165" >
+        <di:waypoint x="4559" y="389" />
+        <di:waypoint x="4708" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_41-_44" >
-        <di:waypoint x="2156" y="98" />
-        <di:waypoint x="2346" y="97" />
+        <di:waypoint x="2055" y="95" />
+        <di:waypoint x="2206" y="94" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_48-_50" >
-        <di:waypoint x="2528" y="319" />
-        <di:waypoint x="2769" y="249" />
+      <bpmndi:BPMNEdge bpmnElement="_153-_164" >
+        <di:waypoint x="4560" y="310" />
+        <di:waypoint x="4559" y="389" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_56-_50" >
-        <di:waypoint x="2688" y="189" />
-        <di:waypoint x="2769" y="249" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_44-_49" >
-        <di:waypoint x="2346" y="97" />
-        <di:waypoint x="2346" y="249" />
+      <bpmndi:BPMNEdge bpmnElement="_144-_49" >
+        <di:waypoint x="2208" y="256" />
+        <di:waypoint x="2334" y="256" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_49-_48" >
-        <di:waypoint x="2346" y="249" />
-        <di:waypoint x="2528" y="319" />
+        <di:waypoint x="2334" y="256" />
+        <di:waypoint x="2453" y="339" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_54-_55" >
-        <di:waypoint x="2918" y="249" />
-        <di:waypoint x="3098" y="249" />
+      <bpmndi:BPMNEdge bpmnElement="_48-_55" >
+        <di:waypoint x="2453" y="339" />
+        <di:waypoint x="3000" y="338" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_50-_54" >
-        <di:waypoint x="2769" y="249" />
-        <di:waypoint x="2918" y="249" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_55-_59" >
-        <di:waypoint x="3098" y="249" />
-        <di:waypoint x="3098" y="139" />
+      <bpmndi:BPMNEdge bpmnElement="_166-_59" >
+        <di:waypoint x="3178" y="518" />
+        <di:waypoint x="3182" y="141" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_55-_58" >
-        <di:waypoint x="3098" y="249" />
-        <di:waypoint x="3100" y="362" />
+        <di:waypoint x="3000" y="338" />
+        <di:waypoint x="3129" y="339" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_56-_57" >
-        <di:waypoint x="2688" y="189" />
-        <di:waypoint x="2690" y="94" />
+        <di:waypoint x="2605" y="177" />
+        <di:waypoint x="2606" y="75" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_47-_56" >
-        <di:waypoint x="2525" y="189" />
-        <di:waypoint x="2688" y="189" />
+        <di:waypoint x="2460" y="178" />
+        <di:waypoint x="2605" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_135-_62" >
         <di:waypoint x="3303" y="139" />
-        <di:waypoint x="3473" y="140" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_75-_68" >
-        <di:waypoint x="3916" y="132" />
-        <di:waypoint x="3643" y="130" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_67-_69" >
-        <di:waypoint x="3772" y="268" />
-        <di:waypoint x="3921" y="223" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_67-_70" >
-        <di:waypoint x="3772" y="268" />
-        <di:waypoint x="3919" y="307" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_68-_71" >
-        <di:waypoint x="3643" y="130" />
-        <di:waypoint x="3647" y="57" />
+        <di:waypoint x="3505" y="140" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_62-_64" >
-        <di:waypoint x="3473" y="140" />
-        <di:waypoint x="3476" y="268" />
+        <di:waypoint x="3505" y="140" />
+        <di:waypoint x="3679" y="138" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_64-_65" >
-        <di:waypoint x="3476" y="268" />
-        <di:waypoint x="3477" y="396" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_64-_66" >
-        <di:waypoint x="3476" y="268" />
-        <di:waypoint x="3644" y="268" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_68-_66" >
-        <di:waypoint x="3643" y="130" />
-        <di:waypoint x="3644" y="268" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_136-_66" >
-        <di:waypoint x="185" y="198" />
-        <di:waypoint x="187" y="438" />
-        <di:waypoint x="1562" y="432" />
-        <di:waypoint x="3245" y="432" />
-        <di:waypoint x="3643" y="432" />
-        <di:waypoint x="3644" y="268" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_66-_67" >
-        <di:waypoint x="3644" y="268" />
-        <di:waypoint x="3772" y="268" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_72-_76" >
-        <di:waypoint x="4060" y="265" />
-        <di:waypoint x="4060" y="131" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_69-_72" >
-        <di:waypoint x="3921" y="223" />
-        <di:waypoint x="4060" y="265" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_70-_72" >
-        <di:waypoint x="3919" y="307" />
-        <di:waypoint x="4060" y="265" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_76-_74" >
-        <di:waypoint x="4060" y="131" />
-        <di:waypoint x="4218" y="132" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_76-_75" >
-        <di:waypoint x="4060" y="131" />
-        <di:waypoint x="3916" y="132" />
+        <di:waypoint x="3679" y="138" />
+        <di:waypoint x="3680" y="257" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_80-_84" >
-        <di:waypoint x="4381" y="132" />
-        <di:waypoint x="4377" y="275" />
+        <di:waypoint x="3879" y="138" />
+        <di:waypoint x="4027" y="138" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_89-_87" >
-        <di:waypoint x="4521" y="275" />
-        <di:waypoint x="4663" y="224" />
+      <bpmndi:BPMNEdge bpmnElement="_161-_87" >
+        <di:waypoint x="4026" y="28" />
+        <di:waypoint x="4209" y="138" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_84-_86" >
-        <di:waypoint x="4377" y="275" />
-        <di:waypoint x="4205" y="276" />
+        <di:waypoint x="4027" y="138" />
+        <di:waypoint x="4028" y="272" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_74-_80" >
-        <di:waypoint x="4218" y="132" />
-        <di:waypoint x="4381" y="132" />
+      <bpmndi:BPMNEdge bpmnElement="_64-_80" >
+        <di:waypoint x="3679" y="138" />
+        <di:waypoint x="3879" y="138" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_87-_94" >
-        <di:waypoint x="4663" y="224" />
-        <di:waypoint x="4810" y="224" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_84-_89" >
-        <di:waypoint x="4377" y="275" />
-        <di:waypoint x="4521" y="275" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_89-_88" >
-        <di:waypoint x="4521" y="275" />
-        <di:waypoint x="4664" y="314" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_88-_91" >
-        <di:waypoint x="4664" y="314" />
-        <di:waypoint x="4809" y="313" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_94-_91" >
-        <di:waypoint x="4810" y="224" />
-        <di:waypoint x="4809" y="313" />
+        <di:waypoint x="4209" y="138" />
+        <di:waypoint x="4387" y="137" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_96-_102" >
-        <di:waypoint x="4986" y="313" />
-        <di:waypoint x="5129" y="312" />
+        <di:waypoint x="4848" y="313" />
+        <di:waypoint x="4962" y="313" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_102-_103" >
-        <di:waypoint x="5129" y="312" />
-        <di:waypoint x="5259" y="313" />
+        <di:waypoint x="4962" y="313" />
+        <di:waypoint x="5117" y="314" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_102-_100" >
-        <di:waypoint x="5129" y="312" />
-        <di:waypoint x="5130" y="200" />
+        <di:waypoint x="4962" y="313" />
+        <di:waypoint x="4963" y="201" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_94-_99" >
-        <di:waypoint x="4810" y="224" />
-        <di:waypoint x="4808" y="126" />
+      <bpmndi:BPMNEdge bpmnElement="_150-_99" >
+        <di:waypoint x="4558" y="138" />
+        <di:waypoint x="4684" y="138" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_91-_96" >
-        <di:waypoint x="4809" y="313" />
-        <di:waypoint x="4986" y="313" />
+      <bpmndi:BPMNEdge bpmnElement="_154-_96" >
+        <di:waypoint x="4710" y="313" />
+        <di:waypoint x="4848" y="313" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_107-_110" >
-        <di:waypoint x="5260" y="142" />
-        <di:waypoint x="5451" y="141" />
+      <bpmndi:BPMNEdge bpmnElement="_157-_110" >
+        <di:waypoint x="5279" y="79" />
+        <di:waypoint x="5449" y="80" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_103-_107" >
-        <di:waypoint x="5259" y="313" />
-        <di:waypoint x="5260" y="142" />
+      <bpmndi:BPMNEdge bpmnElement="_156-_107" >
+        <di:waypoint x="5226" y="312" />
+        <di:waypoint x="5283" y="409" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_114-_116" >
-        <di:waypoint x="5450" y="313" />
-        <di:waypoint x="5448" y="443" />
+        <di:waypoint x="5449" y="182" />
+        <di:waypoint x="5608" y="182" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_114-_115" >
-        <di:waypoint x="5450" y="313" />
-        <di:waypoint x="5647" y="314" />
+      <bpmndi:BPMNEdge bpmnElement="_159-_115" >
+        <di:waypoint x="5449" y="312" />
+        <di:waypoint x="5668" y="311" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_110-_114" >
-        <di:waypoint x="5451" y="141" />
-        <di:waypoint x="5450" y="313" />
+        <di:waypoint x="5449" y="80" />
+        <di:waypoint x="5449" y="182" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_115-_127" >
-        <di:waypoint x="5647" y="314" />
-        <di:waypoint x="5647" y="142" />
+        <di:waypoint x="5668" y="311" />
+        <di:waypoint x="5669" y="140" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
