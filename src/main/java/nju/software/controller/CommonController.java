@@ -1,8 +1,10 @@
 package nju.software.controller;
 
 import net.sf.json.JSONObject;
+import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Craft;
 import nju.software.dataobject.Order;
 import nju.software.service.impl.BuyServiceImpl;
 import nju.software.service.impl.DesignServiceImpl;
@@ -60,7 +62,13 @@ public class CommonController {
 				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 		map.put(DesignServiceImpl.TASK_CONFIRM_DESIGN,
 				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
-
+		map.put(DesignServiceImpl.TASK_CRAFT_SAMPLE,
+				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+		map.put(DesignServiceImpl.TASK_CRAFT_PRODUCT,
+				DesignServiceImpl.ACTOR_DESIGN_MANAGER);		
+		map.put(DesignServiceImpl.TASK_TYPESETTING_SLICE, 
+				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+		
 		map.put(BuyServiceImpl.TASK_VERIFY_PURCHASE,
 				BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
 		map.put(BuyServiceImpl.TASK_COMPUTE_PURCHASE_COST,
@@ -85,6 +93,9 @@ public class CommonController {
 				FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
 		map.put(FinanceServiceImpl.TASK_CONFIRM_DEPOSIT,
 				FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
+		map.put(FinanceServiceImpl.TASK_RETURN_DEPOSIT, 
+				FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
+
 		map.put(FinanceServiceImpl.TASK_CONFIRM_FINAL_PAYMENT,
 				FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
 
@@ -123,6 +134,7 @@ public class CommonController {
 			map.put(MarketServiceImpl.TASK_CONFIRM_PRODUCE_ORDER, actorId);
 			map.put(MarketServiceImpl.TASK_MODIFY_PRODUCE_ORDER, actorId);
 			map.put(MarketServiceImpl.TASK_SIGN_CONTRACT, actorId);
+			map.put(MarketServiceImpl.TASK_PUSH_REST, actorId);
 			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER, number);
 		}
 
@@ -139,6 +151,7 @@ public class CommonController {
 		response.setContentType("image/jpg"); // 设置返回的文件类型
 		Integer orderId =Integer.parseInt(request.getParameter("orderId"));
 		Order order=orderDAO.findById(orderId);
+		Craft craft = craftDAO.findByOrderId(orderId).get(0);
 		String type = request.getParameter("type");
 		String file = null;
 		if (type.equals("sample")) {
@@ -149,9 +162,12 @@ public class CommonController {
 			file = order.getConfirmDepositFile();
 		}else if(type.equals("confirmFinalPaymentFile")){
 			file = order.getConfirmFinalPaymentFile();
+		}else if(type.equals("craftFileUrl")){
+			file = craft.getCraftFileUrl();
 		}else {
 			file = order.getReferencePicture();
 		}
+		
 		try {
 			DataInputStream in = new DataInputStream(new FileInputStream(file));
 			OutputStream os = response.getOutputStream();
@@ -225,4 +241,6 @@ public class CommonController {
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired
 	private OrderDAO orderDAO;
+	@Autowired
+	private CraftDAO craftDAO;
 }

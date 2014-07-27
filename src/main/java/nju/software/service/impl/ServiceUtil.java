@@ -123,10 +123,8 @@ public class ServiceUtil {
 		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
 		model.put("sample", produceDAO.findByExample(produce));
-
 		produce.setType(Produce.TYPE_PRODUCE);
 		model.put("produce", produceDAO.findByExample(produce));
-
 		model.put("versions", versionDataDAO.findByOrderId(orderId));
 		return model;
 	}

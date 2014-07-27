@@ -37,11 +37,20 @@
 					</div>
 				</div>
 			</div>
+			<div class="tab-pane" id="comment">
+						<table
+							class="table table-striped table-bordered table-hover detail">
+							<tr>
+								<td class="title">主管审核意见</td>
+								<td colspan="5">${verifyQuoteComment }</td>
+							</tr>
+ 
+						</table>
+					</div>
 			<div class="action">
 				<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
-				<input type="hidden" name="order_id"
-					value="${orderInfo.quote.orderId }" /> <input type="hidden"
-					name="processId" value="${orderInfo.task.processInstanceId}" />
+				<input type="hidden" name="order_id" value="${orderInfo.quote.orderId }" /> 
+				<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 				<button class="btn btn-primary btn-rounded">
 					<i class="icon-ok icon-white"></i>确定
 				</button>

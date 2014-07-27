@@ -6,8 +6,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import nju.software.dataobject.Accessory;
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
@@ -15,8 +17,13 @@ import nju.software.dataobject.Logistics;
 import nju.software.model.OrderInfo;
 import nju.software.service.BuyService;
 import nju.software.service.EmployeeService;
+import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.JbpmTest;
+import nju.software.service.impl.MarketServiceImpl;
+import nju.software.util.JbpmAPIUtil;
 
+import org.jbpm.task.query.TaskSummary;
+import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -304,8 +311,23 @@ public class BuyController {
 	public String purchaseSampleMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
+		String processId = request.getParameter("processId");
 		boolean result = request.getParameter("result").equals("1");
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");		 
+ 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+				.getKsession().getProcessInstance(Long.parseLong(processId));
+		String needCraft =  (String) process.getVariable("needCraft");
+		
+//		String needCraft = 
+//				(String)jbpmAPIUtil.getVariable(
+//				jbpmAPIUtil.getTask(account.getAccountId()+"", long_taskId),
+//				DesignServiceImpl.RESULT_NEED_CRAFT);
+		boolean needcraft = (needCraft.equals("true"))?true:false;
+		
+//		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
+		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result,needcraft);
+
 		return "forward:/buy/purchaseSampleMaterialList.do";
 	}
 
@@ -433,4 +455,6 @@ public class BuyController {
 	private BuyService buyService;
 	@Autowired
 	private JbpmTest jbpmTest;
+	@Autowired
+	private JbpmAPIUtil jbpmAPIUtil;
 }

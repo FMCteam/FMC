@@ -49,4 +49,9 @@ public interface FinanceService {
 			String actorId, String ordernumber, String customername,
 			String stylename, String startdate, String enddate,
 			Integer[] employeeIds);
+
+	public List<Map<String, Object>> getReturnDepositList(String actorId);
+
+	public Map<String, Object> getReturnDepositDetail(String actorId,
+			int orderId);
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
@@ -21,6 +22,7 @@ import nju.software.dao.impl.QuoteDAO;
 import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Craft;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
@@ -124,6 +126,19 @@ public class DesignServiceImpl implements DesignService {
 		}
 	}
 
+	@Override
+	public boolean produceSampleSubmit(long taskId, boolean result) {
+ 		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PRODUCE, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	// ===========================修改版型=================================
 	@Override
 	public List<Map<String, Object>> getModifyDesignList() {
@@ -192,7 +207,100 @@ public class DesignServiceImpl implements DesignService {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CONFIRM_DESIGN);
 	}
-
+	
+	
+    //获得需要工艺制作的大货订单列表
+	@Override
+	public List<Map<String, Object>> getNeedCraftList() {
+		// TODO Auto-generated method stub
+		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CRAFT_PRODUCT);
+	}
+	 //获得需要工艺制作的大货订单
+	@Override
+	public Map<String, Object> getNeedCraftProductDetail(int orderId) {
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(
+				ACTOR_DESIGN_MANAGER, TASK_CRAFT_PRODUCT, orderId);
+		DesignCad designcad = designCadDAO.findByOrderId(orderId).get(0);
+		model.put("designCadTech", designcad.getCadTech());
+		Craft craft = craftDAO.findByOrderId(orderId).get(0);
+		model.put("sampleCraft", craft);
+		return model;
+	}
+	
+	@Override
+	public void needCraftProductSubmit(int orderId, long taskId) {
+ 		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			
+		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+		}
+	}
+	
+	//获得需要工艺制作的样衣订单列表
+	@Override
+	public List<Map<String, Object>> getNeedCraftSampleList() {
+		// TODO Auto-generated method stub
+		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CRAFT_SAMPLE);
+	}
+	//获得需要工艺制作的样衣订单
+	@Override
+	public Map<String, Object> getNeedCraftSampleDetail(int orderId) {
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(
+				ACTOR_DESIGN_MANAGER, TASK_CRAFT_SAMPLE, orderId);
+		DesignCad designcad = designCadDAO.findByOrderId(orderId).get(0);
+		model.put("designCadTech", designcad.getCadTech());
+		Craft craft = craftDAO.findByOrderId(orderId).get(0);
+		model.put("sampleCraft", craft);
+		return model;
+	}
+	
+	@Override
+	public void uploadCraftFileSubmit(int orderId, String craftFileUrl) {
+		Craft craft = craftDAO.findByOrderId(orderId).get(0);
+		craft.setCraftFileUrl(craftFileUrl);
+		craftDAO.merge(craft);
+ 
+	}
+	@Override
+	public void needCraftSampleSubmit(int orderId, long taskId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	//获得需要排版切片订单列表
+	@Override
+	public List<Map<String, Object>> getTypeSettingSliceList() {
+		// TODO Auto-generated method stub
+		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_TYPESETTING_SLICE);
+	}
+	
+	//获得需要排版切片订单	
+	@Override
+	public Map<String, Object> getTypeSettingSliceDetail(int orderId) {
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(
+				ACTOR_DESIGN_MANAGER, TASK_TYPESETTING_SLICE, orderId);
+		return model;
+	}
+	
+	@Override
+	public void getTypeSettingSliceSubmit(int orderId, long taskId) {
+ 		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			
+		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public List<Map<String, Object>> getSearchConfirmDesignList(
 			String ordernumber, String customername, String stylename,
@@ -219,15 +327,32 @@ public class DesignServiceImpl implements DesignService {
 	public final static String TASK_UPLOAD_DESIGN = "uploadDegisn";
 	public final static String TASK_MODIFY_DESIGN = "modifyDesign";
 	public final static String TASK_CONFIRM_DESIGN = "confirmDesign";
+	public final static String TASK_CRAFT_SAMPLE = "craftSample";
+	public final static String TASK_CRAFT_PRODUCT = "craft";
+	public final static String TASK_TYPESETTING_SLICE = "typeSettingSlice";
 	public final static String RESULT_DESIGN = "design";
 	public final static String RESULT_DESIGN_COMMENT = "designComment";
-
+    public final static String RESULT_NEED_CRAFT ="needCraft";
+	public final static String RESULT_PRODUCE = "produce";
+    
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
 	@Autowired
 	private ServiceUtil service;
 	@Autowired
 	private DesignCadDAO designCadDAO;
+	@Autowired
+	private CraftDAO craftDAO;
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -276,6 +276,22 @@ public class BuyServiceImpl implements BuyService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result,
+			boolean needcraft) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PURCHASE, result);
+		data.put(RESULT_NEED_CRAFT, needcraft);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	// ===========================采购确认=================================
 	@Override
@@ -387,6 +403,7 @@ public class BuyServiceImpl implements BuyService {
 	public final static String TASK_PURCHASE_MATERIAL = "purchaseMaterial";
 	public final static String RESULT_PURCHASE = "purchase";
 	public final static String RESULT_PURCHASE_COMMENT = "purchaseComment";
+    public final static String RESULT_NEED_CRAFT = "needCraft";
 
 
 

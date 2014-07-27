@@ -136,7 +136,7 @@ function verify(){
  if((FabricName== "")||(FabricAmount== "")||(TearPerMeter== "")||(CostPerMeter== "")||(AccessoryName== "")
 		 ||(AccessoryQuery== "")||(TearPerPiece== "")||(CostPerPiece== "")){
 	 
-	
+//	alert("我是魏恒");
 	  return false;
 	
  }

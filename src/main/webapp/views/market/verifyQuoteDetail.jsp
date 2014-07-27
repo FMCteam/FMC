@@ -3,7 +3,7 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form method="post" action="${ctx}/market/verifyQuoteSubmit.do" onSubmit="return quote_verify()">
+		<form id="verifyQuoteDetailForm" class="verify" method="post" action="${ctx}/market/verifyQuoteSubmit.do" onSubmit="return quote_verify()">
 			<div class="row-fluid" style="min-height:300px;">
 				<!--  如果是其它页面，这里是填充具体的内容。 -->
 				<ul class="nav nav-tabs detail" id="tab">
@@ -36,16 +36,42 @@
 						<%@include file="/views/common/quote_w.jsp"%>
 					</div>
 				</div>
+ 				<table class="table table-striped table-bordered table-hover detail">
+					<tr>
+						<td class="span2">意见</td>
+						<td colspan="6"><textarea class="span12"
+								style="resize:vertical" rows="5" name="suggestion"></textarea></td>
+					</tr>
+					<tr>
+						<td>操作</td>
+						<td colspan="6">
+				            <input type="hidden" name="taskId" value="${orderInfo.task.id}" />
+				            <input type="hidden" name="order_id" value="${orderInfo.quote.orderId }" />
+				            <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+				            <input type="hidden" name="verifyQuoteSuccessVal" id="verifyQuoteSuccess_val" value="" /> 
+				            
+							<a id="agree" class="btn btn-primary btn-rounded">
+								<i class="icon-ok icon-white"></i> 同意</a> 
+							<a id="disagree" class="btn btn-danger btn-rounded">
+								<i class="icon-remove icon-white"></i> 拒绝</a>
+						</td>
+					</tr>
+				</table>
+				
 			</div>
+			<!-- 
+			
+			 -->
+			<!-- 
 			<div class="action">
 				<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
-				<input type="hidden" name="order_id"
-					value="${orderInfo.quote.orderId }" /> <input type="hidden"
-					name="processId" value="${orderInfo.task.processInstanceId}" />
+				<input type="hidden" name="order_id" value="${orderInfo.quote.orderId }" />
+				<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 				<button class="btn btn-primary btn-rounded">
 					<i class="icon-ok icon-white"></i>确定
 				</button>
 			</div>
+			 -->	
 		<button class="btn btn-primary" onclick="history.back();">返回</button>
 		</form>
 	</div>
@@ -72,4 +98,5 @@
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_quote.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript" src="${ctx}/views/market/verifyQuoteDetail.js"></script>
 <%@include file="/common/footer.jsp"%>

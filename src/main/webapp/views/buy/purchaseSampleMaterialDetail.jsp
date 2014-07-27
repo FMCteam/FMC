@@ -55,10 +55,8 @@
 								<td colspan="2">${fabricCost.fabricName }</td>
 								<td colspan="1">${fabricCost.tearPerMeter }</td>
 								<td colspan="1">${orderInfo.order.sampleAmount}</td>
-
 								<td colspan="2">${fabricCost.tearPerMeterSampleAmountProduct }
-								</td>
-								
+								</td>								
 							<!-- 
 							<input class="span12" type="hidden" name="fabricCostTearPerMeter" value="${fabricCost.tearPerMeter }" />			
 		                    <input class="span12" type="hidden" name="orderInfoOrderSampleAmount" value="${orderInfo.order.sampleAmount}" />
@@ -82,7 +80,6 @@
 								<td colspan="2">${accessoryCost.accessoryName }</td>
 								<td colspan="1">${accessoryCost.tearPerPiece }</td>
 								<td colspan="1">${orderInfo.order.sampleAmount}</td>
-
 								<td colspan="2">${accessoryCost.tearPerPieceSampleAmountProduct }
 								</td>
 								<!-- 
@@ -96,12 +93,13 @@
 					</table>
 				    <button class="btn btn-primary" onclick="history.back();">返回</button>
 					<div class="action">
+
 						<a
-							href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1"
+							href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1&processId=${orderInfo.task.processInstanceId}"
 							class="btn btn-primary btn-rounded"><i
 							class="icon-ok icon-white"></i>采购完成 </a><a
 							class="btn btn-danger btn-rounded"
-							href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0"
+							href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0&processId=${orderInfo.task.processInstanceId}"
 							class=""><i class="icon-remove icon-white"></i>采购失败</a>
 					</div>
 
