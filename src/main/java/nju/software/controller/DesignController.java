@@ -109,7 +109,7 @@ public class DesignController {
 	public String computeDesignCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		List<Map<String,Object>> list = designService.getComputeDesignCostList();
+		List<Map<String,Object>> list = designService.getVerifyDesignList();
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "设计工艺验证");
 		model.addAttribute("url", "/design/computeDesignCostDetail.do");

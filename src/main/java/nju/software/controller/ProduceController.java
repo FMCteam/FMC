@@ -134,7 +134,7 @@ public class ProduceController {
 	public String computeProduceCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		List<Map<String,Object>> list=produceService.getComputeProduceCostList();
+		List<Map<String,Object>> list=produceService.getVerifyProduceList();
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "生产成本验证并核算");
 		model.addAttribute("url", "/produce/computeProduceCostDetail.do");

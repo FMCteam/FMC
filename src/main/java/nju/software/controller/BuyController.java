@@ -103,13 +103,13 @@ public class BuyController {
 	public String computePurchaseCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService
-				.getComputePurchaseCostList();
+				.getVerifyPurchaseList();
 		/*if (list.size() == 0) {
 			jbpmTest.completeVerify("1", true);
 			list = buyService.getComputePurchaseCostList();
 		}*/
 		model.addAttribute("list", list);
-		model.addAttribute("taskName", "采购成本核算");
+		model.addAttribute("taskName", "采购成本验证并核算");
 		model.addAttribute("url", "/buy/computePurchaseCostDetail.do");
 		model.addAttribute("searchurl", "/buy/computePurchaseCostListSearch.do");
 
