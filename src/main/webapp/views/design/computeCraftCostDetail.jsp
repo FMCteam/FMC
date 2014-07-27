@@ -6,8 +6,8 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
-				<li class="task-name">生产成本验证并核算</li>
-				<li class="active"><a href="#quote" data-toggle="tab">报价信息</a></li>
+				<li class="task-name">设计工艺验证</li>
+				<li class="active"><a href="#quote" data-toggle="tab">工艺报价</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
@@ -33,44 +33,37 @@
 				</div>
 				<div class="tab-pane  active" id="quote">
 					<form id="costAccounting_form" class="verify"
-						method="post" action="${ctx }/produce/computeProduceCostSubmit.do">
+						method="post" action="${ctx }/produce/computeCraftCostSubmit.do">
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td rowspan="4">生产成本</td>
-								<td>裁剪费用（单位：元）</td>
-								<td>管理费用（单位：元）</td>
-								<td>缝制费用（单位：元）</td>
-								<td>整烫费用（单位：元）</td>
+								<td>客户工艺要求：</td>
+								<td colspan="12">${orderInfo.designCadTech}</td>
 							</tr>
 
 							<tr>
-								<td><input class="span12" name="cut_cost" id="cut_cost"
-									type="text" required="required" /></td>
-								<td><input class="span12" name="manage_cost"
-									id="manage_cost" type="text" required="required" /></td>
-								<td><input class="span12" name="nail_cost" id="nail_cost"
-									type="text" required="required" /></td>
-								<td><input class="span12" name="ironing_cost"
-									id="ironing_cost" type="text" required="required" /></td>
-							</tr>
-
-							<tr>
-								<td>锁订费用（单位：元）</td>
-								<td>包装费用（单位：元）</td>
-								<td>其他费用（单位：元）</td>
-								<td>设计费用（单位：元）</td>
-							</tr>
-
-							<tr>
-								<td><input class="span12" name="swing_cost" id="swing_cost"
-									type="text" required="required" /></td>
-								<td><input class="span12" name="package_cost"
-									id="package_cost" type="text" required="required" /></td>
-								<td><input class="span12" name="other_cost" id="other_cost"
-									type="text" required="required" /></td>
-								<td><input class="span12" name="design_cost"
-									id="design_cost" type="text" required="required" /></td>
+								<td colspan="2">
+									<span>需要工艺：</span><input type="radio" name="needcraft" value="1"  checked="checked"  required="required">
+									<span>不要工艺：</span><input type="radio" name="needcraft" value="0" >
+								</td>
+								<td colspan="2" style="width: 120px; ">印花费（元/件）：
+									<input class="span12" type="text" name="stampDutyMoney" value="0" />
+								</td>
+								<td colspan="2" style="width: 120px; ">水洗吊染费（元/件）：
+									<input class="span12" type="text" name="washHangDyeMoney" value="0"/>
+								</td>
+								<td colspan="2" style="width: 120px; ">激光费（元/件）：
+									<input class="span12" type="text" name="laserMoney" value="0" />
+								</td>
+								<td colspan="2" style="width: 120px; ">刺绣费（元/件）：
+									<input class="span12" type="text" name="embroideryMoney" value="0" />
+								</td>
+								<td colspan="2" style="width: 120px; ">压皱费（元/件）：
+									<input class="span12" type="text" name="crumpleMoney" value="0"/>
+								</td>
+								<td colspan="2" style="width: 120px; ">开版费用（元/件）：
+									<input class="span12"  type="text" name="openVersionMoney" value="0"/>
+								</td>
 							</tr>
 							<tr>
 								<td class="span2">意见</td>
@@ -83,8 +76,8 @@
 	                  	<button class="btn btn-primary" onclick="history.back();">返回</button>
 	                  
 	                  	<div class="action" style="float:right">
-							<input id="disagree" class="btn btn-danger" type="button" value="拒绝生产" /> 
-							<input id="agree" class="btn btn-primary" type="button" value="提交报价" /> 
+							<input id="disagree" class="btn btn-danger" type="button" value="拒绝" /> 
+							<input id="agree" class="btn btn-primary" type="button" value="同意" /> 
 							<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
 							<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
 							<input id="verify_val" type="hidden" name="result" value="false" />
@@ -110,8 +103,7 @@
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <link rel="stylesheet" href="${ctx}/views/produce/cost.css">
-<script type="text/javascript" src="${ctx}/views/produce/cost.js"></script>
-<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
+<script type="text/javascript" src="${ctx}/views/design/designCraft.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <script>
 jQuery(document).ready(function(){

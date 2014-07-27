@@ -97,6 +97,106 @@ public class DesignController {
 		designService.verifyDesignSubmit(taskId, result, comment);
 		return "forward:/design/verifyDesignList.do";
 	}
+	
+	// =========================设计工艺验证===============================
+	
+	@RequestMapping(value = "design/computeDesignCostList.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String computeDesignCostList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		List<Map<String,Object>> list = designService.getComputeDesignCostList();
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "设计工艺验证");
+		model.addAttribute("url", "/design/computeDesignCostDetail.do");
+		model.addAttribute("searchurl", "/design/computeDesignCostListSearch.do");
+
+		return "/design/computeDesignCostList";
+	}
+	
+	@RequestMapping(value = "design/computeDesignCostListSearch.do" )
+	@Transactional(rollbackFor = Exception.class)
+	public String computeProduceCostListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0; i<employeeIds.length; i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String,Object>> list = designService.getSearchComputeDesignCostList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "设计工艺验证");
+		model.addAttribute("url", "/design/computeDesignCostDetail.do");
+		model.addAttribute("searchurl", "/design/computeDesignCostListSearch.do");
+		return "/design/computeDesignCostList";
+	}
+	
+	@RequestMapping(value = "design/computeDesignCostDetail.do", method= RequestMethod.GET)
+	@Transactional(rollbackFor = Exception.class)
+	public String computeDesignCostDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		Map<String,Object> orderInfo = designService.getComputeDesignCostInfo(orderId);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/design/computeCraftCostDetail";
+	}
+	
+	@RequestMapping(value = "design/computeDesignCostSubmit.do", method= RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String computeDesignCostSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
+		long taskId = Long.parseLong(request.getParameter("taskId"));
+		
+		boolean result = Boolean.parseBoolean(request.getParameter("result"));// 是否拒绝设计
+		String comment = request.getParameter("suggestion");
+		//如果拒绝，则不进行设计工艺成本的核算，直接返回
+		if (result == false) {
+			designService.verifyDesignSubmit(taskId, result, comment);
+			return "redirect:/design/computeDesignCostList.do";
+		}
+		
+		//是否需要工艺
+		String needCraft = request.getParameter("needcraft");
+		//印花费
+		String stampDutyMoney = request.getParameter("stampDutyMoney");
+		//水洗吊染费
+		String washHangDyeMoney = request.getParameter("washHangDyeMoney");
+		//激光费
+		String laserMoney = request.getParameter("laserMoney");
+		//刺绣费
+	    String embroideryMoney = request.getParameter("embroideryMoney");
+	    //压皱费
+		String crumpleMoney = request.getParameter("crumpleMoney");
+		//开版费用
+		String openVersionMoney = request.getParameter("openVersionMoney");
+		
+		
+		//生产验证通过，设置design变量为true
+		designService.verifyDesignSubmit(taskId, result, comment);
+		//生产报价提交
+		designService.computeDesignCostSubmit(
+				orderId,
+				taskId,
+				Short.parseShort(needCraft),
+				Float.parseFloat(stampDutyMoney),
+				Float.parseFloat(washHangDyeMoney),
+				Float.parseFloat(laserMoney),
+				Float.parseFloat(embroideryMoney),
+				Float.parseFloat(crumpleMoney),
+				Float.parseFloat(openVersionMoney)
+				);
+		
+		return "redirect:/design/computeDesignCostList.do";
+	}
+	
 
 	// ===========================上传版型=================================
 	@RequestMapping(value = "/design/getUploadDesignList.do")

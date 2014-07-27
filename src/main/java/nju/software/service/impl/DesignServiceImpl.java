@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
@@ -21,6 +22,7 @@ import nju.software.dao.impl.QuoteDAO;
 import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Craft;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
@@ -72,6 +74,79 @@ public class DesignServiceImpl implements DesignService {
 			return false;
 		}
 	}
+	
+	
+	@Override
+	public List<Map<String, Object>> getComputeDesignCostList() {
+		return service.getOrderList(ACTOR_DESIGN_MANAGER,
+				TASK_COMPUTE_DESIGN_COST);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getSearchComputeDesignCostList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER, ordernumber,  customername,  stylename,
+				 startdate,  enddate, employeeIds,
+				TASK_COMPUTE_DESIGN_COST);
+	}
+	
+	@Override
+	public Map<String, Object> getComputeDesignCostInfo(Integer orderId) {
+		return service.getBasicOrderModelWithQuote(ACTOR_DESIGN_MANAGER,
+				TASK_COMPUTE_DESIGN_COST, orderId);
+	}
+	
+	//计算设计工艺费用
+	@Override
+	public void computeDesignCostSubmit(int orderId, long taskId, short needCraft,
+			float stampDutyMoney, float washHangDyeMoney, float laserMoney,
+			float embroideryMoney, float crumpleMoney, float openVersionMoney) {
+		
+		List<Craft> craftList = craftDAO.findByOrderId(orderId);
+		for (Craft craft : craftList) {
+			craftDAO.delete(craft);
+		}
+		Craft craft = new Craft();
+		craft.setNeedCraft(needCraft);
+		craft.setOrderId(orderId);
+		craft.setStampDutyMoney(stampDutyMoney);
+		craft.setWashHangDyeMoney(washHangDyeMoney);
+		craft.setLaserMoney(laserMoney);
+		craft.setEmbroideryMoney(embroideryMoney);
+		craft.setCrumpleMoney(crumpleMoney);
+		craft.setOpenVersionMoney(openVersionMoney);
+		craftDAO.save(craft);
+		
+
+		Quote quote = quoteDAO.findById(orderId);
+		//单件工艺制作费
+		float craftCost = stampDutyMoney + washHangDyeMoney + laserMoney + embroideryMoney
+						  + crumpleMoney + openVersionMoney;
+		if (null == quote) {
+			quote = new Quote();
+			quote.setCraftCost(craftCost);
+			quoteDAO.save(quote);
+		}
+		
+		quote.setCraftCost(craftCost);
+		quoteDAO.attachDirty(quote);
+
+		Map<String, Object> data = new HashMap<String, Object>();
+		boolean result = false;
+		if (needCraft == 1){
+			result = true;
+		}
+		data.put(NEED_CRAFT, result);
+		
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 	// ===========================上传版型=================================
 	@Override
@@ -221,6 +296,7 @@ public class DesignServiceImpl implements DesignService {
 	public final static String TASK_CONFIRM_DESIGN = "confirmDesign";
 	public final static String RESULT_DESIGN = "design";
 	public final static String RESULT_DESIGN_COMMENT = "designComment";
+	public final static String NEED_CRAFT = "needCraft";
 
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
@@ -228,7 +304,9 @@ public class DesignServiceImpl implements DesignService {
 	private ServiceUtil service;
 	@Autowired
 	private DesignCadDAO designCadDAO;
-
-
+	@Autowired
+	private QuoteDAO quoteDAO;
+	@Autowired
+	private CraftDAO craftDAO;
 
 }

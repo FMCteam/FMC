@@ -50,4 +50,16 @@ public interface DesignService {
 	public List<Map<String, Object>> getSearchConfirmDesignList(
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getComputeDesignCostList();
+
+	public List<Map<String, Object>> getSearchComputeDesignCostList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public Map<String, Object> getComputeDesignCostInfo(Integer orderId);
+
+	public void computeDesignCostSubmit(int orderId, long taskId, short needCraft,
+			float stampDutyMoney, float washHangDyeMoney, float laserMoney,
+			float embroideryMoney, float crumpleMoney, float openVersionMoney);
 }

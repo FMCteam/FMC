@@ -172,8 +172,12 @@ table.tablesorter thead tr .headerSortDown {
 								class="iconfa-th-list"></span> 设计部<span
 								class="designManager task"></span></a>
 							<ul>
+								<!-- 
 								<li><a href="${ctx}/design/verifyDesignList.do">设计验证<span
 										class="verifyDesign"></span></a></li>
+								-->
+								<li><a href="${ctx}/design/computeDesignCostList.do">设计工艺验证<span
+										class="computeDesignCost"></span></a></li>
 								<li><a href="${ctx}/design/getUploadDesignList.do">样衣版型<span
 										class="uploadDegisn"></span></a></li>
 								<li><a href="${ctx}/design/getModifyDesignList.do">大货生产验证<span
@@ -187,9 +191,11 @@ table.tablesorter thead tr .headerSortDown {
 								class="iconfa-th-list"></span> 采购部<span
 								class="purchaseManager task"></span></a>
 							<ul>
+								<!--  
 								<li><a href="${ctx }/buy/verifyPurchaseList.do">采购验证<span
 										class="verifyPurchase"></span></a></li>
-								<li><a href="${ctx }/buy/computePurchaseCostList.do">成本合算<span
+								-->
+								<li><a href="${ctx }/buy/computePurchaseCostList.do">采购成本验证并核算<span
 										class="computePurchaseCost"></span></a></li>
 								<li><a href="${ctx }/buy/purchaseSampleMaterialList.do">样衣采购<span
 										class="purchaseSampleMaterial"></span></a></li>
@@ -204,9 +210,11 @@ table.tablesorter thead tr .headerSortDown {
 								class="iconfa-th-list"></span> 生产部<span
 								class="produceManager task"></span></a>
 							<ul>
+								<!--  
 								<li><a href="${ctx }/produce/verifyProduceList.do">生产验证<span
 										class="verifyProduce"></span></a></li>
-								<li><a href="${ctx }/produce/computeProduceCostList.do">成本合算<span
+								-->
+								<li><a href="${ctx }/produce/computeProduceCostList.do">生产成本验证并核算<span
 										class="computeProduceCost"></span></a></li>
 								<li><a href="${ctx }/produce/produceSampleList.do">样衣生产<span
 										class="produceSample"></span></a></li>

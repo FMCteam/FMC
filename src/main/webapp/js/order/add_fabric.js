@@ -110,8 +110,6 @@ function getTdString(col){
 }
 
 function verify(){
-	
-	
 	$("#fabric_name").val(getTdString("fabric_name"));
 	$("#fabric_amount").val(getTdString("fabric_amount"));
 	$("#tear_per_meter").val(getTdString("tear_per_meter"));
@@ -120,9 +118,6 @@ function verify(){
 	$("#accessory_query").val(getTdString("accessory_query"));
 	$("#tear_per_piece").val(getTdString("tear_per_piece"));
 	$("#cost_per_piece").val(getTdString("cost_per_piece"));
-	
-	
-	
 	
 	var FabricName=jQuery("input[name='fabric_name']").val();
 	var FabricAmount=jQuery("input[name='fabric_amount']").val();
@@ -135,18 +130,11 @@ function verify(){
 
  if((FabricName== "")||(FabricAmount== "")||(TearPerMeter== "")||(CostPerMeter== "")||(AccessoryName== "")
 		 ||(AccessoryQuery== "")||(TearPerPiece== "")||(CostPerPiece== "")){
-	 
-	
-	  return false;
-	
- }
-	
- 
- else{
-	 
+	 alert("请将面辅报价信息填写完整！");
+	 return false;
+ }else{
 	 return true;
  }
-	
 }
 
 function init(){
