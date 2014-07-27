@@ -20,12 +20,12 @@ public class Craft implements Serializable {
  	private Integer orderId;
  
  	private Short needCraft;//0 not need craft 1 need craft
- 	private double stampDutyMoney =  0;//印花费
- 	private double washHangDyeMoney =  0;//水洗吊染费
- 	private double laserMoney =  0;//激光费
- 	private double embroideryMoney =  0;//刺绣费
- 	private double crumpleMoney =  0;//压皱费
- 	private double openVersionMoney =  0;//开版费
+ 	private float stampDutyMoney =  0;//印花费
+ 	private float washHangDyeMoney =  0;//水洗吊染费
+ 	private float laserMoney =  0;//激光费
+ 	private float embroideryMoney =  0;//刺绣费
+ 	private float crumpleMoney =  0;//压皱费
+ 	private float openVersionMoney =  0;//开版费
  	private String craftFileUrl;//工艺文件位置链接
 	// Constructors
 
@@ -34,8 +34,8 @@ public class Craft implements Serializable {
 	}
 
 	/** full constructor */
-	public Craft(Integer orderId, Short needCraft, double stampDutyMoney, double washHangDyeMoney,
-			double laserMoney, double embroideryMoney, double crumpleMoney, double openVersionMoney,String craftFileUrl) {		
+	public Craft(Integer orderId, Short needCraft, float stampDutyMoney, float washHangDyeMoney,
+			float laserMoney, float embroideryMoney, float crumpleMoney, float openVersionMoney,String craftFileUrl) {		
 		this.orderId = orderId;
 		this.needCraft = needCraft;
 		this.stampDutyMoney = stampDutyMoney;
@@ -75,56 +75,56 @@ public class Craft implements Serializable {
 	}
 //	@Column(name = "logistics_state", columnDefinition="int default 0")
 	@Column(name = "stamp_duty_money", nullable = true, precision = 22, scale = 0)	
-	public double getStampDutyMoney() {
+	public float getStampDutyMoney() {
 		return stampDutyMoney;
 	}
 	
-	public void setStampDutyMoney(double stampDutyMoney) {
+	public void setStampDutyMoney(float stampDutyMoney) {
 		this.stampDutyMoney = stampDutyMoney;
 	}
 	
 	@Column(name = "wash_hang_dye_money", nullable = true, precision = 22, scale = 0)	
-	public double getWashHangDyeMoney() {
+	public float getWashHangDyeMoney() {
 		return washHangDyeMoney;
 	}
 	
-	public void setWashHangDyeMoney(double washHangDyeMoney) {
+	public void setWashHangDyeMoney(float washHangDyeMoney) {
 		this.washHangDyeMoney = washHangDyeMoney;
 	}
 	
 	@Column(name = "laser_money", nullable = true, precision = 22, scale = 0)		
-	public double getLaserMoney() {
+	public float getLaserMoney() {
 		return laserMoney;
 	}
 	
-	public void setLaserMoney(double laserMoney) {
+	public void setLaserMoney(float laserMoney) {
 		this.laserMoney = laserMoney;
 	}
 	
 	@Column(name = "embroidery_money", nullable = true, precision = 22, scale = 0)			
-	public double getEmbroideryMoney() {
+	public float getEmbroideryMoney() {
 		return embroideryMoney;
 	}
 	
-	public void setEmbroideryMoney(double embroideryMoney) {
+	public void setEmbroideryMoney(float embroideryMoney) {
 		this.embroideryMoney = embroideryMoney;
 	}
 	
 	@Column(name = "crumple_money", nullable = true, precision = 22, scale = 0)				
-	public double getCrumpleMoney() {
+	public float getCrumpleMoney() {
 		return crumpleMoney;
 	}
 	
-	public void setCrumpleMoney(double crumpleMoney) {
+	public void setCrumpleMoney(float crumpleMoney) {
 		this.crumpleMoney = crumpleMoney;
 	}
 
 	@Column(name = "open_version_money", nullable = true, precision = 22, scale = 0)					
-	public double getOpenVersionMoney() {
+	public float getOpenVersionMoney() {
 		return openVersionMoney;
 	}
 	
-	public void setOpenVersionMoney(double openVersionMoney) {
+	public void setOpenVersionMoney(float openVersionMoney) {
 		this.openVersionMoney = openVersionMoney;
 	}
 	@Column(name = "craft_file_url", nullable = true, length = 250)

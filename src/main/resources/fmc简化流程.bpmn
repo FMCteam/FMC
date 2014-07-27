@@ -924,18 +924,63 @@
     <inclusiveGateway id="_147" name="needCraft" gatewayDirection="Diverging" />
     <userTask id="_148" name="工艺制作" >
       <ioSpecification>
+        <dataInput id="_148_CommentInput" name="Comment" />
+        <dataInput id="_148_SkippableInput" name="Skippable" />
+        <dataInput id="_148_LocaleInput" name="Locale" />
         <dataInput id="_148_TaskNameInput" name="TaskName" />
+        <dataInput id="_148_GroupIdInput" name="GroupId" />
+        <dataInput id="_148_PriorityInput" name="Priority" />
         <inputSet>
+          <dataInputRefs>_148_CommentInput</dataInputRefs>
+          <dataInputRefs>_148_SkippableInput</dataInputRefs>
+          <dataInputRefs>_148_LocaleInput</dataInputRefs>
           <dataInputRefs>_148_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_148_GroupIdInput</dataInputRefs>
+          <dataInputRefs>_148_PriorityInput</dataInputRefs>
         </inputSet>
         <outputSet>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
+        <targetRef>_148_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_148_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_148_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_148_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_148_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_148_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
         <targetRef>_148_TaskNameInput</targetRef>
         <assignment>
           <from xsi:type="tFormalExpression">craftSample</from>
           <to xsi:type="tFormalExpression">_148_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_148_GroupIdInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_148_GroupIdInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_148_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_148_PriorityInput</to>
         </assignment>
       </dataInputAssociation>
       <potentialOwner>

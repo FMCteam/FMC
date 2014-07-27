@@ -221,15 +221,9 @@ public class FinanceController {
 		int orderId = Integer.parseInt(orderId_string);
 		String taskId_string = request.getParameter("taskId");
 		long taskId = Long.parseLong(taskId_string);
-		boolean result = request.getParameter("result").equals("1");
-		Money money = null;
 
-		if (result) {
-			money = getMoney(request);
-			money.setOrderId(orderId);
-		}
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		financeService.returnDepositSubmit(actorId, taskId, result, money);
+		financeService.returnDepositSubmit(actorId, taskId);
 		return "forward:/finance/returnDepositList.do";
 	}
 	
@@ -330,11 +324,11 @@ public class FinanceController {
 		//上传合同，上传首定金收据，一般是截图，
  
 		marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId),confirmFinalPaymentFileUrl);
-//		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-//		Map<String, Object> orderInfo = financeService
-//				.getConfirmFinalPaymentDetail(actorId,Integer.parseInt(orderId));
-//		model.addAttribute("orderInfo", orderInfo);
-//		return "/finance/confirmFinalPaymentDetail";
+		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
+		Map<String, Object> orderInfo = financeService
+				.getConfirmFinalPaymentDetail(actorId,Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/finance/confirmFinalPaymentDetail";
 	}
 	
 	@RequestMapping(value = "/finance/confirmFinalPaymentSubmit.do")

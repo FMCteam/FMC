@@ -54,4 +54,6 @@ public interface FinanceService {
 
 	public Map<String, Object> getReturnDepositDetail(String actorId,
 			int orderId);
+
+	public void returnDepositSubmit(String actorId, long taskId);
 }
