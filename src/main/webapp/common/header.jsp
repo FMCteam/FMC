@@ -257,6 +257,7 @@ table.tablesorter thead tr .headerSortDown {
 							<ul>
 								<li><a href="${ctx}/account/addEmployeeDetail.do">添加员工</a></li>
 								<li><a href="${ctx}/account/employeeList.do">查看员工</a></li>
+								<li><a href="${ctx}/views/needCraftSampleDetail.jsp">测试</a></li>
 							</ul></li>
 					</c:if>
 
