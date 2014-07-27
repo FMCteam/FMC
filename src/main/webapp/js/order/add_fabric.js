@@ -109,7 +109,7 @@ function getTdString(col){
 	return tdString;
 }
 
-function verify(){
+function verify() {
 	$("#fabric_name").val(getTdString("fabric_name"));
 	$("#fabric_amount").val(getTdString("fabric_amount"));
 	$("#tear_per_meter").val(getTdString("tear_per_meter"));
@@ -118,23 +118,25 @@ function verify(){
 	$("#accessory_query").val(getTdString("accessory_query"));
 	$("#tear_per_piece").val(getTdString("tear_per_piece"));
 	$("#cost_per_piece").val(getTdString("cost_per_piece"));
-	
-	var FabricName=jQuery("input[name='fabric_name']").val();
-	var FabricAmount=jQuery("input[name='fabric_amount']").val();
-	var TearPerMeter=jQuery("input[name='tear_per_meter']").val();
-	var CostPerMeter=jQuery("input[name='cost_per_meter']").val();
-	var AccessoryName=jQuery("input[name='accessory_name']").val();
-	var AccessoryQuery=jQuery("input[name='accessory_query']").val();
-	var TearPerPiece=jQuery("input[name='tear_per_piece']").val();
-	var CostPerPiece=jQuery("input[name='cost_per_piece']").val();
 
- if((FabricName== "")||(FabricAmount== "")||(TearPerMeter== "")||(CostPerMeter== "")||(AccessoryName== "")
-		 ||(AccessoryQuery== "")||(TearPerPiece== "")||(CostPerPiece== "")){
-	 alert("请将面辅报价信息填写完整！");
-	 return false;
- }else{
-	 return true;
- }
+	var FabricName = jQuery("input[name='fabric_name']").val();
+	var FabricAmount = jQuery("input[name='fabric_amount']").val();
+	var TearPerMeter = jQuery("input[name='tear_per_meter']").val();
+	var CostPerMeter = jQuery("input[name='cost_per_meter']").val();
+	var AccessoryName = jQuery("input[name='accessory_name']").val();
+	var AccessoryQuery = jQuery("input[name='accessory_query']").val();
+	var TearPerPiece = jQuery("input[name='tear_per_piece']").val();
+	var CostPerPiece = jQuery("input[name='cost_per_piece']").val();
+
+	if ((FabricName == "") || (FabricAmount == "") || (TearPerMeter == "")
+			|| (CostPerMeter == "") || (AccessoryName == "")
+			|| (AccessoryQuery == "") || (TearPerPiece == "")
+			|| (CostPerPiece == "")) {
+		alert("请将面辅报价信息填写完整！");
+		return false;
+	} else {
+		return true;
+	}
 }
 
 function init(){

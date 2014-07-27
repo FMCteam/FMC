@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
  -->
 <%@ include file="/common/css_file.jsp"%>
-<script type="text/javascript" src="${ctx }/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript"
 	src="${ctx}/js/jquery.noty.packaged.min.js"></script>
@@ -155,9 +155,10 @@ table.tablesorter thead tr .headerSortDown {
 
 								<li><a href="${ctx }/market/modifyQuoteList.do">修改报价<span
 										class="modifyQuote"></span></a></li>
-								<li><a href="${ctx }/market/confirmProduceOrderList.do">确认大货加工单<span
+								<li><a href="${ctx }/market/confirmProduceOrderList.do">确认大货加工单并签订合同<span
 										class="confirmProduceOrder"></span></a></li>
-
+								<li><a href="${ctx }/market/getPushRestOrderList.do">催尾款<span
+										class="pushRest"></span></a></li>
 								<li><a href="${ctx }/market/modifyProductList.do">修改大货合同<span
 										class="modifyProduceOrder"></span></a></li>
 								<li><a href="${ctx }/market/signContractList.do">签订大货合同<span
@@ -180,10 +181,18 @@ table.tablesorter thead tr .headerSortDown {
 										class="computeDesignCost"></span></a></li>
 								<li><a href="${ctx}/design/getUploadDesignList.do">样衣版型<span
 										class="uploadDegisn"></span></a></li>
+								<li><a href="${ctx}/design/getUploadDesignList.do">样衣版型录入及生产<span
+										class="uploadDegisn"></span></a></li>										
+								<li><a href="${ctx}/design/getTypeSettingSliceList.do">排版切片<span
+										class="typeSettingSlice"></span></a></li>
 								<li><a href="${ctx}/design/getModifyDesignList.do">大货生产验证<span
 										class="modifyDesign"></span></a></li>
 								<li><a href="${ctx}/design/getConfirmDesignList.do">大货生产版型<span
 										class="confirmDesign"></span></a></li>
+								<li><a href="${ctx}/design/getNeedCraftSampleList.do"><span
+										class="craftSample">样衣工艺制作</span></a></li>
+								<li><a href="${ctx}/design/getNeedCraftProductList.do"><span
+										class="craft">大货工艺制作</span></a></li>
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_buy==true}">
@@ -201,7 +210,7 @@ table.tablesorter thead tr .headerSortDown {
 										class="purchaseSampleMaterial"></span></a></li>
 								<li><a href="${ctx }/buy/confirmPurchaseList.do">大货采购确认<span
 										class="confirmPurchase"></span></a></li>
-								<li><a href="${ctx }/buy/purchaseMaterialList.do">大货生产原料采购<span
+								<li><a href="${ctx }/buy/purchaseMaterialList.do">大货面料采购确认<span
 										class="purchaseMaterial"></span></a></li>
 							</ul></li>
 					</c:if>
@@ -231,8 +240,11 @@ table.tablesorter thead tr .headerSortDown {
 										class="confirmSampleMoney"></span></a></li>
 								<li><a href="${ctx}/finance/confirmDepositList.do">首定金确认<span
 										class="confirmDeposit"></span></a></li>
+								<li><a href="${ctx}/finance/returnDepositList.do">退还定金<span
+										class="confirmFinalPayment"></span></a></li>
 								<li><a href="${ctx}/finance/confirmFinalPaymentList.do">尾款金确认<span
 										class="confirmFinalPayment"></span></a></li>
+								
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_logistics==true}">

@@ -197,4 +197,15 @@ public interface MarketService {
 
 	public void signConfirmFinalPaymentFileSubmit( int orderId, String confirmFinalPaymentFileUrl);
 
+	public void verifyQuoteSubmit(Quote quote, int id, long taskId,
+			long processId, boolean result, String comment);
+     
+	public List<Map<String, Object>> getPushRestOrderList(String userId);
+
+	public Map<String, Object> getPushRestOrderDetail(String userId,
+			int orderId);
+
+	public boolean getPushRestOrderSubmit(String actorId, long taskId,
+			boolean result);
+
 }

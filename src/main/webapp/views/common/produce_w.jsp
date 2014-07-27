@@ -79,4 +79,9 @@
 				</c:forEach>
 				</table></td>
 	</tr>
+	<tr>
+	<td>加工方：</td>
+	<td colspan="7"><input class="span12 " type="text"
+	    value="${orderInfo.order.payAccountInfo}" readonly="readonly"/></td>
+	</tr>
 </table>

@@ -20,7 +20,7 @@
 	<drools:kbase id="kbase1" >
 		<drools:resources>
 			<drools:resource id="resource1" type="BPMN2"
-				source="classpath:fmc.bpmn" />
+				source="classpath:fmc简化流程.bpmn" />
 		</drools:resources>
 	</drools:kbase>
 

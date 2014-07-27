@@ -20,8 +20,8 @@ public class Order implements java.io.Serializable {
 	private String orderProcessStateName;//订单当前执行到的流程节点的状态
 	private String confirmDepositFile;//大货定金收据电子图片
 	private String confirmFinalPaymentFile;//大货尾金收据电子图片
-
 	private String confirmSampleMoneyFile;//样衣金收据电子图片
+	
 	
 	private Integer orderId;
 	private Short reorder;
@@ -74,8 +74,8 @@ public class Order implements java.io.Serializable {
 	private Short hasPostedSampleClothes;//0 no sample 1 not recieved the sample 2  recieved the sample
 	private Short isNeedSampleClothes;//0 not need sample 1 need sample
 	private String orderSource;
-	private String payAccountInfo;
-	private double discount;
+	private String payAccountInfo;//因为本来的定义没有使用，所以在后期将它用来存储加工方
+	private double discount;//折扣
 	private double totalMoney;
 	private double sampleMoney=0;
 	private String contractFile;

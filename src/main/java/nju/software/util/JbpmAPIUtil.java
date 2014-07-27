@@ -216,6 +216,7 @@ public class JbpmAPIUtil {
 		List<TaskSummary> tasks = getAssignedTasks(actorId);
 
 		for (TaskSummary task : tasks) {
+			
 			if (task.getName().equals(taskName)
 					&& getVariable(task, "orderId").equals(orderId)) {
 				return task;
@@ -224,6 +225,21 @@ public class JbpmAPIUtil {
 		return null;
 	}
 
+	public TaskSummary getTask(String actorId,long taskId) {
+		
+		
+		
+		List<TaskSummary> tasks = getAssignedTasks(actorId);
+
+		for (TaskSummary task : tasks) {
+			
+			if (task.getId()==taskId) {
+				return task;
+			}
+		}
+		return null;
+	}
+	
 	public Object getVariable(TaskSummary task, String name) {
 		StatefulKnowledgeSession session = getKsession();
 		long processId = task.getProcessInstanceId();

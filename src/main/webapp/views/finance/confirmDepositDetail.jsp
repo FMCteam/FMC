@@ -188,5 +188,6 @@
 <link rel="stylesheet" href="${ctx}/views/finance/finance.css">
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<!-- 汇款金额操作js -->
 <script type="text/javascript" src="${ctx}/views/finance/remittanceFinance.js"></script>
 <%@include file="/common/footer.jsp"%>
