@@ -33,7 +33,7 @@
 				</div>
 				<div class="tab-pane  active" id="quote">
 					<form id="costAccounting_form" class="verify"
-						method="post" action="${ctx }/produce/computeCraftCostSubmit.do">
+						method="post" action="${ctx }/design/computeDesignCostSubmit.do">
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
@@ -42,32 +42,33 @@
 							</tr>
 
 							<tr>
-								<td colspan="2">
+								<td colspan="1">
 									<span>需要工艺：</span><input type="radio" name="needcraft" value="1"  checked="checked"  required="required">
+									<br/>
 									<span>不要工艺：</span><input type="radio" name="needcraft" value="0" >
 								</td>
-								<td colspan="2" style="width: 120px; ">印花费（元/件）：
+								<td colspan="1" style="width: 120px; ">印花费（元/件）：
 									<input class="span12" type="text" name="stampDutyMoney" value="0" />
 								</td>
-								<td colspan="2" style="width: 120px; ">水洗吊染费（元/件）：
+								<td colspan="1" style="width: 120px; ">水洗吊染费（元/件）：
 									<input class="span12" type="text" name="washHangDyeMoney" value="0"/>
 								</td>
-								<td colspan="2" style="width: 120px; ">激光费（元/件）：
+								<td colspan="1" style="width: 120px; ">激光费（元/件）：
 									<input class="span12" type="text" name="laserMoney" value="0" />
 								</td>
-								<td colspan="2" style="width: 120px; ">刺绣费（元/件）：
+								<td colspan="1" style="width: 120px; ">刺绣费（元/件）：
 									<input class="span12" type="text" name="embroideryMoney" value="0" />
 								</td>
-								<td colspan="2" style="width: 120px; ">压皱费（元/件）：
+								<td colspan="1" style="width: 120px; ">压皱费（元/件）：
 									<input class="span12" type="text" name="crumpleMoney" value="0"/>
 								</td>
-								<td colspan="2" style="width: 120px; ">开版费用（元/件）：
+								<td colspan="1" style="width: 120px; ">开版费用（元/件）：
 									<input class="span12"  type="text" name="openVersionMoney" value="0"/>
 								</td>
 							</tr>
 							<tr>
 								<td class="span2">意见</td>
-								<td colspan="4">
+								<td colspan="6">
 									<textarea class="span12"
 										style="resize:vertical" rows="3" name="suggestion"></textarea>
 								</td>
@@ -111,10 +112,10 @@ jQuery(document).ready(function(){
 	jQuery("#agree").click(function(){
 		if(confirm("确认操作？")){
 			//报价信息填写正确
-			if(checkForm()){
-				jQuery("#verify_val").val("true");
-				jQuery("#costAccounting_form").submit();
-			}
+			//if(checkForm()){
+			//}
+			jQuery("#verify_val").val("true");
+			jQuery("#costAccounting_form").submit();
 		}
 	});
 	//拒绝采购
