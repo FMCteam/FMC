@@ -111,9 +111,6 @@ jQuery(document).ready(function(){
 	//提交报价
 	jQuery("#agree").click(function(){
 		if(confirm("确认操作？")){
-			//报价信息填写正确
-			//if(checkForm()){
-			//}
 			jQuery("#verify_val").val("true");
 			jQuery("#costAccounting_form").submit();
 		}
