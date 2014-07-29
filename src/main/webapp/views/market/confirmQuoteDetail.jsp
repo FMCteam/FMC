@@ -39,7 +39,7 @@
 				onsubmit="return confirm('确认上传？')" enctype="multipart/form-data">
 				<table class="table table-striped table-bordered table-hover detail">
 					<tr>
-						<td>选择文件</td>
+						<td>上传收取样衣金截图文件</td>
 						<td colspan="3">
 							<a style="color: red;">*</a>
 							<!-- 

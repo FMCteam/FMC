@@ -1641,13 +1641,17 @@ public class MarketController {
 		String result = request.getParameter("result");
 		String taskId = request.getParameter("taskId");
 		String orderId = request.getParameter("orderId");
+		String url = "";
+		if(result.equals("0")){
+			
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("confirmSampleMoneyFile");
 		String filename = file.getOriginalFilename();
-		String url = CONFIRM_SAMPLEMONEY_URL + orderId;
+		url = CONFIRM_SAMPLEMONEY_URL + orderId;
 		String fileid = "confirmSampleMoneyFile";
 		FileOperateUtil.Upload(request, url, null, fileid);
 		url = url + "/" + filename;
+		}
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
 		String actorId = account.getUserId() + "";
