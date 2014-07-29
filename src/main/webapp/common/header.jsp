@@ -176,8 +176,10 @@ table.tablesorter thead tr .headerSortDown {
 								-->
 								<li><a href="${ctx}/design/computeDesignCostList.do">设计工艺验证<span
 										class="computeDesignCost"></span></a></li>
+								<!--
 								<li><a href="${ctx}/design/getUploadDesignList.do">样衣版型<span
 										class="uploadDegisn"></span></a></li>
+								-->
 								<li><a href="${ctx}/design/getUploadDesignList.do">样衣版型录入及生产<span
 										class="uploadDegisn"></span></a></li>										
 								<li><a href="${ctx}/design/getTypeSettingSliceList.do">排版切片<span

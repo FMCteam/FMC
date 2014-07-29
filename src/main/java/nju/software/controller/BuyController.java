@@ -336,16 +336,16 @@ public class BuyController {
 		Account account = (Account) session.getAttribute("cur_user");		 
  		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 				.getKsession().getProcessInstance(Long.parseLong(processId));
-		String needCraft =  (String) process.getVariable("needCraft");
+		boolean needCraft =  (Boolean) process.getVariable("needCraft");
 		
 //		String needCraft = 
 //				(String)jbpmAPIUtil.getVariable(
 //				jbpmAPIUtil.getTask(account.getAccountId()+"", long_taskId),
 //				DesignServiceImpl.RESULT_NEED_CRAFT);
-		boolean needcraft = (needCraft.equals("true"))?true:false;
+//		boolean needcraft = (needCraft.equals("true"))?true:false;
 		
 //		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result,needcraft);
+		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft);
 
 		return "forward:/buy/purchaseSampleMaterialList.do";
 	}
