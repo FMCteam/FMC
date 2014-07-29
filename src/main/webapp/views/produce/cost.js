@@ -3,7 +3,7 @@ function checkForm() {
 			&& checkIsNumber("manage_cost") && checkIsNumber("package_cost")
 			&& checkIsNumber("nail_cost") && checkIsNumber("other_cost")
 			&& checkIsNumber("ironing_cost") && checkIsNumber("design_cost")) {
-		return confirm("确认操作？");
+		return true;
 	} else {
 		alert("报价必须填写并且是数字");
 		return false;
