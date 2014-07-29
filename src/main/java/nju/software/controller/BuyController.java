@@ -336,13 +336,16 @@ public class BuyController {
 		Account account = (Account) session.getAttribute("cur_user");		 
  		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 				.getKsession().getProcessInstance(Long.parseLong(processId));
-		boolean needCraft =  (Boolean) process.getVariable("needCraft");
-		
+		boolean needCraft =  (boolean) process.getVariable("needCraft");
+		System.out.println("need craft 是这个值："+needCraft);
 //		String needCraft = 
 //				(String)jbpmAPIUtil.getVariable(
 //				jbpmAPIUtil.getTask(account.getAccountId()+"", long_taskId),
 //				DesignServiceImpl.RESULT_NEED_CRAFT);
-//		boolean needcraft = (needCraft.equals("true"))?true:false;
+//		boolean needcraft = false;
+//		if(needCraft!=null){			
+//			 needcraft = (needCraft.equals("true"))?true:false;
+//		}
 		
 //		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
 		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft);

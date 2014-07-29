@@ -42,8 +42,8 @@
 				<a
 					href="${ctx}/finance/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
 					class="btn btn-primary btn-rounded" target="_blank">打印补货单</a>
-			</div>
     <button class="btn btn-primary" onclick="history.back();">返回</button>
+			</div>
 		</div>
 	</div>
 	<!--row-fluid-->

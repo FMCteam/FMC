@@ -176,7 +176,7 @@ public class DesignServiceImpl implements DesignService {
 	}
 
 	@Override
-	public boolean uploadDesignSubmit(int orderId, long taskId, String url,
+	public void uploadDesignSubmit(int orderId, long taskId, String url,
 			Timestamp uploadTime) {
 		// TODO Auto-generated method stub
 		DesignCad designCad = null;
@@ -194,15 +194,15 @@ public class DesignServiceImpl implements DesignService {
 		designCad.setUploadTime(uploadTime);
 		designCadDAO.attachDirty(designCad);
 		
-		Map<String, Object> data = new HashMap<String, Object>();
-		try {
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
-			return true;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+//		Map<String, Object> data = new HashMap<String, Object>();
+//		try {
+//			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+//			return true;
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
 	}
 
 	@Override

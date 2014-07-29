@@ -19,7 +19,7 @@ public interface DesignService {
 
 	public Map<String, Object> getUploadDesignDetail(Integer orderId);
 
-	public boolean uploadDesignSubmit(int orderId, long taskId, String url,
+	public void uploadDesignSubmit(int orderId, long taskId, String url,
 			Timestamp uploadTime);
 
 	// ===========================修改版型=================================

@@ -208,7 +208,8 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getUploadDesignList();
 		model.addAttribute("list", list);
-		model.addAttribute("taskName", "录入版型数据");
+//		model.addAttribute("taskName", "录入版型数据");
+		model.addAttribute("taskName", "样衣版型录入及生产");
 		model.addAttribute("url", "/design/getUploadDesignDetail.do");
 		model.addAttribute("searchurl", "/design/getUploadDesignListSearch.do");
 
@@ -269,8 +270,6 @@ public class DesignController {
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.uploadDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
-		
-		
  		Map<String, Object> orderInfo = designService
 				.getUploadDesignDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
@@ -361,7 +360,7 @@ public class DesignController {
 	}
 	
 	
-	@RequestMapping(value = "design/needCraftSampleSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "design/needCraftSampleSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String needCraftSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
