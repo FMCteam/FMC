@@ -23,8 +23,8 @@
 					<%@include file="/views/common/material.jsp"%>
 				</div>
 				<div class="tab-pane  active" id="sample">
-					<form action="${ctx}/logistics/sendSampleSubmit.do" method="post"
-						onsubmit="return confirmSendSampleSubmit()">
+					<form id="send_sample_form" action="${ctx}/logistics/sendSampleSubmit.do" method="post"
+					onSubmit="return confirmSendSampleSubmit();">
 						<input type="hidden" name="orderId"
 							value="${orderInfo.order.orderId}" /> <input type="hidden"
 							name="taskId" value="${orderInfo.task.id}" />
@@ -99,9 +99,13 @@
 									</c:if></td>
 							</tr>
 						</table>
-						 <button class="btn btn-primary" onclick="history.back();">返回</button>
-						<div class="action">
-							<input class="btn btn-primary" type="submit" value="发货完成" />
+						<button class="btn btn-primary" onclick="history.back();">返回</button>
+						<div class="action" style="float:right">
+							<input id="save_this_send" class="btn btn-primary" type="submit" value="保存此次发货" style="background-color:#1E90FF" />
+							<input id="complete_final_send" class="btn btn-primary" type="submit" value="完成最终发货" />
+							
+							<!-- 隐藏标签，判断是否是最终的发货 -->
+							<input id="is_final" type="hidden" name="isFinal" value="false" />
 						</div>
 					</form>
 				</div>
@@ -118,18 +122,14 @@
 		</div>
 	</div>
 
-
 	<div class="footer">
 		<div class="footer-left">
 			<span>&copy; 2014. 江苏南通智造链有限公司.</span>
 		</div>
 	</div>
 
-
 </div>
 </div>
-
-
 
 
 <%@include file="/common/js_file.jsp"%>
@@ -140,5 +140,21 @@
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx}/views/logistics/logistics.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script>
+jQuery(document).ready(function(){
+	//保存此次发货
+	jQuery("#save_this_send").click(function(){
+		jQuery("#is_final").val("false");
+		//alert("保存此次发货");
+		//jQuery("#send_sample_form").submit();
+	});
+	//完成最终发货
+	jQuery("#complete_final_send").click(function(){
+		jQuery("#is_final").val("true");
+		//jQuery("#send_sample_form").submit();
+		//alert("完成最终发货");
+	});
+});
+</script>
 
 <%@include file="/common/footer.jsp"%>

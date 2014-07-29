@@ -53,26 +53,27 @@
 		</property>
 		<property name="annotatedClasses">
 			<list>
-
-			<value>nju.software.dataobject.Account</value>
-			<value>nju.software.dataobject.Accessory</value>
-			<value>nju.software.dataobject.Order</value>
-			<value>nju.software.dataobject.PackageDetail</value>
-			<value>nju.software.dataobject.Quote</value>
-			<value>nju.software.dataobject.Logistics</value>
-			<value>nju.software.dataobject.FabricCost</value>
-			<value>nju.software.dataobject.Product</value>
-			<value>nju.software.dataobject.DesignCad</value>
-			<value>nju.software.dataobject.Craft</value>
-			<value>nju.software.dataobject.Description</value>
-			<value>nju.software.dataobject.Employee</value>
-			<value>nju.software.dataobject.Fabric</value>
-			<value>nju.software.dataobject.Money</value>
-			<value>nju.software.dataobject.Package</value>
-			<value>nju.software.dataobject.Produce</value>
-			<value>nju.software.dataobject.Customer</value>
-			<value>nju.software.dataobject.VersionData</value>
-			<value>nju.software.dataobject.AccessoryCost</value></list>
+				<value>nju.software.dataobject.Account</value>
+				<value>nju.software.dataobject.Accessory</value>
+				<value>nju.software.dataobject.Order</value>
+				<value>nju.software.dataobject.PackageDetail</value>
+				<value>nju.software.dataobject.Quote</value>
+				<value>nju.software.dataobject.Logistics</value>
+				<value>nju.software.dataobject.FabricCost</value>
+				<value>nju.software.dataobject.Product</value>
+				<value>nju.software.dataobject.DesignCad</value>
+				<value>nju.software.dataobject.Craft</value>
+				<value>nju.software.dataobject.Description</value>
+				<value>nju.software.dataobject.Employee</value>
+				<value>nju.software.dataobject.Fabric</value>
+				<value>nju.software.dataobject.Money</value>
+				<value>nju.software.dataobject.Package</value>
+				<value>nju.software.dataobject.Produce</value>
+				<value>nju.software.dataobject.Customer</value>
+				<value>nju.software.dataobject.VersionData</value>
+				<value>nju.software.dataobject.AccessoryCost</value>
+				<value>nju.software.dataobject.DeliveryRecord</value>
+			</list>
 		</property>
 	</bean>
 	
@@ -183,4 +184,11 @@
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
-	</bean></beans>
+	</bean>
+	<bean id="DeliveryRecordDAO"
+		class="nju.software.dao.impl.DeliveryRecordDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+</beans>
