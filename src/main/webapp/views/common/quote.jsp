@@ -74,10 +74,18 @@
 	</tr>
 	<tr>
 		<td>
-		    <span id="pay">${orderInfo.quote.singleCost*orderInfo.order.askAmount}</span>
+<!-- 
+ -->		
+		    <span id="pay">
+		    ${orderInfo.quote.singleCost*orderInfo.order.askAmount}
+		    </span>
 		</td>
 		<td>
-            <span id="pay2">${orderInfo.quote.singleCost*orderInfo.order.askAmount}</span>		
+<!-- 
+ -->
+             <span id="pay2">
+            ${orderInfo.quote.singleCost*orderInfo.order.askAmount}
+            </span>		
 		</td>
 		<td>${orderInfo.quote.profitPerPiece}</td>
 		<td>${orderInfo.quote.outerPrice}</td>
