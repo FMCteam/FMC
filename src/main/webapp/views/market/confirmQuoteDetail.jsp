@@ -39,7 +39,7 @@
 				onsubmit="return confirm('确认上传？')" enctype="multipart/form-data">
 				<table class="table table-striped table-bordered table-hover detail">
 					<tr>
-						<td>上传收取样衣金截图文件</td>
+						<td>上传收取的样衣金截图信息</td>
 						<td colspan="3">
 							<a style="color: red;">*</a>
 							<!-- 
@@ -57,7 +57,6 @@
 		</div>
 		<a href="${ctx}/market/confirmQuoteSubmit.do?result=2&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
 				class="btn btn-danger btn-rounded" id="resetNew"><i class="icon-white"></i>取消订单</a>
-		<div class="action">
 		<!-- 
 			<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
 			<input type="hidden" name="order_id" value="${orderInfo.quote.orderId }" />
@@ -68,7 +67,6 @@
 				<a href="${ctx}/market/confirmQuoteSubmit.do?result=1&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
 				class="btn btn-primary btn-rounded"><i class="icon-white"></i>修改</a>
 				 <button class="btn btn-primary" onclick="history.back();">返回</button>
-		</div>
 	</div>
 
 
