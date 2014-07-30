@@ -621,12 +621,15 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
-	public boolean confirmQuoteSubmit(String actorId, long taskId,
-			int orderId, String result, String url) {
-		if(Integer.parseInt(result)==0){			
-		Order order = orderDAO.findById(orderId);
-		order.setConfirmSampleMoneyFile(url);
-		orderDAO.attachDirty(order);
+	public boolean confirmQuoteSubmit(String actorId, long taskId, int orderId,
+			String result, String url) {
+		//result为0，表示有上传样衣制作金的截图
+		//result为1，表示修改报价
+		//result为2，表示取消订单
+		if (Integer.parseInt(result) == 0) {
+			Order order = orderDAO.findById(orderId);
+			order.setConfirmSampleMoneyFile(url);
+			orderDAO.attachDirty(order);
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_QUOTE, Integer.parseInt(result));
@@ -634,10 +637,10 @@ public class MarketServiceImpl implements MarketService {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
 			return true;
 		} catch (InterruptedException e) {
- 			e.printStackTrace();
+			e.printStackTrace();
 			return false;
 		}
-		
+
 	}
 
 	@Override

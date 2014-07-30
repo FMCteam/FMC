@@ -33,42 +33,48 @@
 				</div>
 				<div class="tab-pane active" id="quote">
 					<%@include file="/views/common/quote.jsp"%>
+					<form id="confirm_quote_form" action="${ctx}/market/confirmQuoteSubmit.do" method="post"
+						enctype="multipart/form-data">
+						<table class="table table-striped table-bordered table-hover detail">
+							<tr>
+								<td>上传收取样衣金截图文件</td>
+								<td colspan="3">
+									<a style="color: red;">*</a>
+									<!-- 
+									<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
+									<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
+							 		-->
+			                		<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+									<input name="confirmSampleMoneyFile" id="confirmSampleMoneyFile" type="file" required="required"/> 
+								</td>
+							</tr>
+						</table>
+						
+ 					    <div class="action" >
+ 					    	<input id="cancel_order" type="button" value="取消订单" class="btn btn-danger btn-rounded" />
+							<input id="modify_price" type="button" value="修改报价" class="btn btn-primary btn-rounded" style="background-color:#1E90FF" />	
+							<input id="confirm_price" type="button" value="确认报价" class="btn btn-primary btn-rounded" />
+						</div>
+						<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
+						<input type="hidden" name="orderId" value="${orderInfo.quote.orderId }" />
+						<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+						<!-- 隐藏标签，判断确认或修改报价，还是取消订单 -->
+						<input id="operation_result" type="hidden" name="result" value="0" />
+ 					</form>
 				</div>
 			</div>
-			<form action="${ctx}/market/confirmQuoteSubmit.do?result=0&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId}" method="post"
-				onsubmit="return confirm('确认上传？')" enctype="multipart/form-data">
-				<table class="table table-striped table-bordered table-hover detail">
-					<tr>
-						<td>上传收取样衣金截图文件</td>
-						<td colspan="3">
-							<a style="color: red;">*</a>
-							<!-- 
-							<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
-							<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
-							 -->
-			                <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
-							<input name="confirmSampleMoneyFile" id="confirmSampleMoneyFile" type="file" required="required"/> 
-						</td>
-						<td colspan="3"><input type="submit" value="确认"
-							class="btn btn-primary btn-rounded"></td>
-					</tr>
-				</table>
- 			</form>
 		</div>
-		<a href="${ctx}/market/confirmQuoteSubmit.do?result=2&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
-				class="btn btn-danger btn-rounded" id="resetNew"><i class="icon-white"></i>取消订单</a>
-		<div class="action">
+		
+		<button class="btn btn-primary" style="float:left" onclick="history.back();">返回</button>
 		<!-- 
+		<div class="action" style="float:right">
 			<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
 			<input type="hidden" name="order_id" value="${orderInfo.quote.orderId }" />
 			<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 			<a href="${ctx}/market/confirmQuoteSubmit.do?result=0&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId}" 
 			class="btn btn-primary btn-rounded"><i class="icon-white"></i>确认</a> 
-		 -->
-				<a href="${ctx}/market/confirmQuoteSubmit.do?result=1&taskId=${orderInfo.task.id}&orderId=${orderInfo.quote.orderId }" 
-				class="btn btn-primary btn-rounded"><i class="icon-white"></i>修改</a>
-				 <button class="btn btn-primary" onclick="history.back();">返回</button>
 		</div>
+		-->
 	</div>
 
 
@@ -78,11 +84,8 @@
 		</div>
 	</div>
 
-
 </div>
 </div>
-
-
 
 
 <%@include file="/common/js_file.jsp"%>
@@ -93,4 +96,30 @@
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_quote.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script>
+jQuery(document).ready(function(){
+	//确认报价
+	jQuery("#confirm_price").click(function(){
+		if(confirm('确认报价？')){
+			jQuery("#operation_result").val("0");
+			jQuery("#confirm_quote_form").submit();
+		}
+	});
+	//修改报价
+	jQuery("#modify_price").click(function(){
+		if(confirm('确定修改报价？')){
+			jQuery("#operation_result").val("1");
+			jQuery("#confirm_quote_form").submit();
+		}
+	});
+	//取消订单
+	jQuery("#cancel_order").click(function(){
+		if(confirm('确定取消订单？')){
+			jQuery("#operation_result").val("2");
+			jQuery("#confirm_quote_form").submit();
+		}
+	});
+});
+</script>
+
 <%@include file="/common/footer.jsp"%>
