@@ -121,8 +121,6 @@ public class DesignServiceImpl implements DesignService {
 		craft.setCrumpleMoney(crumpleMoney);
 		craft.setOpenVersionMoney(openVersionMoney);
 		craftDAO.save(craft);
-		
-
 		Quote quote = quoteDAO.findById(orderId);
 		//单件工艺制作费
 		float craftCost = stampDutyMoney + washHangDyeMoney + laserMoney + embroideryMoney
@@ -130,6 +128,7 @@ public class DesignServiceImpl implements DesignService {
 		if (null == quote) {
 			quote = new Quote();
 			quote.setCraftCost(craftCost);
+			quote.setOrderId(orderId);
 			quoteDAO.save(quote);
 		}
 		

@@ -46,29 +46,27 @@
 								</td>
 							</tr>		
 							<tr>
-
-								<td >印花费（元/件）：
+								<td>印花费（元/件）：
 								</td>
-								<td >水洗吊染费（元/件）：
+								<td>水洗吊染费（元/件）：
 								</td>
-								<td  >激光费（元/件）：
+								<td>激光费（元/件）：
 								</td>
-								<td >刺绣费（元/件）：
+								<td>刺绣费（元/件）：
 								</td>
-								<td  >压皱费（元/件）：
+								<td>压皱费（元/件）：
 								</td>
-								<td >开版费用（元/件）：
+								<td>开版费用（元/件）：
 								</td>
 							</tr>
 							<tr>
-							<td  >${ orderInfo.sampleCraft.stampDutyMoney}</td>
-							<td  >${ orderInfo.sampleCraft.washHangDyeMoney}</td>
-							<td  >${ orderInfo.sampleCraft.laserMoney}</td>
-							<td  >${ orderInfo.sampleCraft.embroideryMoney}</td>
-							<td  >${ orderInfo.sampleCraft.crumpleMoney}</td>
-							<td  >${ orderInfo.sampleCraft.openVersionMoney}</td>
+							<td>${ orderInfo.sampleCraft.stampDutyMoney}</td>
+							<td>${ orderInfo.sampleCraft.washHangDyeMoney}</td>
+							<td>${ orderInfo.sampleCraft.laserMoney}</td>
+							<td>${ orderInfo.sampleCraft.embroideryMoney}</td>
+							<td>${ orderInfo.sampleCraft.crumpleMoney}</td>
+							<td>${ orderInfo.sampleCraft.openVersionMoney}</td>
 							</tr>
-							 
  					<tr>
 						<td>选择工艺文件</td>
 						<td colspan="5">
@@ -78,32 +76,27 @@
 							<input  class="btn btn-primary btn-rounded" type="submit" value="上传工艺制作图" onclick="return confirm('确认上传？')" />						
 						</td>
 					</tr>
- 			 
-							<tr>
-
-		                        <td class="title">工艺图片</td>
-		                        <td colspan="5"><c:if test="${orderInfo.sampleCraft.craftFileUrl!=null}">
-				                <img src="${ctx}/common/getPic.do?type=craftFileUrl&orderId=${orderInfo.order.orderId}"
+					<tr>
+		                <td class="title">工艺图片</td>
+		                <td colspan="5">
+		                	<c:if test="${orderInfo.sampleCraft.craftFileUrl!=null}">
+				            	<img src="${ctx}/common/getPic.do?type=craftFileUrl&orderId=${orderInfo.order.orderId}"
 					                 style="max-height: 300px;" alt="工艺图片"></img>
-			                    </c:if></td>
-	                        </tr>
-							
-						</table>
+			                </c:if>
+			            </td>
+	                </tr>
+				</table>
 			</form>
- 
-			<div class="action">
-						<button class="btn btn-primary" onclick="history.back();">返回</button>
-						<a
-							href="${ctx}/design/needCraftSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
-							class="btn btn-primary">完成工艺制作</a> 
-			</div>
+				<button class="btn btn-primary" onclick="history.back();">返回</button>
+				<div class="action" style="float:right">
+					<a href="${ctx}/design/needCraftSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
+						class="btn btn-primary">完成工艺制作</a> 
+				</div>
 			</div>	
-			</div>
+		</div>
 
 		</div>
 		<!--row-fluid-->
-
-
 
 		<div class="footer">
 			<div class="footer-left">

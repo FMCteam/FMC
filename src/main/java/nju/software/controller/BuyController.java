@@ -336,7 +336,7 @@ public class BuyController {
 		Account account = (Account) session.getAttribute("cur_user");		 
  		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 				.getKsession().getProcessInstance(Long.parseLong(processId));
- 		boolean needCraft =  (boolean) process.getVariable("needCraft");
+		boolean needCraft =  (boolean) process.getVariable("needCraft");
 		System.out.println("need craft 是这个值："+needCraft);
 //		String needCraft = 
 //				(String)jbpmAPIUtil.getVariable(
@@ -348,7 +348,7 @@ public class BuyController {
 //		}
 		
 //		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result,needCraft);
+		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft);
 
 		return "forward:/buy/purchaseSampleMaterialList.do";
 	}
