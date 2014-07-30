@@ -134,15 +134,19 @@ function verify(){
 }
 
 function produce_verify(){
-	$("#produce_color").val(getTdString("produce_color"));
-	$("#produce_xs").val(getTdString("produce_xs"));
-	$("#produce_s").val(getTdString("produce_s"));
-	$("#produce_m").val(getTdString("produce_m"));
-	$("#produce_l").val(getTdString("produce_l"));
-	$("#produce_xl").val(getTdString("produce_xl"));
-	$("#produce_xxl").val(getTdString("produce_xxl"));
-	
-	return true;
+	if(confirm("确认操作？")){
+		$("#produce_color").val(getTdString("produce_color"));
+		$("#produce_xs").val(getTdString("produce_xs"));
+		$("#produce_s").val(getTdString("produce_s"));
+		$("#produce_m").val(getTdString("produce_m"));
+		$("#produce_l").val(getTdString("produce_l"));
+		$("#produce_xl").val(getTdString("produce_xl"));
+		$("#produce_xxl").val(getTdString("produce_xxl"));
+		
+		return true;
+	}else{
+		return false;
+	}
 }
 
 function init(){
