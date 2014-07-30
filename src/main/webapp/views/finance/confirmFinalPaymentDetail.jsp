@@ -58,7 +58,7 @@
 							<tr>
 								<td>${orderInfo.moneyName}</td>
 								<td>${orderInfo.order.discount}</td>
-								<td>${(orderInfo.number)*orderInfo.price}-${orderInfo.order.discount}-${orderInfo.deposit}=<span id="pay">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
+								<td>${(orderInfo.number)*orderInfo.price}-${orderInfo.order.discount}-${orderInfo.deposit}=<span id="shouldFinalPay">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
 							</tr>
 							<tr>
 								<td class="title">实际大货件数</td>
@@ -121,7 +121,9 @@
 									class="span12" /></td>
 							</tr>
 		                    <tr>
+		                    <!-- 
 		                        <td class="title">收款信息</td>
+		                     -->
 		                        <td class="title">收款图片</td>
 		                        <td colspan="3"><c:if test="${orderInfo.order.confirmFinalPaymentFile!=null}">
 				                <img src="${ctx}/common/getPic.do?type=confirmFinalPaymentFile&orderId=${orderInfo.order.orderId}"
@@ -130,8 +132,7 @@
 	                        </tr>
 						</table>
 						
-<!-- 
- -->
+
 						<div class="action">
 							<input type="submit" id="financeSubmit" hidden="hidden" /> 
 					
@@ -146,9 +147,9 @@
 								style="color: white; margin-left: 20px"><i
 								class="icon-remove icon-white"></i>未收到汇款</a>
 						</div>
-						<!-- 
-						 -->
 					</form>
+					
+						<!-- 
 				<form action="${ctx}/finance/confirmFinalPaymentFileSubmit.do?orderId=${orderInfo.order.orderId}" method="post" enctype="multipart/form-data">
 				<table class="table table-striped table-bordered table-hover detail">
 					<tr>
@@ -162,6 +163,8 @@
 					</tr>
 				</table>
 				</form>
+						 -->
+
 				</div>
 			</div>
 		</div>
@@ -180,11 +183,32 @@
 <!--maincontent-->
 <script type="text/javascript">
 $(document).ready(function() {
- var text=$("#pay").text();
-	$("#pay").text(parseFloat(text).toFixed(2));
-// var text=$("#pay2").text();
-//	$("#pay2").text(parseFloat(text).toFixed(2));
-	 
+ var text=$("#shouldFinalPay").text();
+	$("#shouldFinalPay").text(parseFloat(text).toFixed(2));
+
+	$("a#financeButton").click(function() {
+		$("input#financeSubmit").click();
+	});
+//	var text=$("#pay").text();
+//	$("#pay").text(parseFloat(text).toFixed(2));
+//	$("input[name='money_amount']").val(parseFloat(text).toFixed(2));
+
+function confirmFinanceSubmit() {
+	return confirm("确认操作？");
+}
+
+function verifyFinance() {
+	var money_amount = $("input[name='money_amount']").val();
+	if(isNaN(money_amount)){
+		noty({
+			text : '汇款金额必须是数字',
+			layout : 'topCenter',
+			timeout : 2000
+		});
+		return false;
+	}
+	return confirmFinanceSubmit();
+} 
 });  
 </script>
 
@@ -194,5 +218,7 @@ $(document).ready(function() {
 <link rel="stylesheet" href="${ctx}/views/finance/finance.css">
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<!-- 
 <script type="text/javascript" src="${ctx}/views/finance/finance.js"></script>
+ -->
 <%@include file="/common/footer.jsp"%>

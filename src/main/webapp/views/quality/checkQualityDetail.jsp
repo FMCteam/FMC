@@ -95,15 +95,17 @@
 										min="0" value="0" required="required"/></td>
 								</tr>
 							</c:forEach>
-						        <tr>
+						    <tr>
 								<td>加工方：</td>
 								<td colspan="7">${orderInfo.order.payAccountInfo}</td>
-							</tr>		
+							</tr>	
+							<!-- 
 							<tr>
 								<td>加工方：</td>
 								<td colspan="7"><input class="span12" type="text"
 										value="${orderInfo.order.payAccountInfo}" readonly="readonly"/></td>
 							</tr>							
+							 -->	
 							<tr>
 								<td>操作</td>
 								<td colspan="7"><button class="btn btn-primary btn-rounded">确认</button></td>

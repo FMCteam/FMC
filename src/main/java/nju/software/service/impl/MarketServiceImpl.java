@@ -874,7 +874,7 @@ public class MarketServiceImpl implements MarketService {
 		}		
 	}
 	
-	public boolean signContractSubmit(String actorId, long taskId, int orderId,
+	public void signContractSubmit(String actorId, long taskId, int orderId,
 			double discount, double total, String url) {
 		// TODO Auto-generated method stub
 		Order order = orderDAO.findById(orderId);
@@ -882,19 +882,19 @@ public class MarketServiceImpl implements MarketService {
 		order.setTotalMoney(total);
 		order.setContractFile(url);
 		orderDAO.merge(order);
-		Map<String, Object> data = new HashMap<>();
-		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
-			return true;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+//		Map<String, Object> data = new HashMap<>();
+//		try {
+//			jbpmAPIUtil.completeTask(taskId, data, actorId);
+//			return true;
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
 	}
 
 	@Override
-	public boolean signContractSubmit(String actorId, long taskId,
+	public void signContractSubmit(String actorId, long taskId,
 			int orderId, double discount, double total, String url,
 			String confirmDepositFileUrl) {
 		Order order = orderDAO.findById(orderId);
@@ -903,15 +903,15 @@ public class MarketServiceImpl implements MarketService {
 		order.setContractFile(url);
 		order.setConfirmDepositFile(confirmDepositFileUrl);
 		orderDAO.merge(order);
-		Map<String, Object> data = new HashMap<>();
-		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
-			return true;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+//		Map<String, Object> data = new HashMap<>();
+//		try {
+//			jbpmAPIUtil.completeTask(taskId, data, actorId);
+//			return true;
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
 	}
 	
 	@Override

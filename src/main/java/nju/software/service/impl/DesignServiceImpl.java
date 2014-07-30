@@ -302,7 +302,7 @@ public class DesignServiceImpl implements DesignService {
 		DesignCad designcad = designCadDAO.findByOrderId(orderId).get(0);
 		model.put("designCadTech", designcad.getCadTech());
 		Craft craft = craftDAO.findByOrderId(orderId).get(0);
-		model.put("sampleCraft", craft);
+		model.put("craft", craft);
 		return model;
 	}
 	

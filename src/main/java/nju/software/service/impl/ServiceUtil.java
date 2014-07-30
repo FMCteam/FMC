@@ -152,7 +152,6 @@ public class ServiceUtil {
 		}
 		
 		
-		
 		model.put("fabricCosts", fabricCosts);
 		List<AccessoryCost> accessoryCosts = accessoryCostDAO
 				.findByOrderId(orderId);

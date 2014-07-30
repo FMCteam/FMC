@@ -54,8 +54,8 @@ public class CommonController {
 		map.put(MarketServiceImpl.TASK_VERIFY_QUOTE,
 				MarketServiceImpl.ACTOR_MARKET_MANAGER);
 
-		map.put(DesignServiceImpl.TASK_VERIFY_DESIGN,
-				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+		map.put(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST,
+				DesignServiceImpl.ACTOR_DESIGN_MANAGER);		
 		map.put(DesignServiceImpl.TASK_UPLOAD_DESIGN,
 				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 		map.put(DesignServiceImpl.TASK_MODIFY_DESIGN,

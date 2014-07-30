@@ -145,8 +145,10 @@ table.tablesorter thead tr .headerSortDown {
 										class="modifyOrder"></span></a></li>
 								<li><a href="${ctx }/market/mergeQuoteList.do">合并报价<span
 										class="mergeQuote"></span></a></li>
+								<c:if test="${CAN_VERIFY_QUOTE==true}">		
 								<li><a href="${ctx }/market/verifyQuoteList.do">审核报价<span
 										class="verifyQuote"></span></a></li>
+								</c:if>
 								<li><a href="${ctx }/market/confirmQuoteList.do">报价商定<span
 										class="confirmQuote"></span></a></li>
 								<li><a href="${ctx }/market/modifyQuoteList.do">修改报价<span
@@ -240,7 +242,7 @@ table.tablesorter thead tr .headerSortDown {
 								<li><a href="${ctx}/finance/confirmDepositList.do">首定金确认<span
 										class="confirmDeposit"></span></a></li>
 								<li><a href="${ctx}/finance/returnDepositList.do">退还定金<span
-										class="confirmFinalPayment"></span></a></li>
+										class="returnDeposit"></span></a></li>
 								<li><a href="${ctx}/finance/confirmFinalPaymentList.do">尾款金确认<span
 										class="confirmFinalPayment"></span></a></li>
 								

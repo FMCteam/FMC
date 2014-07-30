@@ -6,8 +6,8 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
-				<li class="task-name">工艺加工</li>
-				<li class="active"><a href="#craftSample" data-toggle="tab">工艺报价</a></li>
+				<li class="task-name">排版切片</li>
+				<li class="active"><a href="#typeslice" data-toggle="tab">排版切片</a></li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
@@ -35,16 +35,14 @@
 				<div class="tab-pane" id="quote">
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
-			<div class="tab-pane active" id="craft">
-					<form method="post" action="${ctx}/design/needCraftProductSubmit.do">
-						<table class="table table-striped table-bordered table-hover detail">
-		
+			  <div class="tab-pane active" id="typeslice">
+ 						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td colspan="2">
 								<span>排版切片详细页面</span>
 								</td>
-							</tr>
-							
+							</tr>							
+			  <!-- 
 							<tr>
 								<td>操作</td>
 								<td colspan="12">
@@ -53,9 +51,13 @@
 								<input type="submit" value="完成工艺制作 "  class="btn btn-primary btn-rounded"   />
 								</td>
 							</tr>
+			   -->
 						</table>
-					</form>
+					 
 					<button class="btn btn-primary" onclick="history.back();">返回</button>
+				    <a
+							href="${ctx}/design/getTypeSettingSliceSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
+							class="btn btn-primary">完成排版切片</a> 
 				</div>				
 			</div>
 

@@ -38,7 +38,7 @@ public interface MarketService {
 	
 	public Map<String, Object> getSignContractDetail(String arctorId,Integer orderId);
 	
-	public boolean signContractSubmit(String actorId,long taskId,int i,double d,double discount, String url);
+	public void signContractSubmit(String actorId,long taskId,int i,double d,double discount, String url);
 	
 	
 	
@@ -188,7 +188,7 @@ public interface MarketService {
 	public void sendOrderInfoViaPhone(Order order, Customer customer);
 
 	public ArrayList<String> getProcessStateName(Integer orderId);
-	public boolean signContractSubmit(String actorId, long parseLong,
+	public void signContractSubmit(String actorId, long parseLong,
 			int parseInt, double parseDouble, double parseDouble2, String url,
 			String confirmDepositFileUrl);
 

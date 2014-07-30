@@ -65,5 +65,8 @@
 <link rel="stylesheet" href="${ctx}/views/finance/finance.css">
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<!-- 
 <script type="text/javascript" src="${ctx}/views/finance/finance.js"></script>
+ -->
+
 <%@include file="/common/footer.jsp"%>
