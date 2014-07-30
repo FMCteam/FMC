@@ -51,11 +51,8 @@ public class CommonController {
 		departments.add(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
 		departments.add(QualityServiceImpl.ACTOR_QUALITY_MANAGER);
 
-		map.put(MarketServiceImpl.TASK_VERIFY_QUOTE,
-				MarketServiceImpl.ACTOR_MARKET_MANAGER);
-
-//		map.put(DesignServiceImpl.TASK_VERIFY_DESIGN,
-//				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+//		map.put(MarketServiceImpl.TASK_VERIFY_QUOTE,
+//				MarketServiceImpl.ACTOR_MARKET_MANAGER);
 		map.put(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST,
 				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 		map.put(DesignServiceImpl.TASK_UPLOAD_DESIGN,

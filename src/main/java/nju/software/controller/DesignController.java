@@ -419,7 +419,7 @@ public class DesignController {
 		return "/design/getNeedCraftSampleList";
 	}
     
-	@RequestMapping(value = "design/needCraftProductSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "design/needCraftProductSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String needCraftProductSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -456,7 +456,7 @@ public class DesignController {
 		return "/design/getNeedCraftProductList";
 	}
 
-	@RequestMapping(value = "design/getTypeSettingSliceSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "design/getTypeSettingSliceSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String getTypeSettingSliceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
