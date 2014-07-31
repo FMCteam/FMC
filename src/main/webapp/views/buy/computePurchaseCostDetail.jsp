@@ -132,7 +132,7 @@
 jQuery(document).ready(function(){
 	//提交报价
 	jQuery("#agree").click(function(){
-		if(confirm("确认操作？")){
+		if(confirm("确认提交报价？")){
 			//报价信息填写正确
 			if(verify()){
 				jQuery("#verify_val").val("true");
@@ -147,7 +147,7 @@ jQuery(document).ready(function(){
 			alert("拒绝意见不能为空");
 			return;
 		}
-		if(confirm("确认操作？")){
+		if(confirm("确认拒绝采购？")){
 			jQuery("#verify_val").val("false");
 			jQuery("#costAccounting_form").submit();
 		}
