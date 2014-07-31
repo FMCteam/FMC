@@ -83,8 +83,8 @@ public class MarketServiceImpl implements MarketService {
 	public final static String RESULT_CONFIRM_PRODUCE_ORDER_CONTRACT="confirmProduceOrderContract";
 	public final static String RESULT_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
 	public final static String RESULT_PUSH_RESTMONEY = "pushRestMoney";
-	public final static String UPLOAD_DIR_SAMPLE = "D:/fmc/sample/";
-	public final static String UPLOAD_DIR_REFERENCE = "D:/fmc/reference/";
+	public final static String UPLOAD_DIR_SAMPLE = "C:/fmc/sample/";
+	public final static String UPLOAD_DIR_REFERENCE = "C:/fmc/reference/";
 	public final static String RESULT_VERIFY_QUOTE = "verifyQuoteSuccess";
 	public final static String VERIFY_QUOTE_COMMENT = "verifyQuoteComment";
 	
@@ -621,12 +621,15 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
-	public boolean confirmQuoteSubmit(String actorId, long taskId,
-			int orderId, String result, String url) {
-		if(Integer.parseInt(result)==0){			
-		Order order = orderDAO.findById(orderId);
-		order.setConfirmSampleMoneyFile(url);
-		orderDAO.attachDirty(order);
+	public boolean confirmQuoteSubmit(String actorId, long taskId, int orderId,
+			String result, String url) {
+		//result为0，表示有上传样衣制作金的截图
+		//result为1，表示修改报价
+		//result为2，表示取消订单
+		if (Integer.parseInt(result) == 0) {
+			Order order = orderDAO.findById(orderId);
+			order.setConfirmSampleMoneyFile(url);
+			orderDAO.attachDirty(order);
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_QUOTE, Integer.parseInt(result));
@@ -634,10 +637,10 @@ public class MarketServiceImpl implements MarketService {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
 			return true;
 		} catch (InterruptedException e) {
- 			e.printStackTrace();
+			e.printStackTrace();
 			return false;
 		}
-		
+
 	}
 
 	@Override
@@ -798,8 +801,9 @@ public class MarketServiceImpl implements MarketService {
 				.getKsession().getProcessInstance(processId);
 		int orderId_process = (int) process.getVariable("orderId");
 		Order order = orderDAO.findById(id);
-		String customerName = order.getCustomerName();
-		boolean isHaoDuoYi = (customerName.equals("好多衣"))?true:false;
+//		String customerName = order.getCustomerName();
+		String orderSource = order.getOrderSource();
+		boolean isHaoDuoYi = (orderSource.equals("好多衣"))?true:false;
 		if (id == orderId_process) {
 			Map<String, Object> data = new HashMap<>();
 			
@@ -874,7 +878,7 @@ public class MarketServiceImpl implements MarketService {
 		}		
 	}
 	
-	public boolean signContractSubmit(String actorId, long taskId, int orderId,
+	public void signContractSubmit(String actorId, long taskId, int orderId,
 			double discount, double total, String url) {
 		// TODO Auto-generated method stub
 		Order order = orderDAO.findById(orderId);
@@ -882,19 +886,19 @@ public class MarketServiceImpl implements MarketService {
 		order.setTotalMoney(total);
 		order.setContractFile(url);
 		orderDAO.merge(order);
-		Map<String, Object> data = new HashMap<>();
-		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
-			return true;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+//		Map<String, Object> data = new HashMap<>();
+//		try {
+//			jbpmAPIUtil.completeTask(taskId, data, actorId);
+//			return true;
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
 	}
 
 	@Override
-	public boolean signContractSubmit(String actorId, long taskId,
+	public void signContractSubmit(String actorId, long taskId,
 			int orderId, double discount, double total, String url,
 			String confirmDepositFileUrl) {
 		Order order = orderDAO.findById(orderId);
@@ -903,15 +907,15 @@ public class MarketServiceImpl implements MarketService {
 		order.setContractFile(url);
 		order.setConfirmDepositFile(confirmDepositFileUrl);
 		orderDAO.merge(order);
-		Map<String, Object> data = new HashMap<>();
-		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
-			return true;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+//		Map<String, Object> data = new HashMap<>();
+//		try {
+//			jbpmAPIUtil.completeTask(taskId, data, actorId);
+//			return true;
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
 	}
 	
 	@Override
@@ -1112,15 +1116,18 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getOrdersDoing(String userRole, Integer userId) {		
 		Order orderExample = new Order();
+		List<Order> orders = new ArrayList<Order>();
 		orderExample.setOrderState("A"); //正在进行中的订单
 		
 		if("CUSTOMER".equals(userRole)){
 			orderExample.setCustomerId(userId);
+			orders = orderDAO.findOrdersDoingByCustomer(orderExample);
 		}else if ("marketStaff".equals(userRole)){
 			orderExample.setEmployeeId(userId);
+			orders = orderDAO.findOrdersDoingByEmployee(orderExample);
 		}
 		
-		List<Order> orders = orderDAO.findByExample(orderExample);
+//		List<Order> orders = orderDAO.findByExample(orderExample);
  		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
 			ArrayList<String> orderProcessStateNames = getProcessStateName(order.getOrderId());
@@ -1162,14 +1169,18 @@ public class MarketServiceImpl implements MarketService {
 	public List<Map<String, Object>> getOrdersDone(String userRole, Integer userId) {
 		Order orderExample = new Order();
 		orderExample.setOrderState("Done"); //已经完成的订单
-		
+		List<Order> orders = new ArrayList<Order>();
+
 		if("CUSTOMER".equals(userRole)){
 			orderExample.setCustomerId(userId);
+			orders = orderDAO.findOrdersDoneByCustomer(orderExample);
+ 
 		}else if ("marketStaff".equals(userRole)){
 			orderExample.setEmployeeId(userId);
+			orders = orderDAO.findOrdersDoneByEmployee(orderExample);
+
 		}
-				
-		List<Order> orders = orderDAO.findByExample(orderExample);
+//		List<Order> orders = orderDAO.findByExample(orderExample);
  		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
 			ArrayList<String> orderProcessStateNames = getProcessStateName(order.getOrderId());

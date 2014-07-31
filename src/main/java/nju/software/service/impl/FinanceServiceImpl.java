@@ -240,7 +240,8 @@ public class FinanceServiceImpl implements FinanceService {
 		model.put("tabName", "大货尾款");
 		model.put("type", "大货尾款");
 		model.put("url", "/finance/confirmFinalPaymentSubmit.do");
-		model.put("moneyName", "70%尾款");
+//		model.put("moneyName", "70%尾款");
+		model.put("moneyName", "大货尾款");
 		Money money=new Money();
 		money.setOrderId(orderId);
 		money.setMoneyType("大货定金");

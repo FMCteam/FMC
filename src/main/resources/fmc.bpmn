@@ -1454,7 +1454,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <userTask id="_110" name="70%金额确认" >
+    <userTask id="_110" name="尾款金额确认" >
       <ioSpecification>
         <dataInput id="_110_TaskNameInput" name="TaskName" />
         <dataOutput id="_110_receiveMoneyOutput" name="receiveMoney" />

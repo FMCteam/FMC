@@ -93,8 +93,11 @@ public class DesignServiceImpl implements DesignService {
 	
 	@Override
 	public Map<String, Object> getComputeDesignCostInfo(Integer orderId) {
-		return service.getBasicOrderModelWithQuote(ACTOR_DESIGN_MANAGER,
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(ACTOR_DESIGN_MANAGER,
 				TASK_COMPUTE_DESIGN_COST, orderId);
+		DesignCad designcad = designCadDAO.findByOrderId(orderId).get(0);
+		model.put("designCadTech", designcad.getCadTech());
+		return model;
 	}
 	
 	//计算设计工艺费用
@@ -118,8 +121,6 @@ public class DesignServiceImpl implements DesignService {
 		craft.setCrumpleMoney(crumpleMoney);
 		craft.setOpenVersionMoney(openVersionMoney);
 		craftDAO.save(craft);
-		
-
 		Quote quote = quoteDAO.findById(orderId);
 		//单件工艺制作费
 		float craftCost = stampDutyMoney + washHangDyeMoney + laserMoney + embroideryMoney
@@ -127,6 +128,7 @@ public class DesignServiceImpl implements DesignService {
 		if (null == quote) {
 			quote = new Quote();
 			quote.setCraftCost(craftCost);
+			quote.setOrderId(orderId);
 			quoteDAO.save(quote);
 		}
 		
@@ -173,7 +175,7 @@ public class DesignServiceImpl implements DesignService {
 	}
 
 	@Override
-	public boolean uploadDesignSubmit(int orderId, long taskId, String url,
+	public void uploadDesignSubmit(int orderId, long taskId, String url,
 			Timestamp uploadTime) {
 		// TODO Auto-generated method stub
 		DesignCad designCad = null;
@@ -191,15 +193,15 @@ public class DesignServiceImpl implements DesignService {
 		designCad.setUploadTime(uploadTime);
 		designCadDAO.attachDirty(designCad);
 		
-		Map<String, Object> data = new HashMap<String, Object>();
-		try {
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
-			return true;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+//		Map<String, Object> data = new HashMap<String, Object>();
+//		try {
+//			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+//			return true;
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
 	}
 
 	@Override
@@ -299,7 +301,7 @@ public class DesignServiceImpl implements DesignService {
 		DesignCad designcad = designCadDAO.findByOrderId(orderId).get(0);
 		model.put("designCadTech", designcad.getCadTech());
 		Craft craft = craftDAO.findByOrderId(orderId).get(0);
-		model.put("sampleCraft", craft);
+		model.put("craft", craft);
 		return model;
 	}
 	

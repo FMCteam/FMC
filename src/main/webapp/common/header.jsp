@@ -2,18 +2,15 @@
 <%@ page language="java" import="nju.software.filter.AccessFilter"%>
 <%@ page language="java" import="nju.software.dataobject.Account"%>
 <%@ include file="/common/taglibs.jsp"%>
-
 <!doctype html>
 <head>
 <title>智造链</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<%@ include file="/common/css_file.jsp"%>
+<%@include file="/common/css_file.jsp"%>
 <script type="text/javascript" src="${ctx}/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery.tablesorter.min.js"></script>
-<script type="text/javascript"
-	src="${ctx}/js/jquery.noty.packaged.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/jquery.noty.packaged.min.js"></script>
 <script>
 $(document).ready(function() {
 	if ('${notify}' != null && '${notify}' != "") {
@@ -135,7 +132,17 @@ table.tablesorter thead tr .headerSortDown {
 								</c:if>
 							</ul></li>
 					</c:if>
-					<c:if test="${ROLE_market==true}">
+					<c:if test="${IS_MARKET_MANAGER_OR_ADMIN==true}">
+						<li class="dropdown"><a href=""><span
+								class="iconfa-briefcase"></span> 市场主管<span
+								class="marketManager task"></span></a>
+							<ul>
+								<li><a href="${ctx}/market/verifyQuoteList.do">审核报价<span
+										class="verifyQuote"></span></a></li>
+							</ul></li>
+					</c:if>
+	
+					<c:if test="${IS_MARKET_STAFF_OR_ADMIN==true}">
 						<li class="dropdown"><a href=""><span
 								class="iconfa-briefcase"></span> 市场部<span
 								class="marketManager task"></span></a>
@@ -145,8 +152,12 @@ table.tablesorter thead tr .headerSortDown {
 										class="modifyOrder"></span></a></li>
 								<li><a href="${ctx }/market/mergeQuoteList.do">合并报价<span
 										class="mergeQuote"></span></a></li>
+								<!-- 
+								<c:if test="${CAN_VERIFY_QUOTE==true}">		
 								<li><a href="${ctx }/market/verifyQuoteList.do">审核报价<span
 										class="verifyQuote"></span></a></li>
+								</c:if>
+								 -->
 								<li><a href="${ctx }/market/confirmQuoteList.do">报价商定<span
 										class="confirmQuote"></span></a></li>
 								<li><a href="${ctx }/market/modifyQuoteList.do">修改报价<span
@@ -157,12 +168,6 @@ table.tablesorter thead tr .headerSortDown {
 										class="pushRest"></span></a></li>
 								<li><a href="${ctx }/market/modifyProductList.do">修改大货合同<span
 										class="modifyProduceOrder"></span></a></li>
-										<!-- 
-								<li><a href="${ctx }/market/signContractList.do">签订大货合同<span
-										class="signContract"></span></a></li>
-								<li><a href="#">订单回访</a></li>
-								<li><a href="#">提醒缴费</a></li>
-										 -->
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_design==true}">
@@ -176,8 +181,10 @@ table.tablesorter thead tr .headerSortDown {
 								-->
 								<li><a href="${ctx}/design/computeDesignCostList.do">设计工艺验证<span
 										class="computeDesignCost"></span></a></li>
+								<!--
 								<li><a href="${ctx}/design/getUploadDesignList.do">样衣版型<span
 										class="uploadDegisn"></span></a></li>
+								-->
 								<li><a href="${ctx}/design/getUploadDesignList.do">样衣版型录入及生产<span
 										class="uploadDegisn"></span></a></li>										
 								<li><a href="${ctx}/design/getTypeSettingSliceList.do">排版切片<span
@@ -238,7 +245,7 @@ table.tablesorter thead tr .headerSortDown {
 								<li><a href="${ctx}/finance/confirmDepositList.do">首定金确认<span
 										class="confirmDeposit"></span></a></li>
 								<li><a href="${ctx}/finance/returnDepositList.do">退还定金<span
-										class="confirmFinalPayment"></span></a></li>
+										class="returnDeposit"></span></a></li>
 								<li><a href="${ctx}/finance/confirmFinalPaymentList.do">尾款金确认<span
 										class="confirmFinalPayment"></span></a></li>
 								
@@ -291,4 +298,3 @@ table.tablesorter thead tr .headerSortDown {
 					class="separator"></span></li>
 				<li>欢迎！</li>
 			</ul>
-		

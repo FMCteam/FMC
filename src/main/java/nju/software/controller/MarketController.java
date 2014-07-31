@@ -365,6 +365,8 @@ public class MarketController {
 		cad.setCadTech(cad_tech);
 		cad.setCadVersionData(cad_version_data);
 		// Order
+		Short isHaoDuoYi = Short.parseShort(request
+				.getParameter("is_haoduoyi"));//取得是否为好多衣属性
 		Order order = new Order();
 		order.setReorder((short) 0);
 		order.setEmployeeId(employeeId);
@@ -393,7 +395,15 @@ public class MarketController {
 		order.setHasPostedSampleClothes(hasPostedSampleClothes);
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
-
+		order.setIsHaoDuoYi(isHaoDuoYi);
+		String haoduoyi = request.getParameter("is_haoduoyi");
+		Short ishaoduoyi = Short.parseShort(haoduoyi);
+		
+		if(order.getIsHaoDuoYi()==1){
+			//如果是好多衣客户
+			order.setOrderSource("好多衣");
+		}
+        
 		marketService.addOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, sample_produces, versions, cad, request);
 
@@ -1641,20 +1651,26 @@ public class MarketController {
 		String result = request.getParameter("result");
 		String taskId = request.getParameter("taskId");
 		String orderId = request.getParameter("orderId");
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		MultipartFile file = multipartRequest.getFile("confirmSampleMoneyFile");
-		String filename = file.getOriginalFilename();
-		String url = CONFIRM_SAMPLEMONEY_URL + orderId;
-		String fileid = "confirmSampleMoneyFile";
-		FileOperateUtil.Upload(request, url, null, fileid);
-		url = url + "/" + filename;
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		String url = "";
+		//result为0，表示上传样衣制作金
+		if (result.equals("0")) {
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile file = multipartRequest
+					.getFile("confirmSampleMoneyFile");
+			String filename = file.getOriginalFilename();
+			url = CONFIRM_SAMPLEMONEY_URL + orderId;
+			String fileid = "confirmSampleMoneyFile";
+			FileOperateUtil.Upload(request, url, null, fileid);
+			url = url + "/" + filename;
+		}
+		Account account = (Account) request.getSession().getAttribute("cur_user");
 		String actorId = account.getUserId() + "";
-//		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),result);
-		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),Integer.parseInt(orderId),result,url);
+		// marketService.confirmQuoteSubmit(actorId,
+		// Long.parseLong(taskId),result);
+		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),
+				Integer.parseInt(orderId), result, url);
 
-		// 1=修改报价
+		// 1=修改报价，2=取消订单
 		if (result.equals("1")) {
 			return "redirect:/market/modifyQuoteList.do?id=" + orderId;
 		} else {
@@ -1790,7 +1806,36 @@ public class MarketController {
 			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
+//当用户确认加工单的时候，才选择上传合同和定金截图，否则不上传
+		if(comfirmworksheet){
+			String discount = request.getParameter("discount");
+			String total = request.getParameter("totalmoney");
+			String orderId = request.getParameter("orderId");
+ 
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile file = multipartRequest.getFile("contractFile");
+			MultipartFile confirmDepositFile =  multipartRequest.getFile("confirmDepositFile");
+			String filename = file.getOriginalFilename();
+			String confirmDepositFileName = confirmDepositFile.getOriginalFilename();
+			String url = CONTRACT_URL + orderId;
+			String confirmDepositFileUrl = CONFIRM_DEPOSIT_URL + orderId;		
+			String fileid = "contractFile";
+			String confirmDepositFileId = "confirmDepositFile";
+			FileOperateUtil.Upload(request, url, null, fileid);
+			FileOperateUtil.Upload(request, confirmDepositFileUrl, null, confirmDepositFileId);
+			url = url + "/" + filename;
+			confirmDepositFileUrl = confirmDepositFileUrl + "/" + confirmDepositFileName;
+ 
+			String actorId = account.getUserId() + "";
+			//上传合同，上传首定金收据，一般是截图，
+			marketService.signContractSubmit(actorId, Long.parseLong(s_taskId),
+					Integer.parseInt(orderId), Double.parseDouble(discount),
+					Double.parseDouble(total), url,confirmDepositFileUrl);
 
+		}
+		
+		
+		
 		marketService.confirmProduceOrderSubmit(account.getUserId() + "",
 				orderId_request, taskId, processId, comfirmworksheet, produces);
 		return "redirect:/market/confirmProduceOrderList.do";
@@ -1893,7 +1938,7 @@ public class MarketController {
 			String confirmFinalPaymentFileId = "confirmFinalPaymentFile";
 			FileOperateUtil.Upload(request, confirmFinalPaymentFileUrl, null, confirmFinalPaymentFileId);
 			confirmFinalPaymentFileUrl = confirmFinalPaymentFileUrl + "/" + confirmFinalPaymentFileName;
-			//上传合同，上传首定金收据，一般是截图，
+			//上传尾定金收据，一般是截图，
 	 
 			marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId),confirmFinalPaymentFileUrl);
 			Account account = (Account) request.getSession().getAttribute(
@@ -1910,18 +1955,26 @@ public class MarketController {
 				HttpServletResponse response, ModelMap model) {
 
 			String orderId_string = request.getParameter("orderId");
-			int orderId = Integer.parseInt(orderId_string);
-			String taskId_string = request.getParameter("taskId");
+ 			String taskId_string = request.getParameter("taskId");
 			long taskId = Long.parseLong(taskId_string);
 			boolean result = request.getParameter("result").equals("1");
-//			Money money = null;
-//			if (result) {
-//				money = getMoney(request);
-//				money.setOrderId(orderId);
-//			}
+			if(result){
+			
+ 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile confirmFinalPaymentFile =  multipartRequest.getFile("confirmFinalPaymentFile");
+			String confirmFinalPaymentFileName = confirmFinalPaymentFile.getOriginalFilename();
+			String confirmFinalPaymentFileUrl = CONFIRM_FINALPAYMENT_URL + orderId_string;		
+			String confirmFinalPaymentFileId = "confirmFinalPaymentFile";
+			FileOperateUtil.Upload(request, confirmFinalPaymentFileUrl, null, confirmFinalPaymentFileId);
+			confirmFinalPaymentFileUrl = confirmFinalPaymentFileUrl + "/" + confirmFinalPaymentFileName;
+			//上传尾定金收据，一般是截图，	 
+			marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId_string),confirmFinalPaymentFileUrl);  
+			}
 			Account account = (Account) request.getSession().getAttribute(
 					"cur_user");
 			String actorId = account.getUserId()+"";
+						
+			
 			marketService.getPushRestOrderSubmit(actorId, taskId, result);
 			return "forward:/market/getPushRestOrderList.do";
 		}

@@ -10,16 +10,16 @@
 
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">录入版型数据及生产样衣</li>
- 				<li class="active"><a href="#produce" data-toggle="tab">加工信息</a></li>
-				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
-				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
+ 				<li ><a href="#produce" data-toggle="tab">加工信息</a></li>
+				<li class="active"><a href="#cad" data-toggle="tab">版型信息</a></li>
+ 
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
-				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
+				<li ><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
 
 			<div class="tab-content">
-				<div class="tab-pane active" id="basic">
+				<div class="tab-pane" id="basic">
 					<%@include file="/views/common/basic.jsp"%>
 				</div>
 				<div class="tab-pane" id="material">
@@ -28,30 +28,14 @@
 				<div class="tab-pane" id="sample">
 					<%@include file="/views/common/sample.jsp"%>
 				</div>
-				<div class="tab-pane" id="produce">
-					<%@include file="/views/common/produce.jsp"%>
-				</div>
-				<div class="tab-pane" id="cad">
-					<%@include file="/views/common/cad.jsp"%>
-				</div>
-				<div class="tab-pane active" id="produce">
-					<%@include file="/views/common/produce.jsp"%>
-			    <button class="btn btn-primary" onclick="history.back();">返回</button>
-					<div class="action">
-						<a
-							href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1"
-							class="btn btn-primary">加工完成</a> <a
-							href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0"
-							class="btn btn-danger" style="margin-left: 10px">加工失败</a>
-					</div>
-				</div>
-			</div>
 
-			<form action="${ctx }/design/uploadDesignSubmit.do" method="post"
-				onsubmit="return confirm('确认上传？')" enctype="multipart/form-data">
-				<table class="table table-striped table-bordered table-hover detail">
+				<div class="tab-pane active" id="cad">
+					<%@include file="/views/common/cad.jsp"%>
+					<form action="${ctx }/design/uploadDesignSubmit.do" method="post"
+				          onsubmit="return confirm('确认上传？')" enctype="multipart/form-data">
+				    <table class="table table-striped table-bordered table-hover detail">
 					<tr>
-						<td>选择文件</td>
+						<td>选择版型文件</td>
 						<td colspan="3">
 							<a style="color: red;">*</a>
 							<input name="CADFile" id="CADFile" type="file" required="required"/> 
@@ -61,11 +45,25 @@
 						<td colspan="3"><input type="submit"
 							class="btn btn-primary btn-rounded"></td>
 					</tr>
-				</table>
-				<button class="btn btn-primary" onclick="history.back();">返回</button>
-			</form>
+				    </table>
+			       </form>
+				</div>
+				<div class="tab-pane" id="produce">
+					<%@include file="/views/common/produce.jsp"%>
+ 
+					<div class="action">
+						<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1"
+							class="btn btn-primary">加工完成</a> 
+						<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0"
+							class="btn btn-danger" style="color:white; margin-left:10px">加工失败</a>
+					</div>
+				</div>
+			</div>
 
-		</div>
+			
+				<button class="btn btn-primary" onclick="history.back();">返回</button>
+
+ 		</div>
 		<!--row-fluid-->
 
 		<div class="footer">

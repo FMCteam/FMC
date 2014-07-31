@@ -37,9 +37,8 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 				<div class="tab-pane  active" id="finance">
-				<!-- 
-				 -->
-					<form id="verify_form" action="${ctx}${orderInfo.url}"
+ 
+					<form id="verify_form" action="${ctx}/market/getPushRestOrderSubmit.do" enctype="multipart/form-data"
 						method="post"  onsubmit="return confirmFinanceSubmit();">
 						<input type="hidden" name="money_state" value="已收到" /> <input
 							id="verify_val" type="hidden" name="val" value="已收到" /> <input
@@ -80,6 +79,18 @@
 								<td>${orderInfo.samplePrice}</td>
 								<td>${orderInfo.order.sampleAmount*orderInfo.samplePrice}</td>
 							</tr>
+						    <tr>
+						        <td>选择尾金截图文件</td>
+						        <td colspan="3">
+							       <a style="color: red;">*</a>
+			                       <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+							       <input name="confirmFinalPaymentFile" id="confirmFinalPaymentFile" type="file" required="required"/> 
+							       <!-- 
+							       <input  class="btn btn-primary btn-rounded" type="submit" value="上传尾金截图" onclick="return confirm('确认上传？')" />						
+							        -->
+						</td>
+					</tr>
+					<!-- 
 							<tr>
 		                        <td class="title">收款信息</td>
 		                        <td class="title">收款图片</td>
@@ -88,11 +99,11 @@
 					                 style="max-height: 300px;" alt="收款图片"></img>
 			                    </c:if></td>
 	                        </tr>
+					 -->
 						</table>
 						
 						<div class="action">
 							<input type="submit" id="financeSubmit" hidden="hidden" /> 
-					
 							<a  
 								id="financeButton" class="btn btn-primary btn-rounded"><i
 								class="icon-ok icon-white"></i>已确认收款</a> 
@@ -107,10 +118,11 @@
 						<!-- 
 						 -->
 					</form>
+					<!-- 
 				<form action="${ctx}/market/confirmFinalPaymentFileSubmit.do?orderId=${orderInfo.order.orderId}" method="post" enctype="multipart/form-data">
 				<table class="table table-striped table-bordered table-hover detail">
 					<tr>
-						<td>选择文件</td>
+						<td>选择尾金截图文件</td>
 						<td colspan="3">
 							<a style="color: red;">*</a>
 			                <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
@@ -120,6 +132,7 @@
 					</tr>
 				</table>
 				</form>
+					 -->
 				</div>
 			</div>
 		</div>

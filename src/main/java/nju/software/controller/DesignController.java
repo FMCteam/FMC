@@ -181,7 +181,15 @@ public class DesignController {
 		String crumpleMoney = request.getParameter("crumpleMoney");
 		//开版费用
 		String openVersionMoney = request.getParameter("openVersionMoney");
-		
+
+		if (needCraft.equals("0")) {
+			stampDutyMoney = "0";
+			washHangDyeMoney = "0";
+			laserMoney = "0";
+			embroideryMoney = "0";
+			crumpleMoney = "0";
+			openVersionMoney = "0";
+		}
 		//生产报价提交
 		designService.computeDesignCostSubmit(
 				orderId,
@@ -208,7 +216,8 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getUploadDesignList();
 		model.addAttribute("list", list);
-		model.addAttribute("taskName", "录入版型数据");
+//		model.addAttribute("taskName", "录入版型数据");
+		model.addAttribute("taskName", "样衣版型录入及生产");
 		model.addAttribute("url", "/design/getUploadDesignDetail.do");
 		model.addAttribute("searchurl", "/design/getUploadDesignListSearch.do");
 
@@ -269,8 +278,6 @@ public class DesignController {
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.uploadDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
-		
-		
  		Map<String, Object> orderInfo = designService
 				.getUploadDesignDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
@@ -361,7 +368,7 @@ public class DesignController {
 	}
 	
 	
-	@RequestMapping(value = "design/needCraftSampleSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "design/needCraftSampleSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String needCraftSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -420,7 +427,7 @@ public class DesignController {
 		return "/design/getNeedCraftSampleList";
 	}
     
-	@RequestMapping(value = "design/needCraftProductSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "design/needCraftProductSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String needCraftProductSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -457,7 +464,7 @@ public class DesignController {
 		return "/design/getNeedCraftProductList";
 	}
 
-	@RequestMapping(value = "design/getTypeSettingSliceSubmit.do", method = RequestMethod.POST)
+	@RequestMapping(value = "design/getTypeSettingSliceSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String getTypeSettingSliceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {

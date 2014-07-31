@@ -36,8 +36,9 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			<div class="tab-pane active" id="craftSample">
-					<form method="post" action="${ctx}/design/needCraftSampleSubmit.do">
-						<table class="table table-striped table-bordered table-hover detail">
+						<form action="${ctx}/design/uploadCraftFileSubmit.do?orderId=${orderInfo.order.orderId}" method="post" enctype="multipart/form-data">
+			
+ 						<table class="table table-striped table-bordered table-hover detail">
 						    <tr>
 								<td>客户工艺要求：</td>
 								<td colspan="12">
@@ -45,69 +46,57 @@
 								</td>
 							</tr>		
 							<tr>
-								<td colspan="2">
-								<!-- 
-								<c:if test="${orderInfo.craft.needCraft==1}">
-								</c:if>
-								 -->
-								<span>需要工艺：</span>
+								<td>印花费（元/件）：
 								</td>
-								<td colspan="2" style="width: 120px; ">印花费（元/件）：
-								${ orderInfo.craft.stampDutyMoney}</td>
-								<td colspan="2" style="width: 120px; ">水洗吊染费（元/件）：
-								${ orderInfo.craft.washHangDyeMoney}</td>
-								<td colspan="2" style="width: 120px; ">激光费（元/件）：
-								${ orderInfo.craft.laserMoney}</td>
-								<td colspan="2" style="width: 120px; ">刺绣费（元/件）：
-								${ orderInfo.craft.embroideryMoney}</td>
-								<td colspan="2" style="width: 120px; ">压皱费（元/件）：
-								${ orderInfo.craft.crumpleMoney}</td>
-								<td colspan="2" style="width: 120px; ">开版费用（元/件）：
-								${ orderInfo.craft.openVersionMoney}</td>
-							</tr>
-							<tr>
-		                        <td class="title">工艺制作样式</td>
-		                        <td class="title">工艺图片</td>
-		                        <td colspan="3"><c:if test="${orderInfo.craft.craftFileUrl!=null}">
-				                <img src="${ctx}/common/getPic.do?type=craftFileUrl&orderId=${orderInfo.order.orderId}"
-					                 style="max-height: 300px;" alt="工艺图片"></img>
-			                    </c:if></td>
-	                        </tr>
-							
-							<tr>
-								<td>操作</td>
-								<td colspan="12">
-								<input type="hidden" name="orderId" value="${orderInfo.order.orderId}" /> 
-							    <input type="hidden" name="taskId" value="${orderInfo.task.id}" /> 
-								<input type="submit" value="完成工艺制作 "  class="btn btn-primary btn-rounded"   />
+								<td>水洗吊染费（元/件）：
+								</td>
+								<td>激光费（元/件）：
+								</td>
+								<td>刺绣费（元/件）：
+								</td>
+								<td>压皱费（元/件）：
+								</td>
+								<td>开版费用（元/件）：
 								</td>
 							</tr>
-						</table>
-					</form>
-			<form action="${ctx}/design/uploadCraftFileSubmit.do?orderId=${orderInfo.order.orderId}" method="post" enctype="multipart/form-data">
-				<table class="table table-striped table-bordered table-hover detail">
-					<tr>
-						<td>选择文件</td>
-						<td colspan="3">
+							<tr>
+							<td>${ orderInfo.sampleCraft.stampDutyMoney}</td>
+							<td>${ orderInfo.sampleCraft.washHangDyeMoney}</td>
+							<td>${ orderInfo.sampleCraft.laserMoney}</td>
+							<td>${ orderInfo.sampleCraft.embroideryMoney}</td>
+							<td>${ orderInfo.sampleCraft.crumpleMoney}</td>
+							<td>${ orderInfo.sampleCraft.openVersionMoney}</td>
+							</tr>
+ 					<tr>
+						<td>选择工艺文件</td>
+						<td colspan="5">
 							<a style="color: red;">*</a>
 			                <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 							<input name="craftFile" id="craftFile" type="file" required="required"/> 
-							<input  class="btn btn-primary btn-rounded" type="submit" value="上传尾金截图" onclick="return confirm('确认上传？')" />						
+							<input  class="btn btn-primary btn-rounded" type="submit" value="上传工艺制作图" onclick="return confirm('确认上传？')" />						
 						</td>
 					</tr>
+					<tr>
+		                <td class="title">工艺图片</td>
+		                <td colspan="5">
+		                	<c:if test="${orderInfo.sampleCraft.craftFileUrl!=null}">
+				            	<img src="${ctx}/common/getPic.do?type=craftFileUrl&orderId=${orderInfo.order.orderId}"
+					                 style="max-height: 300px;" alt="工艺图片"></img>
+			                </c:if>
+			            </td>
+	                </tr>
 				</table>
-				</form>
-						<button class="btn btn-primary" onclick="history.back();">返回</button>
+			</form>
+				<button class="btn btn-primary" onclick="history.back();">返回</button>
+				<div class="action" style="float:right">
+					<a href="${ctx}/design/needCraftSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
+						class="btn btn-primary">完成工艺制作</a> 
 				</div>
-				
-				
-				
-			</div>
+			</div>	
+		</div>
 
 		</div>
 		<!--row-fluid-->
-
-
 
 		<div class="footer">
 			<div class="footer-left">

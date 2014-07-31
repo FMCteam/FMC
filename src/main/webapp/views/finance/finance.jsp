@@ -21,7 +21,7 @@
 			<td>${orderInfo.moneyName}</td>
 			<td>${orderInfo.number}</td>
 			<td>${orderInfo.price}</td>
-			<td><span id="pay">${orderInfo.total}</span></td>
+			<td><span id="shouldReceivePay">${orderInfo.total}</span></td>
 		</tr>
 		<tr>
 			<td class="title" rowspan="4">汇款信息</td>
@@ -73,3 +73,32 @@
 			class="icon-remove icon-white"></i>未收到汇款</a>
 	</div>
 </form>
+<script type="text/javascript">
+function confirmFinanceSubmit() {
+	return confirm("确认操作？");
+}
+
+function verifyFinance() {
+	var money_amount = $("input[name='money_amount']").val();
+	if(isNaN(money_amount)){
+		noty({
+			text : '汇款金额必须是数字',
+			layout : 'topCenter',
+			timeout : 2000
+		});
+		return false;
+	}
+	return confirmFinanceSubmit();
+}
+
+	$("a#financeButton").click(function() {
+		$("input#financeSubmit").click();
+	});
+    
+	
+	var text=$("#shouldReceivePay").text();
+	$("#shouldReceivePay").text(parseFloat(text).toFixed(2));
+	$("input[name='money_amount']").val(parseFloat(text).toFixed(2));
+    
+
+</script>

@@ -118,17 +118,19 @@
       function createPaginationElements() {
         var htmlBuffer = [];
         htmlBuffer.push("<div id='tablePagination'>");
+        htmlBuffer.push("每页");
         htmlBuffer.push("<span id='tablePagination_perPage'>");
         htmlBuffer.push("<select id='tablePagination_rowsPerPage'><option value='5'>5</option></select>");
-        htmlBuffer.push("per page");
         htmlBuffer.push("</span>");
+        htmlBuffer.push("条");
+        htmlBuffer.push("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp");
         htmlBuffer.push("<span id='tablePagination_paginater'>");
-        htmlBuffer.push("<img id='tablePagination_firstPage' src='"+defaults.firstArrow+"'>");
-        htmlBuffer.push("<img id='tablePagination_prevPage' src='"+defaults.prevArrow+"'>");
-        htmlBuffer.push("Page");
+        htmlBuffer.push("<img id='tablePagination_firstPage' src='"+defaults.firstArrow+"'>&nbsp&nbsp");
+        htmlBuffer.push("<img id='tablePagination_prevPage' src='"+defaults.prevArrow+"'>&nbsp&nbsp");
+        htmlBuffer.push("第");
         htmlBuffer.push("<input id='tablePagination_currPage' type='input'  value='"+currPageNumber+"' size='1'>");
-        htmlBuffer.push("of <span id='tablePagination_totalPages'>"+totalPages+"</span>");
-        htmlBuffer.push("<img id='tablePagination_nextPage' src='"+defaults.nextArrow+"'>");
+        htmlBuffer.push("页 &nbsp 共 <span id='tablePagination_totalPages'>"+totalPages+"</span>");
+        htmlBuffer.push(" 页&nbsp&nbsp<img id='tablePagination_nextPage' src='"+defaults.nextArrow+"'>&nbsp&nbsp");
         htmlBuffer.push("<img id='tablePagination_lastPage' src='"+defaults.lastArrow+"'>");
         htmlBuffer.push("</span>");
         htmlBuffer.push("</div>");

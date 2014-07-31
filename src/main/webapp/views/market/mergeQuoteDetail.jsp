@@ -41,8 +41,10 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="title">主管审核意见</td>
-								<td colspan="5">${verifyQuoteComment }</td>
+							<!-- 
+								<td class="title" >主管审核意见</td>
+							 -->							
+								<td><span>主管审核意见:</span>${verifyQuoteComment }</td>
 							</tr>
  
 						</table>
