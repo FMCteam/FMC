@@ -713,6 +713,49 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			return orderList;
 		}
 
+	public List<Order> findOrdersDoingByCustomer(Order orderExample) {
+		// TODO Auto-generated method stub
+		Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Order.class);
+        criteria.add(Restrictions.eq("orderState", "A"));
+        criteria.add(Restrictions.eq("customerId", orderExample.getCustomerId()));
+	    List<Order> customerOrdersDoingList = criteria.list();		
+
+		return customerOrdersDoingList;
+	}
+
+	public List<Order> findOrdersDoingByEmployee(Order orderExample) {
+
+		Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Order.class);
+        criteria.add(Restrictions.eq("orderState", "A"));
+        criteria.add(Restrictions.eq("employeeId", orderExample.getEmployeeId()));
+	    List<Order> employeeOrdersDoingList = criteria.list();		
+
+		return employeeOrdersDoingList;
+		
+	}
+
+	public List<Order> findOrdersDoneByCustomer(Order orderExample) {
+		Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Order.class);
+        criteria.add(Restrictions.eq("orderState", "Done"));
+        criteria.add(Restrictions.eq("customerId", orderExample.getCustomerId()));
+	    List<Order> customerOrdersDoneList = criteria.list();		
+
+		return customerOrdersDoneList;
+	}
+
+	public List<Order> findOrdersDoneByEmployee(Order orderExample) {
+		Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Order.class);
+        criteria.add(Restrictions.eq("orderState", "Done"));
+        criteria.add(Restrictions.eq("employeeId", orderExample.getEmployeeId()));
+	    List<Order> employeeOrdersDoneList = criteria.list();		
+
+		return employeeOrdersDoneList;
+	}
+
 
 
 

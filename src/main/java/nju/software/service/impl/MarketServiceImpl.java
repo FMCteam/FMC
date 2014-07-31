@@ -798,8 +798,9 @@ public class MarketServiceImpl implements MarketService {
 				.getKsession().getProcessInstance(processId);
 		int orderId_process = (int) process.getVariable("orderId");
 		Order order = orderDAO.findById(id);
-		String customerName = order.getCustomerName();
-		boolean isHaoDuoYi = (customerName.equals("好多衣"))?true:false;
+//		String customerName = order.getCustomerName();
+		String orderSource = order.getOrderSource();
+		boolean isHaoDuoYi = (orderSource.equals("好多衣"))?true:false;
 		if (id == orderId_process) {
 			Map<String, Object> data = new HashMap<>();
 			
@@ -1112,15 +1113,18 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getOrdersDoing(String userRole, Integer userId) {		
 		Order orderExample = new Order();
+		List<Order> orders = new ArrayList<Order>();
 		orderExample.setOrderState("A"); //正在进行中的订单
 		
 		if("CUSTOMER".equals(userRole)){
 			orderExample.setCustomerId(userId);
+			orders = orderDAO.findOrdersDoingByCustomer(orderExample);
 		}else if ("marketStaff".equals(userRole)){
 			orderExample.setEmployeeId(userId);
+			orders = orderDAO.findOrdersDoingByEmployee(orderExample);
 		}
 		
-		List<Order> orders = orderDAO.findByExample(orderExample);
+//		List<Order> orders = orderDAO.findByExample(orderExample);
  		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
 			ArrayList<String> orderProcessStateNames = getProcessStateName(order.getOrderId());
@@ -1162,14 +1166,18 @@ public class MarketServiceImpl implements MarketService {
 	public List<Map<String, Object>> getOrdersDone(String userRole, Integer userId) {
 		Order orderExample = new Order();
 		orderExample.setOrderState("Done"); //已经完成的订单
-		
+		List<Order> orders = new ArrayList<Order>();
+
 		if("CUSTOMER".equals(userRole)){
 			orderExample.setCustomerId(userId);
+			orders = orderDAO.findOrdersDoneByCustomer(orderExample);
+ 
 		}else if ("marketStaff".equals(userRole)){
 			orderExample.setEmployeeId(userId);
+			orders = orderDAO.findOrdersDoneByEmployee(orderExample);
+
 		}
-				
-		List<Order> orders = orderDAO.findByExample(orderExample);
+//		List<Order> orders = orderDAO.findByExample(orderExample);
  		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
 			ArrayList<String> orderProcessStateNames = getProcessStateName(order.getOrderId());

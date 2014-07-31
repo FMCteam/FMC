@@ -1,6 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@include file="/common/header.jsp"%>
-
+<style>
+ 
+</style>
 <div class="maincontent">
 	<div class="maincontentinner">
 		<form onSubmit="return verify()" method="post"
@@ -23,19 +25,28 @@
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span2 title" rowspan="2">业务信息</td>
+								<!-- 
 								<td class="span2 title">业务编号</td>
+								 -->
+								<td class="span2 title"  ><span style="color:red ;font-weight:bold">请选择是否为好多衣客户</span></td>
 								<td class="span2 title" colspan="2">接单时间<span class="required">*</span></td>
-								<td class="span2 title">接单业务员</td>
 								<td class="span2 title">订单来源<span class="required">*</span></td>
+								<td class="span2 title" >接单业务员</td>
 								<td class="span2 title">翻单</td>
 							</tr>
+							
 							<tr>
+							<!-- 
 								<td>待生成</td>
+							 -->
+								<td ><input type="radio" name="is_haoduoyi"
+									 value="1" required="required" /> 是 <input type="radio"
+									name="is_haoduoyi" value="0" checked="checked" /> 否</td>
 								<td colspan="2"><input class="span8" type="date"required="required"
 									required="required" /></td>
-								<td>${employee_name}</td>
 								<td><input type="text" class="span12" name="order_source"
 									required="required" /></td>
+								<td>${employee_name}</td>
 								<td>否</td>
 							</tr>
 

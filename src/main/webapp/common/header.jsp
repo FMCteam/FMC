@@ -135,7 +135,17 @@ table.tablesorter thead tr .headerSortDown {
 								</c:if>
 							</ul></li>
 					</c:if>
-					<c:if test="${ROLE_market==true}">
+					<c:if test="${IS_MARKET_MANAGER_OR_ADMIN==true}">
+						<li class="dropdown"><a href=""><span
+								class="iconfa-briefcase"></span> 市场主管<span
+								class="marketManager task"></span></a>
+							<ul>
+								<li><a href="${ctx}/market/verifyQuoteList.do">审核报价<span
+										class="verifyQuote"></span></a></li>
+							</ul></li>
+					</c:if>
+	
+					<c:if test="${IS_MARKET_STAFF_OR_ADMIN==true}">
 						<li class="dropdown"><a href=""><span
 								class="iconfa-briefcase"></span> 市场部<span
 								class="marketManager task"></span></a>
@@ -145,10 +155,12 @@ table.tablesorter thead tr .headerSortDown {
 										class="modifyOrder"></span></a></li>
 								<li><a href="${ctx }/market/mergeQuoteList.do">合并报价<span
 										class="mergeQuote"></span></a></li>
+								<!-- 
 								<c:if test="${CAN_VERIFY_QUOTE==true}">		
 								<li><a href="${ctx }/market/verifyQuoteList.do">审核报价<span
 										class="verifyQuote"></span></a></li>
 								</c:if>
+								 -->
 								<li><a href="${ctx }/market/confirmQuoteList.do">报价商定<span
 										class="confirmQuote"></span></a></li>
 								<li><a href="${ctx }/market/modifyQuoteList.do">修改报价<span
@@ -159,12 +171,6 @@ table.tablesorter thead tr .headerSortDown {
 										class="pushRest"></span></a></li>
 								<li><a href="${ctx }/market/modifyProductList.do">修改大货合同<span
 										class="modifyProduceOrder"></span></a></li>
-										<!-- 
-								<li><a href="${ctx }/market/signContractList.do">签订大货合同<span
-										class="signContract"></span></a></li>
-								<li><a href="#">订单回访</a></li>
-								<li><a href="#">提醒缴费</a></li>
-										 -->
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_design==true}">

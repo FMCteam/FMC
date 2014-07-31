@@ -21,7 +21,7 @@ public class Order implements java.io.Serializable {
 	private String confirmDepositFile;//大货定金收据电子图片
 	private String confirmFinalPaymentFile;//大货尾金收据电子图片
 	private String confirmSampleMoneyFile;//样衣金收据电子图片
-	
+	private Short isHaoDuoYi;
 	
 	private Integer orderId;
 	private Short reorder;
@@ -541,5 +541,13 @@ public class Order implements java.io.Serializable {
 
 	public void setConfirmFinalPaymentFile(String confirmFinalPaymentFile) {
 		this.confirmFinalPaymentFile = confirmFinalPaymentFile;
+	}
+	@Column(name = "is_haoduoyi", nullable = false)
+	public Short getIsHaoDuoYi() {
+		return isHaoDuoYi;
+	}
+
+	public void setIsHaoDuoYi(Short isHaoDuoYi) {
+		this.isHaoDuoYi = isHaoDuoYi;
 	}
 }

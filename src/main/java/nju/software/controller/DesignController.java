@@ -181,7 +181,15 @@ public class DesignController {
 		String crumpleMoney = request.getParameter("crumpleMoney");
 		//开版费用
 		String openVersionMoney = request.getParameter("openVersionMoney");
-		
+
+		if (needCraft.equals("0")) {
+			stampDutyMoney = "0";
+			washHangDyeMoney = "0";
+			laserMoney = "0";
+			embroideryMoney = "0";
+			crumpleMoney = "0";
+			openVersionMoney = "0";
+		}
 		//生产报价提交
 		designService.computeDesignCostSubmit(
 				orderId,
