@@ -330,11 +330,15 @@ public class LogisticsServiceImpl implements LogisticsService {
 	public boolean mobileWarehouseSubmit(long taskId, Integer orderId) {
 		// TODO Auto-generated method stub
 		Order order = orderDAO.findById(orderId);
+		Short isHaoDuoYi = order.getIsHaoDuoYi();
+		short ishaoduoyi = isHaoDuoYi.shortValue();
+		boolean is_hao_duo_yi = (ishaoduoyi==1)?true:false;
 		if (order != null) {
 			order.setLogisticsState(2);
 			orderDAO.attachDirty(order);
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_IS_HAODUOYI, is_hao_duo_yi);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
 			return true;
@@ -526,7 +530,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	public final static String RESULT_RECEIVE_SAMPLE = "receiveSample";
 	public final static String RESULT_SEND_SAMPLE = "sendSample";
 	public final static String RESULT_TAKE_SAMPLE_Money = "takeSampleMoney";
-
+    public final static String RESULT_IS_HAODUOYI = "isHaoDuoYi";
 	@Override
 	public Logistics findByOrderId(String s_id) {
 		// TODO Auto-generated method stub

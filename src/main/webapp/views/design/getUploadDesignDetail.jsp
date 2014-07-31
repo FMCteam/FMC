@@ -42,7 +42,7 @@
 							<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
 							<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
 						</td>
-						<td colspan="3"><input type="submit"
+						<td colspan="3"><input type="submit" value="上传版型文件"
 							class="btn btn-primary btn-rounded"></td>
 					</tr>
 				    </table>
@@ -53,8 +53,10 @@
  
 					<div class="action">
 						<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1"
+							onclick="return confirm('确认加工完成？')"
 							class="btn btn-primary">加工完成</a> 
 						<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0"
+							onclick="return confirm('确认加工失败？')"
 							class="btn btn-danger" style="color:white; margin-left:10px">加工失败</a>
 					</div>
 				</div>

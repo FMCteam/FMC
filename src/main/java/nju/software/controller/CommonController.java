@@ -51,8 +51,9 @@ public class CommonController {
 		departments.add(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
 		departments.add(QualityServiceImpl.ACTOR_QUALITY_MANAGER);
 
-//		map.put(MarketServiceImpl.TASK_VERIFY_QUOTE,
-//				MarketServiceImpl.ACTOR_MARKET_MANAGER);
+		map.put(MarketServiceImpl.TASK_VERIFY_QUOTE,
+				MarketServiceImpl.ACTOR_MARKET_MANAGER);
+		
 		map.put(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST,
 				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 		map.put(DesignServiceImpl.TASK_UPLOAD_DESIGN,
@@ -135,6 +136,7 @@ public class CommonController {
 			map.put(MarketServiceImpl.TASK_MODIFY_PRODUCE_ORDER, actorId);
 			map.put(MarketServiceImpl.TASK_SIGN_CONTRACT, actorId);
 			map.put(MarketServiceImpl.TASK_PUSH_REST, actorId);
+			
 			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER, number);
 		}
 
@@ -202,7 +204,12 @@ public class CommonController {
 		return account.getUserRole().equals(
 				MarketServiceImpl.ACTOR_MARKET_STAFF);
 	}
-
+    private boolean isMarketManager(HttpServletRequest request){
+    	HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		return account.getUserRole().equals(
+				MarketServiceImpl.ACTOR_MARKET_MANAGER);
+    }
 	private Integer getTaskNumber(String actorId) {
 		List<TaskSummary> task = jbpmAPIUtil.getAssignedTasks(actorId);
 		Integer number = 0;
@@ -222,6 +229,8 @@ public class CommonController {
 		return number;
 	}
 
+	
+	
 	/**
 	 * 封装返回Json数据的方法
 	 */

@@ -55,9 +55,11 @@
 						</table>
 					 
 					<button class="btn btn-primary" onclick="history.back();">返回</button>
-				    <a
-							href="${ctx}/design/getTypeSettingSliceSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
-							class="btn btn-primary">完成排版切片</a> 
+					<div class="action" style="float:right">
+				    	<a href="${ctx}/design/getTypeSettingSliceSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
+						   onclick="return confirm('确认完成排版切片？')"
+						   class="btn btn-primary">完成排版切片</a>
+					</div>
 				</div>				
 			</div>
 

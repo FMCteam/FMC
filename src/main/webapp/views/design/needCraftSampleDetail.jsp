@@ -73,7 +73,7 @@
 							<a style="color: red;">*</a>
 			                <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 							<input name="craftFile" id="craftFile" type="file" required="required"/> 
-							<input  class="btn btn-primary btn-rounded" type="submit" value="上传工艺制作图" onclick="return confirm('确认上传？')" />						
+							<input class="btn btn-primary btn-rounded" type="submit" value="上传工艺制作图" onclick="return confirm('确认上传？')" />						
 						</td>
 					</tr>
 					<tr>
@@ -90,7 +90,7 @@
 				<button class="btn btn-primary" onclick="history.back();">返回</button>
 				<div class="action" style="float:right">
 					<a href="${ctx}/design/needCraftSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
-						class="btn btn-primary">完成工艺制作</a> 
+						class="btn btn-primary" onclick="return confirm('确认完成工艺制作？')">完成工艺制作</a> 
 				</div>
 			</div>	
 		</div>

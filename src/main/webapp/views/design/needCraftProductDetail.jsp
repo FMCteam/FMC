@@ -7,7 +7,7 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">工艺加工</li>
-				<li class="active"><a href="#craftSample" data-toggle="tab">工艺报价</a></li>
+				<li class="active"><a href="#craft" data-toggle="tab">工艺报价</a></li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
@@ -76,12 +76,12 @@
 	                        </tr>
 							
 						</table>
-						
-					<div class="action">
-						<button class="btn btn-primary" onclick="history.back();">返回</button>						
-						<a
-							href="${ctx}/design/needCraftProductSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
-							class="btn btn-primary">完成工艺制作</a> 
+					
+					<button class="btn btn-primary" onclick="history.back();">返回</button>
+					<div class="action" style="float:right">
+						<a href="${ctx}/design/needCraftProductSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
+						   onclick="return confirm('确认完成工艺制作？')"
+						   class="btn btn-primary">完成工艺制作</a>
 			        </div>
 						
 				 
