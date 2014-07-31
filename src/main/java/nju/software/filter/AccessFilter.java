@@ -136,7 +136,15 @@ public class AccessFilter implements Filter {
 			request.setAttribute("USER_user_name", curUser.getUserName());
 			request.setAttribute("USER_user_role", curUser.getUserRole());
             if(curUser.getUserRole().equals("marketManager")||curUser.getUserRole().equals("ADMIN")){
-            	request.setAttribute("CAN_VERIFY_QUOTE", true);
+            	request.setAttribute("IS_MARKET_MANAGER_OR_ADMIN", true);
+            }else{
+            	request.setAttribute("IS_MARKET_MANAGER_OR_ADMIN", false);
+            }
+            
+            if(curUser.getUserRole().equals("marketStaff")||curUser.getUserRole().equals("ADMIN")){
+            	request.setAttribute("IS_MARKET_STAFF_OR_ADMIN", true);
+            }else{
+            	request.setAttribute("IS_MARKET_STAFF_OR_ADMIN", false);
             }
 			//
 			// if(jbpmAPIUtil==null){

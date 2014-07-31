@@ -69,6 +69,14 @@
 			}
 		});
 
+		$("input[name='is_haoduoyi']").change(function(){
+			if($('input:radio[name="is_haoduoyi"]:checked').val()=="1"){
+				$("input[name='order_source']").attr("disabled","disabled");
+ 			}else{
+				$("input[name='order_source']").removeAttr("disabled");
+ 			}
+		});
+		
 		$("input[name='ask_deliver_date']").change(function(){ 
 			var date = new Date();
 			var input_date = new Date($("input[name='ask_deliver_date']").val());
@@ -389,6 +397,11 @@ function init(){
 		$("select[name='in_post_sample_clothes_type']").attr("disabled","disabled");
 		$("input[name='in_post_sample_clothes_number']").attr("disabled","disabled");
 	}
+	$("input[name='is_haoduoyi']").change(function(){
+		if($('input:radio[name="is_haoduoyi"]:checked').val()=="1"){
+			$("input[name='order_source']").attr("disabled","disabled");
+		}
+	});
 	
 	/*if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
 		$("input[name='sample_clothes_name']").attr("disabled","disabled");

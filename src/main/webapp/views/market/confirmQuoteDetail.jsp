@@ -66,8 +66,7 @@
 				</div>
 			</div>
 		</div>
-		
-		
+
 		<!-- 
 		<div class="action" style="float:right">
 			<input type="hidden" name="taskId" value="${orderInfo.task.id}" />

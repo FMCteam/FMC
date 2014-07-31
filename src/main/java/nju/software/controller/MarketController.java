@@ -365,6 +365,8 @@ public class MarketController {
 		cad.setCadTech(cad_tech);
 		cad.setCadVersionData(cad_version_data);
 		// Order
+		Short isHaoDuoYi = Short.parseShort(request
+				.getParameter("is_haoduoyi"));//取得是否为好多衣属性
 		Order order = new Order();
 		order.setReorder((short) 0);
 		order.setEmployeeId(employeeId);
@@ -393,7 +395,15 @@ public class MarketController {
 		order.setHasPostedSampleClothes(hasPostedSampleClothes);
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
-
+		order.setIsHaoDuoYi(isHaoDuoYi);
+		String haoduoyi = request.getParameter("is_haoduoyi");
+		Short ishaoduoyi = Short.parseShort(haoduoyi);
+		
+		if(order.getIsHaoDuoYi()==1){
+			//如果是好多衣客户
+			order.setOrderSource("好多衣");
+		}
+        
 		marketService.addOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, sample_produces, versions, cad, request);
 

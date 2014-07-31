@@ -8,11 +8,11 @@
 <style>
 
 #tablePagination_currPage{
- width :60px;
+ width :30px;
 }
  
 #tablePagination_rowsPerPage{
- width:80px;
+ width:60px;
 }
 }
 </style>
