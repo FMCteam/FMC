@@ -42,7 +42,7 @@
 							<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
 							<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
 						</td>
-						<td colspan="3"><input type="submit"
+						<td colspan="3"><input type="submit" value="上传版型文件"
 							class="btn btn-primary btn-rounded"></td>
 					</tr>
 				    </table>
