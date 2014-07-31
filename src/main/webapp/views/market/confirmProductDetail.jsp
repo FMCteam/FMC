@@ -50,7 +50,7 @@
 						<td>上传首定金收据</td>
 					</tr>
 					<tr>
-						<td><input name="discount" type="text" /><input name="sum" type="hidden" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }"/></td>
+						<td><input name="discount" type="text" value="0" /><input name="sum" type="hidden" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }"/></td>
 						<td><input name="totalmoney" type="text" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }" readonly="readonly" /></td>
 						<td><input name="contractFile" type="file" value="选择合同文件" required="required"/></td>
 						<td><input name="confirmDepositFile" type="file" value="选择定金文件" required="required"/></td>
@@ -73,8 +73,8 @@
 					id="produce_xl" type="hidden" name="produce_xl" /> <input
 					id="produce_xxl" type="hidden" name="produce_xxl" /> <input
 					type="hidden" name="tof">
-					<a class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定</a> 
-					<a class="btn btn-danger btn-rounded" ><i class="icon-white"></i>取消订单</a>
+					<a class="btn btn-danger btn-rounded" ><i class="icon-white icon-remove"></i>取消订单</a>
+					<a class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定加工</a> 
 			</div>
 		</form>
 		<!--row-fluid

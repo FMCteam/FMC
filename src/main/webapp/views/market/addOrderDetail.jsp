@@ -407,7 +407,7 @@
 				<!--row-fluid-->
 			</div>
 			<button class="btn btn-primary" onclick="history.back();">返回</button>
-			<div class="action" style="">
+			<div class="action" style="float:right">
 				<button class="btn btn-primary btn-rounded norepeat">
 					<i class="icon-ok icon-white"></i>提交询单
 				</button>

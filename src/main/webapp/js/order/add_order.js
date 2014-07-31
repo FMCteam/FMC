@@ -256,7 +256,7 @@ function verify(){
 	if(is_need_sample == 1){
 		var sample_amount = jQuery("input[name='sample_amount']").val();
 		if(sample_amount == "" || sample_amount <= 0){
-			alert("请填写样衣数量");
+			alert("请添加样衣数量");
 			return false;
 		}
 	}
