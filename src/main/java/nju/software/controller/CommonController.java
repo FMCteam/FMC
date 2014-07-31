@@ -206,7 +206,9 @@ public class CommonController {
 	}
     private boolean isMarketManager(HttpServletRequest request){
     	HttpSession session = request.getSession();
-    	Account account = session
+		Account account = (Account) session.getAttribute("cur_user");
+		return account.getUserRole().equals(
+				MarketServiceImpl.ACTOR_MARKET_MANAGER);
     }
 	private Integer getTaskNumber(String actorId) {
 		List<TaskSummary> task = jbpmAPIUtil.getAssignedTasks(actorId);
