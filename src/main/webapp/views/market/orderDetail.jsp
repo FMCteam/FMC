@@ -30,8 +30,9 @@
 			</div>
 			<c:if test="${orderInfo.order.orderState!='1'}">
 			<div class="push-order" style="float:left">
+				<button class="btn btn-primary" onclick="history.back();">返回</button>
 				<c:if test="${role=='ADMIN' || role=='marketManager' || role=='marketStaff'}">
-				<a class="btn btn-primary"
+				<a class="btn btn-primary" 
 					href="${ctx}/order/pushOrderInfo.do?orderId=${orderInfo.order.orderId}">推送订单信息</a>
 				</c:if>
 			</div>
@@ -45,7 +46,7 @@
 			</div>
 			</c:if>
 		</div>
-		<button class="btn btn-primary" onclick="history.back();">返回</button>
+		
 	</div>
 	<!--row-fluid-->
 	<div class="footer">

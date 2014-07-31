@@ -40,14 +40,14 @@
 					action="${ctx }/quality/checkQualitySubmit.do">
 						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td rowspan="${fn:length(orderInfo.produced)+1}">质检合格数量表</td>
-								<td>颜色</td>
-								<td>XS</td>
-								<td>S</td>
-								<td>M</td>
-								<td>L</td>
-								<td>XL</td>
-								<td>XXL</td>
+								<td class="title" rowspan="${fn:length(orderInfo.produced)+1}">质检合格数量表</td>
+								<td class="title">颜色</td>
+								<td class="title">XS</td>
+								<td class="title">S</td>
+								<td class="title">M</td>
+								<td class="title">L</td>
+								<td class="title">XL</td>
+								<td class="title">XXL</td>
 							</tr>
 							<c:forEach var="produced" items="${orderInfo.produced}">
 								<tr>
@@ -68,14 +68,14 @@
 								</tr>
 							</c:forEach>
 							<tr>
-								<td rowspan="${fn:length(orderInfo.produced)+1}">质检不合格数量表</td>
-								<td>颜色</td>
-								<td>XS</td>
-								<td>S</td>
-								<td>M</td>
-								<td>L</td>
-								<td>XL</td>
-								<td>XXL</td>
+								<td class="title" rowspan="${fn:length(orderInfo.produced)+1}">质检不合格数量表</td>
+								<td class="title">颜色</td>
+								<td class="title">XS</td>
+								<td class="title">S</td>
+								<td class="title">M</td>
+								<td class="title">L</td>
+								<td class="title">XL</td>
+								<td class="title">XXL</td>
 							</tr>
 							<c:forEach var="produced" items="${orderInfo.produced}">
 								<tr>
@@ -96,7 +96,7 @@
 								</tr>
 							</c:forEach>
 						    <tr>
-								<td>加工方：</td>
+								<td class="title">加工方：</td>
 								<td colspan="7">${orderInfo.order.payAccountInfo}</td>
 							</tr>	
 							<!-- 
