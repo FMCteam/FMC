@@ -20,6 +20,7 @@
 			var colName = ["accessory_cost_name","costperpiece","tearperpiece"];
 			table_addrow_onclick2("accessory_cost_table",colName,3);
 		});	
+		//大货加工
 		$("table.produce_table a").click(function(){
 			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
 			if(checkNum("produce_table",colName,7)){
@@ -30,11 +31,12 @@
 				}
 			}
 		});
-		
+		//样衣加工
 		$("table.sample_produce_table a").click(function(){
 			var colName = ["sample_produce_color","sample_produce_xs","sample_produce_s","sample_produce_m","sample_produce_l","sample_produce_xl","sample_produce_xxl"];
 			if(checkNum("sample_produce_table",colName,7)){
 				table_addrow_onclick("sample_produce_table",colName,7);
+				$("input[name='sample_amount']").val(calculate("produce_table",colName,7));
 			}
 		});
 		
@@ -105,29 +107,42 @@
 		
 	});
 
-	function table_addrow_onclick(table_name,col_name,col_sum){
-	
-			var content = new Array();
-			for(var i=0;i<col_sum;i++){
-				var col=$("table."+table_name+" tr.addrow input").eq(i).val();
-				content[i] = col;
-				if(col==""){
-					alert("请把信息填写完整");
-					return;
-				}
+	function table_addrow_onclick(table_name,col_name,col_sum){	
+		var content = new Array();
+		for (var i = 0; i < col_sum; i++) {
+			var col = $("table." + table_name + " tr.addrow input").eq(i).val();
+			content[i] = col;
+			if (col == "") {
+				alert("请把信息填写完整");
+				return;
 			}
-			
+		}
 
-			var item = "";
-			for(var j=0;j<col_sum;j++){
-				$("table."+table_name+" tr.addrow input").eq(j).val("");
-				item+="<td class='"+col_name[j]+"'>"+content[j]+"</td>";
+		var item = "";
+		//如果是添加大货和样衣数量，需要设置默认值0
+		if (table_name == "produce_table" || table_name == "sample_produce_table") {
+			for (var j = 0; j < col_sum; j++) {
+				//第1列是颜色，不需要置为0
+				if(j == 0){
+					$("table." + table_name + " tr.addrow input").eq(j).val("");
+				}else{
+					$("table." + table_name + " tr.addrow input").eq(j).val("0");
+				}
+				item += "<td class='" + col_name[j] + "'>" + content[j] + "</td>";
 			}
-			item+="<td><a onclick=\"deleteRow(this,'"+table_name+"')\">删除</a></td>";
-			item="<tr>"+item+"</tr>";
-			$("table."+table_name+" tr.addrow").after(item);
+		}else{
+			for (var j = 0; j < col_sum; j++) {
+				$("table." + table_name + " tr.addrow input").eq(j).val("");
+				item += "<td class='" + col_name[j] + "'>" + content[j] + "</td>";
+			}
+		}
+
+		item += "<td><a onclick=\"deleteRow(this,'" + table_name + "')\">删除</a></td>";
+		item = "<tr>" + item + "</tr>";
+		$("table." + table_name + " tr.addrow").after(item);
 			
 	}
+	
 	function table_addrow_onclick2(table_name,col_name,col_sum){
 		
 		var content = new Array();
@@ -169,17 +184,29 @@
 	
 })(jQuery);
 
-function checkNum(table_name,col_name,col_sum){
-	for(var i=0;i<col_sum;i++){
-		var col=$("table."+table_name+" tr.addrow input").eq(i).val();
-		if(isNaN(parseInt(col))){
-			if(i>0){
+function checkNum(table_name, col_name, col_sum) {
+	var totalNum = 0;
+	for (var i = 0; i < col_sum; i++) {
+		var col = $("table." + table_name + " tr.addrow input").eq(i).val();
+		
+		if (isNaN(parseInt(col))) {
+			if (i > 0) {
 				alert("请正确填写数量");
 				return false;
 			}
+		} else {
+			if (i > 0) {
+				totalNum += parseInt(col);
+			}
 		}
 	}
-	return true;
+	
+	if (totalNum > 0){
+		return true;
+	}else{
+		alert("总数必须大于0，请重新填写");
+		return false;
+	}
 }
 
 function checkFloat(table_name,col_name,col_sum){
@@ -226,6 +253,21 @@ function getTdString(col){
 
 
 function verify(){
+	var ask_amount = jQuery("input[name='ask_amount']").val();
+	if(ask_amount == "" || ask_amount <= 0){
+		alert("大货总数必须大于0");
+		return false;
+	}
+	
+	var is_need_sample = jQuery("input[name='is_need_sample_clothes']").val();
+	//如果需要样衣
+	if(is_need_sample == 1){
+		var sample_amount = jQuery("input[name='sample_amount']").val();
+		if(sample_amount == "" || sample_amount <= 0){
+			alert("请填写样衣数量");
+			return false;
+		}
+	}
 	
 	
 	$("#fabric_name").val(getTdString("fabric_name"));

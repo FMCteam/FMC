@@ -1652,23 +1652,25 @@ public class MarketController {
 		String taskId = request.getParameter("taskId");
 		String orderId = request.getParameter("orderId");
 		String url = "";
-		if(result.equals("0")){
-			
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		MultipartFile file = multipartRequest.getFile("confirmSampleMoneyFile");
-		String filename = file.getOriginalFilename();
-		url = CONFIRM_SAMPLEMONEY_URL + orderId;
-		String fileid = "confirmSampleMoneyFile";
-		FileOperateUtil.Upload(request, url, null, fileid);
-		url = url + "/" + filename;
+		//result为0，表示上传样衣制作金
+		if (result.equals("0")) {
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile file = multipartRequest
+					.getFile("confirmSampleMoneyFile");
+			String filename = file.getOriginalFilename();
+			url = CONFIRM_SAMPLEMONEY_URL + orderId;
+			String fileid = "confirmSampleMoneyFile";
+			FileOperateUtil.Upload(request, url, null, fileid);
+			url = url + "/" + filename;
 		}
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = (Account) request.getSession().getAttribute("cur_user");
 		String actorId = account.getUserId() + "";
-//		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),result);
-		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),Integer.parseInt(orderId),result,url);
+		// marketService.confirmQuoteSubmit(actorId,
+		// Long.parseLong(taskId),result);
+		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),
+				Integer.parseInt(orderId), result, url);
 
-		// 1=修改报价
+		// 1=修改报价，2=取消订单
 		if (result.equals("1")) {
 			return "redirect:/market/modifyQuoteList.do?id=" + orderId;
 		} else {

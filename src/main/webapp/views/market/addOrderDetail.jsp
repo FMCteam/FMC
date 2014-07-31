@@ -241,8 +241,10 @@
 								<td class="span2 title" colspan="2">完工时间（天）<span class="required">*</span></td>
 							</tr>
 							<tr>
-								<td class="span2" colspan="2"><input class="span6"
-									type="number" name="ask_amount" required="required"/></td>
+								<td class="span2" colspan="2">
+									<input class="span6" type="number" name="ask_amount" required="required" readonly="readonly"/>
+									<input class="span6" type="hidden" name="sample_amount" />
+								</td>
 								<td class="span2" colspan="2"><input class="span8"
 									id="datepicker" type="text" name="ask_deliver_date" required="required"/></td>
 								<td class="span2" colspan="2"><input class="span4"
@@ -275,12 +277,12 @@
 										</tr>
 										<tr class="addrow">
 											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
 											<td><a>添加</a><span class="required">（点击添加之后数据生效）</span></td>
 										</tr>
 									</table>
@@ -311,12 +313,12 @@
 										</tr>
 										<tr class="addrow">
 											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
 											<td><a>添加</a><span class="required">（点击添加之后数据生效）</span></td>
 										</tr>
 									</table>
@@ -416,7 +418,7 @@
 				<!--row-fluid-->
 			</div>
 			<button class="btn btn-primary" onclick="history.back();">返回</button>
-			<div class="action">
+			<div class="action" style="">
 				<button class="btn btn-primary btn-rounded norepeat">
 					<i class="icon-ok icon-white"></i>提交询单
 				</button>

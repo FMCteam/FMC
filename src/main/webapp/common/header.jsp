@@ -2,18 +2,15 @@
 <%@ page language="java" import="nju.software.filter.AccessFilter"%>
 <%@ page language="java" import="nju.software.dataobject.Account"%>
 <%@ include file="/common/taglibs.jsp"%>
-
 <!doctype html>
 <head>
 <title>智造链</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<%@ include file="/common/css_file.jsp"%>
+<%@include file="/common/css_file.jsp"%>
 <script type="text/javascript" src="${ctx}/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery.tablesorter.min.js"></script>
-<script type="text/javascript"
-	src="${ctx}/js/jquery.noty.packaged.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/jquery.noty.packaged.min.js"></script>
 <script>
 $(document).ready(function() {
 	if ('${notify}' != null && '${notify}' != "") {
