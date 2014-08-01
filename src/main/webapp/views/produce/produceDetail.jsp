@@ -6,7 +6,7 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
-				<li class="task-name">批量生产</li>
+				<li class="task-name">批量生产(外发)</li>
 				<li class="active"><a href="#produceList" data-toggle="tab">批量生产</a></li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
@@ -102,8 +102,8 @@
 							 <input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
 							 <input type="hidden" name="taskId" value="${orderInfo.taskId }" /> 
 							 <input id="verify_val" type="hidden" name="result" value="" /> 
-							 <input id="disagree_detail" type="button" value="生产失败" class="btn btn-danger btn-rounded">
-							 <input id="agree_detail" type="button" value="生产完成" class="btn btn-primary btn-rounded">
+							 <input id="disagree_detail" type="button" value="终止外发加工" class="btn btn-danger btn-rounded">
+							 <input id="agree_detail" type="button" value="开始外发加工" class="btn btn-primary btn-rounded">
 						</div>
 						<input id="produce_color" name="produce_color" type="hidden" /> <input
 							id="produce_xs" name="produce_xs" type="hidden" /> <input
@@ -150,7 +150,7 @@ jQuery(document).ready(function(){
 			return;
 		}
 	
-		if(confirm("确认完成大货生产？")){
+		if(confirm("确认完成大货外发生产？")){
 			jQuery("#verify_val").val("true");
 			getProduce();
 			jQuery("#produce_detail_form").submit();

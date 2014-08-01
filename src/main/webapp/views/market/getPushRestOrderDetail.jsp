@@ -57,7 +57,7 @@
 							<tr>
 								<td>${orderInfo.moneyName}</td>
 								<td>${orderInfo.order.discount}</td>
-								<td>${(orderInfo.number)*orderInfo.price}-${orderInfo.order.discount}-${orderInfo.deposit}=<span id="pay">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
+								<td>${(orderInfo.number)*orderInfo.price}（大货总价）-${orderInfo.order.discount}（优惠金额）-${orderInfo.deposit}（定金）=<span id="pay">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
 							</tr>
 							<tr>
 								<td class="title">实际大货件数</td>

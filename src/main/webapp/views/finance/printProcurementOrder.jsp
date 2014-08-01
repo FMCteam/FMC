@@ -43,10 +43,11 @@ h3.title {
 td {
 	padding: 2px;
 	text-align: left;
+	border: 1px solid black;
 }
 
 textarea.input {
-	border: 1px solid #A5C2C8;
+	border: 1px solid black;
 	padding: 4px;
 	width: 100%;
 }
@@ -58,6 +59,7 @@ table.table td.center {
 
 table.table.table-bordered{
 	margin: 13px 0px 10px 0px;
+	border: 1px solid black;
 }
 </style>
 </head>
@@ -97,7 +99,7 @@ table.table.table-bordered{
 	</table>
 	<table class="table table-bordered">
 		<tr>
-			<td class="center span3">下单数</td>
+			<td class="center span3">大货下单数</td>
 			<td class="center span2">XS</td>
 			<td class="center span2">S</td>
 			<td class="center span2">M</td>
@@ -109,12 +111,12 @@ table.table.table-bordered{
 		<c:forEach var="produce" items="${orderInfo.produce}">
 			<tr>
 				<td class="center">${produce.color}</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td class="center">${produce.xs}</td>
+				<td class="center">${produce.s}</td>
+				<td class="center">${produce.m}</td>
+				<td class="center">${produce.l}</td>
+				<td class="center">${produce.xl}</td>
+				<td class="center">${produce.xxl}</td>
 				<td></td>
 			</tr>
 		</c:forEach>
