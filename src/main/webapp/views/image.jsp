@@ -16,9 +16,9 @@ a:hover{
 </style>
 <title>流水状态</title>
 </head>
-
+ 
 <body>
-	<img src="${ctx}/images/fmc_simplified.png"
+	<img src="${ctx}/images/fmc-image-new.png"
 		style="position: absolute; left: 0px; top: 0px;"
 		onload="window.scrollTo(${list[0].x-500},0);">
 	<c:forEach var="node" items="${list}">

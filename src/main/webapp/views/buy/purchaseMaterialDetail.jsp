@@ -46,7 +46,7 @@
 								<td colspan="2">${fabricCost.fabricName }</td>
 								<td colspan="1">${fabricCost.tearPerMeter }</td>
 								<td colspan="1">${orderInfo.order.askAmount}</td>
-								<td colspan="2">${(fabricCost.tearPerMeter)*(orderInfo.order.askAmount)}</td>
+								<td colspan="2"><span id="metersPurchasedAll">${(fabricCost.tearPerMeter)*(orderInfo.order.askAmount)}</span></td>
 							</tr>
 						</c:forEach>
 						<tr>
@@ -61,7 +61,7 @@
 								<td colspan="2">${accessoryCost.accessoryName }</td>
 								<td colspan="1">${accessoryCost.tearPerPiece }</td>
 								<td colspan="1">${orderInfo.order.askAmount}</td> 
-								<td colspan="2">${(accessoryCost.tearPerPiece)*(orderInfo.order.askAmount)}</td>
+								<td colspan="2"><span id="piecesPurchasedAll">${(accessoryCost.tearPerPiece)*(orderInfo.order.askAmount)}</span></td>
 	
 							</tr>
 						</c:forEach>
@@ -94,9 +94,6 @@
 </div>
 </div>
 
-
-
-
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
@@ -106,4 +103,10 @@
 <script type="text/javascript" src="${ctx}/views/buy/cost.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript">
+	var text=$("#metersPurchasedAll").text();
+	$("#metersPurchasedAll").text(parseFloat(text).toFixed(2));
+	var text=$("#piecesPurchasedAll").text();
+	$("#piecesPurchasedAll").text(parseFloat(text).toFixed(2));
+</script>
 <%@include file="/common/footer.jsp"%>

@@ -197,6 +197,8 @@ table.tablesorter thead tr .headerSortDown {
 										class="craftSample"></span></a></li>
 								<li><a href="${ctx}/design/getNeedCraftProductList.do">大货工艺制作<span
 										class="craft"></span></a></li>
+								<li><a href="${ctx}/design/getConfirmCadList.do">确认版型<span
+										class="confirmCad"></span></a></li>
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_buy==true}">
