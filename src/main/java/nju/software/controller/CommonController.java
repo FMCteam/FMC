@@ -123,7 +123,16 @@ public class CommonController {
 		JSONObject jsonobj = new JSONObject();
 		jsonobj.put("taskNumber", number);
 		for (String department : departments) {
-			jsonobj.put(department, getTaskNumber(department));
+			if(department.equals(MarketServiceImpl.ACTOR_MARKET_MANAGER)){
+				Integer verifyQuoteTaskNumber = getTaskNumber((String) map.get(MarketServiceImpl.TASK_VERIFY_QUOTE), MarketServiceImpl.TASK_VERIFY_QUOTE);
+				Integer marketDepartmentTasks = getTaskNumber(MarketServiceImpl.ACTOR_MARKET_MANAGER);
+				int result = marketDepartmentTasks.intValue() - verifyQuoteTaskNumber.intValue();
+				Integer marketStaffTasks = new Integer(result);
+				jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,marketStaffTasks );
+			}else{
+				
+				jsonobj.put(department, getTaskNumber(department));
+			}
 		}
 		// jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,
 		// getTaskNumber(actorId));
@@ -136,12 +145,19 @@ public class CommonController {
 			map.put(MarketServiceImpl.TASK_MODIFY_PRODUCE_ORDER, actorId);
 			map.put(MarketServiceImpl.TASK_SIGN_CONTRACT, actorId);
 			map.put(MarketServiceImpl.TASK_PUSH_REST, actorId);
-			
-			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER, number);
+//			Integer verifyQuoteTaskNumber = getTaskNumber((String) map.get(MarketServiceImpl.TASK_VERIFY_QUOTE), MarketServiceImpl.TASK_VERIFY_QUOTE);
+//			int result = number.intValue() - verifyQuoteTaskNumber.intValue();
+//			Integer marketStaffTasks = new Integer(result);
+//			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,marketStaffTasks );
 		}
 
 		for (String task : map.keySet()) {
 			jsonobj.put(task, getTaskNumber((String) map.get(task), task));
+			if(task.equals(MarketServiceImpl.TASK_VERIFY_QUOTE)){
+				//市场主管的task class 设为"marketManager2",设置为市场主管的审核报价的任务数 为市场主管所有的任务数
+				jsonobj.put("marketManager2", getTaskNumber((String) map.get(task), task));
+				
+			}
 		}
 		sendJson(response, jsonobj);
 	}
@@ -229,8 +245,6 @@ public class CommonController {
 		return number;
 	}
 
-	
-	
 	/**
 	 * 封装返回Json数据的方法
 	 */

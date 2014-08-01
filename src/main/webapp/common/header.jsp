@@ -135,7 +135,7 @@ table.tablesorter thead tr .headerSortDown {
 					<c:if test="${IS_MARKET_MANAGER_OR_ADMIN==true}">
 						<li class="dropdown"><a href=""><span
 								class="iconfa-briefcase"></span> 市场主管<span
-								class="marketManager task"></span></a>
+								class="marketManager2 task"></span></a>
 							<ul>
 								<li><a href="${ctx}/market/verifyQuoteList.do">审核报价<span
 										class="verifyQuote"></span></a></li>
