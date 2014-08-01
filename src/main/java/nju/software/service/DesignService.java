@@ -86,4 +86,11 @@ public interface DesignService {
 			float washHangDyeMoney, float laserMoney, float embroideryMoney,
 			float crumpleMoney, float openVersionMoney);
 
+	public List<Map<String, Object>> getConfirmCadList();
+
+	public Map<String, Object> getConfirmCadDetail(int orderId);
+
+	public boolean confirmCadSubmit(int orderId, long taskId, String cadurl,
+			Timestamp uploadTime);
+
 }
