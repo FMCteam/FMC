@@ -90,7 +90,6 @@ public class AccessFilter implements Filter {
 			// todo 从cookie读取数据，看看是否是记住密码用户。
 			if(file[file.length-1].equals("registCustomer.do")||file[file.length-1].equals("forgetPassword.do")||file[file.length-1].equals("sendResetPassMail.do")||file[file.length-1].equals("checkResetPassLink.do")){
 				chain.doFilter(request, response);
-
 			}else{
 				has_access = false;
 			}
@@ -168,10 +167,9 @@ public class AccessFilter implements Filter {
 		} else {
 			if(!file[file.length-1].equals("registCustomer.do")&&!file[file.length-1].equals("forgetPassword.do")&&!file[file.length-1].equals("sendResetPassMail.do")||file[file.length-1].equals("checkResetPassLink.do")){
 //				chain.doFilter(request, response);
-				response.sendRedirect(request.getContextPath() + "/login.do");
+			response.sendRedirect(request.getContextPath() + "/login.do");
 			}
 		}
-
 		chain.doFilter(request, response);
 	}
 

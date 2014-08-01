@@ -244,4 +244,8 @@
        <exception-type>java.lang.Exception</exception-type>
        <location>/views/error.jsp</location>
     </error-page>
+    <!-- session超时定义,单位为分钟 --> 
+	<session-config> 
+	<session-timeout>20</session-timeout> 
+	</session-config>
 </web-app>
