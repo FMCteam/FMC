@@ -73,10 +73,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class MarketController {
-	private final static String CONTRACT_URL = "D:/fmc/contract/";
-	private final static String CONFIRM_SAMPLEMONEY_URL="D:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
-	private final static String CONFIRM_DEPOSIT_URL="D:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
-	private final static String CONFIRM_FINALPAYMENT_URL="D:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
+	private final static String CONTRACT_URL = "C:/fmc/contract/";
+	private final static String CONFIRM_SAMPLEMONEY_URL="C:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
+	private final static String CONFIRM_DEPOSIT_URL="C:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
+	private final static String CONFIRM_FINALPAYMENT_URL="C:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
 
 	@Autowired
 	private OrderService orderService;
