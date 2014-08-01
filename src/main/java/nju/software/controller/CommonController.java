@@ -68,7 +68,8 @@ public class CommonController {
 				DesignServiceImpl.ACTOR_DESIGN_MANAGER);		
 		map.put(DesignServiceImpl.TASK_TYPESETTING_SLICE, 
 				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
-		
+		map.put(DesignServiceImpl.TASK_CONFIRM_CAD , 
+				DesignServiceImpl.ACTOR_DESIGN_MANAGER);		
 		
 		map.put(BuyServiceImpl.TASK_VERIFY_PURCHASE,
 				BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
@@ -123,16 +124,18 @@ public class CommonController {
 		JSONObject jsonobj = new JSONObject();
 		jsonobj.put("taskNumber", number);
 		for (String department : departments) {
-			if(department.equals(MarketServiceImpl.ACTOR_MARKET_MANAGER)){
-				Integer verifyQuoteTaskNumber = getTaskNumber((String) map.get(MarketServiceImpl.TASK_VERIFY_QUOTE), MarketServiceImpl.TASK_VERIFY_QUOTE);
-				Integer marketDepartmentTasks = getTaskNumber(MarketServiceImpl.ACTOR_MARKET_MANAGER);
-				int result = marketDepartmentTasks.intValue() - verifyQuoteTaskNumber.intValue();
-				Integer marketStaffTasks = new Integer(result);
-				jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,marketStaffTasks );
-			}else{
+//			if(department.equals(MarketServiceImpl.ACTOR_MARKET_MANAGER)){
+//				Integer verifyQuoteTaskNumber = getTaskNumber((String) map.get(MarketServiceImpl.TASK_VERIFY_QUOTE), MarketServiceImpl.TASK_VERIFY_QUOTE);
+//				Integer marketDepartmentTasks = getTaskNumber(MarketServiceImpl.ACTOR_MARKET_MANAGER);
+//				int result = marketDepartmentTasks.intValue() - verifyQuoteTaskNumber.intValue();
+//				Integer marketStaffTasks = new Integer(result);
+//				System.out.println("marketDepartmentTasks"+marketDepartmentTasks);
+//				jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,marketStaffTasks );
+//			} 
 				
 				jsonobj.put(department, getTaskNumber(department));
-			}
+//				System.out.println(department+"任务数量"+getTaskNumber(department));
+ 
 		}
 		// jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,
 		// getTaskNumber(actorId));
@@ -145,17 +148,17 @@ public class CommonController {
 			map.put(MarketServiceImpl.TASK_MODIFY_PRODUCE_ORDER, actorId);
 			map.put(MarketServiceImpl.TASK_SIGN_CONTRACT, actorId);
 			map.put(MarketServiceImpl.TASK_PUSH_REST, actorId);
-//			Integer verifyQuoteTaskNumber = getTaskNumber((String) map.get(MarketServiceImpl.TASK_VERIFY_QUOTE), MarketServiceImpl.TASK_VERIFY_QUOTE);
-//			int result = number.intValue() - verifyQuoteTaskNumber.intValue();
-//			Integer marketStaffTasks = new Integer(result);
-//			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,marketStaffTasks );
+			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,number );
+ 
 		}
 
 		for (String task : map.keySet()) {
 			jsonobj.put(task, getTaskNumber((String) map.get(task), task));
+//			System.out.println("该task"+task+"数量为："+getTaskNumber((String) map.get(task), task));
 			if(task.equals(MarketServiceImpl.TASK_VERIFY_QUOTE)){
 				//市场主管的task class 设为"marketManager2",设置为市场主管的审核报价的任务数 为市场主管所有的任务数
 				jsonobj.put("marketManager2", getTaskNumber((String) map.get(task), task));
+//				System.out.println("市场主管的任务数量："+getTaskNumber((String) map.get(task), task));
 				
 			}
 		}
