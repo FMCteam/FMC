@@ -33,8 +33,9 @@
 				</div>
 				<div class="tab-pane active" id="quote">
 					<%@include file="/views/common/quote.jsp"%>
-					<form id="confirm_quote_form" action="${ctx}/market/confirmQuoteSubmit.do" method="post"
-						enctype="multipart/form-data">
+					<form id="confirm_quote_form" name="confirmQuoteForm" action="${ctx}/market/confirmQuoteSubmit.do" method="post"
+					onsubmit="return confirmQuoteDetailSubmit(confirmQuoteForm.confirmSampleMoneyFile.value);"
+						enctype="multipart/form-data" >
 						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td>上传收取样衣金截图文件</td>
@@ -122,5 +123,12 @@ jQuery(document).ready(function(){
 	});
 });
 </script>
-
+<script type="text/javascript">
+function confirmQuoteDetailSubmit(fileValue) {
+     if(fileValue==""){
+	     alert("请选择定金图片");
+	     return false;
+     }
+}
+</script>
 <%@include file="/common/footer.jsp"%>

@@ -1428,20 +1428,65 @@
     </endEvent>
     <userTask id="_96" name="批量生产" >
       <ioSpecification>
+        <dataInput id="_96_CommentInput" name="Comment" />
+        <dataInput id="_96_SkippableInput" name="Skippable" />
+        <dataInput id="_96_LocaleInput" name="Locale" />
         <dataInput id="_96_TaskNameInput" name="TaskName" />
+        <dataInput id="_96_GroupIdInput" name="GroupId" />
+        <dataInput id="_96_PriorityInput" name="Priority" />
         <dataOutput id="_96_produceOutput" name="produce" />
         <inputSet>
+          <dataInputRefs>_96_CommentInput</dataInputRefs>
+          <dataInputRefs>_96_SkippableInput</dataInputRefs>
+          <dataInputRefs>_96_LocaleInput</dataInputRefs>
           <dataInputRefs>_96_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_96_GroupIdInput</dataInputRefs>
+          <dataInputRefs>_96_PriorityInput</dataInputRefs>
         </inputSet>
         <outputSet>
           <dataOutputRefs>_96_produceOutput</dataOutputRefs>
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
+        <targetRef>_96_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_96_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_96_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_96_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_96_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_96_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
         <targetRef>_96_TaskNameInput</targetRef>
         <assignment>
           <from xsi:type="tFormalExpression">produce</from>
           <to xsi:type="tFormalExpression">_96_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_96_GroupIdInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_96_GroupIdInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_96_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_96_PriorityInput</to>
         </assignment>
       </dataInputAssociation>
       <dataOutputAssociation>
