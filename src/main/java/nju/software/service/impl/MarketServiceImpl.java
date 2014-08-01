@@ -801,7 +801,6 @@ public class MarketServiceImpl implements MarketService {
 				.getKsession().getProcessInstance(processId);
 		int orderId_process = (int) process.getVariable("orderId");
 		Order order = orderDAO.findById(id);
-//		String customerName = order.getCustomerName();
 		String orderSource = order.getOrderSource();
 		boolean isHaoDuoYi = (orderSource.equals("好多衣"))?true:false;
 		if (id == orderId_process) {

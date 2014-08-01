@@ -33,8 +33,8 @@
 				</div>
 				<div class="tab-pane active" id="quote">
 					<%@include file="/views/common/quote.jsp"%>
-					<form id="confirm_quote_form" name="confirmQuoteForm" action="${ctx}/market/confirmQuoteSubmit.do" method="post"
-					onsubmit="return confirmQuoteDetailSubmit(confirmQuoteForm.confirmSampleMoneyFile.value);"
+					<form id="confirm_quote_form" name="confirm_quote_form" action="${ctx}/market/confirmQuoteSubmit.do" method="post"
+					onsubmit="return confirmQuoteDetailSubmit(confirm_quote_form.confirmSampleMoneyFile.value,confirm_quote_form.result.value);"
 						enctype="multipart/form-data" >
 						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
@@ -62,7 +62,7 @@
 						<input type="hidden" name="orderId" value="${orderInfo.quote.orderId }" />
 						<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 						<!-- 隐藏标签，判断确认或修改报价，还是取消订单 -->
-						<input id="operation_result" type="hidden" name="result" value="0" />
+						<input id="result"  type="hidden" name="result" value="0" />
  					</form>
 				</div>
 			</div>
@@ -103,32 +103,34 @@ jQuery(document).ready(function(){
 	//确认报价
 	jQuery("#confirm_price").click(function(){
 		if(confirm('确认报价？')){
-			jQuery("#operation_result").val("0");
+			jQuery("#result").val("0");
 			jQuery("#confirm_quote_form").submit();
 		}
 	});
 	//修改报价
 	jQuery("#modify_price").click(function(){
 		if(confirm('确定修改报价？')){
-			jQuery("#operation_result").val("1");
+			jQuery("#result").val("1");
 			jQuery("#confirm_quote_form").submit();
 		}
 	});
 	//取消订单
 	jQuery("#cancel_order").click(function(){
 		if(confirm('确定取消订单？')){
-			jQuery("#operation_result").val("2");
+			jQuery("#result").val("2");
 			jQuery("#confirm_quote_form").submit();
 		}
 	});
 });
 </script>
 <script type="text/javascript">
-function confirmQuoteDetailSubmit(fileValue) {
+function confirmQuoteDetailSubmit(fileValue,operation_result) {
+if(operation_result==0){
      if(fileValue==""){
 	     alert("请选择定金图片");
 	     return false;
      }
+}
 }
 </script>
 <%@include file="/common/footer.jsp"%>

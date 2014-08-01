@@ -93,4 +93,7 @@ public interface DesignService {
 	public boolean confirmCadSubmit(int orderId, long taskId, String cadurl,
 			Timestamp uploadTime);
 
+	public void getTypeSettingSliceSubmit(int orderId, String cadding_side,
+			long taskId);
+
 }
