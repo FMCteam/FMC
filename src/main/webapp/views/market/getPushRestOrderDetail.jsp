@@ -38,8 +38,8 @@
 				</div>
 				<div class="tab-pane  active" id="finance">
  
-					<form id="verify_form" action="${ctx}/market/getPushRestOrderSubmit.do" enctype="multipart/form-data"
-						method="post"  onsubmit="return confirmFinanceSubmit();">
+					<form id="verify_form" name="verify_form" action="${ctx}/market/getPushRestOrderSubmit.do" enctype="multipart/form-data"
+						method="post"  onsubmit="return getPushRestOrderDetailSubmit(verify_form.confirmFinalPaymentFile.value);">
 						<input type="hidden" name="money_state" value="已收到" /> <input
 							id="verify_val" type="hidden" name="val" value="已收到" /> <input
 							type="hidden" name="money_type" value="${orderInfo.type}" /> <input
@@ -88,8 +88,8 @@
 							       <!-- 
 							       <input  class="btn btn-primary btn-rounded" type="submit" value="上传尾金截图" onclick="return confirm('确认上传？')" />						
 							        -->
-						</td>
-					</tr>
+						       </td>
+					       </tr>
 					<!-- 
 							<tr>
 		                        <td class="title">收款信息</td>
@@ -150,13 +150,25 @@
 </div>
 <!--maincontent-->
 <script type="text/javascript">
+
 $(document).ready(function() {
  var text=$("#pay").text();
 	$("#pay").text(parseFloat(text).toFixed(2));
 // var text=$("#pay2").text();
 //	$("#pay2").text(parseFloat(text).toFixed(2));
 	 
-});  
+});
+function getPushRestOrderDetailSubmit(fileValue) {
+     if(fileValue!=""){
+	 confirmFinanceSubmit();
+     return true;     
+     }else{
+     alert("请选择文件");     
+	 return false;
+     }
+     
+}
+
 </script>
 
 <%@include file="/common/js_file.jsp"%>
