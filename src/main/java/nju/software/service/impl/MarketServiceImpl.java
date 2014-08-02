@@ -802,11 +802,17 @@ public class MarketServiceImpl implements MarketService {
 		int orderId_process = (int) process.getVariable("orderId");
 		Order order = orderDAO.findById(id);
 		String orderSource = order.getOrderSource();
+		Short isHaoduoyi = order.getIsHaoDuoYi();
+		short ishaoduoyi = isHaoduoyi.shortValue();
+		boolean isHaoDuoYi2 =false;
+		if(ishaoduoyi==1)
+			isHaoDuoYi2 = true;
+		
 		boolean isHaoDuoYi = (orderSource.equals("好多衣"))?true:false;
 		if (id == orderId_process) {
 			Map<String, Object> data = new HashMap<>();
 			
-		    data.put(RESULT_IS_HAODUOYI, isHaoDuoYi);
+		    data.put(RESULT_IS_HAODUOYI, isHaoDuoYi2);
 			quoteDAO.merge(q);
 			try {
 				jbpmAPIUtil.completeTask(taskId, data, accountId + "");
