@@ -44,7 +44,7 @@
 							<!-- 
 								<td class="title" >主管审核意见</td>
 							 -->							
-								<td><span>主管审核意见:</span>${verifyQuoteComment }</td>
+								<td><span>主管审核意见：</span>${verifyQuoteComment}</td>
 							</tr>
  
 						</table>

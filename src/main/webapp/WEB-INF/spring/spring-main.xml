@@ -73,11 +73,12 @@
 				<value>nju.software.dataobject.VersionData</value>
 				<value>nju.software.dataobject.AccessoryCost</value>
 				<value>nju.software.dataobject.DeliveryRecord</value>
+				<value>nju.software.dataobject.CheckRecord</value>
+				<value>nju.software.dataobject.CheckDetail</value>
 			</list>
 		</property>
 	</bean>
 	
-
 	<bean id="AccountDAO" class="nju.software.dao.impl.AccountDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
@@ -187,6 +188,18 @@
 	</bean>
 	<bean id="DeliveryRecordDAO"
 		class="nju.software.dao.impl.DeliveryRecordDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CheckRecordDAO"
+		class="nju.software.dao.impl.CheckRecordDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CheckDetailDAO"
+		class="nju.software.dao.impl.CheckDetailDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

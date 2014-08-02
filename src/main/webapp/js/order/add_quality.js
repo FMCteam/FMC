@@ -13,6 +13,13 @@ function getInputString(col){
 
 
 function getQuality(){
+	var repairAmount = $("input[name='repair_number']").val();
+	var repairTime = $("input[name='repair_time']").val();
+	if((repairAmount != 0 && repairAmount != "") && (repairTime == "")){
+		alert("请填写回修日期");
+		return false;
+	}
+	
 	$("#good_color").val(getInputString("good_color"));
 	$("#good_xs").val(getInputString("good_xs"));
 	$("#good_s").val(getInputString("good_s"));
@@ -30,6 +37,42 @@ function getQuality(){
 	$("#bad_xxl").val(getInputString("bad_xxl"));
 
 	return confirm('确认提交？');
+}
+
+//根据衣服型号计算质检数量
+function getCheckNumberViaSize(col){
+	var checkNumber = 0;
+	var i = 0;
+	var temp = 0;
+	for (; i < $("input." + col).length; i++) {
+		temp = Number($("input." + col).eq(i).val());
+		if(isNaN(temp)){
+			alert("质检数量必须为数字");
+			return;
+		}
+		checkNumber += temp;
+	}
+	// alert(checkNumber);
+	return checkNumber;
+}
+
+//计算回修数量（不合格总数）
+function computeRepairAmount(){
+	var xs = getCheckNumberViaSize("bad_xs");
+	var s = getCheckNumberViaSize("bad_s");
+	var m = getCheckNumberViaSize("bad_m");
+	var l = getCheckNumberViaSize("bad_l");
+	var xl = getCheckNumberViaSize("bad_xl");
+	var xxl = getCheckNumberViaSize("bad_xxl");
+	
+	if(isNaN(xs) || isNaN(s) || isNaN(m) || isNaN(l) || isNaN(xl) || isNaN(xxl)){
+		alert("不合格数量必须为数字");
+		return;
+	}
+		
+	var repairAmount = xs + s + m + l + xl + xxl;
+	$("input[name='repair_number']").val(repairAmount);
+	
 }
 
 function init(){
