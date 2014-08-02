@@ -25,6 +25,7 @@
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span2 title" rowspan="2">业务信息</td>
+								
 								<!-- 
 								<td class="span2 title">业务编号</td>
 								 -->

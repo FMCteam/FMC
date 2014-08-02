@@ -97,14 +97,17 @@
 							</tr>
 						</table>
 						
-					    <button class="btn btn-primary" onclick="history.back();">返回</button>
+					    
+					    <input id="disagree_detail" type="button" value="终止外发加工" class="btn btn-danger btn-rounded">
 						<div class="action" style="float:right">
 							 <input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
 							 <input type="hidden" name="taskId" value="${orderInfo.taskId }" /> 
 							 <input id="verify_val" type="hidden" name="result" value="" /> 
-							 <input id="disagree_detail" type="button" value="终止外发加工" class="btn btn-danger btn-rounded">
+							 
 							 <input id="agree_detail" type="button" value="开始外发加工" class="btn btn-primary btn-rounded">
 						</div>
+						<br>
+						<button class="btn btn-primary" onclick="history.back();">返回</button>
 						<input id="produce_color" name="produce_color" type="hidden" /> <input
 							id="produce_xs" name="produce_xs" type="hidden" /> <input
 							id="produce_s" name="produce_s" type="hidden" /> <input

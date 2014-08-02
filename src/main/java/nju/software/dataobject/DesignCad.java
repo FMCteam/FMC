@@ -75,7 +75,7 @@ public class DesignCad implements java.io.Serializable {
 		this.cadUrl = cadUrl;
 	}
 
-	@Column(name = "cad_version", nullable = false)
+	@Column(name = "cad_version", nullable = true)
 	public Short getCadVersion() {
 		return this.cadVersion;
 	}

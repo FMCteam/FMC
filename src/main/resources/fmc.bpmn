@@ -1855,7 +1855,7 @@ return true;
         <dc:Bounds x="161" y="174" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_1" >
-        <dc:Bounds x="41" y="174" width="48" height="48" />
+        <dc:Bounds x="46" y="175" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_139" >
         <dc:Bounds x="486" y="67" width="48" height="48" />
@@ -2098,7 +2098,7 @@ return true;
         <dc:Bounds x="5645" y="116" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="_1-_136" >
-        <di:waypoint x="65" y="198" />
+        <di:waypoint x="70" y="199" />
         <di:waypoint x="185" y="198" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_7-_139" >

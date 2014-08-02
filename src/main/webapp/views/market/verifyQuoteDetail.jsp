@@ -50,10 +50,11 @@
 				            <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 				            <input type="hidden" name="verifyQuoteSuccessVal" id="verifyQuoteSuccess_val" value="" /> 
 				            
-							<a id="agree" class="btn btn-primary btn-rounded">
-								<i class="icon-ok icon-white"></i> 同意</a> 
-							<a id="disagree" class="btn btn-danger btn-rounded">
+				            <a id="disagree" class="btn btn-danger btn-rounded" style="float: left;">
 								<i class="icon-remove icon-white"></i> 拒绝</a>
+							<a id="agree" class="btn btn-primary btn-rounded" style="float: right;">
+								<i class="icon-ok icon-white"></i> 同意</a> 
+							
 						</td>
 					</tr>
 				</table>

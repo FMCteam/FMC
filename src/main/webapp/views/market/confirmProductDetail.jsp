@@ -59,7 +59,7 @@
 				</table>
 				</div>
 			</div>
-
+			<a class="btn btn-danger btn-rounded" ><i class="icon-white icon-remove"></i>取消订单</a>
 			<div class="action">
 				<input type="hidden" name="taskId" value="${orderInfo.taskId}" /> <input
 					type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
@@ -73,7 +73,7 @@
 					id="produce_xl" type="hidden" name="produce_xl" /> <input
 					id="produce_xxl" type="hidden" name="produce_xxl" /> <input
 					type="hidden" name="tof">
-					<a class="btn btn-danger btn-rounded" ><i class="icon-white icon-remove"></i>取消订单</a>
+					
 					<a class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定加工</a> 
 			</div>
 		</form>
