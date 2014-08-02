@@ -39,7 +39,7 @@
 							<!-- 
 								<td>待生成</td>
 							 -->
-								<td ><input type="radio" name="is_haoduoyi"
+								<td ><input type="radio" name="is_haoduoyi" id="is_haoduoyi"
 									 value="1" required="required" /> 是 <input type="radio"
 									name="is_haoduoyi" value="0" checked="checked" /> 否</td>
 								<td colspan="2"><input class="span8" type="date"required="required"

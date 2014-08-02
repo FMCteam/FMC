@@ -36,7 +36,9 @@
 									required="required" /></td>
 								<td>${employee_name}</td>
 								<td><input type="text" class="span12" name="order_source"
-									value="${orderModel.order.orderSource }" required="required" /></td>
+									value="${orderModel.order.orderSource }" required="required" />
+									<input type="hidden" name="ishaoduoyi" value="${orderModel.order.isHaoDuoYi }" />
+									</td>
 								<td>是</td>
 							</tr>
 							<tr>

@@ -2,9 +2,11 @@ package nju.software.controller;
 
 import net.sf.json.JSONObject;
 import nju.software.dao.impl.CraftDAO;
+import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Craft;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Order;
 import nju.software.service.impl.BuyServiceImpl;
 import nju.software.service.impl.DesignServiceImpl;
@@ -185,6 +187,9 @@ public class CommonController {
 		}else if(type.equals("craftFileUrl")){
 			Craft craft = craftDAO.findByOrderId(orderId).get(0);
 			file = craft.getCraftFileUrl();
+		}else if(type.equals("CADFile")){
+			DesignCad cad = designCadDAO.findByOrderId(orderId).get(0);
+ 			file = cad.getCadUrl();
 		}else {
 			file = order.getReferencePicture();
 		}
@@ -268,4 +273,6 @@ public class CommonController {
 	private OrderDAO orderDAO;
 	@Autowired
 	private CraftDAO craftDAO;
+	@Autowired
+	private DesignCadDAO designCadDAO;
 }

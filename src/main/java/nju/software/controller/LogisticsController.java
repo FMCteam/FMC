@@ -358,7 +358,7 @@ public class LogisticsController {
 		logisticsService.mobileSendClothesSubmit(orderId);
 		return "forward:/logistics/mobile/sendClothesList.do";
 	}
-
+//==============================发货完成，整个流程结束=========================================================
 	@RequestMapping(value = "/logistics/sendClothesSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String sendClothesSubmit(HttpServletRequest request,
