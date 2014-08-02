@@ -151,17 +151,19 @@
 			                    </c:if></td>
 	                        </tr>
 						</table>
-						<button class="btn btn-primary" onclick="history.back();">返回</button>
 						
-						<div class="action" style="float:right">
-							<input type="submit" id="financeSubmit" hidden="hidden" /> 
-							<a href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
+						<a href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
 								onclick="return confirm('确认未收到汇款？')"
 								class="btn btn-danger btn-rounded"
 								style="color: white"><i class="icon-remove icon-white"></i>未收到汇款</a>
+						<div class="action" style="float:right">
+							<input type="submit" id="financeSubmit" hidden="hidden" /> 
+							
 							<a id="financeButton" class="btn btn-primary btn-rounded">
 								<i class="icon-ok icon-white"></i>已确认收款</a>
 						</div>
+						<br>
+						<button class="btn btn-primary" onclick="history.back();">返回</button>
 					</form>
 				</div>
 			</div>

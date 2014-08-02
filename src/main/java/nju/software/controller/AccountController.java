@@ -38,7 +38,7 @@ public class AccountController {
 	public String employeeList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int page;
-		int numberPerPage=10;
+		int numberPerPage = 10;
 		String s_page = request.getParameter("page");
 		if (s_page == null || s_page.equals("")) {
 			s_page = "1";
@@ -49,9 +49,9 @@ public class AccountController {
 				numberPerPage);
 		int pageNumber = (employeeService.getcount() - 1) / numberPerPage + 1;
 		model.addAttribute("employee_list", list);
-		model.addAttribute("page_number", pageNumber);
+		ModelMap addAttribute = model.addAttribute("page_number", pageNumber);
 		model.addAttribute("page", page);
-		//model.addAttribute("notify", page);
+		// model.addAttribute("notify", page);
 		return "/account/employeeList";
 	}
 
@@ -69,7 +69,6 @@ public class AccountController {
 		return "/customer/registCustomer";
 	}
 
-	
 	@RequestMapping(value = "/account/addEmployeeSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String addEmployeeSubmit(HttpServletRequest request,
@@ -108,9 +107,9 @@ public class AccountController {
 		String hometown = request.getParameter("hometown");
 		String address = request.getParameter("address");
 		String chinaId = request.getParameter("id_card");
-        String jobphone = request.getParameter("jobphone");
-        String email = request.getParameter("email");
-        String qq = request.getParameter("qq");
+		String jobphone = request.getParameter("jobphone");
+		String email = request.getParameter("email");
+		String qq = request.getParameter("qq");
 		Account account = accountService.getAccountByUsername(username);
 		boolean success = false;
 		if (account == null) {
@@ -230,9 +229,9 @@ public class AccountController {
 		String hometown = request.getParameter("hometown");
 		String address = request.getParameter("address");
 		String chinaId = request.getParameter("id_card");
-        String jobphone = request.getParameter("jobphone");
-        String email = request.getParameter("email");
-        String qq = request.getParameter("qq");
+		String jobphone = request.getParameter("jobphone");
+		String email = request.getParameter("email");
+		String qq = request.getParameter("qq");
 		// 两次输入密码不相同
 		if (!password1.equals(password2)) {
 			model.addAttribute("notify", "两次输入密码不相同！");
@@ -287,7 +286,7 @@ public class AccountController {
 			employee.setJobPhone(jobphone);
 			employee.setEmail(email);
 			employee.setQq(qq);
-			
+
 			employeeService.updateEmployee(employee);
 
 			if (!accountToModify.getUserRole().equals("ADMIN")) {
@@ -315,16 +314,17 @@ public class AccountController {
 			return "redirect:/account/modifyEmployeeDetail.do";
 		}
 	}
-	
+
 	@RequestMapping(value = "/account/forgetPassword.do")
 	@Transactional(rollbackFor = Exception.class)
-    public String forgetPassword(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model){
+	public String forgetPassword(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
 		return "/account/forgetPassword";
-    }
-	
+	}
+
 	/**
 	 * 发送找回密码邮件
+	 * 
 	 * @param request
 	 * @param response
 	 * @param model
@@ -332,54 +332,64 @@ public class AccountController {
 	 */
 	@RequestMapping(value = "/account/sendResetPassMail.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-    public String sendResetPassMail(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model){
+	public String sendResetPassMail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
 		System.out.println("---------------开始发送邮件----------------");
-		String username = request.getParameter("username");		
+		String username = request.getParameter("username");
 		Account account = accountService.getAccountByUsername(username);
-		
-        if(null == account){  //登录名不存在
-            model.addAttribute("notify", "登录名不存在");
-            return "/account/sendEmailSuccess";
-        }
-        
-        Customer customer = customerService.findByCustomerId(account.getUserId());
-        if(null != customer){
-        	try{
-                String secretKey= UUID.randomUUID().toString();  //密钥
-                Timestamp failTime = new Timestamp(System.currentTimeMillis() + 30*60*1000); //30分钟后过期
-                long date = failTime.getTime()/1000*1000;  //忽略毫秒数
-                account.setValidataCode(secretKey);
-                account.setResetLinkFailTime(failTime);
-                accountService.updateAccount(account);    //保存到数据库
-                String key = account.getUserName() + "$" + date + "$" + secretKey;
-                String digitalSignature = SecurityUtil.md5hex(key);  //数字签名
 
-                String emailTitle = "智造链 - 找回您的密码";
-                String path = request.getContextPath();
-                String basePath = request.getScheme() + "://" + request.getServerName() + ":"+request.getServerPort() + path + "/";
-                String resetPassHref =  basePath + "account/checkResetPassLink.do?sid=" + digitalSignature + "&userName=" + account.getUserName();
-                String emailContent = "请勿回复本邮件。点击下面的链接，重设密码<br/><a href=" + resetPassHref + " target='_BLANK'>点击我重新设置密码</a>" +
-                        "<br/>提示：本邮件超过30分钟，链接将会失效，需要重新申请";
-                System.out.println(resetPassHref);
-                MailSenderInfo mailSenderInfo = new MailSenderInfo();
-                mailSenderInfo.setSubject(emailTitle);
-                mailSenderInfo.setContent(emailContent);
-                mailSenderInfo.setToAddress(customer.getEmail());
-                SimpleMailSender.sendHtmlMail(mailSenderInfo);
-                
-                model.addAttribute("notify", "操作成功，已经发送找回密码链接到您邮箱。请在30分钟内重置密码");
-            }catch (Exception e){
-                e.printStackTrace();
-                model.addAttribute("notify", "邮箱不存在？未知错误，请联系管理员。");
-            }
-        }
-        System.out.println("---------------邮件发送完成----------------");
-        return "/account/sendEmailSuccess";
-    }
-	
+		if (null == account) { // 登录名不存在
+			model.addAttribute("notify", "登录名不存在");
+			return "/account/sendEmailSuccess";
+		}
+
+		Customer customer = customerService.findByCustomerId(account
+				.getUserId());
+		if (null != customer) {
+			try {
+				String secretKey = UUID.randomUUID().toString(); // 密钥
+				Timestamp failTime = new Timestamp(
+						System.currentTimeMillis() + 30 * 60 * 1000); // 30分钟后过期
+				long date = failTime.getTime() / 1000 * 1000; // 忽略毫秒数
+				account.setValidataCode(secretKey);
+				account.setResetLinkFailTime(failTime);
+				accountService.updateAccount(account); // 保存到数据库
+				String key = account.getUserName() + "$" + date + "$"
+						+ secretKey;
+				String digitalSignature = SecurityUtil.md5hex(key); // 数字签名
+
+				String emailTitle = "智造链 - 找回您的密码";
+				String path = request.getContextPath();
+				String basePath = request.getScheme() + "://"
+						+ request.getServerName() + ":"
+						+ request.getServerPort() + path + "/";
+				String resetPassHref = basePath
+						+ "account/checkResetPassLink.do?sid="
+						+ digitalSignature + "&userName="
+						+ account.getUserName();
+				String emailContent = "请勿回复本邮件。点击下面的链接，重设密码<br/><a href="
+						+ resetPassHref + " target='_BLANK'>点击我重新设置密码</a>"
+						+ "<br/>提示：本邮件超过30分钟，链接将会失效，需要重新申请";
+				System.out.println(resetPassHref);
+				MailSenderInfo mailSenderInfo = new MailSenderInfo();
+				mailSenderInfo.setSubject(emailTitle);
+				mailSenderInfo.setContent(emailContent);
+				mailSenderInfo.setToAddress(customer.getEmail());
+				SimpleMailSender.sendHtmlMail(mailSenderInfo);
+
+				model.addAttribute("notify", "操作成功，已经发送找回密码链接到您邮箱。请在30分钟内重置密码");
+			} catch (Exception e) {
+				e.printStackTrace();
+				model.addAttribute("notify", "邮箱不存在？未知错误，请联系管理员。");
+			}
+		}
+		System.out.println("---------------邮件发送完成----------------");
+		return "/account/sendEmailSuccess";
+	}
+
 	/**
 	 * 验证重设密码链接
+	 * 
 	 * @param request
 	 * @param response
 	 * @param model
@@ -387,39 +397,41 @@ public class AccountController {
 	 */
 	@RequestMapping(value = "/account/checkResetPassLink.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
-    public String checkResetLink(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model){
-        String sid = request.getParameter("sid");
-        String userName = request.getParameter("userName");        
-        if(sid.equals("") || userName.equals("")){
-            model.addAttribute("notify", "链接不完整，请重新生成");
-            return "/account/forgetPassword";
-        }
-        
-        Account account = accountService.getAccountByUsername(userName);
-        if(null == account){
-            model.addAttribute("notify", "链接错误，无法找到匹配用户，请重新申请找回密码");
-            return "/account/forgetPassword";
-        }
-        Timestamp failTime = account.getResetLinkFailTime();
-        if(failTime.getTime() <= System.currentTimeMillis()){         //表示已经过期
-            model.addAttribute("notify", "链接已经过期，请重新申请找回密码");
-            return "/account/forgetPassword";
-        }
-        String key = account.getUserName() + "$" + failTime.getTime()/1000*1000 + "$" + account.getValidataCode();          //数字签名
-        String digitalSignature = SecurityUtil.md5hex(key);
-        System.out.println(key + "\t" + digitalSignature);
-        if(!digitalSignature.equals(sid)) {
-            model.addAttribute("notify", "链接不正确，是否已经过期了？请重新申请");
-            return "/account/forgetPassword";
-        }
-        
-        request.getSession().setAttribute("cur_user", account);
-        return "/account/resetPassword";
-    }
-	
+	public String checkResetLink(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String sid = request.getParameter("sid");
+		String userName = request.getParameter("userName");
+		if (sid.equals("") || userName.equals("")) {
+			model.addAttribute("notify", "链接不完整，请重新生成");
+			return "/account/forgetPassword";
+		}
+
+		Account account = accountService.getAccountByUsername(userName);
+		if (null == account) {
+			model.addAttribute("notify", "链接错误，无法找到匹配用户，请重新申请找回密码");
+			return "/account/forgetPassword";
+		}
+		Timestamp failTime = account.getResetLinkFailTime();
+		if (failTime.getTime() <= System.currentTimeMillis()) { // 表示已经过期
+			model.addAttribute("notify", "链接已经过期，请重新申请找回密码");
+			return "/account/forgetPassword";
+		}
+		String key = account.getUserName() + "$" + failTime.getTime() / 1000
+				* 1000 + "$" + account.getValidataCode(); // 数字签名
+		String digitalSignature = SecurityUtil.md5hex(key);
+		System.out.println(key + "\t" + digitalSignature);
+		if (!digitalSignature.equals(sid)) {
+			model.addAttribute("notify", "链接不正确，是否已经过期了？请重新申请");
+			return "/account/forgetPassword";
+		}
+
+		request.getSession().setAttribute("cur_user", account);
+		return "/account/resetPassword";
+	}
+
 	/**
 	 * 重置密码
+	 * 
 	 * @param request
 	 * @param response
 	 * @param model
@@ -428,21 +440,23 @@ public class AccountController {
 	@RequestMapping(value = "/account/resetPassword.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String resetPassword(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model){
-		Account account = (Account) request.getSession().getAttribute("cur_user");
-		if(null != account){
+			HttpServletResponse response, ModelMap model) {
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
+		if (null != account) {
 			String password1 = request.getParameter("new_pass");
 			String password2 = request.getParameter("cfm_new_pass");
-			
-			if(StringUtils.isEmpty(password1) || StringUtils.isEmpty(password2) || !password1.equals(password2)){
+
+			if (StringUtils.isEmpty(password1)
+					|| StringUtils.isEmpty(password2)
+					|| !password1.equals(password2)) {
 				return "account/resetPassword";
-			}
-			else {
+			} else {
 				account.setUserPassword(SecurityUtil.md5hex(password1));
 				accountService.updateAccount(account);
 				return "login";
 			}
-		}else{
+		} else {
 			return "account/forgetPassword";
 		}
 	}
@@ -496,21 +510,20 @@ public class AccountController {
 	public String customerList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int page;
-		int numberPerPage=10;
+		int numberPerPage = 10;
 		String s_page = request.getParameter("page");
 		if (s_page == null || s_page.equals("")) {
 			s_page = "1";
 		}
-		//String s_number = request.getParameter("number_per_page");
-		/*if (s_page == null || s_page.equals("")) {
-			s_page = "1";
-		}
-		if (s_number == null || s_number.equals("")) {
-			s_number = "10";
-		}*/
-		//int pageNumber = (employeeService.getcount() - 1) / numberPerPage + 1;
+		// String s_number = request.getParameter("number_per_page");
+		/*
+		 * if (s_page == null || s_page.equals("")) { s_page = "1"; } if
+		 * (s_number == null || s_number.equals("")) { s_number = "10"; }
+		 */
+		// int pageNumber = (employeeService.getcount() - 1) / numberPerPage +
+		// 1;
 		System.out.println("page: " + s_page);
-		//System.out.println("number: " + s_number);
+		// System.out.println("number: " + s_number);
 		Map<String, Object> m = new HashMap<String, Object>();
 		m.put("page", Integer.parseInt(s_page));
 		m.put("number_per_page", numberPerPage);
@@ -518,7 +531,7 @@ public class AccountController {
 		model.addAttribute("customer_list", o.get(0));
 		model.addAttribute("page_number",
 				((HashMap<String, Object>) o.get(1)).get("page_number"));
-		model.addAttribute("page",s_page);
+		model.addAttribute("page", s_page);
 		model.addAttribute("notify", "顾客列表");
 		return "/account/customerList";
 	}
@@ -565,7 +578,6 @@ public class AccountController {
 
 		Timestamp registerDate = new Timestamp(d.getTime());
 
-
 		boolean exist = accountService.checkExit(userName);
 		if (exist) {
 
@@ -596,39 +608,39 @@ public class AccountController {
 			c.setRegisterDate(registerDate);
 			HttpSession session = request.getSession();
 			Account registerId = (Account) session.getAttribute("cur_user");
-			if(registerId!=null){
-				c.setRegisterEmployeeId(registerId.getUserId());				
-			    Account account = new Account();
-
-			    boolean test = this.customerService.addCustomer(c, userName,
-					userPassword);
-
-			    if (test) {
-
-				      model.addAttribute("exist", false);
-				      model.addAttribute("success", true);
-				      return "redirect:/account/customerList.do";
-			    } else {
-				      model.addAttribute("exist", false);
-				      model.addAttribute("success", false);
-				      return "redirect:/account/customerList.do";
-			    }
-			}else{
-				c.setRegisterEmployeeId(0);				
+			if (registerId != null) {
+				c.setRegisterEmployeeId(registerId.getUserId());
+				Account account = new Account();
 
 				boolean test = this.customerService.addCustomer(c, userName,
 						userPassword);
 
-				    if (test) {
+				if (test) {
 
-					      model.addAttribute("exist", false);
-					      model.addAttribute("success", true);
-					      return "login";
-				    } else {
-					      model.addAttribute("exist", false);
-					      model.addAttribute("success", false);
-					      return "login";
-				    }
+					model.addAttribute("exist", false);
+					model.addAttribute("success", true);
+					return "redirect:/account/customerList.do";
+				} else {
+					model.addAttribute("exist", false);
+					model.addAttribute("success", false);
+					return "redirect:/account/customerList.do";
+				}
+			} else {
+				c.setRegisterEmployeeId(0);
+
+				boolean test = this.customerService.addCustomer(c, userName,
+						userPassword);
+
+				if (test) {
+
+					model.addAttribute("exist", false);
+					model.addAttribute("success", true);
+					return "login";
+				} else {
+					model.addAttribute("exist", false);
+					model.addAttribute("success", false);
+					return "login";
+				}
 			}
 		}
 	}
@@ -741,7 +753,7 @@ public class AccountController {
 		System.out.println("customer delete successfully" + sucess);
 		return "redirect:/account/customerList.do";
 	}
-	
+
 	@RequestMapping(value = "customer/viewCustomer.do", method = RequestMethod.GET)
 	@Transactional(rollbackFor = Exception.class)
 	public String viewCustomer(HttpServletRequest request,
