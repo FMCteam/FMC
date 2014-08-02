@@ -203,7 +203,7 @@ public class DesignServiceImpl implements DesignService {
 //			return false;
 //		}
 	}
-
+//===========================样衣生产提交========================================
 	@Override
 	public boolean produceSampleSubmit(long taskId, boolean result) {
  		Map<String, Object> data = new HashMap<String, Object>();
@@ -216,6 +216,26 @@ public class DesignServiceImpl implements DesignService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean produceSampleSubmit(long taskId, boolean result,
+			String orderId) {
+		Order order = orderDAO.findById(Integer.parseInt(orderId));
+ 		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PRODUCE, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			if(result==false){//如果result的的值为FALSE，即为样衣生产失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.merge(order);
+			}
+			return true;
+		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+			return false;
+		}
+	}
+
 	
 	// ===========================修改版型=================================
 	@Override
@@ -488,7 +508,9 @@ public class DesignServiceImpl implements DesignService {
 	private QuoteDAO quoteDAO;
 	@Autowired
 	private CraftDAO craftDAO;
-
+	@Autowired
+	private OrderDAO orderDAO;
+	
 
 
 

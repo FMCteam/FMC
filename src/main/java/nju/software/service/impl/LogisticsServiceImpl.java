@@ -103,12 +103,17 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Short result) {
 		// TODO Auto-generated method stub
 		Order order = orderDAO.findById(orderId);
+
 		order.setHasPostedSampleClothes(result);
 		orderDAO.attachDirty(order);
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			data.put(RESULT_RECEIVE_SAMPLE, (int) result);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+			if(result.intValue()==1){//如果result的的值为1，即为未收取到样衣，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

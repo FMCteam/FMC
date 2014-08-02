@@ -92,6 +92,7 @@ public class FinanceServiceImpl implements FinanceService {
 		data.put(RESULT_MONEY, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -99,6 +100,31 @@ public class FinanceServiceImpl implements FinanceService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean confirmSampleMoneySubmit(String actorId, long taskId,
+			boolean result, Money money, int orderId) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(orderId);
+		if (result) {
+			moneyDAO.save(money);
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_MONEY, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			if(result==false){//如果result的的值为false，即为未收取到样衣金，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	// ===========================退还定金===================================
 	@Override
 	public List<Map<String, Object>> getReturnDepositList(String actorId) {
@@ -191,6 +217,29 @@ public class FinanceServiceImpl implements FinanceService {
 		data.put(RESULT_MONEY, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	@Override
+	public boolean confirmDepositSubmit(String actorId, long taskId,
+			boolean result, Money money, int orderId) {
+		// TODO Auto-generated method stub
+		if (result) {
+			moneyDAO.save(money);
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_MONEY, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			if(result==false){//如果result的的值为false，即为确认定金失败，流程会异常终止，将orderState设置为1
+				Order order = orderDAO.findById(orderId);
+				order.setOrderState("1");
+				orderDAO.merge(order);
+				}
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -428,6 +477,8 @@ public class FinanceServiceImpl implements FinanceService {
 		return model;
 
 	}
+
+
 
 
 

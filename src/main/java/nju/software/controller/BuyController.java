@@ -329,6 +329,7 @@ public class BuyController {
 	@Transactional(rollbackFor = Exception.class)
 	public String purchaseSampleMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
 		String processId = request.getParameter("processId");
 		boolean result = request.getParameter("result").equals("1");
@@ -337,6 +338,7 @@ public class BuyController {
  		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
 				.getKsession().getProcessInstance(Long.parseLong(processId));
 		boolean needCraft =  (boolean) process.getVariable("needCraft");
+		
 		System.out.println("need craft 是这个值："+needCraft);
 //		String needCraft = 
 //				(String)jbpmAPIUtil.getVariable(
@@ -348,7 +350,7 @@ public class BuyController {
 //		}
 		
 //		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft);
+		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft,orderId);
 
 		return "forward:/buy/purchaseSampleMaterialList.do";
 	}

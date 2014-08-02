@@ -289,9 +289,11 @@ public class DesignController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
 		boolean result =request.getParameter("result").equals("1");
 		long taskId = Long.parseLong(request.getParameter("taskId"));
-		designService.produceSampleSubmit(taskId, result);
+//		designService.produceSampleSubmit(taskId, result);
+		designService.produceSampleSubmit(taskId, result,orderId);
 		return "forward:/design/getUploadDesignList.do";
 	}
 	

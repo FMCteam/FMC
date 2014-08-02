@@ -92,11 +92,11 @@
 						</c:forEach>
 					</table>
 				    
-				    <a href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0&processId=${orderInfo.task.processInstanceId}"
+				    <a href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
 							class="btn btn-danger btn-rounded" onclick="return confirm('确认采购失败？')">
 							<i class="icon-remove icon-white"></i>采购失败</a>
 					<div class="action" style="float:right">
-						<a href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1&processId=${orderInfo.task.processInstanceId}"
+						<a href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
 							class="btn btn-primary btn-rounded" onclick="return confirm('确认采购完成？')">
 							<i class="icon-ok icon-white"></i>采购完成</a>
 						
