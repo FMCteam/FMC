@@ -465,7 +465,7 @@ public class Order implements java.io.Serializable {
 		this.clothesType = clothesType;
 	}
 
-	@Column(name = "reference_url", length = 250)
+	@Column(name = "reference_url", length = 500)
 	public String getReferenceUrl() {
 		return referenceUrl;
 	}

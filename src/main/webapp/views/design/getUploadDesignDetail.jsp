@@ -31,7 +31,7 @@
 
 				<div class="tab-pane active" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
-					<form action="${ctx }/design/uploadDesignSubmit.do" method="post"
+					<form action="${ctx}/design/uploadDesignSubmit.do" method="post"
 				          onsubmit="return confirm('确认上传？')" enctype="multipart/form-data">
 				    <table class="table table-striped table-bordered table-hover detail">
 					<tr>
@@ -47,11 +47,7 @@
 					</tr>
 				    </table>
 			       </form>
-				</div>
-				<div class="tab-pane" id="produce">
-					<%@include file="/views/common/produce.jsp"%>
- 
-					<div class="action">
+			       <div class="action">
 						<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1"
 							onclick="return confirm('确认加工完成？')"
 							class="btn btn-primary">加工完成</a> 
@@ -59,7 +55,16 @@
 							<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0" 
 							onclick="return confirm('确认加工失败？')"
 							class="btn btn-danger" style="color:white; margin-left:10px">加工失败</a>
+<<<<<<< HEAD
 					
+=======
+				   </div>
+				</div>
+				<div class="tab-pane" id="produce">
+					<%@include file="/views/common/produce.jsp"%>
+ 
+
+>>>>>>> b9669b7c4e4993f8f692fdc8afdae345a661bb5b
 				</div>
 			</div>
 

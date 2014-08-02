@@ -57,7 +57,7 @@
 							<tr>
 								<td>${orderInfo.moneyName}</td>
 								<td>${orderInfo.order.discount}</td>
-								<td>${(orderInfo.number)*orderInfo.price}（大货总价）-${orderInfo.order.discount}（优惠金额）-${orderInfo.deposit}（定金）=<span id="pay">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
+								<td><span id="allMoneyOfProducts">${(orderInfo.number)*orderInfo.price}</span>（大货总价）-${orderInfo.order.discount}（优惠金额）-${orderInfo.deposit}（定金）=<span id="FinalMoneyShouldPay">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
 							</tr>
 							<tr>
 								<td class="title">实际大货件数</td>
@@ -67,7 +67,7 @@
 							<tr>
 								<td>${orderInfo.number}</td>
 								<td>${orderInfo.price}</td>
-								<td>${(orderInfo.number)*orderInfo.price}</td>
+								<td><span id="allMoneyOfAllProducts">${(orderInfo.number)*orderInfo.price}</span></td>
 							</tr>
 							<tr>
 								<td class="title">样衣件数</td>
@@ -77,7 +77,7 @@
 							<tr>
 								<td>${orderInfo.order.sampleAmount}</td>
 								<td>${orderInfo.samplePrice}</td>
-								<td>${orderInfo.order.sampleAmount*orderInfo.samplePrice}</td>
+								<td><span id="allMoneyOfSamples">${orderInfo.order.sampleAmount*orderInfo.samplePrice}</span></td>
 							</tr>
 						    <tr>
 						        <td>选择尾金截图文件</td>
@@ -152,11 +152,15 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
- var text=$("#pay").text();
-	$("#pay").text(parseFloat(text).toFixed(2));
-// var text=$("#pay2").text();
-//	$("#pay2").text(parseFloat(text).toFixed(2));
-	 
+ var text=$("#FinalMoneyShouldPay").text();
+	$("#FinalMoneyShouldPay").text(parseFloat(text).toFixed(2));
+ var text=$("#allMoneyOfProducts").text();
+	$("#allMoneyOfProducts").text(parseFloat(text).toFixed(2));
+ var text=$("#allMoneyOfAllProducts").text();
+	$("#allMoneyOfAllProducts").text(parseFloat(text).toFixed(2));
+	
+ var text=$("#allMoneyOfSamples").text();
+	$("#allMoneyOfSamples").text(parseFloat(text).toFixed(2));	 
 });
 function getPushRestOrderDetailSubmit(fileValue) {
      if(fileValue!=""){

@@ -385,6 +385,31 @@ public class DesignServiceImpl implements DesignService {
 	}
 	
 	@Override
+	public void getTypeSettingSliceSubmit(int orderId, String cadding_side,
+			long taskId) {
+		DesignCad designCad = null;
+		List<DesignCad> designCadList = designCadDAO.findByOrderId(orderId);
+		if (designCadList.isEmpty()) {
+			designCad = new DesignCad();
+			designCad.setOrderId(orderId);
+			designCad.setCadVersion((short) 1);
+			designCad.setCaddingSide(cadding_side);
+		} else {
+			designCad = designCadList.get(0);
+			designCad.setCaddingSide(cadding_side);
+ 		}
+ 
+		designCadDAO.attachDirty(designCad);
+ 		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			
+		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+		}
+	}
+	
+	@Override
 	public List<Map<String, Object>> getSearchConfirmDesignList(
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds) {
@@ -463,6 +488,7 @@ public class DesignServiceImpl implements DesignService {
 	private QuoteDAO quoteDAO;
 	@Autowired
 	private CraftDAO craftDAO;
+
 
 
 

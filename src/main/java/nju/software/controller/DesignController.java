@@ -469,9 +469,10 @@ public class DesignController {
 	public String getTypeSettingSliceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
+		String cadding_side = request.getParameter("cadding_side");
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-        designService.getTypeSettingSliceSubmit(orderId,taskId);
+        designService.getTypeSettingSliceSubmit(orderId,cadding_side,taskId);
 		return "redirect:/design/getTypeSettingSliceList.do";
 	}	
 	
