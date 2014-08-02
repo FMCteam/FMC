@@ -50,14 +50,13 @@
 								</td>
 							</tr>
 						</table>
-						
-						<button class="btn btn-primary" style="float:left" onclick="history.back();">返回</button>
-						
- 					    <div class="action" style="float:right">
- 					    	<input id="cancel_order" type="button" value="取消订单" class="btn btn-danger btn-rounded" />
-							<input id="modify_price" type="button" value="修改报价" class="btn btn-primary btn-rounded" style="background-color:#1E90FF" />	
-							<input id="confirm_price" type="button" value="确认报价" class="btn btn-primary btn-rounded" />
+				
+ 					    <div>
+ 					    	<input id="cancel_order" type="button" value="取消订单" class="btn btn-danger btn-rounded"  style="float: left;"/>
+							<input id="modify_price" type="button" value="修改报价" class="btn btn-primary btn-rounded" style="background-color:#1E90FF;margin-left: 10px;" />	
+							<input id="confirm_price" type="button" value="确认报价" class="btn btn-primary btn-rounded"  style="float: right;"/>
 						</div>
+						<button class="btn btn-primary" style="float:left" onclick="history.back();">返回</button>
 						<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
 						<input type="hidden" name="orderId" value="${orderInfo.quote.orderId }" />
 						<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />

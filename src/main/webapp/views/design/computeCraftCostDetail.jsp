@@ -74,15 +74,16 @@
 								</td>
 							</tr>
 						</table>
-	                  	<button class="btn btn-primary" onclick="history.back();">返回</button>
-	                  
-	                  	<div class="action" style="float:right">
-							<input id="disagree" class="btn btn-danger" type="button" value="拒绝" /> 
+	                  	
+	                    <input id="disagree" class="btn btn-danger" type="button" value="拒绝" />
+	                  	<div class="action" style="float:right"> 
 							<input id="agree" class="btn btn-primary" type="button" value="同意" /> 
 							<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
 							<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
 							<input id="verify_val" type="hidden" name="result" value="false" />
 					  	</div>
+					  	<br>
+					  	<button class="btn btn-primary" onclick="history.back();">返回</button>
 					</form>
 				</div>
 			</div>

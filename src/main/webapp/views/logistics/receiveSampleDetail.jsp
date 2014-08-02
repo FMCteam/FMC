@@ -32,15 +32,17 @@
 				</div>
 			</div>
 		</div>
-		<div class="action">
-			<a class="btn btn-primary btn-rounded"
-				href="${ctx}/logistics/receiveSampleSubmit.do?orderId=${orderInfo.order.orderId}&result=2&taskId=${orderInfo.task.id}"
-				onclick="return confirmReceiveSampleSubmit()"><i
-				class="icon-ok icon-white"></i>已收到样衣</a> <a
-				class="btn btn-danger btn-rounded"
+		<div>
+			<a class="btn btn-danger btn-rounded"   style="float: left;"
 				href="${ctx}/logistics/receiveSampleSubmit.do?orderId=${orderInfo.order.orderId}&result=1&taskId=${orderInfo.task.id}"
 				onclick="return confirmReceiveSampleSubmit()"><i
 				class="icon-remove icon-white"></i>未收到样衣</a>
+		</div>
+		<div class="action">
+			<a class="btn btn-primary btn-rounded" 
+				href="${ctx}/logistics/receiveSampleSubmit.do?orderId=${orderInfo.order.orderId}&result=2&taskId=${orderInfo.task.id}"
+				onclick="return confirmReceiveSampleSubmit()"><i
+				class="icon-ok icon-white"></i>已收到样衣</a> 
 		</div>
 	</div>
 
