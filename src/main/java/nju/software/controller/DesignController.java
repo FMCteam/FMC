@@ -273,8 +273,7 @@ public class DesignController {
 		String url = CAD_URL + orderId;
 		String fileid = "CADFile";
 		FileOperateUtil.Upload(request, url, null, fileid);
-//		FileOperateUtil.Upload(file, url);
-		url = url + "/" + filename;
+ 		url = url + "/" + filename;
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.uploadDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
