@@ -163,14 +163,17 @@ public class AccessFilter implements Filter {
 			// }
 			//
 			// request.setAttribute(, arg1);
-
+            chain.doFilter(request, response);
 		} else {
 			if(!file[file.length-1].equals("registCustomer.do")&&!file[file.length-1].equals("forgetPassword.do")&&!file[file.length-1].equals("sendResetPassMail.do")||file[file.length-1].equals("checkResetPassLink.do")){
 //				chain.doFilter(request, response);
 			response.sendRedirect(request.getContextPath() + "/login.do");
+			return ;
+			}else{
+				chain.doFilter(request, response);
 			}
 		}
-		chain.doFilter(request, response);
+		
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {
