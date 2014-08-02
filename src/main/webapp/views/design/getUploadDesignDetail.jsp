@@ -54,17 +54,12 @@
 					</div>
 							<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0" 
 							onclick="return confirm('确认加工失败？')"
-							class="btn btn-danger" style="color:white; margin-left:10px">加工失败</a>
-<<<<<<< HEAD
-					
-=======
+							class="btn btn-danger" style="color:white; ">加工失败</a>
+
 				   </div>
-				</div>
+
 				<div class="tab-pane" id="produce">
 					<%@include file="/views/common/produce.jsp"%>
- 
-
->>>>>>> b9669b7c4e4993f8f692fdc8afdae345a661bb5b
 				</div>
 			</div>
 
