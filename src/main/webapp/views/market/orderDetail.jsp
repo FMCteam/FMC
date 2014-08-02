@@ -38,16 +38,19 @@
 				<a class="btn btn-primary"
 					href="${ctx}/image.do?orderId=${orderInfo.order.orderId}">订单进度</a>
 			</div>
+			</c:if>
 			<div class="action" style="float:right">
 				
 				<c:if test="${role=='ADMIN'}">
-					<a class="btn btn-danger" style="color: white" onclick="return confirm('确定终止订单？');"
+				<c:if test="${orderInfo.order.orderState=='A'}">
+ 					<a class="btn btn-danger" style="color: white" onclick="return confirm('确定终止订单？');"
 						href="${ctx}/order/end.do?orderId=${orderInfo.order.orderId}">终止订单</a>
+				</c:if>
 				</c:if>
 			</div>
 			<br><br>
 			<button class="btn btn-primary" onclick="history.back();">返回</button>
-			</c:if>
+			
 		</div>
 		
 	</div>
