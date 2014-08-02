@@ -73,10 +73,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class MarketController {
-	private final static String CONTRACT_URL = "D:/fmc/contract/";
-	private final static String CONFIRM_SAMPLEMONEY_URL="D:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
-	private final static String CONFIRM_DEPOSIT_URL="D:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
-	private final static String CONFIRM_FINALPAYMENT_URL="D:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
+	private final static String CONTRACT_URL = "C:/fmc/contract/";
+	private final static String CONFIRM_SAMPLEMONEY_URL="C:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
+	private final static String CONFIRM_DEPOSIT_URL="C:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
+	private final static String CONFIRM_FINALPAYMENT_URL="C:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
 
 	@Autowired
 	private OrderService orderService;
@@ -484,6 +484,8 @@ public class MarketController {
 		Short isNeedSampleClothes = Short.parseShort(request
 				.getParameter("is_need_sample_clothes"));
 		String orderSource = request.getParameter("order_source");
+		String is_haoduoyi = request.getParameter("ishaoduoyi");
+		Short ishaoduoyi = Short.parseShort(is_haoduoyi);
 		// 面料数据
 		String fabric_names = request.getParameter("fabric_name");
 		String fabric_amounts = request.getParameter("fabric_amount");
@@ -703,7 +705,7 @@ public class MarketController {
 		order.setHasPostedSampleClothes(hasPostedSampleClothes);
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
-
+        order.setIsHaoDuoYi(ishaoduoyi);
 		marketService.addMoreOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, versions, cad, request);
 

@@ -36,30 +36,38 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			  <div class="tab-pane active" id="typeslice">
+			  <form action="${ctx}/design/getTypeSettingSliceSubmit.do" method="post" >
  						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td colspan="2">
-								<span>排版切片详细页面</span>
+								<span style="color:red"><b>大货面料已到，请尽快领料排版切片</b></span>
 								</td>
-							</tr>							
-			  <!-- 
+							</tr>	
+							<tr>
+								<td class="title"><span class="required">*</span>排版人姓名</td>
+								<td colspan="7">
+									<input class="span14" id="cadding_side" name="cadding_side" type="text" required="required" />
+								</td>
+							</tr>						
 							<tr>
 								<td>操作</td>
 								<td colspan="12">
 								<input type="hidden" name="orderId" value="${orderInfo.order.orderId}" /> 
 							    <input type="hidden" name="taskId" value="${orderInfo.task.id}" /> 
-								<input type="submit" value="完成工艺制作 "  class="btn btn-primary btn-rounded"   />
+								<input type="submit" value="完成排版切片 "  class="btn btn-primary btn-rounded"   />
 								</td>
 							</tr>
-			   -->
 						</table>
 					 
+			  </form>
 					<button class="btn btn-primary" onclick="history.back();">返回</button>
+					<!-- 
 					<div class="action" style="float:right">
 				    	<a href="${ctx}/design/getTypeSettingSliceSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
 						   onclick="return confirm('确认完成排版切片？')"
 						   class="btn btn-primary">完成排版切片</a>
 					</div>
+					 -->
 				</div>				
 			</div>
 

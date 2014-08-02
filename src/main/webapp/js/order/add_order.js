@@ -154,7 +154,7 @@
 				return;
 			}
 		}
-		
+
 
 		var item = "";
 		for(var j=0;j<col_sum;j++){
@@ -269,7 +269,16 @@ function verify(){
 		}
 	}
 	
-	
+	var is_haoduoyi = jQuery("input[name='is_haoduoyi']").val();
+	if(is_haoduoyi==0){
+		var order_source_name = jQuery("input[name='order_source']").val();
+		if(order_source_name=="好多衣"){
+			alert("是否好多衣选择为否时，订单来源名称不能用好多衣");
+		}
+		if(order_source_name==""){
+			alert("请填写订单来源信息");
+		}
+	}
 	$("#fabric_name").val(getTdString("fabric_name"));
 	$("#fabric_amount").val(getTdString("fabric_amount"));
 	$("#accessory_name").val(getTdString("accessory_name"));

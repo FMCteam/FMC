@@ -580,13 +580,14 @@
 				<!--widgetcontent-->
 				<!--row-fluid-->
 			</div>
-			<div class="action">
+			<button id="disagree_detail" class="btn btn-danger btn-rounded">
+					<i class="icon-remove icon-white"></i>删除
+				</button>
+			<div class="action" style="float: right;">
 				<button id="agree_detail" class="btn btn-primary btn-rounded">
 					<i class="icon-ok icon-white"></i>保存
 				</button>
-				<button id="disagree_detail" class="btn btn-danger btn-rounded">
-					<i class="icon-remove icon-white"></i>删除
-				</button>
+				
 			</div>
 		</form>
 

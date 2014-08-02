@@ -46,7 +46,7 @@
 								<td colspan="2">${fabricCost.fabricName }</td>
 								<td colspan="1">${fabricCost.tearPerMeter }</td>
 								<td colspan="1">${orderInfo.order.askAmount}</td>
-								<td colspan="2">${(fabricCost.tearPerMeter)*(orderInfo.order.askAmount)}</td>
+								<td colspan="2"><span id="metersPurchasedAll">${(fabricCost.tearPerMeter)*(orderInfo.order.askAmount)}</span></td>
 							</tr>
 						</c:forEach>
 						<tr>
@@ -61,23 +61,27 @@
 								<td colspan="2">${accessoryCost.accessoryName }</td>
 								<td colspan="1">${accessoryCost.tearPerPiece }</td>
 								<td colspan="1">${orderInfo.order.askAmount}</td> 
-								<td colspan="2">${(accessoryCost.tearPerPiece)*(orderInfo.order.askAmount)}</td>
+								<td colspan="2"><span id="piecesPurchasedAll">${(accessoryCost.tearPerPiece)*(orderInfo.order.askAmount)}</span></td>
 	
 							</tr>
 						</c:forEach>
 					</table>
-					<button class="btn btn-primary" onclick="history.back();">返回</button>
-					<div class="action" style="float:right">
-						<a	href="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0"
+					<a href="${ctx}/finance/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
+							class="btn btn-primary btn-rounded" target="_blank">打印补货单</a>
+					<a	href="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0"
 							onclick="return confirm('确认采购失败？')"
 							class="btn btn-danger btn-rounded">
-							<i class="icon-remove icon-white"></i>采购失败</a>
+							<i class="icon-remove icon-white"></i>采购失败</a>		
+					
+					<div class="action" style="float:right">
+						
 						<a	href="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1"
-							onclick="return confirm('确认完成采购？')"
+							onclick="return confirm('确认已经打印大货补货单？')"
 							class="btn btn-primary btn-rounded">
 							<i class="icon-ok icon-white"></i>采购完成</a>
 					</div>
-
+					<br>
+					<button class="btn btn-primary" onclick="history.back();">返回</button>
 				</div>
 
 			</div>
@@ -94,9 +98,6 @@
 </div>
 </div>
 
-
-
-
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
@@ -106,4 +107,10 @@
 <script type="text/javascript" src="${ctx}/views/buy/cost.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript">
+	var text=$("#metersPurchasedAll").text();
+	$("#metersPurchasedAll").text(parseFloat(text).toFixed(2));
+	var text=$("#piecesPurchasedAll").text();
+	$("#piecesPurchasedAll").text(parseFloat(text).toFixed(2));
+</script>
 <%@include file="/common/footer.jsp"%>

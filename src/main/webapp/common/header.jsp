@@ -135,7 +135,7 @@ table.tablesorter thead tr .headerSortDown {
 					<c:if test="${IS_MARKET_MANAGER_OR_ADMIN==true}">
 						<li class="dropdown"><a href=""><span
 								class="iconfa-briefcase"></span> 市场主管<span
-								class="marketManager task"></span></a>
+								class="marketManager2 task"></span></a>
 							<ul>
 								<li><a href="${ctx}/market/verifyQuoteList.do">审核报价<span
 										class="verifyQuote"></span></a></li>
@@ -197,6 +197,8 @@ table.tablesorter thead tr .headerSortDown {
 										class="craftSample"></span></a></li>
 								<li><a href="${ctx}/design/getNeedCraftProductList.do">大货工艺制作<span
 										class="craft"></span></a></li>
+								<li><a href="${ctx}/design/getConfirmCadList.do">确认版型<span
+										class="confirmCad"></span></a></li>
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_buy==true}">

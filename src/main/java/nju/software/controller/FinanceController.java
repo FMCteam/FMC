@@ -115,7 +115,9 @@ public class FinanceController {
 			money.setOrderId(orderId);
 		}
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		financeService.confirmSampleMoneySubmit(actorId, taskId, result, money);
+//		financeService.confirmSampleMoneySubmit(actorId, taskId, result, money);
+		financeService.confirmSampleMoneySubmit(actorId, taskId, result, money,orderId);
+
 		return "forward:/finance/confirmSampleMoneyList.do";
 	}
 	
@@ -244,7 +246,9 @@ public class FinanceController {
 			money.setOrderId(orderId);
 		}
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		financeService.confirmDepositSubmit(actorId, taskId, result, money);
+//		financeService.confirmDepositSubmit(actorId, taskId, result, money);
+		financeService.confirmDepositSubmit(actorId, taskId, result, money,orderId);
+
 		return "forward:/finance/confirmDepositList.do";
 	}
 

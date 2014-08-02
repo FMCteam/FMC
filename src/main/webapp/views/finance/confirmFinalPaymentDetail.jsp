@@ -58,7 +58,7 @@
 							<tr>
 								<td>${orderInfo.moneyName}</td>
 								<td>${orderInfo.order.discount}</td>
-								<td>${(orderInfo.number)*orderInfo.price}-${orderInfo.order.discount}-${orderInfo.deposit}=<span id="shouldFinalPay">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
+								<td><span id="moneyOfAllProducts">${(orderInfo.number)*orderInfo.price}</span>-${orderInfo.order.discount}-${orderInfo.deposit}=<span id="shouldFinalPayAccount">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
 							</tr>
 							<tr>
 								<td class="title">实际大货件数</td>
@@ -68,7 +68,7 @@
 							<tr>
 								<td>${orderInfo.number}</td>
 								<td>${orderInfo.price}</td>
-								<td>${(orderInfo.number)*orderInfo.price}</td>
+								<td><span id="moneyOfAllProducts2">${(orderInfo.number)*orderInfo.price}</span></td>
 							</tr>
 							<tr>
 								<td class="title">样衣件数</td>
@@ -132,7 +132,12 @@
 	                        </tr>
 						</table>
 						
-
+						<a
+								class="btn btn-danger btn-rounded"
+								href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
+								onclick="return confirmFinanceSubmit()"
+								style="color: white; margin-left: 20px"><i
+								class="icon-remove icon-white"></i>未收到汇款</a>
 						<div class="action">
 							<input type="submit" id="financeSubmit" hidden="hidden" /> 
 					
@@ -140,16 +145,11 @@
 								id="financeButton" class="btn btn-primary btn-rounded"><i
 								class="icon-ok icon-white"></i>已确认收款</a> 
 								
-								<a
-								class="btn btn-danger btn-rounded"
-								href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
-								onclick="return confirmFinanceSubmit()"
-								style="color: white; margin-left: 20px"><i
-								class="icon-remove icon-white"></i>未收到汇款</a>
+								
 						</div>
 					</form>
 					
-						<!-- 
+				<!-- 
 				<form action="${ctx}/finance/confirmFinalPaymentFileSubmit.do?orderId=${orderInfo.order.orderId}" method="post" enctype="multipart/form-data">
 				<table class="table table-striped table-bordered table-hover detail">
 					<tr>
@@ -163,7 +163,7 @@
 					</tr>
 				</table>
 				</form>
-						 -->
+				-->
 
 				</div>
 			</div>
@@ -183,16 +183,24 @@
 <!--maincontent-->
 <script type="text/javascript">
 $(document).ready(function() {
- var text=$("#shouldFinalPay").text();
-	$("#shouldFinalPay").text(parseFloat(text).toFixed(2));
 
 	$("a#financeButton").click(function() {
 		$("input#financeSubmit").click();
 	});
-//	var text=$("#pay").text();
-//	$("#pay").text(parseFloat(text).toFixed(2));
-//	$("input[name='money_amount']").val(parseFloat(text).toFixed(2));
+//	var text=$("#shouldFinalPay").text();
+//	$("#shouldFinalPay").text(parseFloat(text).toFixed(2));
+	
+ var shouldFinalPaytext=$("#shouldFinalPayAccount").text();
+	$("#shouldFinalPayAccount").text(parseFloat(shouldFinalPaytext).toFixed(2));
+	$("input[name='money_amount']").val(parseFloat(shouldFinalPaytext).toFixed(2));
 
+ var moneyOfAllProductstext=$("#moneyOfAllProducts").text();
+	$("#moneyOfAllProducts").text(parseFloat(moneyOfAllProductstext).toFixed(2));
+	$("#moneyOfAllProducts2").text(parseFloat(moneyOfAllProductstext).toFixed(2));
+	
+});  
+</script>
+<script type="text/javascript">
 function confirmFinanceSubmit() {
 	return confirm("确认操作？");
 }
@@ -208,10 +216,8 @@ function verifyFinance() {
 		return false;
 	}
 	return confirmFinanceSubmit();
-} 
-});  
+}
 </script>
-
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">

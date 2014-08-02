@@ -28,6 +28,7 @@ public class DesignCad implements java.io.Serializable {
 	private String cadBox; //包装
 	private String cadTech; //工艺
 	private String cadOther; //其他
+	private String caddingSide;//制版人姓名
 
 	// Constructors
 
@@ -74,7 +75,7 @@ public class DesignCad implements java.io.Serializable {
 		this.cadUrl = cadUrl;
 	}
 
-	@Column(name = "cad_version", nullable = false)
+	@Column(name = "cad_version", nullable = true)
 	public Short getCadVersion() {
 		return this.cadVersion;
 	}
@@ -144,6 +145,14 @@ public class DesignCad implements java.io.Serializable {
 
 	public void setCadOther(String cadOther) {
 		this.cadOther = cadOther;
+	}
+	@Column(name = "cad_side")
+	public String getCaddingSide() {
+		return caddingSide;
+	}
+
+	public void setCaddingSide(String caddingSide) {
+		this.caddingSide = caddingSide;
 	}
 
 }

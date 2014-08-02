@@ -2,9 +2,11 @@ package nju.software.controller;
 
 import net.sf.json.JSONObject;
 import nju.software.dao.impl.CraftDAO;
+import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Craft;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Order;
 import nju.software.service.impl.BuyServiceImpl;
 import nju.software.service.impl.DesignServiceImpl;
@@ -51,8 +53,9 @@ public class CommonController {
 		departments.add(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
 		departments.add(QualityServiceImpl.ACTOR_QUALITY_MANAGER);
 
-//		map.put(MarketServiceImpl.TASK_VERIFY_QUOTE,
-//				MarketServiceImpl.ACTOR_MARKET_MANAGER);
+		map.put(MarketServiceImpl.TASK_VERIFY_QUOTE,
+				MarketServiceImpl.ACTOR_MARKET_MANAGER);
+		
 		map.put(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST,
 				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 		map.put(DesignServiceImpl.TASK_UPLOAD_DESIGN,
@@ -67,7 +70,8 @@ public class CommonController {
 				DesignServiceImpl.ACTOR_DESIGN_MANAGER);		
 		map.put(DesignServiceImpl.TASK_TYPESETTING_SLICE, 
 				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
-		
+		map.put(DesignServiceImpl.TASK_CONFIRM_CAD , 
+				DesignServiceImpl.ACTOR_DESIGN_MANAGER);		
 		
 		map.put(BuyServiceImpl.TASK_VERIFY_PURCHASE,
 				BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
@@ -122,7 +126,18 @@ public class CommonController {
 		JSONObject jsonobj = new JSONObject();
 		jsonobj.put("taskNumber", number);
 		for (String department : departments) {
-			jsonobj.put(department, getTaskNumber(department));
+//			if(department.equals(MarketServiceImpl.ACTOR_MARKET_MANAGER)){
+//				Integer verifyQuoteTaskNumber = getTaskNumber((String) map.get(MarketServiceImpl.TASK_VERIFY_QUOTE), MarketServiceImpl.TASK_VERIFY_QUOTE);
+//				Integer marketDepartmentTasks = getTaskNumber(MarketServiceImpl.ACTOR_MARKET_MANAGER);
+//				int result = marketDepartmentTasks.intValue() - verifyQuoteTaskNumber.intValue();
+//				Integer marketStaffTasks = new Integer(result);
+//				System.out.println("marketDepartmentTasks"+marketDepartmentTasks);
+//				jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,marketStaffTasks );
+//			} 
+				
+				jsonobj.put(department, getTaskNumber(department));
+//				System.out.println(department+"任务数量"+getTaskNumber(department));
+ 
 		}
 		// jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,
 		// getTaskNumber(actorId));
@@ -135,11 +150,19 @@ public class CommonController {
 			map.put(MarketServiceImpl.TASK_MODIFY_PRODUCE_ORDER, actorId);
 			map.put(MarketServiceImpl.TASK_SIGN_CONTRACT, actorId);
 			map.put(MarketServiceImpl.TASK_PUSH_REST, actorId);
-			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER, number);
+			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,number );
+ 
 		}
 
 		for (String task : map.keySet()) {
 			jsonobj.put(task, getTaskNumber((String) map.get(task), task));
+//			System.out.println("该task"+task+"数量为："+getTaskNumber((String) map.get(task), task));
+			if(task.equals(MarketServiceImpl.TASK_VERIFY_QUOTE)){
+				//市场主管的task class 设为"marketManager2",设置为市场主管的审核报价的任务数 为市场主管所有的任务数
+				jsonobj.put("marketManager2", getTaskNumber((String) map.get(task), task));
+//				System.out.println("市场主管的任务数量："+getTaskNumber((String) map.get(task), task));
+				
+			}
 		}
 		sendJson(response, jsonobj);
 	}
@@ -164,6 +187,9 @@ public class CommonController {
 		}else if(type.equals("craftFileUrl")){
 			Craft craft = craftDAO.findByOrderId(orderId).get(0);
 			file = craft.getCraftFileUrl();
+		}else if(type.equals("CADFile")){
+			DesignCad cad = designCadDAO.findByOrderId(orderId).get(0);
+ 			file = cad.getCadUrl();
 		}else {
 			file = order.getReferencePicture();
 		}
@@ -202,7 +228,12 @@ public class CommonController {
 		return account.getUserRole().equals(
 				MarketServiceImpl.ACTOR_MARKET_STAFF);
 	}
-
+    private boolean isMarketManager(HttpServletRequest request){
+    	HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		return account.getUserRole().equals(
+				MarketServiceImpl.ACTOR_MARKET_MANAGER);
+    }
 	private Integer getTaskNumber(String actorId) {
 		List<TaskSummary> task = jbpmAPIUtil.getAssignedTasks(actorId);
 		Integer number = 0;
@@ -242,4 +273,6 @@ public class CommonController {
 	private OrderDAO orderDAO;
 	@Autowired
 	private CraftDAO craftDAO;
+	@Autowired
+	private DesignCadDAO designCadDAO;
 }

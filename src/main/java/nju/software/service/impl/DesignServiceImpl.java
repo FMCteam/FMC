@@ -203,7 +203,7 @@ public class DesignServiceImpl implements DesignService {
 //			return false;
 //		}
 	}
-
+//===========================样衣生产提交========================================
 	@Override
 	public boolean produceSampleSubmit(long taskId, boolean result) {
  		Map<String, Object> data = new HashMap<String, Object>();
@@ -216,6 +216,26 @@ public class DesignServiceImpl implements DesignService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean produceSampleSubmit(long taskId, boolean result,
+			String orderId) {
+		Order order = orderDAO.findById(Integer.parseInt(orderId));
+ 		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PRODUCE, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			if(result==false){//如果result的的值为FALSE，即为样衣生产失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.merge(order);
+			}
+			return true;
+		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+			return false;
+		}
+	}
+
 	
 	// ===========================修改版型=================================
 	@Override
@@ -285,7 +305,12 @@ public class DesignServiceImpl implements DesignService {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CONFIRM_DESIGN);
 	}
-	
+	// ===========================排版切片前最终确认版型=================================	
+	@Override
+	public List<Map<String, Object>> getConfirmCadList() {
+		// TODO Auto-generated method stub
+		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CONFIRM_CAD);
+	}
 	
     //获得需要工艺制作的大货订单列表
 	@Override
@@ -380,6 +405,31 @@ public class DesignServiceImpl implements DesignService {
 	}
 	
 	@Override
+	public void getTypeSettingSliceSubmit(int orderId, String cadding_side,
+			long taskId) {
+		DesignCad designCad = null;
+		List<DesignCad> designCadList = designCadDAO.findByOrderId(orderId);
+		if (designCadList.isEmpty()) {
+			designCad = new DesignCad();
+			designCad.setOrderId(orderId);
+			designCad.setCadVersion((short) 1);
+			designCad.setCaddingSide(cadding_side);
+		} else {
+			designCad = designCadList.get(0);
+			designCad.setCaddingSide(cadding_side);
+ 		}
+ 
+		designCadDAO.attachDirty(designCad);
+ 		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			
+		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+		}
+	}
+	
+	@Override
 	public List<Map<String, Object>> getSearchConfirmDesignList(
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds) {
@@ -388,7 +438,6 @@ public class DesignServiceImpl implements DesignService {
 				TASK_CONFIRM_DESIGN);
 
 	}
-
 	
 	@Override
 	public Map<String, Object> getConfirmDesignDetail(Integer orderId) {
@@ -398,7 +447,42 @@ public class DesignServiceImpl implements DesignService {
 		model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
 		return model;
 	}
-
+	//取得确认版型数据的详细信息
+	@Override
+	public Map<String, Object> getConfirmCadDetail(int orderId) {
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(
+				ACTOR_DESIGN_MANAGER, TASK_CONFIRM_CAD, orderId);
+		model.put("cad", designCadDAO.findByOrderId(orderId).get(0));
+		return model;
+	}
+	//重新提交版型数据
+	@Override
+	public boolean confirmCadSubmit(int orderId, long taskId, String cadurl,
+			Timestamp uploadTime) {
+		DesignCad designCad = null;
+		List<DesignCad> designCadList = designCadDAO.findByOrderId(orderId);
+		if (designCadList.isEmpty()) {
+			designCad = new DesignCad();
+			designCad.setOrderId(orderId);
+			designCad.setCadVersion((short) 1);
+		} else {
+			designCad = designCadList.get(0);
+			short newVersion = (short) (designCad.getCadVersion() + 1);
+			designCad.setCadVersion(newVersion);
+		}
+		designCad.setCadUrl(cadurl);
+		designCad.setUploadTime(uploadTime);
+		designCadDAO.attachDirty(designCad);
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+			return false;
+		}
+	}
 	public final static String ACTOR_DESIGN_MANAGER = "designManager";
 	public final static String TASK_VERIFY_DESIGN = "verifyDesign";
 	public final static String TASK_COMPUTE_DESIGN_COST = "computeDesignCost";
@@ -408,6 +492,7 @@ public class DesignServiceImpl implements DesignService {
 	public final static String TASK_CRAFT_SAMPLE = "craftSample";
 	public final static String TASK_CRAFT_PRODUCT = "craft";
 	public final static String TASK_TYPESETTING_SLICE = "typeSettingSlice";
+	public final static String TASK_CONFIRM_CAD = "confirmCad";
 	public final static String RESULT_DESIGN = "design";
 	public final static String RESULT_DESIGN_COMMENT = "designComment";
     public final static String RESULT_NEED_CRAFT ="needCraft";
@@ -423,5 +508,11 @@ public class DesignServiceImpl implements DesignService {
 	private QuoteDAO quoteDAO;
 	@Autowired
 	private CraftDAO craftDAO;
+	@Autowired
+	private OrderDAO orderDAO;
+	
+
+
+
 
 }

@@ -33,8 +33,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Controller
 public class DesignController {
 	
-	private final static String CAD_URL = "D:/fmc/cad/";
-	private final static String CRAFT_FILE_URL = "D:/fmc/craft"; 
+	private final static String CAD_URL = "C:/fmc/cad/";
+	private final static String CRAFT_FILE_URL = "C:/fmc/craft"; 
 	// ===========================设计验证=================================
 	@RequestMapping(value = "/design/verifyDesignList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -273,8 +273,7 @@ public class DesignController {
 		String url = CAD_URL + orderId;
 		String fileid = "CADFile";
 		FileOperateUtil.Upload(request, url, null, fileid);
-//		FileOperateUtil.Upload(file, url);
-		url = url + "/" + filename;
+ 		url = url + "/" + filename;
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.uploadDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
@@ -290,9 +289,11 @@ public class DesignController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
 		boolean result =request.getParameter("result").equals("1");
 		long taskId = Long.parseLong(request.getParameter("taskId"));
-		designService.produceSampleSubmit(taskId, result);
+//		designService.produceSampleSubmit(taskId, result);
+		designService.produceSampleSubmit(taskId, result,orderId);
 		return "forward:/design/getUploadDesignList.do";
 	}
 	
@@ -469,9 +470,10 @@ public class DesignController {
 	public String getTypeSettingSliceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
+		String cadding_side = request.getParameter("cadding_side");
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-        designService.getTypeSettingSliceSubmit(orderId,taskId);
+        designService.getTypeSettingSliceSubmit(orderId,cadding_side,taskId);
 		return "redirect:/design/getTypeSettingSliceList.do";
 	}	
 	
@@ -582,8 +584,49 @@ public class DesignController {
 		System.out.println(url+"------------------------");
 		FileOperateUtil.Download(response, url);
 	}
+	
+	// ===========================在排版切片之前确认最终版型=================================
+	@RequestMapping(value = "/design/getConfirmCadList.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String getConfirmCadList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		List<Map<String, Object>> list = designService.getConfirmCadList();
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "确认最终版型");
+		model.addAttribute("url", "/design/getConfirmCadDetail.do");
+		model.addAttribute("searchurl", "/design/getConfirmCadListSearch.do");
 
-
+		return "/design/getConfirmCadList";
+	}
+	
+	@RequestMapping(value = "/design/getConfirmCadDetail.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String getConfirmCadDetail(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		Map<String, Object> orderInfo = designService
+				.getConfirmCadDetail(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/design/getConfirmCadDetail";
+	}
+	@RequestMapping(value = "/design/confirmCadSubmit.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String confirmCadSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		String taskId = request.getParameter("taskId");
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile file = multipartRequest.getFile("CADFile");
+		String filename = file.getOriginalFilename();
+        String url = CAD_URL + orderId;
+        String fileid = "CADFile";
+        FileOperateUtil.Upload(request, url, null, fileid);
+ 		url = url + "/" + filename;
+		Timestamp uploadTime = new Timestamp(new Date().getTime());
+		designService.confirmCadSubmit(Integer.parseInt(orderId),
+				Long.parseLong(taskId), url, uploadTime);
+		return "forward:/design/getConfirmCadList.do";
+	}
 	@Autowired
 	private DesignService designService;
 	@Autowired

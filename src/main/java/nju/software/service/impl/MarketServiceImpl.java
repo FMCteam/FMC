@@ -419,6 +419,10 @@ public class MarketServiceImpl implements MarketService {
 		params.put(RESULT_MODIFY_ORDER, editok);
 		try {
 			jbpmAPIUtil.completeTask(taskId, params, accountId + "");
+			if(editok==false){//如果editok的的值为false，即为未收取到样衣，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.merge(order);
+			}			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -487,6 +491,11 @@ public class MarketServiceImpl implements MarketService {
 			// 直接进入到下一个流程时
 			try {
 				jbpmAPIUtil.completeTask(taskId, data, actorId);
+				if(comfirmworksheet==false){//如果result的的值为false，即为确认加工单并签订合同失败，流程会异常终止，将orderState设置为1
+					Order order = orderDAO.findById(orderId);
+					order.setOrderState("1");
+					orderDAO.merge(order);
+ 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -626,8 +635,8 @@ public class MarketServiceImpl implements MarketService {
 		//result为0，表示有上传样衣制作金的截图
 		//result为1，表示修改报价
 		//result为2，表示取消订单
+		Order order = orderDAO.findById(orderId);
 		if (Integer.parseInt(result) == 0) {
-			Order order = orderDAO.findById(orderId);
 			order.setConfirmSampleMoneyFile(url);
 			orderDAO.attachDirty(order);
 		}
@@ -635,6 +644,10 @@ public class MarketServiceImpl implements MarketService {
 		data.put(RESULT_QUOTE, Integer.parseInt(result));
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			if(result.equals("2")){//如果result的的值为1，即为未收取到样衣，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}			
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -801,13 +814,18 @@ public class MarketServiceImpl implements MarketService {
 				.getKsession().getProcessInstance(processId);
 		int orderId_process = (int) process.getVariable("orderId");
 		Order order = orderDAO.findById(id);
-//		String customerName = order.getCustomerName();
-		String orderSource = order.getOrderSource();
-		boolean isHaoDuoYi = (orderSource.equals("好多衣"))?true:false;
+//		String orderSource = order.getOrderSource();
+		//
+		Short isHaoduoyi = order.getIsHaoDuoYi();
+		short ishaoduoyi = isHaoduoyi.shortValue();
+		boolean isHaoDuoYi2 =false;
+		if(ishaoduoyi==1)
+			isHaoDuoYi2 = true;
+		
+//		boolean isHaoDuoYi = (orderSource.equals("好多衣"))?true:false;
 		if (id == orderId_process) {
-			Map<String, Object> data = new HashMap<>();
-			
-		    data.put(RESULT_IS_HAODUOYI, isHaoDuoYi);
+			Map<String, Object> data = new HashMap<>();			
+		    data.put(RESULT_IS_HAODUOYI, isHaoDuoYi2);
 			quoteDAO.merge(q);
 			try {
 				jbpmAPIUtil.completeTask(taskId, data, accountId + "");

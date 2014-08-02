@@ -46,9 +46,9 @@ public class MainController {
 			String user_agent = request.getHeader("user-agent").toLowerCase();
 			
 			if(user_agent.contains("windows phone") || user_agent.contains("android") || user_agent.contains("iphone")) {
-				return "/login";
+				return "login";
 			} else {
-				return "/login";
+				return "login";
 			}
 			
 		}

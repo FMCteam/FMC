@@ -772,8 +772,8 @@
         <dataInput id="_20_SkippableInput" name="Skippable" />
         <dataInput id="_20_TaskNameInput" name="TaskName" />
         <dataOutput id="_20_defenseteacher1Output" name="defenseteacher1" />
-        <dataOutput id="_20_defenseteacher2Output" name="defenseteacher2" />
         <dataOutput id="_20_defensesecretaryOutput" name="defensesecretary" />
+        <dataOutput id="_20_defenseteacher2Output" name="defenseteacher2" />
         <dataOutput id="_20_defenseteacher3Output" name="defenseteacher3" />
         <inputSet>
           <dataInputRefs>_20_SkippableInput</dataInputRefs>
@@ -781,8 +781,8 @@
         </inputSet>
         <outputSet>
           <dataOutputRefs>_20_defenseteacher1Output</dataOutputRefs>
-          <dataOutputRefs>_20_defenseteacher2Output</dataOutputRefs>
           <dataOutputRefs>_20_defensesecretaryOutput</dataOutputRefs>
+          <dataOutputRefs>_20_defenseteacher2Output</dataOutputRefs>
           <dataOutputRefs>_20_defenseteacher3Output</dataOutputRefs>
         </outputSet>
       </ioSpecification>
@@ -805,12 +805,12 @@
         <targetRef>defenseteacher1</targetRef>
       </dataOutputAssociation>
       <dataOutputAssociation>
-        <sourceRef>_20_defenseteacher2Output</sourceRef>
-        <targetRef>defenseteacher2</targetRef>
-      </dataOutputAssociation>
-      <dataOutputAssociation>
         <sourceRef>_20_defensesecretaryOutput</sourceRef>
         <targetRef>defensesecretary</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_20_defenseteacher2Output</sourceRef>
+        <targetRef>defenseteacher2</targetRef>
       </dataOutputAssociation>
       <dataOutputAssociation>
         <sourceRef>_20_defenseteacher3Output</sourceRef>
@@ -1528,7 +1528,7 @@
         <dc:Bounds x="178" y="1154" width="127" height="58" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_31" >
-        <dc:Bounds x="746" y="779" width="48" height="48" />
+        <dc:Bounds x="748" y="755" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_30" >
         <dc:Bounds x="723" y="840" width="97" height="48" />
@@ -1703,7 +1703,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_30-_31" >
         <di:waypoint x="771" y="864" />
-        <di:waypoint x="770" y="803" />
+        <di:waypoint x="772" y="779" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_25-_30" >
         <di:waypoint x="775" y="925" />

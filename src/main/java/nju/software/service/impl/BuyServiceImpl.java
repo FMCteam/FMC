@@ -22,6 +22,7 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
+import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.model.OrderInfo;
@@ -246,12 +247,17 @@ public class BuyServiceImpl implements BuyService {
 	
 	@Override
 	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result,
-			boolean needcraft) {
+			boolean needcraft,String orderId) {
+		Order order = orderDAO.findById(Integer.parseInt(orderId));
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PURCHASE, result);
 		data.put(RESULT_NEED_CRAFT, needcraft);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			if(result==false){//如果result的的值为false，即为样衣面料采购失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

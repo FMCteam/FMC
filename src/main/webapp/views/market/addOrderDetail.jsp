@@ -25,6 +25,7 @@
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="span2 title" rowspan="2">业务信息</td>
+								
 								<!-- 
 								<td class="span2 title">业务编号</td>
 								 -->
@@ -39,7 +40,7 @@
 							<!-- 
 								<td>待生成</td>
 							 -->
-								<td ><input type="radio" name="is_haoduoyi"
+								<td ><input type="radio" name="is_haoduoyi" id="is_haoduoyi"
 									 value="1" required="required" /> 是 <input type="radio"
 									name="is_haoduoyi" value="0" checked="checked" /> 否</td>
 								<td colspan="2"><input class="span8" type="date"required="required"

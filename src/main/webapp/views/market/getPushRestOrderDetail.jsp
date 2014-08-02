@@ -38,8 +38,8 @@
 				</div>
 				<div class="tab-pane  active" id="finance">
  
-					<form id="verify_form" action="${ctx}/market/getPushRestOrderSubmit.do" enctype="multipart/form-data"
-						method="post"  onsubmit="return confirmFinanceSubmit();">
+					<form id="verify_form" name="verify_form" action="${ctx}/market/getPushRestOrderSubmit.do" enctype="multipart/form-data"
+						method="post"  onsubmit="return getPushRestOrderDetailSubmit(verify_form.confirmFinalPaymentFile.value);">
 						<input type="hidden" name="money_state" value="已收到" /> <input
 							id="verify_val" type="hidden" name="val" value="已收到" /> <input
 							type="hidden" name="money_type" value="${orderInfo.type}" /> <input
@@ -57,7 +57,7 @@
 							<tr>
 								<td>${orderInfo.moneyName}</td>
 								<td>${orderInfo.order.discount}</td>
-								<td>${(orderInfo.number)*orderInfo.price}-${orderInfo.order.discount}-${orderInfo.deposit}=<span id="pay">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
+								<td><span id="allMoneyOfProducts">${(orderInfo.number)*orderInfo.price}</span>（大货总价）-${orderInfo.order.discount}（优惠金额）-${orderInfo.deposit}（定金）=<span id="FinalMoneyShouldPay">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
 							</tr>
 							<tr>
 								<td class="title">实际大货件数</td>
@@ -67,7 +67,7 @@
 							<tr>
 								<td>${orderInfo.number}</td>
 								<td>${orderInfo.price}</td>
-								<td>${(orderInfo.number)*orderInfo.price}</td>
+								<td><span id="allMoneyOfAllProducts">${(orderInfo.number)*orderInfo.price}</span></td>
 							</tr>
 							<tr>
 								<td class="title">样衣件数</td>
@@ -77,7 +77,7 @@
 							<tr>
 								<td>${orderInfo.order.sampleAmount}</td>
 								<td>${orderInfo.samplePrice}</td>
-								<td>${orderInfo.order.sampleAmount*orderInfo.samplePrice}</td>
+								<td><span id="allMoneyOfSamples">${orderInfo.order.sampleAmount*orderInfo.samplePrice}</span></td>
 							</tr>
 						    <tr>
 						        <td>选择尾金截图文件</td>
@@ -88,8 +88,8 @@
 							       <!-- 
 							       <input  class="btn btn-primary btn-rounded" type="submit" value="上传尾金截图" onclick="return confirm('确认上传？')" />						
 							        -->
-						</td>
-					</tr>
+						       </td>
+					       </tr>
 					<!-- 
 							<tr>
 		                        <td class="title">收款信息</td>
@@ -101,19 +101,19 @@
 	                        </tr>
 					 -->
 						</table>
-						
+						<a
+								class="btn btn-danger btn-rounded"
+								href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
+								onclick="return confirmFinanceSubmit()"
+								style="color: white; margin-left: 20px"><i
+								class="icon-remove icon-white"></i>催尾款失败</a>
 						<div class="action">
 							<input type="submit" id="financeSubmit" hidden="hidden" /> 
 							<a  
 								id="financeButton" class="btn btn-primary btn-rounded"><i
 								class="icon-ok icon-white"></i>已确认收款</a> 
 								
-								<a
-								class="btn btn-danger btn-rounded"
-								href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
-								onclick="return confirmFinanceSubmit()"
-								style="color: white; margin-left: 20px"><i
-								class="icon-remove icon-white"></i>催尾款失败</a>
+								
 						</div>
 						<!-- 
 						 -->
@@ -150,13 +150,29 @@
 </div>
 <!--maincontent-->
 <script type="text/javascript">
+
 $(document).ready(function() {
- var text=$("#pay").text();
-	$("#pay").text(parseFloat(text).toFixed(2));
-// var text=$("#pay2").text();
-//	$("#pay2").text(parseFloat(text).toFixed(2));
-	 
-});  
+ var text=$("#FinalMoneyShouldPay").text();
+	$("#FinalMoneyShouldPay").text(parseFloat(text).toFixed(2));
+ var text=$("#allMoneyOfProducts").text();
+	$("#allMoneyOfProducts").text(parseFloat(text).toFixed(2));
+ var text=$("#allMoneyOfAllProducts").text();
+	$("#allMoneyOfAllProducts").text(parseFloat(text).toFixed(2));
+	
+ var text=$("#allMoneyOfSamples").text();
+	$("#allMoneyOfSamples").text(parseFloat(text).toFixed(2));	 
+});
+function getPushRestOrderDetailSubmit(fileValue) {
+     if(fileValue!=""){
+	 confirmFinanceSubmit();
+     return true;     
+     }else{
+     alert("请选择文件");     
+	 return false;
+     }
+     
+}
+
 </script>
 
 <%@include file="/common/js_file.jsp"%>
