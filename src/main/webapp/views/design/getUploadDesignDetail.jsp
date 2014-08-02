@@ -1,4 +1,3 @@
-
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 
 <%@include file="/common/header.jsp"%>
@@ -48,13 +47,13 @@
 				    </table>
 			       </form>
 			       <div class="action">
-						<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1&orderId=${orderInfo.order.orderId }"
+						<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1"
 							onclick="return confirm('确认加工完成？')"
 							class="btn btn-primary">加工完成</a> 
-							<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0&orderId=${orderInfo.order.orderId }" 
-							onclick="return confirm('确认加工失败？')"
-							class="btn btn-danger" style="color:white; margin-left:10px">加工失败</a>
 					</div>
+							<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0" 
+							onclick="return confirm('确认加工失败？')"
+							class="btn btn-danger" style="color:white; ">加工失败</a>
 
 				   </div>
 
@@ -93,3 +92,4 @@
 <script type="text/javascript" src="${ctx}/js/order/add_produce.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>
+>>>>>>> e5b7ef4d6e22710b3f2f489303969cae68bded43
