@@ -132,9 +132,10 @@ public class LogisticsController {
 		
 		String taskId_string = request.getParameter("taskId");
 		long taskId = Long.parseLong(taskId_string);
-		String time = request.getParameter("time");//邮寄时间
 		String name = request.getParameter("name");//快递名称
 		String number = request.getParameter("number");//快递单号
+		String price = request.getParameter("price");//快递价格
+		String time = request.getParameter("time");//邮寄时间
 		String isFinal = request.getParameter("isFinal");//是否是最终发货
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -143,6 +144,7 @@ public class LogisticsController {
 		map.put("time", time);
 		map.put("name", name);
 		map.put("number", number);
+		map.put("price", price);
 		map.put("isFinal", isFinal);
 		logisticsService.sendSampleSubmit(map);
 		return "forward:/logistics/sendSampleList.do";
