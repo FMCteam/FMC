@@ -76,7 +76,7 @@ public class QualityController {
 		}
 		List<Map<String,Object>> orderList = qualityService.getSearchCheckQualityList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.addAttribute("list", orderList);
-		model.addAttribute("taskName", "设计验证");
+		model.addAttribute("taskName", "质量检查");
 		model.addAttribute("url", "/quality/checkQualityDetail.do");
 		model.addAttribute("searchurl", "/quality/checkQualityListSearch.do");
 

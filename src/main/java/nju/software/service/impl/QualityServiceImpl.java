@@ -88,16 +88,15 @@ public class QualityServiceImpl implements QualityService {
 		List<CheckRecord> checkRecordList = checkRecordDAO
 				.findByOrderId(orderId);
 		int historyQualifiedAmount = 0;// 历史质检合格总数
-		int historyUnqualifiedAmount = 0;// 历史质检不合格总数
+//		int historyUnqualifiedAmount = 0;// 历史质检不合格总数
 		if (checkRecordList != null && checkRecordList.size() > 0) {
 			for (CheckRecord record : checkRecordList) {
 				historyQualifiedAmount += record.getQualifiedAmount();
-				historyUnqualifiedAmount += record.getRepairAmount();
+//				historyUnqualifiedAmount += record.getRepairAmount();
 			}
 		}
 		// 历史已质检总数
-		int historyCheckTotalAmount = historyQualifiedAmount
-				+ historyUnqualifiedAmount;
+//		int historyCheckTotalAmount = historyQualifiedAmount + historyUnqualifiedAmount;
 
 		// 再计算本次质检的合格总数与不合格总数
 		int thisCheckQualifiedAmount = 0;
@@ -112,8 +111,8 @@ public class QualityServiceImpl implements QualityService {
 		int thisCheckTotalAmount = thisCheckQualifiedAmount
 				+ thisCheckUnqualifiedAmount;
 
-		// 如果本次质检总数  + 历史质检总数 > 生产总数，则返回false
-		if (thisCheckTotalAmount > (totalProduceAmount - historyCheckTotalAmount)) {
+		// 如果本次质检总数  + 历史质检合格总数 > 生产总数，则返回false
+		if ((thisCheckTotalAmount + historyQualifiedAmount) > totalProduceAmount) {
 			return false;
 		}
 		
