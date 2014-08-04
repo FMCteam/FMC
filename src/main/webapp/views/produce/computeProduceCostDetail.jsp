@@ -70,7 +70,7 @@
 								<td><input class="span12" name="other_cost" id="other_cost"
 									type="text" required="required" /></td>
 								<td><input class="span12" name="design_cost"
-									id="design_cost" type="text" required="required" /></td>
+									id="design_cost" type="text"  value="0" readonly="readonly" /></td>
 							</tr>
 							<tr>
 								<td class="title span2">意见</td>

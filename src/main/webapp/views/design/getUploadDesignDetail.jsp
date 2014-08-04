@@ -48,8 +48,8 @@
 			       </form>
 			       <div class="action">
 						<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=1"
-							onclick="return confirm('确认加工完成？')"
-							class="btn btn-primary">加工完成</a> 
+							onclick="return confirm('确认样衣制作完成？')"
+							class="btn btn-primary">样衣制作完成</a> 
 					</div>
 							<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0" 
 							onclick="return confirm('确认加工失败？')"

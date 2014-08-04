@@ -54,7 +54,7 @@
 								<td class="span2 title" rowspan="6">费用信息</td>
 								<td class="title">金额类型</td>
 								<td class="title">优惠金额</td>
-								<td class="title">应收金额</td>
+								<td class="title" style="color: red;">应收金额</td>
 							</tr>
 							<tr>
 								<td>${orderInfo.moneyName}</td>
@@ -119,7 +119,7 @@
 
 							</tr>
 							<tr>
-								<td class="title">汇款金额</td>
+								<td class="title" style="color: red;">汇款金额</td>
 								<td class="title">收款账号<span style="color: red">*</span></td>
 								<td class="title">收款时间<span style="color: red">*</span></td>
 
@@ -137,7 +137,7 @@
 										<option>872104037@qq.com</option>
 									</select>
 								</td>
-								<td><input type="date" required="required" name="time" /></td>
+								<td><input type="date" required="required" name="time" id="timeNew"/></td>
 
 							</tr>
 							<tr>

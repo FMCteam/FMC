@@ -10,7 +10,7 @@
 }
  
 #tablePagination_rowsPerPage{
- width :40px;
+ width :60px;
 }
  
 }
