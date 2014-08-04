@@ -1959,6 +1959,8 @@ public class MarketController {
 			String orderId_string = request.getParameter("orderId");
  			String taskId_string = request.getParameter("taskId");
 			long taskId = Long.parseLong(taskId_string);
+			
+			//result=0，催尾款失败；result=1，确认收到尾款
 			boolean result = request.getParameter("result").equals("1");
 			if(result){
 			

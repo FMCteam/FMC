@@ -5,18 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.drools.command.Context;
-import org.drools.command.impl.GenericCommand;
-import org.drools.command.impl.KnowledgeCommandContext;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.process.NodeInstance;
-import org.drools.runtime.process.ProcessInstance;
-import org.drools.runtime.process.WorkflowProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CheckRecordDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
@@ -28,13 +19,21 @@ import nju.software.dao.impl.PackageDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
-import nju.software.dataobject.DesignCad;
+import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.service.FinanceService;
 import nju.software.util.JbpmAPIUtil;
+
+import org.drools.command.Context;
+import org.drools.command.impl.GenericCommand;
+import org.drools.command.impl.KnowledgeCommandContext;
+import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.process.NodeInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("financeServiceImpl")
 public class FinanceServiceImpl implements FinanceService {
@@ -275,14 +274,23 @@ public class FinanceServiceImpl implements FinanceService {
 		Quote quote = (Quote) model.get("quote");
 		Float price = quote.getOuterPrice();
 		model.put("price", price);
-		Produce p=new Produce();
-		p.setOid(orderId);
-		p.setType(Produce.TYPE_QUALIFIED);
-		List<Produce>list=produceDAO.findByExample(p);
-		Integer amount=0;
-		for(Produce produce:list){
-			amount+=produce.getProduceAmount();
+		
+//		Produce p = new Produce();
+//		p.setOid(orderId);
+//		p.setType(Produce.TYPE_QUALIFIED);
+//		List<Produce> list = produceDAO.findByExample(p);
+//		Integer amount = 0;
+//		for (Produce produce : list) {
+//			amount += produce.getProduceAmount();
+//		}
+		
+		// 计算质检合格总数，即实际的大货总数
+		int amount = 0;
+		List<CheckRecord> list = checkRecordDAO.findByOrderId(orderId);
+		for (CheckRecord cr : list) {
+			amount += cr.getQualifiedAmount();
 		}
+		
 		model.put("number", amount);
 		model.put("total",  order.getTotalMoney() * 0.7);
 		model.put("taskName", "确认大货尾款");
@@ -446,6 +454,8 @@ public class FinanceServiceImpl implements FinanceService {
 	private FabricCostDAO fabricCostDAO;
 	@Autowired
 	private AccessoryCostDAO accessoryCostDAO;
+	@Autowired
+	private CheckRecordDAO checkRecordDAO;
 	@Autowired
 	private ServiceUtil service;
 

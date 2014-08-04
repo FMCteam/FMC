@@ -10,6 +10,7 @@ import java.util.Map;
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.DeliveryRecordDAO;
 import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
@@ -24,6 +25,7 @@ import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.DeliveryRecord;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Order;
@@ -168,6 +170,12 @@ public class ServiceUtil {
 		}
 		
 		model.put("accessoryCosts", accessoryCosts);
+		
+		// 发货记录
+		List<DeliveryRecord> deliveryRecord = deliveryRecordDAO
+				.findByOrderId(orderId);
+		model.put("deliveryRecord", deliveryRecord);
+		
 		return model;
 	}
 
@@ -240,6 +248,7 @@ public class ServiceUtil {
 	private FabricCostDAO fabricCostDAO;
 	@Autowired
 	private AccessoryCostDAO accessoryCostDAO;
-
-
+	@Autowired
+	private DeliveryRecordDAO deliveryRecordDAO;
+	
 }

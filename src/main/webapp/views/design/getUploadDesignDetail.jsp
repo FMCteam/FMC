@@ -47,14 +47,13 @@
 				    </table>
 			       </form>
 			       <div class="action">
-						<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1"
-							onclick="return confirm('确认样衣制作完成？')"
-							class="btn btn-primary">样衣制作完成</a> 
+						<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=1"
+							onclick="return confirm('确认加工完成？')"
+							class="btn btn-primary">加工完成</a> 
 					</div>
-							<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0" 
-							onclick="return confirm('确认制作失败？')"
-							class="btn btn-danger" style="color:white; ">样衣制作失败</a>
-
+							<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0" 
+							onclick="return confirm('确认加工失败？')"
+							class="btn btn-danger" style="color:white; ">加工失败</a>
 				   </div>
 
 				<div class="tab-pane" id="produce">

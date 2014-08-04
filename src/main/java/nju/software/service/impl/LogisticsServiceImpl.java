@@ -169,6 +169,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		logistics.setSampleClothesTime(getTime((String) map.get("time")));//邮寄时间
 		logistics.setSampleClothesNumber((String) map.get("number"));//快递单号
 		logistics.setSampleClothesType((String) map.get("name"));//快递名称
+		//logistics.setSampleClothesPrice((String) map.get("price"));//快递价格
 		logisticsDAO.attachDirty(logistics);
 		
 		//需要记录每次发货的信息
@@ -180,6 +181,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		deliveryRecord.setRecipientAddr(logistics.getSampleClothesAddress());// 收件人地址
 		deliveryRecord.setExpressName((String) map.get("name"));// 快递名称
 		deliveryRecord.setExpressNumber((String) map.get("number"));// 快递单号
+		deliveryRecord.setExpressPrice((String) map.get("price"));// 快递价格
 		deliveryRecord.setSendTime(getTime((String) map.get("time")));// 邮寄时间
 		deliveryRecordDAO.save(deliveryRecord);
 		
