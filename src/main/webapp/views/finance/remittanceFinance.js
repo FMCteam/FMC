@@ -36,6 +36,6 @@ $(document).ready(function() {
 	$("input[name='amountReceivable']").val(amountReceivable.toFixed(2));
 	$("input[name='orderInfoNumberPriceProduct']").val(orderInfoNumberPriceProduct.toFixed(2));
 	$("input[name='money_amount']").val(amountReceivable.toFixed(2));
-
+	 document.getElementById('totalNumber').innerHTML=orderInfoNumberPriceProduct.toFixed(2);
 	
 });  

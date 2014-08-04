@@ -63,7 +63,10 @@
 								<span id="pay">${((orderInfo.number)*orderInfo.price-orderInfo.order.discount)*0.3}</span>
  -->
 								<td>
-								(${(orderInfo.number)*orderInfo.price}-${orderInfo.order.discount})*0.3=
+								(
+								<a id="totalNumber" style="color: black;">
+								</a>
+								-${orderInfo.order.discount})*0.3=
 								<input name="amountReceivable" type="text" readonly="readonly" />
 								</td>
 							</tr>

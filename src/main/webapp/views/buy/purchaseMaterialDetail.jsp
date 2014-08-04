@@ -67,10 +67,10 @@
 						</c:forEach>
 					</table>
 					<a href="${ctx}/finance/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
-							class="btn btn-primary btn-rounded" target="_blank">打印补货单</a>
+							class="btn btn-primary btn-rounded" target="_blank">打印补货单</a><br>
 					<a	href="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0"
 							onclick="return confirm('确认采购失败？')"
-							class="btn btn-danger btn-rounded">
+							class="btn btn-danger btn-rounded" style="margin-left: 0px;">
 							<i class="icon-remove icon-white"></i>采购失败</a>		
 					
 					<div class="action" style="float:right">
