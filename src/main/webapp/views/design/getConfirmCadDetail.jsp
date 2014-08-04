@@ -37,7 +37,7 @@
 			</div>
 
 			<form action="${ctx }/design/confirmCadSubmit.do" method="post"
-				onsubmit="return confirm('确认提交？')" enctype="multipart/form-data">
+				onsubmit="return check()" enctype="multipart/form-data">
 				<table class="table table-striped table-bordered table-hover">
 					<tr>
 						<td>选择版型文件</td>
@@ -66,6 +66,25 @@
 	<!--maincontentinner-->
 </div>
 <!--maincontent-->
+
+<script type="text/javascript" >
+	function check(){
+		var CADFile = document.getElementById("CADFile").value;
+		var CADFilestr = CADFile.substr(CADFile.indexOf(".")).toLowerCase();		
+
+			if(CADFilestr == ".jpg" || CADFilestr == ".png"){	
+				if(confirm('确认提交？')){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				alert("版型格式不对，请上传jpg或png格式的图片！");
+				return false;
+			}
+
+	}
+</script>
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>

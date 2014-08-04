@@ -36,7 +36,7 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			<div class="tab-pane active" id="craftSample">
-						<form action="${ctx}/design/uploadCraftFileSubmit.do?orderId=${orderInfo.order.orderId}" method="post" enctype="multipart/form-data">
+						<form action="${ctx}/design/uploadCraftFileSubmit.do?orderId=${orderInfo.order.orderId}" method="post" enctype="multipart/form-data"  >
 			
  						<table class="table table-striped table-bordered table-hover detail">
 						    <tr>
@@ -73,7 +73,7 @@
 							<a style="color: red;">*</a>
 			                <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 							<input name="craftFile" id="craftFile" type="file" required="required"/> 
-							<input class="btn btn-primary btn-rounded" type="submit" value="上传工艺制作图" onclick="return confirm('确认上传？')" />						
+							<input class="btn btn-primary btn-rounded" type="submit" value="上传工艺制作图"  onclick="return check()"/>						
 						</td>
 					</tr>
 					<tr>
@@ -90,14 +90,14 @@
 				<button class="btn btn-primary" onclick="history.back();">返回</button>
 				<div class="action" style="float:right">
 					<a href="${ctx}/design/needCraftSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
-						class="btn btn-primary" onclick="return confirm('确认完成工艺制作？')">完成工艺制作</a> 
+						class="btn btn-primary" onclick="return checkimg()">完成工艺制作</a> 
 				</div>
 			</div>	
 		</div>
 
 		</div>
 		<!--row-fluid-->
-
+		<input type="hidden"  id="imgtest"  value="${orderInfo.sampleCraft.craftFileUrl}" />
 		<div class="footer">
 			<div class="footer-left">
 				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
@@ -125,8 +125,43 @@
 $(document).ready(function() {
  var text=$("#pay").text();
 	$("#pay").text(parseFloat(text).toFixed(2));
-	 
+
 });  
+
+function check(){
+	var craftFile = document.getElementById("craftFile").value;
+	var craftFilestr = craftFile.substr(craftFile.indexOf(".")).toLowerCase();		
+	if(craftFile.length != 0){
+		if(craftFilestr == ".jpg" || craftFilestr == ".png"){	
+			if(confirm('确认上传工艺图片？')){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			alert("工艺图片格式不对，请上传jpg或png格式的图片！");
+			return false;
+		}
+	}else{
+		alert("请上传工艺图片");
+		return false;
+	}
+}
+
+function checkimg(){
+	var img = $("#imgtest").val();
+	 if(img != ""){
+		 if(confirm('确认完成工艺制作？')){
+				return true;
+			}else{
+				return false;
+			}
+	}else{ 
+			alert("请上传工艺图片");
+			return false;
+	 } 
+	
+}
 </script>
 <%@include file="/common/footer.jsp"%>
 

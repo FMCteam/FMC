@@ -3,6 +3,8 @@
 <style>
  
 </style>
+
+
 <div class="maincontent">
 	<div class="maincontentinner">
 		<form onSubmit="return verify()" method="post"
@@ -225,10 +227,10 @@
 								<td class="title">样衣信息</td>
 								<td class="title">样衣图片<span class="required">*</span></td>
 								<td><input type="file" value="选择文件"
-									name="sample_clothes_picture" required="required" /></td>
+									name="sample_clothes_picture" id="sample_clothes_picture" required="required" /></td>
 								<td class="title">参考图片<span class="required">*</span></td>
 								<td><input type="file" value="选择文件"
-									name="reference_picture" required="required" /></td>
+									name="reference_picture" id="reference_picture" required="required" /></td>
 							</tr>
 						</table>
 					</div>
@@ -420,7 +422,7 @@
 			</div>
 			<button class="btn btn-primary" onclick="history.back();">返回</button>
 			<div class="action" style="float:right">
-				<button class="btn btn-primary btn-rounded norepeat">
+				<button class="btn btn-primary btn-rounded norepeat"  >
 					<i class="icon-ok icon-white"></i>提交询单
 				</button>
 			</div>

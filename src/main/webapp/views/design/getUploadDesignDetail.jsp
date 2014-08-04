@@ -32,7 +32,7 @@
 				<div class="tab-pane active" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
 					<form action="${ctx}/design/uploadDesignSubmit.do" method="post"
-				          onsubmit="return confirm('确认上传？')" enctype="multipart/form-data">
+				          onsubmit="return check()" enctype="multipart/form-data">
 				    <table class="table table-striped table-bordered table-hover detail">
 					<tr>
 						<td>选择版型文件</td>
@@ -43,13 +43,13 @@
 							<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
 						</td>
 						<td colspan="3"><input type="submit" value="上传版型文件"
-							class="btn btn-primary btn-rounded"></td>
+							class="btn btn-primary btn-rounded" ></td>
 					</tr>
 				    </table>
 			       </form>
 			       <div class="action">
 						<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1"
-							onclick="return confirm('确认加工完成？')"
+							onclick="return checkcad()"   
 							class="btn btn-primary">加工完成</a> 
 					</div>
 							<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0" 
@@ -82,7 +82,43 @@
 </div>
 <!--maincontent-->
 
- 
+ <script type="text/javascript" >
+
+ 	function check(){
+ 		var CADFile = document.getElementById("CADFile").value;
+		var CADFilestr = CADFile.substr(CADFile.indexOf(".")).toLowerCase();		
+		if(CADFile.length != 0){
+			if(CADFilestr == ".jpg" || CADFilestr == ".png"){	
+				if(confirm('确认上传版型文件？')){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				alert("版型格式不对，请上传jpg或png格式的图片！");
+				return false;
+			}
+		}else{
+			alert("请上传版型文件！");
+			return false;
+		}
+ 	}
+ 	
+
+ 	function checkcad(){
+ 		var cadUrl = $("#cadUrl").val();
+ 		 if(cadUrl != null){
+ 			 if(confirm('确认完成？')){
+ 					return true;
+ 				}else{
+ 					return false;
+ 				}
+ 		}else{ 
+ 				alert("请上传版型文件");
+ 				return false;
+ 		 } 
+ 	}
+ </script>
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>

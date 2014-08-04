@@ -129,6 +129,16 @@ public class FinanceController {
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/printProcurementOrder";
 	}
+	
+	@RequestMapping(value = "/finance/printProcurementSampleOrder.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String printProcurementSampleOrder(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		Map<String,Object>orderInfo=financeService.getPrintProcurementOrderDetail(orderId);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/finance/printProcurementSampleOrder";
+	}
 	// ===========================退还定金列表===================================
 	@RequestMapping(value = "/finance/returnDepositList.do")
 	@Transactional(rollbackFor = Exception.class)

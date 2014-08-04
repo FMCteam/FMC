@@ -109,14 +109,30 @@ $(document).ready(function(){
  -->
 <script type="text/javascript">
 function confirmProductDetailSubmit(fileValue1,fileValue2) {
-     if(fileValue1!=""&&fileValue2!=""){
-	 produce_verify();
-     return true;     
-     }else{
-     alert("请选择文件");     
-	 return false;
-     }
-     
+	var fileValue1str = fileValue1.substr(fileValue1.indexOf(".")).toLowerCase();
+	var fileValue2str = fileValue2.substr(fileValue2.indexOf(".")).toLowerCase();
+	if(fileValue1.length != 0){
+		if(!(fileValue1str ==".png"||fileValue1str ==".jpg"||fileValue1str ==".doc"||fileValue1str ==".docx"||fileValue1str ==".pdf")){
+			alert("合同文件格式错误，请上传png,jpg,doc,docx或pdf格式的文件!");
+			return false;
+		}else{
+			if(fileValue2.length != 0){
+				if(!(fileValue2str ==".png"||fileValue2str ==".jpg")){
+					alert("定金收据格式错误，请上传jpg,png格式的文件!");
+					return false;
+				}else{
+					return produce_verify();
+				}
+			}else{
+				alert("请上传定金文件!");
+				return false;
+			}
+		}
+	}else{
+		alert("请上传合同文件!");
+		return false;
+	}
+   
 }
 var orderInfoQuoteOuterPrice = $("input[name='orderInfoQuoteOuterPrice']").val();
 var orderInfoOrderAskAmount = $("input[name='orderInfoOrderAskAmount']").val();

@@ -183,7 +183,7 @@ public class DesignServiceImpl implements DesignService {
 		if (designCadList.isEmpty()) {
 			designCad = new DesignCad();
 			designCad.setOrderId(orderId);
-			designCad.setCadVersion((short) 1);
+			designCad.setCadVersion((short)0);
 		} else {
 			designCad = designCadList.get(0);
 			short newVersion = (short) (designCad.getCadVersion() + 1);

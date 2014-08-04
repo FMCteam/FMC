@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@include file="/common/header.jsp"%>
 
+
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
@@ -101,10 +102,22 @@
 jQuery(document).ready(function(){
 	//确认报价
 	jQuery("#confirm_price").click(function(){
-		if(confirm('确认报价？')){
-			jQuery("#result").val("0");
-			jQuery("#confirm_quote_form").submit();
+		
+		var confirmSampleMoneyFile = document.getElementById("confirmSampleMoneyFile").value;
+		var confirmSampleMoneyFilestr = confirmSampleMoneyFile.substr(confirmSampleMoneyFile.indexOf(".")).toLowerCase();		
+		if(confirmSampleMoneyFile.length != 0){
+			if(confirmSampleMoneyFilestr == ".jpg" || confirmSampleMoneyFilestr == ".png"){	
+				if(confirm('确认报价？')){
+					jQuery("#result").val("0");
+					jQuery("#confirm_quote_form").submit();
+				}
+			}else{
+				alert("样衣金截图格式不对，请上传jpg或png格式的图片！");
+			}
+		}else{
+			alert("请选择定金图片");
 		}
+
 	});
 	//修改报价
 	jQuery("#modify_price").click(function(){
