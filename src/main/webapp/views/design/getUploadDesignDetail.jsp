@@ -31,20 +31,33 @@
 				<div class="tab-pane active" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
 					<form action="${ctx}/design/uploadDesignSubmit.do" method="post"
-				          onsubmit="return confirm('确认上传？')" enctype="multipart/form-data">
-				    <table class="table table-striped table-bordered table-hover detail">
-					<tr>
-						<td>选择版型文件</td>
-						<td colspan="3">
-							<a style="color: red;">*</a>
-							<input name="CADFile" id="CADFile" type="file" required="required"/> 
-							<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
-							<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
-						</td>
-						<td colspan="3"><input type="submit" value="上传版型文件"
-							class="btn btn-primary btn-rounded"></td>
-					</tr>
-				    </table>
+				          onsubmit="return confirm('确认录入版型数据？')" enctype="multipart/form-data">
+				    	<table class="table table-striped table-bordered table-hover detail">
+							<tr>
+								<td class="title"><span style="color:red">*</span>版型文件</td>
+								<td>
+									<a style="color: red;">*</a>
+									<input name="CADFile" id="CADFile" type="file" required="required"/> 
+									<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
+									<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
+								</td>
+								<td rowspan="3"><input type="submit" value="录入版型数据"
+									class="btn btn-primary btn-rounded">
+								</td>
+							</tr>
+							<tr>
+								<td class="title"><span style="color:red">*</span>制版人</td>
+								<td>
+									<input name="cadSide" id="cad_side" type="text" required="required"/> 
+								</td>
+							</tr>
+							<tr>
+								<td class="title"><span style="color:red">*</span>制版完成时间</td>
+								<td>
+									<input name="completeTime" id="complete_time" type="date" required="required"/> 
+								</td>
+							</tr>
+				    	</table>
 			       </form>
 			       <div class="action">
 						<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=1"

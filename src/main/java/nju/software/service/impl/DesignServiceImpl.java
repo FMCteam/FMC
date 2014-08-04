@@ -203,6 +203,28 @@ public class DesignServiceImpl implements DesignService {
 //			return false;
 //		}
 	}
+	
+	@Override
+	public void EntryCadData(int orderId, long taskId, String url,
+			Timestamp uploadTime, String cadSide, Timestamp completeTime) {
+		// TODO Auto-generated method stub
+		DesignCad designCad = null;
+		List<DesignCad> designCadList = designCadDAO.findByOrderId(orderId);
+		if (designCadList.isEmpty()) {
+			designCad = new DesignCad();
+			designCad.setOrderId(orderId);
+			designCad.setCadVersion((short) 1);
+		} else {
+			designCad = designCadList.get(0);
+			short newVersion = (short) (designCad.getCadVersion() + 1);
+			designCad.setCadVersion(newVersion);
+		}
+		designCad.setCadUrl(url);
+		designCad.setUploadTime(uploadTime);
+		designCad.setCadSide(cadSide);
+		designCad.setCompleteTime(completeTime);
+		designCadDAO.attachDirty(designCad);
+	}
 //===========================样衣生产提交========================================
 	@Override
 	public boolean produceSampleSubmit(long taskId, boolean result) {
@@ -405,7 +427,7 @@ public class DesignServiceImpl implements DesignService {
 	}
 	
 	@Override
-	public void getTypeSettingSliceSubmit(int orderId, String cadding_side,
+	public void getTypeSettingSliceSubmit(int orderId, String cad_side,
 			long taskId) {
 		DesignCad designCad = null;
 		List<DesignCad> designCadList = designCadDAO.findByOrderId(orderId);
@@ -413,10 +435,10 @@ public class DesignServiceImpl implements DesignService {
 			designCad = new DesignCad();
 			designCad.setOrderId(orderId);
 			designCad.setCadVersion((short) 1);
-			designCad.setCaddingSide(cadding_side);
+			designCad.setCadSide(cad_side);
 		} else {
 			designCad = designCadList.get(0);
-			designCad.setCaddingSide(cadding_side);
+			designCad.setCadSide(cad_side);
  		}
  
 		designCadDAO.attachDirty(designCad);

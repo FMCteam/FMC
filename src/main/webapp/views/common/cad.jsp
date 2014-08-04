@@ -29,7 +29,7 @@
 </table>
 <table class="table table-striped table-bordered table-hover detail">
 	<tr>
-		<td class="span2 title" rowspan="7">版型数据信息</td>
+		<td class="span2 title" rowspan="9">版型数据信息</td>
 		<td class="span3 title">面料</td>
 		<td class="span6" colspan="3">${orderInfo.designCad.cadFabric}</td>
 	</tr>
@@ -69,5 +69,13 @@
 			</form>
 			</c:if>
 		</td>
+	</tr>
+	<tr>
+		<td class="span1 title">制版人</td>
+		<td colspan="6">${orderInfo.designCad.cadSide}</td>
+	</tr>
+	<tr>
+		<td class="span1 title">制版完成时间</td>
+		<td colspan="6">${orderInfo.designCad.completeTime}</td>
 	</tr>
 </table>
