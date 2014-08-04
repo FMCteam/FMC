@@ -31,7 +31,7 @@
 				<div class="tab-pane active" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
 					<form action="${ctx}/design/uploadDesignSubmit.do" method="post"
-				          onsubmit="return confirm('确认录入版型数据？')" enctype="multipart/form-data">
+				          onsubmit="return check()" enctype="multipart/form-data">
 				    	<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td class="title"><span style="color:red">*</span>版型文件</td>
@@ -58,6 +58,20 @@
 								</td>
 							</tr>
 				    	</table>
+				    <table class="table table-striped table-bordered table-hover detail">
+					<tr>
+						<td>选择版型文件</td>
+						<td colspan="3">
+							<a style="color: red;">*</a>
+							<input name="CADFile" id="CADFile" type="file" required="required"/> 
+							<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
+							<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
+						</td>
+						<td colspan="3"><input type="submit" value="上传版型文件"
+							class="btn btn-primary btn-rounded" ></td>
+					</tr>
+				    </table>
+>>>>>>> 56d8648871a73daae8b1b027afeb33b8cdb68590
 			       </form>
 			       <div class="action">
 						<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=1"
@@ -67,7 +81,6 @@
 							<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0" 
 							onclick="return confirm('确认加工失败？')"
 							class="btn btn-danger" style="color:white; ">加工失败</a>
-
 				   </div>
 
 				<div class="tab-pane" id="produce">
@@ -94,7 +107,43 @@
 </div>
 <!--maincontent-->
 
- 
+ <script type="text/javascript" >
+
+ 	function check(){
+ 		var CADFile = document.getElementById("CADFile").value;
+		var CADFilestr = CADFile.substr(CADFile.indexOf(".")).toLowerCase();		
+		if(CADFile.length != 0){
+			if(CADFilestr == ".jpg" || CADFilestr == ".png"){	
+				if(confirm('确认录入版型数据？')){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				alert("版型格式不对，请上传jpg或png格式的图片！");
+				return false;
+			}
+		}else{
+			alert("请上传版型文件！");
+			return false;
+		}
+ 	}
+ 	
+
+ 	function checkcad(){
+ 		var cadUrl = $("#cadUrl").val();
+ 		 if(cadUrl != null){
+ 			 if(confirm('确认完成？')){
+ 					return true;
+ 				}else{
+ 					return false;
+ 				}
+ 		}else{ 
+ 				alert("请上传版型文件");
+ 				return false;
+ 		 } 
+ 	}
+ </script>
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
@@ -105,4 +154,3 @@
 <script type="text/javascript" src="${ctx}/js/order/add_produce.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>
->>>>>>> e5b7ef4d6e22710b3f2f489303969cae68bded43

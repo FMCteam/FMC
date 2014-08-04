@@ -1,36 +1,21 @@
 package nju.software.service.impl;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.net.ntp.TimeStamp;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CraftDAO;
-import nju.software.dao.impl.FabricDAO;
-import nju.software.dao.impl.LogisticsDAO;
+import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.QuoteDAO;
-import nju.software.dao.impl.DesignCadDAO;
-import nju.software.dataobject.Accessory;
-import nju.software.dataobject.Account;
 import nju.software.dataobject.Craft;
-import nju.software.dataobject.Fabric;
-import nju.software.dataobject.Logistics;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
-import nju.software.dataobject.DesignCad;
-import nju.software.model.OrderInfo;
 import nju.software.service.DesignService;
 import nju.software.util.JbpmAPIUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("designServiceImpl")
 public class DesignServiceImpl implements DesignService {
@@ -532,9 +517,4 @@ public class DesignServiceImpl implements DesignService {
 	private CraftDAO craftDAO;
 	@Autowired
 	private OrderDAO orderDAO;
-	
-
-
-
-
 }
