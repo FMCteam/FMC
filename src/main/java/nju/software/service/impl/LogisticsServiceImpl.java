@@ -103,12 +103,17 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Short result) {
 		// TODO Auto-generated method stub
 		Order order = orderDAO.findById(orderId);
+
 		order.setHasPostedSampleClothes(result);
 		orderDAO.attachDirty(order);
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			data.put(RESULT_RECEIVE_SAMPLE, (int) result);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+			if(result.intValue()==1){//如果result的的值为1，即为未收取到样衣，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -164,6 +169,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		logistics.setSampleClothesTime(getTime((String) map.get("time")));//邮寄时间
 		logistics.setSampleClothesNumber((String) map.get("number"));//快递单号
 		logistics.setSampleClothesType((String) map.get("name"));//快递名称
+		//logistics.setSampleClothesPrice((String) map.get("price"));//快递价格
 		logisticsDAO.attachDirty(logistics);
 		
 		//需要记录每次发货的信息
@@ -175,6 +181,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		deliveryRecord.setRecipientAddr(logistics.getSampleClothesAddress());// 收件人地址
 		deliveryRecord.setExpressName((String) map.get("name"));// 快递名称
 		deliveryRecord.setExpressNumber((String) map.get("number"));// 快递单号
+		deliveryRecord.setExpressPrice((String) map.get("price"));// 快递价格
 		deliveryRecord.setSendTime(getTime((String) map.get("time")));// 邮寄时间
 		deliveryRecordDAO.save(deliveryRecord);
 		

@@ -132,20 +132,15 @@
 	                        </tr>
 						</table>
 						
-						<a
-								class="btn btn-danger btn-rounded"
-								href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
-								onclick="return confirmFinanceSubmit()"
-								style="color: white; margin-left: 20px"><i
-								class="icon-remove icon-white"></i>未收到汇款</a>
-						<div class="action">
+						<a 	href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
+							class="btn btn-danger btn-rounded"
+							onclick="return confirmFinanceSubmit()"
+							style="color: white"><i
+							class="icon-remove icon-white"></i>未收到汇款</a>
+						<div class="action" style="float:right">
 							<input type="submit" id="financeSubmit" hidden="hidden" /> 
-					
-							<a  
-								id="financeButton" class="btn btn-primary btn-rounded"><i
+							<a  id="financeButton" class="btn btn-primary btn-rounded"><i
 								class="icon-ok icon-white"></i>已确认收款</a> 
-								
-								
 						</div>
 					</form>
 					

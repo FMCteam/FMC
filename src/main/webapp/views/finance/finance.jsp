@@ -63,10 +63,9 @@
 	    </tr>
 	</table>
 	<div>
-	 <a  class="btn btn-danger btn-rounded"  style="float: left;"
+	 <a  class="btn btn-danger btn-rounded"  style="float: left;color: white"
 			href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
-			onclick="return confirmFinanceSubmit()"
-			style="color: white; margin-left: 20px"><i
+			onclick="return confirmFinanceSubmit()"><i
 			class="icon-remove icon-white"></i>未收到汇款</a>
 	</div>
 		<input type="submit" id="financeSubmit" hidden="hidden" /> <a

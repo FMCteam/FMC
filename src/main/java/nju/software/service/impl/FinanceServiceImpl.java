@@ -5,18 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.drools.command.Context;
-import org.drools.command.impl.GenericCommand;
-import org.drools.command.impl.KnowledgeCommandContext;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.process.NodeInstance;
-import org.drools.runtime.process.ProcessInstance;
-import org.drools.runtime.process.WorkflowProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CheckRecordDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
@@ -28,13 +19,21 @@ import nju.software.dao.impl.PackageDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
-import nju.software.dataobject.DesignCad;
+import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.service.FinanceService;
 import nju.software.util.JbpmAPIUtil;
+
+import org.drools.command.Context;
+import org.drools.command.impl.GenericCommand;
+import org.drools.command.impl.KnowledgeCommandContext;
+import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.process.NodeInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("financeServiceImpl")
 public class FinanceServiceImpl implements FinanceService {
@@ -92,6 +91,7 @@ public class FinanceServiceImpl implements FinanceService {
 		data.put(RESULT_MONEY, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -99,6 +99,31 @@ public class FinanceServiceImpl implements FinanceService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean confirmSampleMoneySubmit(String actorId, long taskId,
+			boolean result, Money money, int orderId) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(orderId);
+		if (result) {
+			moneyDAO.save(money);
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_MONEY, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			if(result==false){//如果result的的值为false，即为未收取到样衣金，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	// ===========================退还定金===================================
 	@Override
 	public List<Map<String, Object>> getReturnDepositList(String actorId) {
@@ -198,6 +223,29 @@ public class FinanceServiceImpl implements FinanceService {
 			return false;
 		}
 	}
+	@Override
+	public boolean confirmDepositSubmit(String actorId, long taskId,
+			boolean result, Money money, int orderId) {
+		// TODO Auto-generated method stub
+		if (result) {
+			moneyDAO.save(money);
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_MONEY, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			if(result==false){//如果result的的值为false，即为确认定金失败，流程会异常终止，将orderState设置为1
+				Order order = orderDAO.findById(orderId);
+				order.setOrderState("1");
+				orderDAO.merge(order);
+				}
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	// ===========================尾款确认===================================
 	@Override
@@ -226,14 +274,23 @@ public class FinanceServiceImpl implements FinanceService {
 		Quote quote = (Quote) model.get("quote");
 		Float price = quote.getOuterPrice();
 		model.put("price", price);
-		Produce p=new Produce();
-		p.setOid(orderId);
-		p.setType(Produce.TYPE_QUALIFIED);
-		List<Produce>list=produceDAO.findByExample(p);
-		Integer amount=0;
-		for(Produce produce:list){
-			amount+=produce.getProduceAmount();
+		
+//		Produce p = new Produce();
+//		p.setOid(orderId);
+//		p.setType(Produce.TYPE_QUALIFIED);
+//		List<Produce> list = produceDAO.findByExample(p);
+//		Integer amount = 0;
+//		for (Produce produce : list) {
+//			amount += produce.getProduceAmount();
+//		}
+		
+		// 计算质检合格总数，即实际的大货总数
+		int amount = 0;
+		List<CheckRecord> list = checkRecordDAO.findByOrderId(orderId);
+		for (CheckRecord cr : list) {
+			amount += cr.getQualifiedAmount();
 		}
+		
 		model.put("number", amount);
 		model.put("total",  order.getTotalMoney() * 0.7);
 		model.put("taskName", "确认大货尾款");
@@ -398,6 +455,8 @@ public class FinanceServiceImpl implements FinanceService {
 	@Autowired
 	private AccessoryCostDAO accessoryCostDAO;
 	@Autowired
+	private CheckRecordDAO checkRecordDAO;
+	@Autowired
 	private ServiceUtil service;
 
 	public final static String ACTOR_FINANCE_MANAGER = "financeManager";
@@ -428,6 +487,8 @@ public class FinanceServiceImpl implements FinanceService {
 		return model;
 
 	}
+
+
 
 
 

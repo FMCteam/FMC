@@ -12,21 +12,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.drools.command.Context;
-import org.drools.command.impl.GenericCommand;
-import org.drools.command.impl.KnowledgeCommandContext;
-import org.drools.core.util.StringUtils;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.process.NodeInstance;
-import org.drools.runtime.process.ProcessInstance;
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CheckRecordDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.EmployeeDAO;
@@ -41,7 +29,7 @@ import nju.software.dao.impl.QuoteDAO;
 import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
-import nju.software.dataobject.Account;
+import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
@@ -60,6 +48,19 @@ import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.mail.MailSenderInfo;
 import nju.software.util.mail.SimpleMailSender;
+
+import org.drools.command.Context;
+import org.drools.command.impl.GenericCommand;
+import org.drools.command.impl.KnowledgeCommandContext;
+import org.drools.core.util.StringUtils;
+import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.process.NodeInstance;
+import org.drools.runtime.process.ProcessInstance;
+import org.jbpm.task.query.TaskSummary;
+import org.jbpm.workflow.instance.WorkflowProcessInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Service("marketServiceImpl")
 public class MarketServiceImpl implements MarketService {
@@ -121,6 +122,8 @@ public class MarketServiceImpl implements MarketService {
 	private AccessoryCostDAO accessoryCostDAO;
 	@Autowired
 	private MoneyDAO moneyDAO;
+	@Autowired
+	private CheckRecordDAO checkRecordDAO;
 	@Autowired
 	private ServiceUtil service;
 
@@ -419,6 +422,10 @@ public class MarketServiceImpl implements MarketService {
 		params.put(RESULT_MODIFY_ORDER, editok);
 		try {
 			jbpmAPIUtil.completeTask(taskId, params, accountId + "");
+			if(editok==false){//如果editok的的值为false，即为未收取到样衣，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.merge(order);
+			}			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -487,6 +494,11 @@ public class MarketServiceImpl implements MarketService {
 			// 直接进入到下一个流程时
 			try {
 				jbpmAPIUtil.completeTask(taskId, data, actorId);
+				if(comfirmworksheet==false){//如果result的的值为false，即为确认加工单并签订合同失败，流程会异常终止，将orderState设置为1
+					Order order = orderDAO.findById(orderId);
+					order.setOrderState("1");
+					orderDAO.merge(order);
+ 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -626,8 +638,8 @@ public class MarketServiceImpl implements MarketService {
 		//result为0，表示有上传样衣制作金的截图
 		//result为1，表示修改报价
 		//result为2，表示取消订单
+		Order order = orderDAO.findById(orderId);
 		if (Integer.parseInt(result) == 0) {
-			Order order = orderDAO.findById(orderId);
 			order.setConfirmSampleMoneyFile(url);
 			orderDAO.attachDirty(order);
 		}
@@ -635,6 +647,10 @@ public class MarketServiceImpl implements MarketService {
 		data.put(RESULT_QUOTE, Integer.parseInt(result));
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			if(result.equals("2")){//如果result的的值为1，即为未收取到样衣，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}			
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -724,14 +740,22 @@ public class MarketServiceImpl implements MarketService {
 		Quote quote = (Quote) model.get("quote");
 		Float price = quote.getOuterPrice();
 		model.put("price", price);
-		Produce p=new Produce();
-		p.setOid(orderId);
-		p.setType(Produce.TYPE_QUALIFIED);
-		List<Produce>list=produceDAO.findByExample(p);
-		Integer amount=0;
-		for(Produce produce:list){
-			amount+=produce.getProduceAmount();
+//		Produce p=new Produce();
+//		p.setOid(orderId);
+//		p.setType(Produce.TYPE_QUALIFIED);
+//		List<Produce> list = produceDAO.findByExample(p);
+//		Integer amount = 0;
+//		for (Produce produce : list) {
+//			amount += produce.getProduceAmount();
+//		}
+		
+		//计算质检合格总数，即实际的大货总数
+		int amount = 0;
+		List<CheckRecord> list = checkRecordDAO.findByOrderId(orderId);
+		for(CheckRecord cr: list){
+			amount += cr.getQualifiedAmount();
 		}
+		
 		model.put("number", amount);
 		model.put("total",  order.getTotalMoney() * 0.7);
 		model.put("taskName", "催尾款");

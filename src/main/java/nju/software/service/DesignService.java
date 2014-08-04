@@ -96,4 +96,6 @@ public interface DesignService {
 	public void getTypeSettingSliceSubmit(int orderId, String cadding_side,
 			long taskId);
 
+	public boolean produceSampleSubmit(long taskId, boolean result, String orderId);
+
 }
