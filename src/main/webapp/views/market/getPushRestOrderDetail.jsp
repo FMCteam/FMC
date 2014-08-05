@@ -160,8 +160,8 @@ $(document).ready(function() {
 });
 function getPushRestOrderDetailSubmit(fileValue) {
      if(fileValue!=""){
-	 confirmFinanceSubmit();
-     return true;     
+    	 
+     return	 confirmFinanceSubmit();   
      }else{
      alert("请选择文件");     
 	 return false;

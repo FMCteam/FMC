@@ -56,6 +56,7 @@ public interface FinanceService {
 			int orderId);
 
 	public void returnDepositSubmit(String actorId, long taskId);
+	public void returnDepositSubmit(String actorId, long taskId,Integer orderId);
 
 	public boolean confirmSampleMoneySubmit(String actorId, long taskId,
 			boolean result, Money money, int orderId);

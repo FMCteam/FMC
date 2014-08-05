@@ -47,13 +47,8 @@
 				    </table>
 			       </form>
 			       <div class="action">
-<<<<<<< HEAD
-						<a href="${ctx}/design/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1"
-							onclick="return checkcad()"   
-=======
 						<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=1"
-							onclick="return confirm('确认加工完成？')"
->>>>>>> 06f8da6c495057ef7e5ad1846284d6c1e72c25d0
+							onclick="return checkcad()"  
 							class="btn btn-primary">加工完成</a> 
 					</div>
 							<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0" 
