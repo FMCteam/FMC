@@ -372,8 +372,9 @@ public class LogisticsController {
 		String number = request.getParameter("number");
 		Float price = Float.parseFloat(request.getParameter("price"));
 		String remark = request.getParameter("remark");
+		String isFinal = request.getParameter("isFinal");//判断是否最终发货
 		logisticsService.sendClothesSubmit(orderId, taskId, price, name, time,
-				number, remark);
+				number, remark, isFinal);
 		return "forward:/logistics/sendClothesList.do";
 	}
 

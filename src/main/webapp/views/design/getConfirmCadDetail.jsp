@@ -38,7 +38,7 @@
 
 			<form action="${ctx }/design/confirmCadSubmit.do" method="post"
 				onsubmit="return check()" enctype="multipart/form-data">
-				<table class="table table-striped table-bordered table-hover">
+				<table class="table table-striped table-bordered table-hover detail">
 					<tr>
 						<td>选择版型文件</td>
 						<td colspan="3"><a style="color:red;">*</a><input name="CADFile" id="CADFile"
@@ -82,7 +82,6 @@
 				alert("版型格式不对，请上传jpg或png格式的图片！");
 				return false;
 			}
-
 	}
 </script>
 

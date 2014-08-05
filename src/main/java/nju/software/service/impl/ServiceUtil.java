@@ -171,10 +171,9 @@ public class ServiceUtil {
 		
 		model.put("accessoryCosts", accessoryCosts);
 		
-		// 发货记录
-		List<DeliveryRecord> deliveryRecord = deliveryRecordDAO
-				.findByOrderId(orderId);
-		model.put("deliveryRecord", deliveryRecord);
+//		// 样衣发货记录
+//		List<DeliveryRecord> deliveryRecord = deliveryRecordDAO.findSampleRecordByOrderId(orderId);
+//		model.put("deliveryRecord", deliveryRecord);
 		
 		return model;
 	}
