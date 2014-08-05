@@ -71,15 +71,10 @@
 							class="btn btn-primary btn-rounded" ></td>
 					</tr>
 				    </table>
->>>>>>> 56d8648871a73daae8b1b027afeb33b8cdb68590
 			       </form>
 			       <div class="action">
 						<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=1"
-<<<<<<< HEAD
 							onclick="return checkcad()"  
-=======
-							onclick="return confirm('确认加工完成？')"
->>>>>>> 7bb3a39db10bf6a32d6e758909678ccfa34cf73b
 							class="btn btn-primary">加工完成</a> 
 					</div>
 							<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0" 
