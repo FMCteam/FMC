@@ -17,6 +17,7 @@ import nju.software.service.EmployeeService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.impl.JbpmTest;
+import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 
@@ -261,12 +262,16 @@ public class DesignController {
 		return "/design/getUploadDesignDetail";
 	}
 
+	//录入版型数据
 	@RequestMapping(value = "/design/uploadDesignSubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String uploadDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
+		String cadSide = request.getParameter("cadSide");//制版人
+		Timestamp completeTime = this.getTime(request.getParameter("completeTime"));//制版完成时间
+		
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
@@ -275,8 +280,8 @@ public class DesignController {
 		FileOperateUtil.Upload(request, url, null, fileid);
  		url = url + "/" + filename;
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
-		designService.uploadDesignSubmit(Integer.parseInt(orderId),
-				Long.parseLong(taskId), url, uploadTime);
+		designService.EntryCadData(Integer.parseInt(orderId),
+				Long.parseLong(taskId), url, uploadTime, cadSide, completeTime);
  		Map<String, Object> orderInfo = designService
 				.getUploadDesignDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
@@ -627,6 +632,12 @@ public class DesignController {
 				Long.parseLong(taskId), url, uploadTime);
 		return "forward:/design/getConfirmCadList.do";
 	}
+	
+	private Timestamp getTime(String time) {
+		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
+		return new Timestamp(outDate.getTime());
+	}
+	
 	@Autowired
 	private DesignService designService;
 	@Autowired

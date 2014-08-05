@@ -78,7 +78,7 @@
 			}else if(s_profit != ""){
 				var profit = parseFloat(s_profit);
 				if(!(isNaN(inner_price)||isNaN(profit))){
-					$("input[name='outer_price']").val(inner_price+profit);
+					$("input[name='outer_price']").val((inner_price+profit).toFixed(2));
 				}
 			}
 		}

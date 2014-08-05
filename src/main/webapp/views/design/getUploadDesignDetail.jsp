@@ -32,6 +32,32 @@
 					<%@include file="/views/common/cad.jsp"%>
 					<form action="${ctx}/design/uploadDesignSubmit.do" method="post"
 				          onsubmit="return check()" enctype="multipart/form-data">
+				    	<table class="table table-striped table-bordered table-hover detail">
+							<tr>
+								<td class="title"><span style="color:red">*</span>版型文件</td>
+								<td>
+									<a style="color: red;">*</a>
+									<input name="CADFile" id="CADFile" type="file" required="required"/> 
+									<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
+									<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
+								</td>
+								<td rowspan="3"><input type="submit" value="录入版型数据"
+									class="btn btn-primary btn-rounded">
+								</td>
+							</tr>
+							<tr>
+								<td class="title"><span style="color:red">*</span>制版人</td>
+								<td>
+									<input name="cadSide" id="cad_side" type="text" required="required"/> 
+								</td>
+							</tr>
+							<tr>
+								<td class="title"><span style="color:red">*</span>制版完成时间</td>
+								<td>
+									<input name="completeTime" id="complete_time" type="date" required="required"/> 
+								</td>
+							</tr>
+				    	</table>
 				    <table class="table table-striped table-bordered table-hover detail">
 					<tr>
 						<td>选择版型文件</td>
@@ -45,16 +71,20 @@
 							class="btn btn-primary btn-rounded" ></td>
 					</tr>
 				    </table>
+>>>>>>> 56d8648871a73daae8b1b027afeb33b8cdb68590
 			       </form>
 			       <div class="action">
 						<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=1"
+<<<<<<< HEAD
 							onclick="return checkcad()"  
+=======
+							onclick="return confirm('确认加工完成？')"
+>>>>>>> 7bb3a39db10bf6a32d6e758909678ccfa34cf73b
 							class="btn btn-primary">加工完成</a> 
 					</div>
 							<a href="${ctx}/design/produceSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0" 
 							onclick="return confirm('确认加工失败？')"
 							class="btn btn-danger" style="color:white; ">加工失败</a>
-
 				   </div>
 
 				<div class="tab-pane" id="produce">
@@ -88,7 +118,7 @@
 		var CADFilestr = CADFile.substr(CADFile.indexOf(".")).toLowerCase();		
 		if(CADFile.length != 0){
 			if(CADFilestr == ".jpg" || CADFilestr == ".png"){	
-				if(confirm('确认上传版型文件？')){
+				if(confirm('确认录入版型数据？')){
 					return true;
 				}else{
 					return false;
@@ -128,4 +158,3 @@
 <script type="text/javascript" src="${ctx}/js/order/add_produce.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <%@include file="/common/footer.jsp"%>
->>>>>>> e5b7ef4d6e22710b3f2f489303969cae68bded43

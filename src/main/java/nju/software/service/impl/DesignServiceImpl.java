@@ -1,36 +1,21 @@
 package nju.software.service.impl;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.net.ntp.TimeStamp;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CraftDAO;
-import nju.software.dao.impl.FabricDAO;
-import nju.software.dao.impl.LogisticsDAO;
+import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.QuoteDAO;
-import nju.software.dao.impl.DesignCadDAO;
-import nju.software.dataobject.Accessory;
-import nju.software.dataobject.Account;
 import nju.software.dataobject.Craft;
-import nju.software.dataobject.Fabric;
-import nju.software.dataobject.Logistics;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
-import nju.software.dataobject.DesignCad;
-import nju.software.model.OrderInfo;
 import nju.software.service.DesignService;
 import nju.software.util.JbpmAPIUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("designServiceImpl")
 public class DesignServiceImpl implements DesignService {
@@ -202,6 +187,28 @@ public class DesignServiceImpl implements DesignService {
 //			e.printStackTrace();
 //			return false;
 //		}
+	}
+	
+	@Override
+	public void EntryCadData(int orderId, long taskId, String url,
+			Timestamp uploadTime, String cadSide, Timestamp completeTime) {
+		// TODO Auto-generated method stub
+		DesignCad designCad = null;
+		List<DesignCad> designCadList = designCadDAO.findByOrderId(orderId);
+		if (designCadList.isEmpty()) {
+			designCad = new DesignCad();
+			designCad.setOrderId(orderId);
+			designCad.setCadVersion((short) 1);
+		} else {
+			designCad = designCadList.get(0);
+			short newVersion = (short) (designCad.getCadVersion() + 1);
+			designCad.setCadVersion(newVersion);
+		}
+		designCad.setCadUrl(url);
+		designCad.setUploadTime(uploadTime);
+		designCad.setCadSide(cadSide);
+		designCad.setCompleteTime(completeTime);
+		designCadDAO.attachDirty(designCad);
 	}
 //===========================样衣生产提交========================================
 	@Override
@@ -405,7 +412,7 @@ public class DesignServiceImpl implements DesignService {
 	}
 	
 	@Override
-	public void getTypeSettingSliceSubmit(int orderId, String cadding_side,
+	public void getTypeSettingSliceSubmit(int orderId, String cad_side,
 			long taskId) {
 		DesignCad designCad = null;
 		List<DesignCad> designCadList = designCadDAO.findByOrderId(orderId);
@@ -413,10 +420,10 @@ public class DesignServiceImpl implements DesignService {
 			designCad = new DesignCad();
 			designCad.setOrderId(orderId);
 			designCad.setCadVersion((short) 1);
-			designCad.setCaddingSide(cadding_side);
+			designCad.setCadSide(cad_side);
 		} else {
 			designCad = designCadList.get(0);
-			designCad.setCaddingSide(cadding_side);
+			designCad.setCadSide(cad_side);
  		}
  
 		designCadDAO.attachDirty(designCad);
@@ -510,9 +517,4 @@ public class DesignServiceImpl implements DesignService {
 	private CraftDAO craftDAO;
 	@Autowired
 	private OrderDAO orderDAO;
-	
-
-
-
-
 }

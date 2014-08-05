@@ -91,7 +91,9 @@
 							</tr>
 						</c:forEach>
 					</table>
-				    
+				    <a
+					href="${ctx}/finance/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
+					class="btn btn-primary btn-rounded" target="_blank">打印样衣单</a><br>
 				    <a href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
 							style="margin-left:0px"
 							class="btn btn-danger btn-rounded" onclick="return confirm('确认采购失败？')">

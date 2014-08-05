@@ -77,14 +77,15 @@
 <!-- 
  -->		
 		    <span id="pay">
-		    ${orderInfo.quote.singleCost*orderInfo.order.askAmount}
+		    ${orderInfo.quote.singleCost}
 		    </span>
 		</td>
 		<td>
 <!-- 
  -->
              <span id="pay2">
-            ${orderInfo.quote.singleCost*orderInfo.order.askAmount}
+<!--             ${orderInfo.quote.singleCost*orderInfo.order.askAmount} -->
+		    ${orderInfo.quote.singleCost}
             </span>		
 		</td>
 		<td>${orderInfo.quote.profitPerPiece}</td>

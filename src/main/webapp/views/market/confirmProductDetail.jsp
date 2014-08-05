@@ -53,8 +53,8 @@
 					<tr>
 						<td><input name="discount" type="text" value="0" /><input name="sum" type="hidden" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }"/></td>
 						<td><input name="totalmoney" type="text" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }" readonly="readonly" /></td>
-						<td><input name="contractFile" type="file" value="选择合同文件" required="required"/></td>
-						<td><input name="confirmDepositFile" type="file" value="选择定金文件" required="required"/></td>
+						<td><a style="color: red;">*</a><input name="contractFile" type="file" value="选择合同文件" required="required"/></td>
+						<td><a style="color: red;">*</a><input name="confirmDepositFile" type="file" value="选择定金文件" required="required"/></td>
 					</tr>
 				</table>
 				</div>

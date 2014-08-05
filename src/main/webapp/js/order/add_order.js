@@ -71,6 +71,7 @@
 
 		$("input[name='is_haoduoyi']").change(function(){
 			if($('input:radio[name="is_haoduoyi"]:checked').val()=="1"){
+				$("input[name='order_source']").val("");
 				$("input[name='order_source']").attr("disabled","disabled");
  			}else{
 				$("input[name='order_source']").removeAttr("disabled");

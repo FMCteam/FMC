@@ -33,9 +33,9 @@
 								 -->
 								<td class="span2 title"  ><span style="color:red ;font-weight:bold">请选择是否为好多衣客户</span></td>
 								<td class="span2 title" colspan="2">接单时间<span class="required">*</span></td>
-								<td class="span2 title">订单来源<span class="required">*</span></td>
+								<td class="span2 title" >订单来源<span class="required">*</span></td>
 								<td class="span2 title" >接单业务员</td>
-								<td class="span2 title">翻单</td>
+								<td class="span2 title"style="color:red;">翻单</td>
 							</tr>
 							
 							<tr>
@@ -87,8 +87,8 @@
 								<td><input type="text" class="span12" name="clothes_type"
 									required="required" /></td>	
 								<td colspan="2"><input type="radio" name="style_sex"
-									checked="checked" value="男" required="required" /> <span>男</span> <input
-									type="radio" name="style_sex" value="女" /> <span>女</span> <input
+									 value="男" required="required" /> <span>男</span> <input
+									type="radio" name="style_sex" value="女" checked="checked" /> <span>女</span> <input
 									type="radio" name="style_sex" value="儿童" /> <span>儿童</span></td>
 								<td colspan="2"><input type="radio" name="style_season"
 									checked="checked" value="春夏" required="required" /> <span>春夏</span> <input
@@ -125,7 +125,7 @@
 									class="span2" name="other_other_requirements" placeholder="其他" /></td>
 							</tr>
 							<tr>
-								<td class="title">参考链接</td>
+								<td class="title"><a style="color: red;">*</a>参考链接</td>
 								<td colspan="5"><input class="span12" type="url" name="reference_url" required="required" /></td>
 							</tr>
 						</table>
@@ -202,7 +202,7 @@
 							</tr>
 							<tr>
 								<td class="title" rowspan="3">生产样衣</td>
-								<td class="title">制作样衣</td>
+								<td class="title" style="color:red;">制作样衣</td>
 								<td class="title">邮寄人<span class="required">*</span></td>
 								<td class="title">手机<span class="required">*</span></td>
 								<td class="title">邮寄地址<span class="required">*</span></td>

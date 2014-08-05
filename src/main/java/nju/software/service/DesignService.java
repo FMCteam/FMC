@@ -98,4 +98,7 @@ public interface DesignService {
 
 	public boolean produceSampleSubmit(long taskId, boolean result, String orderId);
 
+	public void EntryCadData(int orderId, long taskId, String url,
+			Timestamp uploadTime, String cadSide, Timestamp completeTime);
+
 }

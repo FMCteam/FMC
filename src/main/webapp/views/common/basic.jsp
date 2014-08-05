@@ -2,11 +2,11 @@
 <table class="table table-striped table-bordered detail">
 
 	<tr>
-		<td class="title" rowspan="2">业务信息</td>
+		<td class="title" rowspan="2" style="width: 8%;">业务信息</td>
 		<td class="title">业务编号</td>
 		<td class="title" colspan="2">接单时间</td>
 		<td class="title">接单业务员</td>
-		<td class="title">订单来源</td>
+		<td class="title" style="color:red;">订单来源</td>
 		<td class="title">翻单</td>
 	</tr>
 	<tr>
@@ -57,7 +57,7 @@
 	
 	<tr>
 		<td class="title">参考链接</td>
-		<td colspan="5"><a href="${orderInfo.order.referenceUrl}"  target="_blank">${orderInfo.order.referenceUrl}</a></td>
+		<td colspan="5" style="word-wrap:break-word;word-break:break-all;"><a href="${orderInfo.order.referenceUrl}"  target="_blank">${orderInfo.order.referenceUrl}</a></td>
 	</tr>
 	<tr>
 		<td class="title" rowspan="2">专员信息</td>

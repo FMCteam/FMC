@@ -105,13 +105,13 @@
 						<table class="table table-striped table-bordered table-hover detail">
 							<c:if test="${empty orderInfo.deliveryRecord}">
 								<tr>
-									<td class="title" style="width:22%">发货记录</td>
+									<td class="title" style="width:22%;background: red;">发货记录</td>
 									<td>无</td>
 								</tr>
 							</c:if>
 							<c:if test="${!empty orderInfo.deliveryRecord}">
 								<tr>
-									<td class="title" rowspan="${fn:length(orderInfo.deliveryRecord) + 1}">发货记录</td>
+									<td class="title" rowspan="${fn:length(orderInfo.deliveryRecord) + 1}" style="width:18%;background: red;">发货记录</td>
 									<td class="title">快递名称</td>
 									<td class="title">快递单号</td>
 									<td class="title">快递价格</td>
