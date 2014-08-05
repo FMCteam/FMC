@@ -414,7 +414,35 @@ public class BuyController {
 		buyService.confirmPurchaseSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/confirmPurchaseList.do";
 	}
+	
+	public String purchaseSampleMaterialSubmit1(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		String taskId = request.getParameter("taskId");
+		String processId = request.getParameter("processId");
+		boolean result = request.getParameter("result").equals("1");
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");		 
+ 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+				.getKsession().getProcessInstance(Long.parseLong(processId));
+		boolean needCraft =  (boolean) process.getVariable("needCraft");
+		
+		System.out.println("need craft 是这个值："+needCraft);
+//		String needCraft = 
+//				(String)jbpmAPIUtil.getVariable(
+//				jbpmAPIUtil.getTask(account.getAccountId()+"", long_taskId),
+//				DesignServiceImpl.RESULT_NEED_CRAFT);
+//		boolean needcraft = false;
+//		if(needCraft!=null){			
+//			 needcraft = (needCraft.equals("true"))?true:false;
+//		}
+//		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
+		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft,orderId);
 
+		return "forward:/buy/purchaseSampleMaterialList.do";
+	}
+	
+	
 	// ========================生产采购===========================
 	@RequestMapping(value = "/buy/purchaseMaterialList.do")
 	@Transactional(rollbackFor = Exception.class)

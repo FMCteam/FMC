@@ -304,6 +304,26 @@ public class BuyServiceImpl implements BuyService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean confirmPurchaseSubmit(long taskId, boolean result,String orderId) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(Integer.parseInt(orderId));
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PURCHASE, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			if(result==false){//如果result的的值为false，即为大货面料采购失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	// ===========================大货原料采购=================================
 	@Override

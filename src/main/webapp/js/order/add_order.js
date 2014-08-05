@@ -260,7 +260,7 @@ function verify(){
 		return false;
 	}
 	
-	var is_need_sample = jQuery("input[name='is_need_sample_clothes']").val();
+	var is_need_sample = jQuery("input[name='is_need_sample_clothes']:checked").val();
 	//如果需要样衣
 	if(is_need_sample == 1){
 		var sample_amount = jQuery("input[name='sample_amount']").val();
@@ -353,6 +353,18 @@ function verify(){
 	return true;
 }
 
+function change(){
+	
+	var is_need_sample = jQuery("input[name='is_need_sample_clothes']:checked").val();
+	if(is_need_sample == 0){
+		$("#sampletable *").attr("disabled","disabled");
+		//$("#sample_clothes_picture").attr("disabled","disabled");
+	}else{
+		$("#sampletable *").removeAttr("disabled");
+		//$("#sample_clothes_picture").removeAttr("disabled");
+	}
+}
+
 function init(){
 //	$("#fabric_name").val("name1,name2,name3");
 //	$("#fabric_amount").val("11,12,13");
@@ -443,4 +455,5 @@ function init(){
 		$("input[name='sample_clothes_address']").attr("disabled","disabled");
 		$("input[name='sample_clothes_remark']").attr("disabled","disabled");
 	}*/
+	
 }

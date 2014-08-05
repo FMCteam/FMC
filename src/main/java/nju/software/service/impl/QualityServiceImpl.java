@@ -110,7 +110,7 @@ public class QualityServiceImpl implements QualityService {
 		// 本次质检总数
 		int thisCheckTotalAmount = thisCheckQualifiedAmount
 				+ thisCheckUnqualifiedAmount;
-
+		System.out.println(thisCheckQualifiedAmount+"-----"+thisCheckUnqualifiedAmount+"---------"+historyQualifiedAmount+"--------"+totalProduceAmount);
 		// 如果本次质检总数  + 历史质检合格总数 > 生产总数，则返回false
 		if ((thisCheckTotalAmount + historyQualifiedAmount) > totalProduceAmount) {
 			return false;

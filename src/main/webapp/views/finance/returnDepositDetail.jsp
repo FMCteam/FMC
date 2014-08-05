@@ -45,7 +45,7 @@
 							type="hidden" name="orderId" value="${orderInfo.order.orderId}" />
 						<input type="hidden" name="taskId" value="${orderInfo.taskId}" /><input
 							type="hidden" name="result" value="1" />
-                         <input name="orderInfoOrderDiscount" type="hidden" value="${orderInfo.order.discount}"/>                                                        />
+                         <input name="orderInfoOrderDiscount" type="hidden" value="${orderInfo.order.discount}"/>                                                        
                          <input name="orderInfoOrderSampleAmount" type="hidden" value="${orderInfo.order.sampleAmount}"/>
                          <input name="orderInfoSamplePrice" type="hidden" value="${orderInfo.samplePrice}"/>
                          
@@ -99,8 +99,8 @@
 							</tr>
 							<tr>
 								<td class="title" rowspan="5">汇款信息</td>
-								<td class="title">汇款人<span style="color: red">*</span></td>
-								<td class="title">汇款卡号</td>
+								<td class="title">收款人<span style="color: red">*</span></td>
+								<td class="title">收款卡号<span style="color: red">*</span></td>
 								<td class="title">汇款银行<span style="color: red">*</span></td>
 
 							</tr>
@@ -108,8 +108,8 @@
 								<td><input type="text" required="required" name="money_name" />
 									</td>
 								<td>
-								    <input type="text"  name="money_number" />
-									</td>
+									<input type="text"  name="money_number" required="required"/>
+							   </td>
 								<td>
 									<input type="text" required="required" name="money_bank" />
 									</td>
@@ -117,8 +117,8 @@
 							</tr>
 							<tr>
 								<td class="title">汇款金额</td>
-								<td class="title">收款账号<span style="color: red">*</span></td>
-								<td class="title">收款时间<span style="color: red">*</span></td>
+								<td class="title">汇款账号<span style="color: red">*</span></td>
+								<td class="title">汇款时间<span style="color: red">*</span></td>
 
 							</tr>
 							<tr>
@@ -143,27 +143,25 @@
 									class="span12" /></td>
 							</tr>
 		                    <tr>
-		                        <td class="title">收款信息</td>
-		                        <td class="title">收款图片</td>
+		                        <td class="title">汇款信息</td>
+		                        <td class="title">汇款图片</td>
 		                        <td colspan="3"><c:if test="${orderInfo.order.confirmDepositFile!=null}">
 				                <img src="${ctx}/common/getPic.do?type=confirmDepositFile&orderId=${orderInfo.order.orderId}"
-					                 style="max-height: 300px;" alt="收款图片"></img>
+					                 style="max-height: 300px;" alt="汇款图片"></img>
 			                    </c:if></td>
 	                        </tr>
 						</table>
-						<a
-					href="${ctx}/finance/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
-					class="btn btn-primary btn-rounded" target="_blank">打印补货单</a>
+						<input type="hidden" name="orderId"  value="${orderInfo.order.orderId}"/>
 						<button class="btn btn-primary" onclick="history.back();">返回</button>
-						<div class="action">
+						<div class="action" style="float: right;">
 							<input type="submit" id="financeSubmit" hidden="hidden" /> <a
 								id="financeButton" class="btn btn-primary btn-rounded"><i
-								class="icon-ok icon-white"></i>已确认收款</a> <a
-								class="btn btn-danger btn-rounded"
+								class="icon-ok icon-white"></i>已确认汇款</a> <%-- <a
+								class="btn btn-primary  btn-rounded"
 								href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
 								onclick="return confirmFinanceSubmit()"
 								style="color: white; margin-left: 20px"><i
-								class="icon-remove icon-white"></i>未收到汇款</a>
+								class="icon-ok icon-white"></i>已确认汇款</a> --%>
 						</div>
 					</form>
 				</div>

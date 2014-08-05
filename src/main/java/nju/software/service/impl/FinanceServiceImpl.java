@@ -337,12 +337,26 @@ public class FinanceServiceImpl implements FinanceService {
 	@Override
 	public void returnDepositSubmit(String actorId, long taskId) {
 		Map<String, Object> data = new HashMap<>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void returnDepositSubmit(String actorId, long taskId,Integer orderId) {
+		Order order = orderDAO.findById(orderId);
+		Map<String, Object> data = new HashMap<>();
  		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			order.setOrderState("1");
+			orderDAO.attachDirty(order);
  		} catch (InterruptedException e) {
  			e.printStackTrace();
  		}
-		
+ 		
 	}
 	
 	@Override

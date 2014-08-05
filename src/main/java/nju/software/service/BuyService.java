@@ -45,6 +45,8 @@ public interface BuyService {
 	public Map<String, Object> getConfirmPurchaseDetail(Integer orderId);
 
 	public boolean confirmPurchaseSubmit(long taskId, boolean result);
+
+	public boolean confirmPurchaseSubmit(long taskId, boolean result,String orderId);
 	
 	//===========================大货原料采购=================================
 	public List<Map<String,Object>> getPurchaseMaterialList();

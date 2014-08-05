@@ -182,7 +182,7 @@
 								<td class="span3 title">快递单号</td>
 							</tr>
 							<tr>
-								<td><input type="radio" name="has_posted_sample_clothes"
+								<td><input type="radio" name="has_posted_sample_clothes"  
 									checked="checked" value="1" required="required" /> 是 <input type="radio"
 									name="has_posted_sample_clothes" value="0" /> 否</td>
 								<td><input class="span12" type="date"
@@ -209,8 +209,8 @@
 							</tr>
 							<tr>
 								<td><input type="radio" name="is_need_sample_clothes"
-									checked="checked" value="1" required="required" /> 是 <input type="radio"
-									name="is_need_sample_clothes" value="0" /> 否</td>
+									checked="checked" value="1" required="required" onchange = "change()"/> 是 <input type="radio"
+									name="is_need_sample_clothes" value="0"  onchange ="change()"/> 否</td>
 								<td><input class="span12" type="text"
 									name="sample_clothes_name" required="required" /></td>
 								<td><input class="span12" type="text"
@@ -303,7 +303,7 @@
 									name="sample_produce_xl" /> <input id="sample_produce_xxl"
 									type="hidden" name="sample_produce_xxl" /></td>
 								<td colspan="8" class="innertable">
-									<table class="span12 table sample_produce_table">
+									<table class="span12 table sample_produce_table" id="sampletable">
 										<tr>
 											<td class="span1 title">颜色</td>
 											<td class="span1 title">XS</td>
