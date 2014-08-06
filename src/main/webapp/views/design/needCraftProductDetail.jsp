@@ -87,7 +87,6 @@
 				 
  				</div>				
 			</div>
-			<input type="text" value="${orderInfo.craft.craftFileUrl}"/>
 		</div>
 		<!--row-fluid-->
 

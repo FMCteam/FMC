@@ -333,6 +333,30 @@ public class FinanceServiceImpl implements FinanceService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean confirmFinalPaymentSubmit(String actorId, long taskId,
+			boolean result, Money money,Integer orderId) {
+		// TODO Auto-generated method stub
+		if (result) {
+			moneyDAO.save(money);
+		}
+		Order order = orderDAO.findById(orderId);
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_MONEY, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			if(result==false){//如果result的的值为false，即为尾款收取失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	@Override
 	public void returnDepositSubmit(String actorId, long taskId) {

@@ -31,6 +31,7 @@ public interface FinanceService {
 	public Map<String,Object> getConfirmFinalPaymentDetail(String actorId,Integer orderId);
 	
 	public boolean confirmFinalPaymentSubmit(String actorId,long taskId,boolean result, Money money);
+	public boolean confirmFinalPaymentSubmit(String actorId, long taskId,boolean result, Money money,Integer orderId);
 	
 	public  List<Map<String, Object>> getProcessState(Integer orderId);
 	public  ArrayList<String> getProcessStateName(Integer orderId);

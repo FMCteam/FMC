@@ -796,6 +796,27 @@ public class MarketServiceImpl implements MarketService {
 		
 	}
 	@Override
+	public boolean getPushRestOrderSubmit(String actorId, long taskId,
+			boolean result,String orderId_string) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(Integer.parseInt(orderId_string));
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_PUSH_RESTMONEY, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			if(result==false){//如果result的的值为false，即为催尾款失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	@Override
 	public List<Map<String, Object>> getMergeQuoteList(Integer accountId) {
 		// TODO Auto-generated method stub
 		List<Map<String, Object>> temp = service.getOrderList(accountId + "",
