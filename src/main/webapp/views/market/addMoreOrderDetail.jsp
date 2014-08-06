@@ -340,7 +340,7 @@
 							</tr>
 							<tr>
 								<td class="span2" colspan="2"><input class="span6"
-									type="number" name="ask_amount" required="required" /></td>
+									type="number" name="ask_amount" required="required" readonly="readonly"/></td>
 								<td class="span2" colspan="2"><input class="span8"
 									type="date" name="ask_deliver_date" required="required"/></td>
 								<td class="span2" colspan="2"><input class="span4"
@@ -372,12 +372,12 @@
 										</tr>
 										<tr class="addrow">
 											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
 											<td><a>添加</a></td>
 										</tr>
 									</table>

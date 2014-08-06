@@ -364,7 +364,7 @@ public class FinanceController {
 
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
 		financeService
-				.confirmFinalPaymentSubmit(actorId, taskId, result, money);
+				.confirmFinalPaymentSubmit(actorId, taskId, result, money,orderId);
 		return "forward:/finance/confirmFinalPaymentList.do";
 	}
 

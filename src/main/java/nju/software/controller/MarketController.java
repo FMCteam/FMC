@@ -1979,7 +1979,7 @@ public class MarketController {
 			String actorId = account.getUserId()+"";
 						
 			
-			marketService.getPushRestOrderSubmit(actorId, taskId, result);
+			marketService.getPushRestOrderSubmit(actorId, taskId, result,orderId_string);
 			return "forward:/market/getPushRestOrderList.do";
 		}
 				

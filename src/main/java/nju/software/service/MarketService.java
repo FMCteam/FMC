@@ -207,5 +207,8 @@ public interface MarketService {
 
 	public boolean getPushRestOrderSubmit(String actorId, long taskId,
 			boolean result);
+	
+	public boolean getPushRestOrderSubmit(String actorId, long taskId,
+			boolean result,String orderId_string);
 
 }
