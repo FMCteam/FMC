@@ -54,7 +54,7 @@
 							<tr>
 								<td class="title"><span style="color:red">*</span>制版完成时间</td>
 								<td>
-									<input name="completeTime" id="complete_time" type="date" required="required"/> 
+									<input name="completeTime" id="input_day"  type="date"  required="required" /> 
 								</td>
 							</tr>
 				    	</table>
@@ -139,4 +139,5 @@
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
 <script type="text/javascript" src="${ctx}/js/order/add_produce.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <%@include file="/common/footer.jsp"%>
