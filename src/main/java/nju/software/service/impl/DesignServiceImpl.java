@@ -374,12 +374,16 @@ public class DesignServiceImpl implements DesignService {
  
 	}
 	@Override
-	public void needCraftSampleSubmit(int orderId, long taskId) {
+	public void needCraftSampleSubmit(int orderId, long taskId, String craftLeader, Timestamp completeTime) {
 		// TODO Auto-generated method stub
+		Craft craft = craftDAO.findByOrderId(orderId).get(0);
+		craft.setCraftLeader(craftLeader);
+		craft.setCompleteTime(completeTime);
+		craftDAO.merge(craft);
+		
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
-			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

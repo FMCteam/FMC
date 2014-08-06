@@ -130,7 +130,13 @@
 						<button class="btn btn-primary" onclick="history.back();">返回</button>
 						<div class="action" style="float:right">
 							<input id="save_this_send" class="btn btn-primary" type="submit" value="保存此次发货" style="background-color:#1E90FF" />
+							<!-- 
 							<input id="complete_final_send" class="btn btn-primary" type="submit" value="完成最终发货" />
+							-->
+							
+							<a href="${ctx}/logistics/sendSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&isFinal=true"
+							   onclick="return confirmSendSampleSubmit();"
+							   class="btn btn-primary">完成最终发货</a>
 							
 							<!-- 隐藏标签，判断是否是最终的发货 -->
 							<input id="is_final" type="hidden" name="isFinal" value="false" />

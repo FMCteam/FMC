@@ -38,23 +38,23 @@
 			<div class="tab-pane active" id="craft">
 						<table class="table table-striped table-bordered table-hover detail">
 						    <tr>
-								<td>客户工艺要求：</td>
+								<td class="title">客户工艺要求：</td>
 								<td colspan="12">
 								 ${orderInfo.designCadTech}
 								</td>
 							</tr>	
 							<tr>
-								<td >印花费（元/件）：
+								<td class="title">印花费（元/件）：
 								</td>
-								<td >水洗吊染费（元/件）：
+								<td class="title">水洗吊染费（元/件）：
 								</td>
-								<td  >激光费（元/件）：
+								<td class="title">激光费（元/件）：
 								</td>
-								<td >刺绣费（元/件）：
+								<td class="title">刺绣费（元/件）：
 								</td>
-								<td  >压皱费（元/件）：
+								<td class="title">压皱费（元/件）：
 								</td>
-								<td >开版费用（元/件）：
+								<td class="title">开版费用（元/件）：
 								</td>
 							</tr>
 							<tr>

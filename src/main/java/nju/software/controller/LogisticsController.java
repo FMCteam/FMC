@@ -129,14 +129,20 @@ public class LogisticsController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId_string = request.getParameter("orderId");
 		Integer orderId = Integer.parseInt(orderId_string);
-		
 		String taskId_string = request.getParameter("taskId");
 		long taskId = Long.parseLong(taskId_string);
-		String name = request.getParameter("name");//快递名称
-		String number = request.getParameter("number");//快递单号
-		String price = request.getParameter("price");//快递价格
-		String time = request.getParameter("time");//邮寄时间
+		
+		String name = "" ;//快递名称
+		String number = "";//快递单号
+		String price = "";//快递价格
+		String time = "";//邮寄时间
 		String isFinal = request.getParameter("isFinal");//是否是最终发货
+		if(isFinal.equals("false")){
+			name = request.getParameter("name");//快递名称
+			number = request.getParameter("number");//快递单号
+			price = request.getParameter("price");//快递价格
+			time = request.getParameter("time");//邮寄时间
+		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("orderId", orderId);
