@@ -42,7 +42,13 @@
 							<td class="span2 title">操作</td>
 						</tr>
 						<tr class="addrow">
-							<td><input type="text" class="color" style="width:80px"/></td>
+							<td>
+								<select class="color" style="margin:0px;width:80px">
+									<c:forEach var="produce" items="${orderInfo.produceList}">
+										<option value="${produce.color}">${produce.color}</option>
+									</c:forEach>
+								</select>
+							</td>
 							<td><select class="size" style="margin:0px;width:80px">
 									<option value="XS">XS</option>
 									<option value="S">S</option>

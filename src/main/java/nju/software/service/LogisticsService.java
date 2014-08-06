@@ -6,7 +6,6 @@ import java.util.Map;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
-import nju.software.model.OrderInfo;
 
 public interface LogisticsService {
 
@@ -63,7 +62,7 @@ public interface LogisticsService {
 	public boolean mobileSendClothesSubmit(int orderId);
 
 	public void sendClothesSubmit(Integer orderId, long taskId, float price,
-			String name, String time, String number, String remark);
+			String name, String time, String number, String remark, String isFinal);
 
 	public List<Package> getPackageListByOrderId(int orderId);
 

@@ -87,6 +87,9 @@
 				 
  				</div>				
 			</div>
+
+			<input type="hidden" value="${orderInfo.craft.craftFileUrl}"/>
+
 		</div>
 		<!--row-fluid-->
 

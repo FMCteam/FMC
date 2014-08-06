@@ -14,7 +14,7 @@ function table_addrow_onclick(table_name, col_name, col_sum) {
 
 	var content = new Array();
 	
-	content[0] = $("table." + table_name + " tr.addrow input.color").val();
+	content[0] = $("table." + table_name + " tr.addrow select.color").val();
 	content[1] = $("table." + table_name + " tr.addrow select.size").val();
 	content[2] = $("table." + table_name + " tr.addrow input.number").val();
 	if(content[0]==""||content[2]==""||isNaN(content[2])||content[2]<=0){

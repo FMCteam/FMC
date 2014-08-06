@@ -8,10 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jbpm.task.query.TaskSummary;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.DeliveryRecordDAO;
@@ -20,16 +16,23 @@ import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.PackageDAO;
+import nju.software.dao.impl.PackageDetailDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
-import nju.software.dao.impl.PackageDetailDAO;
 import nju.software.dao.impl.VersionDataDAO;
-import nju.software.dataobject.*;
+import nju.software.dataobject.DeliveryRecord;
+import nju.software.dataobject.Logistics;
+import nju.software.dataobject.Order;
 import nju.software.dataobject.Package;
-import nju.software.model.OrderInfo;
+import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Produce;
 import nju.software.service.LogisticsService;
 import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
+
+import org.jbpm.task.query.TaskSummary;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("logisticsServiceImpl")
 public class LogisticsServiceImpl implements LogisticsService {
@@ -142,8 +145,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public Map<String, Object> getSendSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithQuote(ACTOR_LOGISTICS_MANAGER,
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(ACTOR_LOGISTICS_MANAGER,
 				TASK_SEND_SAMPLE, orderId);
+		// 样衣发货记录
+		List<DeliveryRecord> deliveryRecord = deliveryRecordDAO.findSampleRecordByOrderId(orderId);
+		model.put("deliveryRecord", deliveryRecord);
+		return model;
 	}
 
 	@Override
@@ -225,6 +232,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 		Map<String, Object> model = service.getBasicOrderModel(
 				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE, orderId);
 		List<Package> packages = packageDAO.findByOrderId(orderId);
+		List<Produce> produceList = produceDAO.findProduceByOrderId(orderId);
+		model.put("produceList", produceList);
 		model.put("packages", packages);
 		model.put("packageDetails",
 				packageDetailDAO.findByPackageList(packages));
@@ -371,14 +380,19 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public Map<String, Object> getSendClothesDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String, Object> model=service.getBasicOrderModelWithWareHouse(ACTOR_LOGISTICS_MANAGER,
-				TASK_SEND_CLOTHES, orderId);
-		List<Package>packages=packageDAO.findByOrderId(orderId);
-		if(packages==null){
+		Map<String, Object> model = service.getBasicOrderModelWithWareHouse(
+				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES, orderId);
+		List<Package> packages = packageDAO.findByOrderId(orderId);
+		if (packages == null) {
 			model.put("packageNumber", 0);
-		}else{
+		} else {
 			model.put("packageNumber", packages.size());
-		}	
+		}
+		
+		// 大货发货记录
+		List<DeliveryRecord> deliveryRecord = deliveryRecordDAO.findProductRecordByOrderId(orderId);
+		model.put("sendProductRecord", deliveryRecord);
+		
 		return model;
 	}
 
@@ -439,18 +453,36 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	@Override
 	public void sendClothesSubmit(Integer orderId, long taskId, float price,
-			String name, String time, String number, String remark) {
-		// TODO Auto-generated method stub
+			String name, String time, String number, String remark, String isFinal) {
+		//更新物流信息
 		Logistics logistics = logisticsDAO.findById(orderId);
-		logistics.setProductClothesNumber(number);
-		logistics.setProductClothesRemark(remark);
-		logistics.setProductClothesPrice(price + "");
-		logistics.setProductClothesType(name);
-		logistics.setProductClothesTime(getTime(time));
+		logistics.setProductClothesNumber(number);//快递单号
+		logistics.setProductClothesRemark(remark);//备注
+		logistics.setProductClothesPrice(price + "");//快递价格
+		logistics.setProductClothesType(name);//快递名称
+		logistics.setProductClothesTime(getTime(time));//邮寄时间
 		logisticsDAO.attachDirty(logistics);
+		
+		// 需要记录每次大货发货的信息
+		DeliveryRecord deliveryRecord = new DeliveryRecord();
+		deliveryRecord.setOrderId(orderId);
+		deliveryRecord.setSendType("product");// 发货类型为“大货”
+		deliveryRecord.setRecipientName(logistics.getSampleClothesName());// 收件人姓名
+		deliveryRecord.setRecipientPhone(logistics.getSampleClothesPhone());// 收件人手机
+		deliveryRecord.setRecipientAddr(logistics.getSampleClothesAddress());// 收件人地址
+		deliveryRecord.setExpressName(name);// 快递名称
+		deliveryRecord.setExpressNumber(number);// 快递单号
+		deliveryRecord.setExpressPrice(price + "");// 快递价格
+		deliveryRecord.setSendTime(getTime(time));// 邮寄时间
+		deliveryRecord.setRemark(remark);// 备注
+		deliveryRecordDAO.save(deliveryRecord);
+		
+		//如果不是最终的样衣发货，不执行completeTask方法，直接返回
+		if(isFinal.equals("false")){
+			return;
+		}
+		
 		Map<String, Object> data = new HashMap<String, Object>();
-		
-		
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
 			/*
