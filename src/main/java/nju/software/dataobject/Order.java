@@ -1,10 +1,13 @@
 package nju.software.dataobject;
 
 import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -81,6 +84,14 @@ public class Order implements java.io.Serializable {
 	private String contractFile;
 	private int logisticsState; //物流状态：0,未装包。1，装包未入库，2，入库待扫描，3已扫描待发货。4发货
 	
+	private String samplepurName;//样衣采购负责人
+	private Timestamp samplepurDate;//样衣采购时间
+	private String samplesupplierName;//样衣供应商
+	private String masspurName;//大货原料采购负责人
+	private Timestamp masspurDate;//大货原料采购时间
+	private String masssupplierName;//大货供应商
+	
+	
 	@Column(name = "sampleMoney", nullable = true, precision = 22, scale = 0)
 	public double getSampleMoney() {
 		return sampleMoney;
@@ -107,6 +118,62 @@ public class Order implements java.io.Serializable {
 	public void setTotalMoney(double totalMoney) {
 		this.totalMoney = totalMoney;
 	}
+
+	@Column(name = "samplepur_name")
+	public String getSamplepurName() {
+		return samplepurName;
+	}
+
+	public void setSamplepurName(String samplepurName) {
+		this.samplepurName = samplepurName;
+	}
+
+	@Column(name = "sample_pur_date", length = 19)
+	public Timestamp getSamplepurDate() {
+		return samplepurDate;
+	}
+
+	public void setSamplepurDate(Timestamp samplepurDate) {
+		this.samplepurDate = samplepurDate;
+	}
+
+	@Column(name = "samplesupplier_name")
+	public String getSamplesupplierName() {
+		return samplesupplierName;
+	}
+
+	public void setSamplesupplierName(String samplesupplierName) {
+		this.samplesupplierName = samplesupplierName;
+	}
+
+	@Column(name = "masspur_name")
+	public String getMasspurName() {
+		return masspurName;
+	}
+
+	public void setMasspurName(String masspurName) {
+		this.masspurName = masspurName;
+	}
+
+	@Column(name = "mass_pur_date", length = 19)
+	public Timestamp getMasspurDate() {
+		return masspurDate;
+	}
+
+	public void setMasspurDate(Timestamp masspurDate) {
+		this.masspurDate = masspurDate;
+	}
+
+	@Column(name = "masssupplier_name")
+	public String getMasssupplierName() {
+		return masssupplierName;
+	}
+
+	public void setMasssupplierName(String masssupplierName) {
+		this.masssupplierName = masssupplierName;
+	}
+
+
 
 	//特殊工艺：水洗，激光，压皱。多选，并且不限于这三个预定的工艺。
 	//采用使用“|”符号分隔。比如"shuixi|jiguang|其它",表明使用了水洗和激光的预定工艺，以及添加的“其它”工艺。
@@ -155,6 +222,7 @@ public class Order implements java.io.Serializable {
 	}
 
 	/** full constructor */
+	
 	public Order(Integer customerId, Integer employeeId, String orderState,
 			Timestamp orderTime, String customerName, String customerCompany,
 			String customerCompanyFax, String customerPhone1,
@@ -165,7 +233,10 @@ public class Order implements java.io.Serializable {
 			String referencePicture, Integer askAmount,
 			String askProducePeriod, Timestamp askDeliverDate,
 			String askCodeNumber, Short hasPostedSampleClothes,
-			Short isNeedSampleClothes, String orderSource) {
+			Short isNeedSampleClothes, String orderSource,
+			String samplepurName,Timestamp samplepurDate,
+			String samplesupplierName,String masspurName,
+			Timestamp masspurDate,String masssupplierName) {
 		this.customerId = customerId;
 		this.employeeId = employeeId;
 		this.orderState = orderState;
@@ -191,6 +262,83 @@ public class Order implements java.io.Serializable {
 		this.hasPostedSampleClothes = hasPostedSampleClothes;
 		this.isNeedSampleClothes = isNeedSampleClothes;
 		this.orderSource = orderSource;
+		this.samplepurName = samplepurName;
+		this.samplepurDate = samplepurDate;
+		this.samplesupplierName = samplesupplierName;
+		this.masspurName = masspurName;
+		this.masspurDate = masspurDate;
+		this.masssupplierName = masssupplierName;
+	}
+
+	public Order(String orderProcessStateName, String confirmDepositFile,
+			String confirmFinalPaymentFile, String confirmSampleMoneyFile,
+			Short isHaoDuoYi, Integer orderId, Short reorder,
+			Integer customerId, Integer employeeId, String orderState,
+			Timestamp orderTime, String customerName, String customerCompany,
+			String customerCompanyFax, String customerPhone1,
+			String customerPhone2, String customerCompanyAddress,
+			String styleName, String clothesType, String fabricType,
+			String styleSex, String styleSeason, String specialProcess,
+			String otherRequirements, String referenceUrl,
+			String sampleClothesPicture, String referencePicture,
+			Integer askAmount, Integer sampleAmount, Long processId,
+			String askProducePeriod, Timestamp askDeliverDate,
+			String askCodeNumber, Short hasPostedSampleClothes,
+			Short isNeedSampleClothes, String orderSource,
+			String payAccountInfo, double discount, double totalMoney,
+			double sampleMoney, String contractFile, int logisticsState,
+			String samplepurName, Timestamp samplepurDate,
+			String samplesupplierName, String masspurName,
+			Timestamp masspurDate, String masssupplierName) {
+		super();
+		this.orderProcessStateName = orderProcessStateName;
+		this.confirmDepositFile = confirmDepositFile;
+		this.confirmFinalPaymentFile = confirmFinalPaymentFile;
+		this.confirmSampleMoneyFile = confirmSampleMoneyFile;
+		this.isHaoDuoYi = isHaoDuoYi;
+		this.orderId = orderId;
+		this.reorder = reorder;
+		this.customerId = customerId;
+		this.employeeId = employeeId;
+		this.orderState = orderState;
+		this.orderTime = orderTime;
+		this.customerName = customerName;
+		this.customerCompany = customerCompany;
+		this.customerCompanyFax = customerCompanyFax;
+		this.customerPhone1 = customerPhone1;
+		this.customerPhone2 = customerPhone2;
+		this.customerCompanyAddress = customerCompanyAddress;
+		this.styleName = styleName;
+		this.clothesType = clothesType;
+		this.fabricType = fabricType;
+		this.styleSex = styleSex;
+		this.styleSeason = styleSeason;
+		this.specialProcess = specialProcess;
+		this.otherRequirements = otherRequirements;
+		this.referenceUrl = referenceUrl;
+		this.sampleClothesPicture = sampleClothesPicture;
+		this.referencePicture = referencePicture;
+		this.askAmount = askAmount;
+		this.sampleAmount = sampleAmount;
+		this.processId = processId;
+		this.askProducePeriod = askProducePeriod;
+		this.askDeliverDate = askDeliverDate;
+		this.askCodeNumber = askCodeNumber;
+		this.hasPostedSampleClothes = hasPostedSampleClothes;
+		this.isNeedSampleClothes = isNeedSampleClothes;
+		this.orderSource = orderSource;
+		this.payAccountInfo = payAccountInfo;
+		this.discount = discount;
+		this.totalMoney = totalMoney;
+		this.sampleMoney = sampleMoney;
+		this.contractFile = contractFile;
+		this.logisticsState = logisticsState;
+		this.samplepurName = samplepurName;
+		this.samplepurDate = samplepurDate;
+		this.samplesupplierName = samplesupplierName;
+		this.masspurName = masspurName;
+		this.masspurDate = masspurDate;
+		this.masssupplierName = masssupplierName;
 	}
 
 	// Property accessors

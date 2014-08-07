@@ -3,7 +3,10 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<div class="row-fluid" style="min-height:300px;">
+		<form onSubmit="return confirm('确认采购完成？')" method="post"
+			action="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
+			enctype="multipart/form-data">
+			<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">样衣原料采购</li>
@@ -90,6 +93,17 @@
 								 -->
 							</tr>
 						</c:forEach>
+						<tr>
+							<td rowspan="2">采购相关</td>
+							<td colspan="2">样衣原料采购负责人<span class="required">*</span></td>
+							<td colspan="2">样衣采购时间<span class="required">*</span></td>
+							<td colspan="2">供应商名字<span class="required">*</span></td>
+						</tr>
+						<tr>
+							<td colspan="2"><input class="span12" type="text"  required="required" name="samplepurName"/></td>
+							<td colspan="2"><input class="span12" type="date"  required="required"  id="input_day" name="samplepurDate"/></td>
+							<td colspan="2"><input class="span12" type="text"  required="required"  name="samplesupplierName"/></td>
+						</tr>
 					</table>
 				    
 				    <a href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
@@ -98,10 +112,9 @@
 							<i class="icon-remove icon-white"></i>采购失败</a>
 					
 					<div class="action" style="float:right">
-						<a href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
-							class="btn btn-primary btn-rounded" onclick="return confirm('确认采购完成？')">
-							<i class="icon-ok icon-white"></i>采购完成</a>
-						
+						<button class="btn btn-primary btn-rounded noreapt">
+							<i class="icon-ok icon-white"></i>采购完成
+						</button>
 					</div>
 					<br />
 					<a
@@ -111,6 +124,8 @@
 				</div>
 			</div>
 		</div>
+		</form>
+		
 	</div>
 
 	<div class="footer">
@@ -126,6 +141,7 @@
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<link rel="stylesheet" href="${ctx}/css/order/add_order.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <link rel="stylesheet" href="${ctx}/views/buy/buy.css">

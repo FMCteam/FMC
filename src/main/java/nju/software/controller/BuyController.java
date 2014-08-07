@@ -1,6 +1,8 @@
 package nju.software.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +22,7 @@ import nju.software.service.EmployeeService;
 import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.JbpmTest;
 import nju.software.service.impl.MarketServiceImpl;
+import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 
 import org.jbpm.task.query.TaskSummary;
@@ -333,6 +336,9 @@ public class BuyController {
 		String taskId = request.getParameter("taskId");
 		String processId = request.getParameter("processId");
 		boolean result = request.getParameter("result").equals("1");
+		String samplepurName = request.getParameter("samplepurName");
+		Timestamp samplepurDate = getTime(request.getParameter("samplepurDate")) ;
+		String samplesupplierName = request.getParameter("samplesupplierName");
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");		 
  		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
@@ -350,7 +356,7 @@ public class BuyController {
 //		}
 		
 //		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft,orderId);
+		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft,orderId,samplepurName,samplepurDate,samplesupplierName);
 
 		return "forward:/buy/purchaseSampleMaterialList.do";
 	}
@@ -421,6 +427,9 @@ public class BuyController {
 		String taskId = request.getParameter("taskId");
 		String processId = request.getParameter("processId");
 		boolean result = request.getParameter("result").equals("1");
+		String samplepurName = request.getParameter("samplepurName");
+		Timestamp samplepurDate = getTime(request.getParameter("samplepurDate")) ;
+		String samplesupplierName = request.getParameter("samplesupplierName");
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");		 
  		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
@@ -437,7 +446,7 @@ public class BuyController {
 //			 needcraft = (needCraft.equals("true"))?true:false;
 //		}
 //		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft,orderId);
+		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft,orderId,samplepurName,samplepurDate,samplesupplierName);
 
 		return "forward:/buy/purchaseSampleMaterialList.do";
 	}
@@ -497,10 +506,20 @@ public class BuyController {
 	@Transactional(rollbackFor = Exception.class)
 	public String purchaseMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		String masspurName = request.getParameter("masspurName");
+		Timestamp masspurDate = getTime(request.getParameter("masspurDate")) ;
+		String masssupplierName = request.getParameter("masssupplierName");
 		String taskId = request.getParameter("taskId");
 		Boolean result = request.getParameter("result").equals("1");
-		buyService.purchaseMaterialSubmit(Long.parseLong(taskId), result);
+		buyService.purchaseMaterialSubmit(Long.parseLong(taskId), result,orderId,masspurName,masspurDate,masssupplierName);
 		return "forward:/buy/purchaseMaterialList.do";
+	}
+	
+	public static Timestamp getTime(String time) {
+		if(time.equals("")) return null;
+		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
+		return new Timestamp(outDate.getTime());
 	}
 
 	@Autowired

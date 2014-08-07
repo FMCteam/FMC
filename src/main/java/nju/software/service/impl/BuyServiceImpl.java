@@ -1,6 +1,7 @@
 package nju.software.service.impl;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -237,6 +238,7 @@ public class BuyServiceImpl implements BuyService {
 		data.put(RESULT_PURCHASE, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -247,8 +249,11 @@ public class BuyServiceImpl implements BuyService {
 	
 	@Override
 	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result,
-			boolean needcraft,String orderId) {
+			boolean needcraft,String orderId,String samplepurName,Timestamp samplepurDate,String samplesupplierName) {
 		Order order = orderDAO.findById(Integer.parseInt(orderId));
+		order.setSamplepurName(samplepurName);
+		order.setSamplepurDate(samplepurDate);
+		order.setSamplesupplierName(samplesupplierName);
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PURCHASE, result);
 		data.put(RESULT_NEED_CRAFT, needcraft);
@@ -256,8 +261,9 @@ public class BuyServiceImpl implements BuyService {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			if(result==false){//如果result的的值为false，即为样衣面料采购失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
-				orderDAO.attachDirty(order);
+				
 			}
+			orderDAO.attachDirty(order);
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -356,6 +362,29 @@ public class BuyServiceImpl implements BuyService {
 		data.put(RESULT_PURCHASE, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean purchaseMaterialSubmit(long taskId, boolean result,String orderId,String masspurName,Timestamp masspurDate,String masssupplierName) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(Integer.parseInt(orderId));
+		order.setMasspurName(masspurName);
+		order.setMasspurDate(masspurDate);
+		order.setMasssupplierName(masssupplierName);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PURCHASE, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			if(result==false){//如果result的的值为false，即为样衣面料采购失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+			}
+			orderDAO.attachDirty(order);
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

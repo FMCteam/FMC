@@ -291,14 +291,16 @@ function verify(){
 		}
 	}
 	
-	var is_haoduoyi = jQuery("input[name='is_haoduoyi']").val();
+	var is_haoduoyi = jQuery("input[name='is_haoduoyi']:checked").val();
 	if(is_haoduoyi==0){
 		var order_source_name = jQuery("input[name='order_source']").val();
 		if(order_source_name=="好多衣"){
 			alert("是否好多衣选择为否时，订单来源名称不能用好多衣");
+			return false;
 		}
 		if(order_source_name==""){
 			alert("请填写订单来源信息");
+			return false;
 		}
 	}
 	
