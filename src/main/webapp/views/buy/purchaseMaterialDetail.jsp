@@ -72,12 +72,12 @@
 								<td rowspan="2">采购相关</td>
 								<td colspan="2">大货原料采购负责人<span class="required">*</span></td>
 								<td colspan="2">大货原料采购时间<span class="required">*</span></td>
-								<td colspan="2">供应商名字<span class="required">*</span></td>
+								<td colspan="2">供应商名字</td>
 							</tr>
 							<tr>
 								<td colspan="2"><input class="span12" type="text"  required="required" name="masspurName"/></td>
 								<td colspan="2"><input class="span12" type="date"  required="required"  id="input_day"  name="masspurDate"/></td>
-								<td colspan="2"><input class="span12" type="text"  required="required"  name="masssupplierName"/></td>
+								<td colspan="2"><input class="span12" type="text"  name="masssupplierName"/></td>
 							</tr>
 						</table>
 						<a href="${ctx}/finance/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
@@ -114,6 +114,7 @@
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<link rel="stylesheet" href="${ctx}/css/order/add_order.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <link rel="stylesheet" href="${ctx}/views/buy/buy.css">
