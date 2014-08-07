@@ -382,14 +382,11 @@ public class DesignServiceImpl implements DesignService {
 		Craft craft = craftDAO.findByOrderId(orderId).get(0);
 		craft.setCraftLeader(craftLeader);
 		craft.setCompleteTime(completeTime);
+		craft.setOrderSampleStatus("4");
 		craftDAO.merge(craft);
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			List<Craft> carftList =craftDAO.findByOrderId(orderId);
-			Craft craft =carftList.get(0);
-			craft.setOrderSampleStatus("4");
-			craftDAO.attachDirty(craft);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
