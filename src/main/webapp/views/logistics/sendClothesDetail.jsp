@@ -50,7 +50,7 @@
 								<td class="title">快递价格<span style="color: red">*</span></td>
 							</tr>
 							<tr>
-								<td><input type="date" name="time" required="required" /></td>
+								<td><input type="date" name="time" required="required" id="input_day"/></td>
 								<td><select name="name" style="margin: 0px">
 										<option value="顺丰">顺丰</option>
 										<option value="韵达">韵达</option>

@@ -89,6 +89,27 @@
 			var max = parseInt(Math.abs((input_date - date)/86400000));
 			$("input[name='ask_produce_period']").attr("max",""+parseInt(max));
 		});
+		
+		$("input[id='input_day']").change(function(){ 
+			var date = new Date();
+			var input_date = new Date($("input[id='input_day']").val());
+			if(input_date.valueOf()>date.valueOf()){
+				alert("输入日期不能在今天之后");
+				$("input[id='input_day']").val("");
+				return;
+			}
+		});
+		
+		$("input[name='in_post_sample_clothes_time']").change(function(){ 
+			var date = new Date();
+			var input_date = new Date($("input[name='in_post_sample_clothes_time']").val());
+			if(input_date.valueOf()>date.valueOf()){
+				alert("输入日期不能在今天之后");
+				$("input[name='in_post_sample_clothes_time']").val("");
+				return;
+			}
+
+		});
 		/*$("input[name='is_need_sample_clothes']").change(function(){
 			if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
 				$("input[name='sample_clothes_name']").attr("disabled","disabled");
@@ -270,14 +291,16 @@ function verify(){
 		}
 	}
 	
-	var is_haoduoyi = jQuery("input[name='is_haoduoyi']").val();
+	var is_haoduoyi = jQuery("input[name='is_haoduoyi']:checked").val();
 	if(is_haoduoyi==0){
 		var order_source_name = jQuery("input[name='order_source']").val();
 		if(order_source_name=="好多衣"){
 			alert("是否好多衣选择为否时，订单来源名称不能用好多衣");
+			return false;
 		}
 		if(order_source_name==""){
 			alert("请填写订单来源信息");
+			return false;
 		}
 	}
 	

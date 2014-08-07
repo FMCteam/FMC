@@ -56,12 +56,12 @@
 				</tr>
 				<tr class="addrow">
 					<td><input type="text" class="span12" /></td>
-					<td><input type="text" class="span12" /></td>
-					<td><input type="text" class="span12" /></td>
-					<td><input type="text" class="span12" /></td>
-					<td><input type="text" class="span12" /></td>
-					<td><input type="text" class="span12" /></td>
-					<td><input type="text" class="span12" /></td>
+					<td><input type="text" class="span12"  value="0"/></td>
+					<td><input type="text" class="span12"  value="0"/></td>
+					<td><input type="text" class="span12"  value="0"/></td>
+					<td><input type="text" class="span12"  value="0"/></td>
+					<td><input type="text" class="span12"  value="0"/></td>
+					<td><input type="text" class="span12"  value="0"/></td>
 					<td><a>添加</a><span class="required">（点击添加之后数据生效）</span></td>
 				</tr>
 				<c:forEach var="produceRow" items="${orderInfo.produce}">

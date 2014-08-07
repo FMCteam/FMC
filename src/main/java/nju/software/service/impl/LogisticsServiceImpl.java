@@ -155,47 +155,31 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	@Override
 	public boolean sendSampleSubmit(Map<String, Object> map) {
-		/*
-		 * author:whh
-		 * 测试新建流程分支，好多衣走简化流程,流程去掉各种验证
-		 */
-		
-		Integer orderId = (Integer) map.get("orderId");
-		
-//		Order customerOrder = orderDAO.findById(orderId);
-//		Customer cus =  customerDAO.findById(customerOrder.getCustomerId());
-//		boolean takeSampleMoney = false;
-//		if(cus.getCustomerName().equals("好多衣")){
-//			  takeSampleMoney = false; 
-//		}else{
-//			  takeSampleMoney = true; 
-//		}
-		
-		//更新物流信息
-		Logistics logistics = logisticsDAO.findById(orderId);
-		logistics.setSampleClothesTime(getTime((String) map.get("time")));//邮寄时间
-		logistics.setSampleClothesNumber((String) map.get("number"));//快递单号
-		logistics.setSampleClothesType((String) map.get("name"));//快递名称
-		//logistics.setSampleClothesPrice((String) map.get("price"));//快递价格
-		logisticsDAO.attachDirty(logistics);
-		
-		//需要记录每次发货的信息
-		DeliveryRecord deliveryRecord = new DeliveryRecord();
-		deliveryRecord.setOrderId(orderId);
-		deliveryRecord.setSendType("sample");// 发货类型为“样衣”
-		deliveryRecord.setRecipientName(logistics.getSampleClothesName());// 收件人姓名
-		deliveryRecord.setRecipientPhone(logistics.getSampleClothesPhone());// 收件人手机
-		deliveryRecord.setRecipientAddr(logistics.getSampleClothesAddress());// 收件人地址
-		deliveryRecord.setExpressName((String) map.get("name"));// 快递名称
-		deliveryRecord.setExpressNumber((String) map.get("number"));// 快递单号
-		deliveryRecord.setExpressPrice((String) map.get("price"));// 快递价格
-		deliveryRecord.setSendTime(getTime((String) map.get("time")));// 邮寄时间
-		deliveryRecordDAO.save(deliveryRecord);
-		
+		Integer orderId = (Integer) map.get("orderId");		
 		
 		String isFinal = (String) map.get("isFinal");	
-		//如果不是最终的样衣发货，不执行completeTask方法，直接返回
+		//如果不是最终的样衣发货，保存本次发货记录，不执行completeTask方法，直接返回
 		if(isFinal.equals("false")){
+			//更新物流信息
+			Logistics logistics = logisticsDAO.findById(orderId);
+			logistics.setSampleClothesTime(getTime((String) map.get("time")));//邮寄时间
+			logistics.setSampleClothesNumber((String) map.get("number"));//快递单号
+			logistics.setSampleClothesType((String) map.get("name"));//快递名称
+			//logistics.setSampleClothesPrice((String) map.get("price"));//快递价格
+			logisticsDAO.attachDirty(logistics);
+			
+			//需要记录每次发货的信息
+			DeliveryRecord deliveryRecord = new DeliveryRecord();
+			deliveryRecord.setOrderId(orderId);
+			deliveryRecord.setSendType("sample");// 发货类型为“样衣”
+			deliveryRecord.setRecipientName(logistics.getSampleClothesName());// 收件人姓名
+			deliveryRecord.setRecipientPhone(logistics.getSampleClothesPhone());// 收件人手机
+			deliveryRecord.setRecipientAddr(logistics.getSampleClothesAddress());// 收件人地址
+			deliveryRecord.setExpressName((String) map.get("name"));// 快递名称
+			deliveryRecord.setExpressNumber((String) map.get("number"));// 快递单号
+			deliveryRecord.setExpressPrice((String) map.get("price"));// 快递价格
+			deliveryRecord.setSendTime(getTime((String) map.get("time")));// 邮寄时间
+			deliveryRecordDAO.save(deliveryRecord);
 			return true;
 		}
 		

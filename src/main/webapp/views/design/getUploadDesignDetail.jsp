@@ -47,7 +47,7 @@
 				          onsubmit="return check()" enctype="multipart/form-data">
 				    	<table class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="title"><span style="color:red">*</span>版型文件</td>
+								<td class="title">版型文件<span style="color:red">*</span></td>
 								<td>
 									<a style="color: red;">*</a>
 									<input name="CADFile" id="CADFile" type="file" required="required"/> 
@@ -59,15 +59,15 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="title"><span style="color:red">*</span>制版人</td>
+								<td class="title">制版人<span style="color:red">*</span></td>
 								<td>
 									<input name="cadSide" id="cad_side" type="text" required="required"/> 
 								</td>
 							</tr>
 							<tr>
-								<td class="title"><span style="color:red">*</span>制版完成时间</td>
+								<td class="title">制版完成时间<span style="color:red">*</span></td>
 								<td>
-									<input name="completeTime" id="complete_time" type="date" required="required"/> 
+									<input name="completeTime" id="input_day"  type="date"  required="required" /> 
 								</td>
 							</tr>
 				    	</table>
@@ -157,4 +157,5 @@
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
 <script type="text/javascript" src="${ctx}/js/order/add_produce.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <%@include file="/common/footer.jsp"%>

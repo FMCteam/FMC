@@ -1659,7 +1659,11 @@ public class MarketController {
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			MultipartFile file = multipartRequest
 					.getFile("confirmSampleMoneyFile");
-			String filename = file.getOriginalFilename();
+			String filename = "";
+			if(file != null){
+				filename = file.getOriginalFilename();
+			}
+			
 			url = CONFIRM_SAMPLEMONEY_URL + orderId;
 			String fileid = "confirmSampleMoneyFile";
 			FileOperateUtil.Upload(request, url, null, fileid);

@@ -1,5 +1,6 @@
 package nju.software.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -36,9 +37,10 @@ public interface BuyService {
 
 	public Map<String,Object> getPurchaseSampleMaterialDetail(Integer orderId);
 
-	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result, boolean needcraft,String orderId);
 	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result );
-
+	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result,
+			boolean needcraft,String orderId,String samplepurName,Timestamp samplepurDate,String samplesupplierName);
+	
 	//===========================采购确认=================================
 	public List<Map<String,Object>> getConfirmPurchaseList();
 
@@ -48,12 +50,14 @@ public interface BuyService {
 
 	public boolean confirmPurchaseSubmit(long taskId, boolean result,String orderId);
 	
+	
 	//===========================大货原料采购=================================
 	public List<Map<String,Object>> getPurchaseMaterialList();
 
 	public Map<String, Object> getPurchaseMaterialDetail(Integer orderId);
 
 	public boolean purchaseMaterialSubmit(long taskId, boolean result);
+	public boolean purchaseMaterialSubmit(long taskId, boolean result,String orderId,String masspurName,Timestamp masspurDate,String masssupplierName);
 
 	public List<Map<String, Object>> getSearchVerifyPurchaseList(
 			String ordernumber, String customername, String stylename,
