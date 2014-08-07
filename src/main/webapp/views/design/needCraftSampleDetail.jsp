@@ -58,7 +58,8 @@
 		            </table>
 	            </form>
 			
-				<form action="${ctx}/design/needCraftSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}" method="post">
+				<form action="${ctx}/design/needCraftSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}" method="post"
+						onsubmit="return confirm('确认完成工艺制作？')">
 					<table class="table table-striped table-bordered table-hover detail">
 					    <tr>
 							<td class="title">客户工艺要求</td>
@@ -68,7 +69,7 @@
 							<td class="title">工艺负责人<span style="color: red">*</span></td>
 							<td><input id="craft_leader" type="text" name="craftLeader" required="required" /></td>
 							<td class="title">工艺完成时间<span style="color: red">*</span></td>
-							<td><input id="complete_time" type="date" name="completeTime" required="required" /></td>
+							<td><input id="input_day" type="date" name="completeTime" required="required" /></td>
 						</tr>		
 						<tr>
 							<td class="title" rowspan="2">工艺报价</td>

@@ -258,7 +258,12 @@ public class DesignController {
 		String orderId = request.getParameter("orderId");
 		Map<String, Object> orderInfo = designService
 				.getUploadDesignDetail(Integer.parseInt(orderId));
+		String  orderSampleStatus =designService.getCraftInfo(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
+		//判断订单样衣采购的状态
+		//1.正在进行样衣原料料采购  2.正在进行样衣面料工艺加工 3.样衣原料已经准备好（无需工艺），请根据样衣单到采购部领取面料
+		//4.样衣原料工艺已完成，请根据样衣到印花设计部领取面料
+		model.addAttribute("orderSampleStatus",orderSampleStatus);
 		return "/design/getUploadDesignDetail";
 	}
 
@@ -284,7 +289,9 @@ public class DesignController {
 				Long.parseLong(taskId), url, uploadTime, cadSide, completeTime);
  		Map<String, Object> orderInfo = designService
 				.getUploadDesignDetail(Integer.parseInt(orderId));
+		String  orderSampleStatus =designService.getCraftInfo(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
+		model.addAttribute("orderSampleStatus",orderSampleStatus);
 		return "/design/getUploadDesignDetail";
 //		return "forward:/design/getUploadDesignList.do";
 	}

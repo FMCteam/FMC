@@ -35,23 +35,25 @@
 				<div class="tab-pane active" id="quote">
 					<%@include file="/views/common/quote.jsp"%>
 					<form id="confirm_quote_form" name="confirm_quote_form" action="${ctx}/market/confirmQuoteSubmit.do" method="post"
-					onsubmit="return confirmQuoteDetailSubmit(confirm_quote_form.confirmSampleMoneyFile.value,confirm_quote_form.result.value);"
+					onsubmit="return confirmQuoteDetailSubmit(confirm_quote_form.result.value);"
 						enctype="multipart/form-data" >
-						<table class="table table-striped table-bordered table-hover detail">
-							<tr>
-								<td>上传收取样衣金截图文件</td>
-								<td colspan="3">
-									<a style="color: red;">*</a>
-									<!-- 
-									<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
-									<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
-							 		-->
-			                		<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
-									<input name="confirmSampleMoneyFile" id="confirmSampleMoneyFile" type="file" required="required"/> 
-								</td>
-							</tr>
-						</table>
-				
+						<c:if test="${orderInfo.order.isNeedSampleClothes ==1 }">
+							<table class="table table-striped table-bordered table-hover detail">
+								<tr>
+									<td>上传收取样衣金截图文件</td>
+									<td colspan="3">
+										<a style="color: red;">*</a>
+										<!-- 
+										<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
+										<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
+								 		-->
+				                		<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+										<input name="confirmSampleMoneyFile" id="confirmSampleMoneyFile" type="file" required="required"/> 
+									</td>
+								</tr>
+							</table>
+						</c:if>
+						<input type="hidden"  id="isNeedSampleClothes"  value="${orderInfo.order.isNeedSampleClothes }"/>
  					    <div>
  					    	<input id="cancel_order" type="button" value="取消订单" class="btn btn-danger btn-rounded"  style="float: left;"/>
 							<input id="modify_price" type="button" value="修改报价" class="btn btn-primary btn-rounded" style="background-color:#1E90FF;margin-left: 10px;" />	
@@ -103,20 +105,29 @@ jQuery(document).ready(function(){
 	//确认报价
 	jQuery("#confirm_price").click(function(){
 		
-		var confirmSampleMoneyFile = document.getElementById("confirmSampleMoneyFile").value;
-		var confirmSampleMoneyFilestr = confirmSampleMoneyFile.substr(confirmSampleMoneyFile.indexOf(".")).toLowerCase();		
-		if(confirmSampleMoneyFile.length != 0){
-			if(confirmSampleMoneyFilestr == ".jpg" || confirmSampleMoneyFilestr == ".png"){	
-				if(confirm('确认报价？')){
-					jQuery("#result").val("0");
-					jQuery("#confirm_quote_form").submit();
+		var isNeedSampleClothes = $("#isNeedSampleClothes").val();
+		if(isNeedSampleClothes == "1"){
+			var confirmSampleMoneyFile = document.getElementById("confirmSampleMoneyFile").value;
+			var confirmSampleMoneyFilestr = confirmSampleMoneyFile.substr(confirmSampleMoneyFile.indexOf(".")).toLowerCase();		
+			if(confirmSampleMoneyFile.length != 0){
+				if(confirmSampleMoneyFilestr == ".jpg" || confirmSampleMoneyFilestr == ".png"){	
+					if(confirm('确认报价？')){
+						jQuery("#result").val("0");
+						jQuery("#confirm_quote_form").submit();
+					}
+				}else{
+					alert("样衣金截图格式不对，请上传jpg或png格式的图片！");
 				}
 			}else{
-				alert("样衣金截图格式不对，请上传jpg或png格式的图片！");
+				alert("请选择定金图片");
 			}
 		}else{
-			alert("请选择定金图片");
+			if(confirm('确认报价？')){
+				jQuery("#result").val("0");
+				jQuery("#confirm_quote_form").submit();
+			}
 		}
+		
 
 	});
 	//修改报价
@@ -136,13 +147,8 @@ jQuery(document).ready(function(){
 });
 </script>
 <script type="text/javascript">
-function confirmQuoteDetailSubmit(fileValue,operation_result) {
-if(operation_result==0){
-     if(fileValue==""){
-	     alert("请选择定金图片");
-	     return false;
-     }
-}
+function confirmQuoteDetailSubmit(operation_result) {
+	return true;
 }
 </script>
 <%@include file="/common/footer.jsp"%>

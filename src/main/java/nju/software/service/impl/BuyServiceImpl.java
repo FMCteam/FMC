@@ -1,6 +1,7 @@
 package nju.software.service.impl;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
@@ -20,6 +22,7 @@ import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.Craft;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Order;
@@ -237,6 +240,7 @@ public class BuyServiceImpl implements BuyService {
 		data.put(RESULT_PURCHASE, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -247,8 +251,15 @@ public class BuyServiceImpl implements BuyService {
 	
 	@Override
 	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result,
-			boolean needcraft,String orderId) {
+			boolean needcraft,String orderId,String samplepurName,Timestamp samplepurDate,String samplesupplierName) {
+		List<Craft>craftList =craftDAO.findByOrderId(Integer.parseInt(orderId));
+		Craft craft =craftList.get(0);
+		craft.setOrderSampleStatus("2");
+		craftDAO.attachDirty(craft);
 		Order order = orderDAO.findById(Integer.parseInt(orderId));
+		order.setSamplepurName(samplepurName);
+		order.setSamplepurDate(samplepurDate);
+		order.setSamplesupplierName(samplesupplierName);
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PURCHASE, result);
 		data.put(RESULT_NEED_CRAFT, needcraft);
@@ -256,8 +267,9 @@ public class BuyServiceImpl implements BuyService {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			if(result==false){//如果result的的值为false，即为样衣面料采购失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
-				orderDAO.attachDirty(order);
+				
 			}
+			orderDAO.attachDirty(order);
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -363,6 +375,29 @@ public class BuyServiceImpl implements BuyService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean purchaseMaterialSubmit(long taskId, boolean result,String orderId,String masspurName,Timestamp masspurDate,String masssupplierName) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(Integer.parseInt(orderId));
+		order.setMasspurName(masspurName);
+		order.setMasspurDate(masspurDate);
+		order.setMasssupplierName(masssupplierName);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PURCHASE, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			if(result==false){//如果result的的值为false，即为样衣面料采购失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+			}
+			orderDAO.attachDirty(order);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	@Autowired
 	private ServiceUtil service;
@@ -387,6 +422,8 @@ public class BuyServiceImpl implements BuyService {
 	private FabricCostDAO FabricCostDAO;
 	@Autowired
 	private ProduceDAO ProduceDAO;
+	@Autowired
+	private CraftDAO craftDAO;
 
 	public final static String ACTOR_PURCHASE_MANAGER = "purchaseManager";
 	public final static String TASK_VERIFY_PURCHASE = "verifyPurchase";
