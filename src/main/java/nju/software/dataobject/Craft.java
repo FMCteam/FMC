@@ -27,6 +27,7 @@ public class Craft implements Serializable {
  	private float crumpleMoney =  0;//压皱费
  	private float openVersionMoney =  0;//开版费
  	private String craftFileUrl;//工艺文件位置链接
+ 	private String orderSampleStatus;//订单工艺状态
 	// Constructors
 
 	/** default constructor */
@@ -35,7 +36,7 @@ public class Craft implements Serializable {
 
 	/** full constructor */
 	public Craft(Integer orderId, Short needCraft, float stampDutyMoney, float washHangDyeMoney,
-			float laserMoney, float embroideryMoney, float crumpleMoney, float openVersionMoney,String craftFileUrl) {		
+			float laserMoney, float embroideryMoney, float crumpleMoney, float openVersionMoney,String craftFileUrl,String orderSampleStatus) {		
 		this.orderId = orderId;
 		this.needCraft = needCraft;
 		this.stampDutyMoney = stampDutyMoney;
@@ -45,6 +46,7 @@ public class Craft implements Serializable {
 		this.crumpleMoney = crumpleMoney;
 		this.openVersionMoney = openVersionMoney;
 		this.craftFileUrl = craftFileUrl;
+		this.orderSampleStatus=orderSampleStatus;
 	} 	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -136,5 +138,14 @@ public class Craft implements Serializable {
 	public void setCraftFileUrl(String craftFileUrl) {
 		this.craftFileUrl = craftFileUrl;
 	}
+	@Column(name = "order_sample_status", nullable = true, length = 250)
+	public String getOrderSampleStatus() {
+		return orderSampleStatus;
+	}
+
+	public void setOrderSampleStatus(String orderSampleStatus) {
+		this.orderSampleStatus = orderSampleStatus;
+	}
+	
 
 }

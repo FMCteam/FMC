@@ -16,7 +16,20 @@
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 				<li ><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
-
+			<div style="text-align: center;">
+					<c:if test="${orderSampleStatus=='1'}">
+					<a style="color: red;font-size: 23px;">此订单正在进行样衣原料采购,请尽快领取样衣单，完成制版！</a>
+					</c:if>
+					<c:if test="${orderSampleStatus=='2'}">
+					<a style="color: red;font-size: 23px;">样衣面料正进行工艺加工，请稍等！</a>
+					</c:if>
+					<c:if test="${orderSampleStatus=='3'}">
+					<a style="color: blue;font-size: 23px;">样衣原料已经准备好（无需工艺），请根据样衣单到采购部领取面料！</a>
+					</c:if>
+					<c:if test="${orderSampleStatus=='4'}">
+					<a style="color: blue;font-size: 23px;">样衣原料工艺加工已完成，请根据样衣单到印花设计部领取面料！</a>
+					</c:if>
+			</div>
 			<div class="tab-content">
 				<div class="tab-pane" id="basic">
 					<%@include file="/views/common/basic.jsp"%>
@@ -118,16 +131,21 @@
 
  	function checkcad(){
  		var cadUrl = $("#cadUrl").val();
- 		 if(cadUrl != null){
- 			 if(confirm('确认完成？')){
- 					return true;
- 				}else{
- 					return false;
- 				}
- 		}else{ 
- 				alert("请上传版型文件");
- 				return false;
- 		 } 
+ 		if(${orderSampleStatus==3||orderSampleStatus==4}){
+ 			if(cadUrl != null){
+	 			 if(confirm('确认完成？')){
+	 					return true;
+	 				}else{
+	 					return false;
+	 				}
+	 			}else{ 
+	 				alert("请上传版型文件");
+	 				return false;
+	 			 } 
+ 		}else{
+ 			alert("样衣原料未准备好，无法确认操作！");
+ 			return false; 
+ 		}
  	}
  </script>
 

@@ -100,5 +100,7 @@ public interface DesignService {
 
 	public void EntryCadData(int orderId, long taskId, String url,
 			Timestamp uploadTime, String cadSide, Timestamp completeTime);
+	//获取订单中工艺状态
+	String getCraftInfo(Integer orderId);
 
 }

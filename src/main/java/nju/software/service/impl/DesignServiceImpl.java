@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.OrderDAO;
@@ -14,6 +15,7 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
 import nju.software.service.DesignService;
 import nju.software.util.JbpmAPIUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,6 +107,7 @@ public class DesignServiceImpl implements DesignService {
 		craft.setEmbroideryMoney(embroideryMoney);
 		craft.setCrumpleMoney(crumpleMoney);
 		craft.setOpenVersionMoney(openVersionMoney);
+		craft.setOrderSampleStatus("1");
 		craftDAO.save(craft);
 		Quote quote = quoteDAO.findById(orderId);
 		//单件工艺制作费
@@ -378,6 +381,10 @@ public class DesignServiceImpl implements DesignService {
 		// TODO Auto-generated method stub
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
+			List<Craft> carftList =craftDAO.findByOrderId(orderId);
+			Craft craft =carftList.get(0);
+			craft.setOrderSampleStatus("4");
+			craftDAO.attachDirty(craft);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
 			
 		} catch (InterruptedException e) {
@@ -517,4 +524,11 @@ public class DesignServiceImpl implements DesignService {
 	private CraftDAO craftDAO;
 	@Autowired
 	private OrderDAO orderDAO;
+	@Override
+	//获取订单样衣状态
+	public String getCraftInfo(Integer orderId) {
+	List<Craft> list=craftDAO.findByOrderId(orderId);
+		Craft craft =list.get(0);
+		return craft.getOrderSampleStatus();
+	}
 }

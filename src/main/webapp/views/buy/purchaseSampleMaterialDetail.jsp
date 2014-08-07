@@ -14,7 +14,7 @@
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
-
+			<div style="color: red;font-size: 23px;text-align: center;">请及时打印出样衣单，以便制版人员打样制版</div>
 			<div class="tab-content">
 				<div class="tab-pane" id="basic">
 					<%@include file="/views/common/basic.jsp"%>

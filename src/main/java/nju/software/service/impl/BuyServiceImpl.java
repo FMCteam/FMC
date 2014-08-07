@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
@@ -20,6 +21,7 @@ import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.Craft;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Order;
@@ -248,6 +250,10 @@ public class BuyServiceImpl implements BuyService {
 	@Override
 	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result,
 			boolean needcraft,String orderId) {
+		List<Craft>craftList =craftDAO.findByOrderId(Integer.parseInt(orderId));
+		Craft craft =craftList.get(0);
+		craft.setOrderSampleStatus("2");
+		craftDAO.attachDirty(craft);
 		Order order = orderDAO.findById(Integer.parseInt(orderId));
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PURCHASE, result);
@@ -387,6 +393,8 @@ public class BuyServiceImpl implements BuyService {
 	private FabricCostDAO FabricCostDAO;
 	@Autowired
 	private ProduceDAO ProduceDAO;
+	@Autowired
+	private CraftDAO craftDAO;
 
 	public final static String ACTOR_PURCHASE_MANAGER = "purchaseManager";
 	public final static String TASK_VERIFY_PURCHASE = "verifyPurchase";
