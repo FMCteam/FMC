@@ -3,6 +3,7 @@ package nju.software.dataobject;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,6 +28,8 @@ public class Craft implements Serializable {
  	private float crumpleMoney =  0;//压皱费
  	private float openVersionMoney =  0;//开版费
  	private String craftFileUrl;//工艺文件位置链接
+ 	private String craftLeader;//工艺负责人
+ 	private Timestamp completeTime;//工艺完成时间
 	// Constructors
 
 	/** default constructor */
@@ -135,6 +138,24 @@ public class Craft implements Serializable {
 	}
 	public void setCraftFileUrl(String craftFileUrl) {
 		this.craftFileUrl = craftFileUrl;
+	}
+
+	@Column(name = "craft_leader")
+	public String getCraftLeader() {
+		return craftLeader;
+	}
+
+	public void setCraftLeader(String craftLeader) {
+		this.craftLeader = craftLeader;
+	}
+
+	@Column(name = "complete_time", length = 19)
+	public Timestamp getCompleteTime() {
+		return completeTime;
+	}
+
+	public void setCompleteTime(Timestamp completeTime) {
+		this.completeTime = completeTime;
 	}
 
 }

@@ -381,7 +381,10 @@ public class DesignController {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-        designService.needCraftSampleSubmit(orderId,taskId);
+		String craftLeader = request.getParameter("craftLeader");//工艺负责人
+		Timestamp completeTime = this.getTime(request.getParameter("completeTime"));//工艺完成时间
+		
+        designService.needCraftSampleSubmit(orderId, taskId, craftLeader, completeTime);
 		return "redirect:/design/getNeedCraftSampleList.do";
 	}	
 	

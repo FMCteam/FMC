@@ -75,7 +75,7 @@ public interface DesignService {
 
 	public void uploadCraftFileSubmit(int orderId, String craftFileUrl);
 
-	public void needCraftSampleSubmit(int orderId, long taskId);
+	public void needCraftSampleSubmit(int orderId, long taskId, String craftLeader, Timestamp completeTime);
 
 	public void needCraftProductSubmit(int orderId, long taskId);
 
