@@ -501,6 +501,8 @@ public class DesignController {
 		Map<String, Object> orderInfo = designService
 				.getTypeSettingSliceDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
+		String  orderSampleStatus=designService.getCraftInfo(Integer.parseInt(orderId));
+		model.addAttribute("orderSampleStatus",orderSampleStatus);
 		return "/design/getTypeSettingSliceDetail";
 	}
 	

@@ -15,7 +15,7 @@
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
-
+			<div style="color: red;text-align: center;font-size: 23px;">大货面料已经到，请尽快领取补货单进行工艺加工！</div>
 			<div class="tab-content">
 				<div class="tab-pane" id="basic">
 					<%@include file="/views/common/basic.jsp"%>
