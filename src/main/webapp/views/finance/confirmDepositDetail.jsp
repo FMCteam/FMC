@@ -166,8 +166,8 @@
 								<i class="icon-ok icon-white"></i>已确认收款</a>
 						</div>
 						<br>
-						<button class="btn btn-primary" onclick="history.back();">返回</button>
 					</form>
+					<button class="btn btn-primary" onclick="history.back();">返回</button>
 				</div>
 			</div>
 		</div>

@@ -97,12 +97,12 @@
 							<td rowspan="2">采购相关</td>
 							<td colspan="2">样衣原料采购负责人<span class="required">*</span></td>
 							<td colspan="2">样衣采购时间<span class="required">*</span></td>
-							<td colspan="2">供应商名字<span class="required">*</span></td>
+							<td colspan="2">供应商名字</td>
 						</tr>
 						<tr>
 							<td colspan="2"><input class="span12" type="text"  required="required" name="samplepurName"/></td>
 							<td colspan="2"><input class="span12" type="date"  required="required"  id="input_day" name="samplepurDate"/></td>
-							<td colspan="2"><input class="span12" type="text"  required="required"  name="samplesupplierName"/></td>
+							<td colspan="2"><input class="span12" type="text"  name="samplesupplierName"/></td>
 						</tr>
 					</table>
 				    
