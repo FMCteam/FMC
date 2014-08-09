@@ -40,7 +40,12 @@
  						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td colspan="2">
-								<span style="color:red"><b>大货面料已到，请尽快领料排版切片</b></span>
+								<c:if test="${orderSampleStatus==4}">
+								<span style="color:red;font-size:23px;"><b>大货工艺加工完成，请尽快到印花工艺部门领料，进行排版切片!</b></span>
+								</c:if>
+								<c:if test="${orderSampleStatus!=4}">
+							    <span style="color:red;font-size:23px;"><b>大货面料已到，请尽快到面料部门领料，进行排版切片!</b></span>
+								</c:if>
 								</td>
 							</tr>	
 							<tr>

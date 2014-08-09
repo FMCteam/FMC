@@ -3,7 +3,7 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form onSubmit="return confirm('确认采购完成？')" method="post"
+		<form onSubmit="return confirm('确认已经打印过补货单？')" method="post"
 				action="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1&orderId=${orderInfo.order.orderId}&processId=${orderInfo.task.processInstanceId}"
 				enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
@@ -17,7 +17,7 @@
 					<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 					<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 				</ul>
-	
+	<div style="color: red;font-size: 23px;text-align: center;">请在确认完成之前，打印出补货单！</div>
 				<div class="tab-content">
 					<div class="tab-pane" id="basic">
 						<%@include file="/views/common/basic.jsp"%>
