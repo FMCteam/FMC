@@ -3,7 +3,7 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form onSubmit="return confirm('确认采购完成？')" method="post"
+		<form onSubmit="return confirm('确认已经打印出样衣单？')" method="post"
 			action="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
 			enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
