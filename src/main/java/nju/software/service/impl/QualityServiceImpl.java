@@ -71,11 +71,12 @@ public class QualityServiceImpl implements QualityService {
 	}
 
 	@Override
-	public boolean checkQualitySubmit(int orderId, long taskId, String isFinal,
-			CheckRecord checkRecord, List<Produce> goodList,
-			List<Produce> badList) {
+	public String checkQualitySubmit(int orderId, long taskId, String isFinal,
+			CheckRecord checkRecord, List<Produce> goodList) {
 
-		// 先根据orderId找出本次订单大货生产总数
+		String msg = "";
+		
+		// 先根据orderId找出本次订单大货生产总数（外发总数）
 		List<Produce> totalProduceList = produceDAO
 				.findTotalProduceByOrderId(orderId);
 
@@ -88,32 +89,68 @@ public class QualityServiceImpl implements QualityService {
 		List<CheckRecord> checkRecordList = checkRecordDAO
 				.findByOrderId(orderId);
 		int historyQualifiedAmount = 0;// 历史质检合格总数
+		int historyInvalidAmount = 0;// 历史报废总数
 //		int historyUnqualifiedAmount = 0;// 历史质检不合格总数
 		if (checkRecordList != null && checkRecordList.size() > 0) {
 			for (CheckRecord record : checkRecordList) {
 				historyQualifiedAmount += record.getQualifiedAmount();
+				historyInvalidAmount += record.getInvalidAmount();
 //				historyUnqualifiedAmount += record.getRepairAmount();
 			}
 		}
-		// 历史已质检总数
-//		int historyCheckTotalAmount = historyQualifiedAmount + historyUnqualifiedAmount;
+		
+		//如果没有质检记录却选择完成本次质检，返回false
+		if (isFinal.equals("true") &&(checkRecordList == null || checkRecordList.size() == 0)){
+			msg = "没有质检记录，不能完成最终质检";
+			return msg;
+		}
+		// 历史已质检合格总数 + 报废总数
+		int historyCheckTotalAmount = historyQualifiedAmount + historyInvalidAmount;
 
-		// 再计算本次质检的合格总数与不合格总数
-		int thisCheckQualifiedAmount = 0;
-		int thisCheckUnqualifiedAmount = 0;
+		// 再计算本次质检总数
+		int thisCheckQualifiedAmount = 0;//本次合格数量
+		int thisCheckRepairAmount = checkRecord.getRepairAmount();//本次回修数量
+		int thisCheckInvalidAmount = checkRecord.getInvalidAmount();//本次报废数量
+//		int thisCheckUnqualifiedAmount = 0;
+		
 		for (int i = 0; i < goodList.size(); i++) {
 			thisCheckQualifiedAmount += goodList.get(i).getProduceAmount();
 		}
-		for (int i = 0; i < badList.size(); i++) {
-			thisCheckUnqualifiedAmount += badList.get(i).getProduceAmount();
+		
+//		for (int i = 0; i < badList.size(); i++) {
+//			thisCheckUnqualifiedAmount += badList.get(i).getProduceAmount();
+//		}
+		
+		// 本次质检总数（没有包括本次回修数）
+		int thisCheckTotalAmount = thisCheckQualifiedAmount + thisCheckInvalidAmount;
+
+		// 若：1、本次质检合格总数 > 生产总数（外发总数）;
+		// 2、本次质检回修总数 > 生产总数;
+		// 3、本次质检合格数 + 报废数 > 生产总数;
+		// 4、本次质检合格数和报废数 + 回修数 > 生产总数;
+		// 5、本次质检总数+历史质检合格数和报废数 > 生产总数
+		if (thisCheckQualifiedAmount > totalProduceAmount
+				|| thisCheckRepairAmount > totalProduceAmount
+				|| thisCheckTotalAmount > totalProduceAmount
+				|| (thisCheckTotalAmount + thisCheckRepairAmount) > totalProduceAmount
+				|| (thisCheckTotalAmount + thisCheckRepairAmount + historyCheckTotalAmount) > totalProduceAmount){
+			
+			msg = "您填写的质检数量有误，请重新填写";
+			return msg;
 		}
-		// 本次质检总数
-		int thisCheckTotalAmount = thisCheckQualifiedAmount
-				+ thisCheckUnqualifiedAmount;
-		System.out.println(thisCheckQualifiedAmount+"-----"+thisCheckUnqualifiedAmount+"---------"+historyQualifiedAmount+"--------"+totalProduceAmount);
-		// 如果本次质检总数  + 历史质检合格总数 > 生产总数，则返回false
-		if ((thisCheckTotalAmount + historyQualifiedAmount) > totalProduceAmount) {
-			return false;
+		
+		//如果选择"保存本次质检"但是合格总数+报废总数等于应收总数（应该选择"完成最终质检"），返回false;
+		if (isFinal.equals("false")
+				&& ((thisCheckTotalAmount + historyCheckTotalAmount) == totalProduceAmount)) {
+			msg = "所有产品已经完成质量检查，请选择完成最终质检";
+			return msg;
+		}
+		
+		//如果选择"完成最终质检"但是合格总数+报废总数不等于应收总数，返回false;
+		if (isFinal.equals("true")
+				&& ((thisCheckTotalAmount + historyCheckTotalAmount) != totalProduceAmount)) {
+			msg = "您填写的质检数量有误或者有产品还未质检，不能完成最终的质检";
+			return msg;
 		}
 		
 		checkRecord.setQualifiedAmount(thisCheckQualifiedAmount);
@@ -137,43 +174,36 @@ public class QualityServiceImpl implements QualityService {
 			checkDetailDAO.save(checkDetail);
 		}
 
-		for (int i = 0; i < badList.size(); i++) {
-			Produce produce = badList.get(i);
-			checkDetail.setColor(produce.getColor());
-			checkDetail.setXs(produce.getXs());
-			checkDetail.setS(produce.getS());
-			checkDetail.setM(produce.getM());
-			checkDetail.setL(produce.getL());
-			checkDetail.setXl(produce.getXl());
-			checkDetail.setXxl(produce.getXxl());
-			checkDetail.setCheckAmount(thisCheckUnqualifiedAmount);
-			checkDetail.setCheckResult(CHECK_RESULT_UNQUALITY);
-
-			checkDetailDAO.save(checkDetail);
-		}
+//		for (int i = 0; i < badList.size(); i++) {
+//			Produce produce = badList.get(i);
+//			checkDetail.setColor(produce.getColor());
+//			checkDetail.setXs(produce.getXs());
+//			checkDetail.setS(produce.getS());
+//			checkDetail.setM(produce.getM());
+//			checkDetail.setL(produce.getL());
+//			checkDetail.setXl(produce.getXl());
+//			checkDetail.setXxl(produce.getXxl());
+//			checkDetail.setCheckAmount(thisCheckUnqualifiedAmount);
+//			checkDetail.setCheckResult(CHECK_RESULT_UNQUALITY);
+//
+//			checkDetailDAO.save(checkDetail);
+//		}
 
 		// 如果不是最后一次质检，直接返回
 		if (isFinal.equals("false")) {
-			return true;
+			return msg;
 		}
-		
-//		for (int i = 0; i < goodList.size(); i++) {
-//			produceDAO.save(goodList.get(i));
-//		}
-//		for (int i = 0; i < badList.size(); i++) {
-//			produceDAO.save(badList.get(i));
-//		}
 		
 		//如果是最后一次质检，需要执行completeTask方法
 		Map<String, Object> data = new HashMap<>();
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_QUALITY_MANAGER);
-			return true;
+			return msg;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
+		return msg;
 	}
 
 	@Override

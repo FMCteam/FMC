@@ -162,7 +162,18 @@
 		item += "<td><a onclick=\"deleteRow(this,'" + table_name + "')\">删除</a></td>";
 		item = "<tr>" + item + "</tr>";
 		$("table." + table_name + " tr.addrow").after(item);
+		
+		//如果是大货生产确认，还需要重新计算总金额
+		if (table_name == "produce_table"){
 			
+//			var addAmount = 0;
+//			for (var k = 1; k < col_sum; k ++) {
+//				addAmount += parseInt(content[k]);
+//			}
+			
+			calTotalMoney();
+			calDiscountMoney();
+		}
 	}
 	
 	function table_addrow_onclick2(table_name,col_name,col_sum){
@@ -254,12 +265,30 @@ function calculate(table_name,col_name,col_sum){
 	return sum;
 }
 
+function calTotalMoney(){
+	var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
+	var askAmount = calculate("produce_table",colName,7);
+	
+	var orderInfoQuoteOuterPrice = $("input[name='orderInfoQuoteOuterPrice']").val();
+//	var orderInfoOrderAskAmount = $("input[name='orderInfoOrderAskAmount']").val();
+//	var newAskAmount = parseInt(orderInfoOrderAskAmount) + addAmount;
+//	$("input[name='orderInfoOrderAskAmount']").val(newAskAmount);
+	
+	var totalMoney = orderInfoQuoteOuterPrice * askAmount;
+	$("input[name='totalmoney']").val(totalMoney.toFixed(2));
+	$("input[name='sum']").val(totalMoney.toFixed(2));
+}
+
 function deleteRow(a,table){
 	//alert($(a).parents('.'+table+' tr').length);
 	$(a).parents('.'+table+' tr').remove();
 	if(table=="produce_table"){
 		var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
-		$("input[name='ask_amount']").val(calculate("produce_table",colName,7));
+		var askAmount = calculate("produce_table",colName,7);
+		$("input[name='ask_amount']").val(askAmount);
+		$("td.ask_amount").text(askAmount);
+		calTotalMoney();
+		calDiscountMoney();
 	}
 }
 

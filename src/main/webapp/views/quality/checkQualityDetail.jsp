@@ -40,7 +40,32 @@
 					action="${ctx }/quality/checkQualitySubmit.do">
 						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="title" rowspan="${fn:length(orderInfo.produced)+1}">质检合格数量表</td>
+								<td class="title" rowspan="${fn:length(orderInfo.produced)+1}">应收数量</td>
+								<td class="title">颜色</td>
+								<td class="title">XS</td>
+								<td class="title">S</td>
+								<td class="title">M</td>
+								<td class="title">L</td>
+								<td class="title">XL</td>
+								<td class="title">XXL</td>
+							</tr>
+							<c:forEach var="produced" items="${orderInfo.produced}">
+								<tr>
+									<td>${produced.color}</td>
+									<td>${produced.xs}</td>
+									<td>${produced.s}</td>
+									<td>${produced.m}</td>
+									<td>${produced.l}</td>
+									<td>${produced.xl}</td>
+									<td>${produced.xxl}</td>
+								</tr>
+							</c:forEach>
+							<tr>
+								<td class="title">加工方</td>
+								<td colspan="7">${orderInfo.order.payAccountInfo}</td>
+							</tr>
+							<tr>
+								<td class="title" rowspan="${fn:length(orderInfo.produced)+1}">本次实收合格数量</td>
 								<td class="title">颜色</td>
 								<td class="title">XS</td>
 								<td class="title">S</td>
@@ -54,19 +79,20 @@
 									<td><input class="span12 good_color" type="text"
 										value="${produced.color}" readonly="readonly"/></td>
 									<td><input class="span12 good_xs" type="number"
-										min="0" value="${produced.xs}" required="required"/></td>
+										min="0" required="required"/></td>
 									<td><input class="span12 good_s" type="number"
-										min="0" value="${produced.s}" required="required"/></td>
+										min="0" required="required"/></td>
 									<td><input class="span12 good_m" type="number"
-										min="0" value="${produced.m}" required="required"/></td>
+										min="0" required="required"/></td>
 									<td><input class="span12 good_l" type="number"
-										min="0" value="${produced.l}" required="required"/></td>
+										min="0" required="required"/></td>
 									<td><input class="span12 good_xl" type="number"
-										min="0" value="${produced.xl}" required="required"/></td>
+										min="0" required="required"/></td>
 									<td><input class="span12 good_xxl" type="number"
-										min="0" value="${produced.xxl}" required="required"/></td>
+										min="0" required="required"/></td>
 								</tr>
 							</c:forEach>
+							<!-- 
 							<tr>
 								<td class="title" rowspan="${fn:length(orderInfo.produced)+1}">质检不合格数量表</td>
 								<td class="title">颜色</td>
@@ -95,18 +121,24 @@
 										min="0" value="0" required="required"/></td>
 								</tr>
 							</c:forEach>
-						    <tr>
-								<td class="title">加工方</td>
-								<td colspan="7">${orderInfo.order.payAccountInfo}</td>
-							</tr>
+							-->
+						    
 							<tr>
-								<td class="title" colspan="1">本次回修数量</td>
-								<td colspan="3">
-									<input name="repair_number" class="span12" value="0" type="number" readonly="readonly" />
+								<td class="title" colspan="1">加工方</td>
+								<td>
+									<input name="repair_side" class="span12" type="number" />
 								</td>
-								<td class="title" colspan="1">本次回修日期</td>
-								<td colspan="3">
-									<input name="repair_time" class="span12" type="date" />
+								<td class="title" colspan="1">本次回修数量</td>
+								<td>
+									<input name="repair_number" class="span12" type="number" min="0" />
+								</td>
+								<td class="title" colspan="1">日期</td>
+								<td>
+									<input name="repair_time" class="span12" type="datetime-local" required="required" />
+								</td>
+								<td class="title" colspan="1">报废数量</td>
+								<td>
+									<input name="invalid_number" class="span12" value="0" type="number" min="0" />
 								</td>
 							</tr>
 							
@@ -114,20 +146,24 @@
 						<table class="table table-striped table-bordered table-hover detail">
 							<c:if test="${empty orderInfo.repairRecord}">
 								<tr>
-									<td class="title" style="width:22%">回修记录</td>
+									<td class="title" style="width:22%">收货记录</td>
 									<td>无</td>
 								</tr>
 							</c:if>
 							<c:if test="${!empty orderInfo.repairRecord}">
 								<tr>
-									<td class="title" rowspan="${fn:length(orderInfo.repairRecord)+1}" style="width:22%">回修记录</td>
-									<td class="title" colspan="3">回修数量</td>
-									<td class="title" colspan="3">回修日期</td>
+									<td class="title" rowspan="${fn:length(orderInfo.repairRecord)+1}" style="width:22%">收货记录</td>
+									<td class="title">日期</td>
+									<td class="title">加工方</td>
+									<td class="title">回修数量</td>
+									<td class="title">合格实收数量</td>
 								</tr>
 								<c:forEach var="repairRecord" items="${orderInfo.repairRecord}">
 									<tr>
-										<td colspan="3">${repairRecord.repairAmount}</td>
-										<td colspan="3">${repairRecord.repairTime}</td>
+										<td>${repairRecord.repairTime}</td>
+										<td>${repairRecord.repairSide}</td>
+										<td>${repairRecord.repairAmount}</td>
+										<td>${repairRecord.qualifiedAmount}</td>
 									</tr>
 								</c:forEach>
 							</c:if>

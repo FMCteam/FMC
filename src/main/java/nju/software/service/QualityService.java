@@ -10,11 +10,12 @@ public interface QualityService {
 	
 	public List<Map<String,Object>> getCheckQualityList();
 
-	public boolean checkQualitySubmit(int orderId, long taskId, String isFinal, CheckRecord checkRecord, List<Produce> goodList, List<Produce> badList);
+	public String checkQualitySubmit(int orderId, long taskId, String isFinal, CheckRecord checkRecord, List<Produce> goodList);
 
 	public Map<String,Object> getCheckQualityDetail(int orderId);
 
 	public List<Map<String, Object>> getSearchCheckQualityList(
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
+
 }
