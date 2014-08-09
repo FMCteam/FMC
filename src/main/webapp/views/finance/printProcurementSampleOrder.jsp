@@ -72,8 +72,8 @@ table.table.table-bordered{
 	</div>
 	<table class="table table-bordered">
 		<tr>
-			<td class="span3">补货部门:</td>
-			<td class="span3">配货组：</td>
+			<td class="span3">下单业务员:${orderInfo.employee.employeeName}</td>
+			<td class="span3">订单来源：${orderInfo.order.orderSource }</td>
 			<td class="span3">客户：${orderInfo.order.customerName}-${orderInfo.order.customerCompany}</td>
 		</tr>
 		<tr>
@@ -122,7 +122,15 @@ table.table.table-bordered{
 		</c:forEach>
 
 	</table>
-	
+	<table class="table table-bordered">
+		<tr>
+			<td rowspan="3" class="center span3" style="height: 150px;">样衣面辅料信息</td>
+			<td rowspan="3" class="center span2">面料用量</td>
+			<td rowspan="3" class="center span3"></td>
+			<td rowspan="3" class="center span2">辅料用量</td>
+			<td rowspan="3" class="center span3"></td>
+		</tr>
+	</table>
 	<table class="table table-bordered">
 		<tr>
 			<td rowspan="3" class="center span2">样衣加工信息</td>
@@ -135,39 +143,8 @@ table.table.table-bordered{
 		</tr>
 		
 	</table>
-	<table class="table table-bordered">
-		<tr>
-			<td rowspan="3" class="center span2">衣片</td>
-			<td class="center span3"></td>
-			<td class="center span2">XS</td>
-			<td class="center span2">S</td>
-			<td class="center span2">M</td>
-			<td class="center span2">L</td>
-			<td class="center span2">XL</td>
-			<td class="center span2">XXL</td>
-		</tr>
-		<tr>
-			<td class="center span3">实际衣片</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>&nbsp</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-	</table>
-
 	<p id="info">
-		<textarea class="input" rows="3">备注:</textarea>
+		<textarea class="input" rows="8">备注:</textarea>
 	</p>
 
 </body>

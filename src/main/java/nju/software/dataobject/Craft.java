@@ -31,6 +31,8 @@ public class Craft implements Serializable {
  	private String orderSampleStatus;//订单工艺状态
  	private String craftLeader;//工艺负责人
  	private Timestamp completeTime;//工艺完成时间
+ 	private String crafsManName;//大货工艺负责人
+ 	private Timestamp crafsProduceDate;//大货工艺完成时间
 	// Constructors
 
 	/** default constructor */
@@ -39,7 +41,7 @@ public class Craft implements Serializable {
 
 	/** full constructor */
 	public Craft(Integer orderId, Short needCraft, float stampDutyMoney, float washHangDyeMoney,
-			float laserMoney, float embroideryMoney, float crumpleMoney, float openVersionMoney,String craftFileUrl,String orderSampleStatus) {		
+			float laserMoney, float embroideryMoney, float crumpleMoney, float openVersionMoney,String craftFileUrl,String orderSampleStatus,String crafsManName,Timestamp crafsProduceDate ) {		
 		this.orderId = orderId;
 		this.needCraft = needCraft;
 		this.stampDutyMoney = stampDutyMoney;
@@ -50,6 +52,8 @@ public class Craft implements Serializable {
 		this.openVersionMoney = openVersionMoney;
 		this.craftFileUrl = craftFileUrl;
 		this.orderSampleStatus=orderSampleStatus;
+		this.crafsProduceDate=crafsProduceDate;
+		this.crafsManName=crafsManName;
 	} 	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -168,5 +172,22 @@ public class Craft implements Serializable {
 	public void setCompleteTime(Timestamp completeTime) {
 		this.completeTime = completeTime;
 	}
+	@Column(name = "crafts_manName")
+	public String getCrafsManName() {
+		return crafsManName;
+	}
 
+	public void setCrafsManName(String crafsManName) {
+		this.crafsManName = crafsManName;
+	}
+	@Column(name = "crafts_productDate", length = 19)
+	public Timestamp getCrafsProduceDate() {
+		return crafsProduceDate;
+	}
+
+	public void setCrafsProduceDate(Timestamp crafsProduceDate) {
+		this.crafsProduceDate = crafsProduceDate;
+	}
+	
+	
 }

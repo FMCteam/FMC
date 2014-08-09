@@ -74,12 +74,16 @@
 					                 style="max-height: 300px;" alt="工艺图片"></img>
 			                    </c:if></td>
 	                        </tr>
-							
+	                        <tr>
+							<td colspan="2"><a style="color: red;">*</a>工艺负责人：</td>
+							<td><input name="crafsManName" id="crafsManName" type="text" required="required"/></td>
+							<td colspan="2"><a style="color: red;">*</a>大货工艺完成时间：</td>
+							<td><input name="crafsProduceDate" id="crafsProduceDate" type="date" required="required"/></td>
+							</tr>
 						</table>
-					
 					<button class="btn btn-primary" onclick="history.back();">返回</button>
 					<div class="action" style="float:right">
-						<a href="${ctx}/design/needCraftProductSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
+						<a href="javascript:doPost();"
 						   onclick="return confirm('确认完成大货工艺制作？')"
 						   class="btn btn-primary">完成大货工艺制作</a>
 			        </div>
@@ -122,6 +126,13 @@ $(document).ready(function() {
 	$("#pay").text(parseFloat(text).toFixed(2));
 	 
 });  
+function doPost(){
+	var crafsManName=$("#crafsManName").val();
+	alert(crafsManName)
+	var crafsProduceDate=$("#crafsProduceDate").val();
+    window.location.href="${ctx}/design/needCraftProductSubmit.do?orderId="+${orderInfo.order.orderId}+"&taskId="+${orderInfo.task.id}
+	 +"&crafsManName="+crafsManName+"&crafsProduceDate="+crafsProduceDate;
+}
 </script>
 <%@include file="/common/footer.jsp"%>
 
