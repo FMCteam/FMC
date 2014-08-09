@@ -26,6 +26,9 @@ public class CheckRecord {
 	private Integer qualifiedAmount;//合格数量
 	private Integer repairAmount;// 回修数量（即每次质检不合格数量的总和）
 	private Timestamp repairTime;// 回修时间
+	private String repairSide;// 回修加工方
+	private Integer invalidAmount;// 报废数量
+	
 
 	// Constructors
 	public CheckRecord() {
@@ -76,6 +79,24 @@ public class CheckRecord {
 
 	public void setRepairTime(Timestamp repairTime) {
 		this.repairTime = repairTime;
+	}
+
+	@Column(name = "repair_side")
+	public String getRepairSide() {
+		return repairSide;
+	}
+
+	public void setRepairSide(String repairSide) {
+		this.repairSide = repairSide;
+	}
+
+	@Column(name = "invalid_amount")
+	public Integer getInvalidAmount() {
+		return invalidAmount;
+	}
+
+	public void setInvalidAmount(Integer invalidAmount) {
+		this.invalidAmount = invalidAmount;
 	}
 
 }

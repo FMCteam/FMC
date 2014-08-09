@@ -88,6 +88,29 @@
 	
 })(jQuery);
 
+
+function calDiscountMoney(){
+	var dis = $("input[name='discount']").val();
+	if(!checkDiscountNum(dis)){
+		alert("优惠金额必须是数字");
+		$("input[name='discount']").val("");
+		return;
+	}
+	var origin = parseFloat($("input[name='sum']").val());
+	var discount = parseFloat(dis);
+	var now = origin - discount;
+	now = now.toFixed(2);
+
+	if(now<0){
+		alert("优惠金额不能大于总金额");
+		$("input[name='discount']").val("");
+		$("input[name='totalmoney']").val(origin);
+		return;
+	}else{
+		$("input[name='totalmoney']").val(now);
+	}
+}
+
 function checkDiscountNum(input){
 	var re = /^[0-9]+.?[0-9]*$/; 
 	return re.test(input);

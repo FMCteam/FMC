@@ -183,6 +183,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 			return true;
 		}
 		
+		//如果是最终发货，需要先判断是否有发货记录，若没有，不能完成最终的发货
+		List<DeliveryRecord> list = deliveryRecordDAO.findByOrderId(orderId);
+		if(list == null || list.size() == 0){
+			return false;
+		}
+		
 		long taskId = (long) map.get("taskId");
 		Map<String, Object> data = new HashMap<String, Object>();
 //		data.put(key, value);

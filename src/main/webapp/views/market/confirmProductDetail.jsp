@@ -21,7 +21,7 @@
 				</ul>
 
 				<div class="tab-content">
-					<div class="tab-pane active" id="basic">
+					<div class="tab-pane" id="basic">
 						<%@include file="/views/common/basic.jsp"%>
 					</div>
 					<div class="tab-pane" id="material">
@@ -30,7 +30,7 @@
 					<div class="tab-pane" id="sample">
 						<%@include file="/views/common/sample.jsp"%>
 					</div>
-					<div class="tab-pane" id="produce">
+					<div class="tab-pane active" id="produce">
 						<%@include file="/views/common/produce_w.jsp"%>
 					</div>
 					<div class="tab-pane" id="cad">

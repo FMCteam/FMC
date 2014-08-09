@@ -52,7 +52,7 @@
 								<td class="span2 title" rowspan="6">费用信息</td>
 								<td class="title">金额类型</td>
 								<td class="title">优惠金额</td>
-								<td class="title">应收金额</td>
+								<td class="title" style="color: red;">应收金额</td>
 							</tr>
 							<tr>
 								<td>${orderInfo.moneyName}</td>
@@ -80,7 +80,7 @@
 								<td><span id="allMoneyOfSamples">${orderInfo.order.sampleAmount*orderInfo.samplePrice}</span></td>
 							</tr>
 						    <tr>
-						        <td class="title">选择尾金截图文件</td>
+						        <td class="title" style="color:red; ">选择尾金截图文件</td>
 						        <td colspan="3">
 							       <a style="color: red;">*</a>
 			                       <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />

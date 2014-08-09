@@ -152,8 +152,16 @@ public class LogisticsController {
 		map.put("number", number);
 		map.put("price", price);
 		map.put("isFinal", isFinal);
-		logisticsService.sendSampleSubmit(map);
-		return "forward:/logistics/sendSampleList.do";
+		boolean success = logisticsService.sendSampleSubmit(map);
+		
+		if(success){
+			return "forward:/logistics/sendSampleList.do";
+		}else{
+			Map<String, Object> orderInfo = logisticsService.getSendSampleDetail(orderId);
+			model.addAttribute("orderInfo", orderInfo);
+			model.addAttribute("notify", "没有样衣发货记录，不能完成最终发货");
+			return "/logistics/sendSampleDetail";
+		}
 	}
 
 	// ===========================产品入库=================================

@@ -105,14 +105,28 @@ public class QualityController {
 		long taskId = Long.parseLong(s_taskId);
 		
 		String isFinal = request.getParameter("isFinal");//是否是最终质检
-		Integer repairNumber = Integer.parseInt(request.getParameter("repair_number"));//本次质检回修数量
+		String repairNumberStr = request.getParameter("repair_number");
+		Integer repairNumber = 0;
+		if(!StringUtils.isEmpty(repairNumberStr)){
+			repairNumber = Integer.parseInt(request.getParameter("repair_number"));//本次质检回修数量
+		}
+		
 		Timestamp repairTime = this.getTime(request.getParameter("repair_time"));//本次质检回修日期
+		String repairSide = request.getParameter("repair_side");//本次质检回修加工方
+		
+		String invalidNumberStr = request.getParameter("invalid_number");
+		Integer invalidNumber = 0;
+		if(!StringUtils.isEmpty(invalidNumberStr)){
+			invalidNumber = Integer.parseInt(request.getParameter("invalid_number"));//本次质检报废数量
+		}
 		
 		// 本次质检记录
 		CheckRecord checkRecord = new CheckRecord();
 		checkRecord.setOrderId(orderId);
 		checkRecord.setRepairAmount(repairNumber);
 		checkRecord.setRepairTime(repairTime);
+		checkRecord.setRepairSide(repairSide);
+		checkRecord.setInvalidAmount(invalidNumber);
 		
 		List<Produce> goodList = null;
 		String goodColor = request.getParameter("good_color");
@@ -125,27 +139,27 @@ public class QualityController {
 		goodList = produceService.getProduceList(orderId, goodColor, 
 				goodXS, goodS, goodM, goodL, goodXL, goodXXL, Produce.TYPE_QUALIFIED);
 		
-		List<Produce> badList = null;
-		String badColor = request.getParameter("bad_color");
-		String badXS = request.getParameter("bad_xs");
-		String badS = request.getParameter("bad_s");
-		String badM = request.getParameter("bad_m");
-		String badL = request.getParameter("bad_l");
-		String badXL = request.getParameter("bad_xl");
-		String badXXL = request.getParameter("bad_xxl");
-		badList = produceService.getProduceList(orderId, badColor, 
-				badXS, badS, badM, badL, badXL, badXXL, Produce.TYPE_UNQUALIFIED);
+//		List<Produce> badList = null;
+//		String badColor = request.getParameter("bad_color");
+//		String badXS = request.getParameter("bad_xs");
+//		String badS = request.getParameter("bad_s");
+//		String badM = request.getParameter("bad_m");
+//		String badL = request.getParameter("bad_l");
+//		String badXL = request.getParameter("bad_xl");
+//		String badXXL = request.getParameter("bad_xxl");
+//		badList = produceService.getProduceList(orderId, badColor, 
+//				badXS, badS, badM, badL, badXL, badXXL, Produce.TYPE_UNQUALIFIED);
 		
-		boolean success = qualityService.checkQualitySubmit(orderId, taskId,
-				isFinal, checkRecord, goodList, badList);
-		if (success) {
+		String msg = qualityService.checkQualitySubmit(orderId, taskId,
+				isFinal, checkRecord, goodList);
+		if (msg.equals("")) {
 			// 如果成功保存本次质检，返回质检列表页面
 			return "redirect:/quality/checkQualityList.do";
 		} else {
 			// 否则还是保持在本页面
 			Map<String,Object> oi = qualityService.getCheckQualityDetail(orderId);
 			model.addAttribute("orderInfo", oi);
-			model.addAttribute("notify", "您填写的质检数量有误，请重新填写");
+			model.addAttribute("notify", msg);
 			return "/quality/checkQualityDetail";
 		}
 		
