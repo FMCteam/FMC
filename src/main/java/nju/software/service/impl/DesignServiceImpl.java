@@ -1,6 +1,7 @@
 package nju.software.service.impl;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -341,9 +342,13 @@ public class DesignServiceImpl implements DesignService {
 	}
 	
 	@Override
-	public void needCraftProductSubmit(int orderId, long taskId) {
+	public void needCraftProductSubmit(int orderId, long taskId,String crafsManName,Timestamp crafsProduceDate) {
  		Map<String, Object> data = new HashMap<String, Object>();
 		try {
+			Craft craft = craftDAO.findByOrderId(orderId).get(0);
+			craft.setCrafsManName(crafsManName);
+			craft.setCrafsProduceDate(crafsProduceDate);
+			craftDAO.attachDirty(craft);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
 			
 		} catch (InterruptedException e) {

@@ -131,7 +131,7 @@ public class FinanceController {
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/printProcurementOrder";
 	}
-	
+	//获取样衣单信息
 	@RequestMapping(value = "/finance/printProcurementSampleOrder.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String printProcurementSampleOrder(HttpServletRequest request,
