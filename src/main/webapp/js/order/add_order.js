@@ -304,7 +304,6 @@ function getTdString(col){
 
 
 function verify(){
-	alert(1);
 	var ask_amount = jQuery("input[name='ask_amount']").val();
 	if(ask_amount == "" || ask_amount <= 0){
 		alert("大货总数必须大于0");
