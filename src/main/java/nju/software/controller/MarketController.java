@@ -1831,7 +1831,7 @@ public class MarketController {
 			FileOperateUtil.Upload(request, confirmDepositFileUrl, null, confirmDepositFileId);
 			url = url + "/" + filename;
 			confirmDepositFileUrl = confirmDepositFileUrl + "/" + confirmDepositFileName;
- 
+
 			String actorId = account.getUserId() + "";
 			//上传合同，上传首定金收据，一般是截图，
 			marketService.signContractSubmit(actorId, Long.parseLong(s_taskId),
@@ -1869,6 +1869,7 @@ public class MarketController {
 		Map<String, Object> orderInfo = marketService.getConfirmProductDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderInfo);
+	
 
 		return "market/confirmProductDetail";
 	}

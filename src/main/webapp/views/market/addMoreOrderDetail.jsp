@@ -3,7 +3,7 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form method="post" onsubmit="return verify();"
+		<form method="post" onsubmit="return verify()"
 			action="${ctx }/market/addMoreOrderSubmit.do"
 			enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
@@ -350,7 +350,7 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="title">大货加工具体要求 <input id="produce_color" type="hidden"
+								<td class="span2 title">大货加工具体要求 <input id="produce_color" type="hidden"
 									name="produce_color" /> <input id="produce_xs" type="hidden"
 									name="produce_xs" /> <input id="produce_s" type="hidden"
 									name="produce_s" /> <input id="produce_m" type="hidden"
