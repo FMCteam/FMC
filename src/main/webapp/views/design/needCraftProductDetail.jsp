@@ -128,7 +128,6 @@ $(document).ready(function() {
 });  
 function doPost(){
 	var crafsManName=$("#crafsManName").val();
-	alert(crafsManName)
 	var crafsProduceDate=$("#crafsProduceDate").val();
     window.location.href="${ctx}/design/needCraftProductSubmit.do?orderId="+${orderInfo.order.orderId}+"&taskId="+${orderInfo.task.id}
 	 +"&crafsManName="+crafsManName+"&crafsProduceDate="+crafsProduceDate;
