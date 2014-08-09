@@ -77,7 +77,8 @@ public interface DesignService {
 
 	public void needCraftSampleSubmit(int orderId, long taskId, String craftLeader, Timestamp completeTime);
 
-	public void needCraftProductSubmit(int orderId, long taskId);
+	public void needCraftProductSubmit(int orderId, long taskId, String crafsManName,
+			Timestamp crafsProduceDate);
 
 	public void getTypeSettingSliceSubmit(int orderId, long taskId);
 

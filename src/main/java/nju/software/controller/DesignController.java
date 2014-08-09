@@ -1,5 +1,6 @@
 package nju.software.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -446,11 +447,14 @@ public class DesignController {
 	@RequestMapping(value = "design/needCraftProductSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String needCraftProductSubmit(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model) throws UnsupportedEncodingException {
+		String crafsManName= new String( request.getParameter("crafsManName").getBytes("iso-8859-1"), "UTF-8");
+		String crafsProduceDate =request.getParameter("crafsProduceDate");
+		Timestamp timeProduceDate=this.getTime(crafsProduceDate);
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-        designService.needCraftProductSubmit(orderId,taskId);
+        designService.needCraftProductSubmit(orderId,taskId,crafsManName,timeProduceDate);
 		return "redirect:/design/getNeedCraftProductList.do";
 	}	
 	
