@@ -39,7 +39,17 @@
 				$("input[name='sample_amount']").val(calculate("produce_table",colName,7));
 			}
 		});
-		
+		//大货加工确认
+		$("table.confirm_produce_table a").click(function(){
+			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
+			if(checkNum("confirm_produce_table",colName,7)){
+				table_addrow_onclick("confirm_produce_table",colName,7);
+				$("input[name='ask_amount']").val(calculate("confirm_produce_table",colName,7));
+				for(var i=0;i<$("td.ask_amount").length;i++){
+					$("td.ask_amount").eq(i).text(calculate("confirm_produce_table",colName,7));
+				}
+			}
+		});
 		$("table.version_table a").click(function(){
 			var colName = ["version_size","version_centerBackLength","version_bust","version_waistLine","version_shoulder",
 			               "version_buttock","version_hem","version_trousers","version_skirt","version_sleeves"];
@@ -142,7 +152,7 @@
 
 		var item = "";
 		//如果是添加大货和样衣数量，需要设置默认值0
-		if (table_name == "produce_table" || table_name == "sample_produce_table") {
+		if (table_name == "produce_table" || table_name == "sample_produce_table" || table_name == "confirm_produce_table") {
 			for (var j = 0; j < col_sum; j++) {
 				//第1列是颜色，不需要置为0
 				if(j == 0){
@@ -164,7 +174,7 @@
 		$("table." + table_name + " tr.addrow").after(item);
 		
 		//如果是大货生产确认，还需要重新计算总金额
-		if (table_name == "produce_table"){
+		if (table_name == "confirm_produce_table"){
 			
 //			var addAmount = 0;
 //			for (var k = 1; k < col_sum; k ++) {
@@ -283,13 +293,16 @@ function calTotalMoney(){
 function deleteRow(a,table){
 	//alert($(a).parents('.'+table+' tr').length);
 	$(a).parents('.'+table+' tr').remove();
-	if(table=="produce_table"){
+	if(table=="produce_table" || table=="confirm_produce_table"){
 		var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
 		var askAmount = calculate("produce_table",colName,7);
 		$("input[name='ask_amount']").val(askAmount);
 		$("td.ask_amount").text(askAmount);
-		calTotalMoney();
-		calDiscountMoney();
+		//如果是大货生产确认，还需要重新计算总金额
+		if (table == "confirm_produce_table"){
+			calTotalMoney();
+			calDiscountMoney();
+		}
 	}
 }
 

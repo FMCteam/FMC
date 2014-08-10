@@ -43,7 +43,7 @@
 	<tr>
 		<td class="span2 title">大货加工 </td>
 		<td colspan="8" class="innertable">
-			<table class="span12 table table-bordered table-hover produce_table">
+			<table class="span12 table table-bordered table-hover confirm_produce_table">
 				<tr>
 					<td class="span1 title">颜色</td>
 					<td class="span1 title">XS</td>
@@ -74,7 +74,7 @@
 						<td class='span12 produce_xl'>${produceRow.xl }</td>
 						<td class='span12 produce_xxl'>${produceRow.xxl }</td>
 						<td class='span12'><a
-							onclick="deleteRow(this,'produce_table')">删除</a></td>
+							onclick="deleteRow(this,'confirm_produce_table')">删除</a></td>
 					</tr>
 				</c:forEach>
 				</table></td>

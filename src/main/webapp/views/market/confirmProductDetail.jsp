@@ -47,13 +47,15 @@
 					<tr>
 						<td>优惠金额</td>
 						<td>总金额</td>
-						<td>上传合同</td>
-						<td>上传首定金收据</td>
+						<td>上传合同（请上传jpg,png格式的图片）</td>
+						<td>上传首定金收据（请上传jpg,png格式的图片）</td>
 					</tr>
 					<tr>
 						<td><input name="discount" type="text" value="0" /><input name="sum" type="hidden" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }"/></td>
 						<td><input name="totalmoney" type="text" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }" readonly="readonly" /></td>
-						<td><a style="color: red;">*</a><input name="contractFile" type="file" value="选择合同文件" required="required"/></td>
+						<td><a style="color: red;">*</a>
+							<input name="contractFile" type="file" value="选择合同文件" required="required"/>
+						</td>
 						<td><a style="color: red;">*</a><input name="confirmDepositFile" type="file" value="选择定金文件" required="required"/></td>
 					</tr>
 				</table>
