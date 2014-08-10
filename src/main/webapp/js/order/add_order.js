@@ -103,7 +103,7 @@
 		$("input[id='input_day']").change(function(){ 
 			var date = new Date();
 			var input_date = new Date($("input[id='input_day']").val());
-			if(input_date.valueOf()>date.valueOf()){
+			if((input_date.valueOf()-28800000)>date.valueOf()){
 				alert("输入日期不能在今天之后");
 				$("input[id='input_day']").val("");
 				return;

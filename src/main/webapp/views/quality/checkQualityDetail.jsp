@@ -134,7 +134,7 @@
 								</td>
 								<td class="title" colspan="1">日期</td>
 								<td>
-									<input name="repair_time" class="span12" type="datetime-local" required="required" />
+									<input name="repair_time" class="span12" type="datetime-local" required="required"   id="input_day"/>
 								</td>
 								<td class="title" colspan="1">报废数量</td>
 								<td>
