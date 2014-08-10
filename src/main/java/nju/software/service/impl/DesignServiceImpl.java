@@ -504,6 +504,7 @@ public class DesignServiceImpl implements DesignService {
 		}
 	}
 	public final static String ACTOR_DESIGN_MANAGER = "designManager";
+	public final static String ACTOR_CRAFT_MANAGER = "craftManager";
 	public final static String TASK_VERIFY_DESIGN = "verifyDesign";
 	public final static String TASK_COMPUTE_DESIGN_COST = "computeDesignCost";
 	public final static String TASK_UPLOAD_DESIGN = "uploadDegisn";
