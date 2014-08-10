@@ -165,17 +165,17 @@ public class CommonController {
 			}
 		}
 		
-		if(isDesignManager(request)){
-			int totalNumber = jsonobj.getInt(DesignServiceImpl.ACTOR_DESIGN_MANAGER);
-			//工艺部任务数量
-			int craftNumber = jsonobj.getInt(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST)
-					+ jsonobj.getInt(DesignServiceImpl.TASK_CRAFT_SAMPLE)
-					+ jsonobj.getInt(DesignServiceImpl.TASK_CRAFT_PRODUCT);
-			//设计部任务数量
-			int designNumber = totalNumber - craftNumber;
-			jsonobj.put(DesignServiceImpl.ACTOR_DESIGN_MANAGER, designNumber);
-			jsonobj.put(DesignServiceImpl.ACTOR_CRAFT_MANAGER, craftNumber);
-		}
+		//设计部门分为设计部和工艺部
+		
+		int totalNumber = jsonobj.getInt(DesignServiceImpl.ACTOR_DESIGN_MANAGER);
+		// 工艺部任务数量
+		int craftNumber = jsonobj.getInt(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST)
+				+ jsonobj.getInt(DesignServiceImpl.TASK_CRAFT_SAMPLE)
+				+ jsonobj.getInt(DesignServiceImpl.TASK_CRAFT_PRODUCT);
+		// 设计部任务数量
+		int designNumber = totalNumber - craftNumber;
+		jsonobj.put(DesignServiceImpl.ACTOR_DESIGN_MANAGER, designNumber);
+		jsonobj.put(DesignServiceImpl.ACTOR_CRAFT_MANAGER, craftNumber);
 		
 		sendJson(response, jsonobj);
 	}
