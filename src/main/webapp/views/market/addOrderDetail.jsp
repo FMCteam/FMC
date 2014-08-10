@@ -422,7 +422,7 @@
 			</div>
 			<button class="btn btn-primary" onclick="history.back();">返回</button>
 			<div class="action" style="float:right">
-				<button class="btn btn-primary btn-rounded norepeat"  >
+				<button class="btn btn-primary btn-rounded norepeat"  onclick="return check()">
 					<i class="icon-ok icon-white"></i>提交询单
 				</button>
 			</div>
@@ -439,7 +439,32 @@
 	<!--maincontentinner-->
 </div>
 <!--maincontent-->
+<script>
+	function check(){
+		
+		var sample_clothes_picture = document.getElementById("sample_clothes_picture").value;
+		var reference_picture = document.getElementById("reference_picture").value;
+		var sample_clothes_picturestr = sample_clothes_picture.substr(sample_clothes_picture.indexOf(".")).toLowerCase();		
+		var reference_picturestr = reference_picture.substr(reference_picture.indexOf(".")).toLowerCase();
 
+		if(sample_clothes_picture.length != 0){
+			if(sample_clothes_picturestr == ".jpg" || sample_clothes_picturestr == ".png"){
+				if(reference_picture.length != 0){
+					if(reference_picturestr == ".jpg" || reference_picturestr == ".png"){
+						
+					}else{
+						alert("参考图片格式不对，请上传jpg或png格式的图片！");
+						
+						return false;
+					}
+				}
+			}else{
+				alert("样衣图片格式不对，请上传jpg或png格式的图片！");
+				return false;
+			}
+		}
+	}
+</script>
 
 
 <%@include file="/common/js_file.jsp"%>
@@ -449,4 +474,12 @@
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript">
+// $(function(){
+// 	alert(new Date())
+// 	$( "#input_day" ).datepicker({
+// 		defaultDate : new Date()
+// 	});
+// });
+</script>
 <%@include file="/common/footer.jsp"%>
