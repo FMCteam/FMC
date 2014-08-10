@@ -254,7 +254,11 @@ public class BuyServiceImpl implements BuyService {
 			boolean needcraft,String orderId,String samplepurName,Timestamp samplepurDate,String samplesupplierName) {
 		List<Craft>craftList =craftDAO.findByOrderId(Integer.parseInt(orderId));
 		Craft craft =craftList.get(0);
-		craft.setOrderSampleStatus("2");
+		if("0".equals(craft.getNeedCraft().toString())||craft.getNeedCraft()==0){
+			craft.setOrderSampleStatus("3");
+		}else{
+			craft.setOrderSampleStatus("2");
+		}
 		craftDAO.attachDirty(craft);
 		Order order = orderDAO.findById(Integer.parseInt(orderId));
 		order.setSamplepurName(samplepurName);
