@@ -262,6 +262,7 @@ function calculate(table_name,col_name,col_sum){
 			sum += parseInt($("td."+col_name[i]).eq(j).text());
 		}
 	}
+	alert(sum+"===========");
 	return sum;
 }
 
