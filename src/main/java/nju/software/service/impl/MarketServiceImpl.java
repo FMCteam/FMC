@@ -16,6 +16,7 @@ import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CheckRecordDAO;
 import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.DeliveryRecordDAO;
 import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
@@ -31,6 +32,7 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Customer;
+import nju.software.dataobject.DeliveryRecord;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
@@ -126,6 +128,8 @@ public class MarketServiceImpl implements MarketService {
 	private CheckRecordDAO checkRecordDAO;
 	@Autowired
 	private ServiceUtil service;
+	@Autowired
+	private DeliveryRecordDAO deliveryRecordDAO;
 
 	@Override
 	public List<Customer> getAddOrderList() {
@@ -755,6 +759,8 @@ public class MarketServiceImpl implements MarketService {
 		for(CheckRecord cr: list){
 			amount += cr.getQualifiedAmount();
 		}
+		List<DeliveryRecord> deliveryRecord = deliveryRecordDAO.findSampleRecordByOrderId(orderId);
+		model.put("deliveryRecord", deliveryRecord);
 		
 		model.put("number", amount);
 		model.put("total",  order.getTotalMoney() * 0.7);

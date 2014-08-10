@@ -94,7 +94,7 @@ public class ProduceServiceImpl implements ProduceService {
 	public void computeProduceCostSubmit(int orderId, long taskId, boolean result, String comment,
 			float cut_cost, float manage_cost, float nali_cost,
 			float ironing_cost, float swing_cost, float package_cost,
-			float other_cost, double ask_logistics_cost) {
+			float other_cost, float design_cost) {
 
 		Quote quote = QuoteDAO.findById(orderId);
 
@@ -108,6 +108,7 @@ public class ProduceServiceImpl implements ProduceService {
 			quote.setNailCost(nali_cost);
 			quote.setPackageCost(package_cost);
 			quote.setOtherCost(other_cost);
+			quote.setDesignCost(design_cost);
 			QuoteDAO.save(quote);
 		} else {
 			quote.setCutCost(cut_cost);
@@ -117,6 +118,7 @@ public class ProduceServiceImpl implements ProduceService {
 			quote.setNailCost(nali_cost);
 			quote.setPackageCost(package_cost);
 			quote.setOtherCost(other_cost);
+			quote.setDesignCost(design_cost);
 		}
 
 		float producecost = cut_cost + manage_cost + swing_cost + ironing_cost
@@ -124,9 +126,6 @@ public class ProduceServiceImpl implements ProduceService {
 				+ quote.getFabricCost() + quote.getAccessoryCost();
 		quote.setSingleCost(producecost);
 		QuoteDAO.attachDirty(quote);
-		Order order = orderDAO.findById(orderId);
-		order.setAskLogisticsCost(ask_logistics_cost);
-		orderDAO.attachDirty(order);
 
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PRODUCE, result);

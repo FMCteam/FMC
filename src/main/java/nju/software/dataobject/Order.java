@@ -91,8 +91,6 @@ public class Order implements java.io.Serializable {
 	private Timestamp masspurDate;//大货原料采购时间
 	private String masssupplierName;//大货供应商
 	
-	private double askLogisticsCost;//大货物流费（整单）
-	
 	
 	@Column(name = "sampleMoney", nullable = true, precision = 22, scale = 0)
 	public double getSampleMoney() {
@@ -174,16 +172,6 @@ public class Order implements java.io.Serializable {
 	public void setMasssupplierName(String masssupplierName) {
 		this.masssupplierName = masssupplierName;
 	}
-
-	@Column(name = "ask_logistics_cost", nullable = true, precision = 22, scale = 0)
-	public double getAskLogisticsCost() {
-		return askLogisticsCost;
-	}
-
-	public void setAskLogisticsCost(double askLogisticsCost) {
-		this.askLogisticsCost = askLogisticsCost;
-	}
-
 
 
 	//特殊工艺：水洗，激光，压皱。多选，并且不限于这三个预定的工艺。
@@ -300,8 +288,7 @@ public class Order implements java.io.Serializable {
 			double sampleMoney, String contractFile, int logisticsState,
 			String samplepurName, Timestamp samplepurDate,
 			String samplesupplierName, String masspurName,
-			Timestamp masspurDate, String masssupplierName,
-			double askLogisticsCost) {
+			Timestamp masspurDate, String masssupplierName) {
 		super();
 		this.orderProcessStateName = orderProcessStateName;
 		this.confirmDepositFile = confirmDepositFile;
@@ -351,7 +338,6 @@ public class Order implements java.io.Serializable {
 		this.masspurName = masspurName;
 		this.masspurDate = masspurDate;
 		this.masssupplierName = masssupplierName;
-		this.askLogisticsCost = askLogisticsCost;
 	}
 
 	// Property accessors
