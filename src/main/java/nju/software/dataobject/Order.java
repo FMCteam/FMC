@@ -91,6 +91,8 @@ public class Order implements java.io.Serializable {
 	private Timestamp masspurDate;//大货原料采购时间
 	private String masssupplierName;//大货供应商
 	
+	private double askLogisticsCost;//大货物流费（整单）
+	
 	
 	@Column(name = "sampleMoney", nullable = true, precision = 22, scale = 0)
 	public double getSampleMoney() {
@@ -171,6 +173,15 @@ public class Order implements java.io.Serializable {
 
 	public void setMasssupplierName(String masssupplierName) {
 		this.masssupplierName = masssupplierName;
+	}
+
+	@Column(name = "ask_logistics_cost", nullable = true, precision = 22, scale = 0)
+	public double getAskLogisticsCost() {
+		return askLogisticsCost;
+	}
+
+	public void setAskLogisticsCost(double askLogisticsCost) {
+		this.askLogisticsCost = askLogisticsCost;
 	}
 
 

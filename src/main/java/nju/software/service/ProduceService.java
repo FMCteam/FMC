@@ -21,7 +21,7 @@ public interface ProduceService {
 	public void computeProduceCostSubmit(int orderId, long taskId,boolean result, String comment,
 			float cut_cost, float manage_cost, float nali_cost,
 			float ironing_cost, float swing_cost, float package_cost,
-			float other_cost, float design_cost);
+			float other_cost, double ask_logistics_cost);
 
 	public List<Map<String, Object>> getProduceSampleList();
 

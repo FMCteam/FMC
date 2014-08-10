@@ -59,7 +59,7 @@
 								<td>锁订费用（单位：元）</td>
 								<td>包装费用（单位：元）</td>
 								<td>其他费用（单位：元）</td>
-								<td>设计费用（单位：元）</td>
+								<td>大货物流费(整单)（单位：元）</td>
 							</tr>
 
 							<tr>
@@ -69,8 +69,8 @@
 									id="package_cost" type="text" required="required" /></td>
 								<td><input class="span12" name="other_cost" id="other_cost"
 									type="text" required="required" /></td>
-								<td><input class="span12" name="design_cost"
-									id="design_cost" type="text"  value="0" readonly="readonly" /></td>
+								<td><input class="span12" name="ask_logistics_cost"
+									id="design_cost" type="text"  required="required"/></td>
 							</tr>
 							<tr>
 								<td class="title span2">意见</td>
