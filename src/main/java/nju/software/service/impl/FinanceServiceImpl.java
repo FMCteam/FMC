@@ -187,13 +187,13 @@ public class FinanceServiceImpl implements FinanceService {
 		Quote quote = (Quote) model.get("quote");
 		Float price = quote.getOuterPrice();
 		model.put("price", price);
-		model.put("number", order.getAskAmount());
 		model.put("total", order.getTotalMoney() * 0.3);
 		model.put("taskName", "确认大货定金");
 		model.put("tabName", "大货定金");
 		model.put("type", "大货定金");
 		model.put("url", "/finance/confirmDepositSubmit.do");
 		model.put("moneyName", "30%定金");
+		model.put("number", order.getAskAmount());
 		Float samplePrice = (float) 0;
 		if (order.getStyleSeason().equals("春夏")) {
 			samplePrice = (float) 200;
