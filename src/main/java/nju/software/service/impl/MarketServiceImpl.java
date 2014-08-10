@@ -647,7 +647,7 @@ public class MarketServiceImpl implements MarketService {
 		data.put(RESULT_QUOTE, Integer.parseInt(result));
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
-			if(result.equals("2")){//如果result的的值为1，即为未收取到样衣，流程会异常终止，将orderState设置为1
+			if(result.equals("2")){//如果result的的值为2，即为取消订单，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
 			}			
