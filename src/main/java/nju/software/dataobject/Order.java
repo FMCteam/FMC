@@ -300,7 +300,8 @@ public class Order implements java.io.Serializable {
 			double sampleMoney, String contractFile, int logisticsState,
 			String samplepurName, Timestamp samplepurDate,
 			String samplesupplierName, String masspurName,
-			Timestamp masspurDate, String masssupplierName) {
+			Timestamp masspurDate, String masssupplierName,
+			double askLogisticsCost) {
 		super();
 		this.orderProcessStateName = orderProcessStateName;
 		this.confirmDepositFile = confirmDepositFile;
@@ -350,6 +351,7 @@ public class Order implements java.io.Serializable {
 		this.masspurName = masspurName;
 		this.masspurDate = masspurDate;
 		this.masssupplierName = masssupplierName;
+		this.askLogisticsCost = askLogisticsCost;
 	}
 
 	// Property accessors
