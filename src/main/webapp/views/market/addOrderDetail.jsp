@@ -474,4 +474,12 @@
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript">
+// $(function(){
+// 	alert(new Date())
+// 	$( "#input_day" ).datepicker({
+// 		defaultDate : new Date()
+// 	});
+// });
+</script>
 <%@include file="/common/footer.jsp"%>
