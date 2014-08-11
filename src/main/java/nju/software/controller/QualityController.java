@@ -111,7 +111,8 @@ public class QualityController {
 			repairNumber = Integer.parseInt(request.getParameter("repair_number"));//本次质检回修数量
 		}
 		
-		Timestamp repairTime = this.getTime(request.getParameter("repair_time"));//本次质检回修日期
+		System.out.println(request.getParameter("repair_time").replace("T", " "));
+		Date repairTime = this.getTime(request.getParameter("repair_time").replace("T", " "));//本次质检回修日期
 		String repairSide = request.getParameter("repair_side");//本次质检回修加工方
 		
 		String invalidNumberStr = request.getParameter("invalid_number");
@@ -166,11 +167,11 @@ public class QualityController {
 		// marketService.modifyProduct(account.getUserId(),id,taskId,processId,null);
 	}
 	
-	public Timestamp getTime(String time) {
+	public Date getTime(String time) {
 		if(StringUtils.isEmpty(time)) 
 			return null;
-		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
-		return new Timestamp(outDate.getTime());
+		Date outDate = DateUtil.parse(time, DateUtil.noSecondFormat);
+		return outDate;
 	}
 	
 //	// 质量检查

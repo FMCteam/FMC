@@ -5,6 +5,7 @@ package nju.software.dataobject;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -25,7 +26,7 @@ public class CheckRecord {
 	private Integer orderId;// 外键
 	private Integer qualifiedAmount;//合格数量
 	private Integer repairAmount;// 回修数量（即每次质检不合格数量的总和）
-	private Timestamp repairTime;// 回修时间
+	private Date repairTime;// 回修时间
 	private String repairSide;// 回修加工方
 	private Integer invalidAmount;// 报废数量
 	
@@ -73,11 +74,11 @@ public class CheckRecord {
 	}
 
 	@Column(name = "repair_time", length = 19)
-	public Timestamp getRepairTime() {
+	public Date getRepairTime() {
 		return repairTime;
 	}
 
-	public void setRepairTime(Timestamp repairTime) {
+	public void setRepairTime(Date repairTime) {
 		this.repairTime = repairTime;
 	}
 
