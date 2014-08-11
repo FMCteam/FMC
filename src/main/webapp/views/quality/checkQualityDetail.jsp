@@ -146,7 +146,7 @@
 						<table class="table table-striped table-bordered table-hover detail">
 							<c:if test="${empty orderInfo.repairRecord}">
 								<tr>
-									<td class="title" style="width:22%">收货记录</td>
+									<td class="title" style="width:22%;background : red;">收货记录</td>
 									<td>无</td>
 								</tr>
 							</c:if>
