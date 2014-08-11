@@ -111,9 +111,10 @@ public class DesignServiceImpl implements DesignService {
 		craft.setOrderSampleStatus("1");
 		craftDAO.save(craft);
 		Quote quote = quoteDAO.findById(orderId);
-		//单件工艺制作费
+		//单件工艺制作费（不包含开版费用）
 		float craftCost = stampDutyMoney + washHangDyeMoney + laserMoney + embroideryMoney
-						  + crumpleMoney + openVersionMoney;
+						  + crumpleMoney;
+		
 		if (null == quote) {
 			quote = new Quote();
 			quote.setCraftCost(craftCost);
@@ -121,7 +122,15 @@ public class DesignServiceImpl implements DesignService {
 			quoteDAO.save(quote);
 		}
 		
+		//重新计算单件成本
+		float produceCost = quote.getCutCost() + quote.getManageCost()
+				+ quote.getDesignCost() + quote.getIroningCost()
+				+ quote.getNailCost() + quote.getPackageCost()
+				+ quote.getSwingCost() + quote.getOtherCost();
+		float singleCost = craftCost + quote.getFabricCost() + quote.getAccessoryCost() + produceCost;
+		
 		quote.setCraftCost(craftCost);
+		quote.setSingleCost(singleCost);
 		quoteDAO.attachDirty(quote);
 
 		Map<String, Object> data = new HashMap<String, Object>();

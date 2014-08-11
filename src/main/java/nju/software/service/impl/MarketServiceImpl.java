@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CheckRecordDAO;
+import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.DeliveryRecordDAO;
 import nju.software.dao.impl.DesignCadDAO;
@@ -31,6 +32,7 @@ import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.CheckRecord;
+import nju.software.dataobject.Craft;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.DeliveryRecord;
 import nju.software.dataobject.DesignCad;
@@ -126,6 +128,8 @@ public class MarketServiceImpl implements MarketService {
 	private MoneyDAO moneyDAO;
 	@Autowired
 	private CheckRecordDAO checkRecordDAO;
+	@Autowired
+	private CraftDAO craftDAO;
 	@Autowired
 	private ServiceUtil service;
 	@Autowired
@@ -290,6 +294,25 @@ public class MarketServiceImpl implements MarketService {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				//工艺报价
+				List<Craft> craftList = craftDAO.findByOrderId(source);
+				Craft craft = null;
+				boolean isNeedCraft = false;
+				if(craftList != null && craftList.size() > 0){
+					craft = craftList.get(0);
+				}
+				if(craft.getNeedCraft() == 1){//如果需要工艺
+					isNeedCraft = true;
+				}
+				try {
+					Craft newCraft = (Craft)copy(craft);
+					newCraft.setOrderId(orderId);
+					craftDAO.save(newCraft);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 				List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(source);
 				for(FabricCost fc : fabricCosts){
 					FabricCost newFC = new FabricCost();
@@ -327,6 +350,14 @@ public class MarketServiceImpl implements MarketService {
 				params.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
 						(int) order.getIsNeedSampleClothes());
 				params.put(RESULT_REORDER, true);
+				params.put(DesignServiceImpl.RESULT_NEED_CRAFT, isNeedCraft);//翻单是否需要工艺
+				
+				boolean isHaoDuoYi = false;
+				if(order.getIsHaoDuoYi() == 1){
+					isHaoDuoYi = true;
+				}
+				params.put(RESULT_IS_HAODUOYI, isHaoDuoYi);//翻单是否为好多衣客户
+				
 				long processId=doTMWorkFlowStart(params);
 				order.setProcessId(processId);
 				orderDAO.attachDirty(order);
@@ -986,8 +1017,13 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public Map<String, Object> getMergeQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithQuote(userId + "",
-				TASK_MERGE_QUOTE, orderId);
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(userId
+				+ "", TASK_MERGE_QUOTE, orderId);
+		// 工艺报价信息
+		Craft craft = craftDAO.findByOrderId(orderId).get(0);
+		model.put("craft", craft);
+
+		return model;
 	}
 
 	@Override
@@ -1329,28 +1365,30 @@ public class MarketServiceImpl implements MarketService {
 		Order order = orderDAO.findById(orderId);
 		model.put("order", order);
 		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
-		model.put("logistics", logisticsDAO.findById(orderId));
-		model.put("fabrics", fabricDAO.findByOrderId(orderId));
-		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
-		model.put("designCad", cadDAO.findByOrderId(orderId));
+		model.put("logistics", logisticsDAO.findById(orderId));//物流信息
+		model.put("fabrics", fabricDAO.findByOrderId(orderId));//面料信息
+		model.put("accessorys", accessoryDAO.findByOrderId(orderId));//辅料信息
+		model.put("designCad", cadDAO.findByOrderId(orderId));//制版信息
 		model.put("orderId", service.getOrderId(order));
+		model.put("craft", craftDAO.findByOrderId(orderId).get(0));//工艺信息
 
 		Produce produce = new Produce();
 		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
-		model.put("sample", produceDAO.findByExample(produce));
+		model.put("sample", produceDAO.findByExample(produce));//样衣生产信息
 
 		produce.setType(Produce.TYPE_PRODUCE);
-		model.put("produce", produceDAO.findByExample(produce));
+		model.put("produce", produceDAO.findByExample(produce));//大货生产信息
 
-		model.put("versions", versionDataDAO.findByOrderId(orderId));
+		model.put("versions", versionDataDAO.findByOrderId(orderId));//版型信息
 		
 		Quote quote = quoteDAO.findById(orderId);
-		model.put("quote", quote);
+		model.put("quote", quote);//报价信息
 		List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(orderId);
-		model.put("fabricCosts", fabricCosts);
+		model.put("fabricCosts", fabricCosts);//面料报价
 		List<AccessoryCost> accessoryCosts = accessoryCostDAO.findByOrderId(orderId);
-		model.put("accessoryCosts", accessoryCosts);
+		model.put("accessoryCosts", accessoryCosts);//辅料报价
+		
 		return model;
 	}
 

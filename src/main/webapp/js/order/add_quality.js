@@ -3,7 +3,7 @@
 function getInputString(col){
 	var inputString="";
 	var i=0;
-	for(;i<$("input."+col).length-2;i++){
+	for(;i<$("input."+col).length-1;i++){
 		inputString+=$("input."+col).eq(i).val()+",";
 	}
 	inputString+=$("input."+col).eq(i).val();
@@ -28,13 +28,28 @@ function getQuality(){
 	$("#good_xl").val(getInputString("good_xl"));
 	$("#good_xxl").val(getInputString("good_xxl"));
 	
-	$("#bad_color").val(getInputString("bad_color"));
+	/*$("#bad_color").val(getInputString("bad_color"));
 	$("#bad_xs").val(getInputString("bad_xs"));
 	$("#bad_s").val(getInputString("bad_s"));
 	$("#bad_m").val(getInputString("bad_m"));
 	$("#bad_l").val(getInputString("bad_l"));
 	$("#bad_xl").val(getInputString("bad_xl"));
-	$("#bad_xxl").val(getInputString("bad_xxl"));
+	$("#bad_xxl").val(getInputString("bad_xxl"));*/
+	
+/*	alert($("#good_color").val());
+	alert($("#good_xs").val());
+	alert($("#good_s").val());
+	alert($("#good_m").val());
+	alert($("#good_l").val());
+	alert($("#good_xl").val());
+	alert($("#good_xxl").val());
+	alert($("#bad_color").val());
+	alert($("#bad_xs").val());
+	alert($("#bad_s").val());
+	alert($("#bad_m").val());
+	alert($("#bad_l").val());
+	alert($("#bad_xl").val());
+	alert($("#bad_xxl").val());*/
 
 	return confirm('确认提交？');
 }

@@ -79,17 +79,17 @@
 									<td><input class="span12 good_color" type="text"
 										value="${produced.color}" readonly="readonly"/></td>
 									<td><input class="span12 good_xs" type="number"
-										min="0" required="required"/></td>
+										min="0" required="required"  value="0"/></td>
 									<td><input class="span12 good_s" type="number"
-										min="0" required="required"/></td>
+										min="0" required="required"   value="0"/></td>
 									<td><input class="span12 good_m" type="number"
-										min="0" required="required"/></td>
+										min="0" required="required"   value="0"/></td>
 									<td><input class="span12 good_l" type="number"
-										min="0" required="required"/></td>
+										min="0" required="required"   value="0"/></td>
 									<td><input class="span12 good_xl" type="number"
-										min="0" required="required"/></td>
+										min="0" required="required"   value="0"/></td>
 									<td><input class="span12 good_xxl" type="number"
-										min="0" required="required"/></td>
+										min="0" required="required"   value="0"/></td>
 								</tr>
 							</c:forEach>
 							<!-- 
@@ -126,11 +126,11 @@
 							<tr>
 								<td class="title" colspan="1">加工方</td>
 								<td>
-									<input name="repair_side" class="span12" type="number" />
+									<input name="repair_side" class="span12" type="text"  required="required"/>
 								</td>
 								<td class="title" colspan="1">本次回修数量</td>
 								<td>
-									<input name="repair_number" class="span12" type="number" min="0" />
+									<input name="repair_number" class="span12" type="number" min="0"  value="0"/>
 								</td>
 								<td class="title" colspan="1">日期</td>
 								<td>
@@ -146,7 +146,7 @@
 						<table class="table table-striped table-bordered table-hover detail">
 							<c:if test="${empty orderInfo.repairRecord}">
 								<tr>
-									<td class="title" style="width:22%">收货记录</td>
+									<td class="title" style="width:22%;background : red;">收货记录</td>
 									<td>无</td>
 								</tr>
 							</c:if>
@@ -157,6 +157,7 @@
 									<td class="title">加工方</td>
 									<td class="title">回修数量</td>
 									<td class="title">合格实收数量</td>
+									<td class="title">报废数量</td>
 								</tr>
 								<c:forEach var="repairRecord" items="${orderInfo.repairRecord}">
 									<tr>
@@ -164,6 +165,7 @@
 										<td>${repairRecord.repairSide}</td>
 										<td>${repairRecord.repairAmount}</td>
 										<td>${repairRecord.qualifiedAmount}</td>
+										<td>${repairRecord.invalidAmount}</td>
 									</tr>
 								</c:forEach>
 							</c:if>
@@ -201,8 +203,6 @@
 
 		</div>
 		<!--row-fluid-->
-
-
 
 		<div class="footer">
 			<div class="footer-left">

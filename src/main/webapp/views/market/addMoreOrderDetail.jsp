@@ -537,8 +537,8 @@
 								<tr>
 									<td>${fabric.fabricName}</td>
 									<td>${fabric.tearPerMeter}</td>
-									<td>${fabric.price}</td>
 									<td>${fabric.costPerMeter}</td>
+									<td>${fabric.price}</td>
 								</tr>
 							</c:forEach>
 							<tr>
@@ -552,8 +552,8 @@
 								<tr>
 									<td>${accessory.accessoryName}</td>
 									<td>${accessory.tearPerPiece}</td>
-									<td>${accessory.price}</td>
 									<td>${accessory.costPerPiece}</td>
+									<td>${accessory.price}</td>
 								</tr>
 							</c:forEach>
 							<tr>
@@ -563,6 +563,29 @@
 								<td class="title">辅料总计</td>
 								<td>${orderModel.quote.accessoryCost}</td>
 							</tr>
+							
+							<c:if test="${orderModel.craft.needCraft == 1}">
+								<tr>
+									<td class="title" rowspan="3">工艺报价</td>
+									<td class="title">印花费（单件）</td>
+									<td class="title">水洗吊染费（单件）</td>
+									<td class="title">激光费（单件）</td>
+									<td class="title">刺绣费（单件）</td>
+								</tr>
+								<tr>
+									<td>${orderModel.craft.stampDutyMoney}</td>
+									<td>${orderModel.craft.washHangDyeMoney}</td>
+									<td>${orderModel.craft.laserMoney}</td>
+									<td>${orderModel.craft.embroideryMoney}</td>
+								</tr>
+								<tr>
+									<td class="title">压皱费（单件）</td>
+									<td>${orderModel.craft.crumpleMoney}</td>
+									<td class="title">开版费（整体）</td>
+									<td>${orderModel.craft.openVersionMoney}</td>
+								</tr>
+							</c:if>
+							
 							<tr>
 								<td class="title" rowspan="4">其他成本</td>
 								<td class="title">裁剪费用</td>
@@ -589,8 +612,9 @@
 								<td>${orderModel.quote.otherCost}</td>
 								<td>${orderModel.quote.designCost}</td>
 							</tr>
+							
 							<tr>
-								<td class="title" ="2">费用核算</td>
+								<td class="title" rowspan="2">费用核算</td>
 								<td class="title">成本总计</td>
 								<td class="title">生产报价</td>
 								<td class="title">单件利润</td>
