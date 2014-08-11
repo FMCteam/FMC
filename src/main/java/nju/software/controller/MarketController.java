@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
+import nju.software.dao.impl.DeliveryRecordDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
@@ -92,7 +93,8 @@ public class MarketController {
 	private CustomerService customerService;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
-
+	@Autowired
+	private DeliveryRecordDAO deliveryRecordDAO;
 	@Autowired
 	private JavaMailUtil javaMailUtil;
 	@Autowired

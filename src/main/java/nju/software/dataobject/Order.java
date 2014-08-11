@@ -174,7 +174,6 @@ public class Order implements java.io.Serializable {
 	}
 
 
-
 	//特殊工艺：水洗，激光，压皱。多选，并且不限于这三个预定的工艺。
 	//采用使用“|”符号分隔。比如"shuixi|jiguang|其它",表明使用了水洗和激光的预定工艺，以及添加的“其它”工艺。
 	public static enum SpecialProcessType {

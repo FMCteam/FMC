@@ -139,12 +139,7 @@ public class QualityServiceImpl implements QualityService {
 			return msg;
 		}
 		
-		//如果选择"保存本次质检"但是合格总数+报废总数等于应收总数（应该选择"完成最终质检"），返回false;
-		if (isFinal.equals("false")
-				&& ((thisCheckTotalAmount + historyCheckTotalAmount) == totalProduceAmount)) {
-			msg = "所有产品已经完成质量检查，请选择完成最终质检";
-			return msg;
-		}
+		
 		
 		//如果选择"完成最终质检"但是合格总数+报废总数不等于应收总数，返回false;
 		if (isFinal.equals("true")
@@ -153,26 +148,36 @@ public class QualityServiceImpl implements QualityService {
 			return msg;
 		}
 		
-		checkRecord.setQualifiedAmount(thisCheckQualifiedAmount);
-		checkRecordDAO.save(checkRecord);
-		int recordId = checkRecord.getRecordId();
+		//如果选择"保存本次质检"但是合格总数+报废总数等于应收总数（应该选择"完成最终质检"），返回false;
+				if (isFinal.equals("false")
+						&& ((thisCheckTotalAmount + historyCheckTotalAmount) == totalProduceAmount)) {
+					msg = "所有产品已经完成质量检查，请选择完成最终质检";
+				}
+		
+		if(!(isFinal.equals("true")
+				&& ((thisCheckTotalAmount + historyCheckTotalAmount) == totalProduceAmount))){
+			checkRecord.setQualifiedAmount(thisCheckQualifiedAmount);
+			checkRecordDAO.save(checkRecord);
+			int recordId = checkRecord.getRecordId();
 
-		CheckDetail checkDetail = new CheckDetail();
-		checkDetail.setRecordId(recordId);
-		for (int i = 0; i < goodList.size(); i++) {
-			Produce produce = goodList.get(i);
-			checkDetail.setColor(produce.getColor());
-			checkDetail.setXs(produce.getXs());
-			checkDetail.setS(produce.getS());
-			checkDetail.setM(produce.getM());
-			checkDetail.setL(produce.getL());
-			checkDetail.setXl(produce.getXl());
-			checkDetail.setXxl(produce.getXxl());
-			checkDetail.setCheckAmount(thisCheckQualifiedAmount);
-			checkDetail.setCheckResult(CHECK_RESULT_QUALITY);
+			CheckDetail checkDetail = new CheckDetail();
+			checkDetail.setRecordId(recordId);
+			for (int i = 0; i < goodList.size(); i++) {
+				Produce produce = goodList.get(i);
+				checkDetail.setColor(produce.getColor());
+				checkDetail.setXs(produce.getXs());
+				checkDetail.setS(produce.getS());
+				checkDetail.setM(produce.getM());
+				checkDetail.setL(produce.getL());
+				checkDetail.setXl(produce.getXl());
+				checkDetail.setXxl(produce.getXxl());
+				checkDetail.setCheckAmount(thisCheckQualifiedAmount);
+				checkDetail.setCheckResult(CHECK_RESULT_QUALITY);
 
-			checkDetailDAO.save(checkDetail);
-		}
+				checkDetailDAO.save(checkDetail);
+			}
+		}		
+		
 
 //		for (int i = 0; i < badList.size(); i++) {
 //			Produce produce = badList.get(i);

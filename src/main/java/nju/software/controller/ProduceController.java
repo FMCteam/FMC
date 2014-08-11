@@ -224,7 +224,8 @@ public class ProduceController {
 		String other_cost = request.getParameter("other_cost");
 	    //设计费用
 		String design_cost = request.getParameter("design_cost");
-		
+		//大货物流费（整单）
+		//String ask_logistics_cost = request.getParameter("ask_logistics_cost");
 		
 		//生产报价提交，默认验证通过
 		produceService.computeProduceCostSubmit(

@@ -189,10 +189,10 @@ table.tablesorter thead tr .headerSortDown {
 										class="uploadDegisn"></span></a></li>										
 								<li><a href="${ctx}/design/getTypeSettingSliceList.do">排版切片<span
 										class="typeSettingSlice"></span></a></li>
-								<li><a href="${ctx}/design/getModifyDesignList.do">大货生产验证<span
+<%-- 								<li><a href="${ctx}/design/getModifyDesignList.do">大货生产验证<span
 										class="modifyDesign"></span></a></li>
 								<li><a href="${ctx}/design/getConfirmDesignList.do">大货生产版型<span
-										class="confirmDesign"></span></a></li>
+										class="confirmDesign"></span></a></li> --%>
 								<!--
 								<li><a href="${ctx}/design/getNeedCraftSampleList.do">样衣工艺制作<span
 										class="craftSample"></span></a></li>
@@ -231,8 +231,8 @@ table.tablesorter thead tr .headerSortDown {
 										class="computePurchaseCost"></span></a></li>
 								<li><a href="${ctx }/buy/purchaseSampleMaterialList.do">样衣采购<span
 										class="purchaseSampleMaterial"></span></a></li>
-								<li><a href="${ctx }/buy/confirmPurchaseList.do">大货采购确认<span
-										class="confirmPurchase"></span></a></li>
+						<%-- 		<li><a href="${ctx }/buy/confirmPurchaseList.do">大货采购确认<span
+										class="confirmPurchase"></span></a></li> --%>
 								<li><a href="${ctx }/buy/purchaseMaterialList.do">大货面料采购确认<span
 										class="purchaseMaterial"></span></a></li>
 							</ul></li>
@@ -248,8 +248,8 @@ table.tablesorter thead tr .headerSortDown {
 								-->
 								<li><a href="${ctx }/produce/computeProduceCostList.do">生产成本验证并核算<span
 										class="computeProduceCost"></span></a></li>
-								<li><a href="${ctx }/produce/produceSampleList.do">样衣生产<span
-										class="produceSample"></span></a></li>
+								<%-- <li><a href="${ctx }/produce/produceSampleList.do">样衣生产<span
+										class="produceSample"></span></a></li> --%>
 								<li><a href="${ctx }/produce/produceList.do">大货批量生产<span
 										class="produce"></span></a></li>
 							</ul></li>

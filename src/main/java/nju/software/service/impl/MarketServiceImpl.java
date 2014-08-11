@@ -17,6 +17,7 @@ import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CheckRecordDAO;
 import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.DeliveryRecordDAO;
 import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
@@ -33,6 +34,7 @@ import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Craft;
 import nju.software.dataobject.Customer;
+import nju.software.dataobject.DeliveryRecord;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
@@ -130,6 +132,8 @@ public class MarketServiceImpl implements MarketService {
 	private CraftDAO craftDAO;
 	@Autowired
 	private ServiceUtil service;
+	@Autowired
+	private DeliveryRecordDAO deliveryRecordDAO;
 
 	@Override
 	public List<Customer> getAddOrderList() {
@@ -678,7 +682,7 @@ public class MarketServiceImpl implements MarketService {
 		data.put(RESULT_QUOTE, Integer.parseInt(result));
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
-			if(result.equals("2")){//如果result的的值为1，即为未收取到样衣，流程会异常终止，将orderState设置为1
+			if(result.equals("2")){//如果result的的值为2，即为取消订单，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
 			}			
@@ -786,6 +790,8 @@ public class MarketServiceImpl implements MarketService {
 		for(CheckRecord cr: list){
 			amount += cr.getQualifiedAmount();
 		}
+		List<DeliveryRecord> deliveryRecord = deliveryRecordDAO.findSampleRecordByOrderId(orderId);
+		model.put("deliveryRecord", deliveryRecord);
 		
 		model.put("number", amount);
 		model.put("total",  order.getTotalMoney() * 0.7);
