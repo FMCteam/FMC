@@ -192,7 +192,7 @@ public class BuyServiceImpl implements BuyService {
 					+ quote.getDesignCost() + quote.getIroningCost()
 					+ quote.getNailCost() + quote.getPackageCost()
 					+ quote.getSwingCost() + quote.getOtherCost()
-					+ all_accessory_prices + all_fabric_prices;
+					+ all_accessory_prices + all_fabric_prices + quote.getCraftCost();
 
 			quote.setSingleCost(singleCost);
 			quoteDAO.attachDirty(quote);

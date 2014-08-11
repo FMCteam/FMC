@@ -192,7 +192,7 @@ public class DesignController {
 			crumpleMoney = "0";
 			openVersionMoney = "0";
 		}
-		//生产报价提交
+		//设计工艺报价提交
 		designService.computeDesignCostSubmit(
 				orderId,
 				taskId,

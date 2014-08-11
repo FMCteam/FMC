@@ -485,7 +485,7 @@ public class MarketController {
 				.getParameter("is_need_sample_clothes"));
 		String orderSource = request.getParameter("order_source");
 		String is_haoduoyi = request.getParameter("ishaoduoyi");
-		Short ishaoduoyi = Short.parseShort(is_haoduoyi);
+		Short ishaoduoyi = Short.parseShort(is_haoduoyi);//是否为好多衣客户
 		// 面料数据
 		String fabric_names = request.getParameter("fabric_name");
 		String fabric_amounts = request.getParameter("fabric_amount");
@@ -706,10 +706,14 @@ public class MarketController {
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
         order.setIsHaoDuoYi(ishaoduoyi);
+
 		marketService.addMoreOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, versions, cad, request);
 
-		JavaMailUtil.send();
+		//给客户邮箱发送订单信息
+		marketService.sendOrderInfoViaEmail(order, customer);
+		//给客户手机发送订单信息
+		marketService.sendOrderInfoViaPhone(order, customer);
 
 		return "redirect:/market/addOrderList.do";
 	}
