@@ -38,6 +38,27 @@
 		<td class="title">辅料总计</td>
 		<td>${orderInfo.quote.accessoryCost}</td>
 	</tr>
+	<c:if test="${orderInfo.craft.needCraft == 1}">
+		<tr>
+			<td class="title" rowspan="3">工艺报价</td>
+			<td class="title">印花费（单件）</td>
+			<td class="title">水洗吊染费（单件）</td>
+			<td class="title">激光费（单件）</td>
+			<td class="title">刺绣费（单件）</td>
+		</tr>
+		<tr>
+			<td>${orderInfo.craft.stampDutyMoney}</td>
+			<td>${orderInfo.craft.washHangDyeMoney}</td>
+			<td>${orderInfo.craft.laserMoney}</td>
+			<td>${orderInfo.craft.embroideryMoney}</td>
+		</tr>
+		<tr>
+			<td class="title">压皱费（单件）</td>
+			<td>${orderInfo.craft.crumpleMoney}</td>
+			<td class="title">开版费（整体）</td>
+			<td>${orderInfo.craft.openVersionMoney}</td>
+		</tr>
+	</c:if>
 	<tr>
 		<td class="title" rowspan="4">其他成本</td>
 		<td class="title">裁剪费用（单件）</td>
@@ -84,6 +105,7 @@
 		<input class="span12" type="hidden" name="orderInfoquoteNailCost" value="${orderInfo.quote.nailCost }" />
 		<input class="span12" type="hidden" name="orderInfoquotePackageCost" value="${orderInfo.quote.packageCost }" />
 		<input class="span12" type="hidden" name="orderInfoquoteOtherCost" value="${orderInfo.quote.otherCost }" />
+		<input class="span12" type="hidden" name="orderInfoquoteCraftCost" value="${orderInfo.quote.craftCost }" />
 		<input class="span12" type="hidden" name="orderInfoquoteSingleCost" value="${orderInfo.quote.singleCost }" />
 		<input class="span12" type="hidden" name="orderInfoquoteInnerPrice" value="${orderInfo.quote.innerPrice }" />
 		  
