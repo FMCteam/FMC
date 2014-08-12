@@ -1778,6 +1778,9 @@ public class MarketController {
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("processId");
 		long processId = Long.parseLong(s_processId);
+		
+		System.out.println(request.getParameter("tof"));
+		
 		boolean comfirmworksheet = Boolean.parseBoolean(request
 				.getParameter("tof"));
 		// 大货加工要求
