@@ -477,7 +477,8 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	}
 	public List<Order> findResultsByCustomerId(int customerId) {
 		try {
-			String query = "from Order as model where model.customerId ="+customerId;
+			//查询可翻单的订单，根据客户id及订单状态('Done')查询     hcj
+			String query = "from Order as model where model.customerId ="+customerId+"and model.orderState='Done'";
 			
 			List<Order> c= getHibernateTemplate().find(query);
 			

@@ -422,10 +422,15 @@ public class MarketController {
 	public String addMoreOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String cid = request.getParameter("cid");
+		String result = request.getParameter("result");
+		if(result != null){
+			request.setAttribute("notify", "该订单为好多衣客户所下订单，暂时无法进行翻单！");
+		}
 		List<Map<String, Object>> list = marketService.getAddMoreOrderList(Integer.parseInt(cid));
 		model.put("list", list);
 		model.addAttribute("taskName", "下翻单");
 		model.addAttribute("url", "/market/addMoreOrderDetail.do");
+		model.addAttribute("cid", cid);
 		return "/market/addMoreOrderList";
 	}
 	
@@ -435,8 +440,13 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
 		int id = Integer.parseInt(s_id);
-		
+		String cid = request.getParameter("cid");
 		Map<String, Object> orderModel = marketService.getAddMoreOrderDetail(id);
+		if(orderModel == null){
+			//request.setAttribute("notify", "该订单未签订过大货合同，无法进行翻单！");
+			//若无法进行翻单，返回翻单列表
+			return "redirect:/market/addMoreOrderList.do?result=0&cid="+cid;
+		}
 		model.addAttribute("orderModel", orderModel);
 		model.addAttribute("initId",id);
 		HttpSession session = request.getSession();
@@ -1777,7 +1787,7 @@ public class MarketController {
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("processId");
-		long processId = Long.parseLong(s_processId);
+		long processId = Long.parseLong(s_processId);	
 		boolean comfirmworksheet = Boolean.parseBoolean(request
 				.getParameter("tof"));
 		// 大货加工要求

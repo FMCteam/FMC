@@ -61,7 +61,7 @@
 										<option value="EMS">EMS</option>
 								</select></td>
 								<td><input type="text" name="number" required="required" /></td>
-								<td><input type="text" name="price" required="required" /></td>
+								<td><input type="text" name="price" required="required"  value="${orderInfo.quote.designCost }"  readonly="readonly"/></td>
 							</tr>
 							<tr>
 								<td class="title">其他备注</td>

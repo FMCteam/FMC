@@ -1364,6 +1364,9 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Order order = orderDAO.findById(orderId);
 		model.put("order", order);
+		if(order.getIsHaoDuoYi() == 1){
+			return null;
+		}
 		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 		model.put("logistics", logisticsDAO.findById(orderId));//物流信息
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));//面料信息

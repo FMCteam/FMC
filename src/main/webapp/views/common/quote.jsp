@@ -57,7 +57,7 @@
 		<td class="title">锁订费用（单件）</td>
 		<td class="title">包装费用（单件）</td>
 		<td class="title">其他费用（单件）</td>
-		<td class="title">设计费用（整体）</td>
+		<td class="title">大货物流费（整体）</td>
 	</tr>
 	<tr>
 		<td>${orderInfo.quote.swingCost}</td>

@@ -580,6 +580,9 @@ public class OrderServiceImpl implements OrderService {
 		Map<String, Object> model = new HashMap<String, Object>();
 		//TaskSummary task = jbpmAPIUtil.getTask(actorId, taskName, orderId);
 		Order order = orderDAO.findById(orderId);
+		if(order.getConfirmDepositFile() != null){
+			return null;
+		}
 		//model.put("task", task);
 		//model.put("taskId", task.getId());
 		model.put("order", order);
