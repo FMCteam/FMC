@@ -27,7 +27,11 @@ public interface LogisticsService {
 	// ===========================产品入库=================================
 	public List<Map<String, Object>> getPackageList();
 
+	public List<Map<String, Object>> getPackageHaoDuoYiList();
+	
 	public List<Map<String, Object>> getWarehouseList();
+	
+	public List<Map<String, Object>> getWarehouseHaoDuoYiList();
 
 	public Map<String, Object> getPackageDetail(Integer orderId);
 	
@@ -42,7 +46,7 @@ public interface LogisticsService {
 	public List<Map<String, Object>> getMobileWarehouseList();
 
 	public Map<String, Object> getMobileWarehouseDetail(int orderId);
-
+	
 	public boolean updatePackage(int packageId, String warehouse, String shelf,
 			String location);
 
@@ -79,5 +83,7 @@ public interface LogisticsService {
 	public List<Map<String, Object>> getSearchSendSampleList(
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
+
+	List<Map<String, Object>> getMobileWarehouseHaoDuoYiList();
 
 }

@@ -35,6 +35,15 @@ $(function() {
 					<td>${orderInfo.order.customerCompany}</td>
 				</tr>
 			</c:forEach>
+			<c:forEach var="orderInfo" items="${orderHaoDuoYiList}">
+				<tr>
+					<td><a
+						href="${ctx}/logistics/mobile/warehouseDetail.do?orderId=${orderInfo.order.orderId}">${orderInfo.orderId }</a>
+					</td>
+					<td>${orderInfo.order.customerName}</td>
+					<td>${orderInfo.order.customerCompany}</td>
+				</tr>
+			</c:forEach>
 		</table>
 	</section>
 </body>

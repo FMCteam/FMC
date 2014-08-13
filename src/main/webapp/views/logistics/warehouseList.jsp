@@ -45,7 +45,41 @@
 								</td>
 							</tr>
 						</c:forEach>
+						<c:forEach var="model" items="${packageHaoDuoYiList}">
+							<tr>
+								<td>${model.orderId}</td>
+								<td style="padding:8px 0px 0px 0px;"><c:if
+										test="${model.order.sampleClothesPicture!=null}">
+										<img width="60px" height="100%"
+											src="${ctx}/common/getPic.do?type=sample&orderId=${model.order.orderId}"></img>
+									</c:if></td>
+								<td>${model.employee.employeeName}</td>
+								<td>${model.order.customerName}</td>
+								<td>${model.order.customerCompany}</td>
+								<td>${model.taskTime}</td>
+								<td><a
+									href="${ctx}/logistics/packageDetail.do?orderId=${model.order.orderId}">装箱</a>
+								</td>
+							</tr>
+						</c:forEach>
 						<c:forEach var="model" items="${warehouseList}">
+							<tr>
+								<td>${model.orderId}</td>
+								<td style="padding:8px 0px 0px 0px;"><c:if
+										test="${model.order.sampleClothesPicture!=null}">
+										<img width="60px" height="100%"
+											src="${ctx}/common/getPic.do?type=sample&orderId=${model.order.orderId}"></img>
+									</c:if></td>
+								<td>${model.employee.employeeName}</td>
+								<td>${model.order.customerName}</td>
+								<td>${model.order.customerCompany}</td>
+								<td>${model.taskTime}</td>
+								<td><a
+									href="${ctx}/logistics/warehouseDetail.do?orderId=${model.order.orderId}">入库</a>
+								</td>
+							</tr>
+						</c:forEach>
+						<c:forEach var="model" items="${warehouseHaoDuoYiList}">
 							<tr>
 								<td>${model.orderId}</td>
 								<td style="padding:8px 0px 0px 0px;"><c:if

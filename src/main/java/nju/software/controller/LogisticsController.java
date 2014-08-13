@@ -171,8 +171,12 @@ public class LogisticsController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> packageList = logisticsService
 				.getPackageList();
+		List<Map<String, Object>> packageHaoDuoYiList = logisticsService
+				.getPackageHaoDuoYiList();
 		List<Map<String, Object>> warehouseList = logisticsService
 				.getWarehouseList();
+		List<Map<String, Object>> warehouseHaoDuoYiList = logisticsService
+				.getWarehouseHaoDuoYiList();
 //		if (packageList.size() == 0) {
 //			jbpmTest.completeCheckQuality("1");
 //			packageList = logisticsService.getPackageList();
@@ -180,10 +184,11 @@ public class LogisticsController {
 //		}
 
 		model.put("packageList", packageList);
+		model.put("packageHaoDuoYiList", packageHaoDuoYiList);
 		model.put("warehouseList", warehouseList);
+		model.put("warehouseHaoDuoYiList", warehouseHaoDuoYiList);
 		return "/logistics/warehouseList";
 	}
-
 	
 	@RequestMapping(value = "/logistics/packageDetail.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -195,7 +200,7 @@ public class LogisticsController {
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/packageDetail";
 	}
-
+	
 	@RequestMapping(value = "/logistics/addPackage.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String addPackage(HttpServletRequest request,
@@ -235,7 +240,9 @@ public class LogisticsController {
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		logisticsService.packageSubmit(orderId);
+		
 		return "forward:/logistics/warehouseDetail.do";
+		
 	}
 
 	@RequestMapping(value = "/logistics/warehouseDetail.do")
@@ -248,7 +255,7 @@ public class LogisticsController {
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/warehouseDetail";
 	}
-
+	
 	@RequestMapping(value = "/logistics/printWarehouseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String printWarehouseDetail(HttpServletRequest request,
@@ -275,20 +282,25 @@ public class LogisticsController {
 		List<Map<String, Object>> orderList = logisticsService
 				.getMobileWarehouseList();
 		model.addAttribute("orderList", orderList);
+		
+		List<Map<String, Object>> orderHaoDuoYiList = logisticsService
+				.getMobileWarehouseHaoDuoYiList();
+		model.addAttribute("orderHaoDuoYiList", orderHaoDuoYiList);
+		
 		return "/logistics/mobile/warehouseList";
 	}
-
+	
 	@RequestMapping(value = "/logistics/mobile/warehouseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String mobileWarehouseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
-		Map<String, Object> orderInfo = logisticsService
-				.getMobileWarehouseDetail(orderId);
+		Map<String, Object> orderInfo = logisticsService.getMobileWarehouseDetail(orderId);
+
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/mobile/warehouseDetail";
 	}
-
+	
 	@RequestMapping(value = "/logistics/mobile/updatePackage.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String mobileUpdatePackage(HttpServletRequest request,
@@ -308,6 +320,7 @@ public class LogisticsController {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		Long taskId = Long.parseLong(request.getParameter("taskId"));
 		logisticsService.mobileWarehouseSubmit(taskId, orderId);
+		
 		return "forward:/logistics/mobile/warehouseList.do";
 	}
 
