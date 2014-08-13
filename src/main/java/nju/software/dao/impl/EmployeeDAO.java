@@ -125,8 +125,8 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 				+ ", value: " + value);
 		try {
 			String queryString = "from Employee as model where model."
-					+ propertyName + "= ?";
-			return getHibernateTemplate().find(queryString, value);
+					+ propertyName + " like ?";
+			return getHibernateTemplate().find(queryString, "%"+(String)value+"%");
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
 			throw re;
