@@ -200,7 +200,10 @@ public class QualityServiceImpl implements QualityService {
 		}
 		
 		//如果是最后一次质检，需要执行completeTask方法
+		short haoDuoYi = orderDAO.findById(orderId).getIsHaoDuoYi();
+		boolean isHaoDuoYi = (haoDuoYi == 1) ? true : false;
 		Map<String, Object> data = new HashMap<>();
+		data.put("isHaoDuoYi", isHaoDuoYi);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_QUALITY_MANAGER);
 			return msg;
