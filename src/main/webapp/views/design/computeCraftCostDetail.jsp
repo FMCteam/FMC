@@ -52,7 +52,7 @@
 								<td class="title" colspan="1">激光费（元/件）</td>
 								<td class="title" colspan="1">刺绣费（元/件）</td>
 								<td class="title" colspan="1">压皱费（元/件）</td>
-								<td class="title" colspan="1">开版费用（元/件）</td>
+								<td class="title" colspan="1">开版费用（整单）</td>
 							</tr>
 							<tr>
 								<td><input class="span12" type="text" name="stampDutyMoney" value="0" /></td>
