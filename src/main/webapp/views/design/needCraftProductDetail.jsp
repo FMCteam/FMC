@@ -36,6 +36,7 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			<div class="tab-pane active" id="craft">
+				<form  method="post" enctype="multipart/form-data">
 						<table class="table table-striped table-bordered table-hover detail">
 						    <tr>
 								<td class="title">客户工艺要求：</td>
@@ -88,8 +89,8 @@
 						   class="btn btn-primary">完成大货工艺制作</a>
 			        </div>
 						
-				 
- 				</div>				
+				 </form>
+ 			</div>				
 			</div>
 
 			<input type="hidden" value="${orderInfo.craft.craftFileUrl}"/>

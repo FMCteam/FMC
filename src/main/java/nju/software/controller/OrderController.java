@@ -116,10 +116,8 @@ public class OrderController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
-		System.out.println("ordernumber:"+ordernumber+"---------\n"+"customername:"+customername+"---------\n"+"stylename:"+stylename+"---------\n"+"employeename:"+employeename+"---------\n"+"startdate:"+startdate+"---------\n"+"enddate:"+enddate+"---------\n");
+		//System.out.println("ordernumber:"+ordernumber+"---------\n"+"customername:"+customername+"---------\n"+"stylename:"+stylename+"---------\n"+"employeename:"+employeename+"---------\n"+"startdate:"+startdate+"---------\n"+"enddate:"+enddate+"---------\n");
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
-		System.out.println(employees);
-		System.out.println("----------------------");
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
@@ -141,7 +139,7 @@ public class OrderController {
 		if(list!=null&&list.size()!=0){
 			model.addAttribute("pages", list.get(0).get("pages"));
 		}
-		System.out.println("===========ok:"+list.size());
+		//System.out.println("===========ok:"+list.size());
 		return "account/modifyOrderList";
 	}	
 	
@@ -589,7 +587,6 @@ public class OrderController {
 			model.put("list", resultlist);
 			model.addAttribute("taskName", "被终止订单列表");
 			model.addAttribute("url", "/order/orderDetail.do");
-  
 			return "/order/endList";
 		}		
 		

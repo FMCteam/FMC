@@ -606,7 +606,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
  		if(!StringUtils.isEmpty(stylename))
 			criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
- 		if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
+ 		/*if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
 		{
 			String strformat = "yyyy-MM-dd HH:mm:ss";
 			String strformat2 = "yyyy-MM-dd";
@@ -621,10 +621,34 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	        System.out.println("bengin date is:"+begindate1+"end date is :"+enddate1);
 			}
 			criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
+		}*/
+ 		if(!(StringUtils.isEmpty(startdate))){
+			String strformat = "yyyy-MM-dd HH:mm:ss";
+			 DateUtil du = new DateUtil();
+		     Date begindate1 = null;
+		     if(startdate.length()==10){
+				startdate = startdate+" 00:00:00";
+		        begindate1 = du.parse(startdate, strformat);
+		        criteria.add(Restrictions.gt("orderTime",begindate1));
+		     }
+		     System.out.println(begindate1);
+		}
+		if(!(StringUtils.isEmpty(enddate))){
+			String strformat = "yyyy-MM-dd HH:mm:ss";
+			 DateUtil du = new DateUtil();
+		     Date enddate1 = null;
+		     if(enddate.length()==10){
+		    	 enddate = enddate+" 23:59:59";
+				enddate1 = du.parse(startdate, strformat);
+		        criteria.add(Restrictions.lt("orderTime",enddate1));
+		     }
+		     System.out.println(enddate1);
 		}
 		if(employeeIds!=null&&employeeIds.length !=0)
 		{
 			criteria.add(Restrictions.in("employeeId",employeeIds));
+		}else{
+			criteria.add(Restrictions.eq("employeeId",-1));//若模糊查询得到的专员列表为空，则增加一个不可能的条件，使订单列表的查询结果为空
 		}
 	    List<Order> orderList = criteria.list();		
 		return orderList;
@@ -639,7 +663,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	        criteria.add(Restrictions.eq("orderState", "A"));
 //	 		if (ordernumber != null)
 	 		if(!StringUtils.isEmpty(ordernumber))
-	 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
+	 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber)));
 //			if (customername != null)
 		 	if(!StringUtils.isEmpty(customername))
 				criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
@@ -648,7 +672,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 
 				criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
 //			if (startdate != null&& enddate!=null)
-			if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
+			/*if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
 			{
 				String strformat = "yyyy-MM-dd HH:mm:ss";
 				String strformat2 = "yyyy-MM-dd";
@@ -663,10 +687,32 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		        System.out.println("bengin date is:"+begindate1+"end date is :"+enddate1);
 				}
 				criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
+			}*/
+			if(!(StringUtils.isEmpty(startdate))){
+				String strformat = "yyyy-MM-dd HH:mm:ss";
+				 DateUtil du = new DateUtil();
+			     Date begindate1 = null;
+			     if(startdate.length()==10){
+					startdate = startdate+" 00:00:00";
+			        begindate1 = du.parse(startdate, strformat);
+			        criteria.add(Restrictions.gt("orderTime",begindate1));
+			     }
+			}
+			if(!(StringUtils.isEmpty(enddate))){
+				String strformat = "yyyy-MM-dd HH:mm:ss";
+				 DateUtil du = new DateUtil();
+			     Date enddate1 = null;
+			     if(enddate.length()==10){
+			    	 enddate = enddate+" 23:59:59";
+					enddate1 = du.parse(startdate, strformat);
+			        criteria.add(Restrictions.lt("orderTime",enddate1));
+			     }
 			}
 			if(employeeIds!=null&&employeeIds.length !=0)
 			{
 				criteria.add(Restrictions.in("employeeId",employeeIds));
+			}else{
+				criteria.add(Restrictions.eq("employeeId",-1));//若模糊查询得到的专员列表为空，则增加一个不可能的条件，使订单列表的查询结果为空
 			}
 		    List<Order> orderList = criteria.list();		
 			return orderList;

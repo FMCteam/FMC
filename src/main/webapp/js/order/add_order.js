@@ -503,5 +503,8 @@ function init(){
 		$("input[name='sample_clothes_address']").attr("disabled","disabled");
 		$("input[name='sample_clothes_remark']").attr("disabled","disabled");
 	}*/
+	var date = new Date();
+	$("#input_day").val(date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate());
+	$("#input_day").attr("readonly","readonly");
 
 }
