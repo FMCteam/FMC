@@ -111,7 +111,9 @@ public class CommonController {
 				LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
 		map.put(LogisticsServiceImpl.TASK_SEND_CLOTHES,
 				LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
-
+		map.put(LogisticsServiceImpl.TASK_WAREHOUSE_HAODUOYI,
+				LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
+		
 		map.put(QualityServiceImpl.TASK_CHECK_QUALITY,
 				QualityServiceImpl.ACTOR_QUALITY_MANAGER);
 	}
@@ -166,7 +168,6 @@ public class CommonController {
 		}
 		
 		//设计部门分为设计部和工艺部
-		
 		int totalNumber = jsonobj.getInt(DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 		// 工艺部任务数量
 		int craftNumber = jsonobj.getInt(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST)
@@ -176,6 +177,12 @@ public class CommonController {
 		int designNumber = totalNumber - craftNumber;
 		jsonobj.put(DesignServiceImpl.ACTOR_DESIGN_MANAGER, designNumber);
 		jsonobj.put(DesignServiceImpl.ACTOR_CRAFT_MANAGER, craftNumber);
+		
+		//入库包括好多衣和非好多衣客户
+		int warehouseNum = jsonobj.getInt(LogisticsServiceImpl.TASK_WAREHOUSE)
+				+ jsonobj.getInt(LogisticsServiceImpl.TASK_WAREHOUSE_HAODUOYI);
+		jsonobj.put(LogisticsServiceImpl.TASK_WAREHOUSE, warehouseNum);
+		
 		
 		sendJson(response, jsonobj);
 	}

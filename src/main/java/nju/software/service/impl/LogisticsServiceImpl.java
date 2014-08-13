@@ -211,18 +211,39 @@ public class LogisticsServiceImpl implements LogisticsService {
 		// TODO Auto-generated method stub
 		return getLogisticsList(TASK_WAREHOUSE, 0);
 	}
+	
+	@Override
+	public List<Map<String, Object>> getPackageHaoDuoYiList() {
+		// TODO Auto-generated method stub
+		return getLogisticsList(TASK_WAREHOUSE_HAODUOYI, 0);
+	}
 
 	@Override
 	public List<Map<String, Object>> getWarehouseList() {
 		// TODO Auto-generated method stub
 		return getLogisticsList(TASK_WAREHOUSE, 1);
 	}
+	
+	@Override
+	public List<Map<String, Object>> getWarehouseHaoDuoYiList() {
+		// TODO Auto-generated method stub
+		return getLogisticsList(TASK_WAREHOUSE_HAODUOYI, 1);
+	}
 
 	@Override
 	public Map<String, Object> getPackageDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String, Object> model = service.getBasicOrderModel(
-				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE, orderId);
+		Order order = orderDAO.findById(orderId);
+		short isHaoDuoYi = order.getIsHaoDuoYi();
+		Map<String, Object> model = null;
+		if(isHaoDuoYi == 1){
+			model = service.getBasicOrderModel(
+					ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE_HAODUOYI, orderId);
+		}else{
+			model = service.getBasicOrderModel(
+					ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE, orderId);
+		}
+		
 		List<Package> packages = packageDAO.findByOrderId(orderId);
 		List<Produce> produceList = produceDAO.findProduceByOrderId(orderId);
 		model.put("produceList", produceList);
@@ -231,6 +252,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 				packageDetailDAO.findByPackageList(packages));
 		return model;
 	}
+	
 
 	@Override
 	public Map<String, Object> getPrintWarehouseDetail(Integer orderId,
@@ -297,14 +319,45 @@ public class LogisticsServiceImpl implements LogisticsService {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Map<String, Object>> getMobileWarehouseHaoDuoYiList() {
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE_HAODUOYI);
+		List<Map<String, Object>> list = new ArrayList<>();
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			Map<String, Object> model = new HashMap<String, Object>();
+			Order order = orderDAO.findById(orderId);
+			model.put("order", order);
+			model.put("orderId", dateFormat2.format(order.getOrderTime())
+					+ String.format("%06d", order.getOrderId()));
+
+			if (order.getLogisticsState() == 1) {
+				list.add(model);
+			}
+		}
+		return list;
+	}
 
 	@Override
 	public Map<String, Object> getMobileWarehouseDetail(int orderId) {
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
-				TASK_WAREHOUSE, orderId);
 		Map<String, Object> model = new HashMap<String, Object>();
 		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
+		
 		Order order = orderDAO.findById(orderId);
+		short isHaoDuoYi = order.getIsHaoDuoYi();
+		TaskSummary task = null;
+		if (isHaoDuoYi == 1) {
+			task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
+					TASK_WAREHOUSE_HAODUOYI, orderId);
+		} else {
+			task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE,
+					orderId);
+		}
+		
 		model.put("order", order);
 		model.put("packs", packageDAO.findByOrderId(orderId));
 		model.put("task", task);
@@ -314,7 +367,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 						+ String.format("%06d", order.getOrderId()));
 		return model;
 	}
-
+	
 	@Override
 	public boolean updatePackage(int packageId, String warehouse, String shelf,
 			String location) {
@@ -352,6 +405,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 		data.put(RESULT_IS_HAODUOYI, is_hao_duo_yi);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+			//如果是好多衣，入库完则直接结束整个流程（无需发货）
+			if(is_hao_duo_yi){
+				order.setOrderState("Done");
+				orderDAO.merge(order);
+			}
+			
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -561,6 +620,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	public final static String TASK_RECEIVE_SAMPLE = "receiveSample";
 	public final static String TASK_SEND_SAMPLE = "sendSample";
 	public final static String TASK_WAREHOUSE = "warehouse";
+	public final static String TASK_WAREHOUSE_HAODUOYI = "warehouse_haoduoyi";
 	public final static String TASK_SEND_CLOTHES = "sendClothes";
 	public final static String RESULT_RECEIVE_SAMPLE = "receiveSample";
 	public final static String RESULT_SEND_SAMPLE = "sendSample";
