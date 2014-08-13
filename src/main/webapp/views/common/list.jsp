@@ -89,7 +89,7 @@
 					<td>${model.order.customerName}</td>
 					<td>${model.order.customerCompany}</td>
 					<td>${model.taskTime}</td>
-					<td><a href="${ctx}${url}?orderId=${model.order.orderId}">详情</a>
+					<td><a href="${ctx}${url}?orderId=${model.order.orderId}&cid=${cid}">详情</a>
 					</td>
 				</tr>
 			</c:forEach>

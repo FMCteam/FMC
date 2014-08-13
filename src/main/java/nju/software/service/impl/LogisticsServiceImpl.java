@@ -14,6 +14,7 @@ import nju.software.dao.impl.DeliveryRecordDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
+import nju.software.dao.impl.MoneyDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.PackageDAO;
 import nju.software.dao.impl.PackageDetailDAO;
@@ -22,6 +23,7 @@ import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.DeliveryRecord;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
@@ -341,6 +343,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 		boolean is_hao_duo_yi = (ishaoduoyi==1)?true:false;
 		if (order != null) {
 			order.setLogisticsState(2);
+			if(is_hao_duo_yi){
+				order.setOrderState("Done");
+			}
 			orderDAO.attachDirty(order);
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -549,6 +554,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 	private DeliveryRecordDAO deliveryRecordDAO;
 	@Autowired
 	private ServiceUtil service;
+	@Autowired
+	private MoneyDAO moneyDAO;
 
 	public final static String ACTOR_LOGISTICS_MANAGER = "logisticsManager";
 	public final static String TASK_RECEIVE_SAMPLE = "receiveSample";

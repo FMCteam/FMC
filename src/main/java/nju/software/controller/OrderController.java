@@ -93,6 +93,10 @@ public class OrderController {
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
+		String result = request.getParameter("result");
+		if(result != null){
+			request.setAttribute("notify", "该订单已签订过大货合同，无法进行修改！");
+		}
 		List<Map<String, Object>> orderModelList = orderService.getModifyOrderList();
 		model.put("list", orderModelList);
 		model.addAttribute("taskName", "修改订单");
@@ -149,6 +153,10 @@ public class OrderController {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		Map<String, Object> orderModel = orderService.getModifyOrderDetail(account.getUserId(), id);
+		if(orderModel == null){
+			//若该订单已签订过大货合同，则返回可修改订单列表
+			return "redirect:/account/modifyOrderList.do?result=0";
+		}
 		model.addAttribute("orderModel", orderModel);
 		return "account/modifyOrderDetail";
 	}

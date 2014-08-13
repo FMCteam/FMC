@@ -494,11 +494,14 @@ function init(){
 		}
 	});
 	
+	if($("input[name='is_need_sample_clothes']:checked").val()=="0"){
+		$(".sample_produce_table *").attr("disabled","disabled");
+	}
 	/*if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
 		$("input[name='sample_clothes_name']").attr("disabled","disabled");
 		$("input[name='sample_clothes_phone']").attr("disabled","disabled");
 		$("input[name='sample_clothes_address']").attr("disabled","disabled");
 		$("input[name='sample_clothes_remark']").attr("disabled","disabled");
 	}*/
-	
+
 }
