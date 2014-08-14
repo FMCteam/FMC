@@ -47,8 +47,8 @@
 					<tr>
 						<td>优惠金额</td>
 						<td>总金额</td>
-						<td>上传合同（请上传jpg,png格式的图片）</td>
-						<td>上传首定金收据（请上传jpg,png格式的图片）</td>
+						<td style="background: #cc0000; "><a a style="color: #FFFFFF">上传合同（请上传jpg,png格式的图片）</a></td>
+						<td style="background: #cc0000; "><a style="color: #FFFFFF">上传首定金收据（请上传jpg,png格式的图片）</a></td>
 					</tr>
 					<tr>
 						<td><input name="discount" type="text" value="0" /><input name="sum" type="hidden" value="${orderInfo.quote.outerPrice*orderInfo.order.askAmount }"/></td>
