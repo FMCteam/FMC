@@ -36,6 +36,8 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			<div class="tab-pane active" id="craft">
+				<form action="${ctx}/design/needCraftProductSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
+	 			method="post" enctype="multipart/form-data" onsubmit="return confirm('确认完成大货工艺制作？')">
 						<table class="table table-striped table-bordered table-hover detail">
 						    <tr>
 								<td class="title">客户工艺要求：</td>
@@ -83,13 +85,14 @@
 						</table>
 					<button class="btn btn-primary" onclick="history.back();">返回</button>
 					<div class="action" style="float:right">
-						<a href="javascript:doPost();"
+						<!-- <a href="javascript:doPost();"
 						   onclick="return confirm('确认完成大货工艺制作？')"
-						   class="btn btn-primary">完成大货工艺制作</a>
+						   class="btn btn-primary">完成大货工艺制作</a> -->
+						   <input type="submit" class="btn btn-primary" value="完成大货工艺制作"/>
 			        </div>
 						
-				 
- 				</div>				
+				 </form>
+ 			</div>				
 			</div>
 
 			<input type="hidden" value="${orderInfo.craft.craftFileUrl}"/>
