@@ -456,7 +456,7 @@ public class FinanceServiceImpl implements FinanceService {
 
 				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
 						.getNodeInstances()) {
-					System.out.println("状态名称："+nodeInstance.getNodeName());
+					//System.out.println("状态名称："+nodeInstance.getNodeName());
 					nodeInstanceNames.add(nodeInstance.getNodeName());
 				}
 			}

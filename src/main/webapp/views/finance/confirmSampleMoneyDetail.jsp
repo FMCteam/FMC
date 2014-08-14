@@ -39,9 +39,6 @@
 				<div class="tab-pane  active" id="finance">
 					<%@include file="/views/finance/finance.jsp"%>
 				</div>
-				<a
-					href="${ctx}/finance/printProcurementSampleOrder.do?orderId=${orderInfo.order.orderId}"
-					class="btn btn-primary btn-rounded" target="_blank">打印样衣单</a>
     			<button class="btn btn-primary" onclick="history.back();">返回</button>
 			</div>
 		</div>

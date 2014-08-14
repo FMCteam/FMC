@@ -125,7 +125,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 				+ ", value: " + value);
 		try {
 			String queryString = "from Employee as model where model."
-					+ propertyName + "= ?";
+					+ propertyName + " = ?";
 			return getHibernateTemplate().find(queryString, value);
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
@@ -133,11 +133,27 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 		}
 	}
 
+	/*
+	 * hcj,根据市场部和部门专员姓名模糊查询
+	 */
+	public List findEmployees(String propertyName, Object value) {
+		log.debug("finding Employee instance with property: " + propertyName
+				+ ", value: " + value);
+		try {
+			String queryString = "from Employee as model where model.department = '市场部' and model."
+					+ propertyName + " like ?";
+			return getHibernateTemplate().find(queryString, "%"+(String)value+"%");
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByEmployeeName(java.lang.Object)
 	 */
 	public List<Employee> findByEmployeeName(Object employeeName) {
-		return findByProperty(EMPLOYEE_NAME, employeeName);
+		return findEmployees(EMPLOYEE_NAME, employeeName);
 	}
 
 	/* (non-Javadoc)
