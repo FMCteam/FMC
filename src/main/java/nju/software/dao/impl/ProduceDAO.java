@@ -256,7 +256,7 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 				+ orderId);
 		try {
 			String queryString = "from Produce as model where model.type='"
-					+ Produce.TYPE_PRODUCE + "' and model.oid= ? ";
+					+ Produce.TYPE_PRODUCED + "' and model.oid= ? ";
 			return getHibernateTemplate().find(queryString, orderId);
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
