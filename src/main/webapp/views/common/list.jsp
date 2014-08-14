@@ -59,7 +59,7 @@
 						<input type="text" class="search-query " name="stylename" placeholder="输入款式名称">
 						<span >客户名称:</span>
 						<input type="text" class="search-query " name="customername" placeholder="输入客户名称">
-			 
+			 			<input type="hidden" name="cid" value="${cid }"/>
 		</caption>
 		<thead>
 			<tr>

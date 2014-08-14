@@ -1357,6 +1357,38 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return list;
 	}
+	
+	/**
+	 * 根据条件查询翻单列表  hcj
+	 */
+	@Override
+	public List<Map<String, Object>> getSearchAddMoreOrderList(String ordernumber,String customername,String stylename,String startdate,String enddate, Integer[] employeeIds) {
+		// TODO Auto-generated method stub
+
+//		Order o = new Order();
+//		o.setCustomerId(customerId);
+//		List<Order> orderList = orderDAO.findByExample(o);
+		List<Order> orderList = orderDAO.getSearchOrderDoneList(ordernumber, customername, stylename, startdate, enddate, employeeIds);
+		List<Map<String, Object>> list = new ArrayList<>();
+		System.out.println("翻单数量："+orderList.size());
+		for(Order order: orderList){
+			System.out.println("翻单数量客户姓名："+order.getCustomerName());
+			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
+			Integer orderId = order.getOrderId();
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("taskTime", order.getOrderTime());
+			model.put("orderId", service.getOrderId(order));
+			list.add(model);
+		}
+		return list;
+	}
 
 	@Override
 	public Map<String, Object> getAddMoreOrderDetail(int orderId) {
