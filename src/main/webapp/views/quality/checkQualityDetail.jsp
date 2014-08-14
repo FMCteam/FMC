@@ -126,7 +126,7 @@
 							<tr>
 								<td class="title" colspan="1">加工方</td>
 								<td>
-									<input name="repair_side" class="span12" type="text"  required="required"/>
+									<input name="repair_side" class="span12" type="text" id="repair_side" required="required"/>
 								</td>
 								<td class="title" colspan="1">本次回修数量</td>
 								<td>
@@ -233,12 +233,16 @@ jQuery(document).ready(function(){
 	//保存此次质检
 	jQuery("#save_this_check").click(function(){
 		jQuery("#is_final").val("false");
+		jQuery("#repair_side").attr("required",true);
+		jQuery("#input_day").attr("required",true);
 		//alert("保存此次质检");
 		//jQuery("#send_sample_form").submit();
 	});
 	//完成最终质检
 	jQuery("#complete_final_check").click(function(){
 		jQuery("#is_final").val("true");
+		jQuery("#repair_side").attr("required",false);
+		jQuery("#input_day").attr("required",false);
 		//jQuery("#send_sample_form").submit();
 		//alert("完成最终质检");
 	});
