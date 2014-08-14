@@ -430,9 +430,52 @@ public class MarketController {
 		model.put("list", list);
 		model.addAttribute("taskName", "下翻单");
 		model.addAttribute("url", "/market/addMoreOrderDetail.do");
+		model.addAttribute("searchurl", "/market/addMoreOrderListSearch.do");
 		model.addAttribute("cid", cid);
 		return "/market/addMoreOrderList";
 	}
+	
+	/*@RequestMapping(value = "/market/addMoreOrderListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String addMoreOrderListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String cid = request.getParameter("cid");
+		String result = request.getParameter("result");
+		List<Map<String, Object>> list = marketService.getAddMoreOrderList(Integer.parseInt(cid));
+		model.put("list", list);
+		model.addAttribute("taskName", "下翻单");
+		model.addAttribute("url", "/market/addMoreOrderDetail.do");
+		model.addAttribute("searchurl", "/market/addMoreOrderListSearch.do");
+		model.addAttribute("cid", cid);
+		return "/market/addMoreOrderList";
+		
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+        
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
+		String actorId = account.getUserId() + "";
+		List<Map<String, Object>> orderList = marketService.getSearchConfirmProductList(actorId,ordernumber,customername,stylename,startdate,enddate,employeeIds);
+ 
+//		if (orderList.size() == 0) {
+//			jbpmTest.completeProduceConfirm("1", true);
+//			orderList = marketService.getConfirmProductList(actorId);
+//		}
+		model.put("list", orderList);
+		model.addAttribute("taskName", "确认合同加工单");
+		model.addAttribute("url", "/market/confirmProduceOrderDetail.do");
+		model.addAttribute("searchurl", "/market/confirmProduceOrderListSearch.do");
+	}*/
 	
 	@RequestMapping(value = "/market/addMoreOrderDetail.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -453,6 +496,7 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		model.addAttribute("employee_name", account.getNickName());
 		return "/market/addMoreOrderDetail";
+
 	}
 
 	@RequestMapping(value = "/market/addMoreOrderSubmit.do")

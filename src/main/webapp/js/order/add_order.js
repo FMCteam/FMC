@@ -503,8 +503,20 @@ function init(){
 		$("input[name='sample_clothes_address']").attr("disabled","disabled");
 		$("input[name='sample_clothes_remark']").attr("disabled","disabled");
 	}*/
-	var date = new Date();
-	$("#input_day").val(date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate());
+	/*var date = new Date();
+	var month = 0;
+	if(date.getMonth() < 10){
+		month = "0"+(date.getMonth()+1);
+	}else{
+		month = date.getMonth()+1;
+	}
+	if(date.getDate() < 10){
+		day = "0"+date.getDate();
+	}else{
+		day = date.getDate();
+	}
+	$("#input_day").val(date.getFullYear()+"/"+month+"/"+day);
+	$("input[name='in_post_sample_clothes_time']").val(date.getFullYear()+"/"+month+"/"+day);
 	$("#input_day").attr("readonly","readonly");
-
+	$("input[name='in_post_sample_clothes_time']").attr("readonly","readonly");*/
 }
