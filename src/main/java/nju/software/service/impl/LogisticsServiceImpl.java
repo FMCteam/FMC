@@ -565,7 +565,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	private Timestamp getTime(String time) {
-		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
+		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
 		return new Timestamp(outDate.getTime());
 	}
 

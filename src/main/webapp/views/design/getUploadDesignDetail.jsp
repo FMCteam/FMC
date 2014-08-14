@@ -67,7 +67,7 @@
 							<tr>
 								<td class="title">制版完成时间<span style="color:red">*</span></td>
 								<td>
-									<input name="completeTime" id="input_day"  type="date"  required="required" /> 
+									<input name="completeTime" id="input_day"  type="text"  required="required" /> 
 								</td>
 							</tr>
 				    	</table>

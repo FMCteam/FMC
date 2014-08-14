@@ -158,7 +158,7 @@ public class MarketController {
 				.parseInt(request.getParameter("ask_amount"));
 		String askProducePeriod = request.getParameter("ask_produce_period");
 		String ask_deliver_date = request.getParameter("ask_deliver_date");
-		Timestamp askDeliverDate = getTime(ask_deliver_date);
+		Timestamp askDeliverDate = getAskDeliverDateTime(ask_deliver_date);
 		String askCodeNumber = request.getParameter("ask_code_number");
 		Short hasPostedSampleClothes = Short.parseShort(request
 				.getParameter("has_posted_sample_clothes"));
@@ -319,8 +319,10 @@ public class MarketController {
 					.getParameter("in_post_sample_clothes_type");
 			String in_post_sample_clothes_number = request
 					.getParameter("in_post_sample_clothes_number");
+			
 			logistics
 					.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
+
 			logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
 			logistics
 					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
@@ -1639,10 +1641,15 @@ public class MarketController {
 
 	public static Timestamp getTime(String time) {
 		if(time.equals("")) return null;
+		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
+		return new Timestamp(outDate.getTime());
+	}
+	
+	public static Timestamp getAskDeliverDateTime(String time) {
+		if(time.equals("")) return null;
 		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
 		return new Timestamp(outDate.getTime());
 	}
-
 	@RequestMapping(value = "/market/confirmQuoteList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteList(HttpServletRequest request,
