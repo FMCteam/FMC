@@ -115,6 +115,8 @@ public interface MarketService {
 	public Map<String, Object>getOrderDetail(Integer orderId);
 
 	public List<Map<String, Object>> getAddMoreOrderList(int customerId);
+	
+	public List<Map<String, Object>> getSearchAddMoreOrderList(String ordernumber,String customername,String stylename,String startdate,String enddate, Integer[] employeeIds);
 
 	public Map<String, Object> getAddMoreOrderDetail(int id);
 

@@ -80,7 +80,7 @@
 							<td colspan="2"><a style="color: red;">*</a>工艺负责人：</td>
 							<td><input name="crafsManName" id="crafsManName" type="text" required="required"/></td>
 							<td colspan="2"><a style="color: red;">*</a>大货工艺完成时间：</td>
-							<td><input name="crafsProduceDate" id="input_day" type="date" required="required"/></td>
+							<td><input name="crafsProduceDate" id="input_day" type="text" required="required"/></td>
 							</tr>
 						</table>
 					<button class="btn btn-primary" onclick="history.back();">返回</button>

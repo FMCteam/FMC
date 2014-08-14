@@ -325,6 +325,9 @@ public class BuyController {
 				.getPurchaseSampleMaterialDetail(orderId);
 		model.addAttribute("orderInfoArraySize", orderInfo.size());
 		model.addAttribute("orderInfo", orderInfo);
+		HttpSession session = request.getSession();
+		Account account = (Account)session.getAttribute("cur_user");
+		model.addAttribute("purchaseSampleMaterialName", account.getNickName());
 		return "/buy/purchaseSampleMaterialDetail";
 	}
 
@@ -499,6 +502,9 @@ public class BuyController {
 		Map<String, Object> orderInfo = buyService
 				.getPurchaseMaterialDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
+		HttpSession session = request.getSession();
+		Account account = (Account)session.getAttribute("cur_user");
+		model.addAttribute("purchaseMaterialName", account.getNickName());
 		return "/buy/purchaseMaterialDetail";
 	}
 
@@ -518,7 +524,7 @@ public class BuyController {
 	
 	public static Timestamp getTime(String time) {
 		if(time.equals("")) return null;
-		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
+		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
 		return new Timestamp(outDate.getTime());
 	}
 

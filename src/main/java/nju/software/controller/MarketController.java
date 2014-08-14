@@ -158,7 +158,7 @@ public class MarketController {
 				.parseInt(request.getParameter("ask_amount"));
 		String askProducePeriod = request.getParameter("ask_produce_period");
 		String ask_deliver_date = request.getParameter("ask_deliver_date");
-		Timestamp askDeliverDate = getTime(ask_deliver_date);
+		Timestamp askDeliverDate = getAskDeliverDateTime(ask_deliver_date);
 		String askCodeNumber = request.getParameter("ask_code_number");
 		Short hasPostedSampleClothes = Short.parseShort(request
 				.getParameter("has_posted_sample_clothes"));
@@ -319,8 +319,10 @@ public class MarketController {
 					.getParameter("in_post_sample_clothes_type");
 			String in_post_sample_clothes_number = request
 					.getParameter("in_post_sample_clothes_number");
+			
 			logistics
 					.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
+
 			logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
 			logistics
 					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
@@ -435,20 +437,10 @@ public class MarketController {
 		return "/market/addMoreOrderList";
 	}
 	
-	/*@RequestMapping(value = "/market/addMoreOrderListSearch.do")
+	@RequestMapping(value = "/market/addMoreOrderListSearch.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String addMoreOrderListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String cid = request.getParameter("cid");
-		String result = request.getParameter("result");
-		List<Map<String, Object>> list = marketService.getAddMoreOrderList(Integer.parseInt(cid));
-		model.put("list", list);
-		model.addAttribute("taskName", "下翻单");
-		model.addAttribute("url", "/market/addMoreOrderDetail.do");
-		model.addAttribute("searchurl", "/market/addMoreOrderListSearch.do");
-		model.addAttribute("cid", cid);
-		return "/market/addMoreOrderList";
-		
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -461,21 +453,27 @@ public class MarketController {
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-        
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
-		String actorId = account.getUserId() + "";
-		List<Map<String, Object>> orderList = marketService.getSearchConfirmProductList(actorId,ordernumber,customername,stylename,startdate,enddate,employeeIds);
- 
-//		if (orderList.size() == 0) {
-//			jbpmTest.completeProduceConfirm("1", true);
-//			orderList = marketService.getConfirmProductList(actorId);
-//		}
-		model.put("list", orderList);
-		model.addAttribute("taskName", "确认合同加工单");
-		model.addAttribute("url", "/market/confirmProduceOrderDetail.do");
-		model.addAttribute("searchurl", "/market/confirmProduceOrderListSearch.do");
-	}*/
+		
+		String cid = request.getParameter("cid");
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		List<Map<String, Object>> list = marketService.getSearchAddMoreOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		List<Map<String,Object>> resultlist =  new ArrayList<>();
+		for(int i =0;i<list.size();i++){
+			Map<String, Object> model1  = list.get(i);
+			Order order = (Order) model1.get("order");
+			if(order.getCustomerId() == Integer.parseInt(cid)){
+				resultlist.add(model1);
+			}
+		}
+		model.put("list", resultlist);
+		model.addAttribute("taskName", "下翻单");
+		model.addAttribute("url", "/market/addMoreOrderDetail.do");
+		model.addAttribute("searchurl", "/market/addMoreOrderListSearch.do");
+		model.addAttribute("cid", cid);
+		return "/market/addMoreOrderList";
+		
+	}
 	
 	@RequestMapping(value = "/market/addMoreOrderDetail.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -1643,10 +1641,15 @@ public class MarketController {
 
 	public static Timestamp getTime(String time) {
 		if(time.equals("")) return null;
+		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
+		return new Timestamp(outDate.getTime());
+	}
+	
+	public static Timestamp getAskDeliverDateTime(String time) {
+		if(time.equals("")) return null;
 		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
 		return new Timestamp(outDate.getTime());
 	}
-
 	@RequestMapping(value = "/market/confirmQuoteList.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteList(HttpServletRequest request,
