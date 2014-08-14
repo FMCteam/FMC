@@ -44,6 +44,7 @@
 				                <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 								<input name="craftFile" id="craftFile" type="file" required="required"/> 
 								<input class="btn btn-primary btn-rounded" type="submit" value="上传工艺制作图"  onclick="return check()"/>						
+								<a style="color: red;">点击后,上传图片生效！</a>
 							</td>
 						</tr>
 						<tr>
