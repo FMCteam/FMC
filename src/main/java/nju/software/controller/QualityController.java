@@ -95,7 +95,17 @@ public class QualityController {
 		return "quality/checkQualityDetail";
 	}
 	
-	//质量检查
+
+	/** 
+	* @Title: modifyProduct 
+	* @Description: TODO:质量检查
+	* @param @param request
+	* @param @param response
+	* @param @param model
+	* @param @return    设定文件 
+	* @return String    返回类型 
+	* @throws 
+	*/
 	@RequestMapping(value = "quality/checkQualitySubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String modifyProduct(HttpServletRequest request,

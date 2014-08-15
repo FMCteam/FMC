@@ -126,7 +126,7 @@
 							<tr id="repairInfo">
 								<td class="title" colspan="1">加工方</td>
 								<td>
-									<input name="repair_side" class="span12" type="text"  required="required"/>
+									<input name="repair_side" class="span12" type="text" id="repair_side" required="required"/>
 								</td>
 								<td class="title" colspan="1">本次回修数量</td>
 								<td>
@@ -146,13 +146,13 @@
 						<table class="table table-striped table-bordered table-hover detail">
 							<c:if test="${empty orderInfo.repairRecord}">
 								<tr>
-									<td class="title" style="width:22%;background : red;">收货记录</td>
+									<td class="title" style="width:22%;background: red;">收货记录</td>
 									<td>无</td>
 								</tr>
 							</c:if>
 							<c:if test="${!empty orderInfo.repairRecord}">
 								<tr>
-									<td class="title" rowspan="${fn:length(orderInfo.repairRecord)+1}" style="width:22%">收货记录</td>
+									<td class="title" rowspan="${fn:length(orderInfo.repairRecord)+1}" style="width:22%;background: #ff0000;">收货记录</td>
 									<td class="title">日期</td>
 									<td class="title">加工方</td>
 									<td class="title">回修数量</td>
@@ -232,12 +232,16 @@ jQuery(document).ready(function(){
 	//保存此次质检
 	jQuery("#save_this_check").click(function(){
 		jQuery("#is_final").val("false");
+		jQuery("#repair_side").attr("required",true);
+		jQuery("#input_day").attr("required",true);
 		//alert("保存此次质检");
 		//jQuery("#send_sample_form").submit();
 	});
 	//完成最终质检
 	jQuery("#complete_final_check").click(function(){
 		jQuery("#is_final").val("true");
+		jQuery("#repair_side").attr("required",false);
+		jQuery("#input_day").attr("required",false);
 		//jQuery("#send_sample_form").submit();
 		//alert("完成最终质检");
 	});
