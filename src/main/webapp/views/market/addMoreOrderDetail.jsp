@@ -32,7 +32,7 @@
 							</tr>
 							<tr>
 								<td>待生成</td>
-								<td colspan="2"><input class="span8" type="date"
+								<td colspan="2"><input class="span8" type="text"
 									required="required" id="input_day" /></td>
 								<td>${employee_name}</td>
 								<td><input type="text" class="span12" name="order_source"
@@ -216,9 +216,14 @@
 								<td class="title" colspan="2">快递单号</td>
 							</tr>
 							<tr>
-								<td><input type="radio" name="has_posted_sample_clothes"
-									value="1" /> 是 <input type="radio" checked="checked"
-									name="has_posted_sample_clothes" value="0" /> 否</td>
+								<td>
+									<div style="display: none;">
+										<input type="radio" name="has_posted_sample_clothes"
+										value="1" /> 是 <input type="radio" checked="checked"
+										name="has_posted_sample_clothes" value="0" /> 否
+									</div>
+									否
+								</td>
 								<td colspan="2"><input class="span6" type="date"
 									name="in_post_sample_clothes_time"
 									value="${fn:substring(orderModel.logistics.inPostSampleClothesTime,0,10) }" /></td>
@@ -293,9 +298,14 @@
 								<td class="title" colspan="3">邮寄地址</td>
 							</tr>
 							<tr>
-								<td><input type="radio" name="is_need_sample_clothes"
-									value="1" /> 是 <input type="radio" checked="checked"
-									name="is_need_sample_clothes" value="0" /> 否</td>
+								<td>
+									<div style="display: none;">
+										<input type="radio" name="is_need_sample_clothes"
+										value="1" /> 是 <input type="radio" checked="checked"
+										name="is_need_sample_clothes" value="0" />
+									</div>
+								 	否
+								 </td>
 								<td><input class="span12" type="text"
 									name="sample_clothes_name"
 									value="${orderModel.logistics.sampleClothesName }" /></td>

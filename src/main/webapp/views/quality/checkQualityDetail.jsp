@@ -75,7 +75,7 @@
 								<td class="title">XXL</td>
 							</tr>
 							<c:forEach var="produced" items="${orderInfo.produced}">
-								<tr>
+								<tr name="repairNumber">
 									<td><input class="span12 good_color" type="text"
 										value="${produced.color}" readonly="readonly"/></td>
 									<td><input class="span12 good_xs" type="number"
@@ -123,7 +123,7 @@
 							</c:forEach>
 							-->
 						    
-							<tr>
+							<tr id="repairInfo">
 								<td class="title" colspan="1">加工方</td>
 								<td>
 									<input name="repair_side" class="span12" type="text"  required="required"/>
@@ -193,14 +193,13 @@
 						<button class="btn btn-primary" onclick="history.back();">返回</button>
 						<div class="action" style="float:right">
 							<input id="save_this_check" type="submit" class="btn btn-primary btn-rounded" value="保存本次质检" style="background-color:#1E90FF" />
-							<input id="complete_final_check" type="submit" class="btn btn-primary btn-rounded" value="完成最终质检" />
+							<input id="complete_final_check" type="submit" class="btn btn-primary btn-rounded" value="完成最终质检"  style="display: none;"/>
 							<!-- 隐藏标签，判断是否是最终的质检 -->
 							<input id="is_final" type="hidden" name="isFinal" value="false" />
 						</div>
 					</form>
 				</div>
 			</div>
-
 		</div>
 		<!--row-fluid-->
 
@@ -242,6 +241,17 @@ jQuery(document).ready(function(){
 		//jQuery("#send_sample_form").submit();
 		//alert("完成最终质检");
 	});
+	
+	if(${orderInfo.result == 1}){
+		$("#save_this_check").css("display","none");
+		$("#complete_final_check").css("display","inline");
+
+		//$("#input_day").removeAttr("required");
+		//$("input[name='repair_side']").removeAttr("required");
+		$("tr[name='repairNumber'] *").attr("readonly","readonly");
+		$("#repairInfo *").attr("readonly","readonly");
+	}
+	
 });
 </script>
 

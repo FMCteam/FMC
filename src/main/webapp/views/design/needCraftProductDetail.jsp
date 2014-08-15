@@ -78,7 +78,7 @@
 	                        </tr>
 	                        <tr>
 							<td colspan="2"><a style="color: red;">*</a>工艺负责人：</td>
-							<td><input name="crafsManName" id="crafsManName" type="text" required="required"/></td>
+							<td><input name="crafsManName" id="crafsManName" type="text" required="required"  value="${USER_nick_name }"/></td>
 							<td colspan="2"><a style="color: red;">*</a>大货工艺完成时间：</td>
 							<td><input name="crafsProduceDate" id="input_day" type="text" required="required"/></td>
 							</tr>

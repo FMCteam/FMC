@@ -222,6 +222,26 @@ public class QualityServiceImpl implements QualityService {
 		Produce produce = new Produce();
 		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_PRODUCED);
+		
+		//计算历次质检的合格数和报废数之和       hcj
+		int checkRecordAmount = 0;
+		List<CheckRecord> list = checkRecordDAO.findByOrderId(orderId);
+		for (CheckRecord cr : list) {
+			checkRecordAmount += cr.getQualifiedAmount()+cr.getInvalidAmount();
+		}
+		//计算实际生产数  hcj
+		int producesAmount = 0;
+		List<Produce> produces = produceDAO.findByExample(produce);
+		for (Produce pd : produces) {
+			producesAmount += pd.getL()+pd.getM()+pd.getS()+pd.getXl()+pd.getXs()+pd.getXxl();
+			
+		}
+		if(producesAmount > checkRecordAmount){
+			oi.put("result", 0);//若历次质检的合格数和报废数之和<实际生产数，表示尚未全部质检完
+		}else{
+			oi.put("result", 1);//否则表示已全部质检完，可点最终质检完成这单的质检任务
+		}
+		
 		oi.put("produced", produceDAO.findByExample(produce));
 		oi.put("repairRecord", checkRecordDAO.findByOrderId(orderId));//回修记录
 		return oi;

@@ -325,9 +325,6 @@ public class BuyController {
 				.getPurchaseSampleMaterialDetail(orderId);
 		model.addAttribute("orderInfoArraySize", orderInfo.size());
 		model.addAttribute("orderInfo", orderInfo);
-		HttpSession session = request.getSession();
-		Account account = (Account)session.getAttribute("cur_user");
-		model.addAttribute("purchaseSampleMaterialName", account.getNickName());
 		return "/buy/purchaseSampleMaterialDetail";
 	}
 
@@ -502,9 +499,6 @@ public class BuyController {
 		Map<String, Object> orderInfo = buyService
 				.getPurchaseMaterialDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
-		HttpSession session = request.getSession();
-		Account account = (Account)session.getAttribute("cur_user");
-		model.addAttribute("purchaseMaterialName", account.getNickName());
 		return "/buy/purchaseMaterialDetail";
 	}
 

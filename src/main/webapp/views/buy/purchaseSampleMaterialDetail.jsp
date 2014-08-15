@@ -100,7 +100,7 @@
 							<td colspan="2">供应商名字</td>
 						</tr>
 						<tr>
-							<td colspan="2"><input class="span12" type="text"  required="required" name="samplepurName"  value="${purchaseSampleMaterialName }"/></td>
+							<td colspan="2"><input class="span12" type="text"  required="required" name="samplepurName"  value="${USER_nick_name }"/></td>
 							<td colspan="2"><input class="span12" type="text"  required="required"  id="input_day" name="samplepurDate"/></td>
 							<td colspan="2"><input class="span12" type="text"  name="samplesupplierName"/></td>
 						</tr>

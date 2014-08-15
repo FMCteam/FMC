@@ -531,7 +531,7 @@ public class MarketController {
 				.parseInt(request.getParameter("ask_amount"));
 		String askProducePeriod = request.getParameter("ask_produce_period");
 		String ask_deliver_date = request.getParameter("ask_deliver_date");
-		Timestamp askDeliverDate = getTime(ask_deliver_date);
+		Timestamp askDeliverDate = getAskDeliverDateTime(ask_deliver_date);
 		String askCodeNumber = request.getParameter("ask_code_number");
 		Short hasPostedSampleClothes = Short.parseShort(request
 				.getParameter("has_posted_sample_clothes"));
@@ -1971,6 +1971,21 @@ public class MarketController {
 		@RequestMapping(value = "/market/getPushRestOrderList.do")
 		@Transactional(rollbackFor = Exception.class)
 		public String getPushRestOrderList(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			Account account = (Account) request.getSession().getAttribute(
+					"cur_user");
+			List<Map<String, Object>> list = marketService
+					.getPushRestOrderList(account.getUserId()+"");
+			model.put("list", list); 
+			model.addAttribute("taskName", "催尾款");
+			model.addAttribute("url", "/market/getPushRestOrderDetail.do");
+			model.addAttribute("searchurl", "/market/getPushRestOrderListSearch.do");
+			return "/market/getPushRestOrderList";
+		}
+		
+		@RequestMapping(value = "/market/getPushRestOrderListSearch.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String getPushRestOrderListSearch(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			Account account = (Account) request.getSession().getAttribute(
 					"cur_user");
