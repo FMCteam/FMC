@@ -1368,7 +1368,7 @@ public class MarketServiceImpl implements MarketService {
 //		Order o = new Order();
 //		o.setCustomerId(customerId);
 //		List<Order> orderList = orderDAO.findByExample(o);
-		List<Order> orderList = orderDAO.getSearchOrderDoneList(ordernumber, customername, stylename, startdate, enddate, employeeIds);
+		List<Order> orderList = orderDAO.getSearchOrderDoneList(ordernumber, customername, stylename, startdate, enddate, employeeIds,"",0);
 		List<Map<String, Object>> list = new ArrayList<>();
 		System.out.println("翻单数量："+orderList.size());
 		for(Order order: orderList){
@@ -1461,9 +1461,9 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getSearchOrderList(String ordernumber,
 			String customername, String stylename, String startdate,String enddate,
-			Integer[] employeeIds) {
+			Integer[] employeeIds,String userRole,Integer userId) {
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
-				 customername,stylename,startdate,enddate,employeeIds);
+				 customername,stylename,startdate,enddate,employeeIds,userRole,userId);
  		int orderslength = orders.size();
 		Integer pages=(int) Math.ceil((double)orderslength/10);
 		List<Map<String, Object>> list = new ArrayList<>();
@@ -1494,9 +1494,9 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getSearchOrdersDoing(String ordernumber,
 			String customername, String stylename, String startdate,
-			String enddate, Integer[] employeeIds) {
+			String enddate, Integer[] employeeIds,String userRole,Integer userId) {
 		List<Order> orders = orderDAO.getSearchOrderDoingList( ordernumber,
-				 customername,stylename,startdate,enddate,employeeIds);
+				 customername,stylename,startdate,enddate,employeeIds,userRole,userId);
 		int orderslength = orders.size();
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
@@ -1519,9 +1519,9 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getSearchOrdersDone(String ordernumber,
 			String customername, String stylename, String startdate,
-			String enddate, Integer[] employeeIds) {
+			String enddate, Integer[] employeeIds,String userRole,Integer userId) {
 		List<Order> orders = orderDAO.getSearchOrderDoneList( ordernumber,
-				 customername,stylename,startdate,enddate,employeeIds);
+				 customername,stylename,startdate,enddate,employeeIds,userRole,userId);
 		int orderslength = orders.size();
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {

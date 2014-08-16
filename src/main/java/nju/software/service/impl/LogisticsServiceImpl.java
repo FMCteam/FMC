@@ -64,10 +64,10 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public List<Map<String, Object>> getSearchReceiveSampleList(
 			String ordernumber, String customername, String stylename,
-			String startdate, String enddate, Integer[] employeeIds) {
+			String startdate, String enddate, Integer[] employeeIds,String userRole,Integer userId) {
 		// TODO Auto-generated method stub
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
-				 customername,  stylename,  startdate,enddate,employeeIds);
+				 customername,  stylename,  startdate,enddate,employeeIds,userRole,userId);
 		
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				ACTOR_LOGISTICS_MANAGER, TASK_RECEIVE_SAMPLE);	

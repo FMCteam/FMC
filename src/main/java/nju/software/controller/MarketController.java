@@ -2200,6 +2200,8 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String orderSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -2212,7 +2214,7 @@ public class MarketController {
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-		List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds,account.getUserRole(),account.getUserId());
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表查找");
 		model.addAttribute("url", "/order/orderDetail.do");
@@ -2259,6 +2261,8 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String orderListDoingSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -2271,7 +2275,7 @@ public class MarketController {
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-		List<Map<String, Object>> list = marketService.getSearchOrdersDoing(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		List<Map<String, Object>> list = marketService.getSearchOrdersDoing(ordernumber,customername,stylename,startdate,enddate,employeeIds,account.getUserRole(),account.getUserId());
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
@@ -2293,6 +2297,7 @@ public class MarketController {
 			list = marketService.getOrdersDone();
 		}
 		
+		
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
@@ -2304,6 +2309,9 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String orderListDoneSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		//获取当前登录用户
+		Account account = (Account) request.getSession().getAttribute("cur_user");
+		
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -2316,7 +2324,7 @@ public class MarketController {
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-		List<Map<String, Object>> list = marketService.getSearchOrdersDone(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		List<Map<String, Object>> list = marketService.getSearchOrdersDone(ordernumber,customername,stylename,startdate,enddate,employeeIds,account.getUserRole(), account.getUserId());
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");

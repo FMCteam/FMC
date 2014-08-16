@@ -78,7 +78,7 @@ public interface LogisticsService {
 
 	public List<Map<String, Object>> getSearchReceiveSampleList(
 			String ordernumber, String customername, String stylename,
-			String startdate, String enddate, Integer[] employeeIds);
+			String startdate, String enddate, Integer[] employeeIds,String userRole,Integer userId);
 
 	public List<Map<String, Object>> getSearchSendSampleList(
 			String ordernumber, String customername, String stylename,
