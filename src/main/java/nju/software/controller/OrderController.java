@@ -122,7 +122,7 @@ public class OrderController {
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-		List<Map<String, Object>> list = orderService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		List<Map<String, Object>> list = orderService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds,"",0);
          
 		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
 		Integer page=Integer.parseInt(string_page);
@@ -560,6 +560,7 @@ public class OrderController {
 		@Transactional(rollbackFor = Exception.class)
 		public String endListSearch(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
+			Account account = (Account) request.getSession().getAttribute("cur_user");	
 			
 			String ordernumber = request.getParameter("ordernumber");
 			String customername = request.getParameter("customername");
@@ -573,7 +574,7 @@ public class OrderController {
 			for(int i=0;i<employeeIds.length;i++){
 				employeeIds[i] = employees.get(i).getEmployeeId();
 			}
-			List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+			List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds,account.getUserRole(),account.getUserId());
 			List<Map<String,Object>> resultlist =  new ArrayList<>();
 			for(int i =0;i<list.size();i++){
 				Map<String, Object> model1  = list.get(i);
