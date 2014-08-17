@@ -154,7 +154,7 @@ function check(){
 			return false;
 		}
 	}else{
-		alert("请上传工艺图片");
+		alert("请选择工艺图片文件");
 		return false;
 	}
 }

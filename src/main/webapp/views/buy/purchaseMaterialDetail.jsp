@@ -80,13 +80,9 @@
 								<td colspan="2"><input class="span12" type="text"  name="masssupplierName"/></td>
 							</tr>
 						</table>
-<<<<<<< HEAD
+
 						<input type="hidden" name="result" id="result" />
-						<a href="${ctx}/finance/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
-=======
-						<a href="${ctx}/buy/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
->>>>>>> 82eb569669c55e936b084609ed3ecdc3e09a504f
-								class="btn btn-primary btn-rounded" target="_blank">打印补货单</a>
+						
 						<button onclick="return fail()"
 								class="btn btn-danger btn-rounded" style="margin-left: 0px;">
 								<i class="icon-remove icon-white"></i>采购失败</button>		
@@ -97,6 +93,8 @@
 							</button>
 						</div>
 						<br>
+						<a href="${ctx}/buy/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
+								class="btn btn-primary btn-rounded" target="_blank">打印补货单</a>
 						<button class="btn btn-primary" onclick="history.back();">返回</button>
 					</div>
 	
