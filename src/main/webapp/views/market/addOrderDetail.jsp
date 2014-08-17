@@ -208,9 +208,14 @@
 								<td class="title">邮寄地址<span class="required">*</span></td>
 							</tr>
 							<tr>
-								<td><input type="radio" name="is_need_sample_clothes"
-									checked="checked" value="1" required="required" onchange = "change()"/> 是 <input type="radio"
-									name="is_need_sample_clothes" value="0"  onchange ="change()"/> 否</td>
+								<td>
+									<div id="is_need_sample_clothes">
+										<input type="radio" name="is_need_sample_clothes"
+										checked="checked" value="1" required="required" onchange = "change()"/> 是 <input type="radio"
+										name="is_need_sample_clothes" value="0"  onchange ="change()"/> 否
+									</div>
+									<p id="is_need_sample_clothes_tip"  style="display: none;">是</p>
+								</td>
 								<td><input class="span12" type="text"
 									name="sample_clothes_name" required="required" /></td>
 								<td><input class="span12" type="text"

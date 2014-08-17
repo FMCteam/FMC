@@ -47,10 +47,10 @@
 								<td class="title">邮寄时间<span style="color: red">*</span></td>
 								<td class="title">快递名称<span style="color: red">*</span></td>
 								<td class="title">快递单号<span style="color: red">*</span></td>
-								<td class="title">快递价格<span style="color: red">*</span></td>
+								<td class="title">实际快递价格<span style="color: red">*</span></td>
 							</tr>
 							<tr>
-								<td><input type="text" name="time" required="required" id="input_day"/></td>
+								<td><input type="text" name="time" required="required" id="input_day" readonly="readonly"/></td>
 								<td><select name="name" style="margin: 0px">
 										<option value="顺丰">顺丰</option>
 										<option value="韵达">韵达</option>
@@ -61,7 +61,7 @@
 										<option value="EMS">EMS</option>
 								</select></td>
 								<td><input type="text" name="number" required="required" /></td>
-								<td><input type="text" name="price" required="required"  value="${orderInfo.quote.designCost }"  readonly="readonly"/></td>
+								<td><input type="text" name="price" required="required"  /></td>
 							</tr>
 							<tr>
 								<td class="title">其他备注</td>
@@ -104,7 +104,7 @@
 						-->
 						<button class="btn btn-primary" onclick="history.back();">返回</button>
 						<div class="action" style="float:right">
-							<input id="save_this_send" class="btn btn-primary" type="submit" value="保存此次发货" style="background-color:#1E90FF" />
+							<!-- <input id="save_this_send" class="btn btn-primary" type="submit" value="保存此次发货" style="background-color:#1E90FF" /> -->
 							<input id="complete_final_send" class="btn btn-primary" type="submit" value="完成最终发货" />
 							
 							<!-- 隐藏标签，判断是否是最终的发货 -->

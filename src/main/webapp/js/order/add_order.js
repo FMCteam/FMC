@@ -83,8 +83,16 @@
 			if($('input:radio[name="is_haoduoyi"]:checked').val()=="1"){
 				$("input[name='order_source']").val("");
 				$("input[name='order_source']").attr("disabled","disabled");
- 			}else{
+				//好多衣用户默认选中生产样衣
+				$("#is_need_sample_clothes").css("display","none");
+				$("#is_need_sample_clothes_tip").removeAttr("style");
+				$("#is_need_sample_clothes").html("<input type='radio' name='is_need_sample_clothes' checked='checked' value='1' required='required' onchange = 'change()'/> 是 <input type='radio' name='is_need_sample_clothes' value='0'  onchange ='change()'/> 否");
+				change();
+			}else{
 				$("input[name='order_source']").removeAttr("disabled");
+				$("#is_need_sample_clothes").removeAttr("style");
+				$("#is_need_sample_clothes_tip").css("display","none");
+				change();
  			}
 		});
 		
@@ -169,7 +177,7 @@
 			}
 		}
 
-		item += "<td><a onclick=\"deleteRow(this,'" + table_name + "')\">删除</a></td>";
+		item += "<td><a name='delete' onclick=\"deleteRow(this,'" + table_name + "')\">删除</a></td>";
 		item = "<tr>" + item + "</tr>";
 		$("table." + table_name + " tr.addrow").after(item);
 		
@@ -422,6 +430,7 @@ function change(){
 	var is_need_sample = jQuery("input[name='is_need_sample_clothes']:checked").val();
 	if(is_need_sample == 0){
 		$("#sampletable *").attr("disabled","disabled");
+		$('a[name="delete"]').trigger("click");
 		//$("#sample_clothes_picture").attr("disabled","disabled");
 	}else{
 		$("#sampletable *").removeAttr("disabled");
@@ -515,6 +524,9 @@ function init(){
 	
 	if($("input[name='is_need_sample_clothes']:checked").val()=="0"){
 		$(".sample_produce_table *").attr("disabled","disabled");
+	}
+	if($('input[name="order_source"]').val() =="好多衣"){
+		$('input[name="order_source"]').attr("readonly","readonly");
 	}
 	/*if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
 		$("input[name='sample_clothes_name']").attr("disabled","disabled");
