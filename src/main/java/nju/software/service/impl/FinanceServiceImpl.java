@@ -507,39 +507,5 @@ public class FinanceServiceImpl implements FinanceService {
 	public final static String TASK_CONFIRM_FINAL_PAYMENT = "confirmFinalPayment";
 	public final static String RESULT_MONEY = "receiveMoney";
 	
-	@Override
-	public Map<String, Object> getPrintProcurementOrderDetail(Integer orderId) {
-		// TODO Auto-generated method stub
-		Map<String,Object>model=new HashMap<String,Object>();
-		Order order = orderDAO.findById(orderId);
-		model.put("order", order);
-		model.put("customer",customerDAO.findById(order.getCustomerId()));
-		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
-		model.put("logistics", logisticsDAO.findById(orderId));
-		model.put("fabrics", fabricCostDAO.findByOrderId(orderId));
-		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
-		model.put("orderId", service.getOrderId(order));
-		Produce produce = new Produce();
-		produce.setOid(orderId);
-		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
-		model.put("sample", produceDAO.findByExample(produce));
-		produce.setType(Produce.TYPE_PRODUCE);
-		model.put("produce", produceDAO.findByExample(produce));
-		return model;
-
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

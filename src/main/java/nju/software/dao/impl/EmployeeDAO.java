@@ -2,6 +2,7 @@ package nju.software.dao.impl;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import nju.software.dao.IEmployeeDAO;
@@ -139,14 +140,15 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	public List findEmployees(String propertyName, Object value) {
 		log.debug("finding Employee instance with property: " + propertyName
 				+ ", value: " + value);
+		List list =new ArrayList<>();
 		try {
 			String queryString = "from Employee as model where model.department = '市场部' and model."
 					+ propertyName + " like ?";
-			return getHibernateTemplate().find(queryString, "%"+(String)value+"%");
+			list =getHibernateTemplate().find(queryString, "%"+(String)value+"%");
 		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
-			throw re;
+			
 		}
+		return list;
 	}
 	
 	/* (non-Javadoc)

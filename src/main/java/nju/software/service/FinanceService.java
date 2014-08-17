@@ -23,8 +23,6 @@ public interface FinanceService {
 	
 	public boolean confirmDepositSubmit(String actorId,long taskId,boolean result, Money money);
 	
-	public Map<String,Object>getPrintProcurementOrderDetail(Integer orderId);
-	
 	//===========================尾款确认===================================
 	public List<Map<String,Object>>getConfirmFinalPaymentList(String actorId);
 	

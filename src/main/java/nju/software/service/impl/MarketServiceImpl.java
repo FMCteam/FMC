@@ -88,8 +88,8 @@ public class MarketServiceImpl implements MarketService {
 	public final static String RESULT_CONFIRM_PRODUCE_ORDER_CONTRACT="confirmProduceOrderContract";
 	public final static String RESULT_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
 	public final static String RESULT_PUSH_RESTMONEY = "pushRestMoney";
-	public final static String UPLOAD_DIR_SAMPLE = "C:/fmc/sample/";
-	public final static String UPLOAD_DIR_REFERENCE = "C:/fmc/reference/";
+	public final static String UPLOAD_DIR_SAMPLE = "E:/fmc/sample/";
+	public final static String UPLOAD_DIR_REFERENCE = "E:/fmc/reference/";
 	public final static String RESULT_VERIFY_QUOTE = "verifyQuoteSuccess";
 	public final static String VERIFY_QUOTE_COMMENT = "verifyQuoteComment";
 	

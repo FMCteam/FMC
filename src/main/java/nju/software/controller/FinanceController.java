@@ -120,27 +120,6 @@ public class FinanceController {
 
 		return "forward:/finance/confirmSampleMoneyList.do";
 	}
-	
-	
-	@RequestMapping(value = "/finance/printProcurementOrder.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String printProcurementOrder(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
-		Map<String,Object>orderInfo=financeService.getPrintProcurementOrderDetail(orderId);
-		model.addAttribute("orderInfo", orderInfo);
-		return "/finance/printProcurementOrder";
-	}
-	//获取样衣单信息
-	@RequestMapping(value = "/finance/printProcurementSampleOrder.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String printProcurementSampleOrder(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
-		Map<String,Object>orderInfo=financeService.getPrintProcurementOrderDetail(orderId);
-		model.addAttribute("orderInfo", orderInfo);
-		return "/finance/printProcurementSampleOrder";
-	}
 	// ===========================退还定金列表===================================
 	@RequestMapping(value = "/finance/returnDepositList.do")
 	@Transactional(rollbackFor = Exception.class)
