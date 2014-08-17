@@ -80,7 +80,7 @@
 								<td colspan="2"><input class="span12" type="text"  name="masssupplierName"/></td>
 							</tr>
 						</table>
-						<a href="${ctx}/finance/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
+						<a href="${ctx}/buy/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
 								class="btn btn-primary btn-rounded" target="_blank">打印补货单</a>
 						<a	href="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0&orderId=${orderInfo.order.orderId}"
 								onclick="return confirm('确认采购失败？')"

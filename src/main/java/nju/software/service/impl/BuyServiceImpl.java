@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CraftDAO;
+import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
@@ -23,6 +25,7 @@ import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Craft;
+import nju.software.dataobject.Customer;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Order;
@@ -402,6 +405,27 @@ public class BuyServiceImpl implements BuyService {
 			return false;
 		}
 	}
+	@Override
+	public Map<String, Object> getPrintProcurementOrderDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		Map<String,Object>model=new HashMap<String,Object>();
+		Order order = orderDAO.findById(orderId);
+		model.put("order", order);
+		model.put("customer",customerDAO.findById(order.getCustomerId()));
+		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+		model.put("logistics", logisticsDAO.findById(orderId));
+		model.put("fabrics", FabricCostDAO.findByOrderId(orderId));
+		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
+		model.put("orderId", service.getOrderId(order));
+		Produce produce = new Produce();
+		produce.setOid(orderId);
+		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
+		model.put("sample", ProduceDAO.findByExample(produce));
+		produce.setType(Produce.TYPE_PRODUCE);
+		model.put("produce", ProduceDAO.findByExample(produce));
+		return model;
+
+	}
 
 	@Autowired
 	private ServiceUtil service;
@@ -428,6 +452,11 @@ public class BuyServiceImpl implements BuyService {
 	private ProduceDAO ProduceDAO;
 	@Autowired
 	private CraftDAO craftDAO;
+	@Autowired
+	private CustomerDAO customerDAO;
+	@Autowired
+	private EmployeeDAO employeeDAO;
+	
 
 	public final static String ACTOR_PURCHASE_MANAGER = "purchaseManager";
 	public final static String TASK_VERIFY_PURCHASE = "verifyPurchase";
