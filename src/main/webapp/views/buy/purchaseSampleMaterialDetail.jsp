@@ -3,8 +3,8 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form onSubmit="return confirm('确认已经打印出样衣单？')" method="post"
-			action="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
+		<form onsubmit="return confirm('确认操作？')" method="post"
+			action="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
 			enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
@@ -101,18 +101,20 @@
 						</tr>
 						<tr>
 							<td colspan="2"><input class="span12" type="text"  required="required" name="samplepurName"  value="${USER_nick_name }"/></td>
-							<td colspan="2"><input class="span12" type="text"  required="required"  id="input_day" name="samplepurDate"/></td>
+							<td colspan="2"><input class="span12" type="text"  required="required"  id="input_day" name="samplepurDate" readonly="readonly"/></td>
 							<td colspan="2"><input class="span12" type="text"  name="samplesupplierName"/></td>
 						</tr>
 					</table>
 				    
-				    <a href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
+				    <input type="hidden" id="result" name="result"/>
+				    
+				    <button
 							style="margin-left:0px"
-							class="btn btn-danger btn-rounded" onclick="return confirm('确认采购失败？')">
-							<i class="icon-remove icon-white"></i>采购失败</a>
+							class="btn btn-danger btn-rounded" onclick="return fail()">
+							<i class="icon-remove icon-white"></i>采购失败</button>
 					
 					<div class="action" style="float:right">
-						<button class="btn btn-primary btn-rounded noreapt">
+						<button class="btn btn-primary btn-rounded noreapt" onclick="return success()">
 							<i class="icon-ok icon-white"></i>采购完成
 						</button>
 					</div>
@@ -136,7 +138,16 @@
 
 </div>
 </div>
-
+<script type="text/javascript" >
+	function fail(){
+		$("#result").val(0);
+		return confirm("确认采购失败？");
+	}
+	function success(){
+		$("#result").val(1);
+		return confirm("确认已经打印出样衣单？");
+	}
+</script>
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>

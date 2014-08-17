@@ -391,9 +391,6 @@ public class BuyServiceImpl implements BuyService {
 		data.put(RESULT_PURCHASE, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
-			if(result==false){//如果result的的值为false，即为样衣面料采购失败，流程会异常终止，将orderState设置为1
-				order.setOrderState("1");
-			}
 			orderDAO.attachDirty(order);
 			return true;
 		} catch (InterruptedException e) {

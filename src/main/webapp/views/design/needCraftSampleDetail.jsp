@@ -70,7 +70,7 @@
 							<td class="title">工艺负责人<span style="color: red">*</span></td>
 							<td><input id="craft_leader" type="text" name="craftLeader" required="required"  value="${USER_nick_name }"/></td>
 							<td class="title">工艺完成时间<span style="color: red">*</span></td>
-							<td><input id="input_day" type="text" name="completeTime" required="required" /></td>
+							<td><input id="input_day" type="text" name="completeTime" required="required"  readonly="readonly"/></td>
 						</tr>		
 						<tr>
 							<td class="title" rowspan="2">工艺报价</td>

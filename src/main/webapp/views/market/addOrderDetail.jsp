@@ -46,7 +46,7 @@
 									 value="1" required="required" /> 是 <input type="radio"
 									name="is_haoduoyi" value="0" checked="checked" /> 否</td>
 								<td colspan="2"><input class="span8" type="text" required="required" id="input_day"
-									required="required" /></td>
+									required="required" readonly="readonly"/></td>
 								<td><input type="text" class="span12" name="order_source"
 									required="required" /></td>
 								<td>${employee_name}</td>
@@ -185,7 +185,7 @@
 								<td><input type="radio" name="has_posted_sample_clothes"  
 									checked="checked" value="1" required="required" /> 是 <input type="radio"
 									name="has_posted_sample_clothes" value="0" /> 否</td>
-								<td><input class="span12" type="text" 
+								<td><input class="span12" type="date" 
 									name="in_post_sample_clothes_time" required="required" /></td>
 								<td><select name="in_post_sample_clothes_type"
 									style="margin: 0px">

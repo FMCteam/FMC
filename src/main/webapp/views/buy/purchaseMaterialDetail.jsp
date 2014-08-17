@@ -3,8 +3,8 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form onSubmit="return confirm('确认已经打印过补货单？')" method="post"
-				action="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1&orderId=${orderInfo.order.orderId}&processId=${orderInfo.task.processInstanceId}"
+		<form method="post"
+				action="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&orderId=${orderInfo.order.orderId}&processId=${orderInfo.task.processInstanceId}"
 				enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
 				<!--  如果是其它页面，这里是填充具体的内容。 -->
@@ -76,19 +76,19 @@
 							</tr>
 							<tr>
 								<td colspan="2"><input class="span12" type="text"  required="required" name="masspurName"  value="${USER_nick_name }"/></td>
-								<td colspan="2"><input class="span12" type="text"  required="required"  id="input_day"  name="masspurDate"/></td>
+								<td colspan="2"><input class="span12" type="text"  required="required"  id="input_day"  name="masspurDate" readonly="readonly"/></td>
 								<td colspan="2"><input class="span12" type="text"  name="masssupplierName"/></td>
 							</tr>
 						</table>
+						<input type="hidden" name="result" id="result" />
 						<a href="${ctx}/finance/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
 								class="btn btn-primary btn-rounded" target="_blank">打印补货单</a>
-						<a	href="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0&orderId=${orderInfo.order.orderId}"
-								onclick="return confirm('确认采购失败？')"
+						<button onclick="return fail()"
 								class="btn btn-danger btn-rounded" style="margin-left: 0px;">
-								<i class="icon-remove icon-white"></i>采购失败</a>		
+								<i class="icon-remove icon-white"></i>采购失败</button>		
 						
 						<div class="action" style="float:right">
-							<button class="btn btn-primary btn-rounded noreapt">
+							<button class="btn btn-primary btn-rounded noreapt"  onclick="return success()">
 								<i class="icon-ok icon-white"></i>采购完成
 							</button>
 						</div>
@@ -126,5 +126,14 @@
 	$("#metersPurchasedAll").text(parseFloat(text).toFixed(2));
 	var text=$("#piecesPurchasedAll").text();
 	$("#piecesPurchasedAll").text(parseFloat(text).toFixed(2));
+	
+	function fail(){
+		$("#result").val(0);
+		return confirm("确认采购失败？");
+	}
+	function success(){
+		$("#result").val(1);
+		return confirm("确认已经打印过补货单？");
+	}
 </script>
 <%@include file="/common/footer.jsp"%>

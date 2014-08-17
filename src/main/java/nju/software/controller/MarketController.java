@@ -60,6 +60,7 @@ import nju.software.util.StringUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ntp.TimeStamp;
+import org.drools.command.GetDefaultValue;
 import org.drools.runtime.process.WorkflowProcessInstance;
 import org.jbpm.task.Task;
 import org.jbpm.task.query.TaskSummary;
@@ -321,7 +322,7 @@ public class MarketController {
 					.getParameter("in_post_sample_clothes_number");
 			
 			logistics
-					.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
+					.setInPostSampleClothesTime(getAskDeliverDateTime(in_post_sample_clothes_time));
 
 			logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
 			logistics
@@ -1370,7 +1371,7 @@ public class MarketController {
 		Integer askAmount = Integer
 				.parseInt(request.getParameter("ask_amount"));
 		String askProducePeriod = request.getParameter("ask_produce_period");
-		Timestamp askDeliverDate = getTime(request
+		Timestamp askDeliverDate = getAskDeliverDateTime(request
 				.getParameter("ask_deliver_date"));
 		String askCodeNumber = request.getParameter("ask_code_number");
 		Short hasPostedSampleClothes = Short.parseShort(request
@@ -1527,7 +1528,7 @@ public class MarketController {
 					.getParameter("in_post_sample_clothes_number");
 
 			logistics
-					.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
+					.setInPostSampleClothesTime(getAskDeliverDateTime(in_post_sample_clothes_time));
 			logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
 			logistics
 					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
@@ -1835,6 +1836,7 @@ public class MarketController {
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("processId");
 		long processId = Long.parseLong(s_processId);	
+		String tof = (String)request.getParameter("tof");
 		boolean comfirmworksheet = Boolean.parseBoolean(request
 				.getParameter("tof"));
 		// 大货加工要求

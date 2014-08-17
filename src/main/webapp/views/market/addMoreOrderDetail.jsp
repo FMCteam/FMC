@@ -33,7 +33,7 @@
 							<tr>
 								<td>待生成</td>
 								<td colspan="2"><input class="span8" type="text"
-									required="required" id="input_day" /></td>
+									required="required" id="input_day"  readonly="readonly"/></td>
 								<td>${employee_name}</td>
 								<td><input type="text" class="span12" name="order_source"
 									value="${orderModel.order.orderSource }" required="required" />
