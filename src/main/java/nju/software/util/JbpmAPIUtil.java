@@ -178,6 +178,7 @@ public class JbpmAPIUtil {
 		List<TaskSummary> tasks = null;// 保存从数据库拿到的task记录
 		List<TaskSummary> doWithTaskList = new ArrayList<TaskSummary>();// 保存非完成状态的task列表
 		try {
+			System.out.println(idRef+"------jbpmUntil-----get------");
 			BlockingTaskSummaryResponseHandler responseHandler = new BlockingTaskSummaryResponseHandler();
 			List<Status> statuses = new ArrayList<Status>();
 			statuses.add(Status.Reserved);

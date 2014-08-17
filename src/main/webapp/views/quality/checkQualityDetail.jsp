@@ -75,7 +75,7 @@
 								<td class="title">XXL</td>
 							</tr>
 							<c:forEach var="produced" items="${orderInfo.produced}">
-								<tr>
+								<tr name="repairNumber">
 									<td><input class="span12 good_color" type="text"
 										value="${produced.color}" readonly="readonly"/></td>
 									<td><input class="span12 good_xs" type="number"
@@ -123,10 +123,10 @@
 							</c:forEach>
 							-->
 						    
-							<tr>
+							<tr id="repairInfo">
 								<td class="title" colspan="1">加工方</td>
 								<td>
-									<input name="repair_side" class="span12" type="text"  required="required"/>
+									<input name="repair_side" class="span12" type="text" id="repair_side" required="required"/>
 								</td>
 								<td class="title" colspan="1">本次回修数量</td>
 								<td>
@@ -146,13 +146,13 @@
 						<table class="table table-striped table-bordered table-hover detail">
 							<c:if test="${empty orderInfo.repairRecord}">
 								<tr>
-									<td class="title" style="width:22%;background : red;">收货记录</td>
+									<td class="title" style="width:22%;background: red;">收货记录</td>
 									<td>无</td>
 								</tr>
 							</c:if>
 							<c:if test="${!empty orderInfo.repairRecord}">
 								<tr>
-									<td class="title" rowspan="${fn:length(orderInfo.repairRecord)+1}" style="width:22%">收货记录</td>
+									<td class="title" rowspan="${fn:length(orderInfo.repairRecord)+1}" style="width:22%;background: #ff0000;">收货记录</td>
 									<td class="title">日期</td>
 									<td class="title">加工方</td>
 									<td class="title">回修数量</td>
@@ -193,14 +193,13 @@
 						<button class="btn btn-primary" onclick="history.back();">返回</button>
 						<div class="action" style="float:right">
 							<input id="save_this_check" type="submit" class="btn btn-primary btn-rounded" value="保存本次质检" style="background-color:#1E90FF" />
-							<input id="complete_final_check" type="submit" class="btn btn-primary btn-rounded" value="完成最终质检" />
+							<input id="complete_final_check" type="submit" class="btn btn-primary btn-rounded" value="完成最终质检"  style="display: none;"/>
 							<!-- 隐藏标签，判断是否是最终的质检 -->
 							<input id="is_final" type="hidden" name="isFinal" value="false" />
 						</div>
 					</form>
 				</div>
 			</div>
-
 		</div>
 		<!--row-fluid-->
 
@@ -233,15 +232,30 @@ jQuery(document).ready(function(){
 	//保存此次质检
 	jQuery("#save_this_check").click(function(){
 		jQuery("#is_final").val("false");
+		jQuery("#repair_side").attr("required",true);
+		jQuery("#input_day").attr("required",true);
 		//alert("保存此次质检");
 		//jQuery("#send_sample_form").submit();
 	});
 	//完成最终质检
 	jQuery("#complete_final_check").click(function(){
 		jQuery("#is_final").val("true");
+		jQuery("#repair_side").attr("required",false);
+		jQuery("#input_day").attr("required",false);
 		//jQuery("#send_sample_form").submit();
 		//alert("完成最终质检");
 	});
+	
+	if(${orderInfo.result == 1}){
+		$("#save_this_check").css("display","none");
+		$("#complete_final_check").css("display","inline");
+
+		//$("#input_day").removeAttr("required");
+		//$("input[name='repair_side']").removeAttr("required");
+		$("tr[name='repairNumber'] *").attr("readonly","readonly");
+		$("#repairInfo *").attr("readonly","readonly");
+	}
+	
 });
 </script>
 

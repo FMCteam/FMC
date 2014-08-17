@@ -518,7 +518,7 @@ public class BuyController {
 	
 	public static Timestamp getTime(String time) {
 		if(time.equals("")) return null;
-		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
+		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
 		return new Timestamp(outDate.getTime());
 	}
 

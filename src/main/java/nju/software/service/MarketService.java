@@ -115,6 +115,8 @@ public interface MarketService {
 	public Map<String, Object>getOrderDetail(Integer orderId);
 
 	public List<Map<String, Object>> getAddMoreOrderList(int customerId);
+	
+	public List<Map<String, Object>> getSearchAddMoreOrderList(String ordernumber,String customername,String stylename,String startdate,String enddate, Integer[] employeeIds);
 
 	public Map<String, Object> getAddMoreOrderDetail(int id);
 
@@ -125,7 +127,7 @@ public interface MarketService {
 
 	public List<Map<String, Object>> getSearchOrderList(String ordernumber,
 			String customername, String stylename, String startdate,String enddate,
-			Integer[] employeeIds);
+			Integer[] employeeIds,String userRole,Integer userId);
 
 	public List<Map<String, Object>> getSearchModifyOrderList(Integer userId,
 			String ordernumber, String customername, String stylename,
@@ -173,12 +175,12 @@ public interface MarketService {
 
 	public List<Map<String, Object>> getSearchOrdersDoing(String ordernumber,
 			String customername, String stylename, String startdate,
-			String enddate, Integer[] employeeIds);
+			String enddate, Integer[] employeeIds,String userRole,Integer userId);
 
 
 	public List<Map<String, Object>> getSearchOrdersDone(String ordernumber,
 			String customername, String stylename, String startdate,
-			String enddate, Integer[] employeeIds);
+			String enddate, Integer[] employeeIds,String userRole,Integer userId);
 	
 
 	public List<Map<String, Object>> getOrdersDone(String userRole, Integer userId);

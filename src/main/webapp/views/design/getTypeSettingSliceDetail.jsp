@@ -51,7 +51,7 @@
 							<tr>
 								<td class="title"><span class="required">*</span>排版人姓名</td>
 								<td colspan="7">
-									<input class="span14" id="cadding_side" name="cadding_side" type="text" required="required" />
+									<input class="span14" id="cadding_side" name="cadding_side" type="text" required="required"  value="${USER_nick_name }"/>
 								</td>
 							</tr>						
 							<tr>

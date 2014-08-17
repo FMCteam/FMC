@@ -42,7 +42,7 @@
 			<td class="title" colspan="2">备注</td>
 		</tr>
 		<tr>
-			<td><input type="date" required="required" name="time"  id="input_day"/></td>
+			<td><input type="text" required="required" name="time"  id="input_day"/></td>
 			<td>
 			<select name="account" required="required" >
 			<option selected="selected">36933145@qq.com</option>

@@ -404,7 +404,7 @@ public class FinanceController {
 	}
 
 	public Timestamp getTime(String time) {
-		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
+		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
 		return new Timestamp(outDate.getTime());
 	}
 

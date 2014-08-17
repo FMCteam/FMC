@@ -112,7 +112,7 @@
 										<option>872104037@qq.com</option>
 								</select>
 								</td>
-								<td><input type="date" required="required" name="time"  id="input_day" /></td>
+								<td><input type="text" required="required" name="time"  id="input_day" /></td>
 
 							</tr>
 							<tr>

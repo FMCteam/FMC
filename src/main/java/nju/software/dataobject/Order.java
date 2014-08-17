@@ -80,7 +80,7 @@ public class Order implements java.io.Serializable {
 	private String payAccountInfo;//因为本来的定义没有使用，所以在后期将它用来存储加工方
 	private double discount;//折扣
 	private double totalMoney;
-	private double sampleMoney=0;
+	private double sampleMoney;
 	private String contractFile;
 	private int logisticsState; //物流状态：0,未装包。1，装包未入库，2，入库待扫描，3已扫描待发货。4发货
 	
@@ -594,7 +594,7 @@ public class Order implements java.io.Serializable {
 		this.payAccountInfo = payAccountInfo;
 	}
 	
-	@Column(name = "logistics_state", columnDefinition="int default 0")
+	@Column(name = "logistics_state")
 	public int getLogisticsState() {
 		return logisticsState;
 	}

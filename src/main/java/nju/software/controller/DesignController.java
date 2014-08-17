@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Craft;
@@ -650,7 +651,7 @@ public class DesignController {
 	}
 	
 	private Timestamp getTime(String time) {
-		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
+		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
 		return new Timestamp(outDate.getTime());
 	}
 	
