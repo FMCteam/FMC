@@ -295,7 +295,9 @@
 								<td class="title" colspan="3">邮寄地址</td>
 							</tr>
 							<tr>
-								<td><input type="radio" name="is_need_sample_clothes"
+								<td>
+								<div></div>
+								<input type="radio" name="is_need_sample_clothes"
 									${orderModel.order.isNeedSampleClothes==1?'checked="checked"':'' }
 									value="1"  onchange="change()" /> 是 <input type="radio"
 									${orderModel.order.isNeedSampleClothes==0?'checked="checked"':'' }

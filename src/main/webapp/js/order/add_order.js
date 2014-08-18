@@ -528,6 +528,7 @@ function init(){
 	if($('input[name="order_source"]').val() =="好多衣"){
 		$('input[name="order_source"]').attr("readonly","readonly");
 	}
+	
 	/*if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
 		$("input[name='sample_clothes_name']").attr("disabled","disabled");
 		$("input[name='sample_clothes_phone']").attr("disabled","disabled");
