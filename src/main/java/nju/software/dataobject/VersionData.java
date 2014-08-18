@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * VersionData entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "version_data", catalog = "fmc")
+@Table(name = "version_data", catalog = "newfmc")
 public class VersionData implements java.io.Serializable {
 
 	// Fields

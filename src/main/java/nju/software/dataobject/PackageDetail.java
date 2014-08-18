@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * PackageDetail entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "package_detail", catalog = "fmc")
+@Table(name = "package_detail", catalog = "newfmc")
 public class PackageDetail implements java.io.Serializable {
 
 	// Fields

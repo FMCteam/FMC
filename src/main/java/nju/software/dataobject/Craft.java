@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * Craft entity. @author whh
  */
 @Entity
-@Table(name = "craft", catalog = "fmc")
+@Table(name = "craft", catalog = "newfmc")
 public class Craft implements Serializable {
 	// Fields
     private Integer craftId;

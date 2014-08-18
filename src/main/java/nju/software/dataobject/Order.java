@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * Order entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "order", catalog = "fmc")
+@Table(name = "order", catalog = "newfmc")
 public class Order implements java.io.Serializable {
 
 	// Fields

@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * Quote entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "quote", catalog = "fmc")
+@Table(name = "quote", catalog = "newfmc")
 public class Quote implements java.io.Serializable {
 
 	// Fields

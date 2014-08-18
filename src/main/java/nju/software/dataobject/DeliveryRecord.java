@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * @author luxiangfan 样衣和大货的发货记录表（有多次发货）
  */
 @Entity
-@Table(name = "delivery_record", catalog = "fmc")
+@Table(name = "delivery_record", catalog = "newfmc")
 public class DeliveryRecord implements java.io.Serializable {
 	// Fields
 	private Integer recordId;

@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * Logistics entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "logistics", catalog = "fmc")
+@Table(name = "logistics", catalog = "newfmc")
 public class Logistics implements java.io.Serializable {
 
 	// Fields
