@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * DesignCad entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "design_cad", catalog = "newfmc")
+@Table(name = "design_cad", catalog = "fmc")
 public class DesignCad implements java.io.Serializable {
 
 	// Fields

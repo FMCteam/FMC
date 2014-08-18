@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * FabricCost entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "fabric_cost", catalog = "newfmc")
+@Table(name = "fabric_cost", catalog = "fmc")
 public class FabricCost implements java.io.Serializable {
 
 	// Fields

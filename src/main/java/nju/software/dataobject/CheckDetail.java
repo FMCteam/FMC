@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * 质检详情
  */
 @Entity
-@Table(name = "check_detail", catalog = "newfmc")
+@Table(name = "check_detail", catalog = "fmc")
 public class CheckDetail {
 	// Fields
 	private Integer detailId;// 自增主键

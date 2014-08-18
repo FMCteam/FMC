@@ -15,7 +15,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="account"
-    ,catalog="newfmc"
+    ,catalog="fmc"
 , uniqueConstraints = @UniqueConstraint(columnNames="user_name")
 )
 

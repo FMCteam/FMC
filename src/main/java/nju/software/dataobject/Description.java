@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * Description entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "description", catalog = "newfmc")
+@Table(name = "description", catalog = "fmc")
 public class Description implements java.io.Serializable {
 
 	// Fields

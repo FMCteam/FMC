@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * Accessory entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "accessory", catalog = "newfmc")
+@Table(name = "accessory", catalog = "fmc")
 public class Accessory implements java.io.Serializable {
 
 	// Fields

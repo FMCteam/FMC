@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * Money entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "money", catalog = "newfmc")
+@Table(name = "money", catalog = "fmc")
 public class Money implements java.io.Serializable {
 
 	// Fields

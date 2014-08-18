@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * 质检记录
  */
 @Entity
-@Table(name = "check_record", catalog = "newfmc")
+@Table(name = "check_record", catalog = "fmc")
 public class CheckRecord {
 	// Fields
 	private Integer recordId;
