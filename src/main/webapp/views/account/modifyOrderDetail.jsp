@@ -301,7 +301,7 @@
 							</tr>
 							<tr>
 								<td>
-									<div style="display:none/ "> 
+									<div style="display:none; "> 
 										<input type="radio" name="is_need_sample_clothes" 
 										${orderModel.order.isNeedSampleClothes==1?'checked="checked"':'' }
 										value="1" /> 是 <input type="radio" 
