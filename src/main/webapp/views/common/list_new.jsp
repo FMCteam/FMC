@@ -51,10 +51,6 @@
 										<td>${model.order.orderTime}</td>
 									</tr>
 									<tr>
-										<td>订单状态：</td>
-										<td><span style="color:red;">${model.order.orderProcessStateName}</span></td>
-									</tr>
-									<tr>
 										<td>市场专员：</td>
 										<td>${model.employee.employeeName}</td>
 									</tr>
@@ -81,3 +77,19 @@
 		
 	</div>
 </div>
+
+<link rel="stylesheet" href="${ctx}/css/jPages.css"/>
+<link rel="stylesheet" href="${ctx}/css/animate.css"/>
+<script type="text/javascript" src="${ctx}/js/jPages.min.js"></script>
+<script>
+$(function(){
+	$("div.holder").jPages({
+		containerID : "itemContainer",
+      	previous : "上一页",
+      	next : "下一页",
+      	perPage : 8,
+      	delay : 100
+    });  
+});
+</script>
+

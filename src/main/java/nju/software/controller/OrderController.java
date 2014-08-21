@@ -103,7 +103,7 @@ public class OrderController {
 		model.addAttribute("url", "/account/modifyOrderDetail.do");
 		model.addAttribute("searchurl", "/account/modifyOrderSearch.do");
 
-		return "account/modifyOrderList";
+		return "account/modifyOrderList_new";
 	}
 	
 	@RequestMapping(value = "account/modifyOrderSearch.do")
@@ -140,7 +140,7 @@ public class OrderController {
 			model.addAttribute("pages", list.get(0).get("pages"));
 		}
 		//System.out.println("===========ok:"+list.size());
-		return "account/modifyOrderList";
+		return "account/modifyOrderList_new";
 	}	
 	
 	@RequestMapping(value = "account/modifyOrderDetail.do")
