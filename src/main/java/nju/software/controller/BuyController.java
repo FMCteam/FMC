@@ -521,7 +521,36 @@ public class BuyController {
 		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
 		return new Timestamp(outDate.getTime());
 	}
-
+	
+		/** 
+		* @Title: printProcurementOrder 
+		* @Description: TODO:打印大货补货单
+		* @param @param request
+		* @param @param response
+		* @param @param model
+		* @param @return    设定文件 
+		* @return String    返回类型 
+		* @throws 
+		*/
+		@RequestMapping(value = "/buy/printProcurementOrder.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String printProcurementOrder(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+			Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId);
+			model.addAttribute("orderInfo", orderInfo);
+			return "/finance/printProcurementOrder";
+		}
+		//获取样衣裁剪单信息
+		@RequestMapping(value = "/buy/printProcurementSampleOrder.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String printProcurementSampleOrder(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+			Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId);
+			model.addAttribute("orderInfo", orderInfo);
+			return "/finance/printProcurementSampleOrder";
+		}
 	@Autowired
 	private BuyService buyService;
 	@Autowired

@@ -60,6 +60,7 @@ import nju.software.util.StringUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ntp.TimeStamp;
+import org.drools.command.GetDefaultValue;
 import org.drools.runtime.process.WorkflowProcessInstance;
 import org.jbpm.task.Task;
 import org.jbpm.task.query.TaskSummary;
@@ -74,10 +75,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class MarketController {
-	private final static String CONTRACT_URL = "C:/fmc/contract/";
-	private final static String CONFIRM_SAMPLEMONEY_URL="C:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
-	private final static String CONFIRM_DEPOSIT_URL="C:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
-	private final static String CONFIRM_FINALPAYMENT_URL="C:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
+	private final static String CONTRACT_URL = "E:/fmc/contract/";
+	private final static String CONFIRM_SAMPLEMONEY_URL="E:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
+	private final static String CONFIRM_DEPOSIT_URL="E:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
+	private final static String CONFIRM_FINALPAYMENT_URL="E:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
 
 	@Autowired
 	private OrderService orderService;
@@ -321,7 +322,7 @@ public class MarketController {
 					.getParameter("in_post_sample_clothes_number");
 			
 			logistics
-					.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
+					.setInPostSampleClothesTime(getAskDeliverDateTime(in_post_sample_clothes_time));
 
 			logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
 			logistics
@@ -1370,7 +1371,7 @@ public class MarketController {
 		Integer askAmount = Integer
 				.parseInt(request.getParameter("ask_amount"));
 		String askProducePeriod = request.getParameter("ask_produce_period");
-		Timestamp askDeliverDate = getTime(request
+		Timestamp askDeliverDate = getAskDeliverDateTime(request
 				.getParameter("ask_deliver_date"));
 		String askCodeNumber = request.getParameter("ask_code_number");
 		Short hasPostedSampleClothes = Short.parseShort(request
@@ -1527,7 +1528,7 @@ public class MarketController {
 					.getParameter("in_post_sample_clothes_number");
 
 			logistics
-					.setInPostSampleClothesTime(getTime(in_post_sample_clothes_time));
+					.setInPostSampleClothesTime(getAskDeliverDateTime(in_post_sample_clothes_time));
 			logistics.setInPostSampleClothesType(in_post_sample_clothes_type);
 			logistics
 					.setInPostSampleClothesNumber(in_post_sample_clothes_number);
@@ -1835,6 +1836,7 @@ public class MarketController {
 		long taskId = Long.parseLong(s_taskId);
 		String s_processId = request.getParameter("processId");
 		long processId = Long.parseLong(s_processId);	
+		String tof = (String)request.getParameter("tof");
 		boolean comfirmworksheet = Boolean.parseBoolean(request
 				.getParameter("tof"));
 		// 大货加工要求
@@ -2190,7 +2192,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 	
 	@Autowired
@@ -2219,7 +2221,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表查找");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 	
 	
@@ -2254,7 +2256,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoingSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 	
 	@RequestMapping(value = "/order/orderListDoingSearch.do")
@@ -2280,7 +2282,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoingSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 
 	@RequestMapping(value = "/order/orderListDone.do")
@@ -2302,7 +2304,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoneSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 	
 	@RequestMapping(value = "/order/orderListDoneSearch.do")
@@ -2329,6 +2331,6 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoneSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 }

@@ -69,7 +69,7 @@
 				<th>客户姓名</th>
 				<th>客户公司</th>
 				<th>任务开始时间</th>
-				<th>操作</th>
+				<th style="width: 80px;">操作</th>
 			</tr>
 		</thead>
 		<tbody>

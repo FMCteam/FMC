@@ -553,7 +553,7 @@ public class OrderController {
 			model.put("list", list);
 			model.addAttribute("taskName", "被终止订单列表");
 			model.addAttribute("url", "/order/orderDetail.do");
-			return "/order/endList";
+			return "/order/endList_new";
 		}
 		// =======================被终止订单列表搜索=================================
 		@RequestMapping(value = "/order/endListSearch.do")
@@ -588,7 +588,7 @@ public class OrderController {
 			model.put("list", resultlist);
 			model.addAttribute("taskName", "被终止订单列表");
 			model.addAttribute("url", "/order/orderDetail.do");
-			return "/order/endList";
+			return "/order/endList_new";
 		}		
 		
 		

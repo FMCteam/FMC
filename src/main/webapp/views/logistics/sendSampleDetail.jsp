@@ -77,7 +77,7 @@
 								<td><input type="text"
 									name="number" required="required" /></td>
 								<td><input type="text" name="price" required="required"/></td>
-								<td><input type="text" name="time" required="required" id="input_day"/></td>
+								<td><input type="text" name="time" required="required" id="input_day"  readonly="readonly"/></td>
 							</tr>
 							<tr>
 								<td class="title">其他备注</td>
