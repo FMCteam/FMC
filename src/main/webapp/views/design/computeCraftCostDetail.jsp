@@ -66,7 +66,7 @@
 								<td class="title span2">意见</td>
 								<td colspan="6">
 									<textarea class="span12"
-										style="resize:vertical" rows="3" name="suggestion"></textarea>
+										style="resize:vertical" rows="3" name="suggestion" ></textarea>
 								</td>
 							</tr>
 						</table>

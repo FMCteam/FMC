@@ -58,6 +58,13 @@
 						</td>
 						<td><a style="color: red;">*</a><input name="confirmDepositFile" type="file" value="选择定金文件" required="required"/></td>
 					</tr>
+					<tr>
+						<td>备注信息</td>
+						<td colspan="3">
+							<%-- <input type="text"  name="moneyremark"  required="required" style="height:40px;width: 1000px"   placeholder="输入首定金备注" value="${orderInfo.order.moneyremark }" /> --%>
+							<textarea class="span12"  style="resize:vertical" name="moneyremark"  id="money_remark" placeholder="输入首定金备注" ></textarea>
+						</td>
+					</tr>
 				</table>
 				</div>
 			</div>
@@ -149,6 +156,8 @@ var orderInfoQuoteOuterPrice = $("input[name='orderInfoQuoteOuterPrice']").val()
 var orderInfoOrderAskAmount = $("input[name='orderInfoOrderAskAmount']").val();
 var totalMoney = orderInfoQuoteOuterPrice*orderInfoOrderAskAmount;
 $("input[name='totalmoney']").val(totalMoney.toFixed(2));
+
+$("#money_remark").val("${orderInfo.order.moneyremark}");
 </script>
 
 <%@include file="/common/footer.jsp"%>

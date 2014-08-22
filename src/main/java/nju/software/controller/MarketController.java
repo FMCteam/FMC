@@ -1717,6 +1717,7 @@ public class MarketController {
 		String result = request.getParameter("result");
 		String taskId = request.getParameter("taskId");
 		String orderId = request.getParameter("orderId");
+		String moneyremark = request.getParameter("moneyremark");//金额备注
 		String url = "";
 		//result为0，表示上传样衣制作金
 		if (result.equals("0")) {
@@ -1738,7 +1739,7 @@ public class MarketController {
 		// marketService.confirmQuoteSubmit(actorId,
 		// Long.parseLong(taskId),result);
 		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),
-				Integer.parseInt(orderId), result, url);
+				Integer.parseInt(orderId), result, url,moneyremark);
 
 		// 1=修改报价，2=取消订单
 		if (result.equals("1")) {
@@ -1882,7 +1883,7 @@ public class MarketController {
 			String discount = request.getParameter("discount");
 			String total = request.getParameter("totalmoney");
 			String orderId = request.getParameter("orderId");
- 
+			String moneyremark = request.getParameter("moneyremark");
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			MultipartFile file = multipartRequest.getFile("contractFile");
 			MultipartFile confirmDepositFile =  multipartRequest.getFile("confirmDepositFile");
@@ -1901,7 +1902,7 @@ public class MarketController {
 			//上传合同，上传首定金收据，一般是截图，
 			marketService.signContractSubmit(actorId, Long.parseLong(s_taskId),
 					Integer.parseInt(orderId), Double.parseDouble(discount),
-					Double.parseDouble(total), url,confirmDepositFileUrl);
+					Double.parseDouble(total), url,confirmDepositFileUrl,moneyremark);
 
 		}
 		
@@ -2023,11 +2024,12 @@ public class MarketController {
 			String confirmFinalPaymentFileName = confirmFinalPaymentFile.getOriginalFilename();
 			String confirmFinalPaymentFileUrl = CONFIRM_FINALPAYMENT_URL + orderId;		
 			String confirmFinalPaymentFileId = "confirmFinalPaymentFile";
+			String moneyremark = request.getParameter("moneyremark");
 			FileOperateUtil.Upload(request, confirmFinalPaymentFileUrl, null, confirmFinalPaymentFileId);
 			confirmFinalPaymentFileUrl = confirmFinalPaymentFileUrl + "/" + confirmFinalPaymentFileName;
 			//上传尾定金收据，一般是截图，
 	 
-			marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId),confirmFinalPaymentFileUrl);
+			marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId),confirmFinalPaymentFileUrl,moneyremark);
 			Account account = (Account) request.getSession().getAttribute(
 					"cur_user");
  			Map<String, Object> orderInfo = marketService.getPushRestOrderDetail(
@@ -2044,7 +2046,7 @@ public class MarketController {
 			String orderId_string = request.getParameter("orderId");
  			String taskId_string = request.getParameter("taskId");
 			long taskId = Long.parseLong(taskId_string);
-			
+			String moneyremark = request.getParameter("moneyremark");
 			//result=0，催尾款失败；result=1，确认收到尾款
 			boolean result = request.getParameter("result").equals("1");
 			if(result){
@@ -2057,7 +2059,7 @@ public class MarketController {
 			FileOperateUtil.Upload(request, confirmFinalPaymentFileUrl, null, confirmFinalPaymentFileId);
 			confirmFinalPaymentFileUrl = confirmFinalPaymentFileUrl + "/" + confirmFinalPaymentFileName;
 			//上传尾定金收据，一般是截图，	 
-			marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId_string),confirmFinalPaymentFileUrl);  
+			marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId_string),confirmFinalPaymentFileUrl,moneyremark);  
 			}
 			Account account = (Account) request.getSession().getAttribute(
 					"cur_user");
@@ -2163,7 +2165,7 @@ public class MarketController {
 		//上传合同，上传首定金收据，一般是截图，
 		marketService.signContractSubmit(actorId, Long.parseLong(taskId),
 				Integer.parseInt(orderId), Double.parseDouble(discount),
-				Double.parseDouble(total), url,confirmDepositFileUrl);
+				Double.parseDouble(total), url,confirmDepositFileUrl,"");//""   hcj
 
 		Map<String, Object> orderInfo = marketService.getConfirmProductDetail(
 				account.getUserId(), Integer.parseInt(orderId));

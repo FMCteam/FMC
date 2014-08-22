@@ -117,8 +117,10 @@
 							</tr>
 							<tr>
 								<td class="title" colspan="1">备注</td>
-								<td colspan="2"><input type="text" name="money_remark"
-									class="span12" /></td>
+								<td colspan="2"><!-- <input type="text" name="money_remark"
+									class="span12" /> -->
+									<textarea  name="moneyremark"  id="money_remark"  class="span12"   readonly="readonly"></textarea>
+								</td>
 							</tr>
 		                    <tr>
 		                    <!-- 
@@ -193,6 +195,7 @@ $(document).ready(function() {
 	$("#moneyOfAllProducts").text(parseFloat(moneyOfAllProductstext).toFixed(2));
 	$("#moneyOfAllProducts2").text(parseFloat(moneyOfAllProductstext).toFixed(2));
 	
+	$("#money_remark").val("${orderInfo.order.moneyremark}");
 });  
 </script>
 <script type="text/javascript">

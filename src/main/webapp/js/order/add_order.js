@@ -430,7 +430,8 @@ function change(){
 	var is_need_sample = jQuery("input[name='is_need_sample_clothes']:checked").val();
 	if(is_need_sample == 0){
 		$("#sampletable *").attr("disabled","disabled");
-		$('a[name="delete"]').trigger("click");
+		//$('a[name="delete"]').trigger("click");
+		$('#sampletable a[name="delete"]').trigger("click");
 		//$("#sample_clothes_picture").attr("disabled","disabled");
 	}else{
 		$("#sampletable *").removeAttr("disabled");

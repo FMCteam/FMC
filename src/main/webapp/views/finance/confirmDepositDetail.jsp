@@ -142,8 +142,10 @@
 							</tr>
 							<tr>
 								<td class="title" colspan="1">备注</td>
-								<td colspan="2"><input type="text" name="money_remark"
-									class="span12" /></td>
+								<td colspan="2"><!-- <input type="text" name="money_remark"
+									class="span12" /> -->
+									<textarea  name="money_remark"  id="money_remark"  class="span12"   readonly="readonly"></textarea>
+								</td>
 							</tr>
 		                    <tr>
 		                        <td class="title">收款信息</td>
@@ -183,6 +185,9 @@
 </div>
 <!--maincontentinner-->
 <!--maincontent-->
+<script type="text/javascript">
+	$("#money_remark").val("${orderInfo.order.moneyremark}");
+</script>
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>

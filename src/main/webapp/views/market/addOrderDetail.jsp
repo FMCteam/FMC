@@ -126,7 +126,7 @@
 							</tr>
 							<tr>
 								<td class="title"><a style="color: red;">*</a>参考链接</td>
-								<td colspan="5"><input class="span12" type="url" name="reference_url" required="required" /></td>
+								<td colspan="5"><input class="span12" type="url" name="reference_url" required="required"  placeholder='参考链接以"http://"开头'/></td>
 							</tr>
 						</table>
 					</div>

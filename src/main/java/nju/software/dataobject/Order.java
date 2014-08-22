@@ -90,6 +90,7 @@ public class Order implements java.io.Serializable {
 	private String masspurName;//大货原料采购负责人
 	private Timestamp masspurDate;//大货原料采购时间
 	private String masssupplierName;//大货供应商
+	private String moneyremark;//样衣金，首定金，尾款金备注
 	
 	
 	@Column(name = "sampleMoney", nullable = true, precision = 22, scale = 0)
@@ -173,7 +174,15 @@ public class Order implements java.io.Serializable {
 		this.masssupplierName = masssupplierName;
 	}
 
+	@Column(name = "moneyremark")
+	public String getMoneyremark() {
+		return moneyremark;
+	}
 
+	public void setMoneyremark(String moneyremark) {
+		this.moneyremark = moneyremark;
+	}
+	
 	//特殊工艺：水洗，激光，压皱。多选，并且不限于这三个预定的工艺。
 	//采用使用“|”符号分隔。比如"shuixi|jiguang|其它",表明使用了水洗和激光的预定工艺，以及添加的“其它”工艺。
 	public static enum SpecialProcessType {
