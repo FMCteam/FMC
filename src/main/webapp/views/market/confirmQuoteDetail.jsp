@@ -64,6 +64,9 @@
  					    <div>
  					    	<input id="cancel_order" type="button" value="取消订单" class="btn btn-danger btn-rounded"  style="float: left;"/>
 							<input id="modify_price" type="button" value="修改报价" class="btn btn-primary btn-rounded" style="background-color:#1E90FF;margin-left: 10px;" />	
+							<a
+								href="${ctx}/market/printProcurementSampleOrder.do?orderId=${orderInfo.order.orderId}"
+								class="btn btn-primary btn-rounded" style="margin-left: 10px;width: 80px;" target="_blank">打印样衣单</a><a style="color: red;font-size: 16px;"> &nbsp亲，别忘了打印样衣单哦！</a>
 							<input id="confirm_price" type="button" value="确认报价" class="btn btn-primary btn-rounded"  style="float: right;"/>
 						</div>
 						<button class="btn btn-primary" style="float:left" onclick="history.back();">返回</button>

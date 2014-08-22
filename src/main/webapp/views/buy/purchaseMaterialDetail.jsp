@@ -93,8 +93,8 @@
 							</button>
 						</div>
 						<br>
-						<a href="${ctx}/buy/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
-								class="btn btn-primary btn-rounded" target="_blank">打印补货单</a>
+<!-- 						<a href="${ctx}/buy/printProcurementOrder.do?orderId=${orderInfo.order.orderId}" -->
+<!-- 								class="btn btn-primary btn-rounded" target="_blank">打印补货单</a> -->
 						<button class="btn btn-primary" onclick="history.back();">返回</button>
 					</div>
 	
@@ -135,7 +135,7 @@
 	}
 	function success(){
 		$("#result").val(1);
-		return confirm("确认已经打印过补货单？");
+		return confirm("确认已经核对过补货单？");
 	}
 </script>
 <%@include file="/common/footer.jsp"%>
