@@ -103,7 +103,7 @@ public class OrderController {
 		model.addAttribute("url", "/account/modifyOrderDetail.do");
 		model.addAttribute("searchurl", "/account/modifyOrderSearch.do");
 
-		return "account/modifyOrderList";
+		return "account/modifyOrderList_new";
 	}
 	
 	@RequestMapping(value = "account/modifyOrderSearch.do")
@@ -140,7 +140,7 @@ public class OrderController {
 			model.addAttribute("pages", list.get(0).get("pages"));
 		}
 		//System.out.println("===========ok:"+list.size());
-		return "account/modifyOrderList";
+		return "account/modifyOrderList_new";
 	}	
 	
 	@RequestMapping(value = "account/modifyOrderDetail.do")
@@ -553,7 +553,7 @@ public class OrderController {
 			model.put("list", list);
 			model.addAttribute("taskName", "被终止订单列表");
 			model.addAttribute("url", "/order/orderDetail.do");
-			return "/order/endList";
+			return "/order/endList_new";
 		}
 		// =======================被终止订单列表搜索=================================
 		@RequestMapping(value = "/order/endListSearch.do")
@@ -588,7 +588,7 @@ public class OrderController {
 			model.put("list", resultlist);
 			model.addAttribute("taskName", "被终止订单列表");
 			model.addAttribute("url", "/order/orderDetail.do");
-			return "/order/endList";
+			return "/order/endList_new";
 		}		
 		
 		

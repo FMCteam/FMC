@@ -2195,7 +2195,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 	
 	@Autowired
@@ -2224,7 +2224,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表查找");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 	
 	
@@ -2259,7 +2259,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoingSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 	
 	@RequestMapping(value = "/order/orderListDoingSearch.do")
@@ -2285,7 +2285,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoingSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 
 	@RequestMapping(value = "/order/orderListDone.do")
@@ -2307,7 +2307,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoneSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 	
 	@RequestMapping(value = "/order/orderListDoneSearch.do")
@@ -2334,7 +2334,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoneSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
 	//获取大货补货单信息
 	@RequestMapping(value = "/market/printProcurementOrder.do")

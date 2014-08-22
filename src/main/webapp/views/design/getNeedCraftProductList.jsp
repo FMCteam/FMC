@@ -7,8 +7,10 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
-			<%@include file="/views/common/list.jsp"%>
+			<%@include file="/views/common/list_new.jsp"%>
 		</div>
+		
+		<div class="holder"></div>
 		<!--row-fluid-->
 
 		<div class="footer">

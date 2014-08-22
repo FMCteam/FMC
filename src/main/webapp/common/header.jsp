@@ -44,7 +44,6 @@ $(document).ready(function() {
 	});
 </script>
 <style type="text/css">
-
 table.tablesorter thead th {
 	height: 20px;
 }
@@ -313,7 +312,7 @@ table.tablesorter thead tr .headerSortDown {
 		<div class="rightpanel">
 
 			<ul class="breadcrumbs">
-				<li><a href="dashboard.html"><i class="iconfa-home"></i></a> <span
+				<li><a href="${ctx }/default.do"><i class="iconfa-home"></i></a> <span
 					class="separator"></span></li>
 				<li>欢迎！</li>
 			</ul>
