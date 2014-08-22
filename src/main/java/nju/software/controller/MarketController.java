@@ -3,6 +3,7 @@ package nju.software.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -2338,23 +2339,72 @@ public class MarketController {
 		model.addAttribute("searchurl", "/order/orderListDoneSearch.do");
 		return "/market/orderList_new";
 	}
-	//获取大货补货单信息
+	//获取大货补货单信息 
 	@RequestMapping(value = "/market/printProcurementOrder.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String printProcurementOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
-		Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId);
+		Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId,null);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/printProcurementOrder";
 	}
+	
+	//获取大货补货单信息   printConfirmProcurementOrder
+		@RequestMapping(value = "/market/printConfirmProcurementOrder.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String printConfirmProcurementOrder(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) throws UnsupportedEncodingException {
+			Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+			// 大货加工要求
+			String produce_colors = new String(request.getParameter("produce_color").getBytes("ISO8859-1"),"UTF-8");
+			String produce_xss = request.getParameter("produce_xs");
+			String produce_ss = request.getParameter("produce_s");
+			String produce_ms = request.getParameter("produce_m");
+			String produce_ls = request.getParameter("produce_l");
+			String produce_xls = request.getParameter("produce_xl");
+			String produce_xxls = request.getParameter("produce_xxl");
+			String produce_color[] = produce_colors.split(",");
+			String produce_xs[] = produce_xss.split(",");
+			String produce_s[] = produce_ss.split(",");
+			String produce_m[] = produce_ms.split(",");
+			String produce_l[] = produce_ls.split(",");
+			String produce_xl[] = produce_xls.split(",");
+			String produce_xxl[] = produce_xxls.split(",");
+			List<Produce> produces = new ArrayList<Produce>();
+			for (int i = 0; i < produce_color.length; i++) {
+				if (produce_color[i].equals(""))
+					continue;
+				Produce p = new Produce();
+				p.setColor(produce_color[i]);
+				p.setOid(0);
+				int l = Integer.parseInt(produce_l[i]);
+				int m = Integer.parseInt(produce_m[i]);
+				int s = Integer.parseInt(produce_s[i]);
+				int xs = Integer.parseInt(produce_xs[i]);
+				int xl = Integer.parseInt(produce_xl[i]);
+				int xxl = Integer.parseInt(produce_xxl[i]);
+				p.setL(l);
+				p.setM(m);
+				p.setS(s);
+				p.setXl(xl);
+				p.setXs(xs);
+				p.setXxl(xxl);
+				p.setProduceAmount(l + m + s + xs + xl + xxl);
+				p.setType(Produce.TYPE_PRODUCE);
+				produces.add(p);
+			}
+			Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId,produces);
+			model.addAttribute("orderInfo", orderInfo);
+			return "/finance/printProcurementOrder";
+		}
 	//获取样衣裁剪单信息
 	@RequestMapping(value = "/market/printProcurementSampleOrder.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String printProcurementSampleOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
-		Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId);
+		Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId,null);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/finance/printProcurementSampleOrder";
 	}

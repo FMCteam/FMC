@@ -7,6 +7,7 @@ import java.util.Map;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
 import nju.software.model.ProductModel;
 
@@ -79,6 +80,6 @@ public interface BuyService {
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
 
-	Map<String, Object> getPrintProcurementOrderDetail(Integer orderId);
+	Map<String, Object> getPrintProcurementOrderDetail(Integer orderId,List<Produce> productList);
 
 }
