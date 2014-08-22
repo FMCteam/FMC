@@ -50,7 +50,7 @@
 							<div class="orderWrap" style="width:25%; float:left; margin-bottom:20px;">
 								<li>
 									<div>
-										<a href="${ctx}${url}?orderId=${model.order.orderId}&cid=${cid}" target="_blank" title="查看详情">
+										<a href="${ctx}${url}?orderId=${model.order.orderId}&cid=${cid}"  title="查看详情">
 										<img src="${ctx}/common/getPic.do?type=sample&orderId=${model.order.orderId}" title="查看详情" style="height:225px;width:225px" >
 										</a>
 									</div>
@@ -60,7 +60,10 @@
 											<tbody>
 												<tr>
 													<td>订单号：</td>
-													<td>${model.orderId} &nbsp; ${model.order.styleName}</td>
+													<td>${model.orderId}</td>
+												</tr>
+												<tr>
+												<td colspan="2" style="color: #CD0000;font-weight: bold;">${model.order.styleName}</td>
 												</tr>
 												<tr>
 													<td>开始时间：</td>
@@ -126,7 +129,7 @@ $(function(){
       	previous : "上一页",
       	next : "下一页",
       	perPage : 8,
-      	delay : 100
+      	delay : 200
     });  
 });
 </script>
