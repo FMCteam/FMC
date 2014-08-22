@@ -79,8 +79,9 @@
 					<a class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定加工</a> 
 			</div>
 		</form>
-		<button class="btn btn-primary" onclick="history.back();">返回</button>
-
+		<button class="btn btn-primary" onclick="history.back(-1);">返回</button>
+		<a href="${ctx}/market/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
+		 style="font-size: 13px; padding: 9px 30px 7px; background: #0866c6;border-color: #0a6bce; color: #fff; text-shadow: none;"   target="_blank">打印补货单</a><a style="color: red;font-size: 16px;">亲，请别忘了打印补货单哦！</a>
 	</div>
 	<!--maincontentinner-->
 	<div class="footer">
@@ -110,6 +111,9 @@ $(document).ready(function(){
 </script>
  -->
 <script type="text/javascript">
+$(function(){
+	$("#tof").val("false");
+})
 function confirmProductDetailSubmit(fileValue1,fileValue2) {
 	if($("#tof").val() == "true"){
 		var fileValue1str = fileValue1.substr(fileValue1.indexOf(".")).toLowerCase();

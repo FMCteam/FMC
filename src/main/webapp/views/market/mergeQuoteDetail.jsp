@@ -57,7 +57,7 @@
 					<i class="icon-ok icon-white"></i>确定
 				</button>
 			</div>
-			 <button class="btn btn-primary" onclick="history.back();">返回</button>
+			 <button class="btn btn-primary" onclick="history.back(-1);">返回</button>
 		</form>
 	</div>
 

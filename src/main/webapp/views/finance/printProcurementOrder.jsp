@@ -61,6 +61,9 @@ table.table.table-bordered{
 	margin: 13px 0px 10px 0px;
 	border: 1px solid black;
 }
+table.table th, .table td{
+line-height: 16px
+}
 </style>
 </head>
 

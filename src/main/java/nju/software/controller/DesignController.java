@@ -36,8 +36,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Controller
 public class DesignController {
 	
-	private final static String CAD_URL = "E:/fmc/cad/";
-	private final static String CRAFT_FILE_URL = "E:/fmc/craft"; 
+	private final static String CAD_URL = "C:/fmc/cad/";
+	private final static String CRAFT_FILE_URL = "C:/fmc/craft"; 
 	// ===========================设计验证=================================
 	@RequestMapping(value = "/design/verifyDesignList.do")
 	@Transactional(rollbackFor = Exception.class)

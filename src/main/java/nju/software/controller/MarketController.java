@@ -75,10 +75,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class MarketController {
-	private final static String CONTRACT_URL = "E:/fmc/contract/";
-	private final static String CONFIRM_SAMPLEMONEY_URL="E:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
-	private final static String CONFIRM_DEPOSIT_URL="E:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
-	private final static String CONFIRM_FINALPAYMENT_URL="E:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
+	private final static String CONTRACT_URL = "C:/fmc/contract/";
+	private final static String CONFIRM_SAMPLEMONEY_URL="C:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
+	private final static String CONFIRM_DEPOSIT_URL="C:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
+	private final static String CONFIRM_FINALPAYMENT_URL="C:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
 
 	@Autowired
 	private OrderService orderService;
@@ -125,6 +125,9 @@ public class MarketController {
 		return "/market/addOrderDetail";
 	}
 
+	
+	
+	//-----------------提交订单数据---------------------------------
 	@RequestMapping(value = "/market/addOrderSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String addOrderSubmit(HttpServletRequest request,
@@ -2237,7 +2240,7 @@ public class MarketController {
 		model.addAttribute("role",account.getUserRole());
 		return "/market/orderDetail";
 	}
-	
+	//正在进行中的订单  就是这个
 	@RequestMapping(value = "/order/orderListDoing.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String orderListDoing(HttpServletRequest request,
@@ -2333,4 +2336,25 @@ public class MarketController {
 		model.addAttribute("searchurl", "/order/orderListDoneSearch.do");
 		return "/market/orderList";
 	}
+	//获取大货补货单信息
+	@RequestMapping(value = "/market/printProcurementOrder.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String printProcurementOrder(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/finance/printProcurementOrder";
+	}
+	//获取样衣裁剪单信息
+	@RequestMapping(value = "/market/printProcurementSampleOrder.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String printProcurementSampleOrder(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/finance/printProcurementSampleOrder";
+	}
+	
 }

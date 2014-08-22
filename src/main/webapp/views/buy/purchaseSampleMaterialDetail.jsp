@@ -119,9 +119,9 @@
 						</button>
 					</div>
 					<br />
-					<a
-					href="${ctx}/buy/printProcurementSampleOrder.do?orderId=${orderInfo.order.orderId}"
-					class="btn btn-primary btn-rounded" target="_blank">打印样衣单</a>
+<!-- 					<a -->
+<!-- 					href="${ctx}/buy/printProcurementSampleOrder.do?orderId=${orderInfo.order.orderId}" -->
+<!-- 					class="btn btn-primary btn-rounded" target="_blank">打印样衣单</a> -->
 					<button class="btn btn-primary" onclick="history.back();">返回</button>
 				</div>
 			</div>
@@ -145,7 +145,7 @@
 	}
 	function success(){
 		$("#result").val(1);
-		return confirm("确认已经打印出样衣单？");
+		return confirm("确认已核对样衣单？");
 	}
 </script>
 

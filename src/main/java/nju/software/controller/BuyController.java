@@ -522,7 +522,7 @@ public class BuyController {
 		return new Timestamp(outDate.getTime());
 	}
 	
-		/** 
+		/*	 
 		* @Title: printProcurementOrder 
 		* @Description: TODO:打印大货补货单
 		* @param @param request
@@ -531,7 +531,7 @@ public class BuyController {
 		* @param @return    设定文件 
 		* @return String    返回类型 
 		* @throws 
-		*/
+		
 		@RequestMapping(value = "/buy/printProcurementOrder.do")
 		@Transactional(rollbackFor = Exception.class)
 		public String printProcurementOrder(HttpServletRequest request,
@@ -551,6 +551,8 @@ public class BuyController {
 			model.addAttribute("orderInfo", orderInfo);
 			return "/finance/printProcurementSampleOrder";
 		}
+		
+		*/
 	@Autowired
 	private BuyService buyService;
 	@Autowired
