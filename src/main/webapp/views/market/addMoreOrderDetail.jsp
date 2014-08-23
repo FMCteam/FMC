@@ -157,7 +157,7 @@
 									name="fabric_name" /> <input id="fabric_amount" type="hidden"
 									name="fabric_amount" /></td>
 								<td class="innertable span12"><table
-										class="span12 table accessory_table">
+										class="span12 table fabric_table">
 										<tr>
 											<td class="span5 title">面料名称</td>
 											<td class="span5 title">面料克重</td>
