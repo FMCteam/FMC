@@ -1,5 +1,6 @@
 package nju.software.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Craft;
@@ -17,6 +19,7 @@ import nju.software.service.EmployeeService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.impl.JbpmTest;
+import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 
@@ -190,7 +193,7 @@ public class DesignController {
 			crumpleMoney = "0";
 			openVersionMoney = "0";
 		}
-		//生产报价提交
+		//设计工艺报价提交
 		designService.computeDesignCostSubmit(
 				orderId,
 				taskId,
@@ -257,16 +260,25 @@ public class DesignController {
 		String orderId = request.getParameter("orderId");
 		Map<String, Object> orderInfo = designService
 				.getUploadDesignDetail(Integer.parseInt(orderId));
+		String  orderSampleStatus =designService.getCraftInfo(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
+		//判断订单样衣采购的状态
+		//1.正在进行样衣原料料采购  2.正在进行样衣面料工艺加工 3.样衣原料已经准备好（无需工艺），请根据样衣单到采购部领取面料
+		//4.样衣原料工艺已完成，请根据样衣到印花设计部领取面料
+		model.addAttribute("orderSampleStatus",orderSampleStatus);
 		return "/design/getUploadDesignDetail";
 	}
 
+	//录入版型数据
 	@RequestMapping(value = "/design/uploadDesignSubmit.do", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public String uploadDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
+		String cadSide = request.getParameter("cadSide");//制版人
+		Timestamp completeTime = this.getTime(request.getParameter("completeTime"));//制版完成时间
+		
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
@@ -275,11 +287,13 @@ public class DesignController {
 		FileOperateUtil.Upload(request, url, null, fileid);
  		url = url + "/" + filename;
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
-		designService.uploadDesignSubmit(Integer.parseInt(orderId),
-				Long.parseLong(taskId), url, uploadTime);
+		designService.EntryCadData(Integer.parseInt(orderId),
+				Long.parseLong(taskId), url, uploadTime, cadSide, completeTime);
  		Map<String, Object> orderInfo = designService
 				.getUploadDesignDetail(Integer.parseInt(orderId));
+		String  orderSampleStatus =designService.getCraftInfo(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
+		model.addAttribute("orderSampleStatus",orderSampleStatus);
 		return "/design/getUploadDesignDetail";
 //		return "forward:/design/getUploadDesignList.do";
 	}
@@ -376,7 +390,10 @@ public class DesignController {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-        designService.needCraftSampleSubmit(orderId,taskId);
+		String craftLeader = request.getParameter("craftLeader");//工艺负责人
+		Timestamp completeTime = this.getTime(request.getParameter("completeTime"));//工艺完成时间
+		
+        designService.needCraftSampleSubmit(orderId, taskId, craftLeader, completeTime);
 		return "redirect:/design/getNeedCraftSampleList.do";
 	}	
 	
@@ -431,11 +448,14 @@ public class DesignController {
 	@RequestMapping(value = "design/needCraftProductSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String needCraftProductSubmit(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model) throws UnsupportedEncodingException {
+		String crafsManName= new String( request.getParameter("crafsManName").getBytes("iso-8859-1"), "UTF-8");
+		String crafsProduceDate =request.getParameter("crafsProduceDate");
+		Timestamp timeProduceDate=this.getTime(crafsProduceDate);
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
-        designService.needCraftProductSubmit(orderId,taskId);
+        designService.needCraftProductSubmit(orderId,taskId,crafsManName,timeProduceDate);
 		return "redirect:/design/getNeedCraftProductList.do";
 	}	
 	
@@ -486,6 +506,8 @@ public class DesignController {
 		Map<String, Object> orderInfo = designService
 				.getTypeSettingSliceDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
+		String  orderSampleStatus=designService.getCraftInfo(Integer.parseInt(orderId));
+		model.addAttribute("orderSampleStatus",orderSampleStatus);
 		return "/design/getTypeSettingSliceDetail";
 	}
 	
@@ -627,6 +649,12 @@ public class DesignController {
 				Long.parseLong(taskId), url, uploadTime);
 		return "forward:/design/getConfirmCadList.do";
 	}
+	
+	private Timestamp getTime(String time) {
+		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
+		return new Timestamp(outDate.getTime());
+	}
+	
 	@Autowired
 	private DesignService designService;
 	@Autowired

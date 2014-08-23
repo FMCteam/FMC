@@ -1,8 +1,10 @@
 package nju.software.dao.impl;
 
 import java.util.List;
+
 import nju.software.dao.IDeliveryRecordDAO;
 import nju.software.dataobject.DeliveryRecord;
+
 import org.hibernate.LockMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,8 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public class DeliveryRecordDAO extends HibernateDaoSupport implements IDeliveryRecordDAO{
 	private static final Logger log = LoggerFactory.getLogger(DeliveryRecordDAO.class);
 	public static final String ORDER_ID = "orderId";
+	public static final String SEND_TYPE_PRODUCT = "product";//大货发货
+	public static final String SEND_TYPE_SAMPLE = "sample";//样衣发货
 	
 	@Override
 	public void save(DeliveryRecord transientInstance) {
@@ -136,6 +140,36 @@ public class DeliveryRecordDAO extends HibernateDaoSupport implements IDeliveryR
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
+			throw re;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DeliveryRecord> findProductRecordByOrderId(Object orderId) {
+		log.debug("find DeliveryRecord instance with property: " + "orderId"
+				+ ", value: " + orderId);
+		try {
+			String queryString = "from DeliveryRecord as model where model.sendType='"+SEND_TYPE_PRODUCT+
+					"' and model.orderId= ? " ;
+			return getHibernateTemplate().find(queryString, orderId);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DeliveryRecord> findSampleRecordByOrderId(Object orderId) {
+		log.debug("find DeliveryRecord instance with property: " + "orderId"
+				+ ", value: " + orderId);
+		try {
+			String queryString = "from DeliveryRecord as model where model.sendType='"+SEND_TYPE_SAMPLE+
+					"' and model.orderId= ? " ;
+			return getHibernateTemplate().find(queryString, orderId);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
 			throw re;
 		}
 	}

@@ -5,18 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.drools.command.Context;
-import org.drools.command.impl.GenericCommand;
-import org.drools.command.impl.KnowledgeCommandContext;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.process.NodeInstance;
-import org.drools.runtime.process.ProcessInstance;
-import org.drools.runtime.process.WorkflowProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CheckRecordDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
@@ -28,13 +19,21 @@ import nju.software.dao.impl.PackageDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
-import nju.software.dataobject.DesignCad;
+import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.service.FinanceService;
 import nju.software.util.JbpmAPIUtil;
+
+import org.drools.command.Context;
+import org.drools.command.impl.GenericCommand;
+import org.drools.command.impl.KnowledgeCommandContext;
+import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.process.NodeInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("financeServiceImpl")
 public class FinanceServiceImpl implements FinanceService {
@@ -188,13 +187,13 @@ public class FinanceServiceImpl implements FinanceService {
 		Quote quote = (Quote) model.get("quote");
 		Float price = quote.getOuterPrice();
 		model.put("price", price);
-		model.put("number", order.getAskAmount());
 		model.put("total", order.getTotalMoney() * 0.3);
 		model.put("taskName", "确认大货定金");
 		model.put("tabName", "大货定金");
 		model.put("type", "大货定金");
 		model.put("url", "/finance/confirmDepositSubmit.do");
 		model.put("moneyName", "30%定金");
+		model.put("number", order.getAskAmount());
 		Float samplePrice = (float) 0;
 		if (order.getStyleSeason().equals("春夏")) {
 			samplePrice = (float) 200;
@@ -275,14 +274,23 @@ public class FinanceServiceImpl implements FinanceService {
 		Quote quote = (Quote) model.get("quote");
 		Float price = quote.getOuterPrice();
 		model.put("price", price);
-		Produce p=new Produce();
-		p.setOid(orderId);
-		p.setType(Produce.TYPE_QUALIFIED);
-		List<Produce>list=produceDAO.findByExample(p);
-		Integer amount=0;
-		for(Produce produce:list){
-			amount+=produce.getProduceAmount();
+		
+//		Produce p = new Produce();
+//		p.setOid(orderId);
+//		p.setType(Produce.TYPE_QUALIFIED);
+//		List<Produce> list = produceDAO.findByExample(p);
+//		Integer amount = 0;
+//		for (Produce produce : list) {
+//			amount += produce.getProduceAmount();
+//		}
+		
+		// 计算质检合格总数，即实际的大货总数
+		int amount = 0;
+		List<CheckRecord> list = checkRecordDAO.findByOrderId(orderId);
+		for (CheckRecord cr : list) {
+			amount += cr.getQualifiedAmount();
 		}
+		
 		model.put("number", amount);
 		model.put("total",  order.getTotalMoney() * 0.7);
 		model.put("taskName", "确认大货尾款");
@@ -325,16 +333,57 @@ public class FinanceServiceImpl implements FinanceService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean confirmFinalPaymentSubmit(String actorId, long taskId,
+			boolean result, Money money,Integer orderId) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(orderId);
+		if (result) {
+			moneyDAO.save(money);
+/*			if(order.getIsHaoDuoYi()==1&&(order.getLogisticsState()==2)){//如果是好多衣客户且产品已入库，则该订单完成
+				order.setOrderState("Done");
+			}*/
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_MONEY, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			if(result==false){//如果result的的值为false，即为尾款收取失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");	
+			}
+			orderDAO.attachDirty(order);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	@Override
 	public void returnDepositSubmit(String actorId, long taskId) {
 		Map<String, Object> data = new HashMap<>();
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void returnDepositSubmit(String actorId, long taskId,Integer orderId) {
+		Order order = orderDAO.findById(orderId);
+		Map<String, Object> data = new HashMap<>();
  		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			order.setOrderState("1");
+			orderDAO.attachDirty(order);
  		} catch (InterruptedException e) {
  			e.printStackTrace();
  		}
-		
+ 		
 	}
 	
 	@Override
@@ -407,7 +456,7 @@ public class FinanceServiceImpl implements FinanceService {
 
 				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
 						.getNodeInstances()) {
-					System.out.println("状态名称："+nodeInstance.getNodeName());
+					//System.out.println("状态名称："+nodeInstance.getNodeName());
 					nodeInstanceNames.add(nodeInstance.getNodeName());
 				}
 			}
@@ -447,6 +496,8 @@ public class FinanceServiceImpl implements FinanceService {
 	@Autowired
 	private AccessoryCostDAO accessoryCostDAO;
 	@Autowired
+	private CheckRecordDAO checkRecordDAO;
+	@Autowired
 	private ServiceUtil service;
 
 	public final static String ACTOR_FINANCE_MANAGER = "financeManager";
@@ -456,39 +507,5 @@ public class FinanceServiceImpl implements FinanceService {
 	public final static String TASK_CONFIRM_FINAL_PAYMENT = "confirmFinalPayment";
 	public final static String RESULT_MONEY = "receiveMoney";
 	
-	@Override
-	public Map<String, Object> getPrintProcurementOrderDetail(Integer orderId) {
-		// TODO Auto-generated method stub
-		Map<String,Object>model=new HashMap<String,Object>();
-		Order order = orderDAO.findById(orderId);
-		model.put("order", order);
-		model.put("customer",customerDAO.findById(order.getCustomerId()));
-		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
-		model.put("logistics", logisticsDAO.findById(orderId));
-		model.put("fabrics", fabricCostDAO.findByOrderId(orderId));
-		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
-		model.put("orderId", service.getOrderId(order));
-		Produce produce = new Produce();
-		produce.setOid(orderId);
-		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
-		model.put("sample", produceDAO.findByExample(produce));
-		produce.setType(Produce.TYPE_PRODUCE);
-		model.put("produce", produceDAO.findByExample(produce));
-		return model;
-
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

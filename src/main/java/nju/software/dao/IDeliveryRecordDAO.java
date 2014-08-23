@@ -31,4 +31,8 @@ public interface IDeliveryRecordDAO {
 	public abstract void attachDirty(DeliveryRecord instance);
 
 	public abstract void attachClean(DeliveryRecord instance);
+
+	public abstract List<DeliveryRecord> findProductRecordByOrderId(Object orderId);
+	
+	public abstract List<DeliveryRecord> findSampleRecordByOrderId(Object orderId);
 }

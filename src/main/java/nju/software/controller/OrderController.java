@@ -93,13 +93,17 @@ public class OrderController {
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
+		String result = request.getParameter("result");
+		if(result != null){
+			request.setAttribute("notify", "该订单已签订过大货合同，无法进行修改！");
+		}
 		List<Map<String, Object>> orderModelList = orderService.getModifyOrderList();
 		model.put("list", orderModelList);
 		model.addAttribute("taskName", "修改订单");
 		model.addAttribute("url", "/account/modifyOrderDetail.do");
 		model.addAttribute("searchurl", "/account/modifyOrderSearch.do");
 
-		return "account/modifyOrderList";
+		return "account/modifyOrderList_new";
 	}
 	
 	@RequestMapping(value = "account/modifyOrderSearch.do")
@@ -112,12 +116,13 @@ public class OrderController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
+		//System.out.println("ordernumber:"+ordernumber+"---------\n"+"customername:"+customername+"---------\n"+"stylename:"+stylename+"---------\n"+"employeename:"+employeename+"---------\n"+"startdate:"+startdate+"---------\n"+"enddate:"+enddate+"---------\n");
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-		List<Map<String, Object>> list = orderService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		List<Map<String, Object>> list = orderService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds,"",0);
          
 		String string_page=request.getParameter("page")==null?"1":request.getParameter("page");
 		Integer page=Integer.parseInt(string_page);
@@ -134,8 +139,8 @@ public class OrderController {
 		if(list!=null&&list.size()!=0){
 			model.addAttribute("pages", list.get(0).get("pages"));
 		}
-		System.out.println("===========ok:"+list.size());
-		return "account/modifyOrderList";
+		//System.out.println("===========ok:"+list.size());
+		return "account/modifyOrderList_new";
 	}	
 	
 	@RequestMapping(value = "account/modifyOrderDetail.do")
@@ -149,6 +154,10 @@ public class OrderController {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		Map<String, Object> orderModel = orderService.getModifyOrderDetail(account.getUserId(), id);
+		if(orderModel == null){
+			//若该订单已签订过大货合同，则返回可修改订单列表
+			return "redirect:/account/modifyOrderList.do?result=0";
+		}
 		model.addAttribute("orderModel", orderModel);
 		return "account/modifyOrderDetail";
 	}
@@ -544,13 +553,14 @@ public class OrderController {
 			model.put("list", list);
 			model.addAttribute("taskName", "被终止订单列表");
 			model.addAttribute("url", "/order/orderDetail.do");
-			return "/order/endList";
+			return "/order/endList_new";
 		}
 		// =======================被终止订单列表搜索=================================
 		@RequestMapping(value = "/order/endListSearch.do")
 		@Transactional(rollbackFor = Exception.class)
 		public String endListSearch(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
+			Account account = (Account) request.getSession().getAttribute("cur_user");	
 			
 			String ordernumber = request.getParameter("ordernumber");
 			String customername = request.getParameter("customername");
@@ -564,7 +574,7 @@ public class OrderController {
 			for(int i=0;i<employeeIds.length;i++){
 				employeeIds[i] = employees.get(i).getEmployeeId();
 			}
-			List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+			List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds,account.getUserRole(),account.getUserId());
 			List<Map<String,Object>> resultlist =  new ArrayList<>();
 			for(int i =0;i<list.size();i++){
 				Map<String, Object> model1  = list.get(i);
@@ -578,8 +588,7 @@ public class OrderController {
 			model.put("list", resultlist);
 			model.addAttribute("taskName", "被终止订单列表");
 			model.addAttribute("url", "/order/orderDetail.do");
-  
-			return "/order/endList";
+			return "/order/endList_new";
 		}		
 		
 		
