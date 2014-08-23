@@ -328,9 +328,6 @@ function getTdString(col){
 		tdString+=$("td."+col).eq(i).text()+",";
 	}
 	tdString+=$("td."+col).eq(i).text();
-	if(col == "fabric_name"){
-		alert(tdString);
-	}
 	return tdString;
 }
 
