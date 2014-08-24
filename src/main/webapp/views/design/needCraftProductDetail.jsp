@@ -83,15 +83,16 @@
 							<td><input name="crafsProduceDate" id="input_day" type="text" required="required" readonly="readonly"/></td>
 							</tr>
 						</table>
-					<button class="btn btn-primary" onclick="history.back();">返回</button>
+					
 					<div class="action" style="float:right">
 						<!-- <a href="javascript:doPost();"
 						   onclick="return confirm('确认完成大货工艺制作？')"
 						   class="btn btn-primary">完成大货工艺制作</a> -->
 						   <input type="submit" class="btn btn-primary" value="完成大货工艺制作"/>
 			        </div>
-						
 				 </form>
+				 
+				 <button class="btn btn-primary" onclick="history.back();">返回</button>
  			</div>				
 			</div>
 
