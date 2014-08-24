@@ -346,6 +346,21 @@ public class FinanceServiceImpl implements FinanceService {
 		
 	}
 	
+
+	@Override
+	public void returnDepositSubmit(String actorId, long taskId, Integer orderId) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(orderId);
+		Map<String, Object> data = new HashMap<>();
+ 		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			order.setOrderState("1");
+			orderDAO.attachDirty(order);
+ 		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+ 		}
+	}
+	
 	@Override
 	public List<Map<String, Object>> getProcessState(final Integer orderId) {
 		// //System.out.println("size:"+jbpmAPIUtil.getKsession().getProcessInstances().size());
@@ -494,14 +509,29 @@ public class FinanceServiceImpl implements FinanceService {
 	public boolean confirmFinalPaymentSubmit(String actorId, long taskId,
 			boolean result, Money money, Integer orderId) {
 		// TODO Auto-generated method stub
-		return false;
+		Order order = orderDAO.findById(orderId);
+		if (result) {
+			moneyDAO.save(money);
+/*			if(order.getIsHaoDuoYi()==1&&(order.getLogisticsState()==2)){//如果是好多衣客户且产品已入库，则该订单完成
+				order.setOrderState("Done");
+			}*/
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_MONEY, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			if(result==false){//如果result的的值为false，即为尾款收取失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");	
+			}
+			orderDAO.attachDirty(order);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 
-	@Override
-	public void returnDepositSubmit(String actorId, long taskId, Integer orderId) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 
