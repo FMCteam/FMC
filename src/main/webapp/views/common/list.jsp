@@ -10,7 +10,7 @@
 }
  
 #tablePagination_rowsPerPage{
- width :60px;
+ width :40px;
 }
  
 }
@@ -59,7 +59,7 @@
 						<input type="text" class="search-query " name="stylename" placeholder="输入款式名称">
 						<span >客户名称:</span>
 						<input type="text" class="search-query " name="customername" placeholder="输入客户名称">
-			 			<input type="hidden" name="cid" value="${cid }"/>
+			 
 		</caption>
 		<thead>
 			<tr>
@@ -69,7 +69,7 @@
 				<th>客户姓名</th>
 				<th>客户公司</th>
 				<th>任务开始时间</th>
-				<th style="width: 80px;">操作</th>
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -89,7 +89,7 @@
 					<td>${model.order.customerName}</td>
 					<td>${model.order.customerCompany}</td>
 					<td>${model.taskTime}</td>
-					<td><a href="${ctx}${url}?orderId=${model.order.orderId}&cid=${cid}">详情</a>
+					<td><a href="${ctx}${url}?orderId=${model.order.orderId}">详情</a>
 					</td>
 				</tr>
 			</c:forEach>

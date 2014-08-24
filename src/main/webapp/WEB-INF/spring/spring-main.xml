@@ -36,12 +36,6 @@
 		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
-		<property name="maxActive" value="100"/> 
-        <property name="maxIdle" value="20"/> 
-        <property name="maxWait" value="1000"/> 
-        <property name="defaultAutoCommit" value="true"/> 
-        <property name="removeAbandoned" value="true"/> 
-        <property name="removeAbandonedTimeout" value="120"/> 
 	</bean>
 	
 	<bean id="sessionFactory"
@@ -79,12 +73,11 @@
 				<value>nju.software.dataobject.VersionData</value>
 				<value>nju.software.dataobject.AccessoryCost</value>
 				<value>nju.software.dataobject.DeliveryRecord</value>
-				<value>nju.software.dataobject.CheckRecord</value>
-				<value>nju.software.dataobject.CheckDetail</value>
 			</list>
 		</property>
 	</bean>
 	
+
 	<bean id="AccountDAO" class="nju.software.dao.impl.AccountDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
@@ -194,18 +187,6 @@
 	</bean>
 	<bean id="DeliveryRecordDAO"
 		class="nju.software.dao.impl.DeliveryRecordDAO">
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
-		</property>
-	</bean>
-	<bean id="CheckRecordDAO"
-		class="nju.software.dao.impl.CheckRecordDAO">
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
-		</property>
-	</bean>
-	<bean id="CheckDetailDAO"
-		class="nju.software.dao.impl.CheckDetailDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

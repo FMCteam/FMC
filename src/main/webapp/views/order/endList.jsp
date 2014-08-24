@@ -27,9 +27,9 @@
 						 <br>
 						
 						<span >输入起始日期:</span>
-						<input class="search-query" style="width: 210px"  type="date" name="startdate" placeholder="输入订单起始日期">
+						<input class="search-query" type="text" name="startdate" placeholder="输入订单起始日期">
 						<span >输入截止日期:</span>
-						<input class="search-query" style="width: 210px" type="date" name="enddate" placeholder="输入订单截止日期">
+						<input class="search-query" type="text" name="enddate" placeholder="输入订单截止日期">
 						<br>
 						<!-- 
 						<input type="text" class="search-query float-right" placeholder="输入检索条件">
@@ -41,17 +41,11 @@
 							<span >市场专员名称:</span>
 							<input type="text" class="search-query " name="employeename" placeholder="输入市场专员名称">
 						</c:if>						
-						<c:if test="${USER_user_role eq 'marketStaff'}">
-							<input type="hidden" class="search-query " name="employeename" >
-						</c:if>						
 						<span >款式名称:</span>
 						<input type="text" class="search-query " name="stylename" placeholder="输入款式名称">						
 						<c:if test="${USER_user_role ne 'CUSTOMER'}">
 							<span >客户名称:</span>
 							<input type="text" class="search-query " name="customername" placeholder="输入客户名称">
-						</c:if>
-						<c:if test="${USER_user_role eq 'CUSTOMER'}">
-							<input type="hidden" class="search-query " name="customername" >
 						</c:if>
 					</caption>
 					<thead>
@@ -62,7 +56,7 @@
 							<th>客户姓名</th>
 							<th>客户公司</th>
 							<th>订单开始时间</th>
-							<th style="width: 80px;">操作</th>
+							<th>操作</th>
 						</tr>
 					</thead>
 					<tbody>

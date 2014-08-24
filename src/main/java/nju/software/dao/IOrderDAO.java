@@ -83,8 +83,7 @@ public interface IOrderDAO {
 	public List getOrderList(Integer page);
 	
 	public List<Order> getSearchOrderList(String ordernumber,
-			String customername, String stylename, String startdate,String enddate,
-			Integer[] employeeIds,String userRole,Integer userId);
+			String customername, String stylename, String startdate,String enddate,Integer[] employeeIds);
 
 	
 	public Integer getPageNumber();

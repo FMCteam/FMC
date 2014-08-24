@@ -54,7 +54,7 @@
 								<td class="span2 title" rowspan="6">费用信息</td>
 								<td class="title">金额类型</td>
 								<td class="title">优惠金额</td>
-								<td class="title" style="color: red;">应收金额</td>
+								<td class="title">应收金额</td>
 							</tr>
 							<tr>
 								<td>${orderInfo.moneyName}</td>
@@ -63,10 +63,7 @@
 								<span id="pay">${((orderInfo.number)*orderInfo.price-orderInfo.order.discount)*0.3}</span>
  -->
 								<td>
-								(
-								<a id="totalNumber" style="color: black;">
-								</a>
-								-${orderInfo.order.discount})*0.3=
+								(${(orderInfo.number)*orderInfo.price}-${orderInfo.order.discount})*0.3=
 								<input name="amountReceivable" type="text" readonly="readonly" />
 								</td>
 							</tr>
@@ -119,7 +116,7 @@
 
 							</tr>
 							<tr>
-								<td class="title" style="color: red;">汇款金额</td>
+								<td class="title">汇款金额</td>
 								<td class="title">收款账号<span style="color: red">*</span></td>
 								<td class="title">收款时间<span style="color: red">*</span></td>
 
@@ -137,15 +134,13 @@
 										<option>872104037@qq.com</option>
 									</select>
 								</td>
-								<td><input type="text" required="required" name="time" id="input_day" readonly="readonly"/></td>
+								<td><input type="date" required="required" name="time" /></td>
 
 							</tr>
 							<tr>
 								<td class="title" colspan="1">备注</td>
-								<td colspan="2"><!-- <input type="text" name="money_remark"
-									class="span12" /> -->
-									<textarea  name="money_remark"  id="money_remark"  class="span12"   readonly="readonly"></textarea>
-								</td>
+								<td colspan="2"><input type="text" name="money_remark"
+									class="span12" /></td>
 							</tr>
 		                    <tr>
 		                        <td class="title">收款信息</td>
@@ -168,8 +163,8 @@
 								<i class="icon-ok icon-white"></i>已确认收款</a>
 						</div>
 						<br>
+						<button class="btn btn-primary" onclick="history.back();">返回</button>
 					</form>
-					<button class="btn btn-primary" onclick="history.back();">返回</button>
 				</div>
 			</div>
 		</div>
@@ -185,9 +180,6 @@
 </div>
 <!--maincontentinner-->
 <!--maincontent-->
-<script type="text/javascript">
-	$("#money_remark").val("${orderInfo.order.moneyremark}");
-</script>
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
@@ -195,7 +187,6 @@
 <link rel="stylesheet" href="${ctx}/views/finance/finance.css">
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <!-- 汇款金额操作js -->
 <script type="text/javascript" src="${ctx}/views/finance/remittanceFinance.js"></script>
 <%@include file="/common/footer.jsp"%>

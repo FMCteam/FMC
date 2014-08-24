@@ -44,6 +44,7 @@ $(document).ready(function() {
 	});
 </script>
 <style type="text/css">
+
 table.tablesorter thead th {
 	height: 20px;
 }
@@ -177,10 +178,10 @@ table.tablesorter thead tr .headerSortDown {
 								<!-- 
 								<li><a href="${ctx}/design/verifyDesignList.do">设计验证<span
 										class="verifyDesign"></span></a></li>
-								
+								-->
 								<li><a href="${ctx}/design/computeDesignCostList.do">设计工艺验证<span
 										class="computeDesignCost"></span></a></li>
-								
+								<!--
 								<li><a href="${ctx}/design/getUploadDesignList.do">样衣版型<span
 										class="uploadDegisn"></span></a></li>
 								-->
@@ -188,34 +189,17 @@ table.tablesorter thead tr .headerSortDown {
 										class="uploadDegisn"></span></a></li>										
 								<li><a href="${ctx}/design/getTypeSettingSliceList.do">排版切片<span
 										class="typeSettingSlice"></span></a></li>
-<%-- 								<li><a href="${ctx}/design/getModifyDesignList.do">大货生产验证<span
+								<li><a href="${ctx}/design/getModifyDesignList.do">大货生产验证<span
 										class="modifyDesign"></span></a></li>
 								<li><a href="${ctx}/design/getConfirmDesignList.do">大货生产版型<span
-										class="confirmDesign"></span></a></li> --%>
-								<!--
+										class="confirmDesign"></span></a></li>
 								<li><a href="${ctx}/design/getNeedCraftSampleList.do">样衣工艺制作<span
 										class="craftSample"></span></a></li>
 								<li><a href="${ctx}/design/getNeedCraftProductList.do">大货工艺制作<span
 										class="craft"></span></a></li>
-								-->
 								<li><a href="${ctx}/design/getConfirmCadList.do">确认版型<span
 										class="confirmCad"></span></a></li>
 							</ul></li>
-					</c:if>
-					<c:if test="${ROLE_design==true}">
-						<li class="dropdown"><a href=""><span
-								class="iconfa-th-list"></span> 工艺部<span
-								class="craftManager task"></span></a>
-							<ul>
-								<li><a href="${ctx}/design/computeDesignCostList.do">设计工艺验证<span
-										class="computeDesignCost"></span></a></li>
-								<li><a href="${ctx}/design/getNeedCraftSampleList.do">样衣工艺制作<span
-										class="craftSample"></span></a></li>
-								<li><a href="${ctx}/design/getNeedCraftProductList.do">大货工艺制作<span
-										class="craft"></span></a></li>
-							</ul>
-						</li>
-					
 					</c:if>
 					<c:if test="${ROLE_buy==true}">
 						<li class="dropdown"><a href=""><span
@@ -230,8 +214,8 @@ table.tablesorter thead tr .headerSortDown {
 										class="computePurchaseCost"></span></a></li>
 								<li><a href="${ctx }/buy/purchaseSampleMaterialList.do">样衣采购<span
 										class="purchaseSampleMaterial"></span></a></li>
-						<%-- 		<li><a href="${ctx }/buy/confirmPurchaseList.do">大货采购确认<span
-										class="confirmPurchase"></span></a></li> --%>
+								<li><a href="${ctx }/buy/confirmPurchaseList.do">大货采购确认<span
+										class="confirmPurchase"></span></a></li>
 								<li><a href="${ctx }/buy/purchaseMaterialList.do">大货面料采购确认<span
 										class="purchaseMaterial"></span></a></li>
 							</ul></li>
@@ -247,8 +231,8 @@ table.tablesorter thead tr .headerSortDown {
 								-->
 								<li><a href="${ctx }/produce/computeProduceCostList.do">生产成本验证并核算<span
 										class="computeProduceCost"></span></a></li>
-								<%-- <li><a href="${ctx }/produce/produceSampleList.do">样衣生产<span
-										class="produceSample"></span></a></li> --%>
+								<li><a href="${ctx }/produce/produceSampleList.do">样衣生产<span
+										class="produceSample"></span></a></li>
 								<li><a href="${ctx }/produce/produceList.do">大货批量生产<span
 										class="produce"></span></a></li>
 							</ul></li>
@@ -312,7 +296,7 @@ table.tablesorter thead tr .headerSortDown {
 		<div class="rightpanel">
 
 			<ul class="breadcrumbs">
-				<li><a href="${ctx }/default.do"><i class="iconfa-home"></i></a> <span
+				<li><a href="dashboard.html"><i class="iconfa-home"></i></a> <span
 					class="separator"></span></li>
 				<li>欢迎！</li>
 			</ul>

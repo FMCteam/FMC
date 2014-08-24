@@ -25,11 +25,9 @@ import org.jbpm.task.service.ContentData;
 import org.jbpm.task.service.TaskClient;
 import org.jbpm.task.service.hornetq.HornetQTaskClientConnector;
 import org.jbpm.task.service.hornetq.HornetQTaskClientHandler;
-import org.jbpm.task.service.local.LocalTaskService;
 import org.jbpm.task.service.responsehandlers.BlockingTaskOperationResponseHandler;
 import org.jbpm.task.service.responsehandlers.BlockingTaskSummaryResponseHandler;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 本类封装jbpm5常用的API
@@ -76,8 +74,6 @@ public class JbpmAPIUtil {
 	private Map<String, Object> params;
 
 	private HornetQHTWorkItemHandler hornetQHTWorkItemHandler;
-	
-	private LocalTaskService localTaskService;
 
 	/*
 	 * This is similar to 'completeTask' method, but to complete a task that is
@@ -182,7 +178,6 @@ public class JbpmAPIUtil {
 		List<TaskSummary> tasks = null;// 保存从数据库拿到的task记录
 		List<TaskSummary> doWithTaskList = new ArrayList<TaskSummary>();// 保存非完成状态的task列表
 		try {
-			System.out.println(idRef+"------jbpmUntil-----get------");
 			BlockingTaskSummaryResponseHandler responseHandler = new BlockingTaskSummaryResponseHandler();
 			List<Status> statuses = new ArrayList<Status>();
 			statuses.add(Status.Reserved);
@@ -194,12 +189,6 @@ public class JbpmAPIUtil {
 		// 最终返回
 		return doWithTaskList;
 	}
-	/*public List<TaskSummary> getAssignedTasks(String idRef) {
-		System.out.println(idRef+"-----jbpmUntil-------------");
-			List<Status> statuses = new ArrayList<Status>();
-			statuses.add(Status.Reserved);
-			return localTaskService.getTasksOwned(idRef, statuses, "en-UK");
-	}*/
 
 	/**
 	 * 根据用户id和taskname,返回对应taskName的任务列表
@@ -333,10 +322,6 @@ public class JbpmAPIUtil {
 
 	public void setKsession(StatefulKnowledgeSession ksession) {
 		this.ksession = ksession;
-	}
-
-	public void setLocalTaskService(LocalTaskService localTaskService) {
-		this.localTaskService = localTaskService;
 	}
 
 	public void setParams(Map<String, Object> params) {

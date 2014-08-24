@@ -24,19 +24,13 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="title"  rowspan="2">业务信息</td>
+								<td class="title">业务信息</td>
 								<td class="title">业务编号</td>
-								<td class="title">是否为好多衣客户</td>
-								<td class="title">接单时间</td>
-								<td class="title" colspan="2">接单业务员</td>
-								<td class="title">翻单</td>
-							</tr>
-							<tr>
 								<td>${orderModel.orderId }</td>
-								<td id="isHaoDuoYi">${orderModel.order.isHaoDuoYi==1?'是':'否'}</td>
+								<td class="title">接单时间</td>
 								<td>${fn:substring(orderModel.order.orderTime,0,10) }</td>
-								<td colspan="2">${orderModel.employee.employeeName }</td>
-								<td id="reorder">${orderModel.order.reorder==1?'是':'否'}</td>
+								<td class="title">接单业务员</td>
+								<td>${orderModel.employee.employeeName }</td>
 							</tr>
 							<tr>
 								<td class="title" rowspan="3">客户信息</td>
@@ -71,7 +65,7 @@
 								<td><input type="text" class="span12" name="style_name" required="required"
 									value="${orderModel.order.styleName }" /></td>
 								<td><input type="text" class="span12" name="clothes_type" required="required"
-									value="${orderModel.order.clothesType }" /></td>
+									value="${orderModel.order.clothesType }" /></td>	
 								<td><input type="radio" name="style_sex" 
 									${orderModel.order.styleSex eq '男'?'checked="checked"':'' }
 									value="男" /> <span>男</span> <input type="radio"
@@ -215,17 +209,11 @@
 								<td class="title" colspan="2">快递单号</td>
 							</tr>
 							<tr>
-								<td>
-									<div style="display: none;">
-										<input type="radio" name="has_posted_sample_clothes"
-										${orderModel.order.hasPostedSampleClothes>0?'checked="checked"':'' }
-										value="1" /> 是 <input type="radio"
-										${orderModel.order.hasPostedSampleClothes==0?'checked="checked"':'' }
-										name="has_posted_sample_clothes" value="0" />否
-									</div>
-
-									${orderModel.order.hasPostedSampleClothes>0?'是':'否' }
-								</td>
+								<td><input type="radio" name="has_posted_sample_clothes"
+									${orderModel.order.hasPostedSampleClothes>0?'checked="checked"':'' }
+									value="1" /> 是 <input type="radio"
+									${orderModel.order.hasPostedSampleClothes==0?'checked="checked"':'' }
+									name="has_posted_sample_clothes" value="0" /> 否</td>
 								<td colspan="2"><input class="span6" type="date" required="required"
 									name="in_post_sample_clothes_time"
 									value="${fn:substring(orderModel.logistics.inPostSampleClothesTime,0,10) }" /></td>
@@ -300,16 +288,11 @@
 								<td class="title" colspan="3">邮寄地址</td>
 							</tr>
 							<tr>
-								<td>
-									<div style="display:none; "> 
-										<input type="radio" name="is_need_sample_clothes" 
-										${orderModel.order.isNeedSampleClothes==1?'checked="checked"':'' }
-										value="1" /> 是 <input type="radio" 
-										${orderModel.order.isNeedSampleClothes==0?'checked="checked"':'' }
-										name="is_need_sample_clothes" value="0" /> 否 
-									</div>
-									${orderModel.order.isNeedSampleClothes==1?'是':'否' }	
-								</td>
+								<td><input type="radio" name="is_need_sample_clothes"
+									${orderModel.order.isNeedSampleClothes==1?'checked="checked"':'' }
+									value="1" /> 是 <input type="radio"
+									${orderModel.order.isNeedSampleClothes==0?'checked="checked"':'' }
+									name="is_need_sample_clothes" value="0" /> 否</td>
 								<td><input class="span12" type="text"
 									name="sample_clothes_name" required="required"
 									value="${orderModel.logistics.sampleClothesName }" /></td>
@@ -374,7 +357,7 @@
 								<td>锁订费用（单位：元）</td>
 								<td>包装费用（单位：元）</td>
 								<td>其他费用（单位：元）</td>
-								<td>大货物流费(整单)（单位：元）</td>
+								<td>设计费用（单位：元）</td>
 							</tr>
 
 							<tr>

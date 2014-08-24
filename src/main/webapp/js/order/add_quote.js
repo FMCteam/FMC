@@ -39,7 +39,6 @@
 	var orderInfoquoteNailCost = $("input[name='orderInfoquoteNailCost']").val();
 	var orderInfoquotePackageCost = $("input[name='orderInfoquotePackageCost']").val();
 	var orderInfoquoteOtherCost = $("input[name='orderInfoquoteOtherCost']").val();
-	var orderInfoquoteCraftCost = $("input[name='orderInfoquoteCraftCost']").val();
 	var orderInfoquoteSingleCost = $("input[name='orderInfoquoteSingleCost']").val();
 	var orderInfoquoteInnerPrice = $("input[name='orderInfoquoteInnerPrice']").val();
 
@@ -57,8 +56,7 @@
 		var number5 = accAdd(number4,orderInfoquoteIroningCost);
 		var number6 = accAdd(number5,orderInfoquoteNailCost);
         var number7 = accAdd(number6,orderInfoquotePackageCost);
-        var number8 = accAdd(number7,orderInfoquoteOtherCost);
-        var number = accAdd(number8,orderInfoquoteCraftCost);
+        var number = accAdd(number7,orderInfoquoteOtherCost);
 //        var number = orderInfoquoteFabricCost + orderInfoquoteAccessoryCost + orderInfoquoteCutCost + orderInfoquoteManageCost +
 //        orderInfoquoteSwingCost + orderInfoquoteIroningCost +orderInfoquoteNailCost + orderInfoquotePackageCost +
 //        orderInfoquoteOtherCost + 0.0;
@@ -80,7 +78,7 @@
 			}else if(s_profit != ""){
 				var profit = parseFloat(s_profit);
 				if(!(isNaN(inner_price)||isNaN(profit))){
-					$("input[name='outer_price']").val((inner_price+profit).toFixed(2));
+					$("input[name='outer_price']").val(inner_price+profit);
 				}
 			}
 		}

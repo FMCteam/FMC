@@ -37,11 +37,11 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="title" rowspan="4">生产成本</td>
-								<td>裁剪费用（单位：元/件）</td>
-								<td>管理费用（单位：元/件）</td>
-								<td>缝制费用（单位：元/件）</td>
-								<td>整烫费用（单位：元/件）</td>
+								<td rowspan="4">生产成本</td>
+								<td>裁剪费用（单位：元）</td>
+								<td>管理费用（单位：元）</td>
+								<td>缝制费用（单位：元）</td>
+								<td>整烫费用（单位：元）</td>
 							</tr>
 
 							<tr>
@@ -56,10 +56,10 @@
 							</tr>
 
 							<tr>
-								<td>锁订费用（单位：元/件）</td>
-								<td>包装费用（单位：元/件）</td>
-								<td>其他费用（单位：元/件）</td>
-								<td>大货物流费<a style="color:red;">[整单]</a>（单位：元）</td>
+								<td>锁订费用（单位：元）</td>
+								<td>包装费用（单位：元）</td>
+								<td>其他费用（单位：元）</td>
+								<td>设计费用（单位：元）</td>
 							</tr>
 
 							<tr>
@@ -70,10 +70,10 @@
 								<td><input class="span12" name="other_cost" id="other_cost"
 									type="text" required="required" /></td>
 								<td><input class="span12" name="design_cost"
-									id="design_cost" type="text"  required="required"/></td>
+									id="design_cost" type="text" required="required" /></td>
 							</tr>
 							<tr>
-								<td class="title span2">意见</td>
+								<td class="span2">意见</td>
 								<td colspan="4">
 									<textarea class="span12"
 										style="resize:vertical" rows="3" name="suggestion"></textarea>

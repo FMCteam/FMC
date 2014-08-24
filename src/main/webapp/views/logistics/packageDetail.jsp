@@ -42,13 +42,7 @@
 							<td class="span2 title">操作</td>
 						</tr>
 						<tr class="addrow">
-							<td>
-								<select class="color" style="margin:0px;width:80px">
-									<c:forEach var="produce" items="${orderInfo.produceList}">
-										<option value="${produce.color}">${produce.color}</option>
-									</c:forEach>
-								</select>
-							</td>
+							<td><input type="text" class="color" style="width:80px"/></td>
 							<td><select class="size" style="margin:0px;width:80px">
 									<option value="XS">XS</option>
 									<option value="S">S</option>
@@ -107,7 +101,7 @@
 						</c:forEach>
 					</table>
 					<button class="btn btn-primary" onclick="history.back();">返回</button>
-					<div class="action" style="float:right">
+					<div class="action">
 						<a class="btn btn-primary" onclick="return confirmPackageSubmit()"
 							href="${ctx}/logistics/packageSubmit.do?orderId=${orderInfo.order.orderId}">完成装箱</a>
 					</div>

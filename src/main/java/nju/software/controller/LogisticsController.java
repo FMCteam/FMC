@@ -129,39 +129,22 @@ public class LogisticsController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId_string = request.getParameter("orderId");
 		Integer orderId = Integer.parseInt(orderId_string);
+		
 		String taskId_string = request.getParameter("taskId");
 		long taskId = Long.parseLong(taskId_string);
-		
-		String name = "" ;//快递名称
-		String number = "";//快递单号
-		String price = "";//快递价格
-		String time = "";//邮寄时间
+		String time = request.getParameter("time");//邮寄时间
+		String name = request.getParameter("name");//快递名称
+		String number = request.getParameter("number");//快递单号
 		String isFinal = request.getParameter("isFinal");//是否是最终发货
-		if(isFinal.equals("false")){
-			name = request.getParameter("name");//快递名称
-			number = request.getParameter("number");//快递单号
-			price = request.getParameter("price");//快递价格
-			time = request.getParameter("time");//邮寄时间
-		}
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("orderId", orderId);
 		map.put("taskId", taskId);
 		map.put("time", time);
 		map.put("name", name);
 		map.put("number", number);
-		map.put("price", price);
 		map.put("isFinal", isFinal);
-		boolean success = logisticsService.sendSampleSubmit(map);
-		
-		if(success){
-			return "forward:/logistics/sendSampleList.do";
-		}else{
-			Map<String, Object> orderInfo = logisticsService.getSendSampleDetail(orderId);
-			model.addAttribute("orderInfo", orderInfo);
-			model.addAttribute("notify", "没有样衣发货记录，不能完成最终发货");
-			return "/logistics/sendSampleDetail";
-		}
+		logisticsService.sendSampleSubmit(map);
+		return "forward:/logistics/sendSampleList.do";
 	}
 
 	// ===========================产品入库=================================
@@ -171,12 +154,8 @@ public class LogisticsController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> packageList = logisticsService
 				.getPackageList();
-		List<Map<String, Object>> packageHaoDuoYiList = logisticsService
-				.getPackageHaoDuoYiList();
 		List<Map<String, Object>> warehouseList = logisticsService
 				.getWarehouseList();
-		List<Map<String, Object>> warehouseHaoDuoYiList = logisticsService
-				.getWarehouseHaoDuoYiList();
 //		if (packageList.size() == 0) {
 //			jbpmTest.completeCheckQuality("1");
 //			packageList = logisticsService.getPackageList();
@@ -184,11 +163,10 @@ public class LogisticsController {
 //		}
 
 		model.put("packageList", packageList);
-		model.put("packageHaoDuoYiList", packageHaoDuoYiList);
 		model.put("warehouseList", warehouseList);
-		model.put("warehouseHaoDuoYiList", warehouseHaoDuoYiList);
 		return "/logistics/warehouseList";
 	}
+
 	
 	@RequestMapping(value = "/logistics/packageDetail.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -200,7 +178,7 @@ public class LogisticsController {
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/packageDetail";
 	}
-	
+
 	@RequestMapping(value = "/logistics/addPackage.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String addPackage(HttpServletRequest request,
@@ -240,9 +218,7 @@ public class LogisticsController {
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		logisticsService.packageSubmit(orderId);
-		
 		return "forward:/logistics/warehouseDetail.do";
-		
 	}
 
 	@RequestMapping(value = "/logistics/warehouseDetail.do")
@@ -255,7 +231,7 @@ public class LogisticsController {
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/warehouseDetail";
 	}
-	
+
 	@RequestMapping(value = "/logistics/printWarehouseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String printWarehouseDetail(HttpServletRequest request,
@@ -282,25 +258,20 @@ public class LogisticsController {
 		List<Map<String, Object>> orderList = logisticsService
 				.getMobileWarehouseList();
 		model.addAttribute("orderList", orderList);
-		
-		List<Map<String, Object>> orderHaoDuoYiList = logisticsService
-				.getMobileWarehouseHaoDuoYiList();
-		model.addAttribute("orderHaoDuoYiList", orderHaoDuoYiList);
-		
 		return "/logistics/mobile/warehouseList";
 	}
-	
+
 	@RequestMapping(value = "/logistics/mobile/warehouseDetail.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String mobileWarehouseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
-		Map<String, Object> orderInfo = logisticsService.getMobileWarehouseDetail(orderId);
-
+		Map<String, Object> orderInfo = logisticsService
+				.getMobileWarehouseDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/logistics/mobile/warehouseDetail";
 	}
-	
+
 	@RequestMapping(value = "/logistics/mobile/updatePackage.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String mobileUpdatePackage(HttpServletRequest request,
@@ -320,7 +291,6 @@ public class LogisticsController {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		Long taskId = Long.parseLong(request.getParameter("taskId"));
 		logisticsService.mobileWarehouseSubmit(taskId, orderId);
-		
 		return "forward:/logistics/mobile/warehouseList.do";
 	}
 
@@ -399,9 +369,19 @@ public class LogisticsController {
 		String number = request.getParameter("number");
 		Float price = Float.parseFloat(request.getParameter("price"));
 		String remark = request.getParameter("remark");
-		String isFinal = request.getParameter("isFinal");//判断是否最终发货
-		logisticsService.sendClothesSubmit(orderId, taskId, price, name, time,
-				number, remark, isFinal);
+		String isFinal = request.getParameter("isFinal");
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("orderId", orderId);
+		map.put("taskId",taskId);
+		map.put("price", price);
+		map.put("name", name);
+		map.put("time" ,time);
+		map.put("number",number);
+		map.put("remark",remark);
+		map.put("isFinal",isFinal);
+		logisticsService.sendClothesSubmit(map);
+//		logisticsService.sendClothesSubmit(orderId, taskId, price, name, time,
+//				number, remark);
 		return "forward:/logistics/sendClothesList.do";
 	}
 

@@ -42,7 +42,7 @@
 			<td class="title" colspan="2">备注</td>
 		</tr>
 		<tr>
-			<td><input type="text" required="required" name="time"  id="input_day" readonly="readonly"/></td>
+			<td><input type="date" required="required" name="time" /></td>
 			<td>
 			<select name="account" required="required" >
 			<option selected="selected">36933145@qq.com</option>
@@ -50,8 +50,8 @@
 			<option>872104037@qq.com</option>
 			</select>
 			</td>
-			<td colspan="2"><textarea  name="money_remark"  id="money_remark"
-				class="span12"   readonly="readonly"></textarea></td>
+			<td colspan="2"><input type="text" name="money_remark"
+				class="span12" /></td>
 		</tr>
 		<tr>
 		<td class="title">收款信息</td>
@@ -61,16 +61,12 @@
 					style="max-height: 300px;" alt="收款图片"></img>
 			</c:if></td>
 	    </tr>
-	    <%-- <td class="title">备注信息</td>
-		<td colspan="4">
-				<input type="text"  name="moneyremark"  readonly="readonly" style="height:40px;width: 1000px" value="${orderInfo.order.moneyremark}" />
-		</td>
-	    </tr> --%>
 	</table>
 	<div>
-	 <a  class="btn btn-danger btn-rounded"  style="float: left;color: white"
+	 <a  class="btn btn-danger btn-rounded"  style="float: left;"
 			href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
-			onclick="return confirmFinanceSubmit()"><i
+			onclick="return confirmFinanceSubmit()"
+			style="color: white; margin-left: 20px"><i
 			class="icon-remove icon-white"></i>未收到汇款</a>
 	</div>
 		<input type="submit" id="financeSubmit" hidden="hidden" /> <a
@@ -79,11 +75,6 @@
 		<br><br>
 </form>
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#money_remark").val("${orderInfo.order.moneyremark}");
-})
-
-
 function confirmFinanceSubmit() {
 	return confirm("确认操作？");
 }

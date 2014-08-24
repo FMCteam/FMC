@@ -75,10 +75,9 @@ public interface DesignService {
 
 	public void uploadCraftFileSubmit(int orderId, String craftFileUrl);
 
-	public void needCraftSampleSubmit(int orderId, long taskId, String craftLeader, Timestamp completeTime);
+	public void needCraftSampleSubmit(int orderId, long taskId);
 
-	public void needCraftProductSubmit(int orderId, long taskId, String crafsManName,
-			Timestamp crafsProduceDate);
+	public void needCraftProductSubmit(int orderId, long taskId);
 
 	public void getTypeSettingSliceSubmit(int orderId, long taskId);
 
@@ -99,9 +98,20 @@ public interface DesignService {
 
 	public boolean produceSampleSubmit(long taskId, boolean result, String orderId);
 
-	public void EntryCadData(int orderId, long taskId, String url,
-			Timestamp uploadTime, String cadSide, Timestamp completeTime);
-	//获取订单中工艺状态
-	String getCraftInfo(Integer orderId);
+	public List<Map<String, Object>> getSearchNeedCraftSampleList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchNeedCraftList(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getConfirmCadList(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchTypeSettingSliceList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
 
 }

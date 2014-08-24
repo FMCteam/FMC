@@ -70,6 +70,6 @@ public interface OrderService {
 
 	public List<Map<String, Object>> getSearchOrderList(String ordernumber,
 			String customername, String stylename, String startdate,
-			String enddate, Integer[] employeeIds,String userRole,Integer userId);
+			String enddate, Integer[] employeeIds);
 
 }
