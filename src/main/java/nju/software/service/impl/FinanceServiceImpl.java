@@ -468,7 +468,7 @@ public class FinanceServiceImpl implements FinanceService {
 	public final static String TASK_CONFIRM_FINAL_PAYMENT = "confirmFinalPayment";
 	public final static String RESULT_MONEY = "receiveMoney";
 	
-	//@Override
+	@Override
 	public Map<String, Object> getPrintProcurementOrderDetail(Integer orderId,List<Produce> produces) {
 		// TODO Auto-generated method stub
 		Map<String,Object>model=new HashMap<String,Object>();
@@ -488,6 +488,19 @@ public class FinanceServiceImpl implements FinanceService {
 		model.put("produce", produceDAO.findByExample(produce));
 		return model;
 
+	}
+
+	@Override
+	public boolean confirmFinalPaymentSubmit(String actorId, long taskId,
+			boolean result, Money money, Integer orderId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void returnDepositSubmit(String actorId, long taskId, Integer orderId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
