@@ -18,12 +18,13 @@
 			$("input[name='tof']").val("true");
 			$("form").submit();
 		});
-		
 		$("input[name='discount']").keyup(function(){
+			var originOld = $("input[name='sum']").val();
 			var dis = $("input[name='discount']").val();
 			if(!checkDiscountNum(dis)){
-				alert("优惠金额必须是数字");
-				$("input[name='discount']").val("");
+				//alert("优惠金额必须是数字");
+				$("input[name='discount']").val("0");
+				$("input[name='totalmoney']").val(originOld);
 				return;
 			}
 			var origin = parseFloat($("input[name='sum']").val());
