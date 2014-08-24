@@ -83,7 +83,7 @@
 					<a class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定加工</a> 
 			</div>
 		</form>
-
+		<br>
 			<button class="btn btn-primary" onclick="history.back(-1);">返回</button> 
 			<a href="${ctx}/market/printConfirmProcurementOrder.do?orderId=${orderInfo.order.orderId}"  onclick="return check()"  id="printConfirmProcurementOrder"
 		 		style="font-size: 13px; padding: 9px 30px 7px; background: #0866c6;border-color: #0a6bce; color: #fff; text-shadow: none;"   target="_blank">打印补货单</a><a style="color: red;font-size: 16px;">亲，请别忘了打印补货单哦！</a>
@@ -136,7 +136,6 @@ var orderInfoOrderAskAmount = $("input[name='orderInfoOrderAskAmount']").val();
 var totalMoney = orderInfoQuoteOuterPrice*orderInfoOrderAskAmount;
 $("input[name='totalmoney']").val(totalMoney.toFixed(2));
 
-<<<<<<< HEAD
 function check(){
 	if(confirm("确认打印补货单？")){
 		var produce_color = getTdString("produce_color");
@@ -164,8 +163,6 @@ function getTdString(col){
 	return tdString;
 }
 
-=======
->>>>>>> 0c32784dbb0d3838bff22864b0320b351ad5459d
 $("#money_remark").val("${orderInfo.order.moneyremark}");
 </script>
 
