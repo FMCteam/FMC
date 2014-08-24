@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CheckRecordDAO;
 import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.DeliveryRecordDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
@@ -28,6 +30,8 @@ import nju.software.dao.impl.PackageDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
+import nju.software.dataobject.CheckRecord;
+import nju.software.dataobject.DeliveryRecord;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
@@ -284,16 +288,25 @@ public class FinanceServiceImpl implements FinanceService {
 		Quote quote = (Quote) model.get("quote");
 		Float price = quote.getOuterPrice();
 		model.put("price", price);
-		Produce p=new Produce();
+		/*Produce p=new Produce();
 		p.setOid(orderId);
 		p.setType(Produce.TYPE_QUALIFIED);
 		List<Produce>list=produceDAO.findByExample(p);
 		Integer amount=0;
 		for(Produce produce:list){
 			amount+=produce.getProduceAmount();
+		}*/
+		
+		int amount = 0;
+		List<CheckRecord> list = checkRecordDAO.findByOrderId(orderId);
+		for(CheckRecord cr: list){
+			amount += cr.getQualifiedAmount();
 		}
 		model.put("number", amount);
-		model.put("total",  order.getTotalMoney() * 0.7);
+		List<DeliveryRecord> deliveryRecord = deliveryRecordDAO.findSampleRecordByOrderId(orderId);
+		model.put("deliveryRecord", deliveryRecord);
+		
+		//model.put("total",  order.getTotalMoney() * 0.7);
 		model.put("taskName", "确认大货尾款");
 		model.put("tabName", "大货尾款");
 		model.put("type", "大货尾款");
@@ -475,6 +488,10 @@ public class FinanceServiceImpl implements FinanceService {
 	private AccessoryCostDAO accessoryCostDAO;
 	@Autowired
 	private ServiceUtil service;
+	@Autowired
+	private CheckRecordDAO checkRecordDAO;
+	@Autowired
+	private DeliveryRecordDAO deliveryRecordDAO;
 
 	public final static String ACTOR_FINANCE_MANAGER = "financeManager";
 	public final static String TASK_CONFIRM_SAMPLE_MONEY = "confirmSampleMoney";

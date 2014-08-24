@@ -50,7 +50,7 @@
 
 						<table class="table table-bordered detail finance">
 							<tr>
-								<td class="span2 title" rowspan="6">费用信息</td>
+								<td class="span2 title" rowspan="8">费用信息</td>
 								<td class="title">金额类型</td>
 								<td class="title">优惠金额</td>
 								<td class="title">应收金额</td>
@@ -58,7 +58,7 @@
 							<tr>
 								<td>${orderInfo.moneyName}</td>
 								<td>${orderInfo.order.discount}</td>
-								<td><span id="moneyOfAllProducts">${(orderInfo.number)*orderInfo.price}</span>-${orderInfo.order.discount}-${orderInfo.deposit}=<span id="shouldFinalPayAccount">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
+								<td><span id="totallogistics">0.00</span>+<span id="moneyOfAllProducts">${(orderInfo.number)*orderInfo.price}</span>-${orderInfo.order.discount}-${orderInfo.deposit}=<span id="shouldFinalPayAccount">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
 							</tr>
 							<tr>
 								<td class="title">实际大货件数</td>
@@ -79,6 +79,16 @@
 								<td>${orderInfo.order.sampleAmount}</td>
 								<td>${orderInfo.samplePrice}</td>
 								<td>${orderInfo.order.sampleAmount*orderInfo.samplePrice}</td>
+							</tr>
+							<tr>
+								<td class="title">大货物流费</td>
+								<td class="title">样衣物流费</td>
+								<td class="title">物流总价</td>
+							</tr>
+							<tr>
+								<td>${orderInfo.quote.designCost }</td>
+								<td><span id="sampleLogistics">0</span></td>
+								<td><span id="totalLogistics">0</span></td>
 							</tr>
 							<tr>
 								<td class="title" rowspan="5">汇款信息</td>
@@ -133,7 +143,25 @@
 			                    </c:if></td>
 	                        </tr>
 						</table>
-						
+						<table class="table table-striped table-bordered table-hover detail" >
+							<c:if test="${!empty orderInfo.deliveryRecord}">
+								<tr>
+									<td class="title" rowspan="${fn:length(orderInfo.deliveryRecord) + 1}" style="width:18%;background: red;">样衣发货记录</td>
+									<td class="title">快递名称</td>
+									<td class="title">快递单号</td>
+									<td class="title">快递价格</td>
+									<td class="title">发货时间</td>
+								</tr>
+								<c:forEach var="deliveryRecord" items="${orderInfo.deliveryRecord}">
+									<tr>
+										<td>${deliveryRecord.expressName}</td>
+										<td>${deliveryRecord.expressNumber}</td>
+										<td name="expressPrice">${deliveryRecord.expressPrice}</td>
+										<td>${deliveryRecord.sendTime}</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+						</table>
 						<a 	href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
 							class="btn btn-danger btn-rounded"
 							onclick="return confirmFinanceSubmit()"
@@ -189,13 +217,23 @@ $(document).ready(function() {
 	
  var shouldFinalPaytext=$("#shouldFinalPayAccount").text();
 	$("#shouldFinalPayAccount").text(parseFloat(shouldFinalPaytext).toFixed(2));
-	$("input[name='money_amount']").val(parseFloat(shouldFinalPaytext).toFixed(2));
+	//$("input[name='money_amount']").val(parseFloat(shouldFinalPaytext).toFixed(2));
 
  var moneyOfAllProductstext=$("#moneyOfAllProducts").text();
 	$("#moneyOfAllProducts").text(parseFloat(moneyOfAllProductstext).toFixed(2));
 	$("#moneyOfAllProducts2").text(parseFloat(moneyOfAllProductstext).toFixed(2));
 	
 	$("#money_remark").val("${orderInfo.order.moneyremark}");
+	
+	var text = 0;
+	$("td[name='expressPrice']").each(function(index,value){
+		text += parseFloat(value.innerHTML);
+	})
+	$("#sampleLogistics").text(text.toFixed(2));
+	$("#totalLogistics").text((text+${orderInfo.quote.designCost }).toFixed(2));
+	$("#totallogistics").text((text+${orderInfo.quote.designCost }).toFixed(2));
+	$("#shouldFinalPayAccount").text((parseFloat($("#shouldFinalPayAccount").text())+parseFloat($("#totalLogistics").text())).toFixed(2));
+	$("input[name='money_amount']").val(parseFloat($("#shouldFinalPayAccount").text()).toFixed(2));
 });  
 </script>
 <script type="text/javascript">
