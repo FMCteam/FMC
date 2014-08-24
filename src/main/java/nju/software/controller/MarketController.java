@@ -2350,6 +2350,17 @@ public class MarketController {
 		return "/finance/printProcurementOrder";
 	}
 	
+	@RequestMapping(value = "/market/printConfirmProcurementOrderHDY.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String printConfirmProcurementOrderHDY(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) throws UnsupportedEncodingException {
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId,null);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/finance/printProcurementOrder";
+			}
+		
+	
 	//获取大货补货单信息   printConfirmProcurementOrder
 		@RequestMapping(value = "/market/printConfirmProcurementOrder.do")
 		@Transactional(rollbackFor = Exception.class)

@@ -58,8 +58,16 @@
 				</button>
 			</div>
 			 <button class="btn btn-primary" onclick="history.back(-1);">返回</button>
-		</form>
-	</div>
+			</form>
+			<c:if test="${orderInfo.order.orderSource=='好多衣'}">
+	 		<a	href="${ctx}/market/printProcurementSampleOrder.do?orderId=${orderInfo.order.orderId}"
+								class="btn btn-primary btn-rounded" style="width: 80px;" target="_blank">打印样衣单</a><a style="color: red;font-size: 16px;"> &nbsp亲，别忘了打印样衣单哦！</a>
+			</c:if>
+		</div>
+		<c:if test="${orderInfo.order.orderSource=='好多衣'}">
+			<a href="${ctx}/market/printConfirmProcurementOrderHDY.do?orderId=${orderInfo.order.orderId}"  onclick="return check()"  id="printConfirmProcurementOrder"
+		 		            style="font-size: 13px; margin-left:20px; padding: 9px 30px 7px; background: #0866c6;border-color: #0a6bce; color: #fff; text-shadow: none;"   target="_blank">打印补货单</a><a style="color: red;font-size: 16px;">亲，请别忘了打印补货单哦！</a>
+		</c:if>
 
 	<div class="footer">
 		<div class="footer-left">
