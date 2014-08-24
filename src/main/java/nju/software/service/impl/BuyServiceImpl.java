@@ -343,6 +343,47 @@ public class BuyServiceImpl implements BuyService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean purchaseMaterialSubmit(long taskId, boolean result,String orderId,String masspurName,Timestamp masspurDate,String masssupplierName) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(Integer.parseInt(orderId));
+		order.setMasspurName(masspurName);
+		order.setMasspurDate(masspurDate);
+		order.setMasssupplierName(masssupplierName);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PURCHASE, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			orderDAO.attachDirty(order);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	@Override
+	public Map<String, Object> getPrintProcurementOrderDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		Map<String,Object>model=new HashMap<String,Object>();
+		Order order = orderDAO.findById(orderId);
+		model.put("order", order);
+		model.put("customer",customerDAO.findById(order.getCustomerId()));
+		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+		model.put("logistics", logisticsDAO.findById(orderId));
+		model.put("fabrics", FabricCostDAO.findByOrderId(orderId));
+		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
+		model.put("orderId", service.getOrderId(order));
+		Produce produce = new Produce();
+		produce.setOid(orderId);
+		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
+		model.put("sample", ProduceDAO.findByExample(produce));
+		produce.setType(Produce.TYPE_PRODUCE);
+		model.put("produce", ProduceDAO.findByExample(produce));
+		return model;
+
+	}
 
 	@Autowired
 	private ServiceUtil service;

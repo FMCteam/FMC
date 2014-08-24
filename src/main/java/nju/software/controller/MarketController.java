@@ -2265,6 +2265,27 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoneSearch.do");
-		return "/market/orderList";
+		return "/market/orderList_new";
 	}
+	//获取大货补货单信息
+	@RequestMapping(value = "/market/printProcurementOrder.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String printProcurementOrder(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/finance/printProcurementOrder";
+	}
+	//获取样衣裁剪单信息
+	@RequestMapping(value = "/market/printProcurementSampleOrder.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String printProcurementSampleOrder(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
+		Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/finance/printProcurementSampleOrder";
+	}
+	
 }

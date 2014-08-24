@@ -73,4 +73,6 @@ public interface BuyService {
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
 
+	Map<String, Object> getPrintProcurementOrderDetail(Integer orderId);
+
 }

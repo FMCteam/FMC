@@ -77,7 +77,8 @@
 			</div>
 		</form>
 		<button class="btn btn-primary" onclick="history.back();">返回</button>
-
+		<a href="${ctx}/market/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
+		 style="font-size: 13px; padding: 9px 30px 7px; background: #0866c6;border-color: #0a6bce; color: #fff; text-shadow: none;"   target="_blank">打印补货单</a><a style="color: red;font-size: 16px;">亲，请别忘了打印补货单哦！</a>
 	</div>
 	<!--maincontentinner-->
 	<div class="footer">
@@ -121,6 +122,8 @@ var orderInfoQuoteOuterPrice = $("input[name='orderInfoQuoteOuterPrice']").val()
 var orderInfoOrderAskAmount = $("input[name='orderInfoOrderAskAmount']").val();
 var totalMoney = orderInfoQuoteOuterPrice*orderInfoOrderAskAmount;
 $("input[name='totalmoney']").val(totalMoney.toFixed(2));
+
+$("#money_remark").val("${orderInfo.order.moneyremark}");
 </script>
 
 <%@include file="/common/footer.jsp"%>
