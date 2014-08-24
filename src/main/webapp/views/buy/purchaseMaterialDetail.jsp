@@ -137,5 +137,16 @@
 		$("#result").val(1);
 		return confirm("确认已经核对过补货单？");
 	}
+	 $(function(){
+	        $("#fdd").click(function(){
+	            var _this = $(this);//将当前的pimg元素作为_this传入函数
+	            imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+	        });
+	    });
 </script>
+<style type="text/css">
+* {margin:0;padding:0;}
+#imglist {list-style:none; width:500px; margin:50px auto;}
+#imglist li {float:left; margin-top:10px;}
+</style>
 <%@include file="/common/footer.jsp"%>

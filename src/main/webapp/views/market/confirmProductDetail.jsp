@@ -75,7 +75,6 @@
 					id="produce_xl" type="hidden" name="produce_xl" /> <input
 					id="produce_xxl" type="hidden" name="produce_xxl" /> <input
 					type="hidden" name="tof" id="tof">
-					
 					<a class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定加工</a> 
 			</div>
 		</form>
