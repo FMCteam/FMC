@@ -90,6 +90,13 @@
 							        -->
 						       </td>
 					       </tr>
+					       <tr>
+						        <td class="title" >备注信息</td>
+						        <td colspan="3">
+							       <!-- <input name="confirmFinalPaymentFile" id="confirmFinalPaymentFile" type="file" required="required"/>  -->
+									<textarea class="span12"  style="resize:vertical" name="moneyremark"  id="money_remark" placeholder="输入尾款金备注" ></textarea>
+						       </td>
+					       </tr>
 					       
 					<!-- 
 							<tr>
@@ -196,6 +203,7 @@ function getPushRestOrderDetailSubmit(fileValue) {
      
 }
 
+$("#money_remark").val("${orderInfo.order.moneyremark}");
 </script>
 
 <%@include file="/common/js_file.jsp"%>

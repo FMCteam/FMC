@@ -670,13 +670,14 @@ public class MarketServiceImpl implements MarketService {
 	
 	@Override
 	public boolean confirmQuoteSubmit(String actorId, long taskId, int orderId,
-			String result, String url) {
+			String result, String url,String moneyremark) {
 		//result为0，表示有上传样衣制作金的截图
 		//result为1，表示修改报价
 		//result为2，表示取消订单
 		Order order = orderDAO.findById(orderId);
 		if (Integer.parseInt(result) == 0) {
 			order.setConfirmSampleMoneyFile(url);
+			order.setMoneyremark(moneyremark);
 			orderDAO.attachDirty(order);
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -988,12 +989,13 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public void signContractSubmit(String actorId, long taskId,
 			int orderId, double discount, double total, String url,
-			String confirmDepositFileUrl) {
+			String confirmDepositFileUrl,String moneyremark) {
 		Order order = orderDAO.findById(orderId);
 		order.setDiscount(discount);
 		order.setTotalMoney(total);
 		order.setContractFile(url);
 		order.setConfirmDepositFile(confirmDepositFileUrl);
+		order.setMoneyremark(moneyremark);
 		orderDAO.merge(order);
 //		Map<String, Object> data = new HashMap<>();
 //		try {
@@ -1008,8 +1010,9 @@ public class MarketServiceImpl implements MarketService {
 	
 	@Override
 	public void signConfirmFinalPaymentFileSubmit( 
-			int orderId, String confirmFinalPaymentFileUrl) {
+			int orderId, String confirmFinalPaymentFileUrl,String moneyremark) {
 		Order order = orderDAO.findById(orderId);
+		order.setMoneyremark(moneyremark);
 		order.setConfirmFinalPaymentFile(confirmFinalPaymentFileUrl);
 		orderDAO.merge(order);
 		

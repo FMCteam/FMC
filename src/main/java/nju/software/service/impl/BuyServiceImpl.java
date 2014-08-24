@@ -403,7 +403,7 @@ public class BuyServiceImpl implements BuyService {
 		}
 	}
 	@Override
-	public Map<String, Object> getPrintProcurementOrderDetail(Integer orderId) {
+	public Map<String, Object> getPrintProcurementOrderDetail(Integer orderId,List<Produce> productList) {
 		// TODO Auto-generated method stub
 		Map<String,Object>model=new HashMap<String,Object>();
 		Order order = orderDAO.findById(orderId);
@@ -418,8 +418,12 @@ public class BuyServiceImpl implements BuyService {
 		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
 		model.put("sample", ProduceDAO.findByExample(produce));
-		produce.setType(Produce.TYPE_PRODUCE);
-		model.put("produce", ProduceDAO.findByExample(produce));
+		if(productList != null){
+			model.put("produce", productList);
+		}else{
+			produce.setType(Produce.TYPE_PRODUCE);
+			model.put("produce", ProduceDAO.findByExample(produce));
+		}
 		return model;
 
 	}

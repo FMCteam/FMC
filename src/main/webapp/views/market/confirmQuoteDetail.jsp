@@ -51,6 +51,13 @@
 										<input name="confirmSampleMoneyFile" id="confirmSampleMoneyFile" type="file" required="required"/> 
 									</td>
 								</tr>
+								<tr>
+									<td>备注</td>
+									<td colspan="3" style="width: 1000px;">
+											<!-- <input type="text"  name="moneyremark"  required="required" style="height:40px;width: 1000px"   placeholder="输入样衣金备注"/> -->
+											<textarea class="span12"  style="resize:vertical" name="moneyremark"  placeholder="输入样衣金备注" ></textarea>
+									</td>
+								</tr>
 							</table>
 						</c:if>
 						<input type="hidden"  id="isNeedSampleClothes"  value="${orderInfo.order.isNeedSampleClothes }"/>
@@ -147,6 +154,7 @@ jQuery(document).ready(function(){
 			jQuery("#confirm_quote_form").submit();
 		}
 	});
+
 });
 </script>
 <script type="text/javascript">

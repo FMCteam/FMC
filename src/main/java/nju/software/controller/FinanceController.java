@@ -307,6 +307,7 @@ public class FinanceController {
 	public String confirmFinalPaymentFileSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
+		String moneyremark = request.getParameter("moneyremark");//金额备注
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile confirmFinalPaymentFile =  multipartRequest.getFile("confirmFinalPaymentFile");
 		String confirmFinalPaymentFileName = confirmFinalPaymentFile.getOriginalFilename();
@@ -316,7 +317,7 @@ public class FinanceController {
 		confirmFinalPaymentFileUrl = confirmFinalPaymentFileUrl + "/" + confirmFinalPaymentFileName;
 		//上传合同，上传首定金收据，一般是截图，
  
-		marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId),confirmFinalPaymentFileUrl);
+		marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId),confirmFinalPaymentFileUrl,moneyremark);
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
 		Map<String, Object> orderInfo = financeService
 				.getConfirmFinalPaymentDetail(actorId,Integer.parseInt(orderId));

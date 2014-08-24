@@ -50,8 +50,8 @@
 			<option>872104037@qq.com</option>
 			</select>
 			</td>
-			<td colspan="2"><input type="text" name="money_remark"
-				class="span12" /></td>
+			<td colspan="2"><textarea  name="money_remark"  id="money_remark"
+				class="span12"   readonly="readonly"></textarea></td>
 		</tr>
 		<tr>
 		<td class="title">收款信息</td>
@@ -61,6 +61,11 @@
 					style="max-height: 300px;" alt="收款图片"></img>
 			</c:if></td>
 	    </tr>
+	    <%-- <td class="title">备注信息</td>
+		<td colspan="4">
+				<input type="text"  name="moneyremark"  readonly="readonly" style="height:40px;width: 1000px" value="${orderInfo.order.moneyremark}" />
+		</td>
+	    </tr> --%>
 	</table>
 	<div>
 	 <a  class="btn btn-danger btn-rounded"  style="float: left;color: white"
@@ -74,6 +79,11 @@
 		<br><br>
 </form>
 <script type="text/javascript">
+$(document).ready(function(){
+	$("#money_remark").val("${orderInfo.order.moneyremark}");
+})
+
+
 function confirmFinanceSubmit() {
 	return confirm("确认操作？");
 }

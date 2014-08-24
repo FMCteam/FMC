@@ -192,12 +192,12 @@ public interface MarketService {
 	public ArrayList<String> getProcessStateName(Integer orderId);
 	public void signContractSubmit(String actorId, long parseLong,
 			int parseInt, double parseDouble, double parseDouble2, String url,
-			String confirmDepositFileUrl);
+			String confirmDepositFileUrl,String moneyremark);
 
 	public boolean confirmQuoteSubmit(String actorId, long parseLong,
-			int parseInt, String result, String url);
+			int parseInt, String result, String url,String moneyremark);
 
-	public void signConfirmFinalPaymentFileSubmit( int orderId, String confirmFinalPaymentFileUrl);
+	public void signConfirmFinalPaymentFileSubmit( int orderId, String confirmFinalPaymentFileUrl,String moneyremark);
 
 	public void verifyQuoteSubmit(Quote quote, int id, long taskId,
 			long processId, boolean result, String comment);

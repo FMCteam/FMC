@@ -58,6 +58,13 @@
 						</td>
 						<td><a style="color: red;">*</a><input name="confirmDepositFile" type="file" value="选择定金文件" required="required"/></td>
 					</tr>
+					<tr>
+						<td>备注信息</td>
+						<td colspan="3">
+							<%-- <input type="text"  name="moneyremark"  required="required" style="height:40px;width: 1000px"   placeholder="输入首定金备注" value="${orderInfo.order.moneyremark }" /> --%>
+							<textarea class="span12"  style="resize:vertical" name="moneyremark"  id="money_remark" placeholder="输入首定金备注" ></textarea>
+						</td>
+					</tr>
 				</table>
 				</div>
 			</div>
@@ -78,9 +85,12 @@
 					<a class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定加工</a> 
 			</div>
 		</form>
-		<button class="btn btn-primary" onclick="history.back(-1);">返回</button>
-		<a href="${ctx}/market/printProcurementOrder.do?orderId=${orderInfo.order.orderId}"
-		 style="font-size: 13px; padding: 9px 30px 7px; background: #0866c6;border-color: #0a6bce; color: #fff; text-shadow: none;"   target="_blank">打印补货单</a><a style="color: red;font-size: 16px;">亲，请别忘了打印补货单哦！</a>
+
+			<button class="btn btn-primary" onclick="history.back(-1);">返回</button> 
+			<a href="${ctx}/market/printConfirmProcurementOrder.do?orderId=${orderInfo.order.orderId}"  onclick="return check()"  id="printConfirmProcurementOrder"
+		 		style="font-size: 13px; padding: 9px 30px 7px; background: #0866c6;border-color: #0a6bce; color: #fff; text-shadow: none;"   target="_blank">打印补货单</a><a style="color: red;font-size: 16px;">亲，请别忘了打印补货单哦！</a>
+
+		
 	</div>
 	<!--maincontentinner-->
 	<div class="footer">
@@ -152,6 +162,35 @@ var orderInfoQuoteOuterPrice = $("input[name='orderInfoQuoteOuterPrice']").val()
 var orderInfoOrderAskAmount = $("input[name='orderInfoOrderAskAmount']").val();
 var totalMoney = orderInfoQuoteOuterPrice*orderInfoOrderAskAmount;
 $("input[name='totalmoney']").val(totalMoney.toFixed(2));
+
+function check(){
+	if(confirm("确认打印补货单？")){
+		var produce_color = getTdString("produce_color");
+		var produce_xs = getTdString("produce_xs");
+		var produce_s = getTdString("produce_s");
+		var produce_m = getTdString("produce_m");
+		var produce_l = getTdString("produce_l");
+		var produce_xl = getTdString("produce_xl");
+		var produce_xxl = getTdString("produce_xxl");
+		$("#printConfirmProcurementOrder").attr("href","${ctx}/market/printConfirmProcurementOrder.do?orderId=${orderInfo.order.orderId}&produce_color="+produce_color+"&produce_xs="+produce_xs+"&produce_s="+produce_s+"&produce_m="+produce_m+"&produce_l="+produce_l+"&produce_xl="+produce_xl+"&produce_xxl="+produce_xxl); 
+		
+		return true;
+	}else{
+		return false;
+	}
+}
+
+function getTdString(col){
+	var tdString="";
+	var i=0;
+	for(;i<$("td."+col).length-1;i++){
+		tdString+=$("td."+col).eq(i).text()+",";
+	}
+	tdString+=$("td."+col).eq(i).text();
+	return tdString;
+}
+
+$("#money_remark").val("${orderInfo.order.moneyremark}");
 </script>
 
 <%@include file="/common/footer.jsp"%>
