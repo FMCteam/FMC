@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import nju.software.dataobject.Money;
+import nju.software.dataobject.Produce;
 import nju.software.model.OrderInfo;
 
 public interface FinanceService {
@@ -62,4 +63,11 @@ public interface FinanceService {
 
 	public boolean confirmDepositSubmit(String actorId, long taskId,
 			boolean result, Money money, int orderId);
+
+	List<Map<String, Object>> getReturnDepositList(String actorId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	Map<String, Object> getPrintProcurementOrderDetail(Integer orderId,
+			List<Produce> produces);
 }

@@ -796,7 +796,7 @@ public class MarketServiceImpl implements MarketService {
 		model.put("deliveryRecord", deliveryRecord);
 		
 		model.put("number", amount);
-		model.put("total",  order.getTotalMoney() * 0.7);
+		//model.put("total",  order.getTotalMoney() * 0.7);
 		model.put("taskName", "催尾款");
 		model.put("tabName", "大货尾款");
 		model.put("type", "大货尾款");

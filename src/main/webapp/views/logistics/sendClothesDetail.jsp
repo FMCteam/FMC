@@ -70,7 +70,7 @@
 							</tr>
 						</table>
 						
-						<table class="table table-striped table-bordered table-hover detail">
+						<%-- <table class="table table-striped table-bordered table-hover detail">
 							<c:if test="${empty orderInfo.sendProductRecord}">
 								<tr>
 									<td class="title" style="width:22%;">大货发货记录</td>
@@ -96,7 +96,7 @@
 									</tr>
 								</c:forEach>
 							</c:if>
-						</table>
+						</table> --%>
 						<!-- 
 						<div class="action">
 							<input class="btn btn-primary" type="submit" value="完成发货" />
