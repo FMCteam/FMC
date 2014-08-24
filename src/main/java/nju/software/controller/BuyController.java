@@ -1,8 +1,6 @@
 package nju.software.controller;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +20,6 @@ import nju.software.service.EmployeeService;
 import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.JbpmTest;
 import nju.software.service.impl.MarketServiceImpl;
-import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 
 import org.jbpm.task.query.TaskSummary;
@@ -336,9 +333,6 @@ public class BuyController {
 		String taskId = request.getParameter("taskId");
 		String processId = request.getParameter("processId");
 		boolean result = request.getParameter("result").equals("1");
-		String samplepurName = request.getParameter("samplepurName");
-		Timestamp samplepurDate = getTime(request.getParameter("samplepurDate")) ;
-		String samplesupplierName = request.getParameter("samplesupplierName");
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");		 
  		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
@@ -356,7 +350,7 @@ public class BuyController {
 //		}
 		
 //		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft,orderId,samplepurName,samplepurDate,samplesupplierName);
+		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft,orderId);
 
 		return "forward:/buy/purchaseSampleMaterialList.do";
 	}
@@ -420,38 +414,7 @@ public class BuyController {
 		buyService.confirmPurchaseSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/confirmPurchaseList.do";
 	}
-	
-	public String purchaseSampleMaterialSubmit1(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		String orderId = request.getParameter("orderId");
-		String taskId = request.getParameter("taskId");
-		String processId = request.getParameter("processId");
-		boolean result = request.getParameter("result").equals("1");
-		String samplepurName = request.getParameter("samplepurName");
-		Timestamp samplepurDate = getTime(request.getParameter("samplepurDate")) ;
-		String samplesupplierName = request.getParameter("samplesupplierName");
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");		 
- 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(Long.parseLong(processId));
-		boolean needCraft =  (boolean) process.getVariable("needCraft");
-		
-		System.out.println("need craft 是这个值："+needCraft);
-//		String needCraft = 
-//				(String)jbpmAPIUtil.getVariable(
-//				jbpmAPIUtil.getTask(account.getAccountId()+"", long_taskId),
-//				DesignServiceImpl.RESULT_NEED_CRAFT);
-//		boolean needcraft = false;
-//		if(needCraft!=null){			
-//			 needcraft = (needCraft.equals("true"))?true:false;
-//		}
-//		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft,orderId,samplepurName,samplepurDate,samplesupplierName);
 
-		return "forward:/buy/purchaseSampleMaterialList.do";
-	}
-	
-	
 	// ========================生产采购===========================
 	@RequestMapping(value = "/buy/purchaseMaterialList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -459,7 +422,7 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService.getPurchaseMaterialList();
 		model.put("list", list);
-		model.addAttribute("taskName", "大货面料采购");
+		model.addAttribute("taskName", "生产采购");
 		model.addAttribute("url", "/buy/purchaseMaterialDetail.do");
 		model.addAttribute("searchurl", "/buy/purchaseMaterialListSearch.do");
 
@@ -506,51 +469,12 @@ public class BuyController {
 	@Transactional(rollbackFor = Exception.class)
 	public String purchaseMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String orderId = request.getParameter("orderId");
-		String masspurName = request.getParameter("masspurName");
-		Timestamp masspurDate = getTime(request.getParameter("masspurDate")) ;
-		String masssupplierName = request.getParameter("masssupplierName");
 		String taskId = request.getParameter("taskId");
 		Boolean result = request.getParameter("result").equals("1");
-		buyService.purchaseMaterialSubmit(Long.parseLong(taskId), result,orderId,masspurName,masspurDate,masssupplierName);
+		buyService.purchaseMaterialSubmit(Long.parseLong(taskId), result);
 		return "forward:/buy/purchaseMaterialList.do";
 	}
-	
-	public static Timestamp getTime(String time) {
-		if(time.equals("")) return null;
-		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
-		return new Timestamp(outDate.getTime());
-	}
-	
-		/** 
-		* @Title: printProcurementOrder 
-		* @Description: TODO:打印大货补货单
-		* @param @param request
-		* @param @param response
-		* @param @param model
-		* @param @return    设定文件 
-		* @return String    返回类型 
-		* @throws 
-		*/
-		@RequestMapping(value = "/buy/printProcurementOrder.do")
-		@Transactional(rollbackFor = Exception.class)
-		public String printProcurementOrder(HttpServletRequest request,
-				HttpServletResponse response, ModelMap model) {
-			Integer orderId=Integer.parseInt(request.getParameter("orderId"));
-			Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId);
-			model.addAttribute("orderInfo", orderInfo);
-			return "/finance/printProcurementOrder";
-		}
-		//获取样衣裁剪单信息
-		@RequestMapping(value = "/buy/printProcurementSampleOrder.do")
-		@Transactional(rollbackFor = Exception.class)
-		public String printProcurementSampleOrder(HttpServletRequest request,
-				HttpServletResponse response, ModelMap model) {
-			Integer orderId=Integer.parseInt(request.getParameter("orderId"));
-			Map<String,Object>orderInfo=buyService.getPrintProcurementOrderDetail(orderId);
-			model.addAttribute("orderInfo", orderInfo);
-			return "/finance/printProcurementSampleOrder";
-		}
+
 	@Autowired
 	private BuyService buyService;
 	@Autowired

@@ -224,8 +224,7 @@ public class ProduceController {
 		String other_cost = request.getParameter("other_cost");
 	    //设计费用
 		String design_cost = request.getParameter("design_cost");
-		//大货物流费（整单）
-		//String ask_logistics_cost = request.getParameter("ask_logistics_cost");
+		
 		
 		//生产报价提交，默认验证通过
 		produceService.computeProduceCostSubmit(
@@ -301,10 +300,9 @@ public class ProduceController {
 	@Transactional(rollbackFor = Exception.class)
 	public String produceSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String orderId = request.getParameter("orderId");
 		boolean result =request.getParameter("result").equals("1");
 		long taskId = Long.parseLong(request.getParameter("taskId"));
-		produceService.produceSampleSubmit(taskId, result,orderId);
+		produceService.produceSampleSubmit(taskId, result);
 		return "forward:/produce/produceSampleList.do";
 	}
 	
@@ -391,7 +389,7 @@ public class ProduceController {
 			produceList = produceService.getProduceList(orderId, produceColor, produceXS, 
 					produceS, produceM, produceL, produceXL, produceXXL, Produce.TYPE_PRODUCED);
 		}
-		produceService.pruduceSubmit(Long.parseLong(taskId), result, produceList,orderId);
+		produceService.pruduceSubmit(Long.parseLong(taskId), result, produceList);
 		return "forward:/produce/produceList.do";
 	}
 }

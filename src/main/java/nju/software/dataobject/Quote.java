@@ -15,7 +15,7 @@ public class Quote implements java.io.Serializable {
 	// Fields
 
 	private Integer orderId;
-	private Float designCost = (float) 0; //原为设计费用，现为订单的大货物流费
+	private Float designCost = (float) 0; // 设计费用
 	private Float craftCost = (float) 0; // 单件工艺费用
 	private Float cutCost = (float) 0; // 裁剪费用
 	private Float manageCost = (float) 0; // 管理费用

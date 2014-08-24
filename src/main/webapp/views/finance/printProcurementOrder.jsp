@@ -72,8 +72,8 @@ table.table.table-bordered{
 	</div>
 	<table class="table table-bordered">
 		<tr>
-			<td class="span3">下单业务员:${orderInfo.employee.employeeName}</td>
-			<td class="span3">订单来源：${orderInfo.order.orderSource }</td>
+			<td class="span3">补货部门:</td>
+			<td class="span3">配货组：</td>
 			<td class="span3">客户：${orderInfo.order.customerName}-${orderInfo.order.customerCompany}</td>
 		</tr>
 		<tr>
