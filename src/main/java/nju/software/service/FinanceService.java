@@ -62,4 +62,8 @@ public interface FinanceService {
 
 	public boolean confirmDepositSubmit(String actorId, long taskId,
 			boolean result, Money money, int orderId);
+
+	List<Map<String, Object>> getReturnDepositList(String actorId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
 }
