@@ -1,5 +1,6 @@
 package nju.software.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -75,5 +76,8 @@ public interface BuyService {
 			String startdate, String enddate, Integer[] employeeIds);
 
 	Map<String, Object> getPrintProcurementOrderDetail(Integer orderId,List<Produce> productList);
+
+	boolean purchaseMaterialSubmit(long taskId, boolean result, String orderId,
+			String masspurName, Timestamp masspurDate, String masssupplierName);
 
 }

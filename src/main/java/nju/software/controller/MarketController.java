@@ -1994,11 +1994,8 @@ public class MarketController {
 			String orderId_string = request.getParameter("orderId");
  			String taskId_string = request.getParameter("taskId");
 			long taskId = Long.parseLong(taskId_string);
-<<<<<<< HEAD
 			String moneyremark = request.getParameter("moneyremark");
 			//result=0，催尾款失败；result=1，确认收到尾款
-=======
->>>>>>> 0c32784dbb0d3838bff22864b0320b351ad5459d
 			boolean result = request.getParameter("result").equals("1");
 			if(result){
 			

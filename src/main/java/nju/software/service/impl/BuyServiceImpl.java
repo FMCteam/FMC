@@ -1,6 +1,7 @@
 package nju.software.service.impl;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
@@ -412,7 +415,10 @@ public class BuyServiceImpl implements BuyService {
 	private FabricCostDAO FabricCostDAO;
 	@Autowired
 	private ProduceDAO ProduceDAO;
-
+	@Autowired
+	private CustomerDAO customerDAO;
+	@Autowired
+	private EmployeeDAO employeeDAO;
 	public final static String ACTOR_PURCHASE_MANAGER = "purchaseManager";
 	public final static String TASK_VERIFY_PURCHASE = "verifyPurchase";
 	public final static String TASK_COMPUTE_PURCHASE_COST = "computePurchaseCost";
