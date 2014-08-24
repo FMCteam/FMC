@@ -37,7 +37,7 @@
 				</div>
 				<div class="tab-pane active" id="produceList">
 					<form method="post" id="produce_detail_form"
-						action="${ctx}/produce/produceSubmit.do"  onsubmit="return check()">
+						action="${ctx}/produce/produceSubmit.do">
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
@@ -76,35 +76,35 @@
 									<td><input class="span12 produce_color" type="text"
 										value="${produce.color}" readonly="readonly" /></td>
 									<td><input class="span12 produce_xs" type="number" min="0"
-										value="${produce.xs}" required="required" onblur="this.value=(this.value==''?'0':this.value )"/></td>
+										value="${produce.xs}" required="required" /></td>
 									<td><input class="span12 produce_s" type="number" min="0"
-										value="${produce.s}" required="required"  onblur="this.value=(this.value==''?'0':this.value )" /></td>
+										value="${produce.s}" required="required" /></td>
 									<td><input class="span12 produce_m" type="number" min="0"
-										value="${produce.m}" required="required" onblur="this.value=(this.value==''?'0':this.value )" /></td>
+										value="${produce.m}" required="required" /></td>
 									<td><input class="span12 produce_l" type="number" min="0"
-										value="${produce.l}" required="required" onblur="this.value=(this.value==''?'0':this.value )" /></td>
+										value="${produce.l}" required="required" /></td>
 									<td><input class="span12 produce_xl" type="number" min="0"
-										value="${produce.xl}" required="required" onblur="this.value=(this.value==''?'0':this.value )"/></td>
+										value="${produce.xl}" required="required" /></td>
 									<td><input class="span12 produce_xxl" type="number"
-										min="0" value="${produce.xxl}" required="required" onblur="this.value=(this.value==''?'0':this.value )"/></td>
+										min="0" value="${produce.xxl}" required="required" /></td>
 								</tr>
 							</c:forEach>
 							<tr>
 								<td class="title"><span class="required">*</span>加工方</td>
 								<td colspan="7">
-									<input class="span14" id="processing_side" name="processing_side" type="text"  />
+									<input class="span14" id="processing_side" name="processing_side" type="text" required="required" />
 								</td>
 							</tr>
 						</table>
 						
 					    
-					    <input id="disagree_detail" type="submit" value="终止外发加工" class="btn btn-danger btn-rounded">
+					    <input id="disagree_detail" type="button" value="终止外发加工" class="btn btn-danger btn-rounded">
 						<div class="action" style="float:right">
 							 <input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
 							 <input type="hidden" name="taskId" value="${orderInfo.taskId }" /> 
 							 <input id="verify_val" type="hidden" name="result" value="" /> 
 							 
-							 <input id="agree_detail" type="submit" value="开始外发加工" class="btn btn-primary btn-rounded">
+							 <input id="agree_detail" type="button" value="开始外发加工" class="btn btn-primary btn-rounded">
 						</div>
 						<br>
 						<button class="btn btn-primary" onclick="history.back();">返回</button>
@@ -120,8 +120,6 @@
 			</div>
 		</div>
 		<!--row-fluid-->
-
-		<input type="hidden" id="result" />
 
 		<div class="footer">
 			<div class="footer-left">
@@ -149,7 +147,7 @@ jQuery(document).ready(function(){
 	//确认完成大货生产
 	jQuery("#agree_detail").click(function(){
 		//加工方不能为空
-		/* var processingSide = jQuery("input[name='processing_side']").val();
+		var processingSide = jQuery("input[name='processing_side']").val();
 		if(processingSide == "" || processingSide == null){
 			alert("请填写加工方信息");
 			return;
@@ -159,41 +157,16 @@ jQuery(document).ready(function(){
 			jQuery("#verify_val").val("true");
 			getProduce();
 			jQuery("#produce_detail_form").submit();
-		} */
-		$("#result").val(1);
+		}
 	});
 	//大货生产失败
 	jQuery("#disagree_detail").click(function(){
-		/* if(confirm("确认大货生产失败？")){
-			jQuery("#verify_val").val("false");
-			getProduce();
-			jQuery("#produce_detail_form").submit();
-		} */
-		$("#result").val(0);
-	});
-});
-
-function check(){
-	if($("#result").val()==1){
-		var processingSide = jQuery("input[name='processing_side']").val();
-		if(processingSide == "" || processingSide == null){
-			alert("请填写加工方信息");
-			return false;
-		}
-		if(confirm("确认完成大货外发生产？")){
-			jQuery("#verify_val").val("true");
-			getProduce();
-		}else{
-			return false;
-		} 
-	}else{
 		if(confirm("确认大货生产失败？")){
 			jQuery("#verify_val").val("false");
 			getProduce();
-		}else{
-			return false;
-		} 
-	}
-}
+			jQuery("#produce_detail_form").submit();
+		}
+	});
+});
 </script>
 <%@include file="/common/footer.jsp"%>

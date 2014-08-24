@@ -3,7 +3,6 @@ package nju.software.dataobject;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,11 +27,6 @@ public class Craft implements Serializable {
  	private float crumpleMoney =  0;//压皱费
  	private float openVersionMoney =  0;//开版费
  	private String craftFileUrl;//工艺文件位置链接
- 	private String orderSampleStatus;//订单工艺状态
- 	private String craftLeader;//工艺负责人
- 	private Timestamp completeTime;//工艺完成时间
- 	private String crafsManName;//大货工艺负责人
- 	private Timestamp crafsProduceDate;//大货工艺完成时间
 	// Constructors
 
 	/** default constructor */
@@ -41,7 +35,7 @@ public class Craft implements Serializable {
 
 	/** full constructor */
 	public Craft(Integer orderId, Short needCraft, float stampDutyMoney, float washHangDyeMoney,
-			float laserMoney, float embroideryMoney, float crumpleMoney, float openVersionMoney,String craftFileUrl,String orderSampleStatus,String crafsManName,Timestamp crafsProduceDate ) {		
+			float laserMoney, float embroideryMoney, float crumpleMoney, float openVersionMoney,String craftFileUrl) {		
 		this.orderId = orderId;
 		this.needCraft = needCraft;
 		this.stampDutyMoney = stampDutyMoney;
@@ -51,9 +45,6 @@ public class Craft implements Serializable {
 		this.crumpleMoney = crumpleMoney;
 		this.openVersionMoney = openVersionMoney;
 		this.craftFileUrl = craftFileUrl;
-		this.orderSampleStatus=orderSampleStatus;
-		this.crafsProduceDate=crafsProduceDate;
-		this.crafsManName=crafsManName;
 	} 	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -145,49 +136,5 @@ public class Craft implements Serializable {
 	public void setCraftFileUrl(String craftFileUrl) {
 		this.craftFileUrl = craftFileUrl;
 	}
-	@Column(name = "order_sample_status", nullable = true, length = 250)
-	public String getOrderSampleStatus() {
-		return orderSampleStatus;
-	}
 
-	public void setOrderSampleStatus(String orderSampleStatus) {
-		this.orderSampleStatus = orderSampleStatus;
-	}
-	
-
-	@Column(name = "craft_leader")
-	public String getCraftLeader() {
-		return craftLeader;
-	}
-
-	public void setCraftLeader(String craftLeader) {
-		this.craftLeader = craftLeader;
-	}
-
-	@Column(name = "complete_time", length = 19)
-	public Timestamp getCompleteTime() {
-		return completeTime;
-	}
-
-	public void setCompleteTime(Timestamp completeTime) {
-		this.completeTime = completeTime;
-	}
-	@Column(name = "crafts_manName")
-	public String getCrafsManName() {
-		return crafsManName;
-	}
-
-	public void setCrafsManName(String crafsManName) {
-		this.crafsManName = crafsManName;
-	}
-	@Column(name = "crafts_productDate", length = 19)
-	public Timestamp getCrafsProduceDate() {
-		return crafsProduceDate;
-	}
-
-	public void setCrafsProduceDate(Timestamp crafsProduceDate) {
-		this.crafsProduceDate = crafsProduceDate;
-	}
-	
-	
 }
