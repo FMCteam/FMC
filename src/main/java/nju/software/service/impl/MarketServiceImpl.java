@@ -12,22 +12,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.drools.command.Context;
-import org.drools.command.impl.GenericCommand;
-import org.drools.command.impl.KnowledgeCommandContext;
-import org.drools.core.util.StringUtils;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.process.NodeInstance;
-import org.drools.runtime.process.ProcessInstance;
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CheckRecordDAO;
+import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.CustomerDAO;
+import nju.software.dao.impl.DeliveryRecordDAO;
 import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
@@ -41,8 +31,10 @@ import nju.software.dao.impl.QuoteDAO;
 import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
-import nju.software.dataobject.Account;
+import nju.software.dataobject.CheckRecord;
+import nju.software.dataobject.Craft;
 import nju.software.dataobject.Customer;
+import nju.software.dataobject.DeliveryRecord;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
@@ -60,6 +52,20 @@ import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
 import nju.software.util.mail.MailSenderInfo;
 import nju.software.util.mail.SimpleMailSender;
+
+import org.drools.command.Context;
+import org.drools.command.impl.GenericCommand;
+import org.drools.command.impl.KnowledgeCommandContext;
+import org.drools.core.util.StringUtils;
+import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.process.NodeInstance;
+import org.drools.runtime.process.ProcessInstance;
+import org.jbpm.task.query.TaskSummary;
+import org.jbpm.workflow.instance.WorkflowProcessInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Service("marketServiceImpl")
 public class MarketServiceImpl implements MarketService {
@@ -122,7 +128,13 @@ public class MarketServiceImpl implements MarketService {
 	@Autowired
 	private MoneyDAO moneyDAO;
 	@Autowired
+	private CheckRecordDAO checkRecordDAO;
+	@Autowired
+	private CraftDAO craftDAO;
+	@Autowired
 	private ServiceUtil service;
+	@Autowired
+	private DeliveryRecordDAO deliveryRecordDAO;
 
 	@Override
 	public List<Customer> getAddOrderList() {
@@ -283,6 +295,25 @@ public class MarketServiceImpl implements MarketService {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				//工艺报价
+				List<Craft> craftList = craftDAO.findByOrderId(source);
+				Craft craft = null;
+				boolean isNeedCraft = false;
+				if(craftList != null && craftList.size() > 0){
+					craft = craftList.get(0);
+				}
+				if(craft.getNeedCraft() == 1){//如果需要工艺
+					isNeedCraft = true;
+				}
+				try {
+					Craft newCraft = (Craft)copy(craft);
+					newCraft.setOrderId(orderId);
+					craftDAO.save(newCraft);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 				List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(source);
 				for(FabricCost fc : fabricCosts){
 					FabricCost newFC = new FabricCost();
@@ -320,6 +351,14 @@ public class MarketServiceImpl implements MarketService {
 				params.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
 						(int) order.getIsNeedSampleClothes());
 				params.put(RESULT_REORDER, true);
+				params.put(DesignServiceImpl.RESULT_NEED_CRAFT, isNeedCraft);//翻单是否需要工艺
+				
+				boolean isHaoDuoYi = false;
+				if(order.getIsHaoDuoYi() == 1){
+					isHaoDuoYi = true;
+				}
+				params.put(RESULT_IS_HAODUOYI, isHaoDuoYi);//翻单是否为好多衣客户
+				
 				long processId=doTMWorkFlowStart(params);
 				order.setProcessId(processId);
 				orderDAO.attachDirty(order);
@@ -631,20 +670,21 @@ public class MarketServiceImpl implements MarketService {
 	
 	@Override
 	public boolean confirmQuoteSubmit(String actorId, long taskId, int orderId,
-			String result, String url) {
+			String result, String url,String moneyremark) {
 		//result为0，表示有上传样衣制作金的截图
 		//result为1，表示修改报价
 		//result为2，表示取消订单
 		Order order = orderDAO.findById(orderId);
 		if (Integer.parseInt(result) == 0) {
 			order.setConfirmSampleMoneyFile(url);
+			order.setMoneyremark(moneyremark);
 			orderDAO.attachDirty(order);
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_QUOTE, Integer.parseInt(result));
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
-			if(result.equals("2")){//如果result的的值为1，即为未收取到样衣，流程会异常终止，将orderState设置为1
+			if(result.equals("2")){//如果result的的值为2，即为取消订单，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
 			}			
@@ -728,17 +768,6 @@ public class MarketServiceImpl implements MarketService {
 		return model;
 	}
 	
-	@Override
-	public List<Map<String, Object>> getSearchPushRestOrderList(String userId,
-			String ordernumber, String customername, String stylename,
-			String startdate, String enddate, Integer[] employeeIds) {
-		List<Map<String, Object>> temp = service.getSearchOrderList(userId  ,
-				 ordernumber,  customername,  stylename,
-				 startdate,  enddate,  employeeIds,
-				 TASK_PUSH_REST);
-		return temp;
-	}
-	
 	// ==========================取得催尾款订单=======================
 	@Override
 	public Map<String, Object> getPushRestOrderDetail(String userId, int orderId) {
@@ -748,14 +777,24 @@ public class MarketServiceImpl implements MarketService {
 		Quote quote = (Quote) model.get("quote");
 		Float price = quote.getOuterPrice();
 		model.put("price", price);
-		Produce p=new Produce();
-		p.setOid(orderId);
-		p.setType(Produce.TYPE_QUALIFIED);
-		List<Produce>list=produceDAO.findByExample(p);
-		Integer amount=0;
-		for(Produce produce:list){
-			amount+=produce.getProduceAmount();
+//		Produce p=new Produce();
+//		p.setOid(orderId);
+//		p.setType(Produce.TYPE_QUALIFIED);
+//		List<Produce> list = produceDAO.findByExample(p);
+//		Integer amount = 0;
+//		for (Produce produce : list) {
+//			amount += produce.getProduceAmount();
+//		}
+		
+		//计算质检合格总数，即实际的大货总数
+		int amount = 0;
+		List<CheckRecord> list = checkRecordDAO.findByOrderId(orderId);
+		for(CheckRecord cr: list){
+			amount += cr.getQualifiedAmount();
 		}
+		List<DeliveryRecord> deliveryRecord = deliveryRecordDAO.findSampleRecordByOrderId(orderId);
+		model.put("deliveryRecord", deliveryRecord);
+		
 		model.put("number", amount);
 		model.put("total",  order.getTotalMoney() * 0.7);
 		model.put("taskName", "催尾款");
@@ -787,6 +826,27 @@ public class MarketServiceImpl implements MarketService {
 		data.put(RESULT_PUSH_RESTMONEY, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	@Override
+	public boolean getPushRestOrderSubmit(String actorId, long taskId,
+			boolean result,String orderId_string) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(Integer.parseInt(orderId_string));
+		Map<String, Object> data = new HashMap<>();
+		data.put(RESULT_PUSH_RESTMONEY, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			if(result==false){//如果result的的值为false，即为催尾款失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -929,12 +989,13 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public void signContractSubmit(String actorId, long taskId,
 			int orderId, double discount, double total, String url,
-			String confirmDepositFileUrl) {
+			String confirmDepositFileUrl,String moneyremark) {
 		Order order = orderDAO.findById(orderId);
 		order.setDiscount(discount);
 		order.setTotalMoney(total);
 		order.setContractFile(url);
 		order.setConfirmDepositFile(confirmDepositFileUrl);
+		order.setMoneyremark(moneyremark);
 		orderDAO.merge(order);
 //		Map<String, Object> data = new HashMap<>();
 //		try {
@@ -949,8 +1010,9 @@ public class MarketServiceImpl implements MarketService {
 	
 	@Override
 	public void signConfirmFinalPaymentFileSubmit( 
-			int orderId, String confirmFinalPaymentFileUrl) {
+			int orderId, String confirmFinalPaymentFileUrl,String moneyremark) {
 		Order order = orderDAO.findById(orderId);
+		order.setMoneyremark(moneyremark);
 		order.setConfirmFinalPaymentFile(confirmFinalPaymentFileUrl);
 		orderDAO.merge(order);
 		
@@ -959,8 +1021,13 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public Map<String, Object> getMergeQuoteDetail(Integer userId, int orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithQuote(userId + "",
-				TASK_MERGE_QUOTE, orderId);
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(userId
+				+ "", TASK_MERGE_QUOTE, orderId);
+		// 工艺报价信息
+		Craft craft = craftDAO.findByOrderId(orderId).get(0);
+		model.put("craft", craft);
+
+		return model;
 	}
 
 	@Override
@@ -1059,10 +1126,8 @@ public class MarketServiceImpl implements MarketService {
 				 */
 				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
 						.getNodeInstances()) {
-					if(!"Gateway".equals(nodeInstance.getNodeName())){
-						System.out.println("状态名称："+nodeInstance.getNodeName());
-						nodeInstanceNames.add(nodeInstance.getNodeName());
-					}
+					System.out.println("状态名称："+nodeInstance.getNodeName());
+					nodeInstanceNames.add(nodeInstance.getNodeName());
 				}
 			}
 				return null;
@@ -1124,6 +1189,7 @@ public class MarketServiceImpl implements MarketService {
 		return list;
 	}
 
+	//@Transactional(rollbackFor = Exception.class)
 	@Override
 	public List<Map<String, Object>> getOrdersDoing() {
 		List<Order> orders = orderDAO.getOrdersDoing();
@@ -1144,6 +1210,7 @@ public class MarketServiceImpl implements MarketService {
 		return list;
 	}
 	
+	//@Transactional(rollbackFor = Exception.class)
 	@Override
 	public List<Map<String, Object>> getOrdersDoing(String userRole, Integer userId) {		
 		Order orderExample = new Order();
@@ -1259,7 +1326,7 @@ public class MarketServiceImpl implements MarketService {
 		List<AccessoryCost> accessoryCosts = accessoryCostDAO
 				.findByOrderId(orderId);
 		model.put("accessoryCosts", accessoryCosts);
-		
+		model.put("repairRecord", checkRecordDAO.findByOrderId(orderId));
 		List<DesignCad> cads = cadDAO.findByOrderId(orderId);
 		if (cads != null && cads.size() != 0) {
 			model.put("designCad", cads.get(0));
@@ -1296,6 +1363,38 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return list;
 	}
+	
+	/**
+	 * 根据条件查询翻单列表  hcj
+	 */
+	@Override
+	public List<Map<String, Object>> getSearchAddMoreOrderList(String ordernumber,String customername,String stylename,String startdate,String enddate, Integer[] employeeIds) {
+		// TODO Auto-generated method stub
+
+//		Order o = new Order();
+//		o.setCustomerId(customerId);
+//		List<Order> orderList = orderDAO.findByExample(o);
+		List<Order> orderList = orderDAO.getSearchOrderDoneList(ordernumber, customername, stylename, startdate, enddate, employeeIds,"",0);
+		List<Map<String, Object>> list = new ArrayList<>();
+		System.out.println("翻单数量："+orderList.size());
+		for(Order order: orderList){
+			System.out.println("翻单数量客户姓名："+order.getCustomerName());
+			ArrayList<String>  orderProcessStateNames = getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
+			Integer orderId = order.getOrderId();
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("taskTime", order.getOrderTime());
+			model.put("orderId", service.getOrderId(order));
+			list.add(model);
+		}
+		return list;
+	}
 
 	@Override
 	public Map<String, Object> getAddMoreOrderDetail(int orderId) {
@@ -1303,29 +1402,34 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Order order = orderDAO.findById(orderId);
 		model.put("order", order);
+		if(order.getIsHaoDuoYi() == 1){
+			return null;
+		}
 		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
-		model.put("logistics", logisticsDAO.findById(orderId));
-		model.put("fabrics", fabricDAO.findByOrderId(orderId));
-		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
-		model.put("designCad", cadDAO.findByOrderId(orderId));
+		model.put("logistics", logisticsDAO.findById(orderId));//物流信息
+		model.put("fabrics", fabricDAO.findByOrderId(orderId));//面料信息
+		model.put("accessorys", accessoryDAO.findByOrderId(orderId));//辅料信息
+		model.put("designCad", cadDAO.findByOrderId(orderId));//制版信息
 		model.put("orderId", service.getOrderId(order));
+		model.put("craft", craftDAO.findByOrderId(orderId).get(0));//工艺信息
 
 		Produce produce = new Produce();
 		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
-		model.put("sample", produceDAO.findByExample(produce));
+		model.put("sample", produceDAO.findByExample(produce));//样衣生产信息
 
 		produce.setType(Produce.TYPE_PRODUCE);
-		model.put("produce", produceDAO.findByExample(produce));
+		model.put("produce", produceDAO.findByExample(produce));//大货生产信息
 
-		model.put("versions", versionDataDAO.findByOrderId(orderId));
+		model.put("versions", versionDataDAO.findByOrderId(orderId));//版型信息
 		
 		Quote quote = quoteDAO.findById(orderId);
-		model.put("quote", quote);
+		model.put("quote", quote);//报价信息
 		List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(orderId);
-		model.put("fabricCosts", fabricCosts);
+		model.put("fabricCosts", fabricCosts);//面料报价
 		List<AccessoryCost> accessoryCosts = accessoryCostDAO.findByOrderId(orderId);
-		model.put("accessoryCosts", accessoryCosts);
+		model.put("accessoryCosts", accessoryCosts);//辅料报价
+		
 		return model;
 	}
 
@@ -1363,9 +1467,9 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getSearchOrderList(String ordernumber,
 			String customername, String stylename, String startdate,String enddate,
-			Integer[] employeeIds) {
+			Integer[] employeeIds,String userRole,Integer userId) {
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
-				 customername,stylename,startdate,enddate,employeeIds);
+				 customername,stylename,startdate,enddate,employeeIds,userRole,userId);
  		int orderslength = orders.size();
 		Integer pages=(int) Math.ceil((double)orderslength/10);
 		List<Map<String, Object>> list = new ArrayList<>();
@@ -1396,9 +1500,9 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getSearchOrdersDoing(String ordernumber,
 			String customername, String stylename, String startdate,
-			String enddate, Integer[] employeeIds) {
+			String enddate, Integer[] employeeIds,String userRole,Integer userId) {
 		List<Order> orders = orderDAO.getSearchOrderDoingList( ordernumber,
-				 customername,stylename,startdate,enddate,employeeIds);
+				 customername,stylename,startdate,enddate,employeeIds,userRole,userId);
 		int orderslength = orders.size();
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
@@ -1421,9 +1525,9 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public List<Map<String, Object>> getSearchOrdersDone(String ordernumber,
 			String customername, String stylename, String startdate,
-			String enddate, Integer[] employeeIds) {
+			String enddate, Integer[] employeeIds,String userRole,Integer userId) {
 		List<Order> orders = orderDAO.getSearchOrderDoneList( ordernumber,
-				 customername,stylename,startdate,enddate,employeeIds);
+				 customername,stylename,startdate,enddate,employeeIds,userRole,userId);
 		int orderslength = orders.size();
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
@@ -1480,8 +1584,6 @@ public class MarketServiceImpl implements MarketService {
 	public void sendOrderInfoViaPhone(Order order, Customer customer){
 		
 	}
-
-
 
 
 

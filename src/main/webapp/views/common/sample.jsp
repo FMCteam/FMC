@@ -47,16 +47,15 @@
 		<td class="title">样衣信息</td>
 		<td class="title">样衣图片</td>
 		<td><c:if test="${orderInfo.order.sampleClothesPicture!=null}">
-				<img class="pimg" src="${ctx}/common/getPic.do?type=sample&orderId=${orderInfo.order.orderId}"
+				<img src="${ctx}/common/getPic.do?type=sample&orderId=${orderInfo.order.orderId}"
 					style="max-height: 300px;" alt="样衣图片"></img>
 			</c:if></td>
 		<td class="title">参考图片</td>
 		<td colspan="2"><c:if
 				test="${orderInfo.order.referencePicture!=null}">
-				<img id="fdd"
+				<img
 					src="${ctx}/common/getPic.do?type=reference&orderId=${orderInfo.order.orderId}"
-					style="max-height: 300px;" value="dfd" alt="参考图片"></img>
+					style="max-height: 300px;" alt="参考图片"></img>
 			</c:if></td>
 	</tr>
 </table>
-<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;"><div id="innerdiv" style="position:absolute;"><img id="bigimg" style="border:5px solid #fff;" src="" /></div></div>

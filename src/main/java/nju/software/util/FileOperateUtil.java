@@ -89,29 +89,36 @@ public class FileOperateUtil {
 			String newfilename, String fileid) {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile(fileid);
-		if (newfilename == null || newfilename.equals("")) {
-			newfilename = file.getOriginalFilename();
-		} else {
-			newfilename = newfilename + "."
-					+ getExtensionName(file.getOriginalFilename());
-		}
-		File tmpfile = new File(filedir, newfilename);
-		tmpfile.mkdirs();
+		if(file != null){
+			if (newfilename == null || newfilename.equals("")) {
+				newfilename = file.getOriginalFilename();
+			} else {
+				newfilename = newfilename + "."
+						+ getExtensionName(file.getOriginalFilename());
+			}
+			File tmpfile = new File(filedir, newfilename);
+			tmpfile.mkdirs();
 
-		try {
-			file.transferTo(tmpfile);
-		} catch (Exception e) {
-			e.printStackTrace();
-			tmpfile.delete();
+			try {
+				file.transferTo(tmpfile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				tmpfile.delete();
+				return null;
+			}
+
+			File save = new File(filedir, newfilename);
+			if (save.exists()) {
+				//save.delete();
+			}
+			tmpfile.renameTo(save);
+			return save;
+			
+		}else{
 			return null;
 		}
-
-		File save = new File(filedir, newfilename);
-		if (save.exists()) {
-			//save.delete();
-		}
-		tmpfile.renameTo(save);
-		return save;
+		
+		
 
 	}
 

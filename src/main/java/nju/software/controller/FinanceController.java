@@ -120,17 +120,6 @@ public class FinanceController {
 
 		return "forward:/finance/confirmSampleMoneyList.do";
 	}
-	
-	
-	@RequestMapping(value = "/finance/printProcurementOrder.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String printProcurementOrder(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
-		Map<String,Object>orderInfo=financeService.getPrintProcurementOrderDetail(orderId);
-		model.addAttribute("orderInfo", orderInfo);
-		return "/finance/printProcurementOrder";
-	}
 	// ===========================退还定金列表===================================
 	@RequestMapping(value = "/finance/returnDepositList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -146,36 +135,6 @@ public class FinanceController {
 
 		return "/finance/returnDepositList";
 	}	
-	
-	// ===========================退还定金列表搜索===================================
-	@RequestMapping(value = "/finance/returnDepositListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
-	public String returnDepositListSearch(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		String ordernumber = request.getParameter("ordernumber");
-		String customername = request.getParameter("customername");
-		String stylename = request.getParameter("stylename");
-		String employeename = request.getParameter("employeename");
-		String startdate = request.getParameter("startdate");
-		String enddate = request.getParameter("enddate");
-		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
-		List<Employee> employees = employeeService.getEmployeeByName(employeename);
-		Integer[] employeeIds = new Integer[employees.size()];
-		for(int i=0;i<employeeIds.length;i++){
-			employeeIds[i] = employees.get(i).getEmployeeId();
-		}
-		
-		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		List<Map<String, Object>> list = financeService
-				.getReturnDepositList(actorId,ordernumber,customername,stylename,startdate,enddate,employeeIds);
-		model.addAttribute("list", list);
-		model.addAttribute("taskName", "退还大货定金");
-		model.addAttribute("url", "/finance/returnDepositDetail.do");
-		model.addAttribute("searchurl", "/finance/returnDepositListSearch.do");
-
-		return "/finance/returnDepositList";
-	}
-	
 	// ===========================定金确认===================================
 	@RequestMapping(value = "/finance/confirmDepositList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -255,7 +214,7 @@ public class FinanceController {
 		long taskId = Long.parseLong(taskId_string);
 
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
-		financeService.returnDepositSubmit(actorId, taskId);
+		financeService.returnDepositSubmit(actorId, taskId,orderId);
 		return "forward:/finance/returnDepositList.do";
 	}
 	
@@ -348,6 +307,7 @@ public class FinanceController {
 	public String confirmFinalPaymentFileSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
+		String moneyremark = request.getParameter("moneyremark");//金额备注
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile confirmFinalPaymentFile =  multipartRequest.getFile("confirmFinalPaymentFile");
 		String confirmFinalPaymentFileName = confirmFinalPaymentFile.getOriginalFilename();
@@ -357,7 +317,7 @@ public class FinanceController {
 		confirmFinalPaymentFileUrl = confirmFinalPaymentFileUrl + "/" + confirmFinalPaymentFileName;
 		//上传合同，上传首定金收据，一般是截图，
  
-		marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId),confirmFinalPaymentFileUrl);
+		marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId),confirmFinalPaymentFileUrl,moneyremark);
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
 		Map<String, Object> orderInfo = financeService
 				.getConfirmFinalPaymentDetail(actorId,Integer.parseInt(orderId));
@@ -384,7 +344,7 @@ public class FinanceController {
 
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
 		financeService
-				.confirmFinalPaymentSubmit(actorId, taskId, result, money);
+				.confirmFinalPaymentSubmit(actorId, taskId, result, money,orderId);
 		return "forward:/finance/confirmFinalPaymentList.do";
 	}
 
@@ -424,7 +384,7 @@ public class FinanceController {
 	}
 
 	public Timestamp getTime(String time) {
-		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
+		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
 		return new Timestamp(outDate.getTime());
 	}
 

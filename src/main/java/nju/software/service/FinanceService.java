@@ -23,14 +23,13 @@ public interface FinanceService {
 	
 	public boolean confirmDepositSubmit(String actorId,long taskId,boolean result, Money money);
 	
-	public Map<String,Object>getPrintProcurementOrderDetail(Integer orderId);
-	
 	//===========================尾款确认===================================
 	public List<Map<String,Object>>getConfirmFinalPaymentList(String actorId);
 	
 	public Map<String,Object> getConfirmFinalPaymentDetail(String actorId,Integer orderId);
 	
 	public boolean confirmFinalPaymentSubmit(String actorId,long taskId,boolean result, Money money);
+	public boolean confirmFinalPaymentSubmit(String actorId, long taskId,boolean result, Money money,Integer orderId);
 	
 	public  List<Map<String, Object>> getProcessState(Integer orderId);
 	public  ArrayList<String> getProcessStateName(Integer orderId);
@@ -56,14 +55,11 @@ public interface FinanceService {
 			int orderId);
 
 	public void returnDepositSubmit(String actorId, long taskId);
+	public void returnDepositSubmit(String actorId, long taskId,Integer orderId);
 
 	public boolean confirmSampleMoneySubmit(String actorId, long taskId,
 			boolean result, Money money, int orderId);
 
 	public boolean confirmDepositSubmit(String actorId, long taskId,
 			boolean result, Money money, int orderId);
-
-	public List<Map<String, Object>> getReturnDepositList(String actorId,
-			String ordernumber, String customername, String stylename,
-			String startdate, String enddate, Integer[] employeeIds);
 }

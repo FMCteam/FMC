@@ -39,7 +39,17 @@
 				$("input[name='sample_amount']").val(calculate("produce_table",colName,7));
 			}
 		});
-		
+		//大货加工确认
+		$("table.confirm_produce_table a").click(function(){
+			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
+			if(checkNum("confirm_produce_table",colName,7)){
+				table_addrow_onclick("confirm_produce_table",colName,7);
+				$("input[name='ask_amount']").val(calculate("confirm_produce_table",colName,7));
+				for(var i=0;i<$("td.ask_amount").length;i++){
+					$("td.ask_amount").eq(i).text(calculate("confirm_produce_table",colName,7));
+				}
+			}
+		});
 		$("table.version_table a").click(function(){
 			var colName = ["version_size","version_centerBackLength","version_bust","version_waistLine","version_shoulder",
 			               "version_buttock","version_hem","version_trousers","version_skirt","version_sleeves"];
@@ -71,9 +81,18 @@
 
 		$("input[name='is_haoduoyi']").change(function(){
 			if($('input:radio[name="is_haoduoyi"]:checked').val()=="1"){
+				$("input[name='order_source']").val("");
 				$("input[name='order_source']").attr("disabled","disabled");
- 			}else{
+				//好多衣用户默认选中生产样衣
+				$("#is_need_sample_clothes").css("display","none");
+				$("#is_need_sample_clothes_tip").removeAttr("style");
+				$("#is_need_sample_clothes").html("<input type='radio' name='is_need_sample_clothes' checked='checked' value='1' required='required' onchange = 'change()'/> 是 <input type='radio' name='is_need_sample_clothes' value='0'  onchange ='change()'/> 否");
+				change();
+			}else{
 				$("input[name='order_source']").removeAttr("disabled");
+				$("#is_need_sample_clothes").removeAttr("style");
+				$("#is_need_sample_clothes_tip").css("display","none");
+				change();
  			}
 		});
 		
@@ -87,6 +106,27 @@
 			}
 			var max = parseInt(Math.abs((input_date - date)/86400000));
 			$("input[name='ask_produce_period']").attr("max",""+parseInt(max));
+		});
+		
+		$("input[id='input_day']").change(function(){ 
+			var date = new Date();
+			var input_date = new Date($("input[id='input_day']").val());
+			if((input_date.valueOf()-28800000)>date.valueOf()){
+				alert("输入日期不能在今天之后");
+				$("input[id='input_day']").val("");
+				return;
+			}
+		});
+		
+		$("input[name='in_post_sample_clothes_time']").change(function(){ 
+			var date = new Date();
+			var input_date = new Date($("input[name='in_post_sample_clothes_time']").val());
+			if(input_date.valueOf()>date.valueOf()){
+				alert("输入日期不能在今天之后");
+				$("input[name='in_post_sample_clothes_time']").val("");
+				return;
+			}
+
 		});
 		/*$("input[name='is_need_sample_clothes']").change(function(){
 			if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
@@ -120,7 +160,7 @@
 
 		var item = "";
 		//如果是添加大货和样衣数量，需要设置默认值0
-		if (table_name == "produce_table" || table_name == "sample_produce_table") {
+		if (table_name == "produce_table" || table_name == "sample_produce_table" || table_name == "confirm_produce_table") {
 			for (var j = 0; j < col_sum; j++) {
 				//第1列是颜色，不需要置为0
 				if(j == 0){
@@ -137,10 +177,21 @@
 			}
 		}
 
-		item += "<td><a onclick=\"deleteRow(this,'" + table_name + "')\">删除</a></td>";
+		item += "<td><a name='delete' onclick=\"deleteRow(this,'" + table_name + "')\">删除</a></td>";
 		item = "<tr>" + item + "</tr>";
 		$("table." + table_name + " tr.addrow").after(item);
+		
+		//如果是大货生产确认，还需要重新计算总金额
+		if (table_name == "confirm_produce_table"){
 			
+//			var addAmount = 0;
+//			for (var k = 1; k < col_sum; k ++) {
+//				addAmount += parseInt(content[k]);
+//			}
+			
+			calTotalMoney();
+			calDiscountMoney();
+		}
 	}
 	
 	function table_addrow_onclick2(table_name,col_name,col_sum){
@@ -232,14 +283,43 @@ function calculate(table_name,col_name,col_sum){
 	return sum;
 }
 
+function calTotalMoney(){
+	var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
+	var askAmount = calculate("produce_table",colName,7);
+	
+	var orderInfoQuoteOuterPrice = $("input[name='orderInfoQuoteOuterPrice']").val();
+//	var orderInfoOrderAskAmount = $("input[name='orderInfoOrderAskAmount']").val();
+//	var newAskAmount = parseInt(orderInfoOrderAskAmount) + addAmount;
+//	$("input[name='orderInfoOrderAskAmount']").val(newAskAmount);
+	
+	var totalMoney = orderInfoQuoteOuterPrice * askAmount;
+	$("input[name='totalmoney']").val(totalMoney.toFixed(2));
+	$("input[name='sum']").val(totalMoney.toFixed(2));
+}
+
 function deleteRow(a,table){
 	//alert($(a).parents('.'+table+' tr').length);
 	$(a).parents('.'+table+' tr').remove();
-	if(table=="produce_table"){
+	if(table=="produce_table" || table=="confirm_produce_table"){
 		var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
-		$("input[name='ask_amount']").val(calculate("produce_table",colName,7));
+		var askAmount = calculate("produce_table",colName,7);
+		$("input[name='ask_amount']").val(askAmount);
+		$("td.ask_amount").text(askAmount);
+		//如果是大货生产确认，还需要重新计算总金额
+		if (table == "confirm_produce_table"){
+			calTotalMoney();
+			calDiscountMoney();
+		}
+	}
+	
+	if(table=="sample_produce_table"){
+		var colName = ["sample_produce_color","sample_produce_xs","sample_produce_s","sample_produce_m","sample_produce_l","sample_produce_xl","sample_produce_xxl"];
+		var askAmount = calculate("sample_produce_table",colName,7);
+		$("input[name='sample_amount']").val(askAmount);
+		$("td.sample_amount").text(askAmount);
 	}
 }
+
 
 function getTdString(col){
 	var tdString="";
@@ -259,7 +339,7 @@ function verify(){
 		return false;
 	}
 	
-	var is_need_sample = jQuery("input[name='is_need_sample_clothes']").val();
+	var is_need_sample = jQuery("input[name='is_need_sample_clothes']:checked").val();
 	//如果需要样衣
 	if(is_need_sample == 1){
 		var sample_amount = jQuery("input[name='sample_amount']").val();
@@ -269,16 +349,33 @@ function verify(){
 		}
 	}
 	
-	var is_haoduoyi = jQuery("input[name='is_haoduoyi']").val();
+	var is_haoduoyi = jQuery("input[name='is_haoduoyi']:checked").val();
 	if(is_haoduoyi==0){
 		var order_source_name = jQuery("input[name='order_source']").val();
 		if(order_source_name=="好多衣"){
 			alert("是否好多衣选择为否时，订单来源名称不能用好多衣");
+			return false;
 		}
 		if(order_source_name==""){
 			alert("请填写订单来源信息");
+			return false;
 		}
 	}
+	
+	var is_haoduoyi = jQuery("input[name='ishaoduoyi']").val();
+	if(is_haoduoyi==0){
+		var order_source_name = jQuery("input[name='order_source']").val();
+		if(order_source_name=="好多衣"){
+			alert("是否好多衣选择为否时，订单来源名称不能用好多衣");
+			return false;
+		}
+		if(order_source_name==""){
+			alert("请填写订单来源信息");
+			return false;
+		}
+	}
+	
+	
 	$("#fabric_name").val(getTdString("fabric_name"));
 	$("#fabric_amount").val(getTdString("fabric_amount"));
 	$("#accessory_name").val(getTdString("accessory_name"));
@@ -326,6 +423,20 @@ function verify(){
 
 	$("button.norepeat").attr("disabled","disabled");
 	return true;
+}
+
+function change(){
+	
+	var is_need_sample = jQuery("input[name='is_need_sample_clothes']:checked").val();
+	if(is_need_sample == 0){
+		$("#sampletable *").attr("disabled","disabled");
+		//$('a[name="delete"]').trigger("click");
+		$('#sampletable a[name="delete"]').trigger("click");
+		//$("#sample_clothes_picture").attr("disabled","disabled");
+	}else{
+		$("#sampletable *").removeAttr("disabled");
+		//$("#sample_clothes_picture").removeAttr("disabled");
+	}
 }
 
 function init(){
@@ -412,10 +523,37 @@ function init(){
 		}
 	});
 	
+	if($("input[name='is_need_sample_clothes']:checked").val()=="0"){
+		$(".sample_produce_table *").attr("disabled","disabled");
+	}
+	if($('input[name="order_source"]').val() =="好多衣"){
+		$('input[name="order_source"]').attr("readonly","readonly");
+	}
+	
 	/*if($('input:radio[name="is_need_sample_clothes"]:checked').val()=="0"){
 		$("input[name='sample_clothes_name']").attr("disabled","disabled");
 		$("input[name='sample_clothes_phone']").attr("disabled","disabled");
 		$("input[name='sample_clothes_address']").attr("disabled","disabled");
 		$("input[name='sample_clothes_remark']").attr("disabled","disabled");
 	}*/
+	var date = new Date();
+	var month = date.getMonth()>8?date.getMonth()+1:"0"+(date.getMonth()+1);
+	var day = date.getDate()>9?date.getDate():"0"+date.getDate();
+	/*if(date.getMonth() < 10){
+		month = "0"+(date.getMonth()+1);
+	}else{
+		month = date.getMonth()+1;
+	}
+	if(date.getDate() < 10){
+		day = "0"+date.getDate();
+	}else{
+		day = date.getDate();
+	}*/
+	var hour = date.getHours()>9?date.getHours():"0"+date.getHours();
+	var minute = date.getMinutes()>9?date.getMinutes():"0"+date.getMinutes();
+	var second = date.getSeconds()>9?date.getSeconds():"0"+date.getSeconds();
+	$("#input_day").val(date.getFullYear()+"/"+month+"/"+day+" "+hour+":"+minute+":"+second);
+	//$("input[name='in_post_sample_clothes_time']").val(date.getFullYear()+"/"+month+"/"+day+" "+hour+":"+minute+":"+second);
+	//$("#input_day").attr("readonly","readonly");
+	//$("input[name='in_post_sample_clothes_time']").attr("readonly","readonly");
 }

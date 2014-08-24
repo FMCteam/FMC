@@ -1,36 +1,24 @@
 package nju.software.service.impl;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.net.ntp.TimeStamp;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CraftDAO;
-import nju.software.dao.impl.FabricDAO;
-import nju.software.dao.impl.LogisticsDAO;
+import nju.software.dao.impl.DesignCadDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.QuoteDAO;
-import nju.software.dao.impl.DesignCadDAO;
-import nju.software.dataobject.Accessory;
-import nju.software.dataobject.Account;
 import nju.software.dataobject.Craft;
-import nju.software.dataobject.Fabric;
-import nju.software.dataobject.Logistics;
+import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
-import nju.software.dataobject.DesignCad;
-import nju.software.model.OrderInfo;
 import nju.software.service.DesignService;
 import nju.software.util.JbpmAPIUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("designServiceImpl")
 public class DesignServiceImpl implements DesignService {
@@ -120,11 +108,13 @@ public class DesignServiceImpl implements DesignService {
 		craft.setEmbroideryMoney(embroideryMoney);
 		craft.setCrumpleMoney(crumpleMoney);
 		craft.setOpenVersionMoney(openVersionMoney);
+		craft.setOrderSampleStatus("1");
 		craftDAO.save(craft);
 		Quote quote = quoteDAO.findById(orderId);
-		//单件工艺制作费
+		//单件工艺制作费（不包含开版费用）
 		float craftCost = stampDutyMoney + washHangDyeMoney + laserMoney + embroideryMoney
-						  + crumpleMoney + openVersionMoney;
+						  + crumpleMoney;
+		
 		if (null == quote) {
 			quote = new Quote();
 			quote.setCraftCost(craftCost);
@@ -132,7 +122,15 @@ public class DesignServiceImpl implements DesignService {
 			quoteDAO.save(quote);
 		}
 		
+		//重新计算单件成本
+		float produceCost = quote.getCutCost() + quote.getManageCost()
+				+ quote.getDesignCost() + quote.getIroningCost()
+				+ quote.getNailCost() + quote.getPackageCost()
+				+ quote.getSwingCost() + quote.getOtherCost();
+		float singleCost = craftCost + quote.getFabricCost() + quote.getAccessoryCost() + produceCost;
+		
 		quote.setCraftCost(craftCost);
+		quote.setSingleCost(singleCost);
 		quoteDAO.attachDirty(quote);
 
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -202,6 +200,28 @@ public class DesignServiceImpl implements DesignService {
 //			e.printStackTrace();
 //			return false;
 //		}
+	}
+	
+	@Override
+	public void EntryCadData(int orderId, long taskId, String url,
+			Timestamp uploadTime, String cadSide, Timestamp completeTime) {
+		// TODO Auto-generated method stub
+		DesignCad designCad = null;
+		List<DesignCad> designCadList = designCadDAO.findByOrderId(orderId);
+		if (designCadList.isEmpty()) {
+			designCad = new DesignCad();
+			designCad.setOrderId(orderId);
+			designCad.setCadVersion((short) 1);
+		} else {
+			designCad = designCadList.get(0);
+			short newVersion = (short) (designCad.getCadVersion() + 1);
+			designCad.setCadVersion(newVersion);
+		}
+		designCad.setCadUrl(url);
+		designCad.setUploadTime(uploadTime);
+		designCad.setCadSide(cadSide);
+		designCad.setCompleteTime(completeTime);
+		designCadDAO.attachDirty(designCad);
 	}
 //===========================样衣生产提交========================================
 	@Override
@@ -312,29 +332,12 @@ public class DesignServiceImpl implements DesignService {
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CONFIRM_CAD);
 	}
 	
-	@Override
-	public List<Map<String, Object>> getConfirmCadList(String ordernumber,
-			String customername, String stylename, String startdate,
-			String enddate, Integer[] employeeIds) {
-		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER,ordernumber,customername,stylename,
-				 startdate,enddate,employeeIds,TASK_CONFIRM_CAD);
-	}
-	
     //获得需要工艺制作的大货订单列表
 	@Override
 	public List<Map<String, Object>> getNeedCraftList() {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CRAFT_PRODUCT);
 	}
-	
-	@Override
-	public List<Map<String, Object>> getSearchNeedCraftList(String ordernumber,
-			String customername, String stylename, String startdate,
-			String enddate, Integer[] employeeIds) {
-		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER,ordernumber,customername,stylename,
-				 startdate,enddate,employeeIds,TASK_CRAFT_PRODUCT);
-	}
-	
 	 //获得需要工艺制作的大货订单
 	@Override
 	public Map<String, Object> getNeedCraftProductDetail(int orderId) {
@@ -348,9 +351,13 @@ public class DesignServiceImpl implements DesignService {
 	}
 	
 	@Override
-	public void needCraftProductSubmit(int orderId, long taskId) {
+	public void needCraftProductSubmit(int orderId, long taskId,String crafsManName,Timestamp crafsProduceDate) {
  		Map<String, Object> data = new HashMap<String, Object>();
 		try {
+			Craft craft = craftDAO.findByOrderId(orderId).get(0);
+			craft.setCrafsManName(crafsManName);
+			craft.setCrafsProduceDate(crafsProduceDate);
+			craftDAO.attachDirty(craft);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
 			
 		} catch (InterruptedException e) {
@@ -364,16 +371,6 @@ public class DesignServiceImpl implements DesignService {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CRAFT_SAMPLE);
 	}
-	
-	@Override
-	public List<Map<String, Object>> getSearchNeedCraftSampleList(
-			String ordernumber, String customername, String stylename,
-			String startdate, String enddate, Integer[] employeeIds) {
-		
-		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER,ordernumber,customername,stylename,
-				 startdate,enddate,employeeIds,TASK_CRAFT_SAMPLE);
-	}
-	
 	//获得需要工艺制作的样衣订单
 	@Override
 	public Map<String, Object> getNeedCraftSampleDetail(int orderId) {
@@ -394,12 +391,17 @@ public class DesignServiceImpl implements DesignService {
  
 	}
 	@Override
-	public void needCraftSampleSubmit(int orderId, long taskId) {
+	public void needCraftSampleSubmit(int orderId, long taskId, String craftLeader, Timestamp completeTime) {
 		// TODO Auto-generated method stub
+		Craft craft = craftDAO.findByOrderId(orderId).get(0);
+		craft.setCraftLeader(craftLeader);
+		craft.setCompleteTime(completeTime);
+		craft.setOrderSampleStatus("4");
+		craftDAO.merge(craft);
+		
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
-			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -411,16 +413,6 @@ public class DesignServiceImpl implements DesignService {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_TYPESETTING_SLICE);
 	}
-	
-	@Override
-	public List<Map<String, Object>> getSearchTypeSettingSliceList(
-			String ordernumber, String customername, String stylename,
-			String startdate, String enddate, Integer[] employeeIds) {
-		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER,ordernumber,customername,stylename,
-				 startdate,enddate,employeeIds,TASK_TYPESETTING_SLICE);
-	 
-	}
-
 	
 	//获得需要排版切片订单	
 	@Override
@@ -442,7 +434,7 @@ public class DesignServiceImpl implements DesignService {
 	}
 	
 	@Override
-	public void getTypeSettingSliceSubmit(int orderId, String cadding_side,
+	public void getTypeSettingSliceSubmit(int orderId, String cad_side,
 			long taskId) {
 		DesignCad designCad = null;
 		List<DesignCad> designCadList = designCadDAO.findByOrderId(orderId);
@@ -450,10 +442,10 @@ public class DesignServiceImpl implements DesignService {
 			designCad = new DesignCad();
 			designCad.setOrderId(orderId);
 			designCad.setCadVersion((short) 1);
-			designCad.setCaddingSide(cadding_side);
+			designCad.setCadSide(cad_side);
 		} else {
 			designCad = designCadList.get(0);
-			designCad.setCaddingSide(cadding_side);
+			designCad.setCadSide(cad_side);
  		}
  
 		designCadDAO.attachDirty(designCad);
@@ -521,6 +513,7 @@ public class DesignServiceImpl implements DesignService {
 		}
 	}
 	public final static String ACTOR_DESIGN_MANAGER = "designManager";
+	public final static String ACTOR_CRAFT_MANAGER = "craftManager";
 	public final static String TASK_VERIFY_DESIGN = "verifyDesign";
 	public final static String TASK_COMPUTE_DESIGN_COST = "computeDesignCost";
 	public final static String TASK_UPLOAD_DESIGN = "uploadDegisn";
@@ -547,12 +540,11 @@ public class DesignServiceImpl implements DesignService {
 	private CraftDAO craftDAO;
 	@Autowired
 	private OrderDAO orderDAO;
-
-
-
-	
-
-
-
-
+	@Override
+	//获取订单样衣状态
+	public String getCraftInfo(Integer orderId) {
+	List<Craft> list=craftDAO.findByOrderId(orderId);
+		Craft craft =list.get(0);
+		return craft.getOrderSampleStatus();
+	}
 }

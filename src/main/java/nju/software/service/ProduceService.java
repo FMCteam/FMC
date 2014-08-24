@@ -28,6 +28,7 @@ public interface ProduceService {
 	public Map<String, Object> getProduceSampleDetail(Integer orderId);
 
 	public boolean produceSampleSubmit(long taskId, boolean result);
+	public boolean produceSampleSubmit(long taskId, boolean result,String orderId);
 
 	public List<Map<String, Object>> getProduceList();
 
@@ -35,6 +36,8 @@ public interface ProduceService {
 
 	public boolean pruduceSubmit(long taskId, boolean result,
 			List<Produce> produceList);
+	public boolean pruduceSubmit(long taskId, boolean result,
+			List<Produce> produceList,Integer orderId);
 	
 	public List<Produce> getProduceList(int orderId, String produceColor,
 			String produceXS, String produceS, String produceM,

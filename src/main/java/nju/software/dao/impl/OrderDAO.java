@@ -477,7 +477,8 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	}
 	public List<Order> findResultsByCustomerId(int customerId) {
 		try {
-			String query = "from Order as model where model.customerId ="+customerId;
+			//查询可翻单的订单，根据客户id及订单状态('Done')查询     hcj
+			String query = "from Order as model where model.customerId ="+customerId+"and model.orderState='Done'";
 			
 			List<Order> c= getHibernateTemplate().find(query);
 			
@@ -595,17 +596,22 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	@Override
 	public List<Order> getSearchOrderList(String ordernumber,
 			String customername, String stylename, String startdate,String enddate,
-			Integer[] employeeIds) {
+			Integer[] employeeIds,String userRole,Integer userId) {
       
 		Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Order.class);
+        if("CUSTOMER".equals(userRole)){
+        	criteria.add(Restrictions.eq("customerId", userId));
+        }else if ("marketStaff".equals(userRole)){
+        	criteria.add(Restrictions.eq("employeeId", userId));
+        }
   		if(!StringUtils.isEmpty(ordernumber))
  			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
- 	 	if(!StringUtils.isEmpty(customername))
+ 	 	if(!"CUSTOMER".equals(userRole)&&!StringUtils.isEmpty(customername))
 			criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
  		if(!StringUtils.isEmpty(stylename))
 			criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
- 		if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
+ 		/*if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
 		{
 			String strformat = "yyyy-MM-dd HH:mm:ss";
 			String strformat2 = "yyyy-MM-dd";
@@ -620,34 +626,124 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	        System.out.println("bengin date is:"+begindate1+"end date is :"+enddate1);
 			}
 			criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
+		}*/
+ 		if(!(StringUtils.isEmpty(startdate))){
+			String strformat = "yyyy-MM-dd HH:mm:ss";
+			 DateUtil du = new DateUtil();
+		     Date begindate1 = null;
+		     if(startdate.length()==10){
+				startdate = startdate+" 00:00:00";
+		        begindate1 = du.parse(startdate, strformat);
+		        criteria.add(Restrictions.gt("orderTime",begindate1));
+		     }
+		}
+		if(!(StringUtils.isEmpty(enddate))){
+			String strformat = "yyyy-MM-dd HH:mm:ss";
+			 DateUtil du = new DateUtil();
+		     Date enddate1 = null;
+		     if(enddate.length()==10){
+		    	 enddate = enddate+" 23:59:59";
+				enddate1 = du.parse(enddate, strformat);
+		        criteria.add(Restrictions.lt("orderTime",enddate1));
+		     }
+		}
+		if(!"marketStaff".equals(userRole)){
+			if(employeeIds!=null&&employeeIds.length !=0)
+			{
+				criteria.add(Restrictions.in("employeeId",employeeIds));
+			}else{
+				criteria.add(Restrictions.eq("employeeId",-1));//若模糊查询得到的专员列表为空，则增加一个不可能的条件，使订单列表的查询结果为空
+			}
+		}
+		
+	    List<Order> orderList = criteria.list();		
+		return orderList;
+	}
+
+	public List<Order> getSearchOrderList(String ordernumber,
+			String customername, String stylename, String startdate,String enddate,
+			Integer[] employeeIds) {
+      
+		Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Order.class);
+
+  		if(!StringUtils.isEmpty(ordernumber))
+ 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
+ 	 	if(!StringUtils.isEmpty(customername))
+			criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
+ 		if(!StringUtils.isEmpty(stylename))
+			criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
+ 		/*if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
+		{
+			String strformat = "yyyy-MM-dd HH:mm:ss";
+			String strformat2 = "yyyy-MM-dd";
+	        DateUtil du = new DateUtil();
+	        Date begindate1 = null;
+	        Date enddate1 = null;
+			if(startdate.length()==10&&enddate.length()==10){
+				startdate = startdate+" 00:00:00";
+				enddate = enddate+" 23:59:59";
+	        begindate1 = du.parse(startdate, strformat);
+	        enddate1 = du.parse(enddate, strformat);
+	        System.out.println("bengin date is:"+begindate1+"end date is :"+enddate1);
+			}
+			criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
+		}*/
+ 		if(!(StringUtils.isEmpty(startdate))){
+			String strformat = "yyyy-MM-dd HH:mm:ss";
+			 DateUtil du = new DateUtil();
+		     Date begindate1 = null;
+		     if(startdate.length()==10){
+				startdate = startdate+" 00:00:00";
+		        begindate1 = du.parse(startdate, strformat);
+		        criteria.add(Restrictions.gt("orderTime",begindate1));
+		     }
+		}
+		if(!(StringUtils.isEmpty(enddate))){
+			String strformat = "yyyy-MM-dd HH:mm:ss";
+			 DateUtil du = new DateUtil();
+		     Date enddate1 = null;
+		     if(enddate.length()==10){
+		    	 enddate = enddate+" 23:59:59";
+				enddate1 = du.parse(enddate, strformat);
+		        criteria.add(Restrictions.lt("orderTime",enddate1));
+		     }
 		}
 		if(employeeIds!=null&&employeeIds.length !=0)
 		{
 			criteria.add(Restrictions.in("employeeId",employeeIds));
+		}else{
+			criteria.add(Restrictions.eq("employeeId",-1));//若模糊查询得到的专员列表为空，则增加一个不可能的条件，使订单列表的查询结果为空
 		}
 	    List<Order> orderList = criteria.list();		
 		return orderList;
 	}
 
+	
 	public List<Order> getSearchOrderDoingList(String ordernumber,
 			String customername, String stylename, String startdate,
-			String enddate, Integer[] employeeIds) {
+			String enddate, Integer[] employeeIds,String userRole,Integer userId) {
 	      
 			Session session = getHibernateTemplate().getSessionFactory().openSession();
 	        Criteria criteria = session.createCriteria(Order.class);
 	        criteria.add(Restrictions.eq("orderState", "A"));
+	        if("CUSTOMER".equals(userRole)){
+	        	criteria.add(Restrictions.eq("customerId", userId));
+	        }else if ("marketStaff".equals(userRole)){
+	        	criteria.add(Restrictions.eq("employeeId", userId));
+	        }
 //	 		if (ordernumber != null)
 	 		if(!StringUtils.isEmpty(ordernumber))
-	 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
+	 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber)));
 //			if (customername != null)
-		 	if(!StringUtils.isEmpty(customername))
+		 	if(!"CUSTOMER".equals(userRole)&&!StringUtils.isEmpty(customername))
 				criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
 //		    if (stylename != null)
 			if(!StringUtils.isEmpty(stylename))
 
 				criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
 //			if (startdate != null&& enddate!=null)
-			if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
+			/*if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
 			{
 				String strformat = "yyyy-MM-dd HH:mm:ss";
 				String strformat2 = "yyyy-MM-dd";
@@ -662,34 +758,64 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		        System.out.println("bengin date is:"+begindate1+"end date is :"+enddate1);
 				}
 				criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
+			}*/
+			if(!(StringUtils.isEmpty(startdate))){
+				String strformat = "yyyy-MM-dd HH:mm:ss";
+				 DateUtil du = new DateUtil();
+			     Date begindate1 = null;
+			     if(startdate.length()==10){
+					startdate = startdate+" 00:00:00";
+			        begindate1 = du.parse(startdate, strformat);
+			        criteria.add(Restrictions.gt("orderTime",begindate1));
+			     }
 			}
-			if(employeeIds!=null&&employeeIds.length !=0)
-			{
-				criteria.add(Restrictions.in("employeeId",employeeIds));
+			if(!(StringUtils.isEmpty(enddate))){
+				String strformat = "yyyy-MM-dd HH:mm:ss";
+				 DateUtil du = new DateUtil();
+			     Date enddate1 = null;
+			     if(enddate.length()==10){
+			    	 enddate = enddate+" 23:59:59";
+					enddate1 = du.parse(enddate, strformat);
+			        criteria.add(Restrictions.lt("orderTime",enddate1));
+			     }
 			}
+			if(!"marketStaff".equals(userRole)){
+				if(employeeIds!=null&&employeeIds.length !=0)
+				{
+					criteria.add(Restrictions.in("employeeId",employeeIds));
+				}else{
+					criteria.add(Restrictions.eq("employeeId",-1));//若模糊查询得到的专员列表为空，则增加一个不可能的条件，使订单列表的查询结果为空
+				}
+			}
+			
 		    List<Order> orderList = criteria.list();		
 			return orderList;
 		}
 
 	public List<Order> getSearchOrderDoneList(String ordernumber,
 			String customername, String stylename, String startdate,
-			String enddate, Integer[] employeeIds) {
+			String enddate, Integer[] employeeIds,String userRole,Integer userId) {
 	      
 			Session session = getHibernateTemplate().getSessionFactory().openSession();
 	        Criteria criteria = session.createCriteria(Order.class);
 	        criteria.add(Restrictions.eq("orderState", "Done"));
+	        if("CUSTOMER".equals(userRole)){
+	        	criteria.add(Restrictions.eq("customerId", userId));
+	        }else if ("marketStaff".equals(userRole)){
+	        	criteria.add(Restrictions.eq("employeeId", userId));
+	        }
 //	 		if (ordernumber != null)
 	 		if(!StringUtils.isEmpty(ordernumber))
 	 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
 //			if (customername != null)
-		 	if(!StringUtils.isEmpty(customername))
+		 	if(!"CUSTOMER".equals(userRole) && !StringUtils.isEmpty(customername))
 				criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
 //		    if (stylename != null)
 			if(!StringUtils.isEmpty(stylename))
 
 				criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
 //			if (startdate != null&& enddate!=null)
-			if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
+			/*if (!StringUtils.isEmpty(startdate)&&!StringUtils.isEmpty(enddate))
 			{
 				String strformat = "yyyy-MM-dd HH:mm:ss";
 				String strformat2 = "yyyy-MM-dd";
@@ -704,11 +830,37 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		        System.out.println("bengin date is:"+begindate1+"end date is :"+enddate1);
 				}
 				criteria.add(Restrictions.between("orderTime",begindate1,enddate1));
+			}*/
+			if(!(StringUtils.isEmpty(startdate))){
+				String strformat = "yyyy-MM-dd HH:mm:ss";
+				 DateUtil du = new DateUtil();
+			     Date begindate1 = null;
+			     if(startdate.length()==10){
+					startdate = startdate+" 00:00:00";
+			        begindate1 = du.parse(startdate, strformat);
+			        criteria.add(Restrictions.gt("orderTime",begindate1));
+			     }
 			}
-			if(employeeIds!=null&&employeeIds.length !=0)
-			{
-				criteria.add(Restrictions.in("employeeId",employeeIds));
+			if(!(StringUtils.isEmpty(enddate))){
+				String strformat = "yyyy-MM-dd HH:mm:ss";
+				 DateUtil du = new DateUtil();
+			     Date enddate1 = null;
+			     if(enddate.length()==10){
+			    	 enddate = enddate+" 23:59:59";
+					enddate1 = du.parse(enddate, strformat);
+			        criteria.add(Restrictions.lt("orderTime",enddate1));
+			     }
 			}
+			if(!"marketStaff".equals(userRole)){
+				if(employeeIds!=null&&employeeIds.length !=0)
+				{
+					criteria.add(Restrictions.in("employeeId",employeeIds));
+				}else{
+					criteria.add(Restrictions.eq("employeeId",-1));//若模糊查询得到的专员列表为空，则增加一个不可能的条件，使订单列表的查询结果为空
+				}
+			}
+			
+			System.out.println(criteria.toString());
 		    List<Order> orderList = criteria.list();		
 			return orderList;
 		}

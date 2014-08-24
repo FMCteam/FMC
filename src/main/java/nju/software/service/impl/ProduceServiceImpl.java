@@ -123,7 +123,7 @@ public class ProduceServiceImpl implements ProduceService {
 
 		float producecost = cut_cost + manage_cost + swing_cost + ironing_cost
 				+ nali_cost + package_cost + other_cost
-				+ quote.getFabricCost() + quote.getAccessoryCost();
+				+ quote.getFabricCost() + quote.getAccessoryCost() + quote.getCraftCost();
 		quote.setSingleCost(producecost);
 		QuoteDAO.attachDirty(quote);
 
@@ -177,6 +177,27 @@ public class ProduceServiceImpl implements ProduceService {
 			return false;
 		}
 	}
+	
+	
+	@Override
+	public boolean produceSampleSubmit(long taskId, boolean result,String orderId) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(Integer.parseInt(orderId));
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PRODUCE, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			if(result==false){//如果result的的值为false，即为样衣生产失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	// =======================批量生产========================
 	@Override
@@ -219,6 +240,32 @@ public class ProduceServiceImpl implements ProduceService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	@Override
+	public boolean pruduceSubmit(long taskId, boolean result,
+			List<Produce> produceList,Integer orderId) {
+		Order order = orderDAO.findById(orderId);
+		if (result) {
+			for (int i = 0; i < produceList.size(); i++) {
+				produceDAO.save(produceList.get(i));
+			}
+		}
+		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			data.put(RESULT_PRODUCE, result);
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			if(result==false){//如果result的的值为false，即为大货生产失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	
 	}
 
 

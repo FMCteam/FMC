@@ -54,13 +54,21 @@
 			return false;
 		}
 	}
+	
+	function checkInfo(){
+		if($("#txtScan").val() == ""||$("#txtWare").val() == ""||$("#txtShelf").val() == ""||$("#txtLocation").val() == ""){
+			alert("请填写完整信息后再提交！");
+			return false;
+		}
+	}
+	
 </script>
 </head>
 <body>
 	<%@include file="/views/logistics/mobile/nav.jsp"%>
 	<h4>入库-订单号:${orderInfo.orderId}</h4>
 	<div>
-		<form method="post" id="updateForm"
+		<form method="post" id="updateForm"  onsubmit="return checkInfo();"
 			action="${ctx}/logistics/mobile/updatePackage.do">
 			<input type="hidden" value="${orderInfo.order.orderId }"
 				name="orderId" />
@@ -114,14 +122,14 @@
 	<div>
 		<form action="${ctx}/logistics/mobile/warehouseSubmit.do" onsubmit="return check();"
 			method="post">
-			<input type="hidden" value="${orderInfo.task.id}" name="taskId" /> <input
-				type="hidden" value="${orderInfo.order.orderId }" name="orderId" />
+			<input type="hidden" value="${orderInfo.task.id}" name="taskId" />
+			<input type="hidden" value="${orderInfo.order.orderId }" name="orderId" />
+			
 			<input class="span12 btn btn-primary" type="submit" value="完成入库"
 				name="submit" />
 		</form>
 	</div>
 </body>
-
 <script type="text/javascript" src="${ctx}/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${ctx}/css/bootstrap.min.css">
 <link rel="stylesheet" href="${ctx}/views/logistics/mobile/detail.css">

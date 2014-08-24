@@ -3,7 +3,7 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form method="post" onsubmit="return verify();"
+		<form method="post" onsubmit="return verify()"
 			action="${ctx }/market/addMoreOrderSubmit.do"
 			enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
@@ -32,8 +32,8 @@
 							</tr>
 							<tr>
 								<td>待生成</td>
-								<td colspan="2"><input class="span8" type="date"
-									required="required" /></td>
+								<td colspan="2"><input class="span8" type="text"
+									required="required" id="input_day"  readonly="readonly"/></td>
 								<td>${employee_name}</td>
 								<td><input type="text" class="span12" name="order_source"
 									value="${orderModel.order.orderSource }" required="required" />
@@ -157,7 +157,7 @@
 									name="fabric_name" /> <input id="fabric_amount" type="hidden"
 									name="fabric_amount" /></td>
 								<td class="innertable span12"><table
-										class="span12 table accessory_table">
+										class="span12 table fabric_table">
 										<tr>
 											<td class="span5 title">面料名称</td>
 											<td class="span5 title">面料克重</td>
@@ -216,9 +216,14 @@
 								<td class="title" colspan="2">快递单号</td>
 							</tr>
 							<tr>
-								<td><input type="radio" name="has_posted_sample_clothes"
-									value="1" /> 是 <input type="radio" checked="checked"
-									name="has_posted_sample_clothes" value="0" /> 否</td>
+								<td>
+									<div style="display: none;">
+										<input type="radio" name="has_posted_sample_clothes"
+										value="1" /> 是 <input type="radio" checked="checked"
+										name="has_posted_sample_clothes" value="0" /> 否
+									</div>
+									否
+								</td>
 								<td colspan="2"><input class="span6" type="date"
 									name="in_post_sample_clothes_time"
 									value="${fn:substring(orderModel.logistics.inPostSampleClothesTime,0,10) }" /></td>
@@ -293,9 +298,14 @@
 								<td class="title" colspan="3">邮寄地址</td>
 							</tr>
 							<tr>
-								<td><input type="radio" name="is_need_sample_clothes"
-									value="1" /> 是 <input type="radio" checked="checked"
-									name="is_need_sample_clothes" value="0" /> 否</td>
+								<td>
+									<div style="display: none;">
+										<input type="radio" name="is_need_sample_clothes"
+										value="1" /> 是 <input type="radio" checked="checked"
+										name="is_need_sample_clothes" value="0" />
+									</div>
+								 	否
+								 </td>
 								<td><input class="span12" type="text"
 									name="sample_clothes_name"
 									value="${orderModel.logistics.sampleClothesName }" /></td>
@@ -340,7 +350,7 @@
 							</tr>
 							<tr>
 								<td class="span2" colspan="2"><input class="span6"
-									type="number" name="ask_amount" required="required" /></td>
+									type="number" name="ask_amount" required="required" readonly="readonly"/></td>
 								<td class="span2" colspan="2"><input class="span8"
 									type="date" name="ask_deliver_date" required="required"/></td>
 								<td class="span2" colspan="2"><input class="span4"
@@ -350,7 +360,7 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="title">大货加工具体要求 <input id="produce_color" type="hidden"
+								<td class="span2 title">大货加工具体要求 <input id="produce_color" type="hidden"
 									name="produce_color" /> <input id="produce_xs" type="hidden"
 									name="produce_xs" /> <input id="produce_s" type="hidden"
 									name="produce_s" /> <input id="produce_m" type="hidden"
@@ -372,12 +382,12 @@
 										</tr>
 										<tr class="addrow">
 											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
 											<td><a>添加</a></td>
 										</tr>
 									</table>
@@ -537,8 +547,8 @@
 								<tr>
 									<td>${fabric.fabricName}</td>
 									<td>${fabric.tearPerMeter}</td>
-									<td>${fabric.price}</td>
 									<td>${fabric.costPerMeter}</td>
+									<td>${fabric.price}</td>
 								</tr>
 							</c:forEach>
 							<tr>
@@ -552,8 +562,8 @@
 								<tr>
 									<td>${accessory.accessoryName}</td>
 									<td>${accessory.tearPerPiece}</td>
-									<td>${accessory.price}</td>
 									<td>${accessory.costPerPiece}</td>
+									<td>${accessory.price}</td>
 								</tr>
 							</c:forEach>
 							<tr>
@@ -563,6 +573,29 @@
 								<td class="title">辅料总计</td>
 								<td>${orderModel.quote.accessoryCost}</td>
 							</tr>
+							
+							<c:if test="${orderModel.craft.needCraft == 1}">
+								<tr>
+									<td class="title" rowspan="3">工艺报价</td>
+									<td class="title">印花费（单件）</td>
+									<td class="title">水洗吊染费（单件）</td>
+									<td class="title">激光费（单件）</td>
+									<td class="title">刺绣费（单件）</td>
+								</tr>
+								<tr>
+									<td>${orderModel.craft.stampDutyMoney}</td>
+									<td>${orderModel.craft.washHangDyeMoney}</td>
+									<td>${orderModel.craft.laserMoney}</td>
+									<td>${orderModel.craft.embroideryMoney}</td>
+								</tr>
+								<tr>
+									<td class="title">压皱费（单件）</td>
+									<td>${orderModel.craft.crumpleMoney}</td>
+									<td class="title">开版费（整体）</td>
+									<td>${orderModel.craft.openVersionMoney}</td>
+								</tr>
+							</c:if>
+							
 							<tr>
 								<td class="title" rowspan="4">其他成本</td>
 								<td class="title">裁剪费用</td>
@@ -589,8 +622,9 @@
 								<td>${orderModel.quote.otherCost}</td>
 								<td>${orderModel.quote.designCost}</td>
 							</tr>
+							
 							<tr>
-								<td class="title" ="2">费用核算</td>
+								<td class="title" rowspan="2">费用核算</td>
 								<td class="title">成本总计</td>
 								<td class="title">生产报价</td>
 								<td class="title">单件利润</td>

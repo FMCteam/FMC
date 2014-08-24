@@ -63,12 +63,33 @@
 		</tr>
 	</c:forEach>
 
-</table>
 
 	<tr>
 	<td>加工方：</td>
-	<td colspan="7"><input class="span12 " type="text"
+	<td colspan="8"><input class="span12 " type="text"
 	    value="${orderInfo.order.payAccountInfo}" readonly="readonly"/></td>
 	</tr>	
 </table>
- 
+ <table class="table table-striped table-bordered table-hover detail">
+							<c:if test="${empty orderInfo.repairRecord}">
+								<tr>
+									<td class="title" style="width:22%;background: red;">实际生产数</td>
+									<td>暂无</td>
+								</tr>
+							</c:if>
+							<c:if test="${!empty orderInfo.repairRecord}">
+								<tr>
+									<td class="title" rowspan="${fn:length(orderInfo.repairRecord)+1}" style="width:22%;background: #ff0000;">实际生产数</td>
+									<td class="title">日期</td>
+									<td class="title">加工方</td>
+									<td class="title">合格实收数量</td>
+								</tr>
+								<c:forEach var="repairRecord" items="${orderInfo.repairRecord}">
+									<tr>
+										<td>${repairRecord.repairTime}</td>
+										<td>${repairRecord.repairSide}</td>
+										<td>${repairRecord.qualifiedAmount}</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+						</table>

@@ -47,10 +47,10 @@
 								<td class="title">邮寄时间<span style="color: red">*</span></td>
 								<td class="title">快递名称<span style="color: red">*</span></td>
 								<td class="title">快递单号<span style="color: red">*</span></td>
-								<td class="title">快递价格<span style="color: red">*</span></td>
+								<td class="title">实际快递价格<span style="color: red">*</span></td>
 							</tr>
 							<tr>
-								<td><input type="date" name="time" required="required" /></td>
+								<td><input type="text" name="time" required="required" id="input_day" readonly="readonly"/></td>
 								<td><select name="name" style="margin: 0px">
 										<option value="顺丰">顺丰</option>
 										<option value="韵达">韵达</option>
@@ -61,7 +61,7 @@
 										<option value="EMS">EMS</option>
 								</select></td>
 								<td><input type="text" name="number" required="required" /></td>
-								<td><input type="text" name="price" required="required" /></td>
+								<td><input type="text" name="price" required="required"  /></td>
 							</tr>
 							<tr>
 								<td class="title">其他备注</td>
@@ -69,10 +69,46 @@
 									name="remark" /></td>
 							</tr>
 						</table>
+						
+						<table class="table table-striped table-bordered table-hover detail">
+							<c:if test="${empty orderInfo.sendProductRecord}">
+								<tr>
+									<td class="title" style="width:22%;">大货发货记录</td>
+									<td>无</td>
+								</tr>
+							</c:if>
+							<c:if test="${!empty orderInfo.sendProductRecord}">
+								<tr>
+									<td class="title" rowspan="${fn:length(orderInfo.sendProductRecord) + 1}">大货发货记录</td>
+									<td class="title">发货时间</td>
+									<td class="title">快递名称</td>
+									<td class="title">快递单号</td>
+									<td class="title">快递价格</td>
+									<td class="title">备注</td>
+								</tr>
+								<c:forEach var="sendProductRecord" items="${orderInfo.sendProductRecord}">
+									<tr>
+										<td>${sendProductRecord.sendTime}</td>
+										<td>${sendProductRecord.expressName}</td>
+										<td>${sendProductRecord.expressNumber}</td>
+										<td>${sendProductRecord.expressPrice}</td>
+										<td>${sendProductRecord.remark}</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+						</table>
+						<!-- 
 						<div class="action">
-						    <input id="save_product_send" class="btn btn-primary" type="submit" value="产品批量发货" style="background-color:#1E90FF">
-							<input id="finish_product_send" class="btn btn-primary" type="submit" value="完成发货" />
-							 <input type="hidden" id="is_final" name="isFinal" value="false">
+							<input class="btn btn-primary" type="submit" value="完成发货" />
+						</div>
+						-->
+						<button class="btn btn-primary" onclick="history.back();">返回</button>
+						<div class="action" style="float:right">
+							<!-- <input id="save_this_send" class="btn btn-primary" type="submit" value="保存此次发货" style="background-color:#1E90FF" /> -->
+							<input id="complete_final_send" class="btn btn-primary" type="submit" value="完成最终发货" />
+							
+							<!-- 隐藏标签，判断是否是最终的发货 -->
+							<input id="is_final" type="hidden" name="isFinal" value="false" />
 						</div>
 					</form>
 				</div>
@@ -96,11 +132,8 @@
 		</div>
 	</div>
 
-
 </div>
 </div>
-
-
 
 
 <%@include file="/common/js_file.jsp"%>
@@ -110,16 +143,16 @@
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<script type="text/javascript">
+<script>
 jQuery(document).ready(function(){
 	//保存此次发货
-	jQuery("#save_product_send").click(function(){
+	jQuery("#save_this_send").click(function(){
 		jQuery("#is_final").val("false");
 		//alert("保存此次发货");
 		//jQuery("#send_sample_form").submit();
 	});
 	//完成最终发货
-	jQuery("#finish_product_send").click(function(){
+	jQuery("#complete_final_send").click(function(){
 		jQuery("#is_final").val("true");
 		//jQuery("#send_sample_form").submit();
 		//alert("完成最终发货");
