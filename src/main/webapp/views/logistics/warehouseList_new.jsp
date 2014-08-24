@@ -36,11 +36,11 @@
 										<table>
 											<tbody>
 												<tr>
-													<td>订单号：</td>
-													<td>${model.orderId}</td>
+												<td colspan="2" style="color: #CD0000;font-weight: bold; height: 42px;">${model.order.styleName}</td>
 												</tr>
 												<tr>
-												<td colspan="2" style="color: #CD0000;font-weight: bold;">${model.order.styleName}</td>
+													<td>订单号：</td>
+													<td>${model.orderId}</td>
 												</tr>
 												<tr>
 													<td>市场专员：</td>
@@ -180,11 +180,11 @@
 										<table>
 											<tbody>
 												<tr>
-													<td>订单号：</td>
-													<td>${model.orderId}</td>
+												<td colspan="2" style="color: #CD0000;font-weight: bold; height: 42px;">${model.order.styleName}</td>
 												</tr>
 												<tr>
-												<td colspan="2" style="color: #CD0000;font-weight: bold;">${model.order.styleName}</td>
+													<td>订单号：</td>
+													<td>${model.orderId}</td>
 												</tr>
 												<tr>
 													<td>市场专员：</td>

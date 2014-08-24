@@ -31,11 +31,11 @@
 										<table>
 											<tbody>
 												<tr>
-													<td>询单编号：</td>
-													<td>${task.orderId}</td>
+												<td colspan="2" style="color: #CD0000;font-weight: bold; height: 42px;">${model.order.styleName}</td>
 												</tr>
 												<tr>
-												<td colspan="2" style="color: #CD0000;font-weight: bold;">${model.order.styleName}</td>
+													<td>询单编号：</td>
+													<td>${task.orderId}</td>
 												</tr>
 												<tr>
 													<td>客户姓名：</td>
