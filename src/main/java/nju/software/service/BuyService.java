@@ -38,15 +38,19 @@ public interface BuyService {
 
 	public Map<String,Object> getPurchaseSampleMaterialDetail(Integer orderId);
 
-	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result, boolean needcraft,String orderId);
 	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result );
-
+	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result,
+			boolean needcraft,String orderId,String samplepurName,Timestamp samplepurDate,String samplesupplierName);
+	
 	//===========================采购确认=================================
 	public List<Map<String,Object>> getConfirmPurchaseList();
 
 	public Map<String, Object> getConfirmPurchaseDetail(Integer orderId);
 
 	public boolean confirmPurchaseSubmit(long taskId, boolean result);
+
+	public boolean confirmPurchaseSubmit(long taskId, boolean result,String orderId);
+	
 	
 	//===========================大货原料采购=================================
 	public List<Map<String,Object>> getPurchaseMaterialList();
@@ -54,6 +58,7 @@ public interface BuyService {
 	public Map<String, Object> getPurchaseMaterialDetail(Integer orderId);
 
 	public boolean purchaseMaterialSubmit(long taskId, boolean result);
+	public boolean purchaseMaterialSubmit(long taskId, boolean result,String orderId,String masspurName,Timestamp masspurDate,String masssupplierName);
 
 	public List<Map<String, Object>> getSearchVerifyPurchaseList(
 			String ordernumber, String customername, String stylename,
@@ -76,8 +81,5 @@ public interface BuyService {
 			String startdate, String enddate, Integer[] employeeIds);
 
 	Map<String, Object> getPrintProcurementOrderDetail(Integer orderId,List<Produce> productList);
-
-	boolean purchaseMaterialSubmit(long taskId, boolean result, String orderId,
-			String masspurName, Timestamp masspurDate, String masssupplierName);
 
 }

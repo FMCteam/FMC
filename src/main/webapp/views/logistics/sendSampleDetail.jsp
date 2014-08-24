@@ -47,24 +47,24 @@
 							</tr>
 							<tr>
 								<td class="title" rowspan="5">生产样衣</td>
-								<td class="title" rowspan="2">制作样衣</td>
+								<td class="title" rowspan="1">制作样衣</td>
 								<td class="title">收件人</td>
 								<td class="title">手机</td>
 								<td class="title" colspan="3">收件地址</td>
 							</tr>
 							<tr>
+								<td rowspan="1">${orderInfo.order.isNeedSampleClothes==0?'否':'是' }</td>
 								<td>${orderInfo.logistics.sampleClothesName}&nbsp</td>
 								<td>${orderInfo.logistics.sampleClothesPhone}&nbsp</td>
 								<td colspan="3">${orderInfo.logistics.sampleClothesAddress}&nbsp</td>
 							</tr>
 							<tr>
-								<td rowspan="2">${orderInfo.order.isNeedSampleClothes==0?'否':'是' }</td>
-								<td class="title">邮寄时间<span style="color: red">*</span></td>
 								<td class="title">快递名称<span style="color: red">*</span></td>
-								<td class="title" colspan="3">快递单号<span style="color: red">*</span></td>
+								<td class="title">快递单号<span style="color: red">*</span></td>
+								<td class="title">快递价格（元）<span style="color: red">*</span></td>
+								<td class="title">邮寄时间<span style="color: red">*</span></td>
 							</tr>
 							<tr>
-								<td><input type="date" name="time" required="required"/></td>
 								<td><select name="name" style="margin: 0px">
 										<option value="顺丰">顺丰</option>
 										<option value="韵达">韵达</option>
@@ -74,8 +74,10 @@
 										<option value="汇通">汇通</option>
 										<option value="EMS">EMS</option>
 								</select></td>
-								<td colspan="3"><input class="span12" type="text"
+								<td><input type="text"
 									name="number" required="required" /></td>
+								<td><input type="text" name="price" required="required"/></td>
+								<td><input type="text" name="time" required="required" id="input_day"  readonly="readonly"/></td>
 							</tr>
 							<tr>
 								<td class="title">其他备注</td>
@@ -99,10 +101,42 @@
 									</c:if></td>
 							</tr>
 						</table>
+						
+						<table class="table table-striped table-bordered table-hover detail">
+							<c:if test="${empty orderInfo.deliveryRecord}">
+								<tr>
+									<td class="title" style="width:22%;background: red;">样衣发货记录</td>
+									<td>无</td>
+								</tr>
+							</c:if>
+							<c:if test="${!empty orderInfo.deliveryRecord}">
+								<tr>
+									<td class="title" rowspan="${fn:length(orderInfo.deliveryRecord) + 1}" style="width:18%;background: red;">发货记录</td>
+									<td class="title">快递名称</td>
+									<td class="title">快递单号</td>
+									<td class="title">快递价格</td>
+									<td class="title">发货时间</td>
+								</tr>
+								<c:forEach var="deliveryRecord" items="${orderInfo.deliveryRecord}">
+									<tr>
+										<td>${deliveryRecord.expressName}</td>
+										<td>${deliveryRecord.expressNumber}</td>
+										<td>${deliveryRecord.expressPrice}</td>
+										<td>${deliveryRecord.sendTime}</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+						</table>
 						<button class="btn btn-primary" onclick="history.back();">返回</button>
 						<div class="action" style="float:right">
 							<input id="save_this_send" class="btn btn-primary" type="submit" value="保存此次发货" style="background-color:#1E90FF" />
+							<!-- 
 							<input id="complete_final_send" class="btn btn-primary" type="submit" value="完成最终发货" />
+							-->
+							
+							<a href="${ctx}/logistics/sendSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&isFinal=true"
+							   onclick="return confirmSendSampleSubmit();"
+							   class="btn btn-primary">完成最终发货</a>
 							
 							<!-- 隐藏标签，判断是否是最终的发货 -->
 							<input id="is_final" type="hidden" name="isFinal" value="false" />

@@ -52,12 +52,12 @@
 								<td class="span2 title" rowspan="6">费用信息</td>
 								<td class="title">金额类型</td>
 								<td class="title">优惠金额</td>
-								<td class="title">应收金额</td>
+								<td class="title" style="color: red;">应收金额</td>
 							</tr>
 							<tr>
 								<td>${orderInfo.moneyName}</td>
 								<td>${orderInfo.order.discount}</td>
-								<td><span id="allMoneyOfProducts">${(orderInfo.number)*orderInfo.price}</span>（大货总价）-${orderInfo.order.discount}（优惠金额）-${orderInfo.deposit}（定金）=<span id="FinalMoneyShouldPay">${(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
+								<td>${orderInfo.quote.designCost }(大货物流费)+<span id="sampleLogostics">0</span>(样衣物流费)+<span id="allMoneyOfProducts">${(orderInfo.number)*orderInfo.price}</span>(大货总价)-${orderInfo.order.discount}(优惠金额)-${orderInfo.deposit}(定金)=<span id="FinalMoneyShouldPay">${orderInfo.quote.designCost+(orderInfo.number)*orderInfo.price-orderInfo.order.discount-orderInfo.deposit}</span></td>
 							</tr>
 							<tr>
 								<td class="title">实际大货件数</td>
@@ -80,7 +80,7 @@
 								<td><span id="allMoneyOfSamples">${orderInfo.order.sampleAmount*orderInfo.samplePrice}</span></td>
 							</tr>
 						    <tr>
-						        <td>选择尾金截图文件</td>
+						        <td class="title" style="color:red; ">选择尾金截图文件</td>
 						        <td colspan="3">
 							       <a style="color: red;">*</a>
 			                       <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
@@ -109,19 +109,34 @@
 	                        </tr>
 					 -->
 						</table>
-						<a
-								class="btn btn-danger btn-rounded"
-								href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
-								onclick="return confirmFinanceSubmit()"
-								style="color: white; margin-left: 20px"><i
-								class="icon-remove icon-white"></i>催尾款失败</a>
-						<div class="action">
+						<table class="table table-striped table-bordered table-hover detail" >
+							<c:if test="${!empty orderInfo.deliveryRecord}">
+								<tr>
+									<td class="title" rowspan="${fn:length(orderInfo.deliveryRecord) + 1}" style="width:18%;background: red;">样衣发货记录</td>
+									<td class="title">快递名称</td>
+									<td class="title">快递单号</td>
+									<td class="title">快递价格</td>
+									<td class="title">发货时间</td>
+								</tr>
+								<c:forEach var="deliveryRecord" items="${orderInfo.deliveryRecord}">
+									<tr>
+										<td>${deliveryRecord.expressName}</td>
+										<td>${deliveryRecord.expressNumber}</td>
+										<td name="expressPrice">${deliveryRecord.expressPrice}</td>
+										<td>${deliveryRecord.sendTime}</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+						</table>
+						<a href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0" 
+						   class="btn btn-danger btn-rounded"
+						   onclick="return confirmFinanceSubmit()"
+						   style="color: white">
+						   <i class="icon-remove icon-white"></i>催尾款失败</a>
+						<div class="action" style="float:right">
 							<input type="submit" id="financeSubmit" hidden="hidden" /> 
-							<a  
-								id="financeButton" class="btn btn-primary btn-rounded"><i
-								class="icon-ok icon-white"></i>已确认收款</a> 
-								
-								
+							<a  id="financeButton" class="btn btn-primary btn-rounded">
+								<i class="icon-ok icon-white"></i>已确认收款</a> 
 						</div>
 						<!-- 
 						 -->
@@ -160,8 +175,7 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
- var text=$("#FinalMoneyShouldPay").text();
-	$("#FinalMoneyShouldPay").text(parseFloat(text).toFixed(2));
+ 
  var text=$("#allMoneyOfProducts").text();
 	$("#allMoneyOfProducts").text(parseFloat(text).toFixed(2));
  var text=$("#allMoneyOfAllProducts").text();
@@ -169,11 +183,19 @@ $(document).ready(function() {
 	
  var text=$("#allMoneyOfSamples").text();
 	$("#allMoneyOfSamples").text(parseFloat(text).toFixed(2));	 
+
+	var text = 0;
+	$("td[name='expressPrice']").each(function(index,value){
+		text += parseFloat(value.innerHTML);
+	})
+	$("#sampleLogostics").text(text.toFixed(2));
+	var text2=parseFloat($("#FinalMoneyShouldPay").text())+text;
+	$("#FinalMoneyShouldPay").text(parseFloat(text2).toFixed(2));
 });
 function getPushRestOrderDetailSubmit(fileValue) {
      if(fileValue!=""){
-	 confirmFinanceSubmit();
-     return true;     
+    	 
+     return	 confirmFinanceSubmit();   
      }else{
      alert("请选择文件");     
 	 return false;

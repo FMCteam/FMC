@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 	public void addOrder(Order order) {
 		orderDAO.save(order);
 	}
-
+  
 	public List<Order> findAll() {
 		List<Order> order = this.orderDAO.findAll();
 		return order;
@@ -426,23 +426,27 @@ public class OrderServiceImpl implements OrderService {
 	private FinanceService financeService;		
 
 	public List<Map<String, Object>> getOrdersEnd(String userRole, Integer userId) {
-		Order orderExample = new Order();
+		/*Order orderExample = new Order();
 		orderExample.setOrderState("1"); //被终止的订单
-		
 		if("CUSTOMER".equals(userRole)){
 			orderExample.setCustomerId(userId);
 		}else if ("marketStaff".equals(userRole)){
 			orderExample.setEmployeeId(userId);
 		}
 		
-		List<Order> orders = orderDAO.findByExample(orderExample);
+		List<Order> orders = orderDAO.findByExample(orderExample);*/
+		List<Order> orders = orderDAO.getSearchOrderList( null,
+				 null,null,null,null,null,userRole,userId);
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
-			Map<String, Object> model = new HashMap<String, Object>();
-			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
-			model.put("orderId", service.getOrderId(order));
-			list.add(model);
+			if(order.getOrderState().equals("1")){
+				Map<String, Object> model = new HashMap<String, Object>();
+				model.put("order", order);
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+				model.put("orderId", service.getOrderId(order));
+				list.add(model);
+			}
+			
 		}
 		return list;
 	}		
@@ -485,7 +489,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	public List<Map<String, Object>> getSearchOrderList(String ordernumber,
 			String customername, String stylename, String startdate,String enddate,
-			Integer[] employeeIds) {
+			Integer[] employeeIds,String userRole,Integer userId) {
 		
 //        Order o = new Order();
 //		o.setOrderState("A");//只能修改正在进行的订单
@@ -502,7 +506,7 @@ public class OrderServiceImpl implements OrderService {
 //				System.out.println("hahahahahaha");
 //			}
 //		}
-		List<Order> searchResults = orderDAO.getSearchOrderDoingList(ordernumber, customername, stylename, startdate, enddate, employeeIds);
+		List<Order> searchResults = orderDAO.getSearchOrderDoingList(ordernumber, customername, stylename, startdate, enddate, employeeIds,userRole,userId);
 
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : searchResults) {
@@ -580,6 +584,9 @@ public class OrderServiceImpl implements OrderService {
 		Map<String, Object> model = new HashMap<String, Object>();
 		//TaskSummary task = jbpmAPIUtil.getTask(actorId, taskName, orderId);
 		Order order = orderDAO.findById(orderId);
+		if(order.getConfirmDepositFile() != null){
+			return null;
+		}
 		//model.put("task", task);
 		//model.put("taskId", task.getId());
 		model.put("order", order);

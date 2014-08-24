@@ -11,8 +11,11 @@
 		 	include file="/views/search/marketMergeQuoteListSearch.jsp"
 		  -->
 
-			<%@include file="/views/common/list.jsp"%>
+			<%@include file="/views/common/list_new.jsp"%>
 		</div>
+		
+		<div class="holder"></div>
+		
 		<!--row-fluid-->
 
 		<div class="footer">
