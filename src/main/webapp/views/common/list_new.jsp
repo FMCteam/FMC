@@ -43,7 +43,7 @@
 							<table>
 								<tbody>
 									<tr>
-										<td colspan="2" style="color: #CD0000;font-weight: bold; height: 42px;">${model.order.styleName}</td>
+										<td colspan="2" style="color: #CD0000;font-weight: bold; height: 42px; vertical-align:middle;">${model.order.styleName}</td>
 									</tr>
 									<tr>
 										<td>订单号：</td>
