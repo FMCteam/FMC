@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
@@ -23,6 +24,8 @@ import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.Craft;
+import nju.software.dataobject.Customer;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Order;
@@ -192,7 +195,7 @@ public class BuyServiceImpl implements BuyService {
 					+ quote.getDesignCost() + quote.getIroningCost()
 					+ quote.getNailCost() + quote.getPackageCost()
 					+ quote.getSwingCost() + quote.getOtherCost()
-					+ all_accessory_prices + all_fabric_prices;
+					+ all_accessory_prices + all_fabric_prices + quote.getCraftCost();
 
 			quote.setSingleCost(singleCost);
 			quoteDAO.attachDirty(quote);
@@ -240,6 +243,7 @@ public class BuyServiceImpl implements BuyService {
 		data.put(RESULT_PURCHASE, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -250,8 +254,19 @@ public class BuyServiceImpl implements BuyService {
 	
 	@Override
 	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result,
-			boolean needcraft,String orderId) {
+			boolean needcraft,String orderId,String samplepurName,Timestamp samplepurDate,String samplesupplierName) {
+		List<Craft>craftList =craftDAO.findByOrderId(Integer.parseInt(orderId));
+		Craft craft =craftList.get(0);
+		if("0".equals(craft.getNeedCraft().toString())||craft.getNeedCraft()==0){
+			craft.setOrderSampleStatus("3");
+		}else{
+			craft.setOrderSampleStatus("2");
+		}
+		craftDAO.attachDirty(craft);
 		Order order = orderDAO.findById(Integer.parseInt(orderId));
+		order.setSamplepurName(samplepurName);
+		order.setSamplepurDate(samplepurDate);
+		order.setSamplesupplierName(samplesupplierName);
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PURCHASE, result);
 		data.put(RESULT_NEED_CRAFT, needcraft);
@@ -259,8 +274,9 @@ public class BuyServiceImpl implements BuyService {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			if(result==false){//如果result的的值为false，即为样衣面料采购失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
-				orderDAO.attachDirty(order);
+				
 			}
+			orderDAO.attachDirty(order);
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -300,6 +316,26 @@ public class BuyServiceImpl implements BuyService {
 		data.put(RESULT_PURCHASE, result);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean confirmPurchaseSubmit(long taskId, boolean result,String orderId) {
+		// TODO Auto-generated method stub
+		Order order = orderDAO.findById(Integer.parseInt(orderId));
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put(RESULT_PURCHASE, result);
+		try {
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			if(result==false){//如果result的的值为false，即为大货面料采购失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -416,9 +452,13 @@ public class BuyServiceImpl implements BuyService {
 	@Autowired
 	private ProduceDAO ProduceDAO;
 	@Autowired
+	private CraftDAO craftDAO;
+	@Autowired
 	private CustomerDAO customerDAO;
 	@Autowired
 	private EmployeeDAO employeeDAO;
+	
+
 	public final static String ACTOR_PURCHASE_MANAGER = "purchaseManager";
 	public final static String TASK_VERIFY_PURCHASE = "verifyPurchase";
 	public final static String TASK_COMPUTE_PURCHASE_COST = "computePurchaseCost";

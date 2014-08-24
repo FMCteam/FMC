@@ -3,7 +3,10 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<div class="row-fluid" style="min-height:300px;">
+		<form onsubmit="return confirm('确认操作？')" method="post"
+			action="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
+			enctype="multipart/form-data">
+			<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">样衣原料采购</li>
@@ -14,7 +17,7 @@
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
-
+			<div style="color: red;font-size: 23px;text-align: center;">请及时打印出样衣单，以便制版人员打样制版</div>
 			<div class="tab-content">
 				<div class="tab-pane" id="basic">
 					<%@include file="/views/common/basic.jsp"%>
@@ -90,16 +93,30 @@
 								 -->
 							</tr>
 						</c:forEach>
+						<tr>
+							<td rowspan="2">采购相关</td>
+							<td colspan="2">样衣原料采购负责人<span class="required">*</span></td>
+							<td colspan="2">样衣采购时间<span class="required">*</span></td>
+							<td colspan="2">供应商名字</td>
+						</tr>
+						<tr>
+							<td colspan="2"><input class="span12" type="text"  required="required" name="samplepurName"  value="${USER_nick_name }"/></td>
+							<td colspan="2"><input class="span12" type="text"  required="required"  id="input_day" name="samplepurDate" readonly="readonly"/></td>
+							<td colspan="2"><input class="span12" type="text"  name="samplesupplierName"/></td>
+						</tr>
 					</table>
 				    
-				    <a href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=0&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
-							class="btn btn-danger btn-rounded" onclick="return confirm('确认采购失败？')">
-							<i class="icon-remove icon-white"></i>采购失败</a>
+				    <input type="hidden" id="result" name="result"/>
+				    
+				    <button
+							style="margin-left:0px"
+							class="btn btn-danger btn-rounded" onclick="return fail()">
+							<i class="icon-remove icon-white"></i>采购失败</button>
+					
 					<div class="action" style="float:right">
-						<a href="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&result=1&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
-							class="btn btn-primary btn-rounded" onclick="return confirm('确认采购完成？')">
-							<i class="icon-ok icon-white"></i>采购完成</a>
-						
+						<button class="btn btn-primary btn-rounded noreapt" onclick="return success()">
+							<i class="icon-ok icon-white"></i>采购完成
+						</button>
 					</div>
 					<br />
 <!-- 					<a -->
@@ -109,6 +126,8 @@
 				</div>
 			</div>
 		</div>
+		</form>
+		
 	</div>
 
 	<div class="footer">
@@ -119,7 +138,6 @@
 
 </div>
 </div>
-<<<<<<< HEAD
 <script type="text/javascript" >
 	function fail(){
 		$("#result").val(0);
@@ -130,13 +148,11 @@
 		return confirm("确认已核对样衣单？");
 	}
 </script>
-=======
-
->>>>>>> 0c32784dbb0d3838bff22864b0320b351ad5459d
 
 <%@include file="/common/js_file.jsp"%>
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
+<link rel="stylesheet" href="${ctx}/css/order/add_order.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <link rel="stylesheet" href="${ctx}/views/buy/buy.css">

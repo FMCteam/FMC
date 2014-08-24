@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@include file="/common/header.jsp"%>
 
+
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
@@ -34,7 +35,7 @@
 				<div class="tab-pane active" id="quote">
 					<%@include file="/views/common/quote.jsp"%>
 					<form id="confirm_quote_form" name="confirm_quote_form" action="${ctx}/market/confirmQuoteSubmit.do" method="post"
-					onsubmit="return confirmQuoteDetailSubmit(confirm_quote_form.confirmSampleMoneyFile.value,confirm_quote_form.result.value);"
+					onsubmit="return confirmQuoteDetailSubmit(confirm_quote_form.result.value);"
 						enctype="multipart/form-data" >
 						<c:if test="${orderInfo.order.isNeedSampleClothes ==1 }">
 							<table class="table table-striped table-bordered table-hover detail">
@@ -113,10 +114,31 @@
 jQuery(document).ready(function(){
 	//确认报价
 	jQuery("#confirm_price").click(function(){
-		if(confirm('确认报价？')){
-			jQuery("#result").val("0");
-			jQuery("#confirm_quote_form").submit();
+		
+		var isNeedSampleClothes = $("#isNeedSampleClothes").val();
+		if(isNeedSampleClothes == "1"){
+			var confirmSampleMoneyFile = document.getElementById("confirmSampleMoneyFile").value;
+			var confirmSampleMoneyFilestr = confirmSampleMoneyFile.substr(confirmSampleMoneyFile.indexOf(".")).toLowerCase();		
+			if(confirmSampleMoneyFile.length != 0){
+				if(confirmSampleMoneyFilestr == ".jpg" || confirmSampleMoneyFilestr == ".png"){	
+					if(confirm('确认报价？')){
+						jQuery("#result").val("0");
+						jQuery("#confirm_quote_form").submit();
+					}
+				}else{
+					alert("样衣金截图格式不对，请上传jpg或png格式的图片！");
+				}
+			}else{
+				alert("请选择定金图片");
+			}
+		}else{
+			if(confirm('确认报价？')){
+				jQuery("#result").val("0");
+				jQuery("#confirm_quote_form").submit();
+			}
 		}
+		
+
 	});
 	//修改报价
 	jQuery("#modify_price").click(function(){
@@ -136,13 +158,8 @@ jQuery(document).ready(function(){
 });
 </script>
 <script type="text/javascript">
-function confirmQuoteDetailSubmit(fileValue,operation_result) {
-if(operation_result==0){
-     if(fileValue==""){
-	     alert("请选择定金图片");
-	     return false;
-     }
-}
+function confirmQuoteDetailSubmit(operation_result) {
+	return true;
 }
 </script>
 <%@include file="/common/footer.jsp"%>

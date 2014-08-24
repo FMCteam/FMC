@@ -8,28 +8,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jbpm.task.query.TaskSummary;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import nju.software.dao.impl.AccessoryDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.DeliveryRecordDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
+import nju.software.dao.impl.MoneyDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.PackageDAO;
+import nju.software.dao.impl.PackageDetailDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
-import nju.software.dao.impl.PackageDetailDAO;
 import nju.software.dao.impl.VersionDataDAO;
-import nju.software.dataobject.*;
+import nju.software.dataobject.DeliveryRecord;
+import nju.software.dataobject.Logistics;
+import nju.software.dataobject.Money;
+import nju.software.dataobject.Order;
 import nju.software.dataobject.Package;
-import nju.software.model.OrderInfo;
+import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.Produce;
 import nju.software.service.LogisticsService;
 import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
+
+import org.jbpm.task.query.TaskSummary;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("logisticsServiceImpl")
 public class LogisticsServiceImpl implements LogisticsService {
@@ -59,10 +64,10 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public List<Map<String, Object>> getSearchReceiveSampleList(
 			String ordernumber, String customername, String stylename,
-			String startdate, String enddate, Integer[] employeeIds) {
+			String startdate, String enddate, Integer[] employeeIds,String userRole,Integer userId) {
 		// TODO Auto-generated method stub
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
-				 customername,  stylename,  startdate,enddate,employeeIds);
+				 customername,  stylename,  startdate,enddate,employeeIds,userRole,userId);
 		
 		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
 				ACTOR_LOGISTICS_MANAGER, TASK_RECEIVE_SAMPLE);	
@@ -142,39 +147,48 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public Map<String, Object> getSendSampleDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithQuote(ACTOR_LOGISTICS_MANAGER,
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(ACTOR_LOGISTICS_MANAGER,
 				TASK_SEND_SAMPLE, orderId);
+		// 样衣发货记录
+		List<DeliveryRecord> deliveryRecord = deliveryRecordDAO.findSampleRecordByOrderId(orderId);
+		model.put("deliveryRecord", deliveryRecord);
+		return model;
 	}
 
 	@Override
 	public boolean sendSampleSubmit(Map<String, Object> map) {
-		
-		Integer orderId = (Integer) map.get("orderId");
-		
-		//更新物流信息
-		Logistics logistics = logisticsDAO.findById(orderId);
-		logistics.setSampleClothesTime(getTime((String) map.get("time")));//邮寄时间
-		logistics.setSampleClothesNumber((String) map.get("number"));//快递单号
-		logistics.setSampleClothesType((String) map.get("name"));//快递名称
-		logisticsDAO.attachDirty(logistics);
-		
-		//需要记录每次发货的信息
-		DeliveryRecord deliveryRecord = new DeliveryRecord();
-		deliveryRecord.setOrderId(orderId);
-		deliveryRecord.setSendType("sample");// 发货类型为“样衣”
-		deliveryRecord.setRecipientName(logistics.getSampleClothesName());// 收件人姓名
-		deliveryRecord.setRecipientPhone(logistics.getSampleClothesPhone());// 收件人手机
-		deliveryRecord.setRecipientAddr(logistics.getSampleClothesAddress());// 收件人地址
-		deliveryRecord.setExpressName((String) map.get("name"));// 快递名称
-		deliveryRecord.setExpressNumber((String) map.get("number"));// 快递单号
-		deliveryRecord.setSendTime(getTime((String) map.get("time")));// 邮寄时间
-		deliveryRecordDAO.save(deliveryRecord);
-		
+		Integer orderId = (Integer) map.get("orderId");		
 		
 		String isFinal = (String) map.get("isFinal");	
-		//如果不是最终的样衣发货，不执行completeTask方法，直接返回
+		//如果不是最终的样衣发货，保存本次发货记录，不执行completeTask方法，直接返回
 		if(isFinal.equals("false")){
+			//更新物流信息
+			Logistics logistics = logisticsDAO.findById(orderId);
+			logistics.setSampleClothesTime(getTime((String) map.get("time")));//邮寄时间
+			logistics.setSampleClothesNumber((String) map.get("number"));//快递单号
+			logistics.setSampleClothesType((String) map.get("name"));//快递名称
+			//logistics.setSampleClothesPrice((String) map.get("price"));//快递价格
+			logisticsDAO.attachDirty(logistics);
+			
+			//需要记录每次发货的信息
+			DeliveryRecord deliveryRecord = new DeliveryRecord();
+			deliveryRecord.setOrderId(orderId);
+			deliveryRecord.setSendType("sample");// 发货类型为“样衣”
+			deliveryRecord.setRecipientName(logistics.getSampleClothesName());// 收件人姓名
+			deliveryRecord.setRecipientPhone(logistics.getSampleClothesPhone());// 收件人手机
+			deliveryRecord.setRecipientAddr(logistics.getSampleClothesAddress());// 收件人地址
+			deliveryRecord.setExpressName((String) map.get("name"));// 快递名称
+			deliveryRecord.setExpressNumber((String) map.get("number"));// 快递单号
+			deliveryRecord.setExpressPrice((String) map.get("price"));// 快递价格
+			deliveryRecord.setSendTime(getTime((String) map.get("time")));// 邮寄时间
+			deliveryRecordDAO.save(deliveryRecord);
 			return true;
+		}
+		
+		//如果是最终发货，需要先判断是否有发货记录，若没有，不能完成最终的发货
+		List<DeliveryRecord> list = deliveryRecordDAO.findByOrderId(orderId);
+		if(list == null || list.size() == 0){
+			return false;
 		}
 		
 		long taskId = (long) map.get("taskId");
@@ -197,24 +211,48 @@ public class LogisticsServiceImpl implements LogisticsService {
 		// TODO Auto-generated method stub
 		return getLogisticsList(TASK_WAREHOUSE, 0);
 	}
+	
+	@Override
+	public List<Map<String, Object>> getPackageHaoDuoYiList() {
+		// TODO Auto-generated method stub
+		return getLogisticsList(TASK_WAREHOUSE_HAODUOYI, 0);
+	}
 
 	@Override
 	public List<Map<String, Object>> getWarehouseList() {
 		// TODO Auto-generated method stub
 		return getLogisticsList(TASK_WAREHOUSE, 1);
 	}
+	
+	@Override
+	public List<Map<String, Object>> getWarehouseHaoDuoYiList() {
+		// TODO Auto-generated method stub
+		return getLogisticsList(TASK_WAREHOUSE_HAODUOYI, 1);
+	}
 
 	@Override
 	public Map<String, Object> getPackageDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String, Object> model = service.getBasicOrderModel(
-				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE, orderId);
+		Order order = orderDAO.findById(orderId);
+		short isHaoDuoYi = order.getIsHaoDuoYi();
+		Map<String, Object> model = null;
+		if(isHaoDuoYi == 1){
+			model = service.getBasicOrderModel(
+					ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE_HAODUOYI, orderId);
+		}else{
+			model = service.getBasicOrderModel(
+					ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE, orderId);
+		}
+		
 		List<Package> packages = packageDAO.findByOrderId(orderId);
+		List<Produce> produceList = produceDAO.findProduceByOrderId(orderId);
+		model.put("produceList", produceList);
 		model.put("packages", packages);
 		model.put("packageDetails",
 				packageDetailDAO.findByPackageList(packages));
 		return model;
 	}
+	
 
 	@Override
 	public Map<String, Object> getPrintWarehouseDetail(Integer orderId,
@@ -281,14 +319,45 @@ public class LogisticsServiceImpl implements LogisticsService {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Map<String, Object>> getMobileWarehouseHaoDuoYiList() {
+		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE_HAODUOYI);
+		List<Map<String, Object>> list = new ArrayList<>();
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
+		for (TaskSummary task : tasks) {
+			Integer orderId = (Integer) jbpmAPIUtil
+					.getVariable(task, "orderId");
+			Map<String, Object> model = new HashMap<String, Object>();
+			Order order = orderDAO.findById(orderId);
+			model.put("order", order);
+			model.put("orderId", dateFormat2.format(order.getOrderTime())
+					+ String.format("%06d", order.getOrderId()));
+
+			if (order.getLogisticsState() == 1) {
+				list.add(model);
+			}
+		}
+		return list;
+	}
 
 	@Override
 	public Map<String, Object> getMobileWarehouseDetail(int orderId) {
-		TaskSummary task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
-				TASK_WAREHOUSE, orderId);
 		Map<String, Object> model = new HashMap<String, Object>();
 		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
+		
 		Order order = orderDAO.findById(orderId);
+		short isHaoDuoYi = order.getIsHaoDuoYi();
+		TaskSummary task = null;
+		if (isHaoDuoYi == 1) {
+			task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER,
+					TASK_WAREHOUSE_HAODUOYI, orderId);
+		} else {
+			task = jbpmAPIUtil.getTask(ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE,
+					orderId);
+		}
+		
 		model.put("order", order);
 		model.put("packs", packageDAO.findByOrderId(orderId));
 		model.put("task", task);
@@ -298,7 +367,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 						+ String.format("%06d", order.getOrderId()));
 		return model;
 	}
-
+	
 	@Override
 	public boolean updatePackage(int packageId, String warehouse, String shelf,
 			String location) {
@@ -327,12 +396,21 @@ public class LogisticsServiceImpl implements LogisticsService {
 		boolean is_hao_duo_yi = (ishaoduoyi==1)?true:false;
 		if (order != null) {
 			order.setLogisticsState(2);
+			if(is_hao_duo_yi){
+				order.setOrderState("Done");
+			}
 			orderDAO.attachDirty(order);
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_IS_HAODUOYI, is_hao_duo_yi);
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+			//如果是好多衣，入库完则直接结束整个流程（无需发货）
+			if(is_hao_duo_yi){
+				order.setOrderState("Done");
+				orderDAO.merge(order);
+			}
+			
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -356,14 +434,19 @@ public class LogisticsServiceImpl implements LogisticsService {
 	@Override
 	public Map<String, Object> getSendClothesDetail(Integer orderId) {
 		// TODO Auto-generated method stub
-		Map<String, Object> model=service.getBasicOrderModelWithWareHouse(ACTOR_LOGISTICS_MANAGER,
-				TASK_SEND_CLOTHES, orderId);
-		List<Package>packages=packageDAO.findByOrderId(orderId);
-		if(packages==null){
+		Map<String, Object> model = service.getBasicOrderModelWithWareHouse(
+				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES, orderId);
+		List<Package> packages = packageDAO.findByOrderId(orderId);
+		if (packages == null) {
 			model.put("packageNumber", 0);
-		}else{
+		} else {
 			model.put("packageNumber", packages.size());
-		}	
+		}
+		
+		// 大货发货记录
+		List<DeliveryRecord> deliveryRecord = deliveryRecordDAO.findProductRecordByOrderId(orderId);
+		model.put("sendProductRecord", deliveryRecord);
+		
 		return model;
 	}
 
@@ -424,18 +507,36 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	@Override
 	public void sendClothesSubmit(Integer orderId, long taskId, float price,
-			String name, String time, String number, String remark) {
-		// TODO Auto-generated method stub
+			String name, String time, String number, String remark, String isFinal) {
+		//更新物流信息
 		Logistics logistics = logisticsDAO.findById(orderId);
-		logistics.setProductClothesNumber(number);
-		logistics.setProductClothesRemark(remark);
-		logistics.setProductClothesPrice(price + "");
-		logistics.setProductClothesType(name);
-		logistics.setProductClothesTime(getTime(time));
+		logistics.setProductClothesNumber(number);//快递单号
+		logistics.setProductClothesRemark(remark);//备注
+		logistics.setProductClothesPrice(price + "");//快递价格
+		logistics.setProductClothesType(name);//快递名称
+		logistics.setProductClothesTime(getTime(time));//邮寄时间
 		logisticsDAO.attachDirty(logistics);
+		
+		// 需要记录每次大货发货的信息
+		DeliveryRecord deliveryRecord = new DeliveryRecord();
+		deliveryRecord.setOrderId(orderId);
+		deliveryRecord.setSendType("product");// 发货类型为“大货”
+		deliveryRecord.setRecipientName(logistics.getSampleClothesName());// 收件人姓名
+		deliveryRecord.setRecipientPhone(logistics.getSampleClothesPhone());// 收件人手机
+		deliveryRecord.setRecipientAddr(logistics.getSampleClothesAddress());// 收件人地址
+		deliveryRecord.setExpressName(name);// 快递名称
+		deliveryRecord.setExpressNumber(number);// 快递单号
+		deliveryRecord.setExpressPrice(price + "");// 快递价格
+		deliveryRecord.setSendTime(getTime(time));// 邮寄时间
+		deliveryRecord.setRemark(remark);// 备注
+		deliveryRecordDAO.save(deliveryRecord);
+		
+		//如果不是最终的样衣发货，不执行completeTask方法，直接返回
+		if(isFinal.equals("false")){
+			return;
+		}
+		
 		Map<String, Object> data = new HashMap<String, Object>();
-		
-		
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
 			/*
@@ -449,53 +550,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			e.printStackTrace();
 		}
 	}
-    //加入了分批次发货的发货提交方法
-	@Override
-	public boolean sendClothesSubmit(Map<String, Object> map) {
 
- 		Logistics logistics = logisticsDAO.findById((Integer) map.get("orderId"));
-		logistics.setProductClothesNumber((String) map.get("number"));
-		logistics.setProductClothesRemark((String) map.get("remark"));
-		logistics.setProductClothesPrice((Float)map.get("price") + "");
-		logistics.setProductClothesType((String)map.get("name"));
-		logistics.setProductClothesTime(getTime((String)map.get("time")));
-		logisticsDAO.attachDirty(logistics);
-		
-		//需要记录每次发货的信息
-		DeliveryRecord deliveryRecord = new DeliveryRecord();
-		deliveryRecord.setOrderId((Integer) map.get("orderId"));
-		deliveryRecord.setSendType("productClothes");// 发货类型为“产品”
-		deliveryRecord.setRecipientName(logistics.getProductClothesType());// 收件人姓名
-		deliveryRecord.setRecipientPhone(logistics.getProductClothesPhone());// 收件人手机
-		deliveryRecord.setRecipientAddr(logistics.getProductClothesAddress());// 收件人地址
-		deliveryRecord.setExpressName((String) map.get("name"));// 快递名称
-		deliveryRecord.setExpressNumber((String) map.get("number"));// 快递单号
-		deliveryRecord.setSendTime(getTime((String) map.get("time")));// 邮寄时间
-		deliveryRecordDAO.save(deliveryRecord);
-		
-		String is_final = (String)map.get("isFinal");
-		if(is_final.equals("false")){
-			return true;
-		}
-		 
-		
-		try {
-			Map<String, Object> data = new HashMap<String, Object>();
-			jbpmAPIUtil.completeTask((long) map.get("taskId"), data, ACTOR_LOGISTICS_MANAGER);
-			/*
-			 * whh:设置orderstate字段表示order结束状态
-			 */
-			Order order = orderDAO.findById((Integer) map.get("orderId"));
-			order.setOrderState("Done");
-			orderDAO.merge(order);
-			return true;
-		} catch (InterruptedException e) {
- 			e.printStackTrace();
-		}
-	
-		return false;
-	}
-	
 	private List<Map<String, Object>> getLogisticsList(String taskName,
 			Integer state) {
 		List<Map<String, Object>> temp = service.getOrderList(
@@ -510,7 +565,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	private Timestamp getTime(String time) {
-		Date outDate = DateUtil.parse(time, DateUtil.newFormat);
+		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);
 		return new Timestamp(outDate.getTime());
 	}
 
@@ -558,11 +613,14 @@ public class LogisticsServiceImpl implements LogisticsService {
 	private DeliveryRecordDAO deliveryRecordDAO;
 	@Autowired
 	private ServiceUtil service;
+	@Autowired
+	private MoneyDAO moneyDAO;
 
 	public final static String ACTOR_LOGISTICS_MANAGER = "logisticsManager";
 	public final static String TASK_RECEIVE_SAMPLE = "receiveSample";
 	public final static String TASK_SEND_SAMPLE = "sendSample";
 	public final static String TASK_WAREHOUSE = "warehouse";
+	public final static String TASK_WAREHOUSE_HAODUOYI = "warehouse_haoduoyi";
 	public final static String TASK_SEND_CLOTHES = "sendClothes";
 	public final static String RESULT_RECEIVE_SAMPLE = "receiveSample";
 	public final static String RESULT_SEND_SAMPLE = "sendSample";
@@ -573,8 +631,6 @@ public class LogisticsServiceImpl implements LogisticsService {
 		// TODO Auto-generated method stub
 		return logisticsDAO.findById(Integer.parseInt(s_id));
 	}
-
-
 
 
 

@@ -6,7 +6,7 @@
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
-				<li class="task-name">工艺加工</li>
+				<li class="task-name">样衣工艺加工</li>
 				<li class="active"><a href="#craftSample" data-toggle="tab">工艺报价</a></li>
 				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
@@ -36,68 +36,79 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			<div class="tab-pane active" id="craftSample">
-						<form action="${ctx}/design/uploadCraftFileSubmit.do?orderId=${orderInfo.order.orderId}" method="post" enctype="multipart/form-data">
+				<form action="${ctx}/design/uploadCraftFileSubmit.do?orderId=${orderInfo.order.orderId}" method="post" enctype="multipart/form-data">
+					<table class="table table-striped table-bordered table-hover detail">
+						<tr>
+							<td class="title">上传工艺文件</td>
+							<td colspan="6">
+				                <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+								<input name="craftFile" id="craftFile" type="file" required="required"/> 
+								<input class="btn btn-primary btn-rounded" type="submit" value="上传工艺制作图"  onclick="return check()"/>						
+								<a style="color: red;">点击后,上传图片生效！</a>
+							</td>
+						</tr>
+						<tr>
+			                <td class="title">工艺图片</td>
+			                <td colspan="6">
+			                	<c:if test="${orderInfo.sampleCraft.craftFileUrl!=null}">
+					            	<img src="${ctx}/common/getPic.do?type=craftFileUrl&orderId=${orderInfo.order.orderId}"
+						                 style="max-height: 300px;" alt="工艺图片"></img>
+				                </c:if>
+				            </td>
+		                </tr>
+		            </table>
+	            </form>
 			
- 						<table class="table table-striped table-bordered table-hover detail">
-						    <tr>
-								<td>客户工艺要求：</td>
-								<td colspan="12">
-								 ${orderInfo.designCadTech}
-								</td>
-							</tr>		
-							<tr>
-								<td>印花费（元/件）：
-								</td>
-								<td>水洗吊染费（元/件）：
-								</td>
-								<td>激光费（元/件）：
-								</td>
-								<td>刺绣费（元/件）：
-								</td>
-								<td>压皱费（元/件）：
-								</td>
-								<td>开版费用（元/件）：
-								</td>
-							</tr>
-							<tr>
-							<td>${ orderInfo.sampleCraft.stampDutyMoney}</td>
-							<td>${ orderInfo.sampleCraft.washHangDyeMoney}</td>
-							<td>${ orderInfo.sampleCraft.laserMoney}</td>
-							<td>${ orderInfo.sampleCraft.embroideryMoney}</td>
-							<td>${ orderInfo.sampleCraft.crumpleMoney}</td>
-							<td>${ orderInfo.sampleCraft.openVersionMoney}</td>
-							</tr>
- 					<tr>
-						<td>选择工艺文件</td>
-						<td colspan="5">
-							<a style="color: red;">*</a>
-			                <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
-							<input name="craftFile" id="craftFile" type="file" required="required"/> 
-							<input class="btn btn-primary btn-rounded" type="submit" value="上传工艺制作图" onclick="return confirm('确认上传？')" />						
-						</td>
-					</tr>
-					<tr>
-		                <td class="title">工艺图片</td>
-		                <td colspan="5">
-		                	<c:if test="${orderInfo.sampleCraft.craftFileUrl!=null}">
-				            	<img src="${ctx}/common/getPic.do?type=craftFileUrl&orderId=${orderInfo.order.orderId}"
-					                 style="max-height: 300px;" alt="工艺图片"></img>
-			                </c:if>
-			            </td>
-	                </tr>
-				</table>
-			</form>
+				<form action="${ctx}/design/needCraftSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}" method="post"
+						onsubmit="return confirm('确认完成工艺制作？')">
+					<table class="table table-striped table-bordered table-hover detail">
+					    <tr>
+							<td class="title">客户工艺要求</td>
+							<td colspan="2">
+							 ${orderInfo.designCadTech}
+							</td>
+							<td class="title">工艺负责人<span style="color: red">*</span></td>
+							<td><input id="craft_leader" type="text" name="craftLeader" required="required"  value="${USER_nick_name }"/></td>
+							<td class="title">工艺完成时间<span style="color: red">*</span></td>
+							<td><input id="input_day" type="text" name="completeTime" required="required"  readonly="readonly"/></td>
+						</tr>		
+						<tr>
+							<td class="title" rowspan="2">工艺报价</td>
+							<td class="title">印花费（元/件）
+							</td>
+							<td class="title">水洗吊染费（元/件）
+							</td>
+							<td class="title">激光费（元/件）
+							</td>
+							<td class="title">刺绣费（元/件）
+							</td>
+							<td class="title">压皱费（元/件）
+							</td>
+							<td class="title">开版费用（元/件）
+							</td>
+						</tr>
+						<tr>
+							<td>${orderInfo.sampleCraft.stampDutyMoney}</td>
+							<td>${orderInfo.sampleCraft.washHangDyeMoney}</td>
+							<td>${orderInfo.sampleCraft.laserMoney}</td>
+							<td>${orderInfo.sampleCraft.embroideryMoney}</td>
+							<td>${orderInfo.sampleCraft.crumpleMoney}</td>
+							<td>${orderInfo.sampleCraft.openVersionMoney}</td>
+						</tr>
+					</table>
+					<div class="action" style="float:right">
+						<input type="submit" class="btn btn-primary" value="完成工艺制作"/>
+					</div>
+				</form>
+					
 				<button class="btn btn-primary" onclick="history.back();">返回</button>
-				<div class="action" style="float:right">
-					<a href="${ctx}/design/needCraftSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
-						class="btn btn-primary" onclick="return confirm('确认完成工艺制作？')">完成工艺制作</a> 
-				</div>
+				
 			</div>	
 		</div>
 
 		</div>
 		<!--row-fluid-->
-
+		<input type="hidden"  id="imgtest"  value="${orderInfo.sampleCraft.craftFileUrl}" />
 		<div class="footer">
 			<div class="footer-left">
 				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
@@ -125,8 +136,43 @@
 $(document).ready(function() {
  var text=$("#pay").text();
 	$("#pay").text(parseFloat(text).toFixed(2));
-	 
+
 });  
+
+function check(){
+	var craftFile = document.getElementById("craftFile").value;
+	var craftFilestr = craftFile.substr(craftFile.indexOf(".")).toLowerCase();		
+	if(craftFile.length != 0){
+		if(craftFilestr == ".jpg" || craftFilestr == ".png"){	
+			if(confirm('确认上传工艺图片？')){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			alert("工艺图片格式不对，请上传jpg或png格式的图片！");
+			return false;
+		}
+	}else{
+		alert("请选择工艺图片文件");
+		return false;
+	}
+}
+
+function checkimg(){
+	var img = $("#imgtest").val();
+	 if(img != ""){
+		 if(confirm('确认完成工艺制作？')){
+				return true;
+			}else{
+				return false;
+			}
+	}else{ 
+			alert("请上传工艺图片");
+			return false;
+	 } 
+	
+}
 </script>
 <%@include file="/common/footer.jsp"%>
 

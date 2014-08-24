@@ -1,10 +1,13 @@
 package nju.software.dataobject;
 
 import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -77,7 +80,7 @@ public class Order implements java.io.Serializable {
 	private String payAccountInfo;//因为本来的定义没有使用，所以在后期将它用来存储加工方
 	private double discount;//折扣
 	private double totalMoney;
-	private double sampleMoney=0;
+	private double sampleMoney;
 	private String contractFile;
 	private int logisticsState; //物流状态：0,未装包。1，装包未入库，2，入库待扫描，3已扫描待发货。4发货
 	
@@ -116,6 +119,7 @@ public class Order implements java.io.Serializable {
 	public void setTotalMoney(double totalMoney) {
 		this.totalMoney = totalMoney;
 	}
+
 	@Column(name = "samplepur_name")
 	public String getSamplepurName() {
 		return samplepurName;
@@ -226,6 +230,7 @@ public class Order implements java.io.Serializable {
 	}
 
 	/** full constructor */
+	
 	public Order(Integer customerId, Integer employeeId, String orderState,
 			Timestamp orderTime, String customerName, String customerCompany,
 			String customerCompanyFax, String customerPhone1,
@@ -236,7 +241,10 @@ public class Order implements java.io.Serializable {
 			String referencePicture, Integer askAmount,
 			String askProducePeriod, Timestamp askDeliverDate,
 			String askCodeNumber, Short hasPostedSampleClothes,
-			Short isNeedSampleClothes, String orderSource) {
+			Short isNeedSampleClothes, String orderSource,
+			String samplepurName,Timestamp samplepurDate,
+			String samplesupplierName,String masspurName,
+			Timestamp masspurDate,String masssupplierName) {
 		this.customerId = customerId;
 		this.employeeId = employeeId;
 		this.orderState = orderState;
@@ -262,6 +270,83 @@ public class Order implements java.io.Serializable {
 		this.hasPostedSampleClothes = hasPostedSampleClothes;
 		this.isNeedSampleClothes = isNeedSampleClothes;
 		this.orderSource = orderSource;
+		this.samplepurName = samplepurName;
+		this.samplepurDate = samplepurDate;
+		this.samplesupplierName = samplesupplierName;
+		this.masspurName = masspurName;
+		this.masspurDate = masspurDate;
+		this.masssupplierName = masssupplierName;
+	}
+
+	public Order(String orderProcessStateName, String confirmDepositFile,
+			String confirmFinalPaymentFile, String confirmSampleMoneyFile,
+			Short isHaoDuoYi, Integer orderId, Short reorder,
+			Integer customerId, Integer employeeId, String orderState,
+			Timestamp orderTime, String customerName, String customerCompany,
+			String customerCompanyFax, String customerPhone1,
+			String customerPhone2, String customerCompanyAddress,
+			String styleName, String clothesType, String fabricType,
+			String styleSex, String styleSeason, String specialProcess,
+			String otherRequirements, String referenceUrl,
+			String sampleClothesPicture, String referencePicture,
+			Integer askAmount, Integer sampleAmount, Long processId,
+			String askProducePeriod, Timestamp askDeliverDate,
+			String askCodeNumber, Short hasPostedSampleClothes,
+			Short isNeedSampleClothes, String orderSource,
+			String payAccountInfo, double discount, double totalMoney,
+			double sampleMoney, String contractFile, int logisticsState,
+			String samplepurName, Timestamp samplepurDate,
+			String samplesupplierName, String masspurName,
+			Timestamp masspurDate, String masssupplierName) {
+		super();
+		this.orderProcessStateName = orderProcessStateName;
+		this.confirmDepositFile = confirmDepositFile;
+		this.confirmFinalPaymentFile = confirmFinalPaymentFile;
+		this.confirmSampleMoneyFile = confirmSampleMoneyFile;
+		this.isHaoDuoYi = isHaoDuoYi;
+		this.orderId = orderId;
+		this.reorder = reorder;
+		this.customerId = customerId;
+		this.employeeId = employeeId;
+		this.orderState = orderState;
+		this.orderTime = orderTime;
+		this.customerName = customerName;
+		this.customerCompany = customerCompany;
+		this.customerCompanyFax = customerCompanyFax;
+		this.customerPhone1 = customerPhone1;
+		this.customerPhone2 = customerPhone2;
+		this.customerCompanyAddress = customerCompanyAddress;
+		this.styleName = styleName;
+		this.clothesType = clothesType;
+		this.fabricType = fabricType;
+		this.styleSex = styleSex;
+		this.styleSeason = styleSeason;
+		this.specialProcess = specialProcess;
+		this.otherRequirements = otherRequirements;
+		this.referenceUrl = referenceUrl;
+		this.sampleClothesPicture = sampleClothesPicture;
+		this.referencePicture = referencePicture;
+		this.askAmount = askAmount;
+		this.sampleAmount = sampleAmount;
+		this.processId = processId;
+		this.askProducePeriod = askProducePeriod;
+		this.askDeliverDate = askDeliverDate;
+		this.askCodeNumber = askCodeNumber;
+		this.hasPostedSampleClothes = hasPostedSampleClothes;
+		this.isNeedSampleClothes = isNeedSampleClothes;
+		this.orderSource = orderSource;
+		this.payAccountInfo = payAccountInfo;
+		this.discount = discount;
+		this.totalMoney = totalMoney;
+		this.sampleMoney = sampleMoney;
+		this.contractFile = contractFile;
+		this.logisticsState = logisticsState;
+		this.samplepurName = samplepurName;
+		this.samplepurDate = samplepurDate;
+		this.samplesupplierName = samplesupplierName;
+		this.masspurName = masspurName;
+		this.masspurDate = masspurDate;
+		this.masssupplierName = masssupplierName;
 	}
 
 	// Property accessors
@@ -518,7 +603,7 @@ public class Order implements java.io.Serializable {
 		this.payAccountInfo = payAccountInfo;
 	}
 	
-	@Column(name = "logistics_state", columnDefinition="int default 0")
+	@Column(name = "logistics_state")
 	public int getLogisticsState() {
 		return logisticsState;
 	}
