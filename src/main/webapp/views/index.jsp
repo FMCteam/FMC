@@ -1,14 +1,10 @@
 		<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 		
 		<%@include file="/common/header.jsp" %>
-
-		<style   type="text/css">
-			.iconfa-laptop:before{content:"\f109"}
-		</style>
-		
+        
         <div class="pageheader">
            
-            <div class="pageicon"><span class="iconfa-laptop" ></span></div>
+            <div class="pageicon"><span class="iconfa-laptop"></span></div>
             <div class="pagetitle">
                 <h5>服装快速响应供应链</h5>
                 <h1>智造链</h1>

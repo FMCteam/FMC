@@ -30,9 +30,9 @@
 			    <button class="btn btn-primary" onclick="history.back();">返回</button>
 					<div class="action">
 						<a
-							href="${ctx}/produce/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1&orderId=${orderInfo.order.orderId}"
+							href="${ctx}/produce/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=1"
 							class="btn btn-primary">加工完成</a> <a
-							href="${ctx}/produce/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0&orderId=${orderInfo.order.orderId}"
+							href="${ctx}/produce/produceSampleSubmit.do?taskId=${orderInfo.task.id}&result=0"
 							class="btn btn-danger" style="margin-left: 10px">加工失败</a>
 					</div>
 				</div>

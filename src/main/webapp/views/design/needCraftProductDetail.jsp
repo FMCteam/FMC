@@ -15,7 +15,7 @@
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
-			<div style="color: red;text-align: center;font-size: 23px;">大货面料已经到，请尽快领取补货单进行工艺加工！</div>
+
 			<div class="tab-content">
 				<div class="tab-pane" id="basic">
 					<%@include file="/views/common/basic.jsp"%>
@@ -36,27 +36,25 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			<div class="tab-pane active" id="craft">
-				<form action="${ctx}/design/needCraftProductSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
-	 			method="post" enctype="multipart/form-data" onsubmit="return confirm('确认完成大货工艺制作？')">
 						<table class="table table-striped table-bordered table-hover detail">
 						    <tr>
-								<td class="title">客户工艺要求：</td>
+								<td>客户工艺要求：</td>
 								<td colspan="12">
 								 ${orderInfo.designCadTech}
 								</td>
 							</tr>	
 							<tr>
-								<td class="title">印花费（元/件）：
+								<td >印花费（元/件）：
 								</td>
-								<td class="title">水洗吊染费（元/件）：
+								<td >水洗吊染费（元/件）：
 								</td>
-								<td class="title">激光费（元/件）：
+								<td  >激光费（元/件）：
 								</td>
-								<td class="title">刺绣费（元/件）：
+								<td >刺绣费（元/件）：
 								</td>
-								<td class="title">压皱费（元/件）：
+								<td  >压皱费（元/件）：
 								</td>
-								<td class="title">开版费用（元/件）：
+								<td >开版费用（元/件）：
 								</td>
 							</tr>
 							<tr>
@@ -76,27 +74,20 @@
 					                 style="max-height: 300px;" alt="工艺图片"></img>
 			                    </c:if></td>
 	                        </tr>
-	                        <tr>
-							<td colspan="2"><a style="color: red;">*</a>工艺负责人：</td>
-							<td><input name="crafsManName" id="crafsManName" type="text" required="required"  value="${USER_nick_name }"/></td>
-							<td colspan="2"><a style="color: red;">*</a>大货工艺完成时间：</td>
-							<td><input name="crafsProduceDate" id="input_day" type="text" required="required" readonly="readonly"/></td>
-							</tr>
+							
 						</table>
 					
+					<button class="btn btn-primary" onclick="history.back();">返回</button>
 					<div class="action" style="float:right">
-						<!-- <a href="javascript:doPost();"
+						<a href="${ctx}/design/needCraftProductSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
 						   onclick="return confirm('确认完成大货工艺制作？')"
-						   class="btn btn-primary">完成大货工艺制作</a> -->
-						   <input type="submit" class="btn btn-primary" value="完成大货工艺制作"/>
+						   class="btn btn-primary">完成大货工艺制作</a>
 			        </div>
 				 </form>
 				 
 				 <button class="btn btn-primary" onclick="history.back();">返回</button>
  			</div>				
 			</div>
-
-			<input type="hidden" value="${orderInfo.craft.craftFileUrl}"/>
 
 		</div>
 		<!--row-fluid-->
@@ -130,12 +121,6 @@ $(document).ready(function() {
 	$("#pay").text(parseFloat(text).toFixed(2));
 	 
 });  
-function doPost(){
-	var crafsManName=$("#crafsManName").val();
-	var crafsProduceDate=$("#input_day").val();
-    window.location.href="${ctx}/design/needCraftProductSubmit.do?orderId="+${orderInfo.order.orderId}+"&taskId="+${orderInfo.task.id}
-	 +"&crafsManName="+crafsManName+"&crafsProduceDate="+crafsProduceDate;
-}
 </script>
 <%@include file="/common/footer.jsp"%>
 

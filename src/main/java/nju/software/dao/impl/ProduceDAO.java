@@ -247,20 +247,4 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 			throw re;
 		}
 	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Produce> findTotalProduceByOrderId(Object orderId) {
-		// TODO Auto-generated method stub
-		log.debug("find Produce instance with property: " + "oid" + ", value: "
-				+ orderId);
-		try {
-			String queryString = "from Produce as model where model.type='"
-					+ Produce.TYPE_PRODUCED + "' and model.oid= ? ";
-			return getHibernateTemplate().find(queryString, orderId);
-		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
-			throw re;
-		}
-	}
 }

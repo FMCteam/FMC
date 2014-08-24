@@ -3,8 +3,6 @@
 <style>
  
 </style>
-
-
 <div class="maincontent">
 	<div class="maincontentinner">
 		<form onSubmit="return verify()" method="post"
@@ -33,9 +31,9 @@
 								 -->
 								<td class="span2 title"  ><span style="color:red ;font-weight:bold">请选择是否为好多衣客户</span></td>
 								<td class="span2 title" colspan="2">接单时间<span class="required">*</span></td>
-								<td class="span2 title" >订单来源<span class="required">*</span></td>
+								<td class="span2 title">订单来源<span class="required">*</span></td>
 								<td class="span2 title" >接单业务员</td>
-								<td class="span2 title"style="color:red;">翻单</td>
+								<td class="span2 title">翻单</td>
 							</tr>
 							
 							<tr>
@@ -45,8 +43,8 @@
 								<td ><input type="radio" name="is_haoduoyi" id="is_haoduoyi"
 									 value="1" required="required" /> 是 <input type="radio"
 									name="is_haoduoyi" value="0" checked="checked" /> 否</td>
-								<td colspan="2"><input class="span8" type="text" required="required" id="input_day"
-									required="required" readonly="readonly"/></td>
+								<td colspan="2"><input class="span8" type="date"required="required"
+									required="required" /></td>
 								<td><input type="text" class="span12" name="order_source"
 									required="required" /></td>
 								<td>${employee_name}</td>
@@ -87,8 +85,8 @@
 								<td><input type="text" class="span12" name="clothes_type"
 									required="required" /></td>	
 								<td colspan="2"><input type="radio" name="style_sex"
-									 value="男" required="required" /> <span>男</span> <input
-									type="radio" name="style_sex" value="女" checked="checked" /> <span>女</span> <input
+									checked="checked" value="男" required="required" /> <span>男</span> <input
+									type="radio" name="style_sex" value="女" /> <span>女</span> <input
 									type="radio" name="style_sex" value="儿童" /> <span>儿童</span></td>
 								<td colspan="2"><input type="radio" name="style_season"
 									checked="checked" value="春夏" required="required" /> <span>春夏</span> <input
@@ -182,10 +180,10 @@
 								<td class="span3 title">快递单号</td>
 							</tr>
 							<tr>
-								<td><input type="radio" name="has_posted_sample_clothes"  
+								<td><input type="radio" name="has_posted_sample_clothes"
 									checked="checked" value="1" required="required" /> 是 <input type="radio"
 									name="has_posted_sample_clothes" value="0" /> 否</td>
-								<td><input class="span12" type="date" 
+								<td><input class="span12" type="date"
 									name="in_post_sample_clothes_time" required="required" /></td>
 								<td><select name="in_post_sample_clothes_type"
 									style="margin: 0px">
@@ -202,20 +200,15 @@
 							</tr>
 							<tr>
 								<td class="title" rowspan="3">生产样衣</td>
-								<td class="title" style="color:red;">制作样衣</td>
+								<td class="title">制作样衣</td>
 								<td class="title">邮寄人<span class="required">*</span></td>
 								<td class="title">手机<span class="required">*</span></td>
 								<td class="title">邮寄地址<span class="required">*</span></td>
 							</tr>
 							<tr>
-								<td>
-									<div id="is_need_sample_clothes">
-										<input type="radio" name="is_need_sample_clothes"
-										checked="checked" value="1" required="required" onchange = "change()"/> 是 <input type="radio"
-										name="is_need_sample_clothes" value="0"  onchange ="change()"/> 否
-									</div>
-									<p id="is_need_sample_clothes_tip"  style="display: none;">是</p>
-								</td>
+								<td><input type="radio" name="is_need_sample_clothes"
+									checked="checked" value="1" required="required" /> 是 <input type="radio"
+									name="is_need_sample_clothes" value="0" /> 否</td>
 								<td><input class="span12" type="text"
 									name="sample_clothes_name" required="required" /></td>
 								<td><input class="span12" type="text"
@@ -232,10 +225,10 @@
 								<td class="title">样衣信息</td>
 								<td class="title">样衣图片<span class="required">*</span></td>
 								<td><input type="file" value="选择文件"
-									name="sample_clothes_picture" id="sample_clothes_picture" required="required" /></td>
+									name="sample_clothes_picture" required="required" /></td>
 								<td class="title">参考图片<span class="required">*</span></td>
 								<td><input type="file" value="选择文件"
-									name="reference_picture" id="reference_picture" required="required" /></td>
+									name="reference_picture" required="required" /></td>
 							</tr>
 						</table>
 					</div>
@@ -308,7 +301,7 @@
 									name="sample_produce_xl" /> <input id="sample_produce_xxl"
 									type="hidden" name="sample_produce_xxl" /></td>
 								<td colspan="8" class="innertable">
-									<table class="span12 table sample_produce_table" id="sampletable">
+									<table class="span12 table sample_produce_table">
 										<tr>
 											<td class="span1 title">颜色</td>
 											<td class="span1 title">XS</td>
@@ -427,7 +420,7 @@
 			</div>
 			<button class="btn btn-primary" onclick="history.back();">返回</button>
 			<div class="action" style="float:right">
-				<button class="btn btn-primary btn-rounded norepeat"  onclick="return check()">
+				<button class="btn btn-primary btn-rounded norepeat">
 					<i class="icon-ok icon-white"></i>提交询单
 				</button>
 			</div>
@@ -444,32 +437,7 @@
 	<!--maincontentinner-->
 </div>
 <!--maincontent-->
-<script>
-	function check(){
-		
-		var sample_clothes_picture = document.getElementById("sample_clothes_picture").value;
-		var reference_picture = document.getElementById("reference_picture").value;
-		var sample_clothes_picturestr = sample_clothes_picture.substr(sample_clothes_picture.indexOf(".")).toLowerCase();		
-		var reference_picturestr = reference_picture.substr(reference_picture.indexOf(".")).toLowerCase();
 
-		if(sample_clothes_picture.length != 0){
-			if(sample_clothes_picturestr == ".jpg" || sample_clothes_picturestr == ".png"){
-				if(reference_picture.length != 0){
-					if(reference_picturestr == ".jpg" || reference_picturestr == ".png"){
-						
-					}else{
-						alert("参考图片格式不对，请上传jpg或png格式的图片！");
-						
-						return false;
-					}
-				}
-			}else{
-				alert("样衣图片格式不对，请上传jpg或png格式的图片！");
-				return false;
-			}
-		}
-	}
-</script>
 
 
 <%@include file="/common/js_file.jsp"%>
@@ -479,12 +447,4 @@
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<script type="text/javascript">
-// $(function(){
-// 	alert(new Date())
-// 	$( "#input_day" ).datepicker({
-// 		defaultDate : new Date()
-// 	});
-// });
-</script>
 <%@include file="/common/footer.jsp"%>

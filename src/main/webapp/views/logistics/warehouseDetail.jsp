@@ -66,7 +66,7 @@
 					</table>
 				</div>
 				<button class="btn btn-primary" onclick="history.back();">返回</button>
-				<div class="action" style="float:right">
+				<div class="action">
 					<a class="btn btn-primary"
 						href="${ctx}/logistics/mobile/warehouseDetail.do?orderId=${orderInfo.order.orderId}">入库</a>
 				</div>

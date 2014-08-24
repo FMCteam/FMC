@@ -37,33 +37,37 @@
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
-								<td class="title">客户工艺要求</td>
+								<td>客户工艺要求：</td>
 								<td colspan="12">${orderInfo.designCadTech}</td>
 							</tr>
 
 							<tr>
-								<td class="title" colspan="1" rowspan="2">
-									&nbsp;<span>需要工艺</span><input type="radio" name="needcraft" value="1"  checked="checked"  required="required">
+								<td colspan="1">
+									<span>需要工艺：</span><input type="radio" name="needcraft" value="1"  checked="checked"  required="required">
 									<br/>
-									<span>不要工艺</span><input type="radio" name="needcraft" value="0" >
+									<span>不要工艺：</span><input type="radio" name="needcraft" value="0" >
 								</td>
-								<td class="title" colspan="1">印花费（元/件）</td>
-								<td class="title" colspan="1">水洗吊染费（元/件）</td>
-								<td class="title" colspan="1">激光费（元/件）</td>
-								<td class="title" colspan="1">刺绣费（元/件）</td>
-								<td class="title" colspan="1">压皱费（元/件）</td>
-								<td class="title" colspan="1">开版费用<a style="color: red;">[整单]</a></td>
+								<td colspan="1" style="width: 120px; ">印花费（元/件）：
+									<input class="span12" type="text" name="stampDutyMoney" value="0" />
+								</td>
+								<td colspan="1" style="width: 120px; ">水洗吊染费（元/件）：
+									<input class="span12" type="text" name="washHangDyeMoney" value="0"/>
+								</td>
+								<td colspan="1" style="width: 120px; ">激光费（元/件）：
+									<input class="span12" type="text" name="laserMoney" value="0" />
+								</td>
+								<td colspan="1" style="width: 120px; ">刺绣费（元/件）：
+									<input class="span12" type="text" name="embroideryMoney" value="0" />
+								</td>
+								<td colspan="1" style="width: 120px; ">压皱费（元/件）：
+									<input class="span12" type="text" name="crumpleMoney" value="0"/>
+								</td>
+								<td colspan="1" style="width: 120px; ">开版费用（元/件）：
+									<input class="span12"  type="text" name="openVersionMoney" value="0"/>
+								</td>
 							</tr>
 							<tr>
-								<td><input class="span12" type="text" name="stampDutyMoney" value="0" /></td>
-								<td><input class="span12" type="text" name="washHangDyeMoney" value="0"/></td>
-								<td><input class="span12" type="text" name="laserMoney" value="0" /></td>
-								<td><input class="span12" type="text" name="embroideryMoney" value="0" /></td>
-								<td><input class="span12" type="text" name="crumpleMoney" value="0"/></td>
-								<td><input class="span12"  type="text" name="openVersionMoney" value="0"/></td>
-							</tr>
-							<tr>
-								<td class="title span2">意见</td>
+								<td class="span2">意见</td>
 								<td colspan="6">
 									<textarea class="span12"
 										style="resize:vertical" rows="3" name="suggestion" ></textarea>

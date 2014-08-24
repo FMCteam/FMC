@@ -42,7 +42,7 @@
 			<td class="title" colspan="2">备注</td>
 		</tr>
 		<tr>
-			<td><input type="text" required="required" name="time"  id="input_day" readonly="readonly"/></td>
+			<td><input type="date" required="required" name="time" /></td>
 			<td>
 			<select name="account" required="required" >
 			<option selected="selected">36933145@qq.com</option>
@@ -68,9 +68,10 @@
 	    </tr> --%>
 	</table>
 	<div>
-	 <a  class="btn btn-danger btn-rounded"  style="float: left;color: white"
+	 <a  class="btn btn-danger btn-rounded"  style="float: left;"
 			href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
-			onclick="return confirmFinanceSubmit()"><i
+			onclick="return confirmFinanceSubmit()"
+			style="color: white; margin-left: 20px"><i
 			class="icon-remove icon-white"></i>未收到汇款</a>
 	</div>
 		<input type="submit" id="financeSubmit" hidden="hidden" /> <a
