@@ -50,7 +50,7 @@
 											<td class="span5">面料名称</td>
 											<td class="span5">面料克重</td>
 											<td class="span5">单件米耗（单位：米）</td>
-											<td class="span5">每米价格（单位：元/米）</td>
+											<td class="span5">每米价格（单位：元）</td>
 											<td class="span3">操作</td>
 										</tr>
 										<tr class="addrow">
@@ -76,7 +76,7 @@
 											<td class="span5">辅料名称</td>
 											<td class="span5">辅料要求</td>
 											<td class="span5">单件耗数（单位：个）</td>
-											<td class="span5">辅料单价（单位：元/米）</td>
+											<td class="span5">辅料单价（单位：元）</td>
 											<td class="span3">操作</td>
 										</tr>
 										<tr class="addrow">

@@ -40,18 +40,13 @@
  						<table class="table table-striped table-bordered table-hover detail">
 							<tr>
 								<td colspan="2">
-								<c:if test="${orderSampleStatus==4}">
-								<span style="color:red;font-size:23px;"><b>大货工艺加工完成，请尽快到印花工艺部门领料，进行排版切片!</b></span>
-								</c:if>
-								<c:if test="${orderSampleStatus!=4}">
-							    <span style="color:red;font-size:23px;"><b>大货面料已到，请尽快到面料部门领料，进行排版切片!</b></span>
-								</c:if>
+								<span style="color:red"><b>大货面料已到，请尽快领料排版切片</b></span>
 								</td>
 							</tr>	
 							<tr>
 								<td class="title"><span class="required">*</span>排版人姓名</td>
 								<td colspan="7">
-									<input class="span14" id="cadding_side" name="cadding_side" type="text" required="required"  value="${USER_nick_name }"/>
+									<input class="span14" id="cadding_side" name="cadding_side" type="text" required="required" />
 								</td>
 							</tr>						
 							<tr>

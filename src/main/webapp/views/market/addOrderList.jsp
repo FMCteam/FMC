@@ -21,7 +21,7 @@
 							<th>公司名称</th>
 							<th>公司地址</th>
 							<th>公司电话</th>
-							<th style="width: 80px;">操作</th>
+							<th>操作</th>
 						</tr>
 					</thead>
 					<c:forEach var="customer" items="${customers}">

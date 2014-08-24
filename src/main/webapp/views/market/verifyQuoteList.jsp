@@ -10,11 +10,8 @@
 		<!-- 
 			include file="/views/search/marketVerifyQuoteListSearch.jsp"
 		 -->
-			<%@include file="/views/common/list_new.jsp"%>
+			<%@include file="/views/common/list.jsp"%>
  		</div>
- 		
- 		<div class="holder"></div>
- 		
 		<!--row-fluid-->
 
 		<div class="footer">

@@ -30,7 +30,6 @@ public class DateUtil {
 	public final static String tsfxFormat = "yyyy.MM.dd";
 	public final static String fmcFormat = "MM/dd/yyyy";
 	public final static String noSecondFormat = "yyyy-MM-dd HH:mm";
-	public final static String haveSecondFormat="yyyy/MM/dd HH:mm:ss";
 	public final static long ONE_DAY_MILL_SECONDS = 86400000;
 
 	// -----------------------------------------------------------------------

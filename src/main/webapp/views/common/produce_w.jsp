@@ -43,7 +43,7 @@
 	<tr>
 		<td class="span2 title">大货加工 </td>
 		<td colspan="8" class="innertable">
-			<table class="span12 table table-bordered table-hover confirm_produce_table">
+			<table class="span12 table table-bordered table-hover produce_table">
 				<tr>
 					<td class="span1 title">颜色</td>
 					<td class="span1 title">XS</td>
@@ -56,12 +56,12 @@
 				</tr>
 				<tr class="addrow">
 					<td><input type="text" class="span12" /></td>
-					<td><input type="text" class="span12"  value="0"/></td>
-					<td><input type="text" class="span12"  value="0"/></td>
-					<td><input type="text" class="span12"  value="0"/></td>
-					<td><input type="text" class="span12"  value="0"/></td>
-					<td><input type="text" class="span12"  value="0"/></td>
-					<td><input type="text" class="span12"  value="0"/></td>
+					<td><input type="text" class="span12" /></td>
+					<td><input type="text" class="span12" /></td>
+					<td><input type="text" class="span12" /></td>
+					<td><input type="text" class="span12" /></td>
+					<td><input type="text" class="span12" /></td>
+					<td><input type="text" class="span12" /></td>
 					<td><a>添加</a><span class="required">（点击添加之后数据生效）</span></td>
 				</tr>
 				<c:forEach var="produceRow" items="${orderInfo.produce}">
@@ -74,7 +74,7 @@
 						<td class='span12 produce_xl'>${produceRow.xl }</td>
 						<td class='span12 produce_xxl'>${produceRow.xxl }</td>
 						<td class='span12'><a
-							onclick="deleteRow(this,'confirm_produce_table')">删除</a></td>
+							onclick="deleteRow(this,'produce_table')">删除</a></td>
 					</tr>
 				</c:forEach>
 				</table></td>
@@ -85,26 +85,3 @@
 	    value="${orderInfo.order.payAccountInfo}" readonly="readonly"/></td>
 	</tr>
 </table>
-<table class="table table-striped table-bordered table-hover detail">
-							<c:if test="${empty orderInfo.repairRecord}">
-								<tr>
-									<td class="title" style="width:22%;background: red;">实际生产数</td>
-									<td>暂无</td>
-								</tr>
-							</c:if>
-							<c:if test="${!empty orderInfo.repairRecord}">
-								<tr>
-									<td class="title" rowspan="${fn:length(orderInfo.repairRecord)+1}" style="width:22%;background: #ff0000;">实际生产数</td>
-									<td class="title">日期</td>
-									<td class="title">加工方</td>
-									<td class="title">合格实收数量</td>
-								</tr>
-								<c:forEach var="repairRecord" items="${orderInfo.repairRecord}">
-									<tr>
-										<td>${repairRecord.repairTime}</td>
-										<td>${repairRecord.repairSide}</td>
-										<td>${repairRecord.qualifiedAmount}</td>
-									</tr>
-								</c:forEach>
-							</c:if>
-						</table>

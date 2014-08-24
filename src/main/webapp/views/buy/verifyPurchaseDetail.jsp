@@ -61,7 +61,6 @@
 			</div>
 		</div>
 							<button class="btn btn-primary" onclick="history.back();">返回</button>
-							
 
 
 

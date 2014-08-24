@@ -78,10 +78,8 @@
 									name="style_season" value="秋冬"
 									${orderModel.order.styleSeason eq '秋冬'?'checked="checked"':'' } />
 									<span>秋冬</span></td>
-								<td><input type="text" class="span12" name="order_source" required="required"
-									value="${orderModel.order.orderSource }" /> 
-									<input type="hidden" name="ishaoduoyi" value="${orderModel.order.isHaoDuoYi }" />
-								</td>
+								<td><input type="text" class="span12" name="order_source"
+									value="${orderModel.order.orderSource }" /></td>
 							</tr>
 							<tr>
 								<td class="title">面料类型</td>
@@ -209,24 +207,19 @@
 								<td class="title" colspan="2">快递单号</td>
 							</tr>
 							<tr>
-								<td>
-									<div style="display: none;">
-										<input type="radio" name="has_posted_sample_clothes"
-											${orderModel.order.hasPostedSampleClothes>0?'checked="checked"':'' }
-											value="1" /> 是 <input type="radio"
-											${orderModel.order.hasPostedSampleClothes==0?'checked="checked"':'' }
-											name="has_posted_sample_clothes" value="0" /> 否
-									</div>
-									${orderModel.order.hasPostedSampleClothes>0?'是':'否'}
-								</td>
+								<td><input type="radio" name="has_posted_sample_clothes"
+									${orderModel.order.hasPostedSampleClothes>0?'checked="checked"':'' }
+									value="1" /> 是 <input type="radio"
+									${orderModel.order.hasPostedSampleClothes==0?'checked="checked"':'' }
+									name="has_posted_sample_clothes" value="0" /> 否</td>
 								<td colspan="2"><input class="span6" type="date"
 									name="in_post_sample_clothes_time"
-									value="${fn:substring(orderModel.logistics.inPostSampleClothesTime,0,10) }"  readonly="readonly"/></td>
-								<td><%-- <select name="in_post_sample_clothes_type"
-									style="margin: 0px" >
+									value="${fn:substring(orderModel.logistics.inPostSampleClothesTime,0,10) }" /></td>
+								<td><select name="in_post_sample_clothes_type"
+									style="margin: 0px">
 										<c:if
 											test="${orderModel.logistics.inPostSampleClothesType!='顺丰'}">
-											<option value="顺丰" >顺丰</option>
+											<option value="顺丰">顺丰</option>
 										</c:if>
 										<c:if
 											test="${orderModel.logistics.inPostSampleClothesType=='顺丰'}">
@@ -280,12 +273,10 @@
 											test="${orderModel.logistics.inPostSampleClothesType=='EMS'}">
 											<option value="EMS" selected="selected">EMS</option>
 										</c:if>
-								</select> --%>
-									<input type="text" name="in_post_sample_clothes_type" value="${orderModel.logistics.inPostSampleClothesType}"  readonly="readonly"/>
-								</td>
+								</select></td>
 								<td colspan="2"><input class="span12" type="text"
 									name="in_post_sample_clothes_number"
-									value="${orderModel.logistics.inPostSampleClothesNumber }"   readonly="readonly"/></td>
+									value="${orderModel.logistics.inPostSampleClothesNumber }" /></td>
 							</tr>
 							<tr>
 								<td class="title" rowspan="5">生产样衣</td>
@@ -295,13 +286,11 @@
 								<td class="title" colspan="3">邮寄地址</td>
 							</tr>
 							<tr>
-								<td>
-								<div></div>
-								<input type="radio" name="is_need_sample_clothes"
+								<td><input type="radio" name="is_need_sample_clothes"
 									${orderModel.order.isNeedSampleClothes==1?'checked="checked"':'' }
-									value="1"  onchange="change()" /> 是 <input type="radio"
+									value="1" /> 是 <input type="radio"
 									${orderModel.order.isNeedSampleClothes==0?'checked="checked"':'' }
-									name="is_need_sample_clothes" onchange="change()"  value="0" /> 否</td>
+									name="is_need_sample_clothes" value="0" /> 否</td>
 								<td><input class="span12" type="text"
 									name="sample_clothes_name"
 									value="${orderModel.logistics.sampleClothesName }" /></td>
@@ -352,16 +341,16 @@
 							</tr>
 							<tr>
 								<td class="span2" colspan="2"><input class="span6"
-									type="number" name="sample_amount" readonly="readonly"
+									type="number" name="sample_amount"
 									value="${orderModel.order.sampleAmount }" /></td>
 								<td class="span2" colspan="2"><input class="span6"
-									type="number" name="ask_amount"  readonly="readonly"
+									type="number" name="ask_amount"
 									value="${orderModel.order.askAmount }" /></td>
 								<td class="span2" colspan="2"><input class="span8"
-									type="date" name="ask_deliver_date"  required="required"
+									type="date" name="ask_deliver_date"
 									value="${fn:substring(orderModel.order.askDeliverDate,0,10) }" /></td>
 								<td class="span2" colspan="2"><input class="span4"
-									type="number" name="ask_produce_period" required="required"
+									type="number" name="ask_produce_period"
 									value="${orderModel.order.askProducePeriod }" /></td>
 							</tr>
 						</table>
@@ -389,7 +378,7 @@
 											<td class="span1 title">操作</td>
 										</tr>
 										<tr class="addrow">
-											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12"  onclick="if(this.value=='') this.value='0';"  /></td>
 											<td><input type="text" class="span12" value="0" /></td>
 											<td><input type="text" class="span12" value="0" /></td>
 											<td><input type="text" class="span12" value="0" /></td>
@@ -425,7 +414,7 @@
 									<input id="sample_produce_xxl" type="hidden"
 									name="sample_produce_xxl" /></td>
 								<td colspan="8" class="innertable">
-									<table class="span12 table sample_produce_table" id="sampletable">
+									<table class="span12 table sample_produce_table">
 										<tr>
 											<td class="span1 title">颜色</td>
 											<td class="span1 title">XS</td>
@@ -436,14 +425,14 @@
 											<td class="span1 title">XXL</td>
 											<td class="span1 title">操作</td>
 										</tr>
-										<tr class="addrow" >
+										<tr class="addrow">
 											<td><input type="text" class="span12" /></td>
-											<td><input type="text" class="span12"  value="0"/></td>
-											<td><input type="text" class="span12"  value="0"/></td>
-											<td><input type="text" class="span12"  value="0"/></td>
-											<td><input type="text" class="span12"  value="0"/></td>
-											<td><input type="text" class="span12"  value="0"/></td>
-											<td><input type="text" class="span12"  value="0"/></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" /></td>
 											<td><a>添加</a></td>
 										</tr>
 										<c:forEach var="produceRow" items="${orderModel.sample }">

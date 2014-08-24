@@ -112,15 +112,13 @@
 										<option>872104037@qq.com</option>
 								</select>
 								</td>
-								<td><input type="text" required="required" name="time"  id="input_day"  readonly="readonly"/></td>
+								<td><input type="date" required="required" name="time" /></td>
 
 							</tr>
 							<tr>
 								<td class="title" colspan="1">备注</td>
-								<td colspan="2"><!-- <input type="text" name="money_remark"
-									class="span12" /> -->
-									<textarea  name="moneyremark"  id="money_remark"  class="span12"   readonly="readonly"></textarea>
-								</td>
+								<td colspan="2"><input type="text" name="money_remark"
+									class="span12" /></td>
 							</tr>
 		                    <tr>
 		                    <!-- 
@@ -134,15 +132,20 @@
 	                        </tr>
 						</table>
 						
-						<a 	href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
-							class="btn btn-danger btn-rounded"
-							onclick="return confirmFinanceSubmit()"
-							style="color: white"><i
-							class="icon-remove icon-white"></i>未收到汇款</a>
-						<div class="action" style="float:right">
+						<a
+								class="btn btn-danger btn-rounded"
+								href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
+								onclick="return confirmFinanceSubmit()"
+								style="color: white; margin-left: 20px"><i
+								class="icon-remove icon-white"></i>未收到汇款</a>
+						<div class="action">
 							<input type="submit" id="financeSubmit" hidden="hidden" /> 
-							<a  id="financeButton" class="btn btn-primary btn-rounded"><i
+					
+							<a  
+								id="financeButton" class="btn btn-primary btn-rounded"><i
 								class="icon-ok icon-white"></i>已确认收款</a> 
+								
+								
 						</div>
 					</form>
 					
@@ -195,7 +198,6 @@ $(document).ready(function() {
 	$("#moneyOfAllProducts").text(parseFloat(moneyOfAllProductstext).toFixed(2));
 	$("#moneyOfAllProducts2").text(parseFloat(moneyOfAllProductstext).toFixed(2));
 	
-	$("#money_remark").val("${orderInfo.order.moneyremark}");
 });  
 </script>
 <script type="text/javascript">
@@ -222,7 +224,6 @@ function verifyFinance() {
 <link rel="stylesheet" href="${ctx}/views/finance/finance.css">
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <!-- 
 <script type="text/javascript" src="${ctx}/views/finance/finance.js"></script>
  -->

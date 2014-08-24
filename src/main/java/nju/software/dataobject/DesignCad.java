@@ -28,8 +28,7 @@ public class DesignCad implements java.io.Serializable {
 	private String cadBox; //包装
 	private String cadTech; //工艺
 	private String cadOther; //其他
-	private String cadSide;//制版人姓名
-	private Timestamp completeTime;//制版完成时间
+	private String caddingSide;//制版人姓名
 
 	// Constructors
 
@@ -148,20 +147,12 @@ public class DesignCad implements java.io.Serializable {
 		this.cadOther = cadOther;
 	}
 	@Column(name = "cad_side")
-	public String getCadSide() {
-		return cadSide;
+	public String getCaddingSide() {
+		return caddingSide;
 	}
 
-	public void setCadSide(String cadSide) {
-		this.cadSide = cadSide;
+	public void setCaddingSide(String caddingSide) {
+		this.caddingSide = caddingSide;
 	}
 
-	@Column(name = "complete_time", nullable = true, length = 19)
-	public Timestamp getCompleteTime() {
-		return this.completeTime;
-	}
-
-	public void setCompleteTime(Timestamp completeTime) {
-		this.completeTime = completeTime;
-	}
 }

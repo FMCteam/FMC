@@ -1,7 +1,6 @@
 package nju.software.dao;
 
 import java.util.List;
-
 import nju.software.dataobject.Produce;
 
 
@@ -34,5 +33,4 @@ public interface IProduceDAO {
 	
 	public void deleteSampleProduceByProperty(String propertyName,Object orderId);
 	
-	public List<Produce> findTotalProduceByOrderId(Object orderId);
 }

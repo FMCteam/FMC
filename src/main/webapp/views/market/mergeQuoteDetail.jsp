@@ -44,7 +44,7 @@
 							<!-- 
 								<td class="title" >主管审核意见</td>
 							 -->							
-								<td><span>主管审核意见：</span>${verifyQuoteComment}</td>
+								<td><span>主管审核意见:</span>${verifyQuoteComment }</td>
 							</tr>
  
 						</table>
@@ -57,7 +57,7 @@
 					<i class="icon-ok icon-white"></i>确定
 				</button>
 			</div>
-			 <button class="btn btn-primary" onclick="history.back(-1);">返回</button>
+			 <button class="btn btn-primary" onclick="history.back();">返回</button>
 		</form>
 		<c:if test="${orderInfo.order.orderSource=='好多衣'}">
 		<a href="${ctx}/market/printProcurementSampleOrder.do?orderId=${orderInfo.order.orderId}"
