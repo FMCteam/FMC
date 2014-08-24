@@ -1126,8 +1126,10 @@ public class MarketServiceImpl implements MarketService {
 				 */
 				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
 						.getNodeInstances()) {
-					System.out.println("状态名称："+nodeInstance.getNodeName());
-					nodeInstanceNames.add(nodeInstance.getNodeName());
+					if(!"Gateway".equals(nodeInstance.getNodeName())){
+						System.out.println("状态名称："+nodeInstance.getNodeName());
+						nodeInstanceNames.add(nodeInstance.getNodeName());
+					}
 				}
 			}
 				return null;
