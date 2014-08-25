@@ -110,18 +110,9 @@
 
  	function check(){
  		var CADFile = document.getElementById("CADFile").value;
-		var CADFilestr = CADFile.substr(CADFile.indexOf(".")).toLowerCase();		
+		//var CADFilestr = CADFile.substr(CADFile.indexOf(".")).toLowerCase();		
 		if(CADFile.length != 0){
-			if(CADFilestr == ".jpg" || CADFilestr == ".png"){	
-				if(confirm('确认录入版型数据？')){
-					return true;
-				}else{
-					return false;
-				}
-			}else{
-				alert("版型格式不对，请上传jpg或png格式的图片！");
-				return false;
-			}
+			return true;
 		}else{
 			alert("请上传版型文件！");
 			return false;

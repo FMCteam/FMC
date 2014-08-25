@@ -721,7 +721,16 @@
 				</button> -->
 			</div>
 		</form>
-
+		<%-- 
+			<a href="${ctx}/market/printConfirmProcurementOrder.do?orderId=${orderInfo.order.orderId}"  onclick="return check()"  id="printConfirmProcurementOrder"
+		 		class="btn btn-primary btn-rounded">打印补货单</a><span style="color: red;font-size: 16px;">&nbsp;亲，请别忘了打印补货单哦！</span>
+		 		 --%>
+	 		<a	href="${ctx}/market/printProcurementSampleOrder.do?orderId=${orderModel.order.orderId}"
+								class="btn btn-primary btn-rounded" style="width: 80px;" target="_blank">打印样衣单</a><a style="color: red;font-size: 16px;"> &nbsp亲，别忘了打印样衣单哦！</a>
+		 		<c:if test="${orderModel.order.isHaoDuoYi==1}">
+			<a href="${ctx}/market/printConfirmProcurementOrderHDY.do?orderId=${orderModel.order.orderId}"  onclick="return check()"  id="printConfirmProcurementOrder"
+		 		            style="font-size: 13px; margin-left:20px; padding: 9px 30px 7px; background: #0866c6;border-color: #0a6bce; color: #fff; text-shadow: none;"   target="_blank">打印补货单</a><a style="color: red;font-size: 16px;">亲，请别忘了打印补货单哦！</a>
+				</c:if>
 		<div class="footer">
 			<div class="footer-left">
 				<span>&copy; 2014. 江苏南通智造链有限公司.</span>
