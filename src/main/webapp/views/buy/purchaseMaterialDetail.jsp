@@ -83,14 +83,16 @@
 
 						<input type="hidden" name="result" id="result" />
 						
-						<button onclick="return fail()"
+						<c:if test="${model.order.isHaoDuoYi ==0 }">
+							<button onclick="return fail()"
 								class="btn btn-danger btn-rounded" style="margin-left: 0px;">
-								<i class="icon-remove icon-white"></i>采购失败</button>		
-						
+								<i class="icon-remove icon-white"></i>采购失败</button>
+						</c:if>
+
 						<div class="action" style="float:right">
 							<button class="btn btn-primary btn-rounded noreapt"  onclick="return success()">
 								<i class="icon-ok icon-white"></i>采购完成
-							</button>
+							</button>	
 						</div>
 						<br>
 <!-- 						<a href="${ctx}/buy/printProcurementOrder.do?orderId=${orderInfo.order.orderId}" -->
