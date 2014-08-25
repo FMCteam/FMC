@@ -37,7 +37,7 @@ public class LogisticsController {
 				.getReceiveSampleList();
 		model.addAttribute("list", list);
  
-		return "/logistics/receiveSampleList";
+		return "/logistics/receiveSampleList_new";
 	}
  
 	
@@ -187,7 +187,7 @@ public class LogisticsController {
 		model.put("packageHaoDuoYiList", packageHaoDuoYiList);
 		model.put("warehouseList", warehouseList);
 		model.put("warehouseHaoDuoYiList", warehouseHaoDuoYiList);
-		return "/logistics/warehouseList";
+		return "/logistics/warehouseList_new";
 	}
 	
 	@RequestMapping(value = "/logistics/packageDetail.do")
@@ -333,7 +333,7 @@ public class LogisticsController {
 		List<Map<String, Object>> sendList = logisticsService.getSendClothesList();
 		model.addAttribute("scanList", scanList);
 		model.addAttribute("sendList", sendList);
-		return "/logistics/sendClothesList";
+		return "/logistics/sendClothesList_new";
 	}
 
 	@RequestMapping(value = "/logistics/scanClothesDetail.do")
