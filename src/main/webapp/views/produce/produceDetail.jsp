@@ -107,7 +107,7 @@
 							 <input id="agree_detail" type="submit" value="开始外发加工" class="btn btn-primary btn-rounded">
 						</div>
 						<br>
-						<button class="btn btn-primary" onclick="history.back();">返回</button>
+						
 						<input id="produce_color" name="produce_color" type="hidden" /> <input
 							id="produce_xs" name="produce_xs" type="hidden" /> <input
 							id="produce_s" name="produce_s" type="hidden" /> <input
@@ -116,6 +116,9 @@
 							id="produce_xl" name="produce_xl" type="hidden" /> <input
 							id="produce_xxl" name="produce_xxl" type="hidden" />
 					</form>
+					
+					<button class="btn btn-primary" onclick="history.back();">返回</button>
+					
 				</div>
 			</div>
 		</div>
