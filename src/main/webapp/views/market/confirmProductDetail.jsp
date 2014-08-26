@@ -89,7 +89,7 @@
 		<br>
 			<button class="btn btn-primary" onclick="history.back(-1);">返回</button> 
 			<a href="${ctx}/market/printConfirmProcurementOrder.do?orderId=${orderInfo.order.orderId}"  onclick="return check()"  id="printConfirmProcurementOrder"
-		 		class="btn btn-primary btn-rounded">打印补货单</a><span style="color: red;font-size: 16px;">&nbsp;亲，请别忘了打印补货单哦！</span>
+		 		class="btn btn-primary">打印补货单</a><span style="color: red;font-size: 16px;">&nbsp;亲，请别忘了打印补货单哦！</span>
 	</div>
 	<!--maincontentinner-->
 	<div class="footer">
@@ -124,15 +124,15 @@ $(function(){
 })
 function confirmProductDetailSubmit(fileValue1,fileValue2) {
 	if($("#tof").val() == "true"){
-		var fileValue1str = fileValue1.substr(fileValue1.indexOf(".")).toLowerCase();
-		var fileValue2str = fileValue2.substr(fileValue2.indexOf(".")).toLowerCase();
+		var fileValue1str = fileValue1.toLowerCase().split(".");
+		var fileValue2str = fileValue2.toLowerCase().split(".");
 		if(fileValue1.length != 0){
-			if(!(fileValue1str ==".png"||fileValue1str ==".jpg"||fileValue1str ==".doc"||fileValue1str ==".docx"||fileValue1str ==".pdf")){
-				alert("合同文件格式错误，请上传png,jpg,doc,docx或pdf格式的文件!");
+			if(!(fileValue1str[fileValue1str.length-1] =="png"||fileValue1str[fileValue1str.length-1] =="jpg")){
+				alert("合同文件格式错误，请上传png,jpg格式的文件!");
 				return false;
 			}else{
 				if(fileValue2.length != 0){
-					if(!(fileValue2str ==".png"||fileValue2str ==".jpg")){
+					if(!(fileValue2str[fileValue2str.length-1] =="png"||fileValue2str[fileValue2str.length-1] =="jpg")){
 						alert("定金收据格式错误，请上传jpg,png格式的文件!");
 						return false;
 					}else{

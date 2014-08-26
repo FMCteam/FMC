@@ -141,9 +141,9 @@ $(document).ready(function() {
 
 function check(){
 	var craftFile = document.getElementById("craftFile").value;
-	var craftFilestr = craftFile.substr(craftFile.indexOf(".")).toLowerCase();		
+	var craftFilestr = craftFile.toLowerCase().split(".");		
 	if(craftFile.length != 0){
-		if(craftFilestr == ".jpg" || craftFilestr == ".png"){	
+		if(craftFilestr[craftFilestr.length-1] == "jpg" || craftFilestr[craftFilestr.length-1] == "png"){	
 			if(confirm('确认上传工艺图片？')){
 				return true;
 			}else{
