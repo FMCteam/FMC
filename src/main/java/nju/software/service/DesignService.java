@@ -104,4 +104,20 @@ public interface DesignService {
 	//获取订单中工艺状态
 	String getCraftInfo(Integer orderId);
 
+	public List<Map<String, Object>> getSearchNeedCraftSampleList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchNeedCraftList(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchTypeSettingSliceList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public List<Map<String, Object>> getSearchConfirmCadList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
 }

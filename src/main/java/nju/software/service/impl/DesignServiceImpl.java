@@ -332,12 +332,29 @@ public class DesignServiceImpl implements DesignService {
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CONFIRM_CAD);
 	}
 	
+	@Override
+	public List<Map<String, Object>> getSearchConfirmCadList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER,ordernumber,customername,stylename,
+				 startdate,enddate,employeeIds,TASK_CONFIRM_CAD);
+	}
+	
     //获得需要工艺制作的大货订单列表
 	@Override
 	public List<Map<String, Object>> getNeedCraftList() {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CRAFT_PRODUCT);
 	}
+	
+	@Override
+	public List<Map<String, Object>> getSearchNeedCraftList(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER,ordernumber,customername,stylename,
+				 startdate,enddate,employeeIds,TASK_CRAFT_PRODUCT);
+	}
+	
 	 //获得需要工艺制作的大货订单
 	@Override
 	public Map<String, Object> getNeedCraftProductDetail(int orderId) {
@@ -371,6 +388,16 @@ public class DesignServiceImpl implements DesignService {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_CRAFT_SAMPLE);
 	}
+	
+	@Override
+	public List<Map<String, Object>> getSearchNeedCraftSampleList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		
+		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER,ordernumber,customername,stylename,
+				 startdate,enddate,employeeIds,TASK_CRAFT_SAMPLE);
+	}
+	
 	//获得需要工艺制作的样衣订单
 	@Override
 	public Map<String, Object> getNeedCraftSampleDetail(int orderId) {
@@ -412,6 +439,15 @@ public class DesignServiceImpl implements DesignService {
 	public List<Map<String, Object>> getTypeSettingSliceList() {
 		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_DESIGN_MANAGER, TASK_TYPESETTING_SLICE);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getSearchTypeSettingSliceList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_DESIGN_MANAGER,ordernumber,customername,stylename,
+				 startdate,enddate,employeeIds,TASK_TYPESETTING_SLICE);
+	 
 	}
 	
 	//获得需要排版切片订单	
@@ -547,4 +583,11 @@ public class DesignServiceImpl implements DesignService {
 		Craft craft =list.get(0);
 		return craft.getOrderSampleStatus();
 	}
+
+
+
+
+
+ 
+
 }

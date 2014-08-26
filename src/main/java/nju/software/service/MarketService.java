@@ -213,4 +213,8 @@ public interface MarketService {
 	public boolean getPushRestOrderSubmit(String actorId, long taskId,
 			boolean result,String orderId_string);
 
+	public List<Map<String, Object>> getSearchPushRestOrderList(String string,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
 }

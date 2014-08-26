@@ -26,8 +26,6 @@
 </div>
 <!--maincontent-->
 
-
-
 <%@include file="/common/js_file.jsp"%>
 <!-- 这里引入你需要的js文件 -->
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">

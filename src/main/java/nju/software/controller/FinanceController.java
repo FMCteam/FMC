@@ -135,6 +135,36 @@ public class FinanceController {
 
 		return "/finance/returnDepositList";
 	}	
+	
+	// ===========================退还定金列表搜索===================================
+	@RequestMapping(value = "/finance/returnDepositListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String returnDepositListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		
+		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
+		List<Map<String, Object>> list = financeService
+				.getReturnDepositList(actorId,ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "退还大货定金");
+		model.addAttribute("url", "/finance/returnDepositDetail.do");
+		model.addAttribute("searchurl", "/finance/returnDepositListSearch.do");
+
+		return "/finance/returnDepositList";
+	}
+	
 	// ===========================定金确认===================================
 	@RequestMapping(value = "/finance/confirmDepositList.do")
 	@Transactional(rollbackFor = Exception.class)

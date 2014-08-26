@@ -1990,20 +1990,48 @@ public class MarketController {
 			return "/market/getPushRestOrderList";
 		}
 		
+		// ========================市场专员催尾款搜索===============================
 		@RequestMapping(value = "/market/getPushRestOrderListSearch.do")
 		@Transactional(rollbackFor = Exception.class)
 		public String getPushRestOrderListSearch(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
+			String ordernumber = request.getParameter("ordernumber");
+			String customername = request.getParameter("customername");
+			String stylename = request.getParameter("stylename");
+			String employeename = request.getParameter("employeename");
+			String startdate = request.getParameter("startdate");
+			String enddate = request.getParameter("enddate");
+			//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+			List<Employee> employees = employeeService.getEmployeeByName(employeename);
+			Integer[] employeeIds = new Integer[employees.size()];
+			for(int i=0;i<employeeIds.length;i++){
+				employeeIds[i] = employees.get(i).getEmployeeId();
+			}	
 			Account account = (Account) request.getSession().getAttribute(
 					"cur_user");
 			List<Map<String, Object>> list = marketService
-					.getPushRestOrderList(account.getUserId()+"");
+					.getSearchPushRestOrderList(account.getUserId() + "",ordernumber,customername,stylename,startdate,enddate,employeeIds);
 			model.put("list", list); 
-			model.addAttribute("taskName", "催尾款");
+			model.addAttribute("taskName", "催尾款搜索");
 			model.addAttribute("url", "/market/getPushRestOrderDetail.do");
 			model.addAttribute("searchurl", "/market/getPushRestOrderListSearch.do");
 			return "/market/getPushRestOrderList";
 		}
+		
+// 		@RequestMapping(value = "/market/getPushRestOrderListSearch.do")
+//		@Transactional(rollbackFor = Exception.class)
+//		public String getPushRestOrderListSearch(HttpServletRequest request,
+//				HttpServletResponse response, ModelMap model) {
+//			Account account = (Account) request.getSession().getAttribute(
+//					"cur_user");
+//			List<Map<String, Object>> list = marketService
+//					.getPushRestOrderList(account.getUserId()+"");
+//			model.put("list", list); 
+//			model.addAttribute("taskName", "催尾款");
+//			model.addAttribute("url", "/market/getPushRestOrderDetail.do");
+//			model.addAttribute("searchurl", "/market/getPushRestOrderListSearch.do");
+//			return "/market/getPushRestOrderList";
+//		}
 		
 		@RequestMapping(value = "/market/getPushRestOrderDetail.do")
 		@Transactional(rollbackFor = Exception.class)
