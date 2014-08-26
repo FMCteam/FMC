@@ -89,8 +89,8 @@ public class MarketServiceImpl implements MarketService {
 	public final static String RESULT_CONFIRM_PRODUCE_ORDER_CONTRACT="confirmProduceOrderContract";
 	public final static String RESULT_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
 	public final static String RESULT_PUSH_RESTMONEY = "pushRestMoney";
-	public final static String UPLOAD_DIR_SAMPLE = "C:/fmc/sample/";
-	public final static String UPLOAD_DIR_REFERENCE = "C:/fmc/reference/";
+	public final static String UPLOAD_DIR_SAMPLE = "/upload/sample/";
+	public final static String UPLOAD_DIR_REFERENCE = "/upload/reference/";
 	public final static String RESULT_VERIFY_QUOTE = "verifyQuoteSuccess";
 	public final static String VERIFY_QUOTE_COMMENT = "verifyQuoteComment";
 	
@@ -163,18 +163,35 @@ public class MarketServiceImpl implements MarketService {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
 		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
-			String filedir = request.getSession().getServletContext()
-					.getRealPath("/upload/sampleClothesPicture/" + orderId);
-			File file = FileOperateUtil.Upload(request, UPLOAD_DIR_SAMPLE
-					+ orderId, "1", "sample_clothes_picture");
-			order.setSampleClothesPicture(file.getAbsolutePath());
+//			String filedir = request.getSession().getServletContext()
+//					.getRealPath("/upload/sample/" + orderId);
+			
+			String curPath = request.getSession().getServletContext()
+					.getRealPath("/");
+			String fatherPath = new File(curPath).getParent();
+			String relativePath = "\\upload\\sample\\" + orderId;
+			String filedir = fatherPath + relativePath;
+
+			File file = FileOperateUtil.Upload(request, filedir, "1",
+					"sample_clothes_picture");
+			order.setSampleClothesPicture(UPLOAD_DIR_SAMPLE + orderId + "/"
+					+ file.getName());
 		}
+		
 		if (!multipartRequest.getFile("reference_picture").isEmpty()) {
-			String filedir = request.getSession().getServletContext()
-					.getRealPath("/upload/reference_picture/" + orderId);
-			File file = FileOperateUtil.Upload(request, UPLOAD_DIR_REFERENCE
-					+ orderId, "1", "reference_picture");
-			order.setReferencePicture(file.getAbsolutePath());
+//			String filedir = request.getSession().getServletContext()
+//					.getRealPath("/upload/reference/" + orderId);
+			
+			String curPath = request.getSession().getServletContext()
+					.getRealPath("/");
+			String fatherPath = new File(curPath).getParent();
+			String relativePath = "\\upload\\reference\\" + orderId;
+			String filedir = fatherPath + relativePath;
+
+			File file = FileOperateUtil.Upload(request, filedir, "1",
+					"reference_picture");
+			order.setReferencePicture(UPLOAD_DIR_REFERENCE + orderId + "/"
+					+ file.getName());
 		}
 
 		orderDAO.attachDirty(order);

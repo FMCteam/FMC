@@ -23,7 +23,7 @@
 								<li>
 									<div>
 										<a href="${ctx}/logistics/receiveSampleDetail.do?orderId=${task.order.orderId}"  title="查看详情">
-										<img src="${ctx}/common/getPic.do?type=sample&orderId=${model.order.orderId}" title="查看详情" style="height:225px;width:225px" >
+										<img src="${task.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >
 										</a>
 									</div>
 							
@@ -31,7 +31,7 @@
 										<table>
 											<tbody>
 												<tr>
-												<td colspan="2" style="color: #CD0000;font-weight: bold; height: 42px; vertical-align:middle;">${model.order.styleName}</td>
+												<td colspan="2" style="color: #CD0000;font-weight: bold; height: 42px; vertical-align:middle;">${task.order.styleName}</td>
 												</tr>
 												<tr>
 													<td>询单编号：</td>

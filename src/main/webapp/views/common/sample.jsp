@@ -47,15 +47,26 @@
 		<td class="title">样衣信息</td>
 		<td class="title">样衣图片</td>
 		<td><c:if test="${orderInfo.order.sampleClothesPicture!=null}">
-				<img src="${ctx}/common/getPic.do?type=sample&orderId=${orderInfo.order.orderId}"
-					style="max-height: 300px;" alt="样衣图片"></img>
+				<a class="fancybox" href="${orderInfo.order.sampleClothesPicture}" title="样衣图片">
+					<img src="${orderInfo.order.sampleClothesPicture}"
+						style="max-height: 300px;" alt="样衣图片"></img></a>
 			</c:if></td>
 		<td class="title">参考图片</td>
 		<td colspan="2"><c:if
 				test="${orderInfo.order.referencePicture!=null}">
-				<img
-					src="${ctx}/common/getPic.do?type=reference&orderId=${orderInfo.order.orderId}"
-					style="max-height: 300px;" alt="参考图片"></img>
+				<a class="fancybox" href="${orderInfo.order.referencePicture}" title="参考图片">
+					<img src="${orderInfo.order.referencePicture}"
+						style="max-height: 300px;" alt="参考图片"></img></a>
 			</c:if></td>
 	</tr>
 </table>
+
+<link rel="stylesheet" type="text/css" href="${ctx}/css/zoom_img/jquery.fancybox.css" media="screen" />
+<script type="text/javascript" src="${ctx}/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/zoom_img/jquery.fancybox.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.fancybox').fancybox();	
+});
+</script>
+
