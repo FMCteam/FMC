@@ -449,13 +449,13 @@
 		
 		var sample_clothes_picture = document.getElementById("sample_clothes_picture").value;
 		var reference_picture = document.getElementById("reference_picture").value;
-		var sample_clothes_picturestr = sample_clothes_picture.substr(sample_clothes_picture.indexOf(".")).toLowerCase();		
-		var reference_picturestr = reference_picture.substr(reference_picture.indexOf(".")).toLowerCase();
+		var sample_clothes_picturestr = sample_clothes_picture.toLowerCase().split(".");		
+		var reference_picturestr = reference_picture.toLowerCase().split(".");
 
 		if(sample_clothes_picture.length != 0){
-			if(sample_clothes_picturestr == ".jpg" || sample_clothes_picturestr == ".png"){
+			if(sample_clothes_picturestr[sample_clothes_picturestr.length-1] == "jpg" || sample_clothes_picturestr[sample_clothes_picturestr.length-1] == "png"){
 				if(reference_picture.length != 0){
-					if(reference_picturestr == ".jpg" || reference_picturestr == ".png"){
+					if(reference_picturestr[reference_picturestr.length-1] == "jpg" || reference_picturestr[reference_picturestr.length-1] == "png"){
 						
 					}else{
 						alert("参考图片格式不对，请上传jpg或png格式的图片！");

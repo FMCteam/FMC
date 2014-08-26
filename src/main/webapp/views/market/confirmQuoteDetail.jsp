@@ -118,9 +118,9 @@ jQuery(document).ready(function(){
 		var isNeedSampleClothes = $("#isNeedSampleClothes").val();
 		if(isNeedSampleClothes == "1"){
 			var confirmSampleMoneyFile = document.getElementById("confirmSampleMoneyFile").value;
-			var confirmSampleMoneyFilestr = confirmSampleMoneyFile.substr(confirmSampleMoneyFile.indexOf(".")).toLowerCase();		
+			var confirmSampleMoneyFilestr = confirmSampleMoneyFile.toLowerCase().split(".");		
 			if(confirmSampleMoneyFile.length != 0){
-				if(confirmSampleMoneyFilestr == ".jpg" || confirmSampleMoneyFilestr == ".png"){	
+				if(confirmSampleMoneyFilestr[confirmSampleMoneyFilestr.length-1] == "jpg" || confirmSampleMoneyFilestr[confirmSampleMoneyFilestr.length-1] == "png"){	
 					if(confirm('确认报价？')){
 						jQuery("#result").val("0");
 						jQuery("#confirm_quote_form").submit();
