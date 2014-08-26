@@ -49,7 +49,7 @@
 									<td colspan="2">${fabricCost.fabricName }</td>
 									<td colspan="1">${fabricCost.tearPerMeter }</td>
 									<td colspan="1">${orderInfo.order.askAmount}</td>
-									<td colspan="2"><span id="metersPurchasedAll">${(fabricCost.tearPerMeter)*(orderInfo.order.askAmount)}</span></td>
+									<td colspan="2"><span class="metersPurchasedAll">${(fabricCost.tearPerMeter)*(orderInfo.order.askAmount)}</span></td>
 								</tr>
 							</c:forEach>
 							<tr>
@@ -64,7 +64,7 @@
 									<td colspan="2">${accessoryCost.accessoryName }</td>
 									<td colspan="1">${accessoryCost.tearPerPiece }</td>
 									<td colspan="1">${orderInfo.order.askAmount}</td> 
-									<td colspan="2"><span id="piecesPurchasedAll">${(accessoryCost.tearPerPiece)*(orderInfo.order.askAmount)}</span></td>
+									<td colspan="2"><span class="piecesPurchasedAll">${(accessoryCost.tearPerPiece)*(orderInfo.order.askAmount)}</span></td>
 		
 								</tr>
 							</c:forEach>
@@ -97,13 +97,13 @@
 						<br>
 <!-- 						<a href="${ctx}/buy/printProcurementOrder.do?orderId=${orderInfo.order.orderId}" -->
 <!-- 								class="btn btn-primary btn-rounded" target="_blank">打印补货单</a> -->
-								<button class="btn btn-primary" onclick="history.back();">返回</button>
+								
 					</div>
 	
 				</div>
 			</div>
 		</form>
-		
+		<button class="btn btn-primary" onclick="history.back();">返回</button>
 	</div>
 
 
@@ -127,10 +127,16 @@
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <script type="text/javascript">
-	var text=$("#metersPurchasedAll").text();
-	$("#metersPurchasedAll").text(parseFloat(text).toFixed(2));
-	var text=$("#piecesPurchasedAll").text();
-	$("#piecesPurchasedAll").text(parseFloat(text).toFixed(2));
+	//var text=$("#metersPurchasedAll").text();
+	$.each($(".metersPurchasedAll"),function(index,value){
+		$(this).text(parseFloat($(this).text()).toFixed(2));
+	})
+	//$(".metersPurchasedAll").text(parseFloat(text).toFixed(2));
+	//var text=$("#piecesPurchasedAll").text();
+	$.each($(".piecesPurchasedAll"),function(index,value){
+		$(this).text(parseFloat($(this).text()).toFixed(2));
+	})
+	//$(".piecesPurchasedAll").text(parseFloat(text).toFixed(2));
 	
 	function fail(){
 		$("#result").val(0);
