@@ -89,7 +89,8 @@
 		<br>
 			<button class="btn btn-primary" onclick="history.back(-1);">返回</button> 
 			<a href="${ctx}/market/printConfirmProcurementOrder.do?orderId=${orderInfo.order.orderId}"  onclick="return check()"  id="printConfirmProcurementOrder"
-		 		class="btn btn-primary">打印补货单</a><span style="color: red;font-size: 16px;">&nbsp;亲，请别忘了打印补货单哦！</span>
+		 		 style="font-size: 13px; margin-left:20px; padding: 9px 30px 7px; background: #0866c6;border-color: #0a6bce; color: #fff; text-shadow: none;"   target="_blank">打印补货单</a><a style="color: red;font-size: 16px;">打印补货单</a><span style="color: red;font-size: 16px;">&nbsp;亲，请别忘了打印补货单哦！</span>
+
 	</div>
 	<!--maincontentinner-->
 	<div class="footer">
