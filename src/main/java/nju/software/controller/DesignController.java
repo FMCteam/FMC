@@ -16,6 +16,7 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.Produce;
 import nju.software.service.DesignService;
 import nju.software.service.EmployeeService;
+import nju.software.service.MarketService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.impl.JbpmTest;
@@ -296,6 +297,39 @@ public class DesignController {
 		model.addAttribute("orderSampleStatus",orderSampleStatus);
 		return "/design/getUploadDesignDetail";
 //		return "forward:/design/getUploadDesignList.do";
+	}
+	/** 
+	* @Title: uploadDesignSubmit_all 
+	* @Description: TODO:设计部门可以随时修改上传的版型数据
+	* @param @param request
+	* @param @param response
+	* @param @param model
+	* @param @return    设定文件 
+	* @return String    返回类型 
+	* @throws 
+	*/
+	@RequestMapping(value = "/design/uploadDesignSubmit_all.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String uploadDesignSubmit_all(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		String cadSide = request.getParameter("cadSide");//制版人
+		Timestamp completeTime = this.getTime(request.getParameter("completeTime"));//制版完成时间
+		String taskId ="1";
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile file = multipartRequest.getFile("CADFile");
+		String filename = file.getOriginalFilename();
+		String url = CAD_URL + orderId;
+		String fileid = "CADFile";
+		FileOperateUtil.Upload(request, url, null, fileid);
+ 		url = url + "/" + filename;
+		Timestamp uploadTime = new Timestamp(new Date().getTime());
+		designService.EntryCadData(Integer.parseInt(orderId),
+				Long.parseLong(taskId), url, uploadTime, cadSide, completeTime);
+ 		Map<String, Object> orderInfo = marketService.getOrderDetail(Integer.valueOf(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/market/orderDetail";
 	}
  
     //生产样衣
@@ -657,6 +691,8 @@ public class DesignController {
 	
 	@Autowired
 	private DesignService designService;
+	@Autowired
+	private MarketService marketService;
 	@Autowired
 	private JbpmTest jbpmTest;
 }
