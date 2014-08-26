@@ -23,7 +23,7 @@
 								<li>
 									<div>
 										<a href="${ctx}/logistics/receiveSampleDetail.do?orderId=${task.order.orderId}"  title="查看详情">
-										<img src="${ctx}/common/getPic.do?type=sample&orderId=${model.order.orderId}" title="查看详情" style="height:225px;width:225px" >
+										<img src="${ctx}/common/getPic.do?type=sample&orderId=${task.order.orderId}" title="查看详情" style="height:225px;width:225px" >
 										</a>
 									</div>
 							
