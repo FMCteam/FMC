@@ -91,7 +91,7 @@ line-height: 16px
 			<td
 				style="width:40%;height:170px;text-align: center;vertical-align:middle;">贴样布处</td>
 			<td rowspan="2"><img style="height:200px;"
-				src="${ctx}/common/getPic.do?type=sample&orderId=${orderInfo.order.orderId}">
+				src="${orderInfo.order.sampleClothesPicture}">
 		</tr>
 		<tr>
 			<td style="height:30px;vertical-align:middle;">面料成分： <c:forEach

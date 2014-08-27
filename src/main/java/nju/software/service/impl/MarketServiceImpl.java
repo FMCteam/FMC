@@ -169,7 +169,8 @@ public class MarketServiceImpl implements MarketService {
 			String curPath = request.getSession().getServletContext()
 					.getRealPath("/");
 			String fatherPath = new File(curPath).getParent();
-			String relativePath = "\\upload\\sample\\" + orderId;
+			String relativePath = File.separator + "upload" + File.separator
+					+ "sample" + File.separator + orderId;
 			String filedir = fatherPath + relativePath;
 
 			File file = FileOperateUtil.Upload(request, filedir, "1",
@@ -185,7 +186,8 @@ public class MarketServiceImpl implements MarketService {
 			String curPath = request.getSession().getServletContext()
 					.getRealPath("/");
 			String fatherPath = new File(curPath).getParent();
-			String relativePath = "\\upload\\reference\\" + orderId;
+			String relativePath = File.separator + "upload" + File.separator
+					+ "reference" + File.separator + orderId;
 			String filedir = fatherPath + relativePath;
 
 			File file = FileOperateUtil.Upload(request, filedir, "1",

@@ -76,10 +76,15 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class MarketController {
-	private final static String CONTRACT_URL = "C:/fmc/contract/";
-	private final static String CONFIRM_SAMPLEMONEY_URL="C:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
-	private final static String CONFIRM_DEPOSIT_URL="C:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
-	private final static String CONFIRM_FINALPAYMENT_URL="C:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
+//	private final static String CONTRACT_URL = "C:/fmc/contract/";//合同图片
+//	private final static String CONFIRM_SAMPLEMONEY_URL="C:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
+//	private final static String CONFIRM_DEPOSIT_URL="C:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
+//	private final static String CONFIRM_FINALPAYMENT_URL="C:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
+	
+	private final static String CONTRACT_URL = "/upload/contract/";//合同图片
+	private final static String CONFIRM_SAMPLEMONEY_URL="/upload/confirmSampleMoneyFile/";//样衣金收取钱款图片
+	private final static String CONFIRM_DEPOSIT_URL="/upload/confirmDepositFile/";//大货首定金收取钱款图片
+	private final static String CONFIRM_FINALPAYMENT_URL="/upload/confirmFinalPaymentFile/";//大货首定金收取钱款图片
 
 	@Autowired
 	private OrderService orderService;
@@ -1733,17 +1738,24 @@ public class MarketController {
 				filename = file.getOriginalFilename();
 			}
 			
-			url = CONFIRM_SAMPLEMONEY_URL + orderId;
+			// 将图片保存在和项目根目录同级的文件夹upload下
+			String curPath = request.getSession().getServletContext()
+					.getRealPath("/");// 获取当前路径
+			String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+			String relativePath = "\\upload\\confirmSampleMoneyFile\\" + orderId;
+			String filedir = fatherPath + relativePath;// 最终要保存的路径
+			
 			String fileid = "confirmSampleMoneyFile";
-			FileOperateUtil.Upload(request, url, null, fileid);
-			url = url + "/" + filename;
+			FileOperateUtil.Upload(request, filedir, null, fileid);
+			
+			url = CONFIRM_SAMPLEMONEY_URL + orderId + "/" + filename;// 保存在数据库里的相对路径
 		}
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 		String actorId = account.getUserId() + "";
 		// marketService.confirmQuoteSubmit(actorId,
 		// Long.parseLong(taskId),result);
 		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),
-				Integer.parseInt(orderId), result, url,moneyremark);
+				Integer.parseInt(orderId), result, url, moneyremark);
 
 		// 1=修改报价，2=取消订单
 		if (result.equals("1")) {
@@ -1889,24 +1901,35 @@ public class MarketController {
 			String orderId = request.getParameter("orderId");
 			String moneyremark = request.getParameter("moneyremark");
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-			MultipartFile file = multipartRequest.getFile("contractFile");
+			MultipartFile contractFile = multipartRequest.getFile("contractFile");
 			MultipartFile confirmDepositFile =  multipartRequest.getFile("confirmDepositFile");
-			String filename = file.getOriginalFilename();
+			String contractFileName = contractFile.getOriginalFilename();
 			String confirmDepositFileName = confirmDepositFile.getOriginalFilename();
-			String url = CONTRACT_URL + orderId;
-			String confirmDepositFileUrl = CONFIRM_DEPOSIT_URL + orderId;		
+			
+			// 将图片保存在和项目根目录同级的文件夹upload下
+			String curPath = request.getSession().getServletContext()
+					.getRealPath("/");// 获取当前路径
+			String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+			String contractRelativePath = File.separator + "upload"
+					+ File.separator + "contract" + File.separator + orderId;
+			String depositRelativePath = File.separator + "upload"
+					+ File.separator + "confirmDepositFile" + File.separator + orderId;
+			String contractFileDir = fatherPath + contractRelativePath;// 最终合同保存的路径
+			String depositFileDir = fatherPath + depositRelativePath;// 最终首定金要保存的路径
+			
 			String fileid = "contractFile";
 			String confirmDepositFileId = "confirmDepositFile";
-			FileOperateUtil.Upload(request, url, null, fileid);
-			FileOperateUtil.Upload(request, confirmDepositFileUrl, null, confirmDepositFileId);
-			url = url + "/" + filename;
-			confirmDepositFileUrl = confirmDepositFileUrl + "/" + confirmDepositFileName;
+			FileOperateUtil.Upload(request, contractFileDir, null, fileid);
+			FileOperateUtil.Upload(request, depositFileDir, null, confirmDepositFileId);
+			
+			String contractFileUrl = CONTRACT_URL + orderId + "/" + contractFileName;
+			String confirmDepositFileUrl = CONFIRM_DEPOSIT_URL + orderId + "/" + confirmDepositFileName;		
 
 			String actorId = account.getUserId() + "";
 			//上传合同，上传首定金收据，一般是截图，
 			marketService.signContractSubmit(actorId, Long.parseLong(s_taskId),
 					Integer.parseInt(orderId), Double.parseDouble(discount),
-					Double.parseDouble(total), url,confirmDepositFileUrl,moneyremark);
+					Double.parseDouble(total), contractFileUrl, confirmDepositFileUrl, moneyremark);
 
 		}
 		
@@ -2026,13 +2049,25 @@ public class MarketController {
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			MultipartFile confirmFinalPaymentFile =  multipartRequest.getFile("confirmFinalPaymentFile");
 			String confirmFinalPaymentFileName = confirmFinalPaymentFile.getOriginalFilename();
-			String confirmFinalPaymentFileUrl = CONFIRM_FINALPAYMENT_URL + orderId;		
+			
+			// 将图片保存在和项目根目录同级的文件夹upload下
+			String curPath = request.getSession().getServletContext()
+					.getRealPath("/");// 获取当前路径
+			String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+			String relativePath = File.separator + "upload" + File.separator
+					+ "confirmFinalPaymentFile" + File.separator
+					+ orderId;
+			String filedir = fatherPath + relativePath;// 最终要保存的路径
+			
 			String confirmFinalPaymentFileId = "confirmFinalPaymentFile";
+			
+			FileOperateUtil.Upload(request, filedir, null, confirmFinalPaymentFileId);
+			
+			String confirmFinalPaymentFileUrl = CONFIRM_FINALPAYMENT_URL + orderId
+					+ "/" + confirmFinalPaymentFileName;
 			String moneyremark = request.getParameter("moneyremark");
-			FileOperateUtil.Upload(request, confirmFinalPaymentFileUrl, null, confirmFinalPaymentFileId);
-			confirmFinalPaymentFileUrl = confirmFinalPaymentFileUrl + "/" + confirmFinalPaymentFileName;
-			//上传尾定金收据，一般是截图，
-	 
+			
+			//上传尾定金收据，一般是截图
 			marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId),confirmFinalPaymentFileUrl,moneyremark);
 			Account account = (Account) request.getSession().getAttribute(
 					"cur_user");
@@ -2054,16 +2089,32 @@ public class MarketController {
 			//result=0，催尾款失败；result=1，确认收到尾款
 			boolean result = request.getParameter("result").equals("1");
 			if(result){
-			
- 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-			MultipartFile confirmFinalPaymentFile =  multipartRequest.getFile("confirmFinalPaymentFile");
-			String confirmFinalPaymentFileName = confirmFinalPaymentFile.getOriginalFilename();
-			String confirmFinalPaymentFileUrl = CONFIRM_FINALPAYMENT_URL + orderId_string;		
-			String confirmFinalPaymentFileId = "confirmFinalPaymentFile";
-			FileOperateUtil.Upload(request, confirmFinalPaymentFileUrl, null, confirmFinalPaymentFileId);
-			confirmFinalPaymentFileUrl = confirmFinalPaymentFileUrl + "/" + confirmFinalPaymentFileName;
-			//上传尾定金收据，一般是截图，	 
-			marketService.signConfirmFinalPaymentFileSubmit( Integer.parseInt(orderId_string),confirmFinalPaymentFileUrl,moneyremark);  
+				MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+				MultipartFile confirmFinalPaymentFile = multipartRequest
+						.getFile("confirmFinalPaymentFile");
+				String confirmFinalPaymentFileName = confirmFinalPaymentFile
+						.getOriginalFilename();
+	
+				// 将图片保存在和项目根目录同级的文件夹upload下
+				String curPath = request.getSession().getServletContext()
+						.getRealPath("/");// 获取当前路径
+				String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+				String relativePath = File.separator + "upload" + File.separator
+						+ "confirmFinalPaymentFile" + File.separator
+						+ orderId_string;
+				String filedir = fatherPath + relativePath;// 最终要保存的路径
+	
+				String confirmFinalPaymentFileId = "confirmFinalPaymentFile";
+				FileOperateUtil.Upload(request, filedir, null,
+						confirmFinalPaymentFileId);
+	
+				String confirmFinalPaymentFileUrl = CONFIRM_FINALPAYMENT_URL
+						+ orderId_string + "/" + confirmFinalPaymentFileName;
+	
+				// 上传尾定金收据，一般是截图，
+				marketService.signConfirmFinalPaymentFileSubmit(
+						Integer.parseInt(orderId_string),
+						confirmFinalPaymentFileUrl, moneyremark);
 			}
 			Account account = (Account) request.getSession().getAttribute(
 					"cur_user");
@@ -2151,25 +2202,37 @@ public class MarketController {
 		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		MultipartFile file = multipartRequest.getFile("contractFile");
+		MultipartFile contractFile = multipartRequest.getFile("contractFile");
 		MultipartFile confirmDepositFile =  multipartRequest.getFile("confirmDepositFile");
-		String filename = file.getOriginalFilename();
+		String contractFileName = contractFile.getOriginalFilename();
 		String confirmDepositFileName = confirmDepositFile.getOriginalFilename();
-		String url = CONTRACT_URL + orderId;
-		String confirmDepositFileUrl = CONFIRM_DEPOSIT_URL + orderId;		
+		
+		// 将图片保存在和项目根目录同级的文件夹upload下
+		String curPath = request.getSession().getServletContext()
+				.getRealPath("/");// 获取当前路径
+		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+		String contractRelativePath = File.separator + "upload"
+				+ File.separator + "contract" + File.separator + orderId;
+		String depositRelativePath = File.separator + "upload"
+				+ File.separator + "confirmDepositFile" + File.separator + orderId;
+		String contractFileDir = fatherPath + contractRelativePath;// 最终合同保存的路径
+		String depositFileDir = fatherPath + depositRelativePath;// 最终首定金要保存的路径
+		
 		String fileid = "contractFile";
 		String confirmDepositFileId = "confirmDepositFile";
-		FileOperateUtil.Upload(request, url, null, fileid);
-		FileOperateUtil.Upload(request, confirmDepositFileUrl, null, confirmDepositFileId);
-		url = url + "/" + filename;
-		confirmDepositFileUrl = confirmDepositFileUrl + "/" + confirmDepositFileName;
+		FileOperateUtil.Upload(request, contractFileDir, null, fileid);
+		FileOperateUtil.Upload(request, depositFileDir, null, confirmDepositFileId);
+		
+		String contractFileUrl = CONTRACT_URL + orderId + "/" + contractFileName;
+		String confirmDepositFileUrl = CONFIRM_DEPOSIT_URL + orderId + "/" + confirmDepositFileName;
+		
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
 		String actorId = account.getUserId() + "";
 		//上传合同，上传首定金收据，一般是截图，
 		marketService.signContractSubmit(actorId, Long.parseLong(taskId),
 				Integer.parseInt(orderId), Double.parseDouble(discount),
-				Double.parseDouble(total), url,confirmDepositFileUrl,"");//""   hcj
+				Double.parseDouble(total), contractFileUrl, confirmDepositFileUrl,"");//""   hcj
 
 		Map<String, Object> orderInfo = marketService.getConfirmProductDetail(
 				account.getUserId(), Integer.parseInt(orderId));

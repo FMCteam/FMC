@@ -72,7 +72,7 @@
 		                        
 		                        <td class="title">工艺图片</td>
 		                        <td colspan="5"><c:if test="${orderInfo.craft.craftFileUrl!=null}">
-				                <img src="${ctx}/common/getPic.do?type=craftFileUrl&orderId=${orderInfo.order.orderId}"
+				                <img src="${orderInfo.craft.craftFileUrl}"
 					                 style="max-height: 300px;" alt="工艺图片"></img>
 			                    </c:if></td>
 	                        </tr>

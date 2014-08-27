@@ -44,14 +44,14 @@
 				                <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 								<input name="craftFile" id="craftFile" type="file" required="required"/> 
 								<input class="btn btn-primary btn-rounded" type="submit" value="上传工艺制作图"  onclick="return check()"/>						
-								<a style="color: red;">点击后,上传图片生效！</a>
+								<a style="color: red;">点击后，上传图片生效！</a>
 							</td>
 						</tr>
 						<tr>
 			                <td class="title">工艺图片</td>
 			                <td colspan="6">
 			                	<c:if test="${orderInfo.sampleCraft.craftFileUrl!=null}">
-					            	<img src="${ctx}/common/getPic.do?type=craftFileUrl&orderId=${orderInfo.order.orderId}"
+					            	<img src="${orderInfo.sampleCraft.craftFileUrl}"
 						                 style="max-height: 300px;" alt="工艺图片"></img>
 				                </c:if>
 				            </td>

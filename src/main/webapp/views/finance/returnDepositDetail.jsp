@@ -146,7 +146,7 @@
 		                        <td class="title">汇款信息</td>
 		                        <td class="title">汇款图片</td>
 		                        <td colspan="3"><c:if test="${orderInfo.order.confirmDepositFile!=null}">
-				                <img src="${ctx}/common/getPic.do?type=confirmDepositFile&orderId=${orderInfo.order.orderId}"
+				                <img src="${orderInfo.order.confirmDepositFile}"
 					                 style="max-height: 300px;" alt="汇款图片"></img>
 			                    </c:if></td>
 	                        </tr>

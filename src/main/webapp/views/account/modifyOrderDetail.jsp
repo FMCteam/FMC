@@ -333,14 +333,14 @@
 							<tr>
 								<td colspan="3">
 									<c:if test="${orderModel.order.sampleClothesPicture!=null}">
-										<img src="${ctx}/common/getPic.do?type=sample&orderId=${orderModel.order.orderId}"
+										<img src="${orderModel.order.sampleClothesPicture}"
 											style="max-height: 300px;" alt="样衣图片"></img><br/>
 									</c:if>
 									<input type="file" name="sample_clothes_picture"
 										value="" /></td>
 								<td colspan="3">
 									<c:if test="${orderModel.order.referencePicture!=null}">
-										<img src="${ctx}/common/getPic.do?type=reference&orderId=${orderModel.order.orderId}"
+										<img src="${orderModel.order.referencePicture}"
 											style="max-height: 300px;" alt="参考图片"></img><br/>
 									</c:if>
 									<input type="file" name="reference_picture"

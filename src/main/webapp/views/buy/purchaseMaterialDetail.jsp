@@ -130,12 +130,12 @@
 	//var text=$("#metersPurchasedAll").text();
 	$.each($(".metersPurchasedAll"),function(index,value){
 		$(this).text(parseFloat($(this).text()).toFixed(2));
-	})
+	});
 	//$(".metersPurchasedAll").text(parseFloat(text).toFixed(2));
 	//var text=$("#piecesPurchasedAll").text();
 	$.each($(".piecesPurchasedAll"),function(index,value){
 		$(this).text(parseFloat($(this).text()).toFixed(2));
-	})
+	});
 	//$(".piecesPurchasedAll").text(parseFloat(text).toFixed(2));
 	
 	function fail(){

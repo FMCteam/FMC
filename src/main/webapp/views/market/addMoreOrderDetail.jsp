@@ -329,12 +329,14 @@
 							</tr>
 							<tr>
 								<td colspan="3"><c:if test="${orderModel.order.sampleClothesPicture!=null}">
-									<img src="${ctx}/common/getPic.do?type=sample&orderId=${orderModel.order.orderId}"
-										style="max-height: 300px;" alt="样衣图片"></img>
+									<a class="fancybox" href="${orderModel.order.sampleClothesPicture}" title="样衣图片">
+										<img src="${orderModel.order.sampleClothesPicture}"
+											style="max-height: 300px;" alt="样衣图片"></img></a>
 								</c:if></td>
 								<td colspan="3"><c:if test="${orderModel.order.referencePicture!=null}">
-									<img src="${ctx}/common/getPic.do?type=reference&orderId=${orderModel.order.orderId}"
-										style="max-height: 300px;" alt="参考图片"></img>
+									<a class="fancybox" href="${orderModel.order.referencePicture}" title="参考图片">
+										<img src="${orderModel.order.referencePicture}"
+											style="max-height: 300px;" alt="参考图片"></img></a>
 								</c:if></td>
 							</tr>
 						</table>
@@ -676,5 +678,14 @@
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+
+<link rel="stylesheet" type="text/css" href="${ctx}/css/zoom_img/jquery.fancybox.css" media="screen" />
+<script type="text/javascript" src="${ctx}/js/zoom_img/jquery.fancybox.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.fancybox').fancybox();
+});
+</script>
+
 <%@include file="/common/footer.jsp"%>
 
