@@ -787,6 +787,17 @@ public class MarketServiceImpl implements MarketService {
 		return model;
 	}
 	
+	@Override
+	public List<Map<String, Object>> getSearchPushRestOrderList(String userId,
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		List<Map<String, Object>> temp = service.getSearchOrderList(userId  ,
+				 ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				 TASK_PUSH_REST);
+		return temp;
+	}
+	
 	// ==========================取得催尾款订单=======================
 	@Override
 	public Map<String, Object> getPushRestOrderDetail(String userId, int orderId) {
@@ -1603,6 +1614,8 @@ public class MarketServiceImpl implements MarketService {
 	public void sendOrderInfoViaPhone(Order order, Customer customer){
 		
 	}
+
+
 
 
 

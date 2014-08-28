@@ -473,6 +473,7 @@ public class DesignController {
 		String orderId = request.getParameter("orderId");
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile craftFile = multipartRequest.getFile("craftFile");
+ 
 
 		// 将图片保存在和项目根目录同级的文件夹upload下
 		String curPath = request.getSession().getServletContext()
@@ -481,7 +482,6 @@ public class DesignController {
 		String relativePath = File.separator + "upload" + File.separator
 				+ "craft" + File.separator + orderId;
 		String filedir = fatherPath + relativePath;// 最终要保存的路径
-
 		String craftFileName = craftFile.getOriginalFilename();
 		String craftFileId = "craftFile";
 		FileOperateUtil.Upload(request, filedir, null, craftFileId);
@@ -524,6 +524,32 @@ public class DesignController {
 		return "/design/getNeedCraftSampleList";
 	}
     
+	@RequestMapping(value="/design/getNeedCraftSampleListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String getNeedCraftSampleListSearch(HttpServletRequest request,
+			HttpServletResponse response,ModelMap model){
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String,Object>> list = designService.getSearchNeedCraftSampleList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "样衣工艺制作");
+		model.addAttribute("url", "/design/needCraftSampleDetail.do");
+		model.addAttribute("searchurl", "/design/getNeedCraftSampleListSearch.do");
+		return "/design/getNeedCraftSampleList";
+	
+	    
+	}
+	
 	@RequestMapping(value = "design/needCraftProductSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String needCraftProductSubmit(HttpServletRequest request,
@@ -564,6 +590,32 @@ public class DesignController {
 		return "/design/getNeedCraftProductList";
 	}
 
+	// ===========================大货生产工艺制作列表查询=================================
+	@RequestMapping(value = "/design/getNeedCraftProductListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String getNeedCraftListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String, Object>> list = designService.getSearchNeedCraftList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+ 		model.addAttribute("list", list);
+		model.addAttribute("taskName", "大货工艺制作");
+		model.addAttribute("url", "/design/needCraftProductDetail.do");
+		model.addAttribute("searchurl", "/design/getNeedCraftProductListSearch.do");
+
+		return "/design/getNeedCraftProductList";
+	}
+	
 	@RequestMapping(value = "design/getTypeSettingSliceSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String getTypeSettingSliceSubmit(HttpServletRequest request,
@@ -604,7 +656,31 @@ public class DesignController {
 		return "/design/getTypeSettingSliceList";
 	}
 	
-	
+	//=============================获取需要大货生产排版切片的任务搜索   =============================
+	@RequestMapping(value = "/design/getTypeSettingSliceListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String getTypeSettingSliceListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+		List<Map<String, Object>> list = designService.getSearchTypeSettingSliceList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "排版切片任务搜索");
+		model.addAttribute("url", "/design/getTypeSettingSliceDetail.do");
+		model.addAttribute("searchurl", "/design/getTypeSettingSliceListSearch.do");
+
+		return "/design/getTypeSettingSliceList";
+	}
 	
 	// ===========================确认版型=================================
 	@RequestMapping(value = "/design/getConfirmDesignList.do")
@@ -709,6 +785,33 @@ public class DesignController {
 	public String getConfirmCadList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getConfirmCadList();
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "确认最终版型");
+		model.addAttribute("url", "/design/getConfirmCadDetail.do");
+		model.addAttribute("searchurl", "/design/getConfirmCadListSearch.do");
+
+		return "/design/getConfirmCadList";
+	}
+	
+	// ===========================在排版切片之前确认最终版型搜索=================================
+	@RequestMapping(value = "/design/getConfirmCadListSearch.do")
+	@Transactional(rollbackFor = Exception.class)
+	public String getConfirmCadListSearch(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String employeename = request.getParameter("employeename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+		List<Employee> employees = employeeService.getEmployeeByName(employeename);
+		Integer[] employeeIds = new Integer[employees.size()];
+		for(int i=0;i<employeeIds.length;i++){
+			employeeIds[i] = employees.get(i).getEmployeeId();
+		}
+
+		List<Map<String, Object>> list = designService.getSearchConfirmCadList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "确认最终版型");
 		model.addAttribute("url", "/design/getConfirmCadDetail.do");

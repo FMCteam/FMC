@@ -472,6 +472,37 @@
 									</table></td>
 							</tr>
 						</table>
+						<table
+							class="table table-striped table-bordered table-hover detail">
+							<tr>
+								<td rowspan="4">工艺成本</td>
+								<td>印花费用（单位：元）</td>
+								<td>水洗吊染费用（单位：元）</td>
+								<td>激光费用（单位：元）</td>								 
+							</tr>
+
+							<tr>
+								<td><input class="span12" name="stampDutyMoney" id="stampDutyMoney"
+									type="text" value="${orderModel.craft.stampDutyMoney }"  required="required" /></td>
+								<td><input class="span12" name="washHangDyeMoney"
+									id="washHangDyeMoney" type="text" value="${orderModel.craft.washHangDyeMoney }"  required="required" /></td>
+								<td><input class="span12" name="laserMoney" id="laserMoney"
+									type="text" value="${orderModel.craft.laserMoney }" required="required" /></td>								 
+							</tr>
+							<tr>
+								<td>刺绣费用（单位：元）</td>
+								<td>压皱费用（单位：元）</td>
+								<td>开版费用（单位：元）</td>
+ 							</tr>
+							<tr>
+								<td><input class="span12" name="embroideryMoney" id="embroideryMoney"
+									type="text"  value="${orderModel.craft.embroideryMoney }" required="required" /></td>
+								<td><input class="span12" name="crumpleMoney"
+									id="crumpleMoney" type="text" value="${orderModel.craft.crumpleMoney }" required="required" /></td>
+								<td><input class="span12" name="openVersionMoney" id="openVersionMoney"
+									type="text" value="${orderModel.craft.openVersionMoney }" required="required" /></td>								 
+							</tr>
+						</table>
 					</div>
 					
 					

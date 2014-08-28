@@ -11,6 +11,7 @@ import java.util.Map;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.DesignCadDAO;
@@ -27,6 +28,7 @@ import nju.software.dao.impl.QuoteDAO;
 import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.Craft;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
@@ -576,10 +578,11 @@ public class OrderServiceImpl implements OrderService {
 	private FabricCostDAO fabricCostDAO;
 	@Autowired
 	private AccessoryCostDAO accessoryCostDAO;
-
+	@Autowired
+	private CraftDAO craftDAO;
 	@Override
 	public Map<String, Object> getModifyOrderDetail(Integer userId, int orderId) {
-		// TODO Auto-generated method stub
+		
 		
 		Map<String, Object> model = new HashMap<String, Object>();
 		//TaskSummary task = jbpmAPIUtil.getTask(actorId, taskName, orderId);
@@ -589,6 +592,11 @@ public class OrderServiceImpl implements OrderService {
 		}
 		//model.put("task", task);
 		//model.put("taskId", task.getId());
+		List<Craft> crafts = craftDAO.findByOrderId(orderId);
+		if (crafts != null && crafts.size() != 0) {
+			model.put("craft", crafts.get(0));
+		}
+ 
 		model.put("order", order);
 		model.put("customer",customerDAO.findById(order.getCustomerId()));
 		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -625,7 +633,7 @@ public class OrderServiceImpl implements OrderService {
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
 			List<VersionData> versions, DesignCad cad, int userId,
-			List<FabricCost> fabricCosts,List<AccessoryCost> accessoryCosts,Quote quote) {
+			List<FabricCost> fabricCosts,List<AccessoryCost> accessoryCosts,Quote quote,Craft craft) {
 		// TODO Auto-generated method stub
 		// 添加订单信息
 		orderDAO.merge(order);
@@ -715,7 +723,7 @@ public class OrderServiceImpl implements OrderService {
 
 		// cad
 		cadDAO.merge(cad);
- 
+        craftDAO.merge(craft);
 	}
 
 

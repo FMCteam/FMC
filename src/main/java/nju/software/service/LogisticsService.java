@@ -28,14 +28,15 @@ public interface LogisticsService {
 	public List<Map<String, Object>> getPackageList();
 
 	public List<Map<String, Object>> getPackageHaoDuoYiList();
-	
+
 	public List<Map<String, Object>> getWarehouseList();
-	
+
 	public List<Map<String, Object>> getWarehouseHaoDuoYiList();
 
 	public Map<String, Object> getPackageDetail(Integer orderId);
-	
-	public Map<String, Object> getPrintWarehouseDetail(Integer orderId,Integer packageId);
+
+	public Map<String, Object> getPrintWarehouseDetail(Integer orderId,
+			Integer packageId);
 
 	public Integer addPackage(Package pack, List<PackageDetail> detail);
 
@@ -46,7 +47,7 @@ public interface LogisticsService {
 	public List<Map<String, Object>> getMobileWarehouseList();
 
 	public Map<String, Object> getMobileWarehouseDetail(int orderId);
-	
+
 	public boolean updatePackage(int packageId, String warehouse, String shelf,
 			String location);
 
@@ -66,7 +67,8 @@ public interface LogisticsService {
 	public boolean mobileSendClothesSubmit(int orderId);
 
 	public void sendClothesSubmit(Integer orderId, long taskId, float price,
-			String name, String time, String number, String remark, String isFinal);
+			String name, String time, String number, String remark,
+			String isFinal);
 
 	public List<Package> getPackageListByOrderId(int orderId);
 
@@ -78,7 +80,8 @@ public interface LogisticsService {
 
 	public List<Map<String, Object>> getSearchReceiveSampleList(
 			String ordernumber, String customername, String stylename,
-			String startdate, String enddate, Integer[] employeeIds,String userRole,Integer userId);
+			String startdate, String enddate, Integer[] employeeIds,
+			String userRole, Integer userId);
 
 	public List<Map<String, Object>> getSearchSendSampleList(
 			String ordernumber, String customername, String stylename,
