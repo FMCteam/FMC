@@ -2328,8 +2328,22 @@ public class MarketController {
 	public String orderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
-		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
+				"cur_user");		
+		String orderStateName = "";
+        Integer orderId = Integer.parseInt(request.getParameter("orderId"));
+        ArrayList<String>  orderProcessStateNames = marketService.getProcessStateName(orderId);
+        if(orderProcessStateNames.size()>0){
+        	for(int i=0;i<orderProcessStateNames.size();i++){
+        		if(!orderProcessStateNames.get(i).equals("Gateway")){
+        		    if(i>0)
+        			    orderStateName+=" | ";
+        		    orderStateName+=orderProcessStateNames.get(i);
+        		}
+        	}
+        }
+        if(orderStateName!=""){
+        	request.setAttribute("orderStateMessage", "当前任务是："+orderStateName);
+        }
 		Map<String, Object> orderInfo = marketService.getOrderDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		model.addAttribute("role",account.getUserRole());
