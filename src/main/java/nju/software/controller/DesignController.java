@@ -473,6 +473,7 @@ public class DesignController {
 		String orderId = request.getParameter("orderId");
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile craftFile = multipartRequest.getFile("craftFile");
+ 
 
 		// 将图片保存在和项目根目录同级的文件夹upload下
 		String curPath = request.getSession().getServletContext()
@@ -481,7 +482,6 @@ public class DesignController {
 		String relativePath = File.separator + "upload" + File.separator
 				+ "craft" + File.separator + orderId;
 		String filedir = fatherPath + relativePath;// 最终要保存的路径
-
 		String craftFileName = craftFile.getOriginalFilename();
 		String craftFileId = "craftFile";
 		FileOperateUtil.Upload(request, filedir, null, craftFileId);

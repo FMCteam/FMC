@@ -147,8 +147,8 @@ public class ServiceUtil {
 			float tearPerMeterSampleAmountProduct = fabricCosts.get(i).getTearPerMeter() * orderSampleAmount;
 			float tearPerMeterAskAmountProduct = fabricCosts.get(i).getTearPerMeter() * orderAskAmount; 
 
-			tearPerMeterSampleAmountProduct = (float)(Math.round(tearPerMeterSampleAmountProduct*100)/100);
-			tearPerMeterAskAmountProduct = (float)(Math.round(tearPerMeterAskAmountProduct*100)/100);
+			//tearPerMeterSampleAmountProduct = (float)(Math.round(tearPerMeterSampleAmountProduct*100)/100);
+			//tearPerMeterAskAmountProduct = (float)(Math.round(tearPerMeterAskAmountProduct*100)/100);
 
 			fabricCosts.get(i).setTearPerMeterSampleAmountProduct(tearPerMeterSampleAmountProduct);
 			fabricCosts.get(i).setTearPerMeterAskAmountProduct(tearPerMeterAskAmountProduct);
@@ -162,8 +162,8 @@ public class ServiceUtil {
 			float tearPerPieceSampleAmountProduct = accessoryCosts.get(i).getTearPerPiece() * orderSampleAmount; 
 			float tearPerPieceAskAmountProduct = accessoryCosts.get(i).getTearPerPiece() * orderAskAmount; 
 
-			tearPerPieceSampleAmountProduct = (float)(Math.round(tearPerPieceSampleAmountProduct*100)/100);
-			tearPerPieceAskAmountProduct = (float)(Math.round(tearPerPieceAskAmountProduct*100)/100);
+			//tearPerPieceSampleAmountProduct = (float)(Math.round(tearPerPieceSampleAmountProduct*100)/100);
+			//tearPerPieceAskAmountProduct = (float)(Math.round(tearPerPieceAskAmountProduct*100)/100);
 
 			accessoryCosts.get(i).setTearPerPieceSampleAmountProduct(tearPerPieceSampleAmountProduct);
 			accessoryCosts.get(i).setTearPerPieceAskAmountProduct(tearPerPieceAskAmountProduct);

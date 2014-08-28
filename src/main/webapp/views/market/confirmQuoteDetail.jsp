@@ -40,8 +40,8 @@
 						<c:if test="${orderInfo.order.isNeedSampleClothes ==1 }">
 							<table class="table table-striped table-bordered table-hover detail">
 								<tr>
-									<td>上传收取样衣金截图文件</td>
-									<td colspan="3">
+									<td class="title" style="width:12%">上传收取样衣金截图文件</td>
+									<td>
 										<a style="color: red;">*</a>
 										<!-- 
 										<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
@@ -52,10 +52,10 @@
 									</td>
 								</tr>
 								<tr>
-									<td>备注</td>
-									<td colspan="3" style="width: 1000px;">
-											<!-- <input type="text"  name="moneyremark"  required="required" style="height:40px;width: 1000px"   placeholder="输入样衣金备注"/> -->
-											<textarea class="span12"  style="resize:vertical" name="moneyremark"  placeholder="输入样衣金备注" ></textarea>
+									<td class="title">备注</td>
+									<td>
+										<!-- <input type="text"  name="moneyremark"  required="required" style="height:40px;width: 1000px"   placeholder="输入样衣金备注"/> -->
+										<textarea class="span12"  style="resize:vertical" name="moneyremark"  placeholder="输入样衣金备注" ></textarea>
 									</td>
 								</tr>
 							</table>
@@ -118,9 +118,9 @@ jQuery(document).ready(function(){
 		var isNeedSampleClothes = $("#isNeedSampleClothes").val();
 		if(isNeedSampleClothes == "1"){
 			var confirmSampleMoneyFile = document.getElementById("confirmSampleMoneyFile").value;
-			var confirmSampleMoneyFilestr = confirmSampleMoneyFile.substr(confirmSampleMoneyFile.indexOf(".")).toLowerCase();		
+			var confirmSampleMoneyFilestr = confirmSampleMoneyFile.toLowerCase().split(".");		
 			if(confirmSampleMoneyFile.length != 0){
-				if(confirmSampleMoneyFilestr == ".jpg" || confirmSampleMoneyFilestr == ".png"){	
+				if(confirmSampleMoneyFilestr[confirmSampleMoneyFilestr.length-1] == "jpg" || confirmSampleMoneyFilestr[confirmSampleMoneyFilestr.length-1] == "png"){	
 					if(confirm('确认报价？')){
 						jQuery("#result").val("0");
 						jQuery("#confirm_quote_form").submit();

@@ -70,9 +70,9 @@
 <script type="text/javascript" >
 	function check(){
 		var CADFile = document.getElementById("CADFile").value;
-		var CADFilestr = CADFile.substr(CADFile.indexOf(".")).toLowerCase();		
+		var CADFilestr = CADFile.toLowerCase().split(".");		
 
-			if(CADFilestr == ".jpg" || CADFilestr == ".png"){	
+			if(CADFilestr[CADFilestr.length-1] == "jpg" || CADFilestr[CADFilestr.length-1] == "png"){	
 				if(confirm('确认提交？')){
 					return true;
 				}else{

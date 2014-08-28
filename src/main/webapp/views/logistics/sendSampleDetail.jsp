@@ -86,18 +86,17 @@
 							<tr>
 								<td class="title">样衣信息</td>
 								<td class="title">样衣图片</td>
-								<td><c:if
-										test="${orderInfo.order.sampleClothesPicture!=null}">
-										<img
-											src="${ctx}/common/getPic.do?type=sample&orderId=${orderInfo.order.orderId}"
-											style="max-height: 300px;" alt="样衣图片"></img>
+								<td><c:if test="${orderInfo.order.sampleClothesPicture!=null}">
+										<a class="fancybox" href="${orderInfo.order.sampleClothesPicture}" title="样衣图片">
+											<img src="${orderInfo.order.sampleClothesPicture}"
+												style="max-height: 300px;" alt="样衣图片"></img></a>
 									</c:if></td>
 								<td class="title">参考图片</td>
-								<td colspan="2"><c:if
-										test="${orderInfo.order.referencePicture!=null}">
-										<img
-											src="${ctx}/common/getPic.do?type=reference&orderId=${orderInfo.order.orderId}"
-											style="max-height: 300px;" alt="参考图片"></img>
+								<td colspan="2">
+									<c:if test="${orderInfo.order.referencePicture!=null}">
+										<a class="fancybox" href="${orderInfo.order.referencePicture}" title="样衣图片">
+											<img src="${orderInfo.order.referencePicture}"
+												style="max-height: 300px;" alt="参考图片"></img></a>
 									</c:if></td>
 							</tr>
 						</table>
@@ -174,6 +173,14 @@
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx}/views/logistics/logistics.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<link rel="stylesheet" type="text/css" href="${ctx}/css/zoom_img/jquery.fancybox.css" media="screen" />
+<script type="text/javascript" src="${ctx}/js/zoom_img/jquery.fancybox.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.fancybox').fancybox();	
+});
+</script>
+
 <script>
 jQuery(document).ready(function(){
 	//保存此次发货

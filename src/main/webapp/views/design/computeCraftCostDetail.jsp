@@ -79,8 +79,8 @@
 							<input id="verify_val" type="hidden" name="result" value="false" />
 					  	</div>
 					  	<br>
-					  	<button class="btn btn-primary" onclick="history.back();">返回</button>
 					</form>
+					<a class="btn btn-primary" onclick="history.back();">返回</a>
 				</div>
 			</div>
 		</div>

@@ -73,8 +73,10 @@
 				</button>
 			</div>
 			 -->	
-		<button class="btn btn-primary" onclick="history.back(-1);">返回</button>
 		</form>
+		
+		<button class="btn btn-primary" onclick="history.back(-1);">返回</button>
+		
 	</div>
 
 

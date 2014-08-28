@@ -26,7 +26,7 @@
 								<li>
 									<div>
 										<a href="${ctx}/logistics/scanClothesDetail.do?orderId=${model.order.orderId}"  title="查看详情">
-										<img src="${ctx}/common/getPic.do?type=sample&orderId=${model.order.orderId}" title="查看详情" style="height:225px;width:225px" >
+										<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >
 										</a>
 									</div>
 							
@@ -34,11 +34,11 @@
 										<table>
 											<tbody>
 												<tr>
-													<td>订单号：</td>
-													<td>${model.orderId}</td>
+												<td colspan="2" style="color: #CD0000;font-weight: bold; height: 42px; vertical-align:middle;">${model.order.styleName}</td>
 												</tr>
 												<tr>
-												<td colspan="2" style="color: #CD0000;font-weight: bold;">${model.order.styleName}</td>
+													<td>订单号：</td>
+													<td>${model.orderId}</td>
 												</tr>
 												<tr>
 													<td>市场专员：</td>
@@ -74,7 +74,7 @@
 								<li>
 									<div>
 										<a href="${ctx}/logistics/sendClothesDetail.do?orderId=${model.order.orderId}"  title="查看详情">
-										<img src="${ctx}/common/getPic.do?type=sample&orderId=${model.order.orderId}" title="查看详情" style="height:225px;width:225px" >
+										<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >
 										</a>
 									</div>
 							

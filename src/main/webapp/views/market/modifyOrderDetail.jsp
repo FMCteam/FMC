@@ -325,18 +325,22 @@
 							<tr>
 								<td colspan="3">
 									<c:if test="${orderModel.order.sampleClothesPicture!=null}">
-										<img src="${ctx}/common/getPic.do?type=sample&orderId=${orderModel.order.orderId}"
-											style="max-height: 300px;" alt="样衣图片"></img><br/>
+										<a class="fancybox" href="${orderModel.order.sampleClothesPicture}" title="样衣图片">
+											<img src="${orderModel.order.sampleClothesPicture}"
+												style="max-height: 300px;" alt="样衣图片"></img></a>
+										<br/>
 									</c:if>
-									<input type="file" name="sample_clothes_picture"
-										value="" /></td>
+									<input type="file" name="sample_clothes_picture" value="" />
+								</td>
 								<td colspan="3">
 									<c:if test="${orderModel.order.referencePicture!=null}">
-										<img src="${ctx}/common/getPic.do?type=reference&orderId=${orderModel.order.orderId}"
-											style="max-height: 300px;" alt="参考图片"></img><br/>
+										<a class="fancybox" href="${orderModel.order.referencePicture}" title="参考图片">
+											<img src="${orderModel.order.referencePicture}"
+												style="max-height: 300px;" alt="参考图片"></img></a>
+										<br/>
 									</c:if>
-									<input type="file" name="reference_picture"
-										value="" /></td>
+									<input type="file" name="reference_picture" value="" />
+								</td>
 							</tr>
 						</table>
 					</div>
@@ -620,6 +624,14 @@
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
+<link rel="stylesheet" type="text/css" href="${ctx}/css/zoom_img/jquery.fancybox.css" media="screen" />
+<script type="text/javascript" src="${ctx}/js/zoom_img/jquery.fancybox.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.fancybox').fancybox();
+});
+</script>
+
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>

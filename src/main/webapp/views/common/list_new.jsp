@@ -35,7 +35,7 @@
 					<li>
 						<div>
 							<a href="${ctx}${url}?orderId=${model.order.orderId}&cid=${cid}" title="查看详情">
-							<img src="${ctx}/common/getPic.do?type=sample&orderId=${model.order.orderId}" title="查看详情" style="height:225px;width:225px" >
+							<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >
 							</a>
 						</div>
 				

@@ -57,7 +57,7 @@
 		<td class="title">收款信息</td>
 		<td class="title">收款图片</td>
 		<td colspan="3"><c:if test="${orderInfo.order.confirmSampleMoneyFile!=null}">
-				<img src="${ctx}/common/getPic.do?type=confirmSampleMoney&orderId=${orderInfo.order.orderId}"
+				<img src="${orderInfo.order.confirmSampleMoneyFile}"
 					style="max-height: 300px;" alt="收款图片"></img>
 			</c:if></td>
 	    </tr>
