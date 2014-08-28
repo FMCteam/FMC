@@ -1,5 +1,6 @@
 package nju.software.controller;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -16,6 +17,7 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.Produce;
 import nju.software.service.DesignService;
 import nju.software.service.EmployeeService;
+import nju.software.service.MarketService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.impl.JbpmTest;
@@ -36,8 +38,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Controller
 public class DesignController {
 	
-	private final static String CAD_URL = "C:/fmc/cad/";
-	private final static String CRAFT_FILE_URL = "C:/fmc/craft"; 
+//	private final static String CAD_URL = "C:/fmc/cad/";
+//	private final static String CRAFT_FILE_URL = "C:/fmc/craft/";
+	
+	private final static String CAD_URL = "/upload/cad/";
+	private final static String CRAFT_FILE_URL = "/upload/craft/";
+	
 	// ===========================设计验证=================================
 	@RequestMapping(value = "/design/verifyDesignList.do")
 	@Transactional(rollbackFor = Exception.class)
@@ -282,10 +288,20 @@ public class DesignController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
-		String url = CAD_URL + orderId;
+		
+		// 将图片保存在和项目根目录同级的文件夹upload下
+		String curPath = request.getSession().getServletContext()
+				.getRealPath("/");// 获取当前路径
+		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+		String relativePath = File.separator + "upload" + File.separator
+				+ "cad" + File.separator + orderId;
+		String filedir = fatherPath + relativePath;// 最终要保存的路径
+		
 		String fileid = "CADFile";
-		FileOperateUtil.Upload(request, url, null, fileid);
- 		url = url + "/" + filename;
+		FileOperateUtil.Upload(request, filedir, null, fileid);
+		
+		String url = CAD_URL + orderId + "/" + filename;//最终保存在数据库的相对路径
+ 		
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.EntryCadData(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime, cadSide, completeTime);
@@ -296,6 +312,49 @@ public class DesignController {
 		model.addAttribute("orderSampleStatus",orderSampleStatus);
 		return "/design/getUploadDesignDetail";
 //		return "forward:/design/getUploadDesignList.do";
+	}
+	/** 
+	* @Title: uploadDesignSubmit_all 
+	* @Description: TODO:设计部门可以随时修改上传的版型数据
+	* @param @param request
+	* @param @param response
+	* @param @param model
+	* @param @return    设定文件 
+	* @return String    返回类型 
+	* @throws 
+	*/
+	@RequestMapping(value = "/design/uploadDesignSubmit_all.do", method = RequestMethod.POST)
+	@Transactional(rollbackFor = Exception.class)
+	public String uploadDesignSubmit_all(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String orderId = request.getParameter("orderId");
+		String cadSide = request.getParameter("cadSide");//制版人
+		Timestamp completeTime = this.getTime(request.getParameter("completeTime"));//制版完成时间
+		String taskId ="1";
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile file = multipartRequest.getFile("CADFile");
+		String filename = file.getOriginalFilename();
+		
+		// 将图片保存在和项目根目录同级的文件夹upload下
+		String curPath = request.getSession().getServletContext()
+				.getRealPath("/");// 获取当前路径
+		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+		String relativePath = File.separator + "upload" + File.separator
+				+ "cad" + File.separator + orderId;
+		String filedir = fatherPath + relativePath;// 最终要保存的路径
+		
+		String fileid = "CADFile";
+		FileOperateUtil.Upload(request, filedir, null, fileid);
+		
+		String url = CAD_URL + orderId + "/" + filename;//最终保存在数据库的相对路径
+		
+		Timestamp uploadTime = new Timestamp(new Date().getTime());
+		designService.EntryCadData(Integer.parseInt(orderId),
+				Long.parseLong(taskId), url, uploadTime, cadSide, completeTime);
+ 		Map<String, Object> orderInfo = marketService.getOrderDetail(Integer.valueOf(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/market/orderDetail";
 	}
  
     //生产样衣
@@ -371,11 +430,20 @@ public class DesignController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
-		String url = CAD_URL + orderId;
+		
+		// 将图片保存在和项目根目录同级的文件夹upload下
+		String curPath = request.getSession().getServletContext()
+				.getRealPath("/");// 获取当前路径
+		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+		String relativePath = File.separator + "upload" + File.separator
+				+ "cad" + File.separator + orderId;
+		String filedir = fatherPath + relativePath;// 最终要保存的路径
+		
 		String fileid = "CADFile";
-		FileOperateUtil.Upload(request, url, null, fileid);
-//		FileOperateUtil.Upload(file, url);
-		url = url + "/" + filename;
+		FileOperateUtil.Upload(request, filedir, null, fileid);
+		
+		String url = CAD_URL + orderId + "/" + filename;//最终保存在数据库的相对路径
+		
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.modifyDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
@@ -402,20 +470,31 @@ public class DesignController {
 	@Transactional(rollbackFor = Exception.class)
 	public String uploadCraftFileSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-	String orderId = request.getParameter("orderId");
-	MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-	MultipartFile craftFile =  multipartRequest.getFile("craftFile");
-	String craftFileName = craftFile.getOriginalFilename();
-	String craftFileUrl = CRAFT_FILE_URL + orderId;		
-	String craftFileId = "craftFile";
-	FileOperateUtil.Upload(request, craftFileUrl, null, craftFileId);
-	craftFileUrl = craftFileUrl + "/" + craftFileName;
-	designService.uploadCraftFileSubmit( Integer.parseInt(orderId),craftFileUrl);
+		String orderId = request.getParameter("orderId");
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile craftFile = multipartRequest.getFile("craftFile");
 
-	Map<String, Object> orderInfo = designService
-			.getNeedCraftSampleDetail(Integer.parseInt(orderId));
-	model.addAttribute("orderInfo", orderInfo);
-	return "/design/needCraftSampleDetail";
+		// 将图片保存在和项目根目录同级的文件夹upload下
+		String curPath = request.getSession().getServletContext()
+				.getRealPath("/");// 获取当前路径
+		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+		String relativePath = File.separator + "upload" + File.separator
+				+ "craft" + File.separator + orderId;
+		String filedir = fatherPath + relativePath;// 最终要保存的路径
+
+		String craftFileName = craftFile.getOriginalFilename();
+		String craftFileId = "craftFile";
+		FileOperateUtil.Upload(request, filedir, null, craftFileId);
+
+		String craftFileUrl = CRAFT_FILE_URL + orderId + "/" + craftFileName;// 保存在数据库里的相对路径
+		
+		designService.uploadCraftFileSubmit(Integer.parseInt(orderId),
+				craftFileUrl);
+
+		Map<String, Object> orderInfo = designService
+				.getNeedCraftSampleDetail(Integer.parseInt(orderId));
+		model.addAttribute("orderInfo", orderInfo);
+		return "/design/needCraftSampleDetail";
 	}
 
 	// ===========================获取需要工艺制作的样衣=================================
@@ -661,11 +740,20 @@ public class DesignController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
-        String url = CAD_URL + orderId;
-        String fileid = "CADFile";
-        FileOperateUtil.Upload(request, url, null, fileid);
-//		FileOperateUtil.Upload(file, url);
-		url = url + "/" + filename;
+		
+		// 将图片保存在和项目根目录同级的文件夹upload下
+		String curPath = request.getSession().getServletContext()
+				.getRealPath("/");// 获取当前路径
+		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+		String relativePath = File.separator + "upload" + File.separator
+				+ "cad" + File.separator + orderId;
+		String filedir = fatherPath + relativePath;// 最终要保存的路径
+		
+		String fileid = "CADFile";
+		FileOperateUtil.Upload(request, filedir, null, fileid);
+		
+		String url = CAD_URL + orderId + "/" + filename;//最终保存在数据库的相对路径
+		
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.uploadDesignSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
@@ -679,6 +767,14 @@ public class DesignController {
 	public void downloadCadSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String url = request.getParameter("cadUrl");
+		String curPath = request.getSession().getServletContext()
+				.getRealPath("/");// 获取当前路径
+		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+		
+		url = fatherPath + url;
+		url = url.replace("/", File.separator);
+		url = url.replace("\\", File.separator);
+		
 		System.out.println(url+"------------------------");
 		FileOperateUtil.Download(response, url);
 	}
@@ -743,10 +839,20 @@ public class DesignController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");
 		String filename = file.getOriginalFilename();
-        String url = CAD_URL + orderId;
-        String fileid = "CADFile";
-        FileOperateUtil.Upload(request, url, null, fileid);
- 		url = url + "/" + filename;
+		
+		// 将图片保存在和项目根目录同级的文件夹upload下
+		String curPath = request.getSession().getServletContext()
+				.getRealPath("/");// 获取当前路径
+		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
+		String relativePath = File.separator + "upload" + File.separator
+				+ "cad" + File.separator + orderId;
+		String filedir = fatherPath + relativePath;// 最终要保存的路径
+		
+		String fileid = "CADFile";
+		FileOperateUtil.Upload(request, filedir, null, fileid);
+		
+		String url = CAD_URL + orderId + "/" + filename;//最终保存在数据库的相对路径
+		
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.confirmCadSubmit(Integer.parseInt(orderId),
 				Long.parseLong(taskId), url, uploadTime);
@@ -760,6 +866,8 @@ public class DesignController {
 	
 	@Autowired
 	private DesignService designService;
+	@Autowired
+	private MarketService marketService;
 	@Autowired
 	private JbpmTest jbpmTest;
 }

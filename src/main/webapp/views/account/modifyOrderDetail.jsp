@@ -333,14 +333,14 @@
 							<tr>
 								<td colspan="3">
 									<c:if test="${orderModel.order.sampleClothesPicture!=null}">
-										<img src="${ctx}/common/getPic.do?type=sample&orderId=${orderModel.order.orderId}"
+										<img src="${orderModel.order.sampleClothesPicture}"
 											style="max-height: 300px;" alt="样衣图片"></img><br/>
 									</c:if>
 									<input type="file" name="sample_clothes_picture"
 										value="" /></td>
 								<td colspan="3">
 									<c:if test="${orderModel.order.referencePicture!=null}">
-										<img src="${ctx}/common/getPic.do?type=reference&orderId=${orderModel.order.orderId}"
+										<img src="${orderModel.order.referencePicture}"
 											style="max-height: 300px;" alt="参考图片"></img><br/>
 									</c:if>
 									<input type="file" name="reference_picture"
@@ -470,6 +470,37 @@
  											</tr>
 										</c:forEach>
 									</table></td>
+							</tr>
+						</table>
+						<table
+							class="table table-striped table-bordered table-hover detail">
+							<tr>
+								<td rowspan="4">工艺成本</td>
+								<td>印花费用（单位：元）</td>
+								<td>水洗吊染费用（单位：元）</td>
+								<td>激光费用（单位：元）</td>								 
+							</tr>
+
+							<tr>
+								<td><input class="span12" name="stampDutyMoney" id="stampDutyMoney"
+									type="text" value="${orderModel.craft.stampDutyMoney }"  required="required" /></td>
+								<td><input class="span12" name="washHangDyeMoney"
+									id="washHangDyeMoney" type="text" value="${orderModel.craft.washHangDyeMoney }"  required="required" /></td>
+								<td><input class="span12" name="laserMoney" id="laserMoney"
+									type="text" value="${orderModel.craft.laserMoney }" required="required" /></td>								 
+							</tr>
+							<tr>
+								<td>刺绣费用（单位：元）</td>
+								<td>压皱费用（单位：元）</td>
+								<td>开版费用（单位：元）</td>
+ 							</tr>
+							<tr>
+								<td><input class="span12" name="embroideryMoney" id="embroideryMoney"
+									type="text"  value="${orderModel.craft.embroideryMoney }" required="required" /></td>
+								<td><input class="span12" name="crumpleMoney"
+									id="crumpleMoney" type="text" value="${orderModel.craft.crumpleMoney }" required="required" /></td>
+								<td><input class="span12" name="openVersionMoney" id="openVersionMoney"
+									type="text" value="${orderModel.craft.openVersionMoney }" required="required" /></td>								 
 							</tr>
 						</table>
 					</div>

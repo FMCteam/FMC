@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Craft;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
@@ -29,6 +30,7 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
+import nju.software.service.CraftService;
 import nju.software.service.CustomerService;
 import nju.software.service.DesignCadService;
 import nju.software.service.EmployeeService;
@@ -68,6 +70,8 @@ public class OrderController {
 	private OrderService orderService;
 	@Autowired
 	private DesignCadService cadService;
+	@Autowired
+	private CraftService craftService;
 	@Autowired
 	private LogisticsService logisticsService;
 	@Autowired
@@ -449,6 +453,21 @@ public class OrderController {
 			cad.setCadTech(cad_tech);
 			cad.setCadVersionData(cad_version_data);
 
+			//Craft
+			Craft craft = craftService.findCraftByOrderId(s_id);
+			String stampDutyMoney = request.getParameter("stampDutyMoney");
+			String washHangDyeMoney = request.getParameter("washHangDyeMoney");
+			String laserMoney = request.getParameter("laserMoney");
+			String embroideryMoney = request.getParameter("embroideryMoney");
+			String crumpleMoney = request.getParameter("crumpleMoney");
+			String openVersionMoney = request.getParameter("openVersionMoney");
+			craft.setStampDutyMoney(Float.parseFloat(stampDutyMoney));
+			craft.setWashHangDyeMoney(Float.parseFloat(washHangDyeMoney));
+			craft.setLaserMoney(Float.parseFloat(laserMoney));
+			craft.setEmbroideryMoney(Float.parseFloat(embroideryMoney));
+            craft.setCrumpleMoney(Float.parseFloat(crumpleMoney));
+            craft.setOpenVersionMoney(Float.parseFloat(openVersionMoney));
+            
 			// Order
 			Order order = orderService.findByOrderId(s_id);
 			// order.setEmployeeId(employeeId);
@@ -531,7 +550,7 @@ public class OrderController {
 //			boolean editok = request.getParameter("editok").equals("true") ? true
 //					: false;
 			orderService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
-					produces, sample_produces, versions, cad, account.getUserId(),fabricCosts,accessoryCosts,quote);
+					produces, sample_produces, versions, cad, account.getUserId(),fabricCosts,accessoryCosts,quote,craft);
 			return "redirect:/account/modifyOrderList.do";
 		}
 
