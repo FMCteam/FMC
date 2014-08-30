@@ -22,6 +22,16 @@ $(document).ready(function() {
 	}
 });
 </script>
+<script>
+$(document).ready(function() {
+	if ('${orderStateMessage}' != null && '${orderStateMessage}' != "") {
+		noty({
+			text : '${orderStateMessage}',
+			layout : 'topCenter'
+		});
+	}
+});
+</script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		//	if($("table.tablesorter tbody tr").length!=0){
