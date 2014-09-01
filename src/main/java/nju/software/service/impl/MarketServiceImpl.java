@@ -50,6 +50,7 @@ import nju.software.service.FinanceService;
 import nju.software.service.MarketService;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JbpmAPIUtil;
+import nju.software.util.ThumbnailUtil;
 import nju.software.util.mail.MailSenderInfo;
 import nju.software.util.mail.SimpleMailSender;
 
@@ -172,7 +173,6 @@ public class MarketServiceImpl implements MarketService {
 			String relativePath = File.separator + "upload" + File.separator
 					+ "sample" + File.separator + orderId;
 			String filedir = fatherPath + relativePath;
-
 			File file = FileOperateUtil.Upload(request, filedir, "1",
 					"sample_clothes_picture");
 			order.setSampleClothesPicture(UPLOAD_DIR_SAMPLE + orderId + "/"
