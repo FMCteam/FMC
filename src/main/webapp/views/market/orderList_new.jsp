@@ -12,28 +12,26 @@
 							class="number">${fn:length(list)}</span>条订单
 						</span>
 						<br>
-						
 						<span >输入起始日期:</span>
-						<input class="search-query" style="width: 210px" type="date" name="startdate" placeholder="输入订单起始日期">
-						<span >&nbsp; 输入截止日期:</span>
-						<input class="search-query" style="width: 210px" type="date" name="enddate" placeholder="输入订单截止日期">
+						<input style="width: 210px" type="date" name="startdate" placeholder="输入订单起始日期">
+						<span >输入订单编号:</span>
+						<input type="text" style="width:110px;" name="ordernumber" placeholder="输入订单编号">
+						<span >款式名称:</span> 
+						<input type="text"  style="width: 130px;" name="stylename" placeholder="输入款式名称">						
 						<br>
 						<input class="btn btn-primary" type="submit" value="查询" style="float:right;">
-						<span >输入订单编号:</span>
-						<input type="text" class="search-query " name="ordernumber" placeholder="输入订单编号">
+						<span > 输入截止日期:</span>
+						<input style="width: 210px" type="date" name="enddate" placeholder="输入订单截止日期">
 						<c:if test="${USER_user_role ne 'marketStaff'}">
 							<span >市场专员名称:</span>
-							<input type="text" class="search-query " name="employeename" placeholder="输入市场专员名称">
+							<input type="text" style="width: 110px;" name="employeename" placeholder="输入市场专员名称">
 						</c:if>
 						<c:if test="${USER_user_role eq 'marketStaff'}">
-							<input type="hidden" class="search-query " name="employeename" >	
+							<input type="hidden"  name="employeename" >	
 						</c:if>	
-										
-						<span >款式名称:</span> 
-						<input type="text" class="search-query " name="stylename" placeholder="输入款式名称">						
 						<c:if test="${USER_user_role ne 'CUSTOMER'}">
 							<span >客户名称:</span>
-							<input type="text" class="search-query " name="customername" placeholder="输入客户名称">
+							<input type="text" style="width: 130px;" name="customername" placeholder="输入客户名称">
 						</c:if>
 						<c:if test="${USER_user_role eq 'CUSTOMER'}">
 							<input type="hidden" class="search-query " name="customername" >	

@@ -10,7 +10,7 @@
 					<span >输入起始日期:</span>
 					<input class="search-query" style="width: 210px" type="date" name="startdate" placeholder="输入订单起始日期">
 					<span >&nbsp; 输入截止日期:</span>
-					<input class="search-query" style="width: 210px" type="date" name="enddate" placeholder="输入订单截止日期">
+					<input  style="width: 210px" type="date" name="enddate" placeholder="输入e订单截止日期">
 				<br>
 					<input class="btn btn-primary" type="submit" value="查询" style="float:right;">
 					<span >输入订单编号:</span>
