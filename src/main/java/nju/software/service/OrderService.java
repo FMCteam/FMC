@@ -42,7 +42,7 @@ public interface OrderService {
 	public List<Order> findAll();
 
 	public String addOrder(Order order, List<Fabric> fabrics,
-			List<Accessory> accessorys, Logistics logistics);
+			List<Accessory> accessorys, Logistics logistics) throws Exception;
 
 	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId,
 			String taskName);

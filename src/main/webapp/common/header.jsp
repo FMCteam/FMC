@@ -111,9 +111,9 @@ table.tablesorter thead tr .headerSortDown {
 			</div>
 		</div>
 
-		<div class="leftpanel">
+		<div class="leftpanel" style="overflow: auto;">
 
-			<div class="leftmenu">
+			<div class="leftmenu" style="height: 1000px;">
 				<ul class="nav nav-tabs nav-stacked">
 					<li class="nav-header">Navigation</li>
 					<li class="active"><a href="#"><span class="iconfa-laptop"></span>

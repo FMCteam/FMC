@@ -655,8 +655,8 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 				criteria.add(Restrictions.eq("employeeId",-1));//若模糊查询得到的专员列表为空，则增加一个不可能的条件，使订单列表的查询结果为空
 			}
 		}
-		
 	    List<Order> orderList = criteria.list();		
+	    session.close();
 		return orderList;
 	}
 
@@ -716,6 +716,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			criteria.add(Restrictions.eq("employeeId",-1));//若模糊查询得到的专员列表为空，则增加一个不可能的条件，使订单列表的查询结果为空
 		}
 	    List<Order> orderList = criteria.list();		
+	    session.close();
 		return orderList;
 	}
 
@@ -788,7 +789,8 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 				}
 			}
 			
-		    List<Order> orderList = criteria.list();		
+		    List<Order> orderList = criteria.list();	
+		    session.close();
 			return orderList;
 		}
 
@@ -861,7 +863,8 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			}
 			
 			System.out.println(criteria.toString());
-		    List<Order> orderList = criteria.list();		
+		    List<Order> orderList = criteria.list();	
+		    session.close();
 			return orderList;
 		}
 
@@ -872,7 +875,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
         criteria.add(Restrictions.eq("orderState", "A"));
         criteria.add(Restrictions.eq("customerId", orderExample.getCustomerId()));
 	    List<Order> customerOrdersDoingList = criteria.list();		
-
+        session.close();
 		return customerOrdersDoingList;
 	}
 
@@ -883,7 +886,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
         criteria.add(Restrictions.eq("orderState", "A"));
         criteria.add(Restrictions.eq("employeeId", orderExample.getEmployeeId()));
 	    List<Order> employeeOrdersDoingList = criteria.list();		
-
+        session.close();
 		return employeeOrdersDoingList;
 		
 	}
@@ -894,7 +897,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
         criteria.add(Restrictions.eq("orderState", "Done"));
         criteria.add(Restrictions.eq("customerId", orderExample.getCustomerId()));
 	    List<Order> customerOrdersDoneList = criteria.list();		
-
+         session.close();
 		return customerOrdersDoneList;
 	}
 
@@ -904,7 +907,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
         criteria.add(Restrictions.eq("orderState", "Done"));
         criteria.add(Restrictions.eq("employeeId", orderExample.getEmployeeId()));
 	    List<Order> employeeOrdersDoneList = criteria.list();		
-
+        session.close();
 		return employeeOrdersDoneList;
 	}
 

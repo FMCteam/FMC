@@ -2376,7 +2376,6 @@ public class MarketController {
 	public String orderListDoingSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-		
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
