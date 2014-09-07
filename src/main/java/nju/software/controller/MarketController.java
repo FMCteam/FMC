@@ -35,6 +35,7 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.SearchInfo;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
@@ -2308,17 +2309,31 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
+		int j=0;
+		SearchInfo info = null;
+		SearchInfo searchInfo = getSearchInfo(ordernumber, customername, stylename, startdate, enddate, employeename);
 		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
+		/*SearchInfo info = new SearchInfo();
+		info.setCustomername(customername);
+		info.setEmployeename(employeename);
+		info.setEnddate(enddate);
+		info.setOrdernumber(ordernumber);
+		info.setStartdate(startdate);
+		info.setStylename(stylename);
+		System.out.println("--------"+info.getStylename());*/
 		List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds,account.getUserRole(),account.getUserId());
-		model.addAttribute("list", list);
+		
 		model.addAttribute("taskName", "订单列表查找");
-		model.addAttribute("url", "/order/orderDetail.do");
+		model.addAttribute("url", "/order/orderDetail.do");	
 		model.addAttribute("searchurl", "/order/orderSearch.do");
+		model.addAttribute("info", list.get(list.size()-1));
+		list.remove(list.size()-1);
+		model.addAttribute("list", list);
 		return "/market/orderList_new";
 	}
 	
@@ -2393,6 +2408,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoingSearch.do");
+		model.addAttribute("searchInfo", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));
 		return "/market/orderList_new";
 	}
 
@@ -2525,4 +2541,15 @@ public class MarketController {
 		return "/finance/printProcurementSampleOrder";
 	}
 	
+	public SearchInfo getSearchInfo(String ordernumber,String customername,String stylename,String startdate,String enddate,String employeename){
+		SearchInfo info = new SearchInfo();
+		info.setCustomername(customername);
+		info.setEmployeename(employeename);
+		info.setEnddate(enddate);
+		info.setOrdernumber(ordernumber);
+		info.setStartdate(startdate);
+		info.setStylename(stylename);
+		
+		return info;
+	} 
 }

@@ -44,6 +44,7 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.SearchInfo;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.service.FinanceService;
@@ -1518,6 +1519,10 @@ public class MarketServiceImpl implements MarketService {
 			model.put("taskTime", getTaskTime(order.getOrderTime()));
 			list.add(model);
  		}
+		SearchInfo info = new SearchInfo(ordernumber, customername, stylename, "1", startdate, enddate);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("info", info);
+		list.add(map);
 		return list;
  	}
 
