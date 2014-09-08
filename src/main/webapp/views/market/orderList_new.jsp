@@ -21,7 +21,7 @@
 						<br>
 						<input class="btn btn-primary" type="submit" value="查询" style="float:right;">
 						<span > 输入截止日期:</span>
-						<input style="width: 210px" type="date" name="enddate" value="${infoinfo.enddate }" placeholder="输入订单截止日期">
+						<input style="width: 210px" type="date" name="enddate" value="${info.enddate }" placeholder="输入订单截止日期">
 						<c:if test="${USER_user_role ne 'marketStaff'}">
 							<span >市场专员名称:</span>
 							<input type="text" style="width: 110px;" name="employeename" value="${info.employeename }" placeholder="输入市场专员名称">

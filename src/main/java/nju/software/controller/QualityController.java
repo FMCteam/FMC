@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Produce;
+import nju.software.dataobject.SearchInfo;
 import nju.software.service.CustomerService;
 import nju.software.service.EmployeeService;
 import nju.software.service.OrderService;
@@ -80,6 +81,7 @@ public class QualityController {
 		model.addAttribute("url", "/quality/checkQualityDetail.do");
 		model.addAttribute("searchurl", "/quality/checkQualityListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "quality/checkQualityList";
 	}
 	

@@ -16,6 +16,7 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.SearchInfo;
 import nju.software.model.OrderInfo;
 import nju.software.service.BuyService;
 import nju.software.service.EmployeeService;
@@ -75,6 +76,7 @@ public class BuyController {
 		model.addAttribute("url", "/buy/verifyPurchaseDetail.do");
 		model.addAttribute("searchurl", "/buy/verifyPurchaseListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/buy/verifyPurchaseList";
 	}
 	
@@ -147,6 +149,7 @@ public class BuyController {
 		model.addAttribute("url", "/buy/computePurchaseCostDetail.do");
 		model.addAttribute("searchurl", "/buy/computePurchaseCostListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/buy/computePurchaseCostList";
 	}
 	
@@ -313,6 +316,7 @@ public class BuyController {
 		model.addAttribute("url", "/buy/purchaseSampleMaterialDetail.do");
 		model.addAttribute("searchurl", "/buy/purchaseSampleMaterialListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/buy/purchaseSampleMaterialList";
 	}
 	
@@ -396,6 +400,7 @@ public class BuyController {
 		model.addAttribute("taskName", "确认生产原料");
 		model.addAttribute("url", "/buy/confirmPurchaseDetail.do");
 		model.addAttribute("searchurl", "/buy/confirmPurchaseListSearch.do");
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/buy/confirmPurchaseList";
 	}
 
@@ -488,6 +493,7 @@ public class BuyController {
 		model.addAttribute("url", "/buy/purchaseMaterialDetail.do");
 		model.addAttribute("searchurl", "/buy/purchaseMaterialListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/buy/purchaseMaterialList";
 	}
 	

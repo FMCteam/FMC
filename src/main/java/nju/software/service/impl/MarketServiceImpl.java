@@ -1519,10 +1519,6 @@ public class MarketServiceImpl implements MarketService {
 			model.put("taskTime", getTaskTime(order.getOrderTime()));
 			list.add(model);
  		}
-		SearchInfo info = new SearchInfo(ordernumber, customername, stylename, "1", startdate, enddate);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("info", info);
-		list.add(map);
 		return list;
  	}
 
