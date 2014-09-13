@@ -12,6 +12,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.SearchInfo;
 import nju.software.service.EmployeeService;
 import nju.software.service.FinanceService;
 import nju.software.service.MarketService;
@@ -85,6 +86,7 @@ public class FinanceController {
 		model.addAttribute("url", "/finance/confirmSampleMoneyDetail.do");
 		model.addAttribute("searchurl", "/finance/confirmSampleMoneyListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/finance/confirmSampleMoneyList";
 	}
 	
@@ -162,6 +164,7 @@ public class FinanceController {
 		model.addAttribute("url", "/finance/returnDepositDetail.do");
 		model.addAttribute("searchurl", "/finance/returnDepositListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/finance/returnDepositList";
 	}
 	
@@ -204,6 +207,7 @@ public class FinanceController {
 		model.addAttribute("taskName", "确认大货定金");
 		model.addAttribute("url", "/finance/confirmDepositDetail.do");
 		model.addAttribute("searchurl", "/finance/confirmDepositListSearch.do");
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/finance/confirmDepositList";
 	}
 
@@ -313,6 +317,7 @@ public class FinanceController {
 		model.addAttribute("url", "/finance/confirmFinalPaymentDetail.do");
 		model.addAttribute("searchurl", "/finance/confirmFinalPaymentListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/finance/confirmFinalPaymentList";
 	}
 	

@@ -44,6 +44,7 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.SearchInfo;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.service.FinanceService;

@@ -12,6 +12,7 @@ import nju.software.model.OrderInfo;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
+import nju.software.dataobject.SearchInfo;
 import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
@@ -108,6 +109,7 @@ public class LogisticsController {
 		model.addAttribute("url", "/logistics/sendSampleDetail.do");
 		model.addAttribute("searchurl", "/logistics/sendSampleListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/logistics/sendSampleList";
 	}
 	
