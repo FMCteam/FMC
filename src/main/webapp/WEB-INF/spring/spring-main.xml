@@ -27,7 +27,6 @@
 			</list>
 		</property>
 	</bean>
-
     <bean id="javaMailUtil" class="nju.software.util.JavaMailUtil">       
     </bean>
 	

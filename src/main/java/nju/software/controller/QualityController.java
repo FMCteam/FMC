@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@Transactional 
 public class QualityController {
 
 	@Autowired
@@ -98,7 +99,7 @@ public class QualityController {
 
 	/** 
 	* @Title: modifyProduct 
-	* @Description: TODO:质量检查
+	* @Description: TODO:质量检查（提交）
 	* @param @param request
 	* @param @param response
 	* @param @param model
@@ -107,9 +108,9 @@ public class QualityController {
 	* @throws 
 	*/
 	@RequestMapping(value = "quality/checkQualitySubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor=Exception.class)  
 	public String modifyProduct(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model)throws Exception {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
@@ -163,6 +164,7 @@ public class QualityController {
 		
 		String msg = qualityService.checkQualitySubmit(orderId, taskId,
 				isFinal, checkRecord, goodList);
+		//qualityService.test(orderId,repairSide);
 		if (msg.equals("")) {
 			// 如果成功保存本次质检，返回质检列表页面
 			return "redirect:/quality/checkQualityList.do";

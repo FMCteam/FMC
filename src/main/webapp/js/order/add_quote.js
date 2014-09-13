@@ -25,6 +25,7 @@
 
  */	
 	var orderInfoQuoteSingleCost = $("input[name='orderInfoQuoteSingleCost']").val();
+	alert(orderInfoQuoteSingleCost)
 	var orderInfoOrderAskAmount = $("input[name='orderInfoOrderAskAmount']").val();
 	var quoteSingleCostOrderAskAmountProduct = orderInfoQuoteSingleCost * orderInfoOrderAskAmount;
 	$("input[name='quoteSingleCostOrderAskAmountProduct']").val(quoteSingleCostOrderAskAmountProduct.toFixed(2));
