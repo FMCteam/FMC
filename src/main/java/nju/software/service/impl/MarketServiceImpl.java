@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
@@ -357,10 +359,21 @@ public class MarketServiceImpl implements MarketService {
 				
 				//图片
 				Order sourceOrder = orderDAO.findById(source);
-				File newSamplePic = FileOperateUtil.CopyAndPaste(sourceOrder.getSampleClothesPicture(), UPLOAD_DIR_SAMPLE + orderId);
-				File newRefPic = FileOperateUtil.CopyAndPaste(sourceOrder.getReferencePicture(), UPLOAD_DIR_REFERENCE + orderId);
-				order.setSampleClothesPicture(newSamplePic.getAbsolutePath());
-				order.setReferencePicture(newRefPic.getAbsolutePath());
+				/*System.out.println("--------------");
+				HttpSession httpSession = request.getSession();
+				ServletContext servletContext = httpSession.getServletContext();
+				String curPath = servletContext.getRealPath("/");*/
+				//String curPath = request.getSession().getServletContext().getRealPath("/");
+				//String fatherPath = new File(curPath).getParent();
+				String rePath=new File(request.getSession().getServletContext().getRealPath("/")).getParent();
+				String sourcePicture=rePath+sourceOrder.getSampleClothesPicture();
+				System.out.println(sourcePicture);
+				String targetPicture=rePath+UPLOAD_DIR_SAMPLE + orderId;
+				
+				File newSamplePic = FileOperateUtil.CopyAndPaste(sourcePicture,targetPicture);
+				File newRefPic = FileOperateUtil.CopyAndPaste(rePath+sourceOrder.getReferencePicture(), rePath+UPLOAD_DIR_REFERENCE + orderId);
+				order.setSampleClothesPicture(newSamplePic.getAbsolutePath().substring(rePath.length(), newSamplePic.getAbsolutePath().length()).replace('\\', '/'));
+				order.setReferencePicture(newRefPic.getAbsolutePath().substring(rePath.length(), newRefPic.getAbsolutePath().length()).replace('\\', '/'));
 				
 				// 启动流程
 				Map<String, Object> params = new HashMap<String, Object>();
