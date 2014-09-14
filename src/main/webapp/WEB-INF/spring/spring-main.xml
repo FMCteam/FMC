@@ -129,8 +129,7 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	<bean id="DesignCadDAO"
-		class="nju.software.dao.impl.DesignCadDAO">
+	<bean id="DesignCadDAO" class="nju.software.dao.impl.DesignCadDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

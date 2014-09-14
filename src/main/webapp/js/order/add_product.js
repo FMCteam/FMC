@@ -14,7 +14,7 @@
 			$("form").submit();
 		});
 		
-		$("a.btn-primary").click(function(){
+		$("button.btn-primary").click(function(){
 			$("input[name='tof']").val("true");
 			$("form").submit();
 		});

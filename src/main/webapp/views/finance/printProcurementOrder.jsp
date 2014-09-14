@@ -103,6 +103,7 @@ line-height: 16px
 	<table class="table table-bordered">
 		<tr>
 			<td class="center span3">大货下单数</td>
+			<td class="center span3">大货颜色</td>
 			<td class="center span2">XS</td>
 			<td class="center span2">S</td>
 			<td class="center span2">M</td>
@@ -113,6 +114,7 @@ line-height: 16px
 		</tr>
 		<c:forEach var="produce" items="${orderInfo.produce}">
 			<tr>
+				<td class="center">${produce.xs+produce.s+produce.m+produce.l+produce.xl+produce.xxl}</td>
 				<td class="center">${produce.color}</td>
 				<td class="center">${produce.xs}</td>
 				<td class="center">${produce.s}</td>

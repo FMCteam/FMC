@@ -43,9 +43,9 @@
 				<input type="hidden" name="orderId"
 					value="${orderInfo.order.orderId }" /> <input type="hidden"
 					name="processId" value="${orderInfo.task.processInstanceId}" /> <input
-					type="hidden" name="tof"> <a
+					type="hidden" name="tof"> <button
 					class="btn btn-primary btn-rounded"><i
-					class="icon-ok icon-white"></i>确定</a> <a
+					class="icon-ok icon-white"></i>确定</button> <a
 					class="btn btn-danger btn-rounded"><i class="icon-white"></i>取消订单</a>
 				<input id="produce_color" type="hidden" name="produce_color" /> <input
 					id="produce_xs" type="hidden" name="produce_xs" /> <input

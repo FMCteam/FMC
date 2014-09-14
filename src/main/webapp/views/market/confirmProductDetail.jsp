@@ -83,13 +83,13 @@
 					id="produce_xxl" type="hidden" name="produce_xxl" /> <input
 					type="hidden" name="tof" id="tof">
 					
-					<a class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定加工</a> 
+					<button class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定加工</button> 
 			</div>
 		</form>
 		<br>
-			<button class="btn btn-primary" onclick="history.back(-1);">返回</button> 
+			<a class="btn btn-primary" onclick="history.back(-1);">返回</a> 
 			<a href="${ctx}/market/printConfirmProcurementOrder.do?orderId=${orderInfo.order.orderId}"  onclick="return check()"  id="printConfirmProcurementOrder"
-		 		 class="btn primary btn-rounded" style="margin-left:15px;margin-right:15px;color:#ffffff;text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);background-color:#006dcc;background-image:-moz-linear-gradient(top, #0088cc, #0044cc);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));background-image:-webkit-linear-gradient(top, #0088cc, #0044cc);background-image:-o-linear-gradient(top, #0088cc, #0044cc);background-image:linear-gradient(to bottom, #0088cc, #0044cc);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);border-color:#0044cc #0044cc #002a80;border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);*background-color:#0044cc;filter:progid:DXImageTransform.Microsoft.gradient(enabled = false);" target="_blank">打印补货单</a><span style="color: red;font-size: 16px;">&nbsp;亲，请别忘了打印补货单哦！</span>
+		 		 class="btn btn-primary btn-rounded" style="margin-left:15px;margin-right:15px;" target="_blank">打印补货单</a><span style="color: red;font-size: 16px;">&nbsp;亲，请别忘了打印补货单哦！</span>
 
 	</div>
 	<!--maincontentinner-->

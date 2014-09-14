@@ -100,6 +100,7 @@ table.table.table-bordered{
 	<table class="table table-bordered">
 		<tr>
 			<td class="center span3">样衣下单数</td>
+			<td class="center span2">样衣颜色</td>
 			<td class="center span2">XS</td>
 			<td class="center span2">S</td>
 			<td class="center span2">M</td>
@@ -110,6 +111,7 @@ table.table.table-bordered{
 		</tr>
 		<c:forEach var="sample" items="${orderInfo.sample}">
 			<tr>
+				<td class="center">${sample.xs+sample.s+sample.m+sample.l+sample.xl+sample.xxl}</td>
 				<td class="center">${sample.color}</td>
 				<td class="center">${sample.xs}</td>
 				<td class="center">${sample.s}</td>

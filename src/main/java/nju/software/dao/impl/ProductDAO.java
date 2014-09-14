@@ -215,4 +215,5 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	public static IProductDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (IProductDAO) ctx.getBean("ProductDAO");
 	}
+
 }
