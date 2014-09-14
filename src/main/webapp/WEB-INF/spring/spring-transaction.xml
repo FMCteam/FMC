@@ -23,7 +23,6 @@
 	<!-- 开启注解方式下的声明式事务 -->
 	<tx:annotation-driven transaction-manager="txManager"
 		proxy-target-class="true" />
-
 	<!-- 配置数据源 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

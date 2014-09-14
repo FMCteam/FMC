@@ -19,4 +19,6 @@ public interface QualityService {
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
 
+	boolean test(int orderId, String clothesType);
+
 }

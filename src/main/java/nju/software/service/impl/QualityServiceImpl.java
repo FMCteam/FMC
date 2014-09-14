@@ -12,6 +12,7 @@ import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dataobject.CheckDetail;
 import nju.software.dataobject.CheckRecord;
+import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.service.QualityService;
 import nju.software.util.JbpmAPIUtil;
@@ -69,7 +70,15 @@ public class QualityServiceImpl implements QualityService {
 				.getProcessInstance(processId);
 		return process.getVariable(name);
 	}
-
+//测试异常是否回滚
+	@Override
+	public boolean test(int orderId,String clothesType){
+		Order order=orderDAO.findById(orderId);
+		clothesType=null;
+		order.setAskAmount(Integer.valueOf(clothesType));
+		orderDAO.merge(order);
+		return true;
+	}
 	@Override
 	public String checkQualitySubmit(int orderId, long taskId, String isFinal,
 			CheckRecord checkRecord, List<Produce> goodList) {

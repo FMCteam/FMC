@@ -618,7 +618,7 @@ public class OrderController {
 		@RequestMapping(value = "/order/end.do")
 		@Transactional(rollbackFor = Exception.class)
 		public String end(HttpServletRequest request,
-				HttpServletResponse response, ModelMap model) {
+				HttpServletResponse response, ModelMap modelt){
 			Integer orderId=Integer.parseInt(request.getParameter("orderId"));
 			orderService.endOrder(orderId);
 			return "forward:/order/endList.do";
