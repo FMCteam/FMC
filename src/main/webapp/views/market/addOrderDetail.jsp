@@ -425,7 +425,7 @@
 
 				<!--row-fluid-->
 			</div>
-			<button class="btn btn-primary" onclick="history.back();">返回</button>
+			<a class="btn btn-primary" onclick="history.back();">返回</a>
 			<div class="action" style="float:right">
 				<button class="btn btn-primary btn-rounded norepeat"  onclick="return check()">
 					<i class="icon-ok icon-white"></i>提交询单

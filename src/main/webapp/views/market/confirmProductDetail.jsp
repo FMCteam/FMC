@@ -83,13 +83,13 @@
 					id="produce_xxl" type="hidden" name="produce_xxl" /> <input
 					type="hidden" name="tof" id="tof">
 					
-					<a class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定加工</a> 
+					<button class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定加工</button> 
 			</div>
 		</form>
 		<br>
-			<button class="btn btn-primary" onclick="history.back(-1);">返回</button> 
+			<a class="btn btn-primary" onclick="history.back(-1);">返回</a> 
 			<a href="${ctx}/market/printConfirmProcurementOrder.do?orderId=${orderInfo.order.orderId}"  onclick="return check()"  id="printConfirmProcurementOrder"
-		 		 class="btn btn-primary btn-rounded" style="margin-left:15px;margin-right:15px;">打印补货单</a><span style="color: red;font-size: 16px;">&nbsp;亲，请别忘了打印补货单哦！</span>
+		 		 class="btn btn-primary btn-rounded" style="margin-left:15px;margin-right:15px;" target="_blank">打印补货单</a><span style="color: red;font-size: 16px;">&nbsp;亲，请别忘了打印补货单哦！</span>
 
 	</div>
 	<!--maincontentinner-->

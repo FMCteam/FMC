@@ -83,7 +83,7 @@
 
 						<input type="hidden" name="result" id="result" />
 						
-						<c:if test="${model.order.isHaoDuoYi ==0 }">
+						<c:if test="${orderInfo.order.isHaoDuoYi== 0 }">
 							<button onclick="return fail()"
 								class="btn btn-danger btn-rounded" style="margin-left: 0px;">
 								<i class="icon-remove icon-white"></i>采购失败</button>
@@ -103,8 +103,9 @@
 				</div>
 			</div>
 		</form>
-		<button class="btn btn-primary" onclick="history.back();">返回</button>
 	</div>
+		<a class="btn btn-primary" style="margin-left: 19px;" onclick="history.back();">返回</a>
+		
 
 
 	<div class="footer">

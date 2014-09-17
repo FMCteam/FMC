@@ -29,6 +29,7 @@ import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.SearchInfo;
 import nju.software.dataobject.VersionData;
 import nju.software.service.CraftService;
 import nju.software.service.CustomerService;
@@ -138,6 +139,7 @@ public class OrderController {
 		model.addAttribute("url", "/account/modifyOrderDetail.do");
 		model.addAttribute("searchurl", "/account/modifyOrderSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		model.addAttribute("page", page);
 		
 		if(list!=null&&list.size()!=0){
@@ -607,6 +609,7 @@ public class OrderController {
 			model.put("list", resultlist);
 			model.addAttribute("taskName", "被终止订单列表");
 			model.addAttribute("url", "/order/orderDetail.do");
+			model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 			return "/order/endList_new";
 		}		
 		
@@ -615,7 +618,7 @@ public class OrderController {
 		@RequestMapping(value = "/order/end.do")
 		@Transactional(rollbackFor = Exception.class)
 		public String end(HttpServletRequest request,
-				HttpServletResponse response, ModelMap model) {
+				HttpServletResponse response, ModelMap modelt){
 			Integer orderId=Integer.parseInt(request.getParameter("orderId"));
 			orderService.endOrder(orderId);
 			return "forward:/order/endList.do";

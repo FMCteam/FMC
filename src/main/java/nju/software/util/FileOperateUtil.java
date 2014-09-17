@@ -217,6 +217,7 @@ public class FileOperateUtil {
 
     //复制文件
 	public static File CopyAndPaste(String source, String target){
+		
 		try {
 			File sourceFile = new File(source);
 			FileInputStream fis = new FileInputStream(sourceFile);
@@ -304,7 +305,7 @@ public class FileOperateUtil {
 			response.setContentType("application/octet-stream; charset=utf-8");
 			response.setHeader("Content-Disposition", "attachment; filename="
 					+ getFileName(absolutepath));
-			File pfile = new File(absolutepath);
+			File pfile = new File(absolutepath);	
 			os.write(FileUtils.readFileToByteArray(pfile));
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

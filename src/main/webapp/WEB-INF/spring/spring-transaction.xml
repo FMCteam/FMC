@@ -13,18 +13,14 @@
           http://www.springframework.org/schema/aop   
           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
           http://drools.org/schema/drools-spring
-          http://drools.org/schema/drools-spring.xsd" >
+          http://drools.org/schema/drools-spring.xsd" default-lazy-init="true">
 
 	<!-- 组件扫描 -->
 	<context:component-scan base-package="nju.software">
 	</context:component-scan>
 	<context:annotation-config />
-	<context:component-scan base-package="nju.software.dao.impl,nju.software.service.impl" />
-	<!-- 开启注解方式下的声明式事务 -->
-	<tx:annotation-driven transaction-manager="txManager"
-		proxy-target-class="true" />
-
-	<!-- 配置数据源 
+	<!-- 配置数据源 <context:component-scan base-package="nju.software.dao.impl,nju.software.service.impl" />
+	
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -46,5 +42,18 @@
 	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-
+	<!-- 开启注解方式下的声明式事务 -->
+	<tx:annotation-driven transaction-manager="txManager"
+		proxy-target-class="true" />
+		
+	 <tx:advice id="transactionAdvice" transaction-manager="txManager"> 
+        <tx:attributes> 
+            <tx:method name="*" propagation="REQUIRED"/> 
+        </tx:attributes> 
+    </tx:advice>
+	<aop:config> 
+    <aop:pointcut id="businessService" 
+            expression="execution(* nju.software.controller..*.*(..))" /> 
+    <aop:advisor advice-ref="transactionAdvice" pointcut-ref="businessService" /> 
+    </aop:config>
 </beans>

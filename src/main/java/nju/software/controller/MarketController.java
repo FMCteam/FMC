@@ -35,6 +35,7 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
+import nju.software.dataobject.SearchInfo;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.model.OrderModel;
@@ -482,6 +483,7 @@ public class MarketController {
 		model.addAttribute("url", "/market/addMoreOrderDetail.do");
 		model.addAttribute("searchurl", "/market/addMoreOrderListSearch.do");
 		model.addAttribute("cid", cid);
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/market/addMoreOrderList";
 		
 	}
@@ -922,7 +924,7 @@ public class MarketController {
 		model.addAttribute("taskName", "修改报价订单搜索");
 		model.addAttribute("url", "/market/modifyQuoteDetail.do");
 		model.addAttribute("searchurl", "/market/modifyQuoteListSearch.do");
-
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "market/modifyQuoteList";
 	}
 	
@@ -973,7 +975,7 @@ public class MarketController {
 		model.addAttribute("taskName", "修改合同加工单搜索");
 		model.addAttribute("url", "/market/modifyProductDetail.do");
 		model.addAttribute("searchurl", "/market/modifyProductListSearch.do");
-
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "market/modifyProductList";
 	}
 	
@@ -1161,7 +1163,7 @@ public class MarketController {
 		model.addAttribute("taskName", "合并报价订单查找");
 		model.addAttribute("url", "/market/mergeQuoteDetail.do");
 		model.addAttribute("searchurl", "/market/mergeQuoteListSearch.do");
-
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "market/mergeQuoteList";
 	}
 	// 主管审核报价
@@ -1268,7 +1270,7 @@ public class MarketController {
 		model.addAttribute("taskName", "审核报价订单查询");
 		model.addAttribute("url", "/market/verifyQuoteDetail.do");
 		model.addAttribute("searchurl", "/market/verifyQuoteListSearch.do");
-
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "market/verifyQuoteList";
 
 	}
@@ -1320,6 +1322,7 @@ public class MarketController {
 		model.addAttribute("taskName", "修改询单");
 		model.addAttribute("url", "/market/modifyOrderDetail.do");
 		model.addAttribute("searchurl", "/market/modifyOrderListSearch.do");		
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "market/modifyOrderList";
 	}
 
@@ -1701,7 +1704,7 @@ public class MarketController {
 		model.addAttribute("taskName", "确认报价搜索");
 		model.addAttribute("url", "/market/confirmQuoteDetail.do");
 		model.addAttribute("searchurl", "/market/confirmQuoteListSearch.do");
-
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "market/confirmQuoteList";
 	}
 	
@@ -1828,7 +1831,7 @@ public class MarketController {
 		model.addAttribute("taskName", "确认合同加工单");
 		model.addAttribute("url", "/market/confirmProduceOrderDetail.do");
 		model.addAttribute("searchurl", "/market/confirmProduceOrderListSearch.do");
-
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "market/confirmProductList";
 	}
 	
@@ -2039,6 +2042,7 @@ public class MarketController {
 			model.addAttribute("taskName", "催尾款搜索");
 			model.addAttribute("url", "/market/getPushRestOrderDetail.do");
 			model.addAttribute("searchurl", "/market/getPushRestOrderListSearch.do");
+			model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 			return "/market/getPushRestOrderList";
 		}
 		
@@ -2206,6 +2210,7 @@ public class MarketController {
 		model.addAttribute("taskName", "签订合同");
 		model.addAttribute("url", "/market/signContractDetail.do");
 		model.addAttribute("searchurl", "/market/signContractListSearch.do");
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/market/signContractList";
 	}
 	
@@ -2308,17 +2313,30 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
+		/*int j=0;
+		SearchInfo info = null;*/
+		SearchInfo searchInfo = getSearchInfo(ordernumber, customername, stylename, startdate, enddate, employeename);
 		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
 		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
+		/*SearchInfo info = new SearchInfo();
+		info.setCustomername(customername);
+		info.setEmployeename(employeename);
+		info.setEnddate(enddate);
+		info.setOrdernumber(ordernumber);
+		info.setStartdate(startdate);
+		info.setStylename(stylename);
+		System.out.println("--------"+info.getStylename());*/
 		List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds,account.getUserRole(),account.getUserId());
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表查找");
-		model.addAttribute("url", "/order/orderDetail.do");
-		model.addAttribute("searchurl", "/order/orderSearch.do");
+		model.addAttribute("url", "/order/orderDetail.do");	
+		model.addAttribute("searchurl", "/order/orderSearch.do");  
+		model.addAttribute("info", searchInfo);//将查询条件传回页面 hcj
+		
 		return "/market/orderList_new";
 	}
 	
@@ -2376,7 +2394,6 @@ public class MarketController {
 	public String orderListDoingSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute("cur_user");
-		
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -2394,6 +2411,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoingSearch.do");
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/market/orderList_new";
 	}
 
@@ -2443,6 +2461,7 @@ public class MarketController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/order/orderListDoneSearch.do");
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/market/orderList_new";
 	}
 	//获取大货补货单信息 
@@ -2526,4 +2545,15 @@ public class MarketController {
 		return "/finance/printProcurementSampleOrder";
 	}
 	
+	public SearchInfo getSearchInfo(String ordernumber,String customername,String stylename,String startdate,String enddate,String employeename){
+		SearchInfo info = new SearchInfo();
+		info.setCustomername(customername);
+		info.setEmployeename(employeename);
+		info.setEnddate(enddate);
+		info.setOrdernumber(ordernumber);
+		info.setStartdate(startdate);
+		info.setStylename(stylename);
+		
+		return info;
+	} 
 }

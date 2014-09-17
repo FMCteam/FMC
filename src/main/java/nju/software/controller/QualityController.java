@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Produce;
+import nju.software.dataobject.SearchInfo;
 import nju.software.service.CustomerService;
 import nju.software.service.EmployeeService;
 import nju.software.service.OrderService;
@@ -22,12 +23,14 @@ import nju.software.util.JbpmAPIUtil;
 import org.drools.core.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@Transactional 
 public class QualityController {
 
 	@Autowired
@@ -80,6 +83,7 @@ public class QualityController {
 		model.addAttribute("url", "/quality/checkQualityDetail.do");
 		model.addAttribute("searchurl", "/quality/checkQualityListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "quality/checkQualityList";
 	}
 	
@@ -98,7 +102,7 @@ public class QualityController {
 
 	/** 
 	* @Title: modifyProduct 
-	* @Description: TODO:质量检查
+	* @Description: TODO:质量检查（提交）
 	* @param @param request
 	* @param @param response
 	* @param @param model
@@ -107,9 +111,9 @@ public class QualityController {
 	* @throws 
 	*/
 	@RequestMapping(value = "quality/checkQualitySubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor=Exception.class)  
 	public String modifyProduct(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model)throws Exception {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String s_taskId = request.getParameter("taskId");
 		long taskId = Long.parseLong(s_taskId);
@@ -163,6 +167,7 @@ public class QualityController {
 		
 		String msg = qualityService.checkQualitySubmit(orderId, taskId,
 				isFinal, checkRecord, goodList);
+		//qualityService.test(orderId,repairSide);
 		if (msg.equals("")) {
 			// 如果成功保存本次质检，返回质检列表页面
 			return "redirect:/quality/checkQualityList.do";

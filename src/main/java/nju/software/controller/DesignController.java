@@ -15,6 +15,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Craft;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Produce;
+import nju.software.dataobject.SearchInfo;
 import nju.software.service.DesignService;
 import nju.software.service.EmployeeService;
 import nju.software.service.MarketService;
@@ -84,6 +85,7 @@ public class DesignController {
 		model.addAttribute("url", "/design/verifyDesignDetail.do");
 		model.addAttribute("searchurl", "/design/verifyDesignListSearch.do");
 		
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/design/verifyDesignList";
 	}
 	
@@ -148,6 +150,7 @@ public class DesignController {
 		model.addAttribute("taskName", "设计工艺验证");
 		model.addAttribute("url", "/design/computeDesignCostDetail.do");
 		model.addAttribute("searchurl", "/design/computeDesignCostListSearch.do");
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/design/computeDesignCostList";
 	}
 	
@@ -256,6 +259,7 @@ public class DesignController {
 		model.addAttribute("url", "/design/getUploadDesignDetail.do");
 		model.addAttribute("searchurl", "/design/getUploadDesignListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/design/getUploadDesignList";
 	}
 	
@@ -407,6 +411,7 @@ public class DesignController {
 		model.addAttribute("taskName", "设计部确认");
 		model.addAttribute("url", "/design/getModifyDesignDetail.do");
 		model.addAttribute("searchurl", "/design/getModifyDesignListSearch.do");
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/design/getModifyDesignList";
 	}
 	
@@ -545,6 +550,7 @@ public class DesignController {
 		model.addAttribute("taskName", "样衣工艺制作");
 		model.addAttribute("url", "/design/needCraftSampleDetail.do");
 		model.addAttribute("searchurl", "/design/getNeedCraftSampleListSearch.do");
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/design/getNeedCraftSampleList";
 	
 	    
@@ -613,6 +619,7 @@ public class DesignController {
 		model.addAttribute("url", "/design/needCraftProductDetail.do");
 		model.addAttribute("searchurl", "/design/getNeedCraftProductListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/design/getNeedCraftProductList";
 	}
 	
@@ -679,6 +686,7 @@ public class DesignController {
 		model.addAttribute("url", "/design/getTypeSettingSliceDetail.do");
 		model.addAttribute("searchurl", "/design/getTypeSettingSliceListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/design/getTypeSettingSliceList";
 	}
 	
@@ -717,6 +725,7 @@ public class DesignController {
 		model.addAttribute("taskName", "设计生产确认");
 		model.addAttribute("url", "/design/getConfirmDesignDetail.do");
 		model.addAttribute("searchurl", "/design/getConfirmDesignListSearch.do");
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/design/getConfirmDesignList";
 	}
 	
@@ -817,6 +826,7 @@ public class DesignController {
 		model.addAttribute("url", "/design/getConfirmCadDetail.do");
 		model.addAttribute("searchurl", "/design/getConfirmCadListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/design/getConfirmCadList";
 	}
 	

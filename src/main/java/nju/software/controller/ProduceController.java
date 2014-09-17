@@ -12,6 +12,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
+import nju.software.dataobject.SearchInfo;
 import nju.software.model.OrderInfo;
 import nju.software.service.EmployeeService;
 import nju.software.service.OrderService;
@@ -81,6 +82,7 @@ public class ProduceController {
 		model.addAttribute("taskName", "生产验证");
 		model.addAttribute("url", "/produce/verifyProduceDetail.do");
 		model.addAttribute("searchurl", "/produce/verifyProduceListSearch.do");
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "produce/verifyProduceList";
 	}
 	
@@ -164,6 +166,7 @@ public class ProduceController {
 		model.addAttribute("taskName", "生产成本验证并核算");
 		model.addAttribute("url", "/produce/computeProduceCostDetail.do");
 		model.addAttribute("searchurl", "/produce/computeProduceCostListSearch.do");
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/produce/computeProduceCostList";
 	}
 	
@@ -283,6 +286,7 @@ public class ProduceController {
 		model.addAttribute("url", "/produce/produceSampleDetail.do");
 		model.addAttribute("searchurl", "/produce/produceSampleListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/produce/produceSampleList";
 	}
 	
@@ -353,6 +357,7 @@ public class ProduceController {
 		model.addAttribute("url", "/produce/produceDetail.do");
 		model.addAttribute("searchurl", "/produce/produceListSearch.do");
 
+		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		return "/produce/produceList";
 	}
 	
