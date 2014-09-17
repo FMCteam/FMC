@@ -11,7 +11,7 @@ public interface QualityService {
 	public List<Map<String, Object>> getCheckQualityList();
 
 	public String checkQualitySubmit(int orderId, long taskId, String isFinal,
-			CheckRecord checkRecord, List<Produce> goodList);
+			CheckRecord checkRecord, List<Produce> goodList)throws Exception;
 
 	public Map<String, Object> getCheckQualityDetail(int orderId);
 
@@ -19,6 +19,6 @@ public interface QualityService {
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
 
-	boolean test(int orderId, String clothesType);
+	boolean test(int orderId, String clothesType) throws Exception;
 
 }
