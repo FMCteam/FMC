@@ -595,6 +595,13 @@ public class OrderServiceImpl implements OrderService {
 		List<Craft> crafts = craftDAO.findByOrderId(orderId);
 		if (crafts != null && crafts.size() != 0) {
 			model.put("craft", crafts.get(0));
+			Craft craft = crafts.get(0);
+			short need_craft = craft.getNeedCraft();
+			if(need_craft ==1){
+				model.put("needcraft", "needcraft");
+			}else{
+				model.put("needcraft", "dontneedcraft");
+			}
 		}
  
 		model.put("order", order);
@@ -694,7 +701,10 @@ public class OrderServiceImpl implements OrderService {
 			float singleCost=originalQuote.getCutCost()+originalQuote.getManageCost()+originalQuote.getDesignCost()+
 					originalQuote.getIroningCost()+originalQuote.getNailCost()+originalQuote.getPackageCost()+
 					originalQuote.getSwingCost()+originalQuote.getOtherCost()+all_accessory_prices+all_fabric_prices;
-			
+			float craft_price = craft.getCrumpleMoney()+craft.getEmbroideryMoney()+craft.getLaserMoney()+
+					            craft.getOpenVersionMoney()+craft.getStampDutyMoney()+craft.getWashHangDyeMoney();
+			singleCost+=craft_price;
+			originalQuote.setCraftCost(craft_price);
 			originalQuote.setSingleCost(singleCost);
 			quoteDAO.merge(originalQuote);
 //			quoteDAO.attachDirty(originalQuote);
@@ -723,6 +733,7 @@ public class OrderServiceImpl implements OrderService {
 
 		// cad
 		cadDAO.merge(cad);
+		
         craftDAO.merge(craft);
 	}
 

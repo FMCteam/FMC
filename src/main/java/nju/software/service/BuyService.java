@@ -88,4 +88,14 @@ public interface BuyService {
 	Map<String, Object> getPrintProcurementOrderDetail(Integer orderId,
 			List<Produce> productList);
 
+	public List<Map<String, Object>> purchaseSweaterMaterialList();
+
+	public List<Map<String, Object>> getSearchPurchaseSweaterMaterialList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds);
+
+	public Map<String, Object> getPurchaseSweaterMaterialDetail(int orderId);
+
+	public boolean purchaseSweaterMaterialSubmit(long taskId, String orderId);
+
 }

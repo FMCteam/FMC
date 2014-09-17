@@ -184,10 +184,10 @@ table.tablesorter thead tr .headerSortDown {
 								class="iconfa-th-list"></span> 设计部<span
 								class="designManager task"></span></a>
 							<ul>
-								<!-- 
 								<li><a href="${ctx}/design/verifyDesignList.do">设计验证<span
 										class="verifyDesign"></span></a></li>
 								
+								<!-- 
 								<li><a href="${ctx}/design/computeDesignCostList.do">设计工艺验证<span
 										class="computeDesignCost"></span></a></li>
 								
@@ -244,6 +244,9 @@ table.tablesorter thead tr .headerSortDown {
 										class="confirmPurchase"></span></a></li> --%>
 								<li><a href="${ctx }/buy/purchaseMaterialList.do">大货面料采购确认<span
 										class="purchaseMaterial"></span></a></li>
+								<li><a href="${ctx }/buy/purchaseSweaterMaterialList.do">毛衣面料采购<span
+										class="buySweaterMaterial"></span></a></li>		
+								
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_produce==true}">
@@ -263,6 +266,19 @@ table.tablesorter thead tr .headerSortDown {
 										class="produce"></span></a></li>
 							</ul></li>
 					</c:if>
+					<c:if test="${ROLE_sweater==true}">
+						<li class="dropdown"><a href=""><span
+								class="iconfa-th-list"></span>毛衣制作部<span
+								class="SweaterMakeManager task"></span></a>
+							<ul>
+								<li><a href="${ctx }/sweater/sweaterSampleAndCraftList.do">样衣确认和工艺制作<span
+										class="confirmSweaterSampleAndCraft"></span></a></li>
+								<li><a href="${ctx }/sweater/sendSweaterList.do">毛衣外发<span
+										class="sendSweater"></span></a></li>
+							</ul></li>
+					</c:if>
+
+					
 					<c:if test="${ROLE_finance==true}">
 						<li class="dropdown"><a href=""><span
 								class="iconfa-th-list"></span> 财务部<span

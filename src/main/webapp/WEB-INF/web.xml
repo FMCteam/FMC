@@ -140,6 +140,19 @@
 	</filter-mapping>
 
 	<filter>
+		<filter-name>sweaterFilter</filter-name>
+		<filter-class>nju.software.filter.AccessFilter</filter-class>
+		<init-param>
+			<param-name>type</param-name>
+			<param-value>sweater</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>sweaterFilter</filter-name>
+		<url-pattern>/sweater/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
 		<filter-name>buyFilter</filter-name>
 		<filter-class>nju.software.filter.AccessFilter</filter-class>
 		<init-param>

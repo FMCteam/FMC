@@ -15,6 +15,7 @@ import nju.software.service.impl.LogisticsServiceImpl;
 import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
 import nju.software.service.impl.QualityServiceImpl;
+import nju.software.service.impl.SweaterMakeServiceImpl;
 import nju.software.util.JbpmAPIUtil;
 
 import java.io.DataInputStream;
@@ -52,6 +53,7 @@ public class CommonController {
 		departments.add(FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
 		departments.add(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
 		departments.add(QualityServiceImpl.ACTOR_QUALITY_MANAGER);
+		departments.add(SweaterMakeServiceImpl.ACTOR_SWEATER_MANAGER);
 
 		map.put(MarketServiceImpl.TASK_VERIFY_QUOTE,
 				MarketServiceImpl.ACTOR_MARKET_MANAGER);
@@ -83,7 +85,10 @@ public class CommonController {
 				BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
 		map.put(BuyServiceImpl.TASK_PURCHASE_MATERIAL,
 				BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
-
+        map.put(BuyServiceImpl.TASK_BUY_SWEATER_MATERIAL,
+        		BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
+		
+		
 		map.put(ProduceServiceImpl.TASK_VERIFY_PRODUCE,
 				ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
 		map.put(ProduceServiceImpl.TASK_COMPUTE_PRODUCE_COST,
@@ -116,6 +121,11 @@ public class CommonController {
 		
 		map.put(QualityServiceImpl.TASK_CHECK_QUALITY,
 				QualityServiceImpl.ACTOR_QUALITY_MANAGER);
+		
+		map.put(SweaterMakeServiceImpl.TASK_CONFIRM_SWEATER_SAMPLE_AND_CRAFT,
+				SweaterMakeServiceImpl.ACTOR_SWEATER_MANAGER);
+		map.put(SweaterMakeServiceImpl.TASK_SEND_SWEATER, 
+				SweaterMakeServiceImpl.ACTOR_SWEATER_MANAGER);
 	}
 
 	@RequestMapping(value = "/common/getTaskNumber.do")
@@ -158,15 +168,12 @@ public class CommonController {
 
 		for (String task : map.keySet()) {
 			jsonobj.put(task, getTaskNumber((String) map.get(task), task));
-//			System.out.println("该task"+task+"数量为："+getTaskNumber((String) map.get(task), task));
-			if(task.equals(MarketServiceImpl.TASK_VERIFY_QUOTE)){
+ 			if(task.equals(MarketServiceImpl.TASK_VERIFY_QUOTE)){
 				//市场主管的task class 设为"marketManager2",设置为市场主管的审核报价的任务数 为市场主管所有的任务数
 				jsonobj.put("marketManager2", getTaskNumber((String) map.get(task), task));
-//				System.out.println("市场主管的任务数量："+getTaskNumber((String) map.get(task), task));
-				
+ 				
 			}
 		}
-		
 		//设计部门分为设计部和工艺部
 		int totalNumber = jsonobj.getInt(DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 		// 工艺部任务数量
@@ -182,8 +189,6 @@ public class CommonController {
 		int warehouseNum = jsonobj.getInt(LogisticsServiceImpl.TASK_WAREHOUSE)
 				+ jsonobj.getInt(LogisticsServiceImpl.TASK_WAREHOUSE_HAODUOYI);
 		jsonobj.put(LogisticsServiceImpl.TASK_WAREHOUSE, warehouseNum);
-		
-		
 		sendJson(response, jsonobj);
 	}
 

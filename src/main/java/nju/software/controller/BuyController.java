@@ -516,6 +516,66 @@ public class BuyController {
 		return "forward:/buy/purchaseMaterialList.do";
 	}
 	
+ 		// ========================毛衣原料采购===========================
+		@RequestMapping(value = "/buy/purchaseSweaterMaterialList.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String purchaseSweaterMaterialList(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			List<Map<String, Object>> list = buyService.purchaseSweaterMaterialList();
+			model.put("list", list);
+			model.addAttribute("taskName", "毛衣原料采购");
+			model.addAttribute("url", "/buy/purchaseSweaterMaterialDetail.do");
+			model.addAttribute("searchurl", "/buy/purchaseSweaterMaterialListSearch.do");
+
+			return "/buy/purchaseSweaterMaterialList";
+		}
+		
+		// ========================毛衣原料采购订单搜索===========================		
+		@RequestMapping(value = "/buy/purchaseSweaterMaterialListSearch.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String purchaseSweaterMaterialListSearch(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			String ordernumber = request.getParameter("ordernumber");
+			String customername = request.getParameter("customername");
+			String stylename = request.getParameter("stylename");
+			String employeename = request.getParameter("employeename");
+			String startdate = request.getParameter("startdate");
+			String enddate = request.getParameter("enddate");
+			//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+			List<Employee> employees = employeeService.getEmployeeByName(employeename);
+			Integer[] employeeIds = new Integer[employees.size()];
+			for(int i=0;i<employeeIds.length;i++){
+				employeeIds[i] = employees.get(i).getEmployeeId();
+			}
+			List<Map<String, Object>> list = buyService.getSearchPurchaseSweaterMaterialList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+			model.put("list", list);
+			model.addAttribute("taskName", "毛衣原料采购订单搜索");
+			model.addAttribute("url", "/buy/purchaseSweaterMaterialDetail.do");
+			model.addAttribute("searchurl", "/buy/purchaseSweaterMaterialListSearch.do");
+			return "/buy/purchaseSweaterMaterialList";
+		}
+		
+		@RequestMapping(value = "/buy/purchaseSweaterMaterialDetail.do")
+		@Transactional(rollbackFor = Exception.class)
+		public String purchaseSweaterMaterialDetail(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			String orderId = request.getParameter("orderId");
+			Map<String, Object> orderInfo = buyService
+					.getPurchaseSweaterMaterialDetail(Integer.parseInt(orderId));
+			model.addAttribute("orderInfo", orderInfo);
+			return "/buy/purchaseSweaterMaterialDetail";
+		}
+	
+		@RequestMapping(value = "/buy/purchaseSweaterMaterialSubmit.do", method = RequestMethod.POST)
+		@Transactional(rollbackFor = Exception.class)
+		public String purchaseSweaterMaterialSubmit(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			String orderId = request.getParameter("orderId");
+			String taskId =  request.getParameter("taskId");
+ 			buyService.purchaseSweaterMaterialSubmit(Long.parseLong(taskId),orderId);
+			return "forward:/buy/purchaseSweaterMaterialList.do";
+		}
+	
 	public static Timestamp getTime(String time) {
 		if(time.equals("")) return null;
 		Date outDate = DateUtil.parse(time, DateUtil.haveSecondFormat);

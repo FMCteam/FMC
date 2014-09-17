@@ -18,7 +18,7 @@ a:hover{
 </head>
  
 <body>
-	<img src="${ctx}/images/fmc-image0813.png"
+	<img src="${ctx}/images/fmc-9-14.png"
 		style="position: absolute; left: 0px; top: 0px;"
 		onload="window.scrollTo(${list[0].x-500},0);">
 	<c:forEach var="node" items="${list}">

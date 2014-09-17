@@ -15,8 +15,9 @@ var _cityInfo = [{ "n": "市场部", "c": ["市场主管", "市场专员"] },
 		{ "n": "物流部", "c": ["物流主管"] },
 
 		{ "n": "质检部", "c": ["质检主管"] },
-
-		//{ "n": "人事部", "c": ["人事主管"] },
+        
+		
+		{ "n": "毛衣制作部", "c": ["毛衣部主管"] },
 
 		];
 
@@ -88,6 +89,8 @@ var _cityInfo = [{ "n": "市场部", "c": ["市场主管", "市场专员"] },
         		case "物流主管": return "logisticsManager";
         		case "财务主管": return "financeManager";
         		case "质检主管": return "qualityManager";
+        		case "毛衣部主管": return "SweaterMakeManager";
+        		
         		//case "人事主管": return "humanManager";
         	}
         }

@@ -472,6 +472,7 @@
 									</table></td>
 							</tr>
 						</table>
+						<c:if test="${orderModel.craft.needCraft == 1}">
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
@@ -501,8 +502,39 @@
 									id="crumpleMoney" type="text" value="${orderModel.craft.crumpleMoney }" required="required" /></td>
 								<td><input class="span12" name="openVersionMoney" id="openVersionMoney"
 									type="text" value="${orderModel.craft.openVersionMoney }" required="required" /></td>								 
+							   
+							</tr>
+						
+						</table>
+						</c:if>
+						<c:if test="${orderModel.craft.needCraft != 1}">
+						<table
+							class="table table-striped table-bordered table-hover detail">
+							<tr>
+								<td rowspan="4">工艺成本</td>
+								<td>印花费用（单位：元）</td>
+								<td>水洗吊染费用（单位：元）</td>
+								<td>激光费用（单位：元）</td>								 
+							</tr>
+
+							<tr>
+								<td>${orderModel.craft.stampDutyMoney}</td>
+								<td>${orderModel.craft.washHangDyeMoney}</td>
+								<td>${orderModel.craft.laserMoney }</td>								 
+							</tr>
+							<tr>
+								<td>刺绣费用（单位：元）</td>
+								<td>压皱费用（单位：元）</td>
+								<td>开版费用（单位：元）</td>
+ 							</tr>
+							<tr>
+								<td>${orderModel.craft.embroideryMoney }</td>
+								<td>${orderModel.craft.crumpleMoney }</td>
+								<td>${orderModel.craft.openVersionMoney }</td>								 
 							</tr>
 						</table>
+						</c:if>
+
 					</div>
 					
 					

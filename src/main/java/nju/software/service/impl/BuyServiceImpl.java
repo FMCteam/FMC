@@ -338,13 +338,47 @@ public class BuyServiceImpl implements BuyService {
 			}
 			return true;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+ 			e.printStackTrace();
 			return false;
 		}
 	}
-
-	// ===========================大货原料采购=================================
+    
+	// ========================毛衣原料采购==================================
+	@Override
+	public List<Map<String, Object>> purchaseSweaterMaterialList() {
+		return service.getOrderList(ACTOR_PURCHASE_MANAGER,
+				TASK_BUY_SWEATER_MATERIAL);
+	}
+	
+	// ========================毛衣原料采购搜索==================================
+	@Override
+	public List<Map<String, Object>> getSearchPurchaseSweaterMaterialList(
+			String ordernumber, String customername, String stylename,
+			String startdate, String enddate, Integer[] employeeIds) {
+		return service.getSearchOrderList(ACTOR_PURCHASE_MANAGER, ordernumber,  customername,  stylename,
+				 startdate,  enddate,  employeeIds,
+				 TASK_BUY_SWEATER_MATERIAL);
+	}
+	
+	// ======================毛衣原料采购详情===================================
+	@Override
+	public Map<String, Object> getPurchaseSweaterMaterialDetail(int orderId) {
+		return service.getBasicOrderModelWithQuote(ACTOR_PURCHASE_MANAGER,
+				TASK_BUY_SWEATER_MATERIAL, orderId);
+	}
+	
+	@Override
+	public boolean purchaseSweaterMaterialSubmit(long taskId, String orderId) {
+		try {
+			jbpmAPIUtil.completeTask(taskId, null, ACTOR_PURCHASE_MANAGER);
+			return true;
+		} catch (InterruptedException e) {
+ 			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	// ========================大货原料采购=================================
 	@Override
 	public List<Map<String, Object>> getPurchaseMaterialList() {
 		// TODO Auto-generated method stub
@@ -392,16 +426,23 @@ public class BuyServiceImpl implements BuyService {
 		order.setMasssupplierName(masssupplierName);
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PURCHASE, result);
+		if(result==false){
+		if(order.getIsHaoDuoYi().equals(1)){			
+			data.put(RESULT_IS_HAODUOYI,true );
+		}else{
+			data.put(RESULT_IS_HAODUOYI,false );
+		}
+		}
 		try {
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			orderDAO.attachDirty(order);
 			return true;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+ 			e.printStackTrace();
 			return false;
 		}
 	}
+	
 	@Override
 	public Map<String, Object> getPrintProcurementOrderDetail(Integer orderId,List<Produce> productList) {
 		// TODO Auto-generated method stub
@@ -465,9 +506,15 @@ public class BuyServiceImpl implements BuyService {
 	public final static String TASK_PURCHASE_SAMPLE_MATERIAL = "purchaseSampleMaterial";
 	public final static String TASK_CONFIRM_PURCHASE = "confirmPurchase";
 	public final static String TASK_PURCHASE_MATERIAL = "purchaseMaterial";
+	public final static String TASK_BUY_SWEATER_MATERIAL ="buySweaterMaterial";        
 	public final static String RESULT_PURCHASE = "purchase";
 	public final static String RESULT_PURCHASE_COMMENT = "purchaseComment";
     public final static String RESULT_NEED_CRAFT = "needCraft";
+    public final static String RESULT_IS_HAODUOYI = "isHaoDuoYi";
+    public final static String RESULT_PURCHASE_SWEATER ="purchaseSweater";
+
+
+
 
 
 

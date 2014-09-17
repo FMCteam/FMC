@@ -85,6 +85,7 @@
 		<td>${orderInfo.quote.otherCost}</td>
 		<td>${orderInfo.quote.designCost}</td>
 	</tr>
+	
 	<tr>
 		<td class="title" rowspan="2">费用核算</td>
 		<td class="title">成本总计</td>

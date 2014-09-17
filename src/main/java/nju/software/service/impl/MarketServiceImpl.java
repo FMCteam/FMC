@@ -154,7 +154,6 @@ public class MarketServiceImpl implements MarketService {
 			List<Produce> produces, List<Produce> sample_produces,
 			List<VersionData> versions, DesignCad cad,
 			HttpServletRequest request) {
-		// TODO Auto-generated method stub
 
 		// 添加订单信息
 		orderDAO.save(order);
@@ -239,13 +238,29 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("orderId", orderId);
 		params.put("marketStaff", order.getEmployeeId());
+
 		params.put(LogisticsServiceImpl.RESULT_RECEIVE_SAMPLE,
 				(int) order.getHasPostedSampleClothes());
 		params.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
 				(int) order.getIsNeedSampleClothes());
-		params.put(RESULT_REORDER, false);
-		long processId=doTMWorkFlowStart(params);
-		order.setProcessId(processId);
+		params.put(RESULT_REORDER, false);		
+		Map<String, Object> params2 = new HashMap<String, Object>();
+		boolean isSweater = false;
+		if(order.getClothesType().contains("毛衣")){//假如新订单的衣服类型里含有“毛衣”这两个字，
+			isSweater = true;
+		}
+		if(isSweater){
+			params2.put("orderId", orderId);
+			params2.put("marketStaff", order.getEmployeeId());
+			params2.put("isSweater", true);
+			long processId=doTMWorkFlowStart(params2);
+			order.setProcessId(processId);
+			
+		}else{
+			params.put("isSweater", false);
+			long processId=doTMWorkFlowStart(params);
+			order.setProcessId(processId);
+		}
 		orderDAO.attachDirty(order);
 		return true;
 	}

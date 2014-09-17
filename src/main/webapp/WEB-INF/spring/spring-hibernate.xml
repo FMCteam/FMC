@@ -13,7 +13,7 @@
           http://www.springframework.org/schema/aop   
           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
           http://drools.org/schema/drools-spring
-          http://drools.org/schema/drools-spring.xsd" default-lazy-init="true">
+          http://drools.org/schema/drools-spring.xsd" >
 
 	
 	<!-- 以注解的方式配置session工厂 -->

@@ -24,6 +24,7 @@ import nju.software.service.impl.LogisticsServiceImpl;
 import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
 import nju.software.service.impl.QualityServiceImpl;
+import nju.software.service.impl.SweaterMakeServiceImpl;
 import nju.software.util.JbpmAPIUtil;
 
 public class AccessFilter implements Filter {
@@ -45,7 +46,7 @@ public class AccessFilter implements Filter {
 		// accessTable.put("produce", "SHENGCHANZHUGUAN");
 		// accessTable.put("logistics", "logisticsManager");
 		// accessTable.put("quality", "qualityManager");
-
+        
 		accessTable.put("customer", "ADMIN,"
 				+ MarketServiceImpl.ACTOR_MARKET_MANAGER + ","
 				+ MarketServiceImpl.ACTOR_MARKET_STAFF);
@@ -56,6 +57,7 @@ public class AccessFilter implements Filter {
 				+ MarketServiceImpl.ACTOR_MARKET_STAFF);
 		accessTable.put("order", "ALL");
 		accessTable.put("produce", "ADMIN,"+ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
+		accessTable.put("sweater","ADMIN,"+ SweaterMakeServiceImpl.ACTOR_SWEATER_MANAGER);
 		accessTable.put("logistics",
 				"ADMIN,"+LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
 		accessTable.put("quality", "ADMIN,"+QualityServiceImpl.ACTOR_QUALITY_MANAGER);

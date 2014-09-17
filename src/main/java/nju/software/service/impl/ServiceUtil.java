@@ -138,6 +138,11 @@ public class ServiceUtil {
 				orderId);
 		Quote quote = quoteDAO.findById(orderId);
 		model.put("quote", quote);
+		List<Craft> craftList = craftDAO.findByOrderId(orderId);
+		if(craftList.size()>0){
+			Craft craft = craftList.get(0);
+			model.put("craft", craft);			
+		}
 		Order getorder = (Order) model.get("order");
 		int orderSampleAmount = getorder.getSampleAmount();
 		int orderAskAmount = getorder.getAskAmount();
