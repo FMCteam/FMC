@@ -368,9 +368,11 @@ public class BuyServiceImpl implements BuyService {
 	}
 	
 	@Override
-	public boolean purchaseSweaterMaterialSubmit(long taskId, String orderId) {
+	public boolean purchaseSweaterMaterialSubmit(long taskId, String orderId,boolean buySweaterMaterialResult) {
 		try {
-			jbpmAPIUtil.completeTask(taskId, null, ACTOR_PURCHASE_MANAGER);
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put(RESULT_PURCHASE_SWEATER_MATERIAL, buySweaterMaterialResult);
+			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			return true;
 		} catch (InterruptedException e) {
  			e.printStackTrace();
@@ -511,7 +513,7 @@ public class BuyServiceImpl implements BuyService {
 	public final static String RESULT_PURCHASE_COMMENT = "purchaseComment";
     public final static String RESULT_NEED_CRAFT = "needCraft";
     public final static String RESULT_IS_HAODUOYI = "isHaoDuoYi";
-    public final static String RESULT_PURCHASE_SWEATER ="purchaseSweater";
+    public final static String RESULT_PURCHASE_SWEATER_MATERIAL ="sweaterMaterial";
 
 
 
