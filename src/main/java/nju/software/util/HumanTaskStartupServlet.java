@@ -21,6 +21,7 @@ import nju.software.service.impl.LogisticsServiceImpl;
 import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
 import nju.software.service.impl.QualityServiceImpl;
+import nju.software.service.impl.SweaterMakeServiceImpl;
 
 import org.drools.SystemEventListener;
 import org.drools.SystemEventListenerFactory;
@@ -71,6 +72,7 @@ public class HumanTaskStartupServlet extends HttpServlet {
 			taskSession.addUser(new User(FinanceServiceImpl.ACTOR_FINANCE_MANAGER));
 			taskSession.addUser(new User(LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER));
 			taskSession.addUser(new User(QualityServiceImpl.ACTOR_QUALITY_MANAGER));
+			taskSession.addUser(new User(SweaterMakeServiceImpl.ACTOR_SWEATER_MANAGER));
 			taskSession.addUser(new User("1"));
 			
 			// 添加管理员
