@@ -578,7 +578,13 @@ public class BuyController {
 				HttpServletResponse response, ModelMap model) {
 			String orderId = request.getParameter("orderId");
 			String taskId =  request.getParameter("taskId");
- 			buyService.purchaseSweaterMaterialSubmit(Long.parseLong(taskId),orderId);
+			String result = request.getParameter("result");
+			boolean buySweaterMaterialResult = false;
+			if(result.equals("1")){
+				buySweaterMaterialResult = true;
+			} 
+			
+ 			buyService.purchaseSweaterMaterialSubmit(Long.parseLong(taskId),orderId,buySweaterMaterialResult);
 			return "forward:/buy/purchaseSweaterMaterialList.do";
 		}
 	

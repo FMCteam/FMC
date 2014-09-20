@@ -108,7 +108,7 @@ public class ServiceUtil {
 		TaskSummary task = jbpmAPIUtil.getTask(actorId, taskName, orderId);
 		Order order = orderDAO.findById(orderId);
 		model.put("task", task);
-		model.put("taskId", task.getId());
+ 		model.put("taskId", task.getId());
 		model.put("order", order);
 		model.put("orderSampleAmount", order.getSampleAmount());
 		model.put("customer",customerDAO.findById(order.getCustomerId()));

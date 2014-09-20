@@ -80,6 +80,7 @@
 				<value>nju.software.dataobject.DeliveryRecord</value>
 				<value>nju.software.dataobject.CheckRecord</value>
 				<value>nju.software.dataobject.CheckDetail</value>
+				<value>nju.software.dataobject.OperateRecord</value>
 			</list>
 		</property>
 	</bean>
@@ -208,5 +209,10 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+		<bean id="OperateRecordDAO"
+		class="nju.software.dao.impl.OperateRecordDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
 </beans>
