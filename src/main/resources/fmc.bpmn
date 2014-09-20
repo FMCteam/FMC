@@ -34,7 +34,6 @@
   <itemDefinition id="_verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_7-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_7-marketStaffItem" structureRef="Integer" />
@@ -58,7 +57,6 @@
   <itemDefinition id="_7-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_7-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_7-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_7-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_10-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_10-marketStaffItem" structureRef="Integer" />
@@ -82,7 +80,6 @@
   <itemDefinition id="_10-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_10-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_10-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_10-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_11-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_11-marketStaffItem" structureRef="Integer" />
@@ -106,7 +103,6 @@
   <itemDefinition id="_11-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_11-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_11-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_11-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_12-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_12-marketStaffItem" structureRef="Integer" />
@@ -130,7 +126,6 @@
   <itemDefinition id="_12-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_12-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_12-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_12-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_152-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_152-marketStaffItem" structureRef="Integer" />
@@ -154,31 +149,6 @@
   <itemDefinition id="_152-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_152-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_152-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_152-purchaseSweaterItem" structureRef="Integer" />
-
-  <itemDefinition id="_19-orderIdItem" structureRef="Integer" />
-  <itemDefinition id="_19-marketStaffItem" structureRef="Integer" />
-  <itemDefinition id="_19-reorderItem" structureRef="Boolean" />
-  <itemDefinition id="_19-receiveSampleItem" structureRef="Integer" />
-  <itemDefinition id="_19-sendSampleItem" structureRef="Integer" />
-  <itemDefinition id="_19-purchaseItem" structureRef="Boolean" />
-  <itemDefinition id="_19-designItem" structureRef="Boolean" />
-  <itemDefinition id="_19-produceItem" structureRef="Boolean" />
-  <itemDefinition id="_19-purchaseCommentItem" structureRef="String" />
-  <itemDefinition id="_19-designCommentItem" structureRef="String" />
-  <itemDefinition id="_19-produceCommentItem" structureRef="String" />
-  <itemDefinition id="_19-modifyOrderItem" structureRef="Boolean" />
-  <itemDefinition id="_19-quoteItem" structureRef="Integer" />
-  <itemDefinition id="_19-receiveMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_19-confirmProduceOrderContractItem" structureRef="Boolean" />
-  <itemDefinition id="_19-isHaoDuoYiItem" structureRef="Boolean" />
-  <itemDefinition id="_19-verifyQuoteSuccessItem" structureRef="Boolean" />
-  <itemDefinition id="_19-needCraftItem" structureRef="Boolean" />
-  <itemDefinition id="_19-pushRestMoneyItem" structureRef="Boolean" />
-  <itemDefinition id="_19-verifyQuoteCommentItem" structureRef="String" />
-  <itemDefinition id="_19-isSweaterItem" structureRef="Boolean" />
-  <itemDefinition id="_19-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_19-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_154-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_154-marketStaffItem" structureRef="Integer" />
@@ -202,7 +172,29 @@
   <itemDefinition id="_154-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_154-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_154-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_154-purchaseSweaterItem" structureRef="Integer" />
+
+  <itemDefinition id="_19-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_19-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_19-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_19-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_19-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_19-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_19-designItem" structureRef="Boolean" />
+  <itemDefinition id="_19-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_19-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_19-designCommentItem" structureRef="String" />
+  <itemDefinition id="_19-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_19-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_19-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_19-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_19-confirmProduceOrderContractItem" structureRef="Boolean" />
+  <itemDefinition id="_19-isHaoDuoYiItem" structureRef="Boolean" />
+  <itemDefinition id="_19-verifyQuoteSuccessItem" structureRef="Boolean" />
+  <itemDefinition id="_19-needCraftItem" structureRef="Boolean" />
+  <itemDefinition id="_19-pushRestMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_19-verifyQuoteCommentItem" structureRef="String" />
+  <itemDefinition id="_19-isSweaterItem" structureRef="Boolean" />
+  <itemDefinition id="_19-sweaterMaterialItem" structureRef="Boolean" />
 
   <itemDefinition id="_155-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_155-marketStaffItem" structureRef="Integer" />
@@ -226,7 +218,6 @@
   <itemDefinition id="_155-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_155-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_155-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_155-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_148-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_148-marketStaffItem" structureRef="Integer" />
@@ -250,7 +241,6 @@
   <itemDefinition id="_148-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_148-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_148-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_148-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_29-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_29-marketStaffItem" structureRef="Integer" />
@@ -274,7 +264,6 @@
   <itemDefinition id="_29-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_29-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_29-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_29-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_28-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_28-marketStaffItem" structureRef="Integer" />
@@ -298,7 +287,6 @@
   <itemDefinition id="_28-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_28-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_28-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_28-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_150-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_150-marketStaffItem" structureRef="Integer" />
@@ -322,7 +310,6 @@
   <itemDefinition id="_150-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_150-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_150-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_150-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_34-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_34-marketStaffItem" structureRef="Integer" />
@@ -346,7 +333,6 @@
   <itemDefinition id="_34-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_34-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_34-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_34-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_170-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_170-marketStaffItem" structureRef="Integer" />
@@ -370,7 +356,6 @@
   <itemDefinition id="_170-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_170-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_170-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_170-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_169-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_169-marketStaffItem" structureRef="Integer" />
@@ -394,7 +379,6 @@
   <itemDefinition id="_169-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_169-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_169-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_169-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_33-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_33-marketStaffItem" structureRef="Integer" />
@@ -418,7 +402,6 @@
   <itemDefinition id="_33-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_33-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_33-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_33-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_175-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_175-marketStaffItem" structureRef="Integer" />
@@ -442,7 +425,6 @@
   <itemDefinition id="_175-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_175-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_175-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_175-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_172-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_172-marketStaffItem" structureRef="Integer" />
@@ -466,7 +448,6 @@
   <itemDefinition id="_172-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_172-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_172-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_172-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_41-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_41-marketStaffItem" structureRef="Integer" />
@@ -490,7 +471,6 @@
   <itemDefinition id="_41-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_41-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_41-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_41-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_47-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_47-marketStaffItem" structureRef="Integer" />
@@ -514,7 +494,6 @@
   <itemDefinition id="_47-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_47-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_47-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_47-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_48-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_48-marketStaffItem" structureRef="Integer" />
@@ -538,7 +517,6 @@
   <itemDefinition id="_48-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_48-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_48-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_48-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_59-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_59-marketStaffItem" structureRef="Integer" />
@@ -562,7 +540,6 @@
   <itemDefinition id="_59-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_59-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_59-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_59-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_177-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_177-marketStaffItem" structureRef="Integer" />
@@ -586,7 +563,6 @@
   <itemDefinition id="_177-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_177-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_177-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_177-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_62-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_62-marketStaffItem" structureRef="Integer" />
@@ -610,7 +586,6 @@
   <itemDefinition id="_62-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_62-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_62-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_62-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_87-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_87-marketStaffItem" structureRef="Integer" />
@@ -634,7 +609,6 @@
   <itemDefinition id="_87-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_87-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_87-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_87-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_80-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_80-marketStaffItem" structureRef="Integer" />
@@ -658,7 +632,6 @@
   <itemDefinition id="_80-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_80-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_80-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_80-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_103-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_103-marketStaffItem" structureRef="Integer" />
@@ -682,7 +655,6 @@
   <itemDefinition id="_103-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_103-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_103-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_103-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_96-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_96-marketStaffItem" structureRef="Integer" />
@@ -706,7 +678,6 @@
   <itemDefinition id="_96-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_96-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_96-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_96-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_110-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_110-marketStaffItem" structureRef="Integer" />
@@ -730,7 +701,6 @@
   <itemDefinition id="_110-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_110-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_110-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_110-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_107-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_107-marketStaffItem" structureRef="Integer" />
@@ -754,7 +724,6 @@
   <itemDefinition id="_107-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_107-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_107-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_107-purchaseSweaterItem" structureRef="Integer" />
 
   <itemDefinition id="_115-orderIdItem" structureRef="Integer" />
   <itemDefinition id="_115-marketStaffItem" structureRef="Integer" />
@@ -778,7 +747,6 @@
   <itemDefinition id="_115-verifyQuoteCommentItem" structureRef="String" />
   <itemDefinition id="_115-isSweaterItem" structureRef="Boolean" />
   <itemDefinition id="_115-sweaterMaterialItem" structureRef="Boolean" />
-  <itemDefinition id="_115-purchaseSweaterItem" structureRef="Integer" />
 
   <process processType="Private" isExecutable="true" id="nju.software.fmc.bpmn" name="Sample Process" tns:packageName="defaultPackage" >
 
@@ -805,7 +773,6 @@
     <property id="verifyQuoteComment" itemSubjectRef="_verifyQuoteCommentItem"/>
     <property id="isSweater" itemSubjectRef="_isSweaterItem"/>
     <property id="sweaterMaterial" itemSubjectRef="_sweaterMaterialItem"/>
-    <property id="purchaseSweater" itemSubjectRef="_purchaseSweaterItem"/>
 
     <laneSet>
       <lane name="financeManager" >
@@ -813,6 +780,13 @@
         <flowNodeRef>_41</flowNodeRef>
         <flowNodeRef>_80</flowNodeRef>
         <flowNodeRef>_110</flowNodeRef>
+      </lane>
+      <lane name="logisticsManager" >
+        <flowNodeRef>_7</flowNodeRef>
+        <flowNodeRef>_170</flowNodeRef>
+        <flowNodeRef>_59</flowNodeRef>
+        <flowNodeRef>_107</flowNodeRef>
+        <flowNodeRef>_115</flowNodeRef>
       </lane>
       <lane name="marketStaff" >
         <flowNodeRef>_19</flowNodeRef>
@@ -822,19 +796,20 @@
         <flowNodeRef>_33</flowNodeRef>
         <flowNodeRef>_62</flowNodeRef>
       </lane>
-      <lane name="logisticsManager" >
-        <flowNodeRef>_7</flowNodeRef>
-        <flowNodeRef>_170</flowNodeRef>
-        <flowNodeRef>_59</flowNodeRef>
-        <flowNodeRef>_107</flowNodeRef>
-        <flowNodeRef>_115</flowNodeRef>
-      </lane>
       <lane name="produceManager" >
         <flowNodeRef>_12</flowNodeRef>
         <flowNodeRef>_96</flowNodeRef>
       </lane>
       <lane name="marketManager" >
         <flowNodeRef>_29</flowNodeRef>
+      </lane>
+      <lane name="qualityManager" >
+        <flowNodeRef>_103</flowNodeRef>
+      </lane>
+      <lane name="purchaseManager" >
+        <flowNodeRef>_10</flowNodeRef>
+        <flowNodeRef>_172</flowNodeRef>
+        <flowNodeRef>_47</flowNodeRef>
       </lane>
       <lane name="designManager" >
         <flowNodeRef>_11</flowNodeRef>
@@ -843,14 +818,6 @@
         <flowNodeRef>_148</flowNodeRef>
         <flowNodeRef>_169</flowNodeRef>
         <flowNodeRef>_48</flowNodeRef>
-      </lane>
-      <lane name="purchaseManager" >
-        <flowNodeRef>_10</flowNodeRef>
-        <flowNodeRef>_172</flowNodeRef>
-        <flowNodeRef>_47</flowNodeRef>
-      </lane>
-      <lane name="qualityManager" >
-        <flowNodeRef>_103</flowNodeRef>
       </lane>
       <lane name="SweaterMakeManager" >
         <flowNodeRef>_175</flowNodeRef>
@@ -1017,7 +984,6 @@
     <parallelGateway id="_13" name="verify" gatewayDirection="Diverging" />
     <exclusiveGateway id="_135" name="Gateway" gatewayDirection="Converging" />
     <parallelGateway id="_15" name="Gateway" gatewayDirection="Converging" />
-    <inclusiveGateway id="_17" name="editOrder" gatewayDirection="Diverging" />
     <userTask id="_152" name="大货工艺制作" >
       <ioSpecification>
         <dataInput id="_152_TaskNameInput" name="TaskName" />
@@ -1040,7 +1006,30 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+    <inclusiveGateway id="_17" name="editOrder" gatewayDirection="Diverging" />
     <exclusiveGateway id="_153" name="Gateway" gatewayDirection="Converging" />
+    <userTask id="_154" name="排版切片" >
+      <ioSpecification>
+        <dataInput id="_154_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_154_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_154_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">typeSettingSlice</from>
+          <to xsi:type="tFormalExpression">_154_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>designManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
     <userTask id="_19" name="修改询单" >
       <ioSpecification>
         <dataInput id="_19_TaskNameInput" name="TaskName" />
@@ -1066,28 +1055,6 @@
       <potentialOwner>
         <resourceAssignmentExpression>
           <formalExpression>#{marketStaff}</formalExpression>
-        </resourceAssignmentExpression>
-      </potentialOwner>
-    </userTask>
-    <userTask id="_154" name="排版切片" >
-      <ioSpecification>
-        <dataInput id="_154_TaskNameInput" name="TaskName" />
-        <inputSet>
-          <dataInputRefs>_154_TaskNameInput</dataInputRefs>
-        </inputSet>
-        <outputSet>
-        </outputSet>
-      </ioSpecification>
-      <dataInputAssociation>
-        <targetRef>_154_TaskNameInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">typeSettingSlice</from>
-          <to xsi:type="tFormalExpression">_154_TaskNameInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <potentialOwner>
-        <resourceAssignmentExpression>
-          <formalExpression>designManager</formalExpression>
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
@@ -1119,10 +1086,10 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <parallelGateway id="_156" name="Gateway" gatewayDirection="Diverging" />
     <endEvent id="_21" name="End" >
         <terminateEventDefinition />
     </endEvent>
+    <parallelGateway id="_156" name="Gateway" gatewayDirection="Diverging" />
     <inclusiveGateway id="_157" name="Gateway" gatewayDirection="Diverging" />
     <endEvent id="_158" name="End" >
         <terminateEventDefinition />
@@ -1434,11 +1401,10 @@
     <endEvent id="_43" name="End" >
         <terminateEventDefinition />
     </endEvent>
+    <exclusiveGateway id="_161" name="Gateway" gatewayDirection="Converging" />
     <endEvent id="_40" name="End" >
         <terminateEventDefinition />
     </endEvent>
-    <exclusiveGateway id="_161" name="Gateway" gatewayDirection="Converging" />
-    <parallelGateway id="_160" name="Gateway" gatewayDirection="Diverging" />
     <userTask id="_41" name="确认样衣制作金" >
       <ioSpecification>
         <dataInput id="_41_TaskNameInput" name="TaskName" />
@@ -1467,8 +1433,8 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
+    <parallelGateway id="_160" name="Gateway" gatewayDirection="Diverging" />
     <inclusiveGateway id="_167" name="isHaoDuoYi" gatewayDirection="Diverging" />
-    <inclusiveGateway id="_166" name="isHaoDuoYi" gatewayDirection="Diverging" />
     <userTask id="_47" name="样衣面料采购" >
       <ioSpecification>
         <dataInput id="_47_TaskNameInput" name="TaskName" />
@@ -1497,13 +1463,14 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <exclusiveGateway id="_165" name="Gateway" gatewayDirection="Converging" />
+    <inclusiveGateway id="_166" name="isHaoDuoYi" gatewayDirection="Diverging" />
     <inclusiveGateway id="_44" name="receivedsamplejin" gatewayDirection="Diverging" />
+    <exclusiveGateway id="_165" name="Gateway" gatewayDirection="Converging" />
     <inclusiveGateway id="_164" name="isHaoDuoYi" gatewayDirection="Diverging" />
-    <parallelGateway id="_49" name="Gateway" gatewayDirection="Diverging" />
     <endEvent id="_184" name="End" >
         <terminateEventDefinition />
     </endEvent>
+    <parallelGateway id="_49" name="Gateway" gatewayDirection="Diverging" />
     <userTask id="_48" name="录入版型数据及生产样衣" >
       <ioSpecification>
         <dataInput id="_48_TaskNameInput" name="TaskName" />
@@ -1555,15 +1522,16 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <endEvent id="_179" name="End" >
+    <endEvent id="_58" name="End" >
         <terminateEventDefinition />
     </endEvent>
-    <endEvent id="_58" name="End" >
+    <endEvent id="_179" name="End" >
         <terminateEventDefinition />
     </endEvent>
     <endEvent id="_57" name="End" >
         <terminateEventDefinition />
     </endEvent>
+    <inclusiveGateway id="_56" name="purchaseerror" gatewayDirection="Diverging" />
     <userTask id="_177" name="外发" >
       <ioSpecification>
         <dataInput id="_177_TaskNameInput" name="TaskName" />
@@ -1586,8 +1554,8 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <inclusiveGateway id="_56" name="purchaseerror" gatewayDirection="Diverging" />
     <exclusiveGateway id="_182" name="Gateway" gatewayDirection="Converging" />
+    <inclusiveGateway id="_183" name="isHaoDuoYi" gatewayDirection="Diverging" />
     <userTask id="_62" name="确认加工单并签订合同" >
       <ioSpecification>
         <dataInput id="_62_TaskNameInput" name="TaskName" />
@@ -1616,7 +1584,6 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <inclusiveGateway id="_183" name="isHaoDuoYi" gatewayDirection="Diverging" />
     <inclusiveGateway id="_181" name="Gateway" gatewayDirection="Diverging" />
     <inclusiveGateway id="_64" name="comfirmworksheet" gatewayDirection="Diverging" />
     <endEvent id="_65" name="End" >
@@ -1965,14 +1932,15 @@
     <sequenceFlow id="_10-_15" sourceRef="_10" targetRef="_15" />
     <sequenceFlow id="_11-_15" sourceRef="_11" targetRef="_15" />
     <sequenceFlow id="_12-_15" sourceRef="_12" targetRef="_15" />
-    <sequenceFlow id="_15-_17" sourceRef="_15" targetRef="_17" />
     <sequenceFlow id="_151-_152" sourceRef="_151" targetRef="_152" name="需要工艺" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return needCraft;</conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_15-_17" sourceRef="_15" targetRef="_17" />
     <sequenceFlow id="_152-_153" sourceRef="_152" targetRef="_153" />
     <sequenceFlow id="_151-_153" sourceRef="_151" targetRef="_153" name="不需要工艺" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !needCraft;</conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_165-_154" sourceRef="_165" targetRef="_154" />
     <sequenceFlow id="_17-_19" sourceRef="_17" targetRef="_19" name="验证不通过" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!purchase){
 	return true;
@@ -1988,13 +1956,12 @@ return false;
 
 </conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_165-_154" sourceRef="_165" targetRef="_154" />
     <sequenceFlow id="_156-_155" sourceRef="_156" targetRef="_155" />
-    <sequenceFlow id="_167-_156" sourceRef="_167" targetRef="_156" name="不是好多衣客户" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !isHaoDuoYi;</conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="_22-_21" sourceRef="_22" targetRef="_21" name="放弃修改" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !modifyOrder;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_167-_156" sourceRef="_167" targetRef="_156" name="不是好多衣客户" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !isHaoDuoYi;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_155-_157" sourceRef="_155" targetRef="_157" />
     <sequenceFlow id="_157-_158" sourceRef="_157" targetRef="_158" name="催尾款失败" tns:priority="1" >
@@ -2081,56 +2048,56 @@ return true;
     <sequenceFlow id="_44-_43" sourceRef="_44" targetRef="_43" name="未收到制作金" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receiveMoney;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_36-_40" sourceRef="_36" targetRef="_40" name="放弃订单" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return quote==2;</conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="_84-_161" sourceRef="_84" targetRef="_161" name="收到大货定金" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveMoney;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_160-_161" sourceRef="_160" targetRef="_161" />
-    <sequenceFlow id="_141-_160" sourceRef="_141" targetRef="_160" name="好多衣客户" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isHaoDuoYi;</conditionExpression>
+    <sequenceFlow id="_36-_40" sourceRef="_36" targetRef="_40" name="放弃订单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return quote==2;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_37-_41" sourceRef="_37" targetRef="_41" name="制作样衣" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return sendSample!=0;</conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_141-_160" sourceRef="_141" targetRef="_160" name="好多衣客户" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isHaoDuoYi;</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_181-_167" sourceRef="_181" targetRef="_167" name="不是毛衣" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !isSweater;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_146-_166" sourceRef="_146" targetRef="_166" />
     <sequenceFlow id="_49-_47" sourceRef="_49" targetRef="_47" />
+    <sequenceFlow id="_146-_166" sourceRef="_146" targetRef="_166" />
+    <sequenceFlow id="_41-_44" sourceRef="_41" targetRef="_44" />
     <sequenceFlow id="_163-_165" sourceRef="_163" targetRef="_165" />
     <sequenceFlow id="_169-_165" sourceRef="_169" targetRef="_165" />
-    <sequenceFlow id="_41-_44" sourceRef="_41" targetRef="_44" />
     <sequenceFlow id="_153-_164" sourceRef="_153" targetRef="_164" />
-    <sequenceFlow id="_144-_49" sourceRef="_144" targetRef="_49" />
     <sequenceFlow id="_183-_184" sourceRef="_183" targetRef="_184" name="好多衣订单" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isHaoDuoYi;</conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_144-_49" sourceRef="_144" targetRef="_49" />
     <sequenceFlow id="_49-_48" sourceRef="_49" targetRef="_48" />
     <sequenceFlow id="_48-_55" sourceRef="_48" targetRef="_55" />
     <sequenceFlow id="_166-_59" sourceRef="_166" targetRef="_59" name="非好多衣客户" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !isHaoDuoYi;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_181-_179" sourceRef="_181" targetRef="_179" name="是毛衣" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isSweater;</conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="_55-_58" sourceRef="_55" targetRef="_58" name="生产失败" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !produce;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_181-_179" sourceRef="_181" targetRef="_179" name="是毛衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isSweater;</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_56-_57" sourceRef="_56" targetRef="_57" name="采购失败" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !purchase;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_175-_177" sourceRef="_175" targetRef="_177" />
     <sequenceFlow id="_47-_56" sourceRef="_47" targetRef="_56" />
+    <sequenceFlow id="_175-_177" sourceRef="_175" targetRef="_177" />
     <sequenceFlow id="_177-_182" sourceRef="_177" targetRef="_182" />
     <sequenceFlow id="_102-_182" sourceRef="_102" targetRef="_182" name="生产完成" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return produce;</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_135-_62" sourceRef="_135" targetRef="_62" />
     <sequenceFlow id="_94-_183" sourceRef="_94" targetRef="_183" name="采购失败" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !purchase;</conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_135-_62" sourceRef="_135" targetRef="_62" />
     <sequenceFlow id="_103-_181" sourceRef="_103" targetRef="_181" />
     <sequenceFlow id="_62-_64" sourceRef="_62" targetRef="_64" />
     <sequenceFlow id="_64-_65" sourceRef="_64" targetRef="_65" name="取消订单" tns:priority="1" >
@@ -2215,29 +2182,29 @@ return true;
       <bpmndi:BPMNShape bpmnElement="_15" >
         <dc:Bounds x="883" y="303" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_17" >
-        <dc:Bounds x="1013" y="303" width="48" height="48" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_152" >
         <dc:Bounds x="4165" y="286" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_17" >
+        <dc:Bounds x="1013" y="303" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_153" >
         <dc:Bounds x="4363" y="284" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_19" >
-        <dc:Bounds x="987" y="173" width="100" height="48" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_154" >
         <dc:Bounds x="4660" y="289" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_19" >
+        <dc:Bounds x="987" y="173" width="100" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_155" >
         <dc:Bounds x="5221" y="183" width="100" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_156" >
-        <dc:Bounds x="5246" y="290" width="48" height="48" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_21" >
         <dc:Bounds x="719" y="71" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_156" >
+        <dc:Bounds x="5246" y="290" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_157" >
         <dc:Bounds x="5244" y="56" width="48" height="48" />
@@ -2317,41 +2284,41 @@ return true;
       <bpmndi:BPMNShape bpmnElement="_43" >
         <dc:Bounds x="2318" y="71" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_40" >
-        <dc:Bounds x="1725" y="-19" width="48" height="48" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_161" >
         <dc:Bounds x="4002" y="4" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_160" >
-        <dc:Bounds x="1645" y="4" width="48" height="48" />
+      <bpmndi:BPMNShape bpmnElement="_40" >
+        <dc:Bounds x="1725" y="-19" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_41" >
         <dc:Bounds x="1992" y="71" width="127" height="48" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_160" >
+        <dc:Bounds x="1645" y="4" width="48" height="48" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_167" >
         <dc:Bounds x="5248" y="384" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_166" >
-        <dc:Bounds x="3154" y="494" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_47" >
         <dc:Bounds x="2410" y="154" width="100" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_165" >
-        <dc:Bounds x="4684" y="366" width="48" height="48" />
+      <bpmndi:BPMNShape bpmnElement="_166" >
+        <dc:Bounds x="3154" y="494" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_44" >
         <dc:Bounds x="2182" y="70" width="48" height="48" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_165" >
+        <dc:Bounds x="4684" y="366" width="48" height="48" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_164" >
         <dc:Bounds x="4364" y="364" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_49" >
-        <dc:Bounds x="2310" y="232" width="48" height="48" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_184" >
         <dc:Bounds x="4515" y="29" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_49" >
+        <dc:Bounds x="2310" y="232" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_48" >
         <dc:Bounds x="2374" y="315" width="159" height="48" />
@@ -2362,29 +2329,29 @@ return true;
       <bpmndi:BPMNShape bpmnElement="_59" >
         <dc:Bounds x="3132" y="117" width="100" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_179" >
-        <dc:Bounds x="5147" y="509" width="48" height="48" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_58" >
         <dc:Bounds x="3041" y="231" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_179" >
+        <dc:Bounds x="5147" y="509" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_57" >
         <dc:Bounds x="2582" y="51" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_177" >
-        <dc:Bounds x="1597" y="544" width="100" height="48" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_56" >
         <dc:Bounds x="2581" y="153" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_177" >
+        <dc:Bounds x="1597" y="544" width="100" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_182" >
         <dc:Bounds x="4940" y="388" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_62" >
-        <dc:Bounds x="3427" y="116" width="156" height="48" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_183" >
         <dc:Bounds x="4516" y="111" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_62" >
+        <dc:Bounds x="3427" y="116" width="156" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_181" >
         <dc:Bounds x="5145" y="384" width="48" height="48" />
@@ -2536,14 +2503,14 @@ return true;
         <di:waypoint x="708" y="395" />
         <di:waypoint x="907" y="327" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_15-_17" >
-        <di:waypoint x="907" y="327" />
-        <di:waypoint x="1037" y="327" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_151-_152" >
         <di:waypoint x="4388" y="223" />
         <di:waypoint x="4215" y="223" />
         <di:waypoint x="4215" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_15-_17" >
+        <di:waypoint x="907" y="327" />
+        <di:waypoint x="1037" y="327" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_152-_153" >
         <di:waypoint x="4215" y="310" />
@@ -2553,25 +2520,25 @@ return true;
         <di:waypoint x="4388" y="223" />
         <di:waypoint x="4387" y="308" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_17-_19" >
-        <di:waypoint x="1037" y="327" />
-        <di:waypoint x="1037" y="197" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_165-_154" >
         <di:waypoint x="4708" y="390" />
         <di:waypoint x="4710" y="313" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_17-_19" >
+        <di:waypoint x="1037" y="327" />
+        <di:waypoint x="1037" y="197" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_156-_155" >
         <di:waypoint x="5270" y="314" />
         <di:waypoint x="5271" y="207" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_167-_156" >
-        <di:waypoint x="5272" y="408" />
-        <di:waypoint x="5270" y="314" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_22-_21" >
         <di:waypoint x="744" y="198" />
         <di:waypoint x="743" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_167-_156" >
+        <di:waypoint x="5272" y="408" />
+        <di:waypoint x="5270" y="314" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_155-_157" >
         <di:waypoint x="5271" y="207" />
@@ -2702,10 +2669,6 @@ return true;
         <di:waypoint x="2206" y="94" />
         <di:waypoint x="2342" y="95" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_36-_40" >
-        <di:waypoint x="1749" y="96" />
-        <di:waypoint x="1749" y="5" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_84-_161" >
         <di:waypoint x="4027" y="138" />
         <di:waypoint x="4026" y="28" />
@@ -2714,18 +2677,26 @@ return true;
         <di:waypoint x="1669" y="28" />
         <di:waypoint x="4026" y="28" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_141-_160" >
-        <di:waypoint x="1354" y="186" />
-        <di:waypoint x="1356" y="26" />
-        <di:waypoint x="1669" y="28" />
+      <bpmndi:BPMNEdge bpmnElement="_36-_40" >
+        <di:waypoint x="1749" y="96" />
+        <di:waypoint x="1749" y="5" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_37-_41" >
         <di:waypoint x="1891" y="96" />
         <di:waypoint x="2055" y="95" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_141-_160" >
+        <di:waypoint x="1354" y="186" />
+        <di:waypoint x="1356" y="26" />
+        <di:waypoint x="1669" y="28" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_181-_167" >
         <di:waypoint x="5169" y="408" />
         <di:waypoint x="5272" y="408" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_49-_47" >
+        <di:waypoint x="2334" y="256" />
+        <di:waypoint x="2460" y="178" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_146-_166" >
         <di:waypoint x="3000" y="140" />
@@ -2733,9 +2704,9 @@ return true;
         <di:waypoint x="3112" y="520" />
         <di:waypoint x="3178" y="518" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_49-_47" >
-        <di:waypoint x="2334" y="256" />
-        <di:waypoint x="2460" y="178" />
+      <bpmndi:BPMNEdge bpmnElement="_41-_44" >
+        <di:waypoint x="2055" y="95" />
+        <di:waypoint x="2206" y="94" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_163-_165" >
         <di:waypoint x="4387" y="519" />
@@ -2746,21 +2717,17 @@ return true;
         <di:waypoint x="4537" y="390" />
         <di:waypoint x="4708" y="390" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_41-_44" >
-        <di:waypoint x="2055" y="95" />
-        <di:waypoint x="2206" y="94" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_153-_164" >
         <di:waypoint x="4387" y="308" />
         <di:waypoint x="4388" y="388" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_144-_49" >
-        <di:waypoint x="2208" y="256" />
-        <di:waypoint x="2334" y="256" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_183-_184" >
         <di:waypoint x="4540" y="135" />
         <di:waypoint x="4539" y="53" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_144-_49" >
+        <di:waypoint x="2208" y="256" />
+        <di:waypoint x="2334" y="256" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_49-_48" >
         <di:waypoint x="2334" y="256" />
@@ -2774,26 +2741,26 @@ return true;
         <di:waypoint x="3178" y="518" />
         <di:waypoint x="3182" y="141" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_181-_179" >
-        <di:waypoint x="5169" y="408" />
-        <di:waypoint x="5171" y="533" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_55-_58" >
         <di:waypoint x="3000" y="338" />
         <di:waypoint x="3064" y="337" />
         <di:waypoint x="3065" y="255" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_181-_179" >
+        <di:waypoint x="5169" y="408" />
+        <di:waypoint x="5171" y="533" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_56-_57" >
         <di:waypoint x="2605" y="177" />
         <di:waypoint x="2606" y="75" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_175-_177" >
-        <di:waypoint x="1067" y="569" />
-        <di:waypoint x="1647" y="568" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_47-_56" >
         <di:waypoint x="2460" y="178" />
         <di:waypoint x="2605" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_175-_177" >
+        <di:waypoint x="1067" y="569" />
+        <di:waypoint x="1647" y="568" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_177-_182" >
         <di:waypoint x="1647" y="568" />
@@ -2804,13 +2771,13 @@ return true;
         <di:waypoint x="4962" y="313" />
         <di:waypoint x="4964" y="412" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_135-_62" >
-        <di:waypoint x="3303" y="139" />
-        <di:waypoint x="3505" y="140" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_94-_183" >
         <di:waypoint x="4392" y="135" />
         <di:waypoint x="4540" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_135-_62" >
+        <di:waypoint x="3303" y="139" />
+        <di:waypoint x="3505" y="140" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_103-_181" >
         <di:waypoint x="5072" y="410" />

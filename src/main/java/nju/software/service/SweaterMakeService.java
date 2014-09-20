@@ -3,6 +3,8 @@ package nju.software.service;
 import java.util.List;
 import java.util.Map;
 
+import nju.software.dataobject.OperateRecord;
+
 public interface SweaterMakeService {
 	public List<Map<String, Object>> getSweaterSampleAndCraftList();
 	
@@ -14,7 +16,7 @@ public interface SweaterMakeService {
 
 
 	public boolean sweaterSampleAndCraftSubmit(long taskId, boolean result,
-			String orderId);
+			String orderId,OperateRecord oprecord);
 	
 
 	public boolean sendSweaterSubmit(long taskId, boolean result,
