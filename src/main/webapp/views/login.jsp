@@ -22,17 +22,24 @@
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		jQuery('#login').submit(function() {
-			//alert("as");
-			var u = jQuery('#username').val().trim();
-			var p = jQuery('#password').val().trim();
-			if (u == '' || p == '') {
-				jQuery('.login-alert').fadeIn();
+			jQuery('#login').submit(function() {
 				//alert("as");
-				return false;
-			}
-		});
+				var u = jQuery('#username').val().trim();
+				var p = jQuery('#password').val().trim();
+				if (u == '' || p == '') {
+					jQuery('.login-alert').fadeIn();
+					//alert("as");
+					return false;
+				}
+			});
 	});
+	function checkExplorer(){
+		if(window.navigator.userAgent.indexOf("Chrome")>=0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 </script>
 </head>
 
@@ -62,7 +69,7 @@
 				<!-- <img src="images/logo.png" alt="" /> -->
 				智造链
 			</div>
-			<form id="login" action="doLogin.do" method="post">
+			<form id="login" action="doLogin.do" method="post" onsubmit="return checkExplorer();">
 				<c:if test="${state != null}">
 					<div class="inputwrapper login-alert" style="display: block;">
 						<div class="alert alert-error">账户名或密码错误</div>
