@@ -1209,7 +1209,7 @@ public class MarketServiceImpl implements MarketService {
 			}else{
 				order.setOrderProcessStateName("");
 			}
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>();	
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
@@ -1238,6 +1238,7 @@ public class MarketServiceImpl implements MarketService {
 			}else{
 				order.setOrderProcessStateName("");
 			}
+			
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));

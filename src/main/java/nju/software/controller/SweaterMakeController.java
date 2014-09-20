@@ -5,14 +5,18 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
 import nju.software.service.EmployeeService;
 import nju.software.service.SweaterMakeService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
@@ -146,7 +150,5 @@ public class SweaterMakeController {
 		sweaterMakeService.sendSweaterSubmit(Long.parseLong(taskId), result, orderId);
 		return "forward:/sweater/sendSweaterList.do";
 	}
-	
-	
 	
 }
