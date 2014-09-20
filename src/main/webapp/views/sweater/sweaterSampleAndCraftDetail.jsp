@@ -34,51 +34,56 @@
 				            action="${ctx}/sweater/sweaterSampleAndCraftSubmit.do?taskId=${orderInfo.task.id}&orderId=${orderInfo.order.orderId}">		
 			          	 <table class="table table-striped table-bordered table-hover detail">
 								<tr>
-								<td class="span2 title" rowspan="2">任务选择</td>
-								<td class="span2 title"><span style="color:red ;font-weight:bold">请选择操作</span></td>
+								<td class="title" rowspan="2">任务选择</td>
+								<td><span style="color:red ;font-weight:bold">请选择操作</span></td>
 								
 								</tr>
 								<tr>
 								<td>
 								    <!-- 表示仓库里没有原料，需要去购买原料 ，需要打小样-->
-			                        <c:if test="${buySweaterMaterial == true }">
+			                        <c:if test="${orderInfo.order.buySweaterMaterialResult == true }">
 								    <input type="radio" name="task_name" id="task_name"
-									 value="1" required="required" /> 打小样
+									 value="打小样" required="required" /> 打小样
 			                        </c:if>
 									<input type="radio" name="task_name" id="task_name"
-									 value="2" checked="checked" /> 制作工艺
+									 value="制作工艺" checked="checked" /> 制作工艺
 									<input type="radio" name="task_name" id="task_name"
-									 value="3" checked="checked" /> 制版打样
+									 value="制版打样" checked="checked" /> 制版打样
 									<input type="radio" name="task_name" id="task_name"
-									 value="3" checked="checked" /> 确认样衣
+									 value="确认样衣" checked="checked" /> 确认样衣
 								</td>
 								</tr>
 								
 							<tr>
-								<td class="title" rowspan="3">操作信息</td>
-								<td class="span2 title">完成时间</td>
-								<td class="span2 title">负责人</td>
-								<td class="title">上传</td>
+								<td class="title" rowspan="2">操作信息</td>
+								<td>完成时间</td>
+								<td>负责人</td>
+								<!-- 
+								<td class="span2 title">上传</td>
+								 -->
 							</tr>
 							<tr>
-								<td class="span2" colspan="2">
-								<input class="span8" id="datepicker" type="text" name="task_finish_date" required="required"/>
+								<td>
+								<input  id="datepicker" type="text" name="task_finish_date" required="required"/>
 								</td>
 								<td>
-								<input type="text" class="span12" name="person_in_charge" required="required" />
+								<input type="text" name="person_in_charge" required="required" />
 								</td>
+								<!-- 
 								<td><input type="button" class="span12" name="upload" value="上传"/></td>
+								 -->
 							</tr>
-								
 								<tr>
-									<td class="title">备注</td>
-									<td>
- 										<textarea class="span12"  style="resize:vertical" name="sweaterremark"  placeholder="请输入备注" ></textarea>
-									</td>
+									<td rowspan="2">备注</td>
 								</tr>
+								<tr>
+									<td style="width: 800px; ">
+ 										<textarea class="span12"   name="sweaterremark"  placeholder="请输入备注" ></textarea>
+									</td>
+								</tr>	
 								
 						 </table>
-						 
+ 
 						<table class="table table-striped table-bordered table-hover detail">
 							<c:if test="${empty orderInfo.sweaterOperateRecord}">
 								<tr>
@@ -96,7 +101,7 @@
 								</tr>
 								<c:forEach var="operateRecord" items="${orderInfo.sweaterOperateRecord}">
 									<tr>
-										<td>${operateRecord.operateTaskName}</td>
+										<td>${operateRecord.taskName}</td>
 										<td>${operateRecord.operateTime}</td>
 										<td>${operateRecord.operatePerson}</td>
 										<td>${operateRecord.operateRemark}</td>

@@ -30,7 +30,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 		Map<String, Object> model = service.getBasicOrderModelWithQuote(ACTOR_SWEATER_MANAGER,
 				TASK_CONFIRM_SWEATER_SAMPLE_AND_CRAFT, orderId);
 		model.put("sweaterOperateRecord", operateRecordDAO.findByOrderId(orderId));// 毛衣打小样制造工艺等操作步骤记录
-
+//        model.put("buySweaterMaterial", orderDAO.findById(orderId).isBuySweaterMaterialResult());
 	    return model;
 	}
 

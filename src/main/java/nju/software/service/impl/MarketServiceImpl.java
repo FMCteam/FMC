@@ -928,7 +928,7 @@ public class MarketServiceImpl implements MarketService {
 			String startdate, String enddate, Integer[] employeeIds) {
 		// TODO Auto-generated method stub
 		List<Map<String, Object>> temp = service.getSearchOrderList(userId + "",
-				 ordernumber,  customername,  stylename,
+				 ordernumber,  customername, stylename,
 				 startdate,  enddate,  employeeIds,
 				TASK_MERGE_QUOTE);
 		return temp;

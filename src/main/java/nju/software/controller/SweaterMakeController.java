@@ -81,15 +81,14 @@ public class SweaterMakeController {
 	public String getSweaterSampleAndCraftDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
-		
 		Map<String,Object> orderInfo=sweaterMakeService.getSweaterSampleAndCraftDetail(Integer.parseInt(orderId));
-		TaskSummary task = (TaskSummary) orderInfo.get("task");
-		long processId = task.getProcessInstanceId();
-		// 需要获取task中的数据
-		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(processId);
-		boolean sweaterMaterial = (boolean) process.getVariable("sweaterMaterial");
-		model.addAttribute("buySweaterMaterial",sweaterMaterial);
+//		TaskSummary task = (TaskSummary) orderInfo.get("task");
+//		long processId = task.getProcessInstanceId();
+//需要获取task中的数据
+//		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+//				.getKsession().getProcessInstance(processId);
+//		boolean sweaterMaterial = (boolean) process.getVariable("sweaterMaterial");
+//		model.addAttribute("buySweaterMaterial",sweaterMaterial);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/sweater/sweaterSampleAndCraftDetail";
 	}

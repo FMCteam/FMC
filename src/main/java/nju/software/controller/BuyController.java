@@ -16,16 +16,19 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.Order;
 import nju.software.dataobject.SearchInfo;
 import nju.software.model.OrderInfo;
 import nju.software.service.BuyService;
 import nju.software.service.EmployeeService;
+import nju.software.service.OrderService;
 import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.JbpmTest;
 import nju.software.service.impl.MarketServiceImpl;
 import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
 
+import org.drools.runtime.StatefulKnowledgeSession;
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -571,7 +574,7 @@ public class BuyController {
 			model.addAttribute("orderInfo", orderInfo);
 			return "/buy/purchaseSweaterMaterialDetail";
 		}
-	
+
 		@RequestMapping(value = "/buy/purchaseSweaterMaterialSubmit.do", method = RequestMethod.POST)
 		@Transactional(rollbackFor = Exception.class)
 		public String purchaseSweaterMaterialSubmit(HttpServletRequest request,
@@ -583,7 +586,6 @@ public class BuyController {
 			if(result.equals("1")){
 				buySweaterMaterialResult = true;
 			} 
-			
  			buyService.purchaseSweaterMaterialSubmit(Long.parseLong(taskId),orderId,buySweaterMaterialResult);
 			return "forward:/buy/purchaseSweaterMaterialList.do";
 		}
