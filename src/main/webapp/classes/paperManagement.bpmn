@@ -1,0 +1,1838 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://www.jboss.org/drools"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <itemDefinition id="_studentItem" structureRef="String" />
+  <itemDefinition id="_tutorItem" structureRef="Integer" />
+  <itemDefinition id="_detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_defenseItem" structureRef="String" />
+  <itemDefinition id="_reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_jwyItem" structureRef="String" />
+  <itemDefinition id="_studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_4-studentItem" structureRef="String" />
+  <itemDefinition id="_4-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_4-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_4-defenseItem" structureRef="String" />
+  <itemDefinition id="_4-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_4-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_4-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_4-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_4-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_4-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_4-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_4-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_4-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_4-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_4-jwyItem" structureRef="String" />
+  <itemDefinition id="_4-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_4-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_4-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_8-studentItem" structureRef="String" />
+  <itemDefinition id="_8-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_8-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_8-defenseItem" structureRef="String" />
+  <itemDefinition id="_8-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_8-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_8-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_8-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_8-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_8-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_8-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_8-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_8-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_8-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_8-jwyItem" structureRef="String" />
+  <itemDefinition id="_8-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_8-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_8-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_10-studentItem" structureRef="String" />
+  <itemDefinition id="_10-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_10-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_10-defenseItem" structureRef="String" />
+  <itemDefinition id="_10-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_10-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_10-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_10-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_10-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_10-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_10-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_10-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_10-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_10-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_10-jwyItem" structureRef="String" />
+  <itemDefinition id="_10-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_10-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_10-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_19-studentItem" structureRef="String" />
+  <itemDefinition id="_19-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_19-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_19-defenseItem" structureRef="String" />
+  <itemDefinition id="_19-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_19-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_19-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_19-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_19-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_19-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_19-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_19-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_19-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_19-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_19-jwyItem" structureRef="String" />
+  <itemDefinition id="_19-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_19-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_19-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_18-studentItem" structureRef="String" />
+  <itemDefinition id="_18-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_18-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_18-defenseItem" structureRef="String" />
+  <itemDefinition id="_18-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_18-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_18-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_18-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_18-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_18-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_18-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_18-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_18-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_18-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_18-jwyItem" structureRef="String" />
+  <itemDefinition id="_18-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_18-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_18-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_21-studentItem" structureRef="String" />
+  <itemDefinition id="_21-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_21-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_21-defenseItem" structureRef="String" />
+  <itemDefinition id="_21-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_21-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_21-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_21-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_21-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_21-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_21-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_21-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_21-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_21-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_21-jwyItem" structureRef="String" />
+  <itemDefinition id="_21-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_21-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_21-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_20-studentItem" structureRef="String" />
+  <itemDefinition id="_20-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_20-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_20-defenseItem" structureRef="String" />
+  <itemDefinition id="_20-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_20-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_20-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_20-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_20-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_20-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_20-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_20-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_20-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_20-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_20-jwyItem" structureRef="String" />
+  <itemDefinition id="_20-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_20-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_20-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_25-studentItem" structureRef="String" />
+  <itemDefinition id="_25-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_25-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_25-defenseItem" structureRef="String" />
+  <itemDefinition id="_25-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_25-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_25-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_25-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_25-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_25-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_25-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_25-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_25-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_25-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_25-jwyItem" structureRef="String" />
+  <itemDefinition id="_25-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_25-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_25-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_28-studentItem" structureRef="String" />
+  <itemDefinition id="_28-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_28-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_28-defenseItem" structureRef="String" />
+  <itemDefinition id="_28-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_28-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_28-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_28-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_28-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_28-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_28-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_28-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_28-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_28-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_28-jwyItem" structureRef="String" />
+  <itemDefinition id="_28-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_28-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_28-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_30-studentItem" structureRef="String" />
+  <itemDefinition id="_30-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_30-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_30-defenseItem" structureRef="String" />
+  <itemDefinition id="_30-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_30-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_30-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_30-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_30-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_30-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_30-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_30-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_30-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_30-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_30-jwyItem" structureRef="String" />
+  <itemDefinition id="_30-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_30-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_30-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_35-studentItem" structureRef="String" />
+  <itemDefinition id="_35-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_35-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_35-defenseItem" structureRef="String" />
+  <itemDefinition id="_35-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_35-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_35-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_35-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_35-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_35-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_35-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_35-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_35-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_35-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_35-jwyItem" structureRef="String" />
+  <itemDefinition id="_35-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_35-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_35-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_32-studentItem" structureRef="String" />
+  <itemDefinition id="_32-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_32-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_32-defenseItem" structureRef="String" />
+  <itemDefinition id="_32-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_32-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_32-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_32-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_32-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_32-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_32-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_32-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_32-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_32-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_32-jwyItem" structureRef="String" />
+  <itemDefinition id="_32-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_32-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_32-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_38-studentItem" structureRef="String" />
+  <itemDefinition id="_38-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_38-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_38-defenseItem" structureRef="String" />
+  <itemDefinition id="_38-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_38-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_38-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_38-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_38-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_38-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_38-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_38-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_38-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_38-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_38-jwyItem" structureRef="String" />
+  <itemDefinition id="_38-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_38-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_38-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_39-studentItem" structureRef="String" />
+  <itemDefinition id="_39-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_39-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_39-defenseItem" structureRef="String" />
+  <itemDefinition id="_39-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_39-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_39-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_39-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_39-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_39-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_39-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_39-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_39-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_39-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_39-jwyItem" structureRef="String" />
+  <itemDefinition id="_39-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_39-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_39-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_42-studentItem" structureRef="String" />
+  <itemDefinition id="_42-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_42-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_42-defenseItem" structureRef="String" />
+  <itemDefinition id="_42-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_42-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_42-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_42-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_42-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_42-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_42-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_42-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_42-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_42-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_42-jwyItem" structureRef="String" />
+  <itemDefinition id="_42-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_42-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_42-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_55-studentItem" structureRef="String" />
+  <itemDefinition id="_55-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_55-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_55-defenseItem" structureRef="String" />
+  <itemDefinition id="_55-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_55-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_55-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_55-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_55-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_55-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_55-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_55-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_55-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_55-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_55-jwyItem" structureRef="String" />
+  <itemDefinition id="_55-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_55-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_55-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_53-studentItem" structureRef="String" />
+  <itemDefinition id="_53-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_53-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_53-defenseItem" structureRef="String" />
+  <itemDefinition id="_53-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_53-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_53-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_53-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_53-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_53-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_53-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_53-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_53-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_53-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_53-jwyItem" structureRef="String" />
+  <itemDefinition id="_53-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_53-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_53-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_52-studentItem" structureRef="String" />
+  <itemDefinition id="_52-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_52-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_52-defenseItem" structureRef="String" />
+  <itemDefinition id="_52-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_52-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_52-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_52-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_52-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_52-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_52-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_52-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_52-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_52-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_52-jwyItem" structureRef="String" />
+  <itemDefinition id="_52-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_52-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_52-isPassedItem" structureRef="Boolean" />
+
+  <itemDefinition id="_58-studentItem" structureRef="String" />
+  <itemDefinition id="_58-tutorItem" structureRef="Integer" />
+  <itemDefinition id="_58-detectionItem" structureRef="Boolean" />
+  <itemDefinition id="_58-defenseItem" structureRef="String" />
+  <itemDefinition id="_58-reviewItem" structureRef="Boolean" />
+  <itemDefinition id="_58-reprieve1Item" structureRef="Boolean" />
+  <itemDefinition id="_58-reprieve2Item" structureRef="Boolean" />
+  <itemDefinition id="_58-reprieve3Item" structureRef="Boolean" />
+  <itemDefinition id="_58-reviewteacher1Item" structureRef="String" />
+  <itemDefinition id="_58-reviewteacher2Item" structureRef="Object" />
+  <itemDefinition id="_58-defensesecretaryItem" structureRef="String" />
+  <itemDefinition id="_58-defenseteacher1Item" structureRef="String" />
+  <itemDefinition id="_58-defenseteacher2Item" structureRef="String" />
+  <itemDefinition id="_58-defenseteacher3Item" structureRef="Object" />
+  <itemDefinition id="_58-jwyItem" structureRef="String" />
+  <itemDefinition id="_58-studentIdItem" structureRef="Integer" />
+  <itemDefinition id="_58-tutorIdItem" structureRef="Integer" />
+  <itemDefinition id="_58-isPassedItem" structureRef="Boolean" />
+
+  <process processType="Private" isExecutable="true" id="nju.software.papermanagement.bpmn" name="Sample Process" tns:packageName="defaultPackage" >
+
+    <!-- process variables -->
+    <property id="student" itemSubjectRef="_studentItem"/>
+    <property id="tutor" itemSubjectRef="_tutorItem"/>
+    <property id="detection" itemSubjectRef="_detectionItem"/>
+    <property id="defense" itemSubjectRef="_defenseItem"/>
+    <property id="review" itemSubjectRef="_reviewItem"/>
+    <property id="reprieve1" itemSubjectRef="_reprieve1Item"/>
+    <property id="reprieve2" itemSubjectRef="_reprieve2Item"/>
+    <property id="reprieve3" itemSubjectRef="_reprieve3Item"/>
+    <property id="reviewteacher1" itemSubjectRef="_reviewteacher1Item"/>
+    <property id="reviewteacher2" itemSubjectRef="_reviewteacher2Item"/>
+    <property id="defensesecretary" itemSubjectRef="_defensesecretaryItem"/>
+    <property id="defenseteacher1" itemSubjectRef="_defenseteacher1Item"/>
+    <property id="defenseteacher2" itemSubjectRef="_defenseteacher2Item"/>
+    <property id="defenseteacher3" itemSubjectRef="_defenseteacher3Item"/>
+    <property id="jwy" itemSubjectRef="_jwyItem"/>
+    <property id="studentId" itemSubjectRef="_studentIdItem"/>
+    <property id="tutorId" itemSubjectRef="_tutorIdItem"/>
+    <property id="isPassed" itemSubjectRef="_isPassedItem"/>
+
+    <laneSet>
+      <lane name="jwy" >
+        <flowNodeRef>_10</flowNodeRef>
+        <flowNodeRef>_19</flowNodeRef>
+        <flowNodeRef>_20</flowNodeRef>
+        <flowNodeRef>_30</flowNodeRef>
+      </lane>
+      <lane name="student" >
+        <flowNodeRef>_4</flowNodeRef>
+        <flowNodeRef>_53</flowNodeRef>
+        <flowNodeRef>_52</flowNodeRef>
+      </lane>
+      <lane name="judge" >
+      </lane>
+      <lane name="tutor" >
+        <flowNodeRef>_8</flowNodeRef>
+        <flowNodeRef>_18</flowNodeRef>
+        <flowNodeRef>_25</flowNodeRef>
+        <flowNodeRef>_42</flowNodeRef>
+        <flowNodeRef>_55</flowNodeRef>
+        <flowNodeRef>_58</flowNodeRef>
+      </lane>
+    </laneSet>
+    <!-- nodes -->
+    <startEvent id="_1" name="StartProcess" />
+    <userTask id="_4" name="submit papers" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("submit papers started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("submit papers ended");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_4_CommentInput" name="Comment" />
+        <dataInput id="_4_SkippableInput" name="Skippable" />
+        <dataInput id="_4_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_4_CommentInput</dataInputRefs>
+          <dataInputRefs>_4_SkippableInput</dataInputRefs>
+          <dataInputRefs>_4_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_4_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"> </from>
+          <to xsi:type="tFormalExpression">_4_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_4_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_4_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_4_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">submit papers</from>
+          <to xsi:type="tFormalExpression">_4_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{student}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <exclusiveGateway id="_6" name="submit papers gateway" gatewayDirection="Converging" />
+    <userTask id="_8" name="Preliminary finalize" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("preliminary finalize started!");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("preliminary finalize ended!");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_8_CommentInput" name="Comment" />
+        <dataInput id="_8_SkippableInput" name="Skippable" />
+        <dataInput id="_8_TaskNameInput" name="TaskName" />
+        <dataOutput id="_8_isPassedOutput" name="isPassed" />
+        <inputSet>
+          <dataInputRefs>_8_CommentInput</dataInputRefs>
+          <dataInputRefs>_8_SkippableInput</dataInputRefs>
+          <dataInputRefs>_8_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_8_isPassedOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_8_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">preliminary finalize</from>
+          <to xsi:type="tFormalExpression">_8_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_8_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">preliminary finalize</from>
+          <to xsi:type="tFormalExpression">_8_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_8_isPassedOutput</sourceRef>
+        <targetRef>isPassed</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{tutor}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_10" name="detection" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("detection activity started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("detection activity ended, detection is: "+detection);</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_10_CommentInput" name="Comment" />
+        <dataInput id="_10_SkippableInput" name="Skippable" />
+        <dataInput id="_10_LocaleInput" name="Locale" />
+        <dataInput id="_10_TaskNameInput" name="TaskName" />
+        <dataInput id="_10_GroupIdInput" name="GroupId" />
+        <dataInput id="_10_PriorityInput" name="Priority" />
+        <dataOutput id="_10_detectionOutput" name="detection" />
+        <inputSet>
+          <dataInputRefs>_10_CommentInput</dataInputRefs>
+          <dataInputRefs>_10_SkippableInput</dataInputRefs>
+          <dataInputRefs>_10_LocaleInput</dataInputRefs>
+          <dataInputRefs>_10_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_10_GroupIdInput</dataInputRefs>
+          <dataInputRefs>_10_PriorityInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_10_detectionOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_10_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">detection</from>
+          <to xsi:type="tFormalExpression">_10_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_10_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_10_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">detection</from>
+          <to xsi:type="tFormalExpression">_10_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_GroupIdInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_10_GroupIdInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_10_PriorityInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_10_detectionOutput</sourceRef>
+        <targetRef>detection</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{jwy}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_11" name="detection gateway" gatewayDirection="Diverging" />
+    <userTask id="_19" name="assign review" >
+      <extensionElements>
+        <tns:onEntry-script>
+          <tns:script>System.out.println("assign  activity started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("assign activity ended");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_19_SkippableInput" name="Skippable" />
+        <dataInput id="_19_TaskNameInput" name="TaskName" />
+        <dataOutput id="_19_reviewteacher2Output" name="reviewteacher2" />
+        <dataOutput id="_19_reviewteacher1Output" name="reviewteacher1" />
+        <inputSet>
+          <dataInputRefs>_19_SkippableInput</dataInputRefs>
+          <dataInputRefs>_19_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_19_reviewteacher2Output</dataOutputRefs>
+          <dataOutputRefs>_19_reviewteacher1Output</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_19_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_19_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_19_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">assign review</from>
+          <to xsi:type="tFormalExpression">_19_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_19_reviewteacher2Output</sourceRef>
+        <targetRef>reviewteacher2</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_19_reviewteacher1Output</sourceRef>
+        <targetRef>reviewteacher1</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{jwy}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_18" name="Defense finalize before" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("defense  finalize before activity started ");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("defense finalize before activity ended ");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_18_SkippableInput" name="Skippable" />
+        <dataInput id="_18_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_18_SkippableInput</dataInputRefs>
+          <dataInputRefs>_18_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_18_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_18_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_18_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Defense finalize before</from>
+          <to xsi:type="tFormalExpression">_18_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{tutor}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_21" name="defense decision" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("defense decision activity started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("defense decision activity ended. result is: "+defense);</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_21_SkippableInput" name="Skippable" />
+        <dataInput id="_21_TaskNameInput" name="TaskName" />
+        <dataOutput id="_21_defenseOutput" name="defense" />
+        <inputSet>
+          <dataInputRefs>_21_SkippableInput</dataInputRefs>
+          <dataInputRefs>_21_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_21_defenseOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_21_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_21_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_21_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">defense decision</from>
+          <to xsi:type="tFormalExpression">_21_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_21_defenseOutput</sourceRef>
+        <targetRef>defense</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{defensesecretary}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_20" name="assign defense" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("assign defense activity started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("assign defense activity ended");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_20_SkippableInput" name="Skippable" />
+        <dataInput id="_20_TaskNameInput" name="TaskName" />
+        <dataOutput id="_20_defenseteacher1Output" name="defenseteacher1" />
+        <dataOutput id="_20_defensesecretaryOutput" name="defensesecretary" />
+        <dataOutput id="_20_defenseteacher2Output" name="defenseteacher2" />
+        <dataOutput id="_20_defenseteacher3Output" name="defenseteacher3" />
+        <inputSet>
+          <dataInputRefs>_20_SkippableInput</dataInputRefs>
+          <dataInputRefs>_20_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_20_defenseteacher1Output</dataOutputRefs>
+          <dataOutputRefs>_20_defensesecretaryOutput</dataOutputRefs>
+          <dataOutputRefs>_20_defenseteacher2Output</dataOutputRefs>
+          <dataOutputRefs>_20_defenseteacher3Output</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_20_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_20_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_20_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">assign defense</from>
+          <to xsi:type="tFormalExpression">_20_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_20_defenseteacher1Output</sourceRef>
+        <targetRef>defenseteacher1</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_20_defensesecretaryOutput</sourceRef>
+        <targetRef>defensesecretary</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_20_defenseteacher2Output</sourceRef>
+        <targetRef>defenseteacher2</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_20_defenseteacher3Output</sourceRef>
+        <targetRef>defenseteacher3</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{jwy}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_22" name="exit defense decision" gatewayDirection="Diverging" />
+    <userTask id="_25" name="defense finalize after" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("defense finalize activity started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("defense finalize activity ended");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_25_SkippableInput" name="Skippable" />
+        <dataInput id="_25_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_25_SkippableInput</dataInputRefs>
+          <dataInputRefs>_25_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_25_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_25_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_25_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">defense finalize after</from>
+          <to xsi:type="tFormalExpression">_25_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{tutor}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_28" name="reprieve decision" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("reprieve 1 started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("reprieve 1 ended. result: "+reprieve1);</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_28_SkippableInput" name="Skippable" />
+        <dataInput id="_28_TaskNameInput" name="TaskName" />
+        <dataOutput id="_28_reprieve1Output" name="reprieve1" />
+        <inputSet>
+          <dataInputRefs>_28_SkippableInput</dataInputRefs>
+          <dataInputRefs>_28_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_28_reprieve1Output</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_28_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_28_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_28_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">reprieve decision</from>
+          <to xsi:type="tFormalExpression">_28_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_28_reprieve1Output</sourceRef>
+        <targetRef>reprieve1</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{defenseteacher1}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <endEvent id="_31" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <userTask id="_30" name="print papers" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("print paper activity started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("print paper activity ended");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_30_SkippableInput" name="Skippable" />
+        <dataInput id="_30_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_30_SkippableInput</dataInputRefs>
+          <dataInputRefs>_30_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_30_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_30_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_30_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">print papers</from>
+          <to xsi:type="tFormalExpression">_30_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{jwy}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_35" name="review" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("review activity started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("review activity ended! result is: "+review);</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_35_SkippableInput" name="Skippable" />
+        <dataInput id="_35_TaskNameInput" name="TaskName" />
+        <dataOutput id="_35_reviewOutput" name="review" />
+        <inputSet>
+          <dataInputRefs>_35_SkippableInput</dataInputRefs>
+          <dataInputRefs>_35_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_35_reviewOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_35_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_35_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_35_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">review</from>
+          <to xsi:type="tFormalExpression">_35_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_35_reviewOutput</sourceRef>
+        <targetRef>review</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{reviewteacher1}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_32" name="review" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("review activity started!");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("review activity ended, result is: "+review);</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_32_SkippableInput" name="Skippable" />
+        <dataInput id="_32_TaskNameInput" name="TaskName" />
+        <dataOutput id="_32_reviewOutput" name="review" />
+        <inputSet>
+          <dataInputRefs>_32_SkippableInput</dataInputRefs>
+          <dataInputRefs>_32_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_32_reviewOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_32_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_32_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_32_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">review</from>
+          <to xsi:type="tFormalExpression">_32_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_32_reviewOutput</sourceRef>
+        <targetRef>review</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{reviewteacher2}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_38" name="reprieve decision" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("reprieve2 started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("reprieve 2 endedï¼?result is: "+reprieve2);</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_38_SkippableInput" name="Skippable" />
+        <dataInput id="_38_TaskNameInput" name="TaskName" />
+        <dataOutput id="_38_reprieve2Output" name="reprieve2" />
+        <inputSet>
+          <dataInputRefs>_38_SkippableInput</dataInputRefs>
+          <dataInputRefs>_38_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_38_reprieve2Output</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_38_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_38_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_38_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">reprieve decision</from>
+          <to xsi:type="tFormalExpression">_38_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_38_reprieve2Output</sourceRef>
+        <targetRef>reprieve2</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{defenseteacher2}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_39" name="reprieve decision" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("reprieve 3 started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("reprieve 3 endedï¼?result is: "+reprieve3);</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_39_SkippableInput" name="Skippable" />
+        <dataInput id="_39_TaskNameInput" name="TaskName" />
+        <dataOutput id="_39_reprieve3Output" name="reprieve3" />
+        <inputSet>
+          <dataInputRefs>_39_SkippableInput</dataInputRefs>
+          <dataInputRefs>_39_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_39_reprieve3Output</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_39_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_39_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_39_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">reprieve decision</from>
+          <to xsi:type="tFormalExpression">_39_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_39_reprieve3Output</sourceRef>
+        <targetRef>reprieve3</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{defenseteacher3}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <parallelGateway id="_36" name="assign review gateway" gatewayDirection="Diverging" />
+    <userTask id="_42" name="reprieve finalize" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("reprieve finalize activity started");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("reprieve finalize activity ended");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_42_SkippableInput" name="Skippable" />
+        <dataInput id="_42_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_42_SkippableInput</dataInputRefs>
+          <dataInputRefs>_42_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_42_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_42_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_42_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">reprieve finalize</from>
+          <to xsi:type="tFormalExpression">_42_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{tutor}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <parallelGateway id="_43" name="Gateway13" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_46" name="review gateway 2" gatewayDirection="Diverging" />
+    <parallelGateway id="_47" name="reviews gateway" gatewayDirection="Converging" />
+    <exclusiveGateway id="_44" name="defense passed gateway" gatewayDirection="Converging" />
+    <inclusiveGateway id="_45" name="review gateway 1" gatewayDirection="Diverging" />
+    <parallelGateway id="_51" name="reprieved decisions gateway" gatewayDirection="Converging" />
+    <inclusiveGateway id="_50" name="reprieve decision gateway 3" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_49" name="reprieve decision gateway 2" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_48" name=" reprieve decision gateway 1" gatewayDirection="Diverging" />
+    <userTask id="_55" name="proposal finalize" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("proposal finalize started!");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("proposal finalize ended!");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_55_SkippableInput" name="Skippable" />
+        <dataInput id="_55_TaskNameInput" name="TaskName" />
+        <dataOutput id="_55_isPassedOutput" name="isPassed" />
+        <inputSet>
+          <dataInputRefs>_55_SkippableInput</dataInputRefs>
+          <dataInputRefs>_55_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_55_isPassedOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_55_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_55_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_55_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">proposal finalize</from>
+          <to xsi:type="tFormalExpression">_55_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_55_isPassedOutput</sourceRef>
+        <targetRef>isPassed</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{tutor}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_54" name="exit preliminary finalize" gatewayDirection="Diverging" />
+    <userTask id="_53" name="submit interim report" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("submit interim report started!");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script>
+          <tns:script>System.out.println("submit interim report ended!");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_53_SkippableInput" name="Skippable" />
+        <dataInput id="_53_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_53_SkippableInput</dataInputRefs>
+          <dataInputRefs>_53_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_53_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_53_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_53_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">submit interim report</from>
+          <to xsi:type="tFormalExpression">_53_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{student}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_52" name="submit proposal" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("submit proposal started !");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("submit proposal ended !");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_52_CommentInput" name="Comment" />
+        <dataInput id="_52_SkippableInput" name="Skippable" />
+        <dataInput id="_52_LocaleInput" name="Locale" />
+        <dataInput id="_52_TaskNameInput" name="TaskName" />
+        <dataInput id="_52_GroupIdInput" name="GroupId" />
+        <dataInput id="_52_PriorityInput" name="Priority" />
+        <inputSet>
+          <dataInputRefs>_52_CommentInput</dataInputRefs>
+          <dataInputRefs>_52_SkippableInput</dataInputRefs>
+          <dataInputRefs>_52_LocaleInput</dataInputRefs>
+          <dataInputRefs>_52_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_52_GroupIdInput</dataInputRefs>
+          <dataInputRefs>_52_PriorityInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_52_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_52_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_52_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_52_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_52_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_52_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_52_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">submit proposal</from>
+          <to xsi:type="tFormalExpression">_52_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_52_GroupIdInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_52_GroupIdInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_52_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_52_PriorityInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{student}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_59" name="exit interim report finalize" gatewayDirection="Diverging" />
+    <userTask id="_58" name="interim report finalize" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("interim report finalize started!");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("interim report finalize ended!");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_58_SkippableInput" name="Skippable" />
+        <dataInput id="_58_TaskNameInput" name="TaskName" />
+        <dataOutput id="_58_isPassedOutput" name="isPassed" />
+        <inputSet>
+          <dataInputRefs>_58_SkippableInput</dataInputRefs>
+          <dataInputRefs>_58_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_58_isPassedOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_58_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_58_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_58_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">interim report finalize</from>
+          <to xsi:type="tFormalExpression">_58_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_58_isPassedOutput</sourceRef>
+        <targetRef>isPassed</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{tutor}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <exclusiveGateway id="_57" name="enter submit proposal" gatewayDirection="Converging" />
+    <inclusiveGateway id="_56" name="exit proposal finalize" gatewayDirection="Diverging" />
+    <exclusiveGateway id="_60" name="enter submit interim report" gatewayDirection="Converging" />
+
+    <!-- connections -->
+    <sequenceFlow id="_6-_4" sourceRef="_6" targetRef="_4" />
+    <sequenceFlow id="_11-_6" sourceRef="_11" targetRef="_6" name="detection failed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !detection;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_22-_6" sourceRef="_22" targetRef="_6" name="defense failed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return ("failed".equals(defense));</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_45-_6" sourceRef="_45" targetRef="_6" name="review failed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return (!review);</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_46-_6" sourceRef="_46" targetRef="_6" name="review failed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return (!review);</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_48-_6" sourceRef="_48" targetRef="_6" name="defense failed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return (!reprieve1);</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_50-_6" sourceRef="_50" targetRef="_6" name="defense failed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return (!reprieve3);</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_49-_6" sourceRef="_49" targetRef="_6" name="defense failed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return (!reprieve2);</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_54-_6" sourceRef="_54" targetRef="_6" name="preliminary finalize failed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !isPassed;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_59-_6" sourceRef="_59" targetRef="_6" name="interim report passed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isPassed;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_4-_8" sourceRef="_4" targetRef="_8" />
+    <sequenceFlow id="_54-_10" sourceRef="_54" targetRef="_10" name="preliminary finalize passed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isPassed;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_10-_11" sourceRef="_10" targetRef="_11" />
+    <sequenceFlow id="_11-_19" sourceRef="_11" targetRef="_19" name="detection passed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return detection;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_47-_18" sourceRef="_47" targetRef="_18" />
+    <sequenceFlow id="_20-_21" sourceRef="_20" targetRef="_21" />
+    <sequenceFlow id="_18-_20" sourceRef="_18" targetRef="_20" />
+    <sequenceFlow id="_21-_22" sourceRef="_21" targetRef="_22" />
+    <sequenceFlow id="_44-_25" sourceRef="_44" targetRef="_25" />
+    <sequenceFlow id="_43-_28" sourceRef="_43" targetRef="_28" />
+    <sequenceFlow id="_30-_31" sourceRef="_30" targetRef="_31" />
+    <sequenceFlow id="_25-_30" sourceRef="_25" targetRef="_30" />
+    <sequenceFlow id="_36-_35" sourceRef="_36" targetRef="_35" />
+    <sequenceFlow id="_36-_32" sourceRef="_36" targetRef="_32" />
+    <sequenceFlow id="_43-_38" sourceRef="_43" targetRef="_38" />
+    <sequenceFlow id="_43-_39" sourceRef="_43" targetRef="_39" />
+    <sequenceFlow id="_19-_36" sourceRef="_19" targetRef="_36" />
+    <sequenceFlow id="_22-_42" sourceRef="_22" targetRef="_42" name="defense reprieved" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return ("reprieved".equals(defense));</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_42-_43" sourceRef="_42" targetRef="_43" />
+    <sequenceFlow id="_32-_46" sourceRef="_32" targetRef="_46" />
+    <sequenceFlow id="_45-_47" sourceRef="_45" targetRef="_47" name="review passed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return review;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_46-_47" sourceRef="_46" targetRef="_47" name="review passed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return review;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_22-_44" sourceRef="_22" targetRef="_44" name="defense passed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return ("passed".equals(defense));</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_51-_44" sourceRef="_51" targetRef="_44" />
+    <sequenceFlow id="_35-_45" sourceRef="_35" targetRef="_45" />
+    <sequenceFlow id="_49-_51" sourceRef="_49" targetRef="_51" name="defense passed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return (reprieve2);</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_48-_51" sourceRef="_48" targetRef="_51" name="defense passed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return (reprieve1);</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_50-_51" sourceRef="_50" targetRef="_51" name="defense passed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return (reprieve3);</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_39-_50" sourceRef="_39" targetRef="_50" />
+    <sequenceFlow id="_38-_49" sourceRef="_38" targetRef="_49" />
+    <sequenceFlow id="_28-_48" sourceRef="_28" targetRef="_48" />
+    <sequenceFlow id="_52-_55" sourceRef="_52" targetRef="_55" />
+    <sequenceFlow id="_8-_54" sourceRef="_8" targetRef="_54" />
+    <sequenceFlow id="_60-_53" sourceRef="_60" targetRef="_53" />
+    <sequenceFlow id="_57-_52" sourceRef="_57" targetRef="_52" />
+    <sequenceFlow id="_58-_59" sourceRef="_58" targetRef="_59" />
+    <sequenceFlow id="_53-_58" sourceRef="_53" targetRef="_58" />
+    <sequenceFlow id="_1-_57" sourceRef="_1" targetRef="_57" />
+    <sequenceFlow id="_56-_57" sourceRef="_56" targetRef="_57" name="proposal failed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !isPassed;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_55-_56" sourceRef="_55" targetRef="_56" />
+    <sequenceFlow id="_56-_60" sourceRef="_56" targetRef="_60" name="proposal passed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return isPassed;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_59-_60" sourceRef="_59" targetRef="_60" name="interim report failed" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !isPassed;</conditionExpression>
+    </sequenceFlow>
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="nju.software.papermanagement.bpmn" >
+      <bpmndi:BPMNShape bpmnElement="_1" >
+        <dc:Bounds x="-2" y="0" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_4" >
+        <dc:Bounds x="326" y="183" width="118" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_6" >
+        <dc:Bounds x="357" y="96" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_8" >
+        <dc:Bounds x="313" y="249" width="145" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_10" >
+        <dc:Bounds x="320" y="381" width="145" height="53" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_11" >
+        <dc:Bounds x="366" y="449" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_19" >
+        <dc:Bounds x="329" y="517" width="124" height="53" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_18" >
+        <dc:Bounds x="325" y="779" width="170" height="52" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_21" >
+        <dc:Bounds x="356" y="909" width="121" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_20" >
+        <dc:Bounds x="353" y="844" width="124" height="53" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_22" >
+        <dc:Bounds x="394" y="967" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_25" >
+        <dc:Bounds x="715" y="901" width="121" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_28" >
+        <dc:Bounds x="178" y="1154" width="127" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_31" >
+        <dc:Bounds x="748" y="755" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_30" >
+        <dc:Bounds x="723" y="840" width="97" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_35" >
+        <dc:Bounds x="223" y="647" width="145" height="46" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_32" >
+        <dc:Bounds x="458" y="647" width="145" height="46" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_38" >
+        <dc:Bounds x="348" y="1155" width="145" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_39" >
+        <dc:Bounds x="516" y="1152" width="145" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_36" >
+        <dc:Bounds x="368" y="594" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_42" >
+        <dc:Bounds x="343" y="1029" width="145" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_43" >
+        <dc:Bounds x="395" y="1094" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_46" >
+        <dc:Bounds x="507" y="708" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_47" >
+        <dc:Bounds x="385" y="715" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_44" >
+        <dc:Bounds x="755" y="965" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_45" >
+        <dc:Bounds x="274" y="714" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_51" >
+        <dc:Bounds x="399" y="1290" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_50" >
+        <dc:Bounds x="566" y="1224" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_49" >
+        <dc:Bounds x="398" y="1228" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_48" >
+        <dc:Bounds x="214" y="1230" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_55" >
+        <dc:Bounds x="279" y="5" width="134" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_54" >
+        <dc:Bounds x="366" y="322" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_53" >
+        <dc:Bounds x="580" y="9" width="176" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_52" >
+        <dc:Bounds x="125" y="4" width="129" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_59" >
+        <dc:Bounds x="507" y="98" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_58" >
+        <dc:Bounds x="590" y="101" width="155" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_57" >
+        <dc:Bounds x="55" y="4" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_56" >
+        <dc:Bounds x="441" y="5" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_60" >
+        <dc:Bounds x="509" y="5" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_6-_4" >
+        <di:waypoint x="381" y="120" />
+        <di:waypoint x="385" y="208" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_11-_6" >
+        <di:waypoint x="390" y="473" />
+        <di:waypoint x="610" y="478" />
+        <di:waypoint x="607" y="232" />
+        <di:waypoint x="381" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_22-_6" >
+        <di:waypoint x="418" y="991" />
+        <di:waypoint x="200" y="986" />
+        <di:waypoint x="194" y="175" />
+        <di:waypoint x="381" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_45-_6" >
+        <di:waypoint x="298" y="738" />
+        <di:waypoint x="241" y="738" />
+        <di:waypoint x="232" y="189" />
+        <di:waypoint x="381" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_46-_6" >
+        <di:waypoint x="531" y="732" />
+        <di:waypoint x="652" y="735" />
+        <di:waypoint x="654" y="225" />
+        <di:waypoint x="381" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_48-_6" >
+        <di:waypoint x="238" y="1254" />
+        <di:waypoint x="162" y="1231" />
+        <di:waypoint x="154" y="156" />
+        <di:waypoint x="381" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_50-_6" >
+        <di:waypoint x="590" y="1248" />
+        <di:waypoint x="698" y="1223" />
+        <di:waypoint x="692" y="199" />
+        <di:waypoint x="381" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_49-_6" >
+        <di:waypoint x="422" y="1252" />
+        <di:waypoint x="330" y="1230" />
+        <di:waypoint x="309" y="190" />
+        <di:waypoint x="381" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_54-_6" >
+        <di:waypoint x="390" y="346" />
+        <di:waypoint x="520" y="346" />
+        <di:waypoint x="517" y="203" />
+        <di:waypoint x="381" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_59-_6" >
+        <di:waypoint x="531" y="122" />
+        <di:waypoint x="381" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_4-_8" >
+        <di:waypoint x="385" y="208" />
+        <di:waypoint x="385" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_54-_10" >
+        <di:waypoint x="390" y="346" />
+        <di:waypoint x="392" y="407" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_10-_11" >
+        <di:waypoint x="392" y="407" />
+        <di:waypoint x="390" y="473" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_11-_19" >
+        <di:waypoint x="390" y="473" />
+        <di:waypoint x="391" y="543" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_47-_18" >
+        <di:waypoint x="409" y="739" />
+        <di:waypoint x="410" y="805" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_20-_21" >
+        <di:waypoint x="415" y="870" />
+        <di:waypoint x="416" y="934" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_18-_20" >
+        <di:waypoint x="410" y="805" />
+        <di:waypoint x="415" y="870" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_21-_22" >
+        <di:waypoint x="416" y="934" />
+        <di:waypoint x="418" y="991" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_44-_25" >
+        <di:waypoint x="779" y="989" />
+        <di:waypoint x="775" y="925" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_43-_28" >
+        <di:waypoint x="419" y="1118" />
+        <di:waypoint x="241" y="1183" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_30-_31" >
+        <di:waypoint x="771" y="864" />
+        <di:waypoint x="772" y="779" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_25-_30" >
+        <di:waypoint x="775" y="925" />
+        <di:waypoint x="771" y="864" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_36-_35" >
+        <di:waypoint x="392" y="618" />
+        <di:waypoint x="295" y="670" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_36-_32" >
+        <di:waypoint x="392" y="618" />
+        <di:waypoint x="530" y="670" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_43-_38" >
+        <di:waypoint x="419" y="1118" />
+        <di:waypoint x="420" y="1184" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_43-_39" >
+        <di:waypoint x="419" y="1118" />
+        <di:waypoint x="588" y="1181" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_19-_36" >
+        <di:waypoint x="391" y="543" />
+        <di:waypoint x="392" y="618" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_22-_42" >
+        <di:waypoint x="418" y="991" />
+        <di:waypoint x="415" y="1053" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_42-_43" >
+        <di:waypoint x="415" y="1053" />
+        <di:waypoint x="419" y="1118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_32-_46" >
+        <di:waypoint x="530" y="670" />
+        <di:waypoint x="531" y="732" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_45-_47" >
+        <di:waypoint x="298" y="738" />
+        <di:waypoint x="409" y="739" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_46-_47" >
+        <di:waypoint x="531" y="732" />
+        <di:waypoint x="409" y="739" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_22-_44" >
+        <di:waypoint x="418" y="991" />
+        <di:waypoint x="779" y="989" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_51-_44" >
+        <di:waypoint x="423" y="1314" />
+        <di:waypoint x="781" y="1261" />
+        <di:waypoint x="779" y="989" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_35-_45" >
+        <di:waypoint x="295" y="670" />
+        <di:waypoint x="298" y="738" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_49-_51" >
+        <di:waypoint x="422" y="1252" />
+        <di:waypoint x="423" y="1314" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_48-_51" >
+        <di:waypoint x="238" y="1254" />
+        <di:waypoint x="423" y="1314" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_50-_51" >
+        <di:waypoint x="590" y="1248" />
+        <di:waypoint x="423" y="1314" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_39-_50" >
+        <di:waypoint x="588" y="1181" />
+        <di:waypoint x="590" y="1248" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_38-_49" >
+        <di:waypoint x="420" y="1184" />
+        <di:waypoint x="422" y="1252" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_28-_48" >
+        <di:waypoint x="241" y="1183" />
+        <di:waypoint x="238" y="1254" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_52-_55" >
+        <di:waypoint x="189" y="28" />
+        <di:waypoint x="346" y="29" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_8-_54" >
+        <di:waypoint x="385" y="278" />
+        <di:waypoint x="390" y="346" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_60-_53" >
+        <di:waypoint x="533" y="29" />
+        <di:waypoint x="668" y="33" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_57-_52" >
+        <di:waypoint x="79" y="28" />
+        <di:waypoint x="189" y="28" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_58-_59" >
+        <di:waypoint x="667" y="125" />
+        <di:waypoint x="531" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_53-_58" >
+        <di:waypoint x="668" y="33" />
+        <di:waypoint x="667" y="125" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_1-_57" >
+        <di:waypoint x="22" y="24" />
+        <di:waypoint x="79" y="28" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_56-_57" >
+        <di:waypoint x="465" y="29" />
+        <di:waypoint x="467" y="78" />
+        <di:waypoint x="89" y="75" />
+        <di:waypoint x="79" y="28" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_55-_56" >
+        <di:waypoint x="346" y="29" />
+        <di:waypoint x="465" y="29" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_56-_60" >
+        <di:waypoint x="465" y="29" />
+        <di:waypoint x="533" y="29" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_59-_60" >
+        <di:waypoint x="531" y="122" />
+        <di:waypoint x="533" y="29" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>
