@@ -19,12 +19,12 @@ import javax.persistence.Table;
 public class Order implements java.io.Serializable {
 
 	// Fields
-
-	private String orderProcessStateName;//订单当前执行到的流程节点的状态
-	private String confirmDepositFile;//大货定金收据电子图片
-	private String confirmFinalPaymentFile;//大货尾金收据电子图片
-	private String confirmSampleMoneyFile;//样衣金收据电子图片
-	private Short isHaoDuoYi;
+	private boolean buySweaterMaterialResult;//毛衣订单仓是否需要买毛衣原料
+	private String  orderProcessStateName;//订单当前执行到的流程节点的状态
+	private String  confirmDepositFile;//大货定金收据电子图片
+	private String  confirmFinalPaymentFile;//大货尾金收据电子图片
+	private String  confirmSampleMoneyFile;//样衣金收据电子图片
+	private Short   isHaoDuoYi;
 	
 	private Integer orderId;
 	private Short reorder;
@@ -705,5 +705,13 @@ public class Order implements java.io.Serializable {
 
 	public void setIsHaoDuoYi(Short isHaoDuoYi) {
 		this.isHaoDuoYi = isHaoDuoYi;
+	}
+	@Column(name = "buy_sweaterMaterial_result")
+	public boolean isBuySweaterMaterialResult() {
+		return buySweaterMaterialResult;
+	}
+
+	public void setBuySweaterMaterialResult(boolean buySweaterMaterialResult) {
+		this.buySweaterMaterialResult = buySweaterMaterialResult;
 	}
 }

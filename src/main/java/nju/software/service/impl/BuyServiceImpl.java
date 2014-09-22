@@ -371,7 +371,10 @@ public class BuyServiceImpl implements BuyService {
 	public boolean purchaseSweaterMaterialSubmit(long taskId, String orderId,boolean buySweaterMaterialResult) {
 		try {
 			Map<String, Object> data = new HashMap<String, Object>();
-			data.put(RESULT_PURCHASE_SWEATER_MATERIAL, buySweaterMaterialResult);
+			Order order = orderDAO.findById(Integer.parseInt(orderId));
+			order.setBuySweaterMaterialResult(buySweaterMaterialResult);
+			orderDAO.merge(order);
+			data.put("sweaterMaterial", buySweaterMaterialResult);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
 			return true;
 		} catch (InterruptedException e) {

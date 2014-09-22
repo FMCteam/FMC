@@ -84,8 +84,17 @@
 							<tr>
 								<td><input type="text" class="span12" name="style_name"
 									required="required" /></td>
-								<td><input type="text" class="span12" name="clothes_type"
-									required="required" /></td>	
+								<td>
+								<select type="text" class="span12" name="clothes_type" required="required" >
+								<option selected="selected" value="0">请选择</option>
+								<option value="上衣">上衣</option>
+								<option value="连衣裙">连衣裙</option>
+								<option value="T恤">T恤</option>
+								<option value="下裤">下裤</option>
+								<option value="毛衣" style="color: red;">毛衣</option>
+							    <option value="其他">其他</option>
+								</select>
+								</td>	
 								<td colspan="2"><input type="radio" name="style_sex"
 									 value="男" required="required" /> <span>男</span> <input
 									type="radio" name="style_sex" value="女" checked="checked" /> <span>女</span> <input
