@@ -2290,7 +2290,6 @@ public class MarketController {
 		} else {
 			list = marketService.getOrders();
 		}
-
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");

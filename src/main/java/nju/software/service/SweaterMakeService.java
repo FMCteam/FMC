@@ -28,4 +28,7 @@ public interface SweaterMakeService {
 	public List<Map<String, Object>> getSearchSendSweaterList(
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
+
+	public Map<String, Object> getProduceDetail(Integer orderId);
+
 }

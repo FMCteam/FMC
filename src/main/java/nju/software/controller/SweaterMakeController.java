@@ -7,14 +7,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.OperateRecord;
 import nju.software.service.EmployeeService;
 import nju.software.service.SweaterMakeService;
 import nju.software.util.DateUtil;
 import nju.software.util.JbpmAPIUtil;
-
 import org.jbpm.task.query.TaskSummary;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
@@ -81,14 +81,15 @@ public class SweaterMakeController {
 	public String getSweaterSampleAndCraftDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
+		
 		Map<String,Object> orderInfo=sweaterMakeService.getSweaterSampleAndCraftDetail(Integer.parseInt(orderId));
-//		TaskSummary task = (TaskSummary) orderInfo.get("task");
-//		long processId = task.getProcessInstanceId();
-//需要获取task中的数据
-//		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-//				.getKsession().getProcessInstance(processId);
-//		boolean sweaterMaterial = (boolean) process.getVariable("sweaterMaterial");
-//		model.addAttribute("buySweaterMaterial",sweaterMaterial);
+		/*TaskSummary task = (TaskSummary) orderInfo.get("task");
+		long processId = task.getProcessInstanceId();
+		// 需要获取task中的数据
+		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
+				.getKsession().getProcessInstance(processId);
+		boolean sweaterMaterial = (boolean) process.getVariable("sweaterMaterial");
+		model.addAttribute("buySweaterMaterial",sweaterMaterial);*/
 		model.addAttribute("orderInfo", orderInfo);
 		return "/sweater/sweaterSampleAndCraftDetail";
 	}
@@ -183,4 +184,5 @@ public class SweaterMakeController {
 		return new Timestamp(outDate.getTime());
 	}
 	
+
 }

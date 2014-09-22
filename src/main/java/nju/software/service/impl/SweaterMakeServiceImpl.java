@@ -148,4 +148,12 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	private ServiceUtil service;
 	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
+
+	@Override
+	public Map<String, Object> getProduceDetail(Integer orderId) {
+		// TODO Auto-generated method stub
+		return service.getBasicOrderModelWithQuote(ACTOR_SWEATER_MANAGER, RESULT_PRODUCE,
+				orderId);
+	}
+
 }
