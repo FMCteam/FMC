@@ -23,6 +23,8 @@ import java.util.Map;
 
 
 
+
+
 import nju.software.dao.IOrderDAO;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Order;
@@ -79,6 +81,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	public static final String HAS_POSTED_SAMPLE_CLOTHES = "hasPostedSampleClothes";
 	public static final String IS_NEED_SAMPLE_CLOTHES = "isNeedSampleClothes";
 	public static final String ORDER_SOURCE = "orderSource";
+	public static final String CLOTHES_TYPE = "clothesType";
 
 	protected void initDao() {
 		// do nothing
@@ -565,6 +568,17 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		List<Order> orderList = findByOrderState("A");
 		return orderList;
 	}
+	
+	public List<Order> getSweaterOrders(){
+		List<Order> orderList = findAllSweaterOrders("毛衣");
+		return orderList;
+	}
+
+	private List<Order> findAllSweaterOrders(String clothesType) {
+		// TODO Auto-generated method stub
+		
+		return findByProperty(CLOTHES_TYPE, clothesType);
+	}
 
 	public List<Order> getOrdersDone() {
 		// TODO Auto-generated method stub
@@ -909,6 +923,14 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	    List<Order> employeeOrdersDoneList = criteria.list();		
         session.close();
 		return employeeOrdersDoneList;
+	}
+
+	public List<Order> getSweaterSearchOrders() {
+		// TODO Auto-generated method stub
+		 Session session = getHibernateTemplate().getSessionFactory().openSession();
+		 Criteria criteria = session.createCriteria(Order.class);
+		 
+		return null;
 	}
 
 

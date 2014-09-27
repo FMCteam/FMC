@@ -62,6 +62,20 @@ public class OperateRecordDAO extends HibernateDaoSupport implements IOperateRec
 			throw re;
 		}
 	}
+	
+	public List<OperateRecord> findByIdQueryMax(java.lang.Integer id) {
+		log.debug("finding OperateRecord instance with id: " + id);
+		try {
+			String queryString = "from nju.software.dataobject.OperateRecord  where orderId=? and operateId = (SELECT MAX(operateId)  from nju.software.dataobject.OperateRecord where orderId=?)";
+			return getHibernateTemplate().find(queryString, id,id);
+			/*OperateRecord instance = (OperateRecord) getHibernateTemplate().get(
+					"nju.software.dataobject.OperateRecord as operate where operate.operateId = (select max(operate.operateId) from operate)", id);
+			return instance;*/
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
 
 	public List findByExample(OperateRecord instance) {
 		log.debug("finding OperateRecord instance by example");

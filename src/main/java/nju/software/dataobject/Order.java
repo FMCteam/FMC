@@ -52,6 +52,14 @@ public class Order implements java.io.Serializable {
 	private Integer sampleAmount;
 	private Long processId;
 	
+	private String Purchase_director; //采购负责人
+	private String supplier;//供应商
+	private String Purchase_time;//采购时间
+	private String Wool_type;//毛线类型
+	private String Wool_weight;//重量
+	private String total_price;//总价
+	
+	
 	
 	@Column(name = "processId", nullable = true)
 	public Long getProcessId() {
@@ -714,4 +722,60 @@ public class Order implements java.io.Serializable {
 	public void setBuySweaterMaterialResult(boolean buySweaterMaterialResult) {
 		this.buySweaterMaterialResult = buySweaterMaterialResult;
 	}
+
+	@Column(name = "Purchase_director")
+	public String getPurchase_director() {
+		return Purchase_director;
+	}
+
+	public void setPurchase_director(String purchase_director) {
+		Purchase_director = purchase_director;
+	}
+
+	@Column(name = "supplier")
+	public String getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(String supplier) {
+		this.supplier = supplier;
+	}
+
+	@Column(name = "Purchase_time")
+	public String getPurchase_time() {
+		return Purchase_time;
+	}
+
+	public void setPurchase_time(String purchase_time) {
+		Purchase_time = purchase_time;
+	}
+
+	@Column(name = "Wool_type")
+	public String getWool_type() {
+		return Wool_type;
+	}
+
+	public void setWool_type(String wool_type) {
+		Wool_type = wool_type;
+	}
+
+	@Column(name = "wool_weight")
+	public String getWool_weight() {
+		return Wool_weight;
+	}
+
+	public void setWool_weight(String wool_weight) {
+		Wool_weight = wool_weight;
+	}
+
+	@Column(name = "total_price")
+	public String getTotal_price() {
+		return total_price;
+	}
+
+	public void setTotal_price(String total_price) {
+		this.total_price = total_price;
+	}
+	
+	
 }

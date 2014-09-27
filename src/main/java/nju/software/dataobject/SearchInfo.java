@@ -8,6 +8,7 @@ public class SearchInfo {
 	private String employeename;
 	private String startdate;
 	private String enddate;
+	private String orderState;
 	
 	
 	
@@ -62,6 +63,14 @@ public class SearchInfo {
 	}
 	public void setEnddate(String enddate) {
 		this.enddate = enddate;
+	}
+
+	public String getOrderState() {
+		return orderState;
+	}
+
+	public void setOrderState(String orderState) {
+		this.orderState = orderState;
 	}
 	
 	

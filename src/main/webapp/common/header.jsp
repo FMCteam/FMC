@@ -141,6 +141,12 @@ table.tablesorter thead tr .headerSortDown {
 								</c:if>
 							</ul></li>
 					</c:if>
+					<li class="dropdown"><a href=""><span
+								class="iconfa-pencil"></span>数据管理</a>
+							<ul>
+								<li><a href="${ctx}/sweater/sweaterOrderList.do">查看毛衣订单</a></li>
+							</ul>
+					</li>
 					<c:if test="${IS_MARKET_MANAGER_OR_ADMIN==true}">
 						<li class="dropdown"><a href=""><span
 								class="iconfa-briefcase"></span> 市场主管<span

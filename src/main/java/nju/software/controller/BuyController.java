@@ -571,6 +571,10 @@ public class BuyController {
 			String orderId = request.getParameter("orderId");
 			Map<String, Object> orderInfo = buyService
 					.getPurchaseSweaterMaterialDetail(Integer.parseInt(orderId));
+			//从session中取默认责任人
+			HttpSession session = request.getSession();
+			Account account = (Account) session.getAttribute("cur_user");
+			model.addAttribute("employee_name", account.getUserName());
 			model.addAttribute("orderInfo", orderInfo);
 			return "/buy/purchaseSweaterMaterialDetail";
 		}
@@ -581,12 +585,18 @@ public class BuyController {
 				HttpServletResponse response, ModelMap model) {
 			String orderId = request.getParameter("orderId");
 			String taskId =  request.getParameter("taskId");
-			String result = request.getParameter("result");
+			String choose = request.getParameter("task_name");
+			String head = request.getParameter("Purchase_director");
+			String supplier = request.getParameter("supplier");
+			String Purchase_time = request.getParameter("Purchase_time");
+			String type = request.getParameter("Wool_type");
+			String weight = request.getParameter("Wool_weight");
+			String total_price = request.getParameter("total_price");
 			boolean buySweaterMaterialResult = false;
-			if(result.equals("1")){
+			if("有库存".equals(choose)){
 				buySweaterMaterialResult = true;
-			} 
- 			buyService.purchaseSweaterMaterialSubmit(Long.parseLong(taskId),orderId,buySweaterMaterialResult);
+			}
+ 			buyService.purchaseSweaterMaterialSubmit(Long.parseLong(taskId),orderId,total_price,weight,type,Purchase_time,supplier,head,buySweaterMaterialResult);
 			return "forward:/buy/purchaseSweaterMaterialList.do";
 		}
 	

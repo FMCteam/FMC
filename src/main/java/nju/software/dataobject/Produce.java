@@ -29,6 +29,10 @@ public class Produce implements java.io.Serializable {
 	private Integer produceAmount;
 	private String type;
 	
+	private String sendTime;	//外发时间
+	private String Purchase_director;//负责人
+	private String processing_side;//加工方
+	
 	public static final String TYPE_SAMPLE_PRODUCE = "sampleProduce";//生产样衣所需件数
 	public static final String TYPE_SAMPLE_PRODUCED = "sampleProduced";//实际生产件数
 	public static final String TYPE_PRODUCE="PRODUCE";
@@ -135,6 +139,33 @@ public class Produce implements java.io.Serializable {
 		return this.xl;
 	}
 
+	@Column(name = "sendTime")
+	public String getSendTime() {
+		return sendTime;
+	}
+
+	public void setSendTime(String sendTime) {
+		this.sendTime = sendTime;
+	}
+
+	@Column(name = "Purchase_director")
+	public String getPurchase_director() {
+		return Purchase_director;
+	}
+
+	public void setPurchase_director(String purchase_director) {
+		Purchase_director = purchase_director;
+	}
+	
+	@Column(name = "processing_side")
+	public String getProcessing_side() {
+		return processing_side;
+	}
+
+	public void setProcessing_side(String processing_side) {
+		this.processing_side = processing_side;
+	}
+	
 	public void setXl(Integer xl) {
 		this.xl = xl;
 	}

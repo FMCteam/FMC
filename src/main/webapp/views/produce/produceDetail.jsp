@@ -50,15 +50,15 @@
 								<td class="title">XL</td>
 								<td class="title">XXL</td>
 							</tr>
-							<c:forEach var="produce" items="${orderInfo.produce}">
+							<c:forEach var="produce" items="${orderInfo.produce}" >
 								<tr>
-									<td>${produce.color}</td>
-									<td>${produce.xs}</td>
-									<td>${produce.s}</td>
-									<td>${produce.m}</td>
-									<td>${produce.l}</td>
-									<td>${produce.xl}</td>
-									<td>${produce.xxl}</td>
+									<td><span id="color">${produce.color}</span></td>
+									<td><span id="xs">${produce.xs}</span></td>
+									<td><span id="s">${produce.s}</span></td>
+									<td><span id="m">${produce.m}</span></td>
+									<td><span id="l">${produce.l}</span></td>
+									<td><span id="xl">${produce.xl}</span></td>
+									<td><span id="xxl">${produce.xxl}</span></td>
 								</tr>
 							</c:forEach>
 							<tr>
@@ -107,14 +107,6 @@
 							 <input id="agree_detail" type="submit" value="开始外发加工" class="btn btn-primary btn-rounded">
 						</div>
 						<br>
-						
-						<input id="produce_color" name="produce_color" type="hidden" /> <input
-							id="produce_xs" name="produce_xs" type="hidden" /> <input
-							id="produce_s" name="produce_s" type="hidden" /> <input
-							id="produce_m" name="produce_m" type="hidden" /> <input
-							id="produce_l" name="produce_l" type="hidden" /> <input
-							id="produce_xl" name="produce_xl" type="hidden" /> <input
-							id="produce_xxl" name="produce_xxl" type="hidden" />
 					</form>
 					
 					<button class="btn btn-primary" onclick="history.back();">返回</button>
@@ -197,6 +189,16 @@ function check(){
 			return false;
 		} 
 	}
+}
+</script>
+
+<script type="text/javascript">
+var length=$("#size").attr("rowspan")-1;
+var taskName=$("#"+"taskName"+length+"").text();
+if("确认样衣" == taskName){
+	$("#showSubmit").show();
+}else{
+	$("#showSubmit").hide();
 }
 </script>
 <%@include file="/common/footer.jsp"%>
