@@ -7,19 +7,15 @@
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">毛衣样衣确认和工艺制作</li>
-				<li class="active"><a href="#sweater" data-toggle="tab">毛衣样衣确认和工艺制作</a> </li>
+				<!-- 
  				<li><a href="#quote" data-toggle="tab">报价信息</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
-				<!-- 
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
+				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
 				 -->
-<<<<<<< HEAD
 
 				<li class="active"><a href="#sweater" data-toggle="tab">毛衣样衣确认和工艺制作</a>
 				</li>
-=======
-				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
->>>>>>> 86431001ba60fef0d0ec1021a7fdba296926f4c8
 				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
 				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
@@ -37,24 +33,7 @@
 				<div class="tab-pane" id="material">
 					<%@include file="/views/common/material.jsp"%>
 				</div>
-<<<<<<< HEAD
 
-=======
-				<div class="tab-pane" id="sample">
-					<%@include file="/views/common/sample.jsp"%>
-				</div>
-				<!-- 
-				<div class="tab-pane" id="produce">
-					<%@include file="/views/common/produce.jsp"%>
-				</div>
-				 -->
-				<div class="tab-pane" id="cad">
-					<%@include file="/views/common/cad.jsp"%>
-				</div>
-				<div class="tab-pane" id="quote">
-					<%@include file="/views/common/quote.jsp"%>
-				</div>
->>>>>>> 86431001ba60fef0d0ec1021a7fdba296926f4c8
 				<div class="tab-pane active" id="sweater">
 
 					<form method="post" 
