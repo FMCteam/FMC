@@ -16,8 +16,8 @@
 
 				<li class="active"><a href="#sweater" data-toggle="tab">毛衣样衣确认和工艺制作</a>
 				</li>
-				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
+				<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 				<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 			</ul>
 

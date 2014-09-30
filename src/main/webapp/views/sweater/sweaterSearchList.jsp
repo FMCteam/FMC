@@ -18,7 +18,8 @@
 								<option selected="selected" value="0">请选择</option>
 								<option value="购买组织原料">未采购毛线</option>
 								<option value="打小样">未制作工艺</option>
-								<option value="制作工艺">未确认样衣</option>
+								<option value="制作工艺">未制版打样</option>
+								<option value="制版打样">未确认样衣</option>
 								<option value="确认样衣">未外发</option>
 								<option value="质量检测">未完成</option>
 							    <option value="已完成">已完成</option>
