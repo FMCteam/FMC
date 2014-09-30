@@ -183,7 +183,7 @@
 document.onkeydown = function(e){
     e = window.event || e;
     var keycode = e.keyCode || e.which;
-    if( keycode = 116){
+    if( keycode == 116){
         if(window.event){// ie
             try{e.keyCode = 0;}catch(e){}
             e.returnValue = false;
