@@ -40,19 +40,19 @@
 						<tbody style='display:none' id="showInfo">
 						<tr>
 	
-								<td><span>供 应 商：</span><input type="text" name="supplier">
+								<td>&nbsp;<span>供 应 商：</span>&nbsp;&nbsp;<input type="text" name="supplier">
 								</td>
 	
 								<td><span>采购负责人：</span><input type="text"
 									name="Purchase_director" value="${employee_name}" readonly="readonly"></td>
 							</tr>
 							<tr>
-								<td><span>采购时间：</span><input type="text"  id="input_day" name="Purchase_time" readonly="readonly" ></td>
-								<td><span>毛线类型：</span><input type="text" name="Wool_type" >
+								<td><span>采购时间：</span>&nbsp;<input type="text"  id="input_day" name="Purchase_time" readonly="readonly" ></td>
+								<td><span>毛线类型：</span>　<input type="text" name="Wool_type" >
 								</td>
 							</tr>
 							<tr>
-								<td><span>重 量(Kg)：</span><input type="text"
+								<td><span>重 量(Kg)：</span>&nbsp;<input type="text"
 									name="Wool_weight"></td>
 								<td><span>总 价(RMB)：</span><input type="text" name="total_price">
 								</td>
@@ -107,9 +107,9 @@
 	function checkInfo(){
 		var info = $("input[type='radio']:checked").val();
 		if(info == '无库存'){
-			$("#showInfo").show(1);
+			$("#showInfo").show();
 		}else{
-			$("#showInfo").hide(1);
+			$("#showInfo").hide();
 		}
 	}
 </script>
