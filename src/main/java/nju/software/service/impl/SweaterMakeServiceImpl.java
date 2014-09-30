@@ -173,7 +173,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	public List<Map<String, Object>> getOrders() {
 		// TODO Auto-generated method stub
 		List<Order> orders = orderDAO.getSweaterOrders();
- 		List<Map<String, Object>> list = new ArrayList<>();
+ 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		for (Order order : orders) {
 			ArrayList<String>  orderProcessStateNames = MarketService.getProcessStateName(order.getOrderId());
 			if(orderProcessStateNames.size()>0){

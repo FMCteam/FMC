@@ -1351,7 +1351,7 @@
         </resourceAssignmentExpression>
       </potentialOwner>
     </userTask>
-    <userTask id="_175" name="打小样&amp;制作工艺&amp;制版打样&amp;样衣确认" >
+    <userTask id="_175" name="打小样&amp;制作工艺&amp;制版打样&amp;确认样衣" >
       <ioSpecification>
         <dataInput id="_175_TaskNameInput" name="TaskName" />
         <inputSet>

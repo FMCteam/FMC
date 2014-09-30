@@ -67,9 +67,9 @@
 									name="processing_side" type="text" /></td>
 							</tr>
 							<tr>
-								<td colspan="4"><span>外发时间 ：</span><input type="text" name="sendTime" id="input_day">
+								<td colspan="4"><span>外发时间 ：</span><input type="text" name="sendTime" id="input_day" readonly="readonly">
 								</td>
-								<td colspan="4"><span>负责人：</span><input type="text"
+								<td colspan="4"><span>负责人：</span><input type="text" readonly="readonly"
 									name="Purchase_director" value="${employee_name}"></td>
 							</tr>
 						</table>

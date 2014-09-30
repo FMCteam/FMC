@@ -470,7 +470,7 @@ public class MarketController {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService.getSearchAddMoreOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-		List<Map<String,Object>> resultlist =  new ArrayList<>();
+		List<Map<String,Object>> resultlist =  new ArrayList();
 		for(int i =0;i<list.size();i++){
 			Map<String, Object> model1  = list.get(i);
 			Order order = (Order) model1.get("order");

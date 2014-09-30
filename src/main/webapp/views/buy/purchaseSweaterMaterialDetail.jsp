@@ -26,33 +26,34 @@
 					<table
 						class="table table-striped table-bordered table-hover detail">
 						<tr>
-							<td><input type="radio" name="task_name" id="task_name"
+							<td><input type="radio" name="task_name" onchange="return checkInfo();"
 								value="无库存" /> <span><font color="red">无库存，需采购面料</font></span>
 							</td>
-							<td><input type="radio" name="task_name" id="task_name"
+							<td><input type="radio" name="task_name" onchange="return checkInfo();"
 								value="有库存" checked="checked" /> <span><font
 									color="blue">有库存，无需采购</font></span></td>
 						</tr>
+						<tbody style='display:none' id="showInfo">
 						<tr>
-
-							<td><span>供 应 商 ：</span><input type="text" name="supplier">
-							</td>
-
-							<td><span>采购负责人：</span><input type="text"
-								name="Purchase_director" value="${employee_name}"></td>
-						</tr>
-						<tr>
-							<td><span>采购时间：</span><input type="date"
-								name="Purchase_time" ></td>
-							<td><span>毛线类型：</span><input type="text" name="Wool_type">
-							</td>
-						</tr>
-						<tr>
-							<td><span>重 量(Kg)：</span><input type="text"
-								name="Wool_weight"></td>
-							<td><span>总 价(RMB)：</span><input type="text" name="total_price">
-							</td>
-						</tr>
+	
+								<td><span>供 应 商 ：</span><input type="text" name="supplier">
+								</td>
+	
+								<td><span>采购负责人：</span><input type="text"
+									name="Purchase_director" value="${employee_name}" readonly="readonly"></td>
+							</tr>
+							<tr>
+								<td><span>采购时间：</span><input type="text"  id="input_day" name="Purchase_time" readonly="readonly" ></td>
+								<td><span>毛线类型：</span><input type="text" name="Wool_type">
+								</td>
+							</tr>
+							<tr>
+								<td><span>重 量(Kg)：</span><input type="text"
+									name="Wool_weight"></td>
+								<td><span>总 价(RMB)：</span><input type="text" name="total_price">
+								</td>
+							</tr>
+						</tbody>
 					</table>
 					<!--  <button
 							style="margin-left:0px"
@@ -92,20 +93,20 @@
 <%@include file="/common/js_form_file.jsp"%>
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <link rel="stylesheet" href="${ctx}/css/order/add_order.css">
+<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <link rel="stylesheet" href="${ctx}/views/buy/buy.css">
+<script type="text/javascript" src="${ctx}/views/buy/cost.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
-<script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
-<script type="text/javascript" src="${ctx}/js/order/add_produce.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<!--  <script type="text/javascript" >
-	function fail(){
-		$("#result").val(1);
-		return confirm("确认采购到毛衣原料？");
+<script type="text/javascript" >
+	function checkInfo(){
+		var info = $("input[type='radio']:checked").val();
+		if(info == '无库存'){
+			$("#showInfo").show(1000);
+		}else{
+			$("#showInfo").hide(1000);
+		}
 	}
-	function success(){
-		$("#result").val(0);
-		return confirm("确认仓库有毛衣原料？");
-	}
-</script> -->
+</script>
 <%@include file="/common/footer.jsp"%>

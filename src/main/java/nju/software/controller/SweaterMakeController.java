@@ -273,30 +273,9 @@ public class SweaterMakeController {
 	public String sweaterOrderListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderState = request.getParameter("orderState");
-		if("采购毛线".equals(orderState)){
-			orderState = "购买组织原料";
-		}
-		if("打小样".equals(orderState)){
-			orderState = "打小样";
-		}
-		if("制作工艺".equals(orderState)){
-			orderState = "制作工艺";
-		}
-		if("确认样衣".equals(orderState)){
-			orderState = "样衣确认";
-		}
-		if("外发".equals(orderState)){
-			orderState = "外发";
-		}
-		if("回收质检".equals(orderState)){
-			orderState = "质量检测";
-		}
-		if("已完成".equals(orderState)){
-			orderState = "已完成";
-		}
 				
 		List<Map<String, Object>> list = null;
-		if("0".equals(orderState)){
+		if("0".equals(orderState)||orderState == null){
 			return "forward:/sweater/sweaterOrderList.do";
 		}else{
 			list = sweaterMakeService.getSerachOrders(orderState);;

@@ -47,26 +47,22 @@
 									<!-- 表示仓库里没有原料，需要去购买原料 ，需要打小样-->
 									<c:if
 										test="${orderInfo.order.buySweaterMaterialResult == true }">
-										<input type="radio" name="task_name" id="task_name1"
-											value="打小样" required="required" />
-										<span>打小样</span>
+									  <input type="radio" name="task_name" id="task_name1" value="打小样"/><span>打小样</span>
 									</c:if> 
-									 <input type="radio" 
-									name="task_name" id="task_name2" value="制作工艺"><span>制作工艺</span>
-									<input type="radio" name="task_name" id="task_name3"
-									value="制版打样"> <span>制版打样</span> <input type="radio"
-									name="task_name" id="task_name4" value="确认样衣" /> <span>确认样衣</span>
+									  <input type="radio" name="task_name" id="task_name2" value="制作工艺"><span>制作工艺</span>
+									  <input type="radio" name="task_name" id="task_name3" value="制版打样"><span>制版打样</span> 
+									  <input type="radio" name="task_name" id="task_name4" value="确认样衣"/><span>确认样衣</span>
 								</td>
 							</tr>
 							<tr>
 								<td class="title">完成时间</td>
 								<td colspan="5"><input type="text" name="task_finish_date"
-									required="required" id="input_day" /></td>
+									required="required" id="input_day" readonly="readonly" /></td>
 							</tr>
 							<tr>
 								<td class="title">负责人</td>
 								<td colspan="5"><input type="text" name="person_in_charge"
-									required="required" value="${employee_name}" /></td>
+									required="required" value="${employee_name}"  readonly="readonly"/></td>
 							</tr>
 							<tr>
 								<td class="title">备注</td>
@@ -110,10 +106,9 @@
 			          -->
 
 						<div class="action" style="float: right">
-							<input id="save_this_send" class="btn btn-primary" type="submit"
-								value="保存记录" style="background-color: #1E90FF" /> <a
-								id="showSubmit"
-								href="${ctx}/sweater/sweaterSampleAndCraftSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&isFinal=true"
+							<input id="save_this_send" class="btn btn-primary" type="submit" 
+								value="保存记录" style="background-color: #1E90FF" /> 
+							<a id="showSubmit" href="${ctx}/sweater/sweaterSampleAndCraftSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&isFinal=true"
 								onclick="return confirmSendSampleSubmit();"
 								class="btn btn-primary">完成毛衣样衣确认和工艺制作</a>
 							<!-- 隐藏标签，判断是否是最终的发货 -->
@@ -147,19 +142,60 @@
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <script type="text/javascript">
-var length = $("#size").attr("rowspan") - 1;
-var taskName = $("#" + "taskName" + length + "").text();
-if ("确认样衣" == taskName) {
-	$("#showSubmit").show();
-} else {
-	$("#showSubmit").hide();
+	var  result = ${orderInfo.order.buySweaterMaterialResult};
+	var length =null;
+	var taskName =null;
+	var checked =null;
+	var disabled =null;
+	var NotEmpty =${!empty orderInfo.sweaterOperateRecord};
+	var rowLength = $("#size").attr("rowspan") - 1;	
+	var taskName = $("#"+"taskName"+rowLength+"").text();
+	if(NotEmpty == false){
+		if(result){
+			$("#task_name1").attr("checked", "checked");
+		}else{
+			$("#task_name2").attr("checked", "checked");
+		}
+	}else if("打小样" == taskName){
+		length = 1;
+	}else if("制作工艺" == taskName){
+		length = 2;
+	}else if("制版打样" == taskName){
+		length = 3;
+	}else if("确认样衣" == taskName){
+		length = 3;
+	}
+	for(var i=0;i<length+1;i++){
+		disabled = $("#"+"task_name"+i+"").attr("disabled","disabled");
+		checked = $("#"+"task_name"+(length+1)+"").attr("checked", "checked");
+	}
+	if ("确认样衣" == taskName) {
+			$("#showSubmit").show();
+			$("#save_this_send").hide();
+			
+	} else {
+			$("#showSubmit").hide();
+			$("#save_this_send").show();
+	}
+</script>
+<script type="text/javascript">
+//禁止按键F5
+document.onkeydown = function(e){
+    e = window.event || e;
+    var keycode = e.keyCode || e.which;
+    if( keycode = 116){
+        if(window.event){// ie
+            try{e.keyCode = 0;}catch(e){}
+            e.returnValue = false;
+        }else{// ff
+            e.preventDefault();
+        }
+    }
 }
-var radionName = $("#" + "task_name" + length + "");
-var checked = $("#" + "task_name" + (length + 1) + "");
-if (taskName == radionName.val()) {
-	checked.attr("checked", "checked");
-} else {
-	$("#task_name1").attr("checked", "checked");
+
+//禁止鼠标右键菜单
+document.oncontextmenu = function(e){
+         return false;
 }
 </script>
 <%@include file="/common/footer.jsp"%>
