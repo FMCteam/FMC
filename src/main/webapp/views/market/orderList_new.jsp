@@ -136,12 +136,13 @@ $(function(){
 });
 </script>
 <script type="text/javascript">
+// 详细控制
 	var length = ${fn:length(list)+1};
 	var oldName = null;
 	var newName = null;
 	for(var i=1;i<length;i++){
 		oldName = $("#"+"newName"+i+"").text();
-		if(oldName.length > 10){
+		if(oldName.length > 12){
 			newName = oldName.substring(0,12)+"...";
 		}else{
 			newName = oldName;
