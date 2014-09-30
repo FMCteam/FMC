@@ -777,5 +777,4 @@ public class Order implements java.io.Serializable {
 		this.total_price = total_price;
 	}
 	
-	
 }

@@ -8,6 +8,7 @@
 
 			<li class="active"><a href="#sweater" data-toggle="tab">毛衣面料采购</a>
 			</li>
+			<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
 			<li><a href="#material" data-toggle="tab">面辅信息</a></li>
 			<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 		</ul>
@@ -16,9 +17,12 @@
 			<div class="tab-pane" id="basic">
 				<%@include file="/views/common/basic.jsp"%>
 			</div>
-
+		
 			<div class="tab-pane" id="material">
 				<%@include file="/views/common/material.jsp"%>
+			</div>
+			<div class="tab-pane" id="sample">
+					<%@include file="/views/common/sample.jsp"%>
 			</div>
 			<div class="tab-pane active" id="sweater">
 				<form onsubmit="return confirm('确认操作？')" method="post"
@@ -36,7 +40,7 @@
 						<tbody style='display:none' id="showInfo">
 						<tr>
 	
-								<td><span>供 应 商 ：</span><input type="text" name="supplier">
+								<td><span>供 应 商：</span><input type="text" name="supplier">
 								</td>
 	
 								<td><span>采购负责人：</span><input type="text"
@@ -44,7 +48,7 @@
 							</tr>
 							<tr>
 								<td><span>采购时间：</span><input type="text"  id="input_day" name="Purchase_time" readonly="readonly" ></td>
-								<td><span>毛线类型：</span><input type="text" name="Wool_type">
+								<td><span>毛线类型：</span><input type="text" name="Wool_type" >
 								</td>
 							</tr>
 							<tr>
