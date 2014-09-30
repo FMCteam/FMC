@@ -180,17 +180,15 @@
 </script>
 <script type="text/javascript">
 //禁止按键F5
-document.onkeydown = function(e){
-    e = window.event || e;
-    var keycode = e.keyCode || e.which;
-    if( keycode = 116){
-        if(window.event){// ie
-            try{e.keyCode = 0;}catch(e){}
-            e.returnValue = false;
-        }else{// ff
-            e.preventDefault();
-        }
-    }
+document.onkeydown = function (e) {
+	var ev = window.event || e;
+	var code = ev.keyCode || ev.which;
+	alert(code);
+	if (code == 116) {
+	ev.keyCode ? ev.keyCode = 0 : ev.which = 0;
+	cancelBubble = true;
+	return false;
+	}
 }
 
 //禁止鼠标右键菜单

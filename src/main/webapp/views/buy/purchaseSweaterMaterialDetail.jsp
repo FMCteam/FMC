@@ -107,9 +107,9 @@
 	function checkInfo(){
 		var info = $("input[type='radio']:checked").val();
 		if(info == '无库存'){
-			$("#showInfo").show();
+			$("#showInfo").show(1000);
 		}else{
-			$("#showInfo").hide();
+			$("#showInfo").hide(1000);
 		}
 	}
 </script>
