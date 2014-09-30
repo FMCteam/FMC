@@ -44,7 +44,7 @@
 							</tr>
 							<tr>
 								<td><span>采购时间：</span><input type="text"  id="input_day" name="Purchase_time" readonly="readonly" ></td>
-								<td><span>毛线类型：</span><input type="text" name="Wool_type">
+								<td><span>&nbsp&nbsp&nbsp&nbsp毛线类型：</span><input type="text" name="Wool_type">
 								</td>
 							</tr>
 							<tr>
@@ -103,9 +103,9 @@
 	function checkInfo(){
 		var info = $("input[type='radio']:checked").val();
 		if(info == '无库存'){
-			$("#showInfo").show(1000);
+			$("#showInfo").show(1);
 		}else{
-			$("#showInfo").hide(1000);
+			$("#showInfo").hide(1);
 		}
 	}
 </script>
