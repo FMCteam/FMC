@@ -47,11 +47,11 @@
 									<!-- 表示仓库里没有原料，需要去购买原料 ，需要打小样-->
 									<c:if
 										test="${orderInfo.order.buySweaterMaterialResult == true }">
-									  <input type="radio" name="task_name" id="task_name1" value="打小样"/><span>打小样</span>
+									  <input type="radio" name="task_name" id="task_name1" value="打小样"  onchange="confim(1);"/><span>打小样</span>
 									</c:if> 
-									  <input type="radio" name="task_name" id="task_name2" value="制作工艺"><span>制作工艺</span>
-									  <input type="radio" name="task_name" id="task_name3" value="制版打样"><span>制版打样</span> 
-									  <input type="radio" name="task_name" id="task_name4" value="确认样衣"/><span>确认样衣</span>
+									  <input type="radio" name="task_name" id="task_name2" value="制作工艺" onchange="confim(2);"><span>制作工艺</span>
+									  <input type="radio" name="task_name" id="task_name3" value="制版打样" onchange="confim(3);"><span>制版打样</span> 
+									  <input type="radio" name="task_name" id="task_name4" value="确认样衣" onchange="confim(4);"/><span>确认样衣</span>
 								</td>
 							</tr>
 							<tr>
@@ -107,10 +107,11 @@
 
 						<div class="action" style="float: right">
 							<input id="save_this_send" class="btn btn-primary" type="submit" 
-								value="保存记录" style="background-color: #1E90FF" /> 
-							<a id="showSubmit" href="${ctx}/sweater/sweaterSampleAndCraftSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&isFinal=true"
+								value="保存记录" style="background-color: #1E90FF" />
+						<input id="showSubmit" type="submit" value="完成毛衣样衣确认和工艺制作" class="btn btn-primary"/>
+							<%-- <a id="showSubmit" href="${ctx}/sweater/sweaterSampleAndCraftSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
 								onclick="return confirmSendSampleSubmit();"
-								class="btn btn-primary">完成毛衣样衣确认和工艺制作</a>
+								class="btn btn-primary">完成毛衣样衣确认和工艺制作</a> --%>
 							<!-- 隐藏标签，判断是否是最终的发货 -->
 							<input id="is_final" type="hidden" name="isFinal" value="false" />
 						</div>
@@ -181,6 +182,17 @@
 			$("#save_this_send").show();
 		
 }
+	
+function confim(Show){
+	if(Show == 4){
+		$("#showSubmit").show();
+		$("#save_this_send").hide();
+	}else{
+		$("#showSubmit").hide();
+		$("#save_this_send").show();
+	}
+
+}	
 </script>
 <script type="text/javascript">
 //禁止按键F5

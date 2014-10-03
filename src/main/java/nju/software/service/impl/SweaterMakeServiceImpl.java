@@ -53,13 +53,12 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	@Override
 	public boolean sweaterSampleAndCraftSubmit(long taskId, boolean result,
 			String orderId,OperateRecord oprec) {
+		operateRecordDAO.save(oprec);
 		if(result==false){
-			operateRecordDAO.save(oprec);
 			return false;
 		}else{			
 			Map<String, Object> data = new HashMap<String, Object>();
 			try {
-				
 				jbpmAPIUtil.completeTask(taskId, data, ACTOR_SWEATER_MANAGER);
 				return true;
 			} catch (InterruptedException e) {

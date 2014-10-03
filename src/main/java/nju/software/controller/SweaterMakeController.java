@@ -124,19 +124,20 @@ public class SweaterMakeController {
  		String taskId =  request.getParameter("taskId");
 		String orderId = request.getParameter("orderId");
 		String isFinalConfirm = request.getParameter("isFinal");
+		String taskName = request.getParameter("task_name");
 		boolean isfinalconfirm = Boolean.parseBoolean(isFinalConfirm);
-		OperateRecord operateRecord = new OperateRecord();
-		if(isfinalconfirm==false){
-			String taskName = request.getParameter("task_name");
-			String operateTime = request.getParameter("task_finish_date");
-			String operatePerson = request.getParameter("person_in_charge");
-			String operateRemark = request.getParameter("sweaterremark");			
-			operateRecord.setOrderId(Integer.parseInt(orderId));
-			operateRecord.setTaskName(taskName);
-			operateRecord.setOperatePerson(operatePerson);
-			operateRecord.setOperateRemark(operateRemark);
-			operateRecord.setOperateTime(getDateTime(operateTime));
+		if("确认样衣".equals(taskName)){
+			isfinalconfirm =true;
 		}
+		OperateRecord operateRecord = new OperateRecord();		
+		String operateTime = request.getParameter("task_finish_date");
+		String operatePerson = request.getParameter("person_in_charge");
+		String operateRemark = request.getParameter("sweaterremark");			
+		operateRecord.setOrderId(Integer.parseInt(orderId));
+		operateRecord.setTaskName(taskName);
+		operateRecord.setOperatePerson(operatePerson);
+		operateRecord.setOperateRemark(operateRemark);
+		operateRecord.setOperateTime(getDateTime(operateTime));
 		sweaterMakeService.sweaterSampleAndCraftSubmit(Long.parseLong(taskId), isfinalconfirm, orderId,operateRecord);
 		if(isfinalconfirm){//保存记录和确认完成跳转不同的方法
 			return "forward:/sweater/sweaterSampleAndCraftList.do";
