@@ -169,7 +169,8 @@
 		disabled = $("#"+"task_name"+i+"").attr("disabled","disabled");
 		checked = $("#"+"task_name"+(length+1)+"").attr("checked", "checked");
 	}
-	if ("确认样衣" == taskName) {
+	alert(taskName);
+	if ("制版打样" == taskName) {
 			$("#showSubmit").show();
 			$("#save_this_send").hide();
 			

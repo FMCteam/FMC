@@ -211,13 +211,12 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 						}else{
 							continue;
 						}
-					}else if(Operatelist.size() == 0 && order.isBuySweaterMaterialResult() == false && !("制作工艺").equals(orderState)){
+					}else if(!("制作工艺").equals(orderState) &&!("制版打样").equals(orderState) &&!("确认样衣").equals(orderState) && !("质量检测").equals(orderState)  && !("完成").equals(orderState)){
 						order.setOrderProcessStateName(orderState);
-					}else{
+					}
+					else{
 						continue;
 					}	
-				}else if(Operatelist.size() == 0 && order.isBuySweaterMaterialResult() == true){
-					order.setOrderProcessStateName(orderState);
 				}else{
 					continue;
 				}

@@ -14,14 +14,14 @@
 						<br>
 						<tr>
 							<td>
-								<select type="text" class="span12" name="orderState" required="required" >
+								<select type="text" class="span12" name="orderState" required="required" id="selectName" >
 								<option selected="selected" value="0">请选择</option>
-								<option value="购买组织原料">未打小样</option>
+								<option value="购买组织原料">未采购毛线</option>
 								<option value="打小样">未制作工艺</option>
 								<option value="制作工艺">未制版打样</option>
 								<option value="制版打样">未确认样衣</option>
-								<option value="确认样衣">未外发</option>
-								<option value="质量检测">未完成</option>
+								<option value="外发">未外发</option>
+								<option value="质量检测">未质量检测</option>
 							    <option value="已完成">已完成</option>
 								</select>
 							</td>
@@ -141,9 +141,10 @@ $(function(){
 		}else{
 			newName = oldName;
 		}
-		$("#"+"newName"+i+"").text(newName);
+		selectValue = $("#"+"newName"+i+"").text(newName);
 		$("#"+"newName"+i+"").attr("title",oldName);
 	}
 </script>
+
 <%@include file="/common/footer.jsp"%>
 
