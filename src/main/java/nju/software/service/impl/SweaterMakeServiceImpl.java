@@ -198,12 +198,12 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 		for (Order order : orders) {
 			int oid = order.getOrderId();
 			ArrayList<String>  orderProcessStateNames = MarketService.getProcessStateName(oid);
+			List<OperateRecord> Operatelist= operateRecordDAO.findByIdQueryMax(oid);
 			if(orderProcessStateNames.size()>0){
 				if(orderState.equals(orderProcessStateNames.get(0))){
 					order.setOrderProcessStateName(orderProcessStateNames.get(0));
-				}
-				else if(orderProcessStateNames.get(0).indexOf(orderState)!= -1){//因为样衣确认和制作模块是分开来的，所以单独查询
-					List<OperateRecord> Operatelist= operateRecordDAO.findByIdQueryMax(oid);
+				}else if(orderProcessStateNames.get(0).indexOf(orderState)!= -1){//因为样衣确认和制作模块是分开来的，所以单独查询
+					
 					if(Operatelist.size() >0){
 						OperateRecord Operate = Operatelist.get(0);
 						if(orderState.equals(Operate.getTaskName())){//判断此单子的最大状态，如果和查询的状态一样，则显示
@@ -211,11 +211,14 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 						}else{
 							continue;
 						}
+					}else if(Operatelist.size() == 0 && order.isBuySweaterMaterialResult() == false && !("制作工艺").equals(orderState)){
+						order.setOrderProcessStateName(orderState);
 					}else{
 						continue;
 					}	
-				}
-				else{
+				}else if(Operatelist.size() == 0 && order.isBuySweaterMaterialResult() == true){
+					order.setOrderProcessStateName(orderState);
+				}else{
 					continue;
 				}
 			}

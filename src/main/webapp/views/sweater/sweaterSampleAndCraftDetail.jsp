@@ -183,7 +183,6 @@
 document.onkeydown = function (e) {
 	var ev = window.event || e;
 	var code = ev.keyCode || ev.which;
-	alert(code);
 	if (code == 116) {
 	ev.keyCode ? ev.keyCode = 0 : ev.which = 0;
 	cancelBubble = true;

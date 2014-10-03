@@ -16,7 +16,7 @@
 							<td>
 								<select type="text" class="span12" name="orderState" required="required" >
 								<option selected="selected" value="0">请选择</option>
-								<option value="购买组织原料">未采购毛线</option>
+								<option value="购买组织原料">未打小样</option>
 								<option value="打小样">未制作工艺</option>
 								<option value="制作工艺">未制版打样</option>
 								<option value="制版打样">未确认样衣</option>
@@ -38,7 +38,7 @@
 			<div class="OrderListWrap" style="margin-top:20px;margin-left:25px;"> 
 				<div class="OrderList">
 					<ul id="itemContainer" style="list-style:none;">
-						<c:forEach var="model" items="${list}">
+						<c:forEach var="model" items="${list}" varStatus="status">
 							<div class="orderWrap" style="width:25%; float:left; margin-bottom:20px;">
 								<li>
 									<div>
@@ -63,7 +63,7 @@
 												</tr>
 												<tr>
 													<td>订单状态：</td>
-													<td><span style="color:red;">${model.order.orderProcessStateName}</span></td>
+													<td><span style="color:red;" id="newName${status.index + 1}">${model.order.orderProcessStateName}</span></td>
 												</tr>
 												<tr>
 													<td>市场专员：</td>
@@ -129,6 +129,21 @@ $(function(){
     });  
 });
 </script>
-
+<script type="text/javascript">
+// 详细控制
+	var length = ${fn:length(list)+1};
+	var oldName = null;
+	var newName = null;
+	for(var i=1;i<length;i++){
+		oldName = $("#"+"newName"+i+"").text();
+		if(oldName.length > 12){
+			newName = oldName.substring(0,12)+"...";
+		}else{
+			newName = oldName;
+		}
+		$("#"+"newName"+i+"").text(newName);
+		$("#"+"newName"+i+"").attr("title",oldName);
+	}
+</script>
 <%@include file="/common/footer.jsp"%>
 
