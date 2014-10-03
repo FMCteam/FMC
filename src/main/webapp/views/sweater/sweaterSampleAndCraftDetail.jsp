@@ -169,15 +169,18 @@
 		disabled = $("#"+"task_name"+i+"").attr("disabled","disabled");
 		checked = $("#"+"task_name"+(length+1)+"").attr("checked", "checked");
 	}
-	alert(taskName);
 	if ("制版打样" == taskName) {
 			$("#showSubmit").show();
 			$("#save_this_send").hide();
 			
-	} else {
+	} else if("确认样衣" == taskName) {
+			$("#showSubmit").hide();
+			$("#save_this_send").hide();
+	}else{
 			$("#showSubmit").hide();
 			$("#save_this_send").show();
-	}
+		
+}
 </script>
 <script type="text/javascript">
 //禁止按键F5
