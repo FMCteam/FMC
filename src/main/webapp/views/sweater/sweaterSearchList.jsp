@@ -14,7 +14,7 @@
 						<br>
 						<tr>
 							<td>
-								<select type="text" class="span12" name="orderState" required="required" id="selectName" >
+								<select type="text" class="span12" name="orderState" required="required" id="selectName">
 								<option selected="selected" value="0">请选择</option>
 								<option value="购买组织原料">未采购毛线</option>
 								<option value="打小样">未制作工艺</option>
@@ -24,6 +24,7 @@
 								<option value="质量检测">未质量检测</option>
 							    <option value="已完成">已完成</option>
 								</select>
+								<span style="display: none" id="orderState">${orderState}</span>
 							</td>
 							<td>&nbsp;</td>
 							<td>
@@ -141,9 +142,13 @@ $(function(){
 		}else{
 			newName = oldName;
 		}
-		selectValue = $("#"+"newName"+i+"").text(newName);
+	    $("#"+"newName"+i+"").text(newName);
 		$("#"+"newName"+i+"").attr("title",oldName);
 	}
+	
+//下拉框默认选中
+var orderState=$("#orderState").text();
+$("#selectName option[value='"+orderState+"']").attr("selected",true);
 </script>
 
 <%@include file="/common/footer.jsp"%>

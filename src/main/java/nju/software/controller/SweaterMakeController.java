@@ -283,10 +283,10 @@ public class SweaterMakeController {
 		}
 		
 		model.addAttribute("list", list);
+		model.addAttribute("orderState", orderState);
 		model.addAttribute("taskName", "毛衣列表");
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/sweater/sweaterOrderListSearch.do");
-		
 		return "/sweater/sweaterSearchList";
 	}
 }
