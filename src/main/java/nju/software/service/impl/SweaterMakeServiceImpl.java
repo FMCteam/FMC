@@ -197,29 +197,28 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 		for (Order order : orders) {
 			int oid = order.getOrderId();
 			ArrayList<String>  orderProcessStateNames = MarketService.getProcessStateName(oid);
-			List<OperateRecord> Operatelist= operateRecordDAO.findByIdQueryMax(oid);
-			if(orderProcessStateNames.size()>0){
-				if(orderState.equals(orderProcessStateNames.get(0))){
-					order.setOrderProcessStateName(orderProcessStateNames.get(0));
-				}else if(orderProcessStateNames.get(0).indexOf(orderState)!= -1){//因为样衣确认和制作模块是分开来的，所以单独查询
-					
-					if(Operatelist.size() >0){
-						OperateRecord Operate = Operatelist.get(0);
-						if(orderState.equals(Operate.getTaskName())){//判断此单子的最大状态，如果和查询的状态一样，则显示
+				List<OperateRecord> Operatelist= operateRecordDAO.findByIdQueryMax(oid);
+				if(orderProcessStateNames.size()>0){
+					if(orderState.equals(orderProcessStateNames.get(0))){
+						order.setOrderProcessStateName(orderProcessStateNames.get(0));
+					}else if(orderProcessStateNames.get(0).indexOf(orderState)!= -1){//因为样衣确认和制作模块是分开来的，所以单独查询
+						if(Operatelist.size() >0){
+							OperateRecord Operate = Operatelist.get(0);
+							if(orderState.equals(Operate.getTaskName())){//判断此单子的最大状态，如果和查询的状态一样，则显示
+								order.setOrderProcessStateName(orderState);
+							}else{
+								continue;
+							}
+						}else if(!("制作工艺").equals(orderState) &&!("制版打样").equals(orderState) &&!("确认样衣").equals(orderState) && !("质量检测").equals(orderState)  && !("完成").equals(orderState)){
 							order.setOrderProcessStateName(orderState);
-						}else{
-							continue;
 						}
-					}else if(!("制作工艺").equals(orderState) &&!("制版打样").equals(orderState) &&!("确认样衣").equals(orderState) && !("质量检测").equals(orderState)  && !("完成").equals(orderState)){
-						order.setOrderProcessStateName(orderState);
-					}
-					else{
+						else{
+							continue;
+						}	
+					}else{
 						continue;
-					}	
-				}else{
-					continue;
+					}
 				}
-			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));

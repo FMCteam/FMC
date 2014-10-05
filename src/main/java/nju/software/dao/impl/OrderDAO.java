@@ -1,32 +1,10 @@
 package nju.software.dao.impl;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import nju.software.dao.IOrderDAO;
-import nju.software.dataobject.Customer;
 import nju.software.dataobject.Order;
 import nju.software.util.DateUtil;
 
