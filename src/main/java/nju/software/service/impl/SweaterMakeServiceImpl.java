@@ -192,16 +192,17 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	@Override
 	public List<Map<String, Object>> getSerachOrders(String orderState) {
 		// TODO Auto-generated method stub
-		List<Order> orders = orderDAO.getSweaterOrders();
+		List<Order> orders = orderDAO.getSweaterOrders();//获取所有毛衣的单子
  		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {
 			int oid = order.getOrderId();
-			ArrayList<String>  orderProcessStateNames = MarketService.getProcessStateName(oid);
-				List<OperateRecord> Operatelist= operateRecordDAO.findByIdQueryMax(oid);
-				if(orderProcessStateNames.size()>0){
-					if(orderState.equals(orderProcessStateNames.get(0))){
+			ArrayList<String>  orderProcessStateNames = MarketService.getProcessStateName(oid);//通过id获取单子当前的进度状态
+				if(orderProcessStateNames.size()>0){  // 通过orderProcessStateName 的size 来进行判断此单子的状态
+					if(orderState.equals(orderProcessStateNames.get(0))){//判断要查询的单子和单子的状态是否一致
 						order.setOrderProcessStateName(orderProcessStateNames.get(0));
-					}else if(orderProcessStateNames.get(0).indexOf(orderState)!= -1){//因为样衣确认和制作模块是分开来的，所以单独查询
+					}
+					else if(orderProcessStateNames.get(0).indexOf(orderState)!= -1){//因为制版这边的状态是个大的状态，所以要进一步的去筛选
+						List<OperateRecord> Operatelist= operateRecordDAO.findByIdQueryMax(oid);//获取操作记录中单子的最后一步操作记录
 						if(Operatelist.size() >0){
 							OperateRecord Operate = Operatelist.get(0);
 							if(orderState.equals(Operate.getTaskName())){//判断此单子的最大状态，如果和查询的状态一样，则显示
@@ -209,7 +210,8 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 							}else{
 								continue;
 							}
-						}else if(!("制作工艺").equals(orderState) &&!("制版打样").equals(orderState) &&!("确认样衣").equals(orderState) && !("质量检测").equals(orderState)  && !("完成").equals(orderState)){
+							//查询未制作工艺的单子
+						}else if(!("制作工艺").equals(orderState) &&!("制版打样").equals(orderState) &&!("确认样衣").equals(orderState) && !("质量检测").equals(orderState)  && !("已完成").equals(orderState)){
 							order.setOrderProcessStateName(orderState);
 						}
 						else{
@@ -218,6 +220,8 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 					}else{
 						continue;
 					}
+				}else if("1".equals(order.getOrderState())){ //判断单子的状态是否为1(表示终止的单子 ，done表示正常结束的单子)
+					continue;
 				}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
