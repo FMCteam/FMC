@@ -472,18 +472,33 @@
     	<version>1.0.0.M2</version>
     </dependency>
 	</dependencies>
-<!--  	<build>
+  	<build>
 		<finalName>jbpm4web2</finalName>
 		<plugins>
+		
+		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.6</source>
+					<target>1.6</target>
 					<encoding>UTF-8</encoding> 
 				</configuration>
 			</plugin>
+			 <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-eclipse-plugin</artifactId>  
+                <version>2.7</version>  
+                <configuration>  
+                    <sourceExcludes>  
+                        <sourceExclude>**/.svn/</sourceExclude>  
+                    </sourceExcludes>  
+                    <downloadSources>true</downloadSources>  
+                    <ajdtVersion>none</ajdtVersion>  
+                </configuration>  
+            </plugin>  
+			
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -507,19 +522,9 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<configuration>
-					<projectnatures>
-						<java.lang.String>com.genuitec.eclipse.j2eedt.core.webnature</java.lang.String>
-						<java.lang.String>org.eclipse.jdt.core.javanature</java.lang.String>
-					</projectnatures>
-					<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
-				</configuration>
-			</plugin>
+			
 
 		</plugins>
 	</build>
-	-->
+
 </project>
