@@ -368,11 +368,20 @@ public class BuyServiceImpl implements BuyService {
 	}
 	
 	@Override
-	public boolean purchaseSweaterMaterialSubmit(long taskId, String orderId,boolean buySweaterMaterialResult) {
+	public boolean purchaseSweaterMaterialSubmit(long taskId, String orderId,
+			String total_price, String weight, String type,
+			String purchase_time, String supplier, String head,
+			boolean buySweaterMaterialResult){
 		try {
 			Map<String, Object> data = new HashMap<String, Object>();
 			Order order = orderDAO.findById(Integer.parseInt(orderId));
 			order.setBuySweaterMaterialResult(buySweaterMaterialResult);
+			order.setWool_weight(weight);
+			order.setTotal_price(total_price);
+			order.setWool_type(type);
+			order.setPurchase_director(head);
+			order.setPurchase_time(purchase_time);
+			order.setSupplier(supplier);
 			orderDAO.merge(order);
 			data.put("sweaterMaterial", buySweaterMaterialResult);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);

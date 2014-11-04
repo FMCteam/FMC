@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class CommonController {
 	private static List<String> departments = new ArrayList<String>();
-	private static Map<String, Object> map = new HashMap<>();
+	private static Map<String, Object> map = new HashMap<String,Object>();
 
 	static {
 		departments.add(MarketServiceImpl.ACTOR_MARKET_MANAGER);

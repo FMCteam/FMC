@@ -470,7 +470,7 @@ public class MarketController {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService.getSearchAddMoreOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
-		List<Map<String,Object>> resultlist =  new ArrayList<>();
+		List<Map<String,Object>> resultlist =  new ArrayList();
 		for(int i =0;i<list.size();i++){
 			Map<String, Object> model1  = list.get(i);
 			Order order = (Order) model1.get("order");
@@ -2399,13 +2399,14 @@ public class MarketController {
 		String employeename = request.getParameter("employeename");
 		String startdate = request.getParameter("startdate");
 		String enddate = request.getParameter("enddate");
+		String orderProcessStateName = request.getParameter("orderProcessStateName");
 		//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
  		List<Employee> employees = employeeService.getEmployeeByName(employeename);
 		Integer[] employeeIds = new Integer[employees.size()];
 		for(int i=0;i<employeeIds.length;i++){
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-		List<Map<String, Object>> list = marketService.getSearchOrdersDoing(ordernumber,customername,stylename,startdate,enddate,employeeIds,account.getUserRole(),account.getUserId());
+		List<Map<String, Object>> list = marketService.getSearchOrdersDoing(ordernumber,orderProcessStateName,customername,stylename,startdate,enddate,employeeIds,account.getUserRole(),account.getUserId());
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/orderDetail.do");

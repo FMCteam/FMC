@@ -1,30 +1,10 @@
 package nju.software.dao.impl;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import nju.software.dao.IOrderDAO;
-import nju.software.dataobject.Customer;
 import nju.software.dataobject.Order;
 import nju.software.util.DateUtil;
 
@@ -79,6 +59,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	public static final String HAS_POSTED_SAMPLE_CLOTHES = "hasPostedSampleClothes";
 	public static final String IS_NEED_SAMPLE_CLOTHES = "isNeedSampleClothes";
 	public static final String ORDER_SOURCE = "orderSource";
+	public static final String CLOTHES_TYPE = "clothesType";
 
 	protected void initDao() {
 		// do nothing
@@ -565,6 +546,17 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		List<Order> orderList = findByOrderState("A");
 		return orderList;
 	}
+	
+	public List<Order> getSweaterOrders(){
+		List<Order> orderList = findAllSweaterOrders("毛衣");
+		return orderList;
+	}
+
+	private List<Order> findAllSweaterOrders(String clothesType) {
+		// TODO Auto-generated method stub
+		
+		return findByProperty(CLOTHES_TYPE, clothesType);
+	}
 
 	public List<Order> getOrdersDone() {
 		// TODO Auto-generated method stub
@@ -719,9 +711,9 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	    session.close();
 		return orderList;
 	}
-
+ 
 	
-	public List<Order> getSearchOrderDoingList(String ordernumber,
+	public List<Order> getSearchOrderDoingList(String ordernumber,String orderProcessStateName,
 			String customername, String stylename, String startdate,
 			String enddate, Integer[] employeeIds,String userRole,Integer userId) {
 	      
@@ -736,6 +728,9 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 //	 		if (ordernumber != null)
 	 		if(!StringUtils.isEmpty(ordernumber))
 	 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber)));
+	 		
+	 		if(!StringUtils.isEmpty(orderProcessStateName))
+	 			criteria.add(Restrictions.like("orderProcessStateName","%" + orderProcessStateName + "%"));
 //			if (customername != null)
 		 	if(!"CUSTOMER".equals(userRole)&&!StringUtils.isEmpty(customername))
 				criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
@@ -909,6 +904,14 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	    List<Order> employeeOrdersDoneList = criteria.list();		
         session.close();
 		return employeeOrdersDoneList;
+	}
+
+	public List<Order> getSweaterSearchOrders() {
+		// TODO Auto-generated method stub
+		 Session session = getHibernateTemplate().getSessionFactory().openSession();
+		 Criteria criteria = session.createCriteria(Order.class);
+		 
+		return null;
 	}
 
 

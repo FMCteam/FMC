@@ -12,48 +12,25 @@
 							class="number">${fn:length(list)}</span>条订单
 						</span>
 						<br>
-						<span >输入起始日期:</span>
-						<input style="width: 210px" type="date" name="startdate" value="${info.startdate }" placeholder="输入订单起始日期">
-						<span >输入订单编号:</span>
-						<input type="text" style="width:110px;" name="ordernumber" value="${info.ordernumber }"  placeholder="输入订单编号">
-						<span >款式名称:</span> 
-						<input type="text"  style="width: 130px;" name="stylename" placeholder="输入款式名称" value="${info.stylename }">
-						<c:if test="${searchurl eq '/order/orderListDoingSearch.do' }">
-						<span >订单状态:</span> 
-						<select  style="width:150px;" name ="orderProcessStateName" >
-						<option>状态选择 </option>
-						<option>大货面料采购确认</option>
-						<option>录入版型数据及生产样衣</option>
-						<option>排版切片</option>
-						<option>样衣工艺制作</option>
-						<option>大货工艺制作</option>
-						<option>批量生产</option>
-						<option>质量检测</option>
-						<option>确认样衣制作金</option>
-						<option>30%定金确认</option>
-						<option>尾款金额确认</option>
-						</select>
-						</c:if>	
-						
-												
-						<br>
-						<input class="btn btn-primary" type="submit" value="查询" style="float:right;">
-						<span > 输入截止日期:</span>
-						<input style="width: 210px" type="date" name="enddate" value="${info.enddate }" placeholder="输入订单截止日期">
-						<c:if test="${USER_user_role ne 'marketStaff'}">
-							<span >市场专员名称:</span>
-							<input type="text" style="width: 110px;" name="employeename" value="${info.employeename }" placeholder="输入市场专员名称">
-						</c:if>
-						<c:if test="${USER_user_role eq 'marketStaff'}">
-							&nbsp; &nbsp; &nbsp; &nbsp; <input type="hidden"  name="employeename" >	
-						</c:if>	
-						<c:if test="${USER_user_role ne 'CUSTOMER'}">
-							<span >客户名称:</span>
-							<input type="text" style="width: 130px;" name="customername" placeholder="输入客户名称" value="${info.customername }">
-						</c:if>
-						<c:if test="${USER_user_role eq 'CUSTOMER'}">
-							<input type="hidden" class="search-query " name="customername" >	
-						</c:if>
+						<tr>
+							<td>
+								<select type="text" class="span12" name="orderState" required="required" id="selectName">
+								<option selected="selected" value="0">请选择</option>
+								<option value="购买组织原料">未采购毛线</option>
+								<option value="打小样">未制作工艺</option>
+								<option value="制作工艺">未制版打样</option>
+								<option value="制版打样">未确认样衣</option>
+								<option value="外发">未外发</option>
+								<option value="质量检测">未质量检测</option>
+							    <option value="已完成">已完成</option>
+								</select>
+								<span style="display: none" id="orderState">${orderState}</span>
+							</td>
+							<td>&nbsp;</td>
+							<td>
+								<input class="btn btn-primary" type="submit" value="查询" style="float:right;">
+							</td>
+						</tr>
 					</caption>
 				</table>
 				</form>
@@ -165,11 +142,14 @@ $(function(){
 		}else{
 			newName = oldName;
 		}
-		$("#"+"newName"+i+"").text(newName);
+	    $("#"+"newName"+i+"").text(newName);
 		$("#"+"newName"+i+"").attr("title",oldName);
 	}
+	
+//下拉框默认选中
+var orderState=$("#orderState").text();
+$("#selectName option[value='"+orderState+"']").attr("selected",true);
 </script>
-
 
 <%@include file="/common/footer.jsp"%>
 

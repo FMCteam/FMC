@@ -508,7 +508,7 @@ public class OrderServiceImpl implements OrderService {
 //				System.out.println("hahahahahaha");
 //			}
 //		}
-		List<Order> searchResults = orderDAO.getSearchOrderDoingList(ordernumber, customername, stylename, startdate, enddate, employeeIds,userRole,userId);
+		List<Order> searchResults = orderDAO.getSearchOrderDoingList(ordernumber,"", customername, stylename, startdate, enddate, employeeIds,userRole,userId);
 
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : searchResults) {

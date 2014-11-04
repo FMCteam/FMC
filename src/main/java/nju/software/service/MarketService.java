@@ -179,7 +179,7 @@ public interface MarketService {
 
 	public List<Map<String, Object>> getOrdersDone();
 
-	public List<Map<String, Object>> getSearchOrdersDoing(String ordernumber,
+	public List<Map<String, Object>> getSearchOrdersDoing(String ordernumber,String orderProcessStateName,
 			String customername, String stylename, String startdate,
 			String enddate, Integer[] employeeIds, String userRole,
 			Integer userId);

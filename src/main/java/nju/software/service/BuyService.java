@@ -96,6 +96,10 @@ public interface BuyService {
 
 	public Map<String, Object> getPurchaseSweaterMaterialDetail(int orderId);
 
-	public boolean purchaseSweaterMaterialSubmit(long taskId, String orderId,boolean buySweaterMaterialResult);
+	public boolean purchaseSweaterMaterialSubmit(long taskId, String orderId,
+			String total_price, String weight, String type,
+			String purchase_time, String supplier, String head,
+			boolean buySweaterMaterialResult);
+
 
 }

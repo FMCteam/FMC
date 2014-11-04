@@ -12,7 +12,8 @@
 						<span >输入订单编号:</span>
 						<input type="text" style="width:110px;" name="ordernumber" value="${info.ordernumber }"  placeholder="输入订单编号">
 						<span >款式名称:</span> 
-						<input type="text"  style="width: 130px;" name="stylename" placeholder="输入款式名称" value="${info.stylename }">						
+						<input type="text"  style="width: 130px;" name="stylename" placeholder="输入款式名称" value="${info.stylename }">
+					
 						<br>
 						<input class="btn btn-primary" type="submit" value="查询" style="float:right;">
 						<span > 输入截止日期:</span>
@@ -31,6 +32,7 @@
 						<c:if test="${USER_user_role eq 'CUSTOMER'}">
 							<input type="hidden" class="search-query " name="customername" >	
 						</c:if>
+						
 			</caption>
 		</table>
 	</form>

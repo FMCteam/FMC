@@ -1558,10 +1558,10 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getSearchOrdersDoing(String ordernumber,
+	public List<Map<String, Object>> getSearchOrdersDoing(String ordernumber,String orderProcessStateName,
 			String customername, String stylename, String startdate,
 			String enddate, Integer[] employeeIds,String userRole,Integer userId) {
-		List<Order> orders = orderDAO.getSearchOrderDoingList( ordernumber,
+		List<Order> orders = orderDAO.getSearchOrderDoingList( ordernumber,orderProcessStateName,
 				 customername,stylename,startdate,enddate,employeeIds,userRole,userId);
 		int orderslength = orders.size();
 		List<Map<String, Object>> list = new ArrayList<>();

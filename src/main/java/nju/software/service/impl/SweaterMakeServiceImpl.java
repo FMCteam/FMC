@@ -1,20 +1,24 @@
 package nju.software.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.OperateRecordDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.ProduceDAO;
 import nju.software.dataobject.OperateRecord;
 import nju.software.dataobject.Order;
-import nju.software.service.SweaterMakeService; 
+import nju.software.dataobject.Produce;
+import nju.software.service.SweaterMakeService;
 import nju.software.util.JbpmAPIUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("sweaterMakeServiceImpl")
 public class SweaterMakeServiceImpl implements SweaterMakeService {
@@ -49,13 +53,12 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	@Override
 	public boolean sweaterSampleAndCraftSubmit(long taskId, boolean result,
 			String orderId,OperateRecord oprec) {
+		operateRecordDAO.save(oprec);
 		if(result==false){
-			operateRecordDAO.save(oprec);
 			return false;
 		}else{			
 			Map<String, Object> data = new HashMap<String, Object>();
 			try {
-				
 				jbpmAPIUtil.completeTask(taskId, data, ACTOR_SWEATER_MANAGER);
 				return true;
 			} catch (InterruptedException e) {
@@ -103,19 +106,27 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
         	return false;
         }
 	}
-	
 	@Override
-	public boolean sendSweaterSubmit(long taskId, boolean result, String orderId) {
- 		Order order = orderDAO.findById(Integer.parseInt(orderId));
+	public boolean sendSweaterSubmit(long taskId, boolean result,List<Produce> produceList, Integer orderId) {
+ 		Order order = orderDAO.findById(orderId);
+ 		if (result) {
+			for (int i = 0; i < produceList.size(); i++) {
+				ProduceDAO.save(produceList.get(i));
+			}
+		}
 		Map<String, Object> data = new HashMap<String, Object>();
  		try {
+ 			data.put(RESULT_SWEATER, result);
 			jbpmAPIUtil.completeTask(taskId, data, ACTOR_SWEATER_MANAGER);
+			if(result==false){//如果result的的值为false，即为大货生产失败，流程会异常终止，将orderState设置为1
+				order.setOrderState("1");
+				orderDAO.attachDirty(order);
+			}
 			return true;
 		} catch (InterruptedException e) {
  			e.printStackTrace();
 			return false;
-		}
- 
+			}
 	}
 
 	@Override
@@ -138,6 +149,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	public final static String ACTOR_SWEATER_MANAGER = "SweaterMakeManager";
 	public final static String TASK_CONFIRM_SWEATER_SAMPLE_AND_CRAFT = "confirmSweaterSampleAndCraft";
 	public final static String TASK_SEND_SWEATER= "sendSweater";
+	public final static String RESULT_SWEATER = "sweater";
 	public final static String RESULT_PRODUCE = "produce";
 	public final static String RESULT_PRODUCE_COMMENT = "produceComment";
 	@Autowired
@@ -147,13 +159,77 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	@Autowired
 	private ServiceUtil service;
 	@Autowired
+	private ProduceDAO ProduceDAO;
+	@Autowired
 	private JbpmAPIUtil jbpmAPIUtil;
+	@Autowired
+	private EmployeeDAO employeeDAO;
+	@Autowired
+	private MarketServiceImpl MarketService;
+	
+	
+	@Override
+	public List<Map<String, Object>> getOrders() {
+		// TODO Auto-generated method stub
+		List<Order> orders = orderDAO.getSweaterOrders();
+ 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		for (Order order : orders) {
+			ArrayList<String>  orderProcessStateNames = MarketService.getProcessStateName(order.getOrderId());
+			if(orderProcessStateNames.size()>0){
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			}else{
+				order.setOrderProcessStateName("");
+			}
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+ 			list.add(model);
+		}
+		return list;
+	}
 
 	@Override
-	public Map<String, Object> getProduceDetail(Integer orderId) {
+	public List<Map<String, Object>> getSerachOrders(String orderState) {
 		// TODO Auto-generated method stub
-		return service.getBasicOrderModelWithQuote(ACTOR_SWEATER_MANAGER, RESULT_PRODUCE,
-				orderId);
+		List<Order> orders = orderDAO.getSweaterOrders();//获取所有毛衣的单子
+ 		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orders) {
+			int oid = order.getOrderId();
+			ArrayList<String>  orderProcessStateNames = MarketService.getProcessStateName(oid);//通过id获取单子当前的进度状态
+				if(orderProcessStateNames.size()>0){  // 通过orderProcessStateName 的size 来进行判断此单子的状态
+					if(orderState.equals(orderProcessStateNames.get(0))){//判断要查询的单子和单子的状态是否一致
+						order.setOrderProcessStateName(orderProcessStateNames.get(0));
+					}
+					else if(orderProcessStateNames.get(0).indexOf(orderState)!= -1){//因为制版这边的状态是个大的状态，所以要进一步的去筛选
+						List<OperateRecord> Operatelist= operateRecordDAO.findByIdQueryMax(oid);//获取操作记录中单子的最后一步操作记录
+						if(Operatelist.size() >0){
+							OperateRecord Operate = Operatelist.get(0);
+							if(orderState.equals(Operate.getTaskName())){//判断此单子的最大状态，如果和查询的状态一样，则显示
+								order.setOrderProcessStateName(orderState);
+							}else{
+								continue;
+							}
+							//查询未制作工艺的单子
+						}else if(!("制作工艺").equals(orderState) &&!("制版打样").equals(orderState) &&!("确认样衣").equals(orderState) && !("质量检测").equals(orderState)  && !("已完成").equals(orderState)){
+							order.setOrderProcessStateName(orderState);
+						}
+						else{
+							continue;
+						}	
+					}else{
+						continue;
+					}
+				}else if("1".equals(order.getOrderState())){ //判断单子的状态是否为1(表示终止的单子 ，done表示正常结束的单子)
+					continue;
+				}
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			model.put("orderId", service.getOrderId(order));
+ 			list.add(model);
+		}
+		return list;
 	}
 
 }

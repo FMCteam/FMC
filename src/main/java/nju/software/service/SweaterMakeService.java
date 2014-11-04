@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import nju.software.dataobject.OperateRecord;
+import nju.software.dataobject.Produce;
 
 public interface SweaterMakeService {
 	public List<Map<String, Object>> getSweaterSampleAndCraftList();
@@ -19,8 +20,8 @@ public interface SweaterMakeService {
 			String orderId,OperateRecord oprecord);
 	
 
-	public boolean sendSweaterSubmit(long taskId, boolean result,
-			String orderId);
+	public boolean sendSweaterSubmit(long taskId, boolean result,List<Produce> produceList,
+			Integer orderId);
 	public List<Map<String, Object>> getSearchSweaterSampleAndCraftList(
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
@@ -29,6 +30,8 @@ public interface SweaterMakeService {
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
 
-	public Map<String, Object> getProduceDetail(Integer orderId);
+	public List<Map<String, Object>> getOrders();
+
+	public List<Map<String, Object>> getSerachOrders(String orderState);
 
 }
