@@ -10,27 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
-import nju.software.dataobject.Fabric;
-import nju.software.dataobject.FabricCost;
-import nju.software.dataobject.Logistics;
-import nju.software.dataobject.Order;
 import nju.software.dataobject.SearchInfo;
-import nju.software.model.OrderInfo;
 import nju.software.service.BuyService;
 import nju.software.service.EmployeeService;
-import nju.software.service.OrderService;
-import nju.software.service.impl.DesignServiceImpl;
-import nju.software.service.impl.JbpmTest;
-import nju.software.service.impl.MarketServiceImpl;
 import nju.software.util.DateUtil;
-import nju.software.util.JbpmAPIUtil;
+import nju.software.util.ListUtil;
 
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +34,7 @@ public class BuyController {
 	public String verifyPurchaseList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService.getVerifyPurchaseList();
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "采购验证");
 		model.addAttribute("url", "/buy/verifyPurchaseDetail.do");
@@ -74,6 +62,7 @@ public class BuyController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String, Object>> list = buyService.getSearchVerifyPurchaseList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "采购验证");
 		model.addAttribute("url", "/buy/verifyPurchaseDetail.do");
@@ -98,7 +87,7 @@ public class BuyController {
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyPurchaseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Long taskId = Long.parseLong(request.getParameter("taskId"));
+		String taskId = request.getParameter("taskId");
 		String comment = request.getParameter("suggestion");
 		boolean result = Boolean.parseBoolean(request.getParameter("result"));
 		buyService.verifyPurchaseSubmit(taskId, result, comment);
@@ -112,6 +101,7 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService
 				.getComputePurchaseCostList();
+		list = ListUtil.reserveList(list);
 		/*if (list.size() == 0) {
 			jbpmTest.completeVerify("1", true);
 			list = buyService.getComputePurchaseCostList();
@@ -143,6 +133,7 @@ public class BuyController {
 		}
 		List<Map<String, Object>> list = buyService
 				.getSearchComputePurchaseCostList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		/*if (list.size() == 0) {
 			jbpmTest.completeVerify("1", true);
 			list = buyService.getComputePurchaseCostList();
@@ -173,7 +164,7 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
-		long taskId = Long.parseLong(request.getParameter("taskId"));
+		String taskId = request.getParameter("taskId");
 
 		boolean result = Boolean.parseBoolean(request.getParameter("result"));// 是否拒绝采购
 		String comment = request.getParameter("suggestion"); // 采购拒绝意见
@@ -288,6 +279,7 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService
 				.getPurchaseSampleMaterialList();
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "样衣原料采购");
 		model.addAttribute("url", "/buy/purchaseSampleMaterialDetail.do");
@@ -314,6 +306,7 @@ public class BuyController {
 		}
 		List<Map<String, Object>> list = buyService
 				.getSearchPurchaseSampleMaterialList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "样衣原料采购");
 		model.addAttribute("url", "/buy/purchaseSampleMaterialDetail.do");
@@ -348,9 +341,7 @@ public class BuyController {
 		String samplesupplierName = request.getParameter("samplesupplierName");
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");		 
- 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(Long.parseLong(processId));
-		boolean needCraft =  (boolean) process.getVariable("needCraft");
+		boolean needCraft = buyService.isNeedCraft(processId, "needCraft");
 		
 		System.out.println("need craft 是这个值："+needCraft);
 //		String needCraft = 
@@ -363,7 +354,7 @@ public class BuyController {
 //		}
 		
 //		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft,orderId,samplepurName,samplepurDate,samplesupplierName);
+		buyService.purchaseSampleMaterialSubmit(taskId, result, needCraft,orderId,samplepurName,samplepurDate,samplesupplierName);
 
 		return "forward:/buy/purchaseSampleMaterialList.do";
 	}
@@ -375,6 +366,7 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService.getConfirmPurchaseList();
 		model.put("list", list);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("taskName", "确认生产原料");
 		model.addAttribute("url", "/buy/confirmPurchaseDetail.do");
 		model.addAttribute("searchurl", "/buy/confirmPurchaseListSearch.do");
@@ -399,6 +391,7 @@ public class BuyController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String, Object>> list = buyService.getSearchConfirmPurchaseList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "确认生产原料");
 		model.addAttribute("url", "/buy/confirmPurchaseDetail.do");
@@ -425,7 +418,7 @@ public class BuyController {
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
 		Boolean result = request.getParameter("result").equals("1");
-		buyService.confirmPurchaseSubmit(Long.parseLong(taskId), result);
+		buyService.confirmPurchaseSubmit(taskId, result);
 		return "forward:/buy/confirmPurchaseList.do";
 	}
 	
@@ -440,9 +433,7 @@ public class BuyController {
 		String samplesupplierName = request.getParameter("samplesupplierName");
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");		 
- 		WorkflowProcessInstance process = (WorkflowProcessInstance) jbpmAPIUtil
-				.getKsession().getProcessInstance(Long.parseLong(processId));
-		boolean needCraft =  (boolean) process.getVariable("needCraft");
+		boolean needCraft =  buyService.isNeedCraft(processId, "needCraft");
 		
 		System.out.println("need craft 是这个值："+needCraft);
 //		String needCraft = 
@@ -454,7 +445,7 @@ public class BuyController {
 //			 needcraft = (needCraft.equals("true"))?true:false;
 //		}
 //		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result);
-		buyService.purchaseSampleMaterialSubmit(Long.parseLong(taskId), result, needCraft,orderId,samplepurName,samplepurDate,samplesupplierName);
+		buyService.purchaseSampleMaterialSubmit(taskId, result, needCraft,orderId,samplepurName,samplepurDate,samplesupplierName);
 
 		return "forward:/buy/purchaseSampleMaterialList.do";
 	}
@@ -466,6 +457,7 @@ public class BuyController {
 	public String purchaseMaterialList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService.getPurchaseMaterialList();
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "大货面料采购");
 		model.addAttribute("url", "/buy/purchaseMaterialDetail.do");
@@ -491,6 +483,7 @@ public class BuyController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String, Object>> list = buyService.getSearchPurchaseMaterialList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "生产采购");
 		model.addAttribute("url", "/buy/purchaseMaterialDetail.do");
@@ -521,7 +514,7 @@ public class BuyController {
 		String masssupplierName = request.getParameter("masssupplierName");
 		String taskId = request.getParameter("taskId");
 		Boolean result = request.getParameter("result").equals("1");
-		buyService.purchaseMaterialSubmit(Long.parseLong(taskId), result,orderId,masspurName,masspurDate,masssupplierName);
+		buyService.purchaseMaterialSubmit(taskId, result,orderId,masspurName,masspurDate,masssupplierName);
 		return "forward:/buy/purchaseMaterialList.do";
 	}
 	
@@ -531,6 +524,7 @@ public class BuyController {
 		public String purchaseSweaterMaterialList(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			List<Map<String, Object>> list = buyService.purchaseSweaterMaterialList();
+			list = ListUtil.reserveList(list);
 			model.put("list", list);
 			model.addAttribute("taskName", "毛衣原料采购");
 			model.addAttribute("url", "/buy/purchaseSweaterMaterialDetail.do");
@@ -557,6 +551,7 @@ public class BuyController {
 				employeeIds[i] = employees.get(i).getEmployeeId();
 			}
 			List<Map<String, Object>> list = buyService.getSearchPurchaseSweaterMaterialList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+			list = ListUtil.reserveList(list);
 			model.put("list", list);
 			model.addAttribute("taskName", "毛衣原料采购订单搜索");
 			model.addAttribute("url", "/buy/purchaseSweaterMaterialDetail.do");
@@ -596,7 +591,7 @@ public class BuyController {
 			if("有库存".equals(choose)){
 				buySweaterMaterialResult = true;
 			}
- 			buyService.purchaseSweaterMaterialSubmit(Long.parseLong(taskId),orderId,total_price,weight,type,Purchase_time,supplier,head,buySweaterMaterialResult);
+ 			buyService.purchaseSweaterMaterialSubmit(taskId,orderId,total_price,weight,type,Purchase_time,supplier,head,buySweaterMaterialResult);
 			return "forward:/buy/purchaseSweaterMaterialList.do";
 		}
 	
@@ -639,8 +634,4 @@ public class BuyController {
 		*/
 	@Autowired
 	private BuyService buyService;
-	@Autowired
-	private JbpmTest jbpmTest;
-	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
 }

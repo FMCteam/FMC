@@ -41,8 +41,8 @@
 						<span >输入起始日期:</span>
 						<input style="width: 210px" type="date" name="startdate" value="${info.startdate }" placeholder="输入订单起始日期">
 						<span >输入订单编号:</span>
-						<input type="text" style="width:110px;" name="ordernumber" value="${info.ordernumber }"  placeholder="输入订单编号">
-						<span >款式名称:</span> 
+						<input type="text" style="width:130px;" name="ordernumber" value="${info.ordernumber }"  placeholder="输入订单编号">
+						<span >输入款式名称:</span> 
 						<input type="text"  style="width: 130px;" name="stylename" placeholder="输入款式名称" value="${info.stylename }">						
 						<br>
 						<input class="btn btn-primary" type="submit" value="查询" style="float:right;">
@@ -53,10 +53,10 @@
 							<input type="text" style="width: 110px;" name="employeename" value="${info.employeename }" placeholder="输入市场专员名称">
 						</c:if>
 						<c:if test="${USER_user_role eq 'marketStaff'}">
-							&nbsp; &nbsp; &nbsp; &nbsp; <input type="hidden"  name="employeename" >	
+							<input type="hidden"  name="employeename" >	
 						</c:if>	
 						<c:if test="${USER_user_role ne 'CUSTOMER'}">
-							<span >客户名称:</span>
+							<span >输入客户名称:</span>
 							<input type="text" style="width: 130px;" name="customername" placeholder="输入客户名称" value="${info.customername }">
 						</c:if>
 						<c:if test="${USER_user_role eq 'CUSTOMER'}">
@@ -75,7 +75,12 @@
 								<li>
 									<div>
 										<a href="${ctx}${url}?orderId=${model.order.orderId}&cid=${cid}"  title="查看详情">
-										<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >
+										<c:if test="${empty model.order.sampleClothesThumbnailPicture}">
+											<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >	
+										</c:if>
+										<c:if test="${not empty model.order.sampleClothesThumbnailPicture}">
+											<img src="${model.order.sampleClothesThumbnailPicture}" title="查看详情" style="height:225px;width:225px" >
+										</c:if>
 										</a>
 									</div>
 							

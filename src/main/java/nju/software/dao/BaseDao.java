@@ -8,8 +8,6 @@ import nju.software.dataobject.Pagination;
 import org.hibernate.Criteria;
 
 
-
-
 public interface BaseDao<T> {
 	   public void update(T t);
 	   public void add(T t);
@@ -32,5 +30,7 @@ public interface BaseDao<T> {
 	   public List findByHql(String hql, Pagination page,Integer pageNow);
 	   public List<T> queryById(String hql);
 	   public void updhql(String hql);
+	   public List<Object> findByhql2(final String hql);
 	  // public List<Object> PaginationSelect(final String sql,final Pagination p,String currentPage);
+	
 }

@@ -26,7 +26,12 @@
 								<li>
 									<div>
 										<a href="${ctx}/logistics/scanClothesDetail.do?orderId=${model.order.orderId}"  title="查看详情">
-										<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >
+										<c:if test="${empty model.order.sampleClothesThumbnailPicture}">
+											<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >	
+										</c:if>
+										<c:if test="${not empty model.order.sampleClothesThumbnailPicture}">
+											<img src="${model.order.sampleClothesThumbnailPicture}" title="查看详情" style="height:225px;width:225px" >
+										</c:if>	
 										</a>
 									</div>
 							
@@ -74,7 +79,12 @@
 								<li>
 									<div>
 										<a href="${ctx}/logistics/sendClothesDetail.do?orderId=${model.order.orderId}"  title="查看详情">
-										<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >
+										<c:if test="${empty model.order.sampleClothesThumbnailPicture}">
+											<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >	
+										</c:if>
+										<c:if test="${not empty model.order.sampleClothesThumbnailPicture}">
+											<img src="${model.order.sampleClothesThumbnailPicture}" title="查看详情" style="height:225px;width:225px" >
+										</c:if>
 										</a>
 									</div>
 							

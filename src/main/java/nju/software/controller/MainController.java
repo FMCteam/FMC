@@ -1,11 +1,15 @@
 package nju.software.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import nju.software.dataobject.Account;
+import nju.software.dataobject.TreeNode;
 import nju.software.service.AccountService;
+import nju.software.service.SystemService;
 
 import org.apache.log4j.Logger;
 import org.jboss.netty.handler.codec.http.HttpHeaders;
@@ -24,7 +28,8 @@ public class MainController {
 	
 	@Autowired
 	private AccountService accountService;
-	
+	@Autowired
+	private SystemService systemService;	
 //	@Autowired
 //	private EmployeeService employeeService;
 	
@@ -61,6 +66,7 @@ public class MainController {
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("cur_user", null);
+		session.removeAttribute("treeNodeList");
 		
 		return "redirect:/login.do";
 
@@ -100,7 +106,15 @@ public class MainController {
 	@Transactional(rollbackFor = Exception.class)
 	public String getDefaultPage(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		
+		/**
+		 * 权限
+		 */
+		/*
+		 */
+		HttpSession session = request.getSession();
+		Account account = (Account)session.getAttribute("cur_user");
+		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
+		session.setAttribute("treeNodeList", list);
 //		List<Teacher> t_list = teacherService.getAllTeachers();
 //		model.addAttribute("teacherList", t_list);
 	//	System.out.println("//============default.do");

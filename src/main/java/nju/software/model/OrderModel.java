@@ -4,14 +4,14 @@ import nju.software.dataobject.Order;
 
 public class OrderModel {
 	private Order order;
-	private long taskId;
-	private long processInstanceId;
+	private String taskId;
+	private String processInstanceId;
 	
 	public OrderModel(){
 		
 	}
 	
-	public OrderModel(Order order, long taskId, long processInstanceId) {
+	public OrderModel(Order order, String taskId, String processInstanceId) {
 		this.order = order;
 		this.taskId = taskId;
 		this.processInstanceId = processInstanceId;
@@ -23,16 +23,16 @@ public class OrderModel {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-	public long getTaskId() {
+	public String getTaskId() {
 		return taskId;
 	}
-	public void setTaskId(long taskId) {
+	public void setTaskId(String taskId) {
 		this.taskId = taskId;
 	}
-	public long getProcessInstanceId() {
+	public String getProcessInstanceId() {
 		return processInstanceId;
 	}
-	public void setProcessInstanceId(long processInstanceId) {
+	public void setProcessInstanceId(String processInstanceId) {
 		this.processInstanceId = processInstanceId;
 	}
 	

@@ -5,13 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.drools.command.Context;
-import org.drools.command.impl.GenericCommand;
-import org.drools.command.impl.KnowledgeCommandContext;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.process.NodeInstance;
-import org.drools.runtime.process.ProcessInstance;
-import org.drools.runtime.process.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,13 +25,12 @@ import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.DeliveryRecord;
-import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.service.FinanceService;
-import nju.software.util.JbpmAPIUtil;
+import nju.software.util.ActivitiAPIUtil;
 
 @Service("financeServiceImpl")
 public class FinanceServiceImpl implements FinanceService {
@@ -46,7 +38,6 @@ public class FinanceServiceImpl implements FinanceService {
 	// ===========================样衣金确认=================================
 	@Override
 	public List<Map<String, Object>> getConfirmSampleMoneyList(String actorId) {
-		// TODO Auto-generated method stub
 		return service.getOrderList(actorId, TASK_CONFIRM_SAMPLE_MONEY);
 	}
 
@@ -63,7 +54,6 @@ public class FinanceServiceImpl implements FinanceService {
 	@Override
 	public Map<String, Object> getConfirmSampleMoneyDetail(String actorId,
 			Integer orderId) {
-		// TODO Auto-generated method stub
 		Map<String, Object> model = service.getBasicOrderModelWithQuote(
 				actorId, TASK_CONFIRM_SAMPLE_MONEY, orderId);
 		Order order = (Order) model.get("order");
@@ -86,29 +76,26 @@ public class FinanceServiceImpl implements FinanceService {
 	}
 
 	@Override
-	public boolean confirmSampleMoneySubmit(String actorId, long taskId,
+	public boolean confirmSampleMoneySubmit(String actorId, String taskId,
 			boolean result, Money money) {
-		// TODO Auto-generated method stub
 		if (result) {
 			moneyDAO.save(money);
 		}
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			activitiAPIUtil.completeTask(taskId, data, actorId);
 			
 			return true;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 	}
 	
 	@Override
-	public boolean confirmSampleMoneySubmit(String actorId, long taskId,
+	public boolean confirmSampleMoneySubmit(String actorId, String taskId,
 			boolean result, Money money, int orderId) {
-		// TODO Auto-generated method stub
 		Order order = orderDAO.findById(orderId);
 		if (result) {
 			moneyDAO.save(money);
@@ -116,14 +103,13 @@ public class FinanceServiceImpl implements FinanceService {
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			activitiAPIUtil.completeTask(taskId, data, actorId);
 			if(result==false){//如果result的的值为false，即为未收取到样衣金，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
 			}
 			return true;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -132,7 +118,6 @@ public class FinanceServiceImpl implements FinanceService {
 	// ===========================退还定金===================================
 	@Override
 	public List<Map<String, Object>> getReturnDepositList(String actorId) {
-		// TODO Auto-generated method stub
 		return service.getOrderList(actorId,TASK_RETURN_DEPOSIT );
 	}
 	
@@ -147,7 +132,6 @@ public class FinanceServiceImpl implements FinanceService {
 	// ===========================定金确认===================================
 	@Override
 	public List<Map<String, Object>> getConfirmDepositList(String actorId) {
-		// TODO Auto-generated method stub
 		return service.getOrderList(actorId, TASK_CONFIRM_DEPOSIT);
 	}
 
@@ -164,7 +148,6 @@ public class FinanceServiceImpl implements FinanceService {
 	@Override
 	public Map<String, Object> getReturnDepositDetail(String actorId,
 			int orderId) {
-		// TODO Auto-generated method stub
 
 		Map<String, Object> model = service.getBasicOrderModelWithQuote(
 				actorId, TASK_RETURN_DEPOSIT, orderId);
@@ -193,7 +176,6 @@ public class FinanceServiceImpl implements FinanceService {
 	@Override
 	public Map<String, Object> getConfirmDepositDetail(String actorId,
 			Integer orderId) {
-		// TODO Auto-generated method stub
 
 		Map<String, Object> model = service.getBasicOrderModelWithQuote(
 				actorId, TASK_CONFIRM_DEPOSIT, orderId);
@@ -220,34 +202,31 @@ public class FinanceServiceImpl implements FinanceService {
 	}
 
 	@Override
-	public boolean confirmDepositSubmit(String actorId, long taskId,
+	public boolean confirmDepositSubmit(String actorId, String taskId,
 			boolean result, Money money) {
-		// TODO Auto-generated method stub
 		if (result) {
 			moneyDAO.save(money);
 		}
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			activitiAPIUtil.completeTask(taskId, data, actorId);
 			return true;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 	}
 	@Override
-	public boolean confirmDepositSubmit(String actorId, long taskId,
+	public boolean confirmDepositSubmit(String actorId, String taskId,
 			boolean result, Money money, int orderId) {
-		// TODO Auto-generated method stub
 		if (result) {
 			moneyDAO.save(money);
 		}
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			activitiAPIUtil.completeTask(taskId, data, actorId);
 			if(result==false){//如果result的的值为false，即为确认定金失败，流程会异常终止，将orderState设置为1
 				Order order = orderDAO.findById(orderId);
 				order.setOrderState("1");
@@ -255,7 +234,6 @@ public class FinanceServiceImpl implements FinanceService {
 				}
 			return true;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -264,7 +242,6 @@ public class FinanceServiceImpl implements FinanceService {
 	// ===========================尾款确认===================================
 	@Override
 	public List<Map<String, Object>> getConfirmFinalPaymentList(String actorId) {
-		// TODO Auto-generated method stub
 		return service.getOrderList(actorId, TASK_CONFIRM_FINAL_PAYMENT);
 	}
 
@@ -281,7 +258,6 @@ public class FinanceServiceImpl implements FinanceService {
 	@Override
 	public Map<String, Object> getConfirmFinalPaymentDetail(String actorId,
 			Integer orderId) {
-		// TODO Auto-generated method stub
 		Map<String, Object> model = service.getBasicOrderModelWithQuote(
 				actorId, TASK_CONFIRM_FINAL_PAYMENT, orderId);
 		Order order = (Order) model.get("order");
@@ -330,29 +306,27 @@ public class FinanceServiceImpl implements FinanceService {
 	}
 
 	@Override
-	public boolean confirmFinalPaymentSubmit(String actorId, long taskId,
+	public boolean confirmFinalPaymentSubmit(String actorId, String taskId,
 			boolean result, Money money) {
-		// TODO Auto-generated method stub
 		if (result) {
 			moneyDAO.save(money);
 		}
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			activitiAPIUtil.completeTask(taskId, data, actorId);
 			return true;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 	}
 
 	@Override
-	public void returnDepositSubmit(String actorId, long taskId) {
+	public void returnDepositSubmit(String actorId, String taskId) {
 		Map<String, Object> data = new HashMap<>();
  		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			activitiAPIUtil.completeTask(taskId, data, actorId);
  		} catch (InterruptedException e) {
  			e.printStackTrace();
  		}
@@ -361,12 +335,11 @@ public class FinanceServiceImpl implements FinanceService {
 	
 
 	@Override
-	public void returnDepositSubmit(String actorId, long taskId, Integer orderId) {
-		// TODO Auto-generated method stub
+	public void returnDepositSubmit(String actorId, String taskId, Integer orderId) {
 		Order order = orderDAO.findById(orderId);
 		Map<String, Object> data = new HashMap<>();
  		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			activitiAPIUtil.completeTask(taskId, data, actorId);
 			order.setOrderState("1");
 			orderDAO.attachDirty(order);
  		} catch (InterruptedException e) {
@@ -376,90 +349,21 @@ public class FinanceServiceImpl implements FinanceService {
 	
 	@Override
 	public List<Map<String, Object>> getProcessState(final Integer orderId) {
-		// //System.out.println("size:"+jbpmAPIUtil.getKsession().getProcessInstances().size());
-		final List<Map<String, Object>> list = new ArrayList<>();
-		jbpmAPIUtil.getKsession().execute(new GenericCommand<String>() {
-			public String execute(Context context) {
-				StatefulKnowledgeSession ksession = ((KnowledgeCommandContext) context)
-						.getStatefulKnowledgesession();
-				long processId=orderDAO.findById(orderId).getProcessId();
-				org.jbpm.process.instance.ProcessInstance processInstance = (org.jbpm.process.instance.ProcessInstance) ksession
-						.getProcessInstance(processId);
-
-				if(processInstance==null){
-					return null;
-				}
-				
-				/*
-				 *get state 
-				 *通过当前的node实例方法获得节点名称：nodeInstance.getNodeName()
-				 */
-				
-				String processName = processInstance.getProcessName();
-
-				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
-						.getNodeInstances()) {
-					System.out.println("状态名称："+nodeInstance.getNodeName());
-					Map<String, Object> data = nodeInstance.getNode()
-							.getMetaData();
-					Map<String, Object> data2 = new HashMap<String, Object>();
-					data2.put("x", data.get("x"));
-					data2.put("y", data.get("y"));
-					data2.put("width", data.get("width"));
-					data2.put("height", data.get("height"));
-					data2.put("statename", nodeInstance.getNodeName());
-					list.add(data2);
-				}
-				return null;
-			}
-		});
-		return list;
+		String processId=orderDAO.findById(orderId).getProcessId();
+		return activitiAPIUtil.getProcessStates(processId);
 	}
 
+	//TODO  节点状态是个什么鬼
 	@Override
 	public ArrayList<String> getProcessStateName(final Integer orderId) {
-		final List<Map<String, Object>> list = new ArrayList<>();
-        final ArrayList<String> nodeInstanceNames = new ArrayList<>();
 
-		jbpmAPIUtil.getKsession().execute(new GenericCommand<String>() {
-			public String execute(Context context) {
-				StatefulKnowledgeSession ksession = ((KnowledgeCommandContext) context)
-						.getStatefulKnowledgesession();
 				Order order = orderDAO.findById(orderId);
-				long processId=order.getProcessId();
-				if((Long)processId==null)
-                return null;
-				if((Long)processId!=null){
-					
-				
-				org.jbpm.process.instance.ProcessInstance processInstance = (org.jbpm.process.instance.ProcessInstance) ksession
-						.getProcessInstance(processId);
-				if(processInstance==null){
-					return null;
-				}
-				/*
-				 *get state 
-				 *通过当前的node实例方法获得节点名称：nodeInstance.getNodeName()
-				 */
-
-				for (NodeInstance nodeInstance : ((org.jbpm.workflow.instance.WorkflowProcessInstance) processInstance)
-						.getNodeInstances()) {
-					//System.out.println("状态名称："+nodeInstance.getNodeName());
-					if(!"Gateway".equals(nodeInstance.getNodeName())){
-						System.out.println("状态名称："+nodeInstance.getNodeName());
-						nodeInstanceNames.add(nodeInstance.getNodeName());
-					}
-				}
-			}
-				return null;
-			}
-		});
-		return nodeInstanceNames;
+				String processId= order.getProcessId();
+				return activitiAPIUtil.getProcessStateNames(processId);
 	}
 	
-	
 	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
+	private ActivitiAPIUtil activitiAPIUtil;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired
@@ -492,17 +396,17 @@ public class FinanceServiceImpl implements FinanceService {
 	private CheckRecordDAO checkRecordDAO;
 	@Autowired
 	private DeliveryRecordDAO deliveryRecordDAO;
-
+	
 	public final static String ACTOR_FINANCE_MANAGER = "financeManager";
 	public final static String TASK_CONFIRM_SAMPLE_MONEY = "confirmSampleMoney";
 	public final static String TASK_CONFIRM_DEPOSIT = "confirmDeposit";
 	public final static String TASK_RETURN_DEPOSIT = "returnDeposit";	
 	public final static String TASK_CONFIRM_FINAL_PAYMENT = "confirmFinalPayment";
+	
 	public final static String RESULT_MONEY = "receiveMoney";
 	
 	@Override
 	public Map<String, Object> getPrintProcurementOrderDetail(Integer orderId,List<Produce> produces) {
-		// TODO Auto-generated method stub
 		Map<String,Object>model=new HashMap<String,Object>();
 		Order order = orderDAO.findById(orderId);
 		model.put("order", order);
@@ -523,9 +427,8 @@ public class FinanceServiceImpl implements FinanceService {
 	}
 
 	@Override
-	public boolean confirmFinalPaymentSubmit(String actorId, long taskId,
+	public boolean confirmFinalPaymentSubmit(String actorId, String taskId,
 			boolean result, Money money, Integer orderId) {
-		// TODO Auto-generated method stub
 		Order order = orderDAO.findById(orderId);
 		if (result) {
 			moneyDAO.save(money);
@@ -536,14 +439,13 @@ public class FinanceServiceImpl implements FinanceService {
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, actorId);
+			activitiAPIUtil.completeTask(taskId, data, actorId);
 			if(result==false){//如果result的的值为false，即为尾款收取失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");	
 			}
 			orderDAO.attachDirty(order);
 			return true;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}

@@ -80,7 +80,8 @@
 					id="produce_m" type="hidden" name="produce_m" /> <input
 					id="produce_l" type="hidden" name="produce_l" /> <input
 					id="produce_xl" type="hidden" name="produce_xl" /> <input
-					id="produce_xxl" type="hidden" name="produce_xxl" /> <input
+					id="produce_xxl" type="hidden" name="produce_xxl" /><input
+					id="produce_j" type="hidden" name="produce_j" /> <input
 					type="hidden" name="tof" id="tof">
 					
 					<button class="btn btn-primary btn-rounded" ><i class="icon-ok icon-white"></i>确定加工</button> 
@@ -112,7 +113,7 @@
 <script type="text/javascript" src="${ctx}/js/order/add_produce.js"></script>
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
-<script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript" src="${ctx}/js/custom.js"></script>
 <!-- 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -125,18 +126,21 @@ $(function(){
 })
 function confirmProductDetailSubmit(fileValue1,fileValue2) {
 	if($("#tof").val() == "true"){
-		var fileValue1str = fileValue1.toLowerCase().split(".");
+		/* var fileValue1str = fileValue1.toLowerCase().split(".");
 		var fileValue2str = fileValue2.toLowerCase().split(".");
 		if(fileValue1.length != 0){
+			alert(1);
 			if(!(fileValue1str[fileValue1str.length-1] =="png"||fileValue1str[fileValue1str.length-1] =="jpg")){
 				alert("合同文件格式错误，请上传png,jpg格式的文件!");
 				return false;
 			}else{
+				alert(2);
 				if(fileValue2.length != 0){
 					if(!(fileValue2str[fileValue2str.length-1] =="png"||fileValue2str[fileValue2str.length-1] =="jpg")){
 						alert("定金收据格式错误，请上传jpg,png格式的文件!");
 						return false;
 					}else{
+						alert(3);
 						return produce_verify();
 					}
 				}else{
@@ -147,7 +151,18 @@ function confirmProductDetailSubmit(fileValue1,fileValue2) {
 		}else{
 			alert("请上传合同文件!");
 			return false;
+		} */
+		var fileValue1str = fileValue1.toLowerCase().split(".");
+		var fileValue2str = fileValue2.toLowerCase().split(".");
+		if(!(fileValue1str[fileValue1str.length-1] =="png"||fileValue1str[fileValue1str.length-1] =="jpg")){
+			alert("合同文件格式错误，请上传png,jpg格式的文件!");
+			return false;
 		}
+		if(!(fileValue2str[fileValue2str.length-1] =="png"||fileValue2str[fileValue2str.length-1] =="jpg")){
+			alert("定金收据格式错误，请上传jpg,png格式的文件!");
+			return false;
+		}
+		return produce_verify();
 	}else{
 		return produce_verify();
 	}
@@ -172,8 +187,8 @@ function check(){
 		var produce_l = getTdString("produce_l");
 		var produce_xl = getTdString("produce_xl");
 		var produce_xxl = getTdString("produce_xxl");
-		$("#printConfirmProcurementOrder").attr("href","${ctx}/market/printConfirmProcurementOrder.do?orderId=${orderInfo.order.orderId}&produce_color="+produce_color+"&produce_xs="+produce_xs+"&produce_s="+produce_s+"&produce_m="+produce_m+"&produce_l="+produce_l+"&produce_xl="+produce_xl+"&produce_xxl="+produce_xxl); 
-		
+		var produce_j = getTdString("produce_j");
+		$("#printConfirmProcurementOrder").attr("href","${ctx}/market/printConfirmProcurementOrder.do?orderId=${orderInfo.order.orderId}&produce_color="+produce_color+"&produce_xs="+produce_xs+"&produce_s="+produce_s+"&produce_m="+produce_m+"&produce_l="+produce_l+"&produce_xl="+produce_xl+"&produce_xxl="+produce_xxl+"&produce_j="+produce_j); 
 		return true;
 	}else{
 		return false;

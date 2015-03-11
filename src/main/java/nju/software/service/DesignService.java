@@ -11,7 +11,7 @@ public interface DesignService {
 
 	public Map<String, Object> getVerifyDesignDetail(int orderId);
 
-	public boolean verifyDesignSubmit(long taskId, boolean result,
+	public boolean verifyDesignSubmit(String taskId, boolean result,
 			String comment);
 
 	// ===========================上传版型=================================
@@ -19,7 +19,7 @@ public interface DesignService {
 
 	public Map<String, Object> getUploadDesignDetail(Integer orderId);
 
-	public void uploadDesignSubmit(int orderId, long taskId, String url,
+	public void uploadDesignSubmit(int orderId, String taskId, String url,
 			Timestamp uploadTime);
 
 	// ===========================修改版型=================================
@@ -27,7 +27,7 @@ public interface DesignService {
 
 	public Map<String, Object> getModifyDesignDetail(Integer orderId);
 
-	public boolean modifyDesignSubmit(int orderId, long taskId, String url,
+	public boolean modifyDesignSubmit(int orderId, String taskId, String url,
 			Timestamp uploadTime);
 
 	// ===========================确认版型=================================
@@ -61,7 +61,7 @@ public interface DesignService {
 
 	public List<Map<String, Object>> getNeedCraftList();
 
-	public boolean produceSampleSubmit(long taskId, boolean result);
+	public boolean produceSampleSubmit(String taskId, boolean result);
 
 	public List<Map<String, Object>> getNeedCraftSampleList();
 
@@ -75,15 +75,15 @@ public interface DesignService {
 
 	public void uploadCraftFileSubmit(int orderId, String craftFileUrl);
 
-	public void needCraftSampleSubmit(int orderId, long taskId,
+	public void needCraftSampleSubmit(int orderId, String taskId,
 			String craftLeader, Timestamp completeTime);
 
-	public void needCraftProductSubmit(int orderId, long taskId,
+	public void needCraftProductSubmit(int orderId, String taskId,
 			String crafsManName, Timestamp crafsProduceDate);
 
-	public void getTypeSettingSliceSubmit(int orderId, long taskId);
+	public void getTypeSettingSliceSubmit(int orderId, String taskId);
 
-	public void computeDesignCostSubmit(int orderId, long taskId,
+	public void computeDesignCostSubmit(int orderId, String taskId,
 			boolean result, String comment, short needCraft,
 			float stampDutyMoney, float washHangDyeMoney, float laserMoney,
 			float embroideryMoney, float crumpleMoney, float openVersionMoney);
@@ -92,16 +92,16 @@ public interface DesignService {
 
 	public Map<String, Object> getConfirmCadDetail(int orderId);
 
-	public boolean confirmCadSubmit(int orderId, long taskId, String cadurl,
+	public boolean confirmCadSubmit(int orderId, String taskId, String cadurl,
 			Timestamp uploadTime);
 
 	public void getTypeSettingSliceSubmit(int orderId, String cadding_side,
-			long taskId);
+			String taskId);
 
-	public boolean produceSampleSubmit(long taskId, boolean result,
+	public boolean produceSampleSubmit(String taskId, boolean result,
 			String orderId);
 
-	public void EntryCadData(int orderId, long taskId, String url,
+	public void EntryCadData(int orderId, String taskId, String url,
 			Timestamp uploadTime, String cadSide, Timestamp completeTime);
 
 	// 获取订单中工艺状态

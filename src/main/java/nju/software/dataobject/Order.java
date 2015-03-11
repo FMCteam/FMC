@@ -47,10 +47,11 @@ public class Order implements java.io.Serializable {
 	private String otherRequirements;
 	private String referenceUrl;
 	private String sampleClothesPicture;
+	private String sampleClothesThumbnailPicture;//样衣缩略图
 	private String referencePicture;
 	private Integer askAmount;
 	private Integer sampleAmount;
-	private Long processId;
+	private String processId;
 	
 	private String Purchase_director; //采购负责人
 	private String supplier;//供应商
@@ -62,11 +63,11 @@ public class Order implements java.io.Serializable {
 	
 	
 	@Column(name = "processId", nullable = true)
-	public Long getProcessId() {
+	public String getProcessId() {
 		return processId;
 	}
 
-	public void setProcessId(Long processId) {
+	public void setProcessId(String processId) {
 		this.processId = processId;
 	}
 
@@ -246,6 +247,7 @@ public class Order implements java.io.Serializable {
 			String styleName, String fabricType, String styleSex,
 			String styleSeason, String specialProcess,
 			String otherRequirements, String sampleClothesPicture,
+			String sampleClothesThumbnailPicture,
 			String referencePicture, Integer askAmount,
 			String askProducePeriod, Timestamp askDeliverDate,
 			String askCodeNumber, Short hasPostedSampleClothes,
@@ -270,6 +272,7 @@ public class Order implements java.io.Serializable {
 		this.specialProcess = specialProcess;
 		this.otherRequirements = otherRequirements;
 		this.sampleClothesPicture = sampleClothesPicture;
+		this.sampleClothesThumbnailPicture = sampleClothesThumbnailPicture;
 		this.referencePicture = referencePicture;
 		this.askAmount = askAmount;
 		this.askProducePeriod = askProducePeriod;
@@ -296,8 +299,10 @@ public class Order implements java.io.Serializable {
 			String styleName, String clothesType, String fabricType,
 			String styleSex, String styleSeason, String specialProcess,
 			String otherRequirements, String referenceUrl,
-			String sampleClothesPicture, String referencePicture,
-			Integer askAmount, Integer sampleAmount, Long processId,
+			String sampleClothesPicture,
+			String sampleClothesThumbnailPicture,
+			String referencePicture,
+			Integer askAmount, Integer sampleAmount, String processId,
 			String askProducePeriod, Timestamp askDeliverDate,
 			String askCodeNumber, Short hasPostedSampleClothes,
 			Short isNeedSampleClothes, String orderSource,
@@ -333,6 +338,7 @@ public class Order implements java.io.Serializable {
 		this.otherRequirements = otherRequirements;
 		this.referenceUrl = referenceUrl;
 		this.sampleClothesPicture = sampleClothesPicture;
+		this.sampleClothesThumbnailPicture = sampleClothesThumbnailPicture;
 		this.referencePicture = referencePicture;
 		this.askAmount = askAmount;
 		this.sampleAmount = sampleAmount;
@@ -520,6 +526,16 @@ public class Order implements java.io.Serializable {
 
 	public void setSampleClothesPicture(String sampleClothesPicture) {
 		this.sampleClothesPicture = sampleClothesPicture;
+	}
+
+	@Column(name = "sample_clothes_thumbnial_picture", length = 250)
+	public String getSampleClothesThumbnailPicture() {
+		return sampleClothesThumbnailPicture;
+	}
+
+	public void setSampleClothesThumbnailPicture(
+			String sampleClothesThumbnailPicture) {
+		this.sampleClothesThumbnailPicture = sampleClothesThumbnailPicture;
 	}
 
 	@Column(name = "reference_picture", length = 250)

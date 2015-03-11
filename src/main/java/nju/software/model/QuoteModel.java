@@ -5,10 +5,10 @@ import nju.software.dataobject.Quote;
 public class QuoteModel {
 
 	public Quote quote;
-	public long taskId;
-	public long processInstanceId;
+	public String taskId;
+	public String processInstanceId;
 	
-	public QuoteModel(Quote quote,long taskId,Long processInstanceId)
+	public QuoteModel(Quote quote,String taskId,String processInstanceId)
 	{
 		this.quote=quote;
 		this.taskId=taskId;
@@ -23,19 +23,19 @@ public class QuoteModel {
 		this.quote = quote;
 	}
 
-	public long getTaskId() {
+	public String getTaskId() {
 		return taskId;
 	}
 
-	public void setTaskId(long taskId) {
+	public void setTaskId(String taskId) {
 		this.taskId = taskId;
 	}
 
-	public long getProcessInstanceId() {
+	public String getProcessInstanceId() {
 		return processInstanceId;
 	}
 
-	public void setProcessInstanceId(long processInstanceId) {
+	public void setProcessInstanceId(String processInstanceId) {
 		this.processInstanceId = processInstanceId;
 	}
 }

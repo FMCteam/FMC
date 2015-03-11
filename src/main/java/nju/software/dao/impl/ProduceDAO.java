@@ -32,6 +32,7 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 	public static final String L = "l";
 	public static final String XL = "xl";
 	public static final String XXL = "xxl";
+	public static final String J = "j";
 	public static final String TYPE = "type";
 
 	protected void initDao() {
@@ -77,6 +78,9 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 		try {
 			List<Produce> results = (List<Produce>) getHibernateTemplate()
 					.findByExample(instance);
+			if (results == null) {
+				log.error("no results found in produce");
+			}
 			log.debug("find by example successful, result size: "
 					+ results.size());
 			return results;
@@ -129,6 +133,10 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 
 	public List<Produce> findByXxl(Object xxl) {
 		return findByProperty(XXL, xxl);
+	}
+	
+	public List<Produce> findByJ(Object j) {
+		return findByProperty(J, j);
 	}
 
 	public List<Produce> findByType(Object type) {

@@ -49,6 +49,7 @@
 								<td class="title">L</td>
 								<td class="title">XL</td>
 								<td class="title">XXL</td>
+								<td class="title">均码</td>
 							</tr>
 							<c:forEach var="produce" items="${orderInfo.produce}" >
 								<tr>
@@ -59,6 +60,7 @@
 									<td><span id="l">${produce.l}</span></td>
 									<td><span id="xl">${produce.xl}</span></td>
 									<td><span id="xxl">${produce.xxl}</span></td>
+									<td><span id="j">${produce.j}</span></td>
 								</tr>
 							</c:forEach>
 							<tr>
@@ -70,6 +72,7 @@
 								<td class="title">L</td>
 								<td class="title">XL</td>
 								<td class="title">XXL</td>
+								<td class="title">均码</td>
 							</tr>
 							<c:forEach var="produce" items="${orderInfo.produce}">
 								<tr>
@@ -87,15 +90,26 @@
 										value="${produce.xl}" required="required" onblur="this.value=(this.value==''?'0':this.value )"/></td>
 									<td><input class="span12 produce_xxl" type="number"
 										min="0" value="${produce.xxl}" required="required" onblur="this.value=(this.value==''?'0':this.value )"/></td>
+									<td><input class="span12 produce_j" type="number"
+										min="0" value="${produce.j}" required="required" onblur="this.value=(this.value==''?'0':this.value )"/></td>
 								</tr>
 							</c:forEach>
 							<tr>
 								<td class="title"><span class="required">*</span>加工方</td>
-								<td colspan="7">
+								<td colspan="8">
 									<input class="span14" id="processing_side" name="processing_side" type="text"  />
 								</td>
 							</tr>
 						</table>
+						
+						<input type="hidden" id="produce_color" name="produce_color"/>
+						<input type="hidden" id="produce_xs" name="produce_xs"/>
+						<input type="hidden" id="produce_s" name="produce_s"/>
+						<input type="hidden" id="produce_m" name="produce_m"/>
+						<input type="hidden" id="produce_l" name="produce_l"/>
+						<input type="hidden" id="produce_xl" name="produce_xl"/>
+						<input type="hidden" id="produce_xxl" name="produce_xxl"/>
+						<input type="hidden" id="produce_j" name="produce_j"/>
 						
 					    
 					    <input id="disagree_detail" type="submit" value="终止外发加工" class="btn btn-danger btn-rounded">
@@ -169,6 +183,7 @@ jQuery(document).ready(function(){
 });
 
 function check(){
+	alert(1)
 	if($("#result").val()==1){
 		var processingSide = jQuery("input[name='processing_side']").val();
 		if(processingSide == "" || processingSide == null){
@@ -190,13 +205,14 @@ function check(){
 		} 
 	}
 }
+
 </script>
 
 <script type="text/javascript">
 var length=$("#size").attr("rowspan")-1;
 var taskName=$("#"+"taskName"+length+"").text();
 if("确认样衣" == taskName){
-	$("#showSubmit").show();
+	$("#showSubmit").show();	
 }else{
 	$("#showSubmit").hide();
 }

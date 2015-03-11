@@ -19,33 +19,21 @@
 	<context:component-scan base-package="nju.software">
 	</context:component-scan>
 	<context:annotation-config />
-	<!-- 配置数据源 <context:component-scan base-package="nju.software.dao.impl,nju.software.service.impl" />
+	<context:component-scan base-package="nju.software.dao.impl,nju.software.service.impl" />
 	
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mysql://localhost:3306/papermanagement?characterEncoding=UTF-8" />
-		<property name="username" value="root" />
-		<property name="password" value="root" />
-	</bean>-->
-
-
 	<!-- jpa配置需要 -->
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="persistenceUnitName" value="org.jbpm.persistence.jpa" />
 	</bean>
 
 	<!-- 声明事务 -->
 	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="entityManagerFactory" ref="entityManagerFactory" /> 
 	</bean>
 	<!-- 开启注解方式下的声明式事务 -->
 	<tx:annotation-driven transaction-manager="txManager"
 		proxy-target-class="true" />
-		
 	 <tx:advice id="transactionAdvice" transaction-manager="txManager"> 
         <tx:attributes> 
             <tx:method name="*" propagation="REQUIRED"/> 
@@ -53,7 +41,7 @@
     </tx:advice>
 	<aop:config> 
     <aop:pointcut id="businessService" 
-            expression="execution(* nju.software.controller..*.*(..))" /> 
+            expression="execution(* nju.software.service.*.*(..))" /> 
     <aop:advisor advice-ref="transactionAdvice" pointcut-ref="businessService" /> 
     </aop:config>
 </beans>

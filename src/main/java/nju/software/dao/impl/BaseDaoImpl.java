@@ -358,4 +358,22 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 			
 		});
 	}
+	
+	@Override
+    public List<Object> findByhql2(final String hql){
+        List<Object> list=new ArrayList<Object>();
+		try {
+			list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							return session.createQuery(hql).list();
+						}
+					});
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return list;
+        
+    }
 }

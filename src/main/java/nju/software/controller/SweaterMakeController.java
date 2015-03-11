@@ -26,7 +26,7 @@ import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.SweaterMakeService;
 import nju.software.util.DateUtil;
-import nju.software.util.JbpmAPIUtil;
+import nju.software.util.ListUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,8 +46,6 @@ public class SweaterMakeController {
 	@Autowired
 	private EmployeeService employeeService;
 	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
 	private OrderService orderService;
 	@Autowired
 	private ProduceService produceService;
@@ -60,6 +58,7 @@ public class SweaterMakeController {
 	public String sweaterSampleAndCraftList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=sweaterMakeService.getSweaterSampleAndCraftList();
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "毛衣样衣确认和工艺制作");
 		model.addAttribute("url", "/sweater/sweaterSampleAndCraftDetail.do");
@@ -86,6 +85,7 @@ public class SweaterMakeController {
 		}
 		List<Map<String,Object>> list=sweaterMakeService.
 				getSearchSweaterSampleAndCraftList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "毛衣样衣确认和工艺制作订单搜索");
 		model.addAttribute("url", "/sweater/sweaterSampleAndCraftDetail.do");
@@ -138,7 +138,7 @@ public class SweaterMakeController {
 		operateRecord.setOperatePerson(operatePerson);
 		operateRecord.setOperateRemark(operateRemark);
 		operateRecord.setOperateTime(getDateTime(operateTime));
-		sweaterMakeService.sweaterSampleAndCraftSubmit(Long.parseLong(taskId), isfinalconfirm, orderId,operateRecord);
+		sweaterMakeService.sweaterSampleAndCraftSubmit(taskId, isfinalconfirm, orderId,operateRecord);
 		if(isfinalconfirm){//保存记录和确认完成跳转不同的方法
 			return "forward:/sweater/sweaterSampleAndCraftList.do";
 		}else{
@@ -152,6 +152,7 @@ public class SweaterMakeController {
 	public String sendSweaterList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=sweaterMakeService.getSendSweaterList();
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "毛衣外发");
 		model.addAttribute("url", "/sweater/sendSweaterDetail.do");
@@ -178,6 +179,7 @@ public class SweaterMakeController {
 		}
 		List<Map<String,Object>> list=sweaterMakeService.
 				getSearchSendSweaterList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "毛衣外发订单搜索");
 		model.addAttribute("url", "/sweater/sendSweaterDetail.do");
@@ -215,6 +217,7 @@ public class SweaterMakeController {
 			int produceL = Integer.parseInt(request.getParameter("produce_l"));
 			int produceXL = Integer.parseInt(request.getParameter("produce_xl"));
 			int produceXXL = Integer.parseInt(request.getParameter("produce_xxl"));
+			int produceJ = Integer.parseInt(request.getParameter("produce_j"));
 			String processing_side = request.getParameter("processing_side");
 			String Purchase_director = request.getParameter("Purchase_director");
 			String sendTime = request.getParameter("sendTime");
@@ -223,7 +226,7 @@ public class SweaterMakeController {
 			orderService.updateOrder(torder);
 			Produce Produce = new Produce();
 			int total = produceXS + produceS + produceM + produceL +
-					produceXL + produceXXL;
+					produceXL + produceXXL + produceJ;
 			Produce.setProduceAmount(total);
 			Produce.setType(Produce.TYPE_PRODUCED);
 			Produce.setSendTime(sendTime);
@@ -234,12 +237,13 @@ public class SweaterMakeController {
 			Produce.setL(produceL);
 			Produce.setXl(produceXL);
 			Produce.setXxl(produceXXL);
+			Produce.setJ(produceJ);
 			Produce.setProcessing_side(processing_side);
 			Produce.setPurchase_director(Purchase_director);
 			Produce.setOid(orderId);
 			produceList.add(Produce);
 		}
-		sweaterMakeService.sendSweaterSubmit(Long.parseLong(taskId),result,produceList, orderId);
+		sweaterMakeService.sendSweaterSubmit(taskId,result,produceList, orderId);
 		return "forward:/sweater/sendSweaterList.do";
 	}
 	
@@ -261,6 +265,7 @@ public class SweaterMakeController {
 	public String sweaterOrderList(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			List<Map<String, Object>> list = sweaterMakeService.getOrders();//查询所有订单
+			list = ListUtil.reserveList(list);
 			model.addAttribute("list", list);
 			model.addAttribute("taskName", "毛衣列表");
 			model.addAttribute("url", "/order/orderDetail.do");
@@ -281,7 +286,7 @@ public class SweaterMakeController {
 		}else{
 			list = sweaterMakeService.getSerachOrders(orderState);;
 		}
-		
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("orderState", orderState);
 		model.addAttribute("taskName", "毛衣列表");

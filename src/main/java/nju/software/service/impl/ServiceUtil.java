@@ -9,6 +9,8 @@ import java.util.Map;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.AccountDAO;
+import nju.software.dao.impl.BaseDaoImpl;
 import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.CustomerDAO;
 import nju.software.dao.impl.DeliveryRecordDAO;
@@ -26,6 +28,7 @@ import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Craft;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.FabricCost;
@@ -34,9 +37,10 @@ import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
-import nju.software.util.JbpmAPIUtil;
+import nju.software.dataobject.TreeNode;
+import nju.software.util.ActivitiAPIUtil;
 
-import org.jbpm.task.query.TaskSummary;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,21 +49,29 @@ public class ServiceUtil {
 
 	public List<Map<String, Object>> getOrderList(String actorId,
 			String taskName) {
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		List<Task> tasks = activitiAPIUtil.getAssignedTasksOfUserByTaskName(
 				actorId, taskName);
 		
+//		if (isAdminRequest(actorId)) {
+//			List<Account> accounts = accountDAO.findByUserRole(MarketServiceImpl.ACTOR_MARKET_STAFF);
+//			for (Account account : accounts) {
+//				List<Task> tasks2 = activitiAPIUtil.getAssignedTasksOfUserByTaskName(account.getUserId()+"", taskName);
+//				tasks.addAll(tasks2);
+//			}
+//		}
+
 		List<Map<String, Object>> list = new ArrayList<>();
 
-		for (TaskSummary task : tasks) {
-			Integer orderId = (Integer) jbpmAPIUtil
-					.getVariable(task, "orderId");
+		for (Task task : tasks) {
+			Integer orderId = (Integer) activitiAPIUtil
+					.getProcessVariable(task, "orderId");
 			Map<String, Object> model = new HashMap<String, Object>();
 			Order order = orderDAO.findById(orderId);
 			System.out.println(orderId);
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("task", task);
-			model.put("taskTime", getTaskTime(task.getCreatedOn()));
+			model.put("taskTime", getTaskTime(task.getCreateTime()));
 			model.put("orderId", getOrderId(order));
 			list.add(model);
 		}
@@ -72,14 +84,14 @@ public class ServiceUtil {
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
 				 customername,stylename,startdate,enddate,employeeIds);
 		
-		List<TaskSummary> tasks = jbpmAPIUtil.getAssignedTasksByTaskname(
+		List<Task> tasks = activitiAPIUtil.getAssignedTasksOfUserByTaskName(
 				actorId, taskName);
 		
 		List<Map<String, Object>> list = new ArrayList<>();
 
-		for (TaskSummary task : tasks) {
+		for (Task task : tasks) {
 			boolean isSearched = false;
-			Integer orderId = (Integer) jbpmAPIUtil.getVariable(task, "orderId");
+			Integer orderId = (Integer) activitiAPIUtil.getProcessVariable(task, "orderId");
 			for(int k =0;k<orders.size();k++){
 				if(orderId.equals(orders.get(k).getOrderId())){
 					isSearched = true;
@@ -95,7 +107,7 @@ public class ServiceUtil {
 				model.put("order", order);
 				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 				model.put("task", task);
-				model.put("taskTime", getTaskTime(task.getCreatedOn()));
+				model.put("taskTime", getTaskTime(task.getCreateTime()));
 				model.put("orderId", getOrderId(order));
 				list.add(model);
 			}
@@ -105,7 +117,7 @@ public class ServiceUtil {
 	public Map<String, Object> getBasicOrderModel(String actorId,
 			String taskName, Integer orderId) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		TaskSummary task = jbpmAPIUtil.getTask(actorId, taskName, orderId);
+		Task task = activitiAPIUtil.getTask(actorId, taskName, orderId);
 		Order order = orderDAO.findById(orderId);
 		model.put("task", task);
  		model.put("taskId", task.getId());
@@ -208,7 +220,6 @@ public class ServiceUtil {
 
 	private List<List<PackageDetail>> findByPackageList(
 			List<Package> packageList) {
-		// TODO Auto-generated method stub
 		List<List<PackageDetail>> dList = new ArrayList<List<PackageDetail>>();
 		for (int i = 0; i < packageList.size(); i++) {
 			Package pk = packageList.get(i);
@@ -218,9 +229,41 @@ public class ServiceUtil {
 		}
 		return dList;
 	}
+	
+	/**
+	 * 权限菜单
+	 */
+	 public List<TreeNode> findSystemMenu() {
+		String hql="select p.permissionId,p.pid,p.name,p.sort,p.iconcls,p.url,p.isused,p.description from Permission p where p.status='A' ORDER BY p.sort";
+        List<Object> list= baseDao.findByhql2(hql);
+        List<TreeNode> treeList = new ArrayList<TreeNode>();
+        for (Object object : list) {
+			Object[] objs=(Object[]) object;
+		  TreeNode treeNode =new TreeNode();
+		  treeNode.setId(String.valueOf(objs[0]));
+		  treeNode.setPId(String.valueOf(objs[1])==""?null:String.valueOf(objs[1]));
+  		  treeNode.setName(String.valueOf(objs[2]));
+  		  treeNode.setSort(String.valueOf(objs[3]));
+  		  treeNode.setIconcls(String.valueOf(objs[4]));
+  		  treeNode.setUrl(String.valueOf(objs[5]));
+  		  treeNode.setIsUsed(String.valueOf(objs[6]));
+  		  treeNode.setDescription(String.valueOf(objs[7]));
+  		  treeList.add(treeNode);
+		}
+        return treeList;
+	}
+	 
+	 private boolean isAdminRequest(String actorId){
+		 List<Account> accounts = accountDAO.findByUserRole(CommonServiceImpl.ACTOR_ADMIN);
+		 //这边管理员默认只有一个
+		 Account admin = accounts.get(0);
+		 return actorId.equals(admin.getAccountId()+"");
+	 }
 
 	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
+	private ActivitiAPIUtil activitiAPIUtil;
+	@Autowired
+	private AccountDAO accountDAO;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired
@@ -257,5 +300,8 @@ public class ServiceUtil {
 	private DeliveryRecordDAO deliveryRecordDAO;
 	@Autowired
 	private CraftDAO craftDAO;
+	@Autowired
+	private BaseDaoImpl baseDao;
+
 	
 }

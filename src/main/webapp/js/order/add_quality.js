@@ -27,6 +27,7 @@ function getQuality(){
 	$("#good_l").val(getInputString("good_l"));
 	$("#good_xl").val(getInputString("good_xl"));
 	$("#good_xxl").val(getInputString("good_xxl"));
+	$("#good_j").val(getInputString("good_j"));
 	
 	/*$("#bad_color").val(getInputString("bad_color"));
 	$("#bad_xs").val(getInputString("bad_xs"));

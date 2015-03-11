@@ -16,11 +16,11 @@ public interface SweaterMakeService {
 	public Map<String, Object> getSendSweaterDetail(int orderId);
 
 
-	public boolean sweaterSampleAndCraftSubmit(long taskId, boolean result,
+	public boolean sweaterSampleAndCraftSubmit(String taskId, boolean result,
 			String orderId,OperateRecord oprecord);
 	
 
-	public boolean sendSweaterSubmit(long taskId, boolean result,List<Produce> produceList,
+	public boolean sendSweaterSubmit(String taskId, boolean result,List<Produce> produceList,
 			Integer orderId);
 	public List<Map<String, Object>> getSearchSweaterSampleAndCraftList(
 			String ordernumber, String customername, String stylename,

@@ -107,11 +107,12 @@ table.table.table-bordered{
 			<td class="center span2">L</td>
 			<td class="center span2">XL</td>
 			<td class="center span2">XXL</td>
+			<td class="center span2">均码</td>
 			<td class="center span2"></td>
 		</tr>
 		<c:forEach var="sample" items="${orderInfo.sample}">
 			<tr>
-				<td class="center">${sample.xs+sample.s+sample.m+sample.l+sample.xl+sample.xxl}</td>
+				<td class="center">${sample.xs+sample.s+sample.m+sample.l+sample.xl+sample.xxl+sample.j}</td>
 				<td class="center">${sample.color}</td>
 				<td class="center">${sample.xs}</td>
 				<td class="center">${sample.s}</td>
@@ -119,6 +120,7 @@ table.table.table-bordered{
 				<td class="center">${sample.l}</td>
 				<td class="center">${sample.xl}</td>
 				<td class="center">${sample.xxl}</td>
+				<td class="center">${sample.j}</td>
 				<td></td>
 			</tr>
 		</c:forEach>

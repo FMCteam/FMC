@@ -12,13 +12,12 @@
           http://www.springframework.org/schema/context/spring-context-3.0.xsd   
           http://www.springframework.org/schema/aop   
           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-          http://drools.org/schema/drools-spring
           http://drools.org/schema/drools-spring.xsd" >
 
 	<import resource="spring-transaction.xml" />
 
-	<import resource="spring-jbpm.xml" />
-
+	<import resource="spring-activiti.xml" />
+	
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -81,6 +80,17 @@
 				<value>nju.software.dataobject.CheckRecord</value>
 				<value>nju.software.dataobject.CheckDetail</value>
 				<value>nju.software.dataobject.OperateRecord</value>
+				
+				<value>nju.software.dataobject.AccountRole</value>
+				<value>nju.software.dataobject.AccountView</value>
+				<value>nju.software.dataobject.Permission</value>
+				<value>nju.software.dataobject.Role</value>
+				<value>nju.software.dataobject.RolePermission</value>
+				<value>nju.software.dataobject.RolePriView</value>
+				<value>nju.software.dataobject.TreeNode</value>
+				<value>nju.software.dataobject.UserRoleView</value>
+				
+				
 			</list>
 		</property>
 	</bean>
@@ -209,8 +219,14 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-		<bean id="OperateRecordDAO"
+	<bean id="OperateRecordDAO"
 		class="nju.software.dao.impl.OperateRecordDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="BaseDaoImpl"
+		class="nju.software.dao.impl.BaseDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

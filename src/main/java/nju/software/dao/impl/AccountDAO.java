@@ -6,6 +6,7 @@ import nju.software.dao.IAccountDAO;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 
+import org.drools.lang.dsl.DSLMapParser.statement_return;
 import org.hibernate.LockMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -33,6 +34,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	public static final String USER_TYPE = "userType";
 	public static final String USER_PASSWORD = "userPassword";
 	public static final String USER_NAME = "userName";
+	public static final String USER_ROLE = "userRole";
 
 	protected void initDao() {
 		// do nothing
@@ -185,6 +187,11 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 */
 	public List<Account> findByUserType(Object userType) {
 		return findByProperty(USER_TYPE, userType);
+	}
+	
+	public List<Account> findByUserRole(Object userRole){
+		return findByProperty(USER_ROLE, userRole);
+		
 	}
 
 	/*

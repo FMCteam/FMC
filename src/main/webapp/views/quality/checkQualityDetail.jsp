@@ -48,6 +48,7 @@
 								<td class="title">L</td>
 								<td class="title">XL</td>
 								<td class="title">XXL</td>
+								<td class="title">均码</td>
 							</tr>
 							<c:forEach var="produced" items="${orderInfo.produced}">
 								<tr>
@@ -58,11 +59,12 @@
 									<td>${produced.l}</td>
 									<td>${produced.xl}</td>
 									<td>${produced.xxl}</td>
+									<td>${produced.j}</td>
 								</tr>
 							</c:forEach>
 							<tr>
 								<td class="title">加工方</td>
-								<td colspan="7">${orderInfo.order.payAccountInfo}</td>
+								<td colspan="8">${orderInfo.order.payAccountInfo}</td>
 							</tr>
 							<tr>
 								<td class="title" rowspan="${fn:length(orderInfo.produced)+1}">本次实收合格数量</td>
@@ -73,6 +75,7 @@
 								<td class="title">L</td>
 								<td class="title">XL</td>
 								<td class="title">XXL</td>
+								<td class="title">均码</td>
 							</tr>
 							<c:forEach var="produced" items="${orderInfo.produced}">
 								<tr name="repairNumber">
@@ -89,6 +92,8 @@
 									<td><input class="span12 good_xl" type="number"
 										min="0" required="required"   value="0"/></td>
 									<td><input class="span12 good_xxl" type="number"
+										min="0" required="required"   value="0"/></td>
+									<td><input class="span12 good_j" type="number"
 										min="0" required="required"   value="0"/></td>
 								</tr>
 							</c:forEach>
@@ -125,7 +130,7 @@
 						    
 							<tr id="repairInfo">
 								<td class="title" colspan="1">加工方</td>
-								<td>
+								<td colspan="2">
 									<input name="repair_side" class="span12" type="text" id="repair_side" required="required"/>
 								</td>
 								<td class="title" colspan="1">本次回修数量</td>
@@ -181,6 +186,7 @@
 						<input id="good_l" name="good_l" type="hidden" /> 
 						<input id="good_xl" name="good_xl" type="hidden" /> 
 						<input id="good_xxl" name="good_xxl" type="hidden" />
+						<input id="good_j" name="good_j" type="hidden" />
 						
 						<input id="bad_color" name="bad_color" type="hidden" /> 
 						<input id="bad_xs" name="bad_xs" type="hidden" /> 
@@ -189,6 +195,7 @@
 						<input id="bad_l" name="bad_l" type="hidden" /> 
 						<input id="bad_xl" name="bad_xl" type="hidden" /> 
 						<input id="bad_xxl" name="bad_xxl" type="hidden" />
+						<input id="bad_j" name="bad_j" type="hidden" />
 					
 						<button class="btn btn-primary" onclick="history.back();">返回</button>
 						<div class="action" style="float:right">

@@ -49,6 +49,7 @@
 								<td class="title">L</td>
 								<td class="title">XL</td>
 								<td class="title">XXL</td>
+								<td class="title">均码</td>
 							</tr>
 							<c:forEach var="produce" items="${orderInfo.produce}">
 								<tr>
@@ -59,17 +60,18 @@
 									<td>${produce.l}</td>
 									<td>${produce.xl}</td>
 									<td>${produce.xxl}</td>
+									<td>${produce.j}</td>
 								</tr>
 							</c:forEach>
 							<tr>
 								<td class="title"><span class="required">*</span>加工方</td>
-								<td colspan="7"><input class="span14" id="processing_side"
+								<td colspan="8"><input class="span14" id="processing_side"
 									name="processing_side" type="text" /></td>
 							</tr>
 							<tr>
 								<td colspan="4"><span>外发时间 ：</span><input type="text" name="sendTime" id="input_day" readonly="readonly">
 								</td>
-								<td colspan="4"><span>负责人：</span><input type="text" readonly="readonly"
+								<td colspan="5"><span>负责人：</span><input type="text" readonly="readonly"
 									name="Purchase_director" value="${employee_name}"></td>
 							</tr>
 						</table>
@@ -99,6 +101,8 @@
 										value="${produce.xl}"  name="produce_xl"/></td>
 									<td><input class="span12 produce_xxl" type="hidden"
 									    value="${produce.xxl}"  name="produce_xxl"/></td>
+									<td><input class="span12 produce_j" type="hidden"
+									    value="${produce.j}"  name="produce_j"/></td>
 								</tr>
 							</c:forEach>
 					</form>

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jbpm.task.query.TaskSummary;
+import org.activiti.engine.task.Task;
 
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
@@ -38,8 +38,8 @@ public class OrderInfo {
 	private List<Product>products=null;
 	private List<Package>packages=null;
 	private List<List<PackageDetail>>packageDetails=null;
-	private TaskSummary task;
-	private long taskId;
+	private Task task;
+	private String taskId;
 	private List<Produce> produces;
 	private Map<String,Object> data=new HashMap<String,Object>();
 	private List<Produce> sample;
@@ -166,11 +166,11 @@ public class OrderInfo {
 		this.packageDetails = packageDetails;
 	}
 
-	public TaskSummary getTask() {
+	public Task getTask() {
 		return task;
 	}
 
-	public void setTask(TaskSummary task) {
+	public void setTask(Task task) {
 		this.task = task;
 	}
 	
@@ -180,7 +180,7 @@ public class OrderInfo {
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderInfo(Order order, long taskId) {
+	public OrderInfo(Order order, String taskId) {
 		super();
 		this.order = order;
 		this.taskId = taskId;
@@ -192,10 +192,10 @@ public class OrderInfo {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-	public long getTaskId() {
+	public String getTaskId() {
 		return taskId;
 	}
-	public void setTaskId(long taskId) {
+	public void setTaskId(String taskId) {
 		this.taskId = taskId;
 	}
 

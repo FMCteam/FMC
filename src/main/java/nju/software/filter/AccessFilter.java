@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 import nju.software.dataobject.Account;
 import nju.software.service.impl.BuyServiceImpl;
@@ -25,13 +24,8 @@ import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
 import nju.software.service.impl.QualityServiceImpl;
 import nju.software.service.impl.SweaterMakeServiceImpl;
-import nju.software.util.JbpmAPIUtil;
 
 public class AccessFilter implements Filter {
-
-	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-
 	private FilterConfig filterConfig = null;
 	public static HashMap<String, String> accessTable = new HashMap<String, String>();
 	static {
@@ -69,13 +63,11 @@ public class AccessFilter implements Filter {
 	};
 
 	public void destroy() {
-		// TODO Auto-generated method stub
 
 	}
 
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		String type = filterConfig.getInitParameter("type");
 		boolean has_access = false;
 
@@ -99,9 +91,9 @@ public class AccessFilter implements Filter {
 		} else {
 			String user_role = curUser.getUserRole();
 			String access = accessTable.get(type);
+			System.err.println("ddddddddddddddddd"+ access);
 			//System.out.println("null "+access);
 			if (access != null
-
 //					&& ((access.equals("ALL") && !user_role.equals("CUSTOMER")) || access
 					&& (access.equals("ALL")|| access
 							.contains(user_role))) {

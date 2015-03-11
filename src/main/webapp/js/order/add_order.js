@@ -22,31 +22,31 @@
 		});	
 		//大货加工
 		$("table.produce_table a").click(function(){
-			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
-			if(checkNum("produce_table",colName,7)){
-				table_addrow_onclick("produce_table",colName,7);
-				$("input[name='ask_amount']").val(calculate("produce_table",colName,7));
+			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl","produce_j"];
+			if(checkNum("produce_table",colName,8)){
+				table_addrow_onclick("produce_table",colName,8);
+				$("input[name='ask_amount']").val(calculate("produce_table",colName,8));
 				for(var i=0;i<$("td.ask_amount").length;i++){
-					$("td.ask_amount").eq(i).text(calculate("produce_table",colName,7));
+					$("td.ask_amount").eq(i).text(calculate("produce_table",colName,8));
 				}
 			}
 		});
 		//样衣加工
 		$("table.sample_produce_table a").click(function(){
-			var colName = ["sample_produce_color","sample_produce_xs","sample_produce_s","sample_produce_m","sample_produce_l","sample_produce_xl","sample_produce_xxl"];
-			if(checkNum("sample_produce_table",colName,7)){
-				table_addrow_onclick("sample_produce_table",colName,7);
-				$("input[name='sample_amount']").val(calculate("produce_table",colName,7));
+			var colName = ["sample_produce_color","sample_produce_xs","sample_produce_s","sample_produce_m","sample_produce_l","sample_produce_xl","sample_produce_xxl","sample_produce_j"];
+			if(checkNum("sample_produce_table",colName,8)){
+				table_addrow_onclick("sample_produce_table",colName,8);
+				$("input[name='sample_amount']").val(calculate("produce_table",colName,8));
 			}
 		});
 		//大货加工确认
 		$("table.confirm_produce_table a").click(function(){
-			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
-			if(checkNum("confirm_produce_table",colName,7)){
-				table_addrow_onclick("confirm_produce_table",colName,7);
-				$("input[name='ask_amount']").val(calculate("confirm_produce_table",colName,7));
+			var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl","produce_j"];
+			if(checkNum("confirm_produce_table",colName,8)){
+				table_addrow_onclick("confirm_produce_table",colName,8);
+				$("input[name='ask_amount']").val(calculate("confirm_produce_table",colName,8));
 				for(var i=0;i<$("td.ask_amount").length;i++){
-					$("td.ask_amount").eq(i).text(calculate("confirm_produce_table",colName,7));
+					$("td.ask_amount").eq(i).text(calculate("confirm_produce_table",colName,8));
 				}
 			}
 		});
@@ -251,7 +251,6 @@ function checkNum(table_name, col_name, col_sum) {
 			}
 		}
 	}
-	
 	if (totalNum > 0){
 		return true;
 	}else{
@@ -284,8 +283,8 @@ function calculate(table_name,col_name,col_sum){
 }
 
 function calTotalMoney(){
-	var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
-	var askAmount = calculate("produce_table",colName,7);
+	var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl","produce_j"];
+	var askAmount = calculate("produce_table",colName,8);
 	
 	var orderInfoQuoteOuterPrice = $("input[name='orderInfoQuoteOuterPrice']").val();
 //	var orderInfoOrderAskAmount = $("input[name='orderInfoOrderAskAmount']").val();
@@ -301,8 +300,8 @@ function deleteRow(a,table){
 	//alert($(a).parents('.'+table+' tr').length);
 	$(a).parents('.'+table+' tr').remove();
 	if(table=="produce_table" || table=="confirm_produce_table"){
-		var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl"];
-		var askAmount = calculate("produce_table",colName,7);
+		var colName = ["produce_color","produce_xs","produce_s","produce_m","produce_l","produce_xl","produce_xxl","produce_j"];
+		var askAmount = calculate("produce_table",colName,8);
 		$("input[name='ask_amount']").val(askAmount);
 		$("td.ask_amount").text(askAmount);
 		//如果是大货生产确认，还需要重新计算总金额
@@ -313,8 +312,8 @@ function deleteRow(a,table){
 	}
 	
 	if(table=="sample_produce_table"){
-		var colName = ["sample_produce_color","sample_produce_xs","sample_produce_s","sample_produce_m","sample_produce_l","sample_produce_xl","sample_produce_xxl"];
-		var askAmount = calculate("sample_produce_table",colName,7);
+		var colName = ["sample_produce_color","sample_produce_xs","sample_produce_s","sample_produce_m","sample_produce_l","sample_produce_xl","sample_produce_xxl","sample_produce_j"];
+		var askAmount = calculate("sample_produce_table",colName,8);
 		$("input[name='sample_amount']").val(askAmount);
 		$("td.sample_amount").text(askAmount);
 	}
@@ -387,6 +386,7 @@ function verify(){
 	$("#produce_l").val(getTdString("produce_l"));
 	$("#produce_xl").val(getTdString("produce_xl"));
 	$("#produce_xxl").val(getTdString("produce_xxl"));
+	$("#produce_j").val(getTdString("produce_j"));
 	$("#sample_produce_color").val(getTdString("sample_produce_color"));
 	$("#sample_produce_xs").val(getTdString("sample_produce_xs"));
 	$("#sample_produce_s").val(getTdString("sample_produce_s"));
@@ -394,6 +394,7 @@ function verify(){
 	$("#sample_produce_l").val(getTdString("sample_produce_l"));
 	$("#sample_produce_xl").val(getTdString("sample_produce_xl"));
 	$("#sample_produce_xxl").val(getTdString("sample_produce_xxl"));
+	$("#sample_produce_j").val(getTdString("sample_produce_j"));
 	$("#version_size").val(getTdString("version_size"));
 	$("#version_centerBackLength").val(getTdString("version_centerBackLength"));
 	$("#version_bust").val(getTdString("version_bust"));

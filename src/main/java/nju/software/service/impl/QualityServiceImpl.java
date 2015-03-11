@@ -15,17 +15,14 @@ import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.service.QualityService;
-import nju.software.util.JbpmAPIUtil;
+import nju.software.util.ActivitiAPIUtil;
 
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("qualityServiceImpl")
-public class QualityServiceImpl implements QualityService {
+public class QualityServiceImpl implements QualityService  {
 
 	public final static String ACTOR_QUALITY_MANAGER = "qualityManager";
 	public final static String TASK_CHECK_QUALITY = "checkQuality";
@@ -39,7 +36,7 @@ public class QualityServiceImpl implements QualityService {
 	@Autowired
 	private CustomerDAO customerDAO;
 	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
+	private ActivitiAPIUtil activitiAPIUtil;
 	@Autowired
 	private ServiceUtil service;
 	@Autowired
@@ -51,7 +48,6 @@ public class QualityServiceImpl implements QualityService {
 
 	@Override
 	public List<Map<String, Object>> getCheckQualityList() {
-		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_QUALITY_MANAGER, TASK_CHECK_QUALITY);
 	}
 
@@ -65,17 +61,9 @@ public class QualityServiceImpl implements QualityService {
 
 	}
 
-	public Object getVariable(String name, TaskSummary task) {
-		StatefulKnowledgeSession session = jbpmAPIUtil.getKsession();
-		long processId = task.getProcessInstanceId();
-		WorkflowProcessInstance process = (WorkflowProcessInstance) session
-				.getProcessInstance(processId);
-		return process.getVariable(name);
-	}
-
 	// 测试异常是否回滚
 	@Override
-	public boolean test(int orderId, String clothesType) throws Exception {
+	public boolean test(int orderId, String clothesType) throws RuntimeException {
 
 		Order order = orderDAO.findById(orderId);
 		clothesType = null;
@@ -86,9 +74,9 @@ public class QualityServiceImpl implements QualityService {
 	}
 
 	@Override
-	public String checkQualitySubmit(int orderId, long taskId, String isFinal,
-			CheckRecord checkRecord, List<Produce> goodList) throws Exception {
-		//this.test(orderId,"李四");
+	@Transactional(rollbackFor=Exception.class)
+	public String checkQualitySubmit(int orderId, String taskId, String isFinal,
+			CheckRecord checkRecord, List<Produce> goodList) throws RuntimeException {
 		String msg = "";
 
 		// 先根据orderId找出本次订单大货生产总数（外发总数）
@@ -192,6 +180,10 @@ public class QualityServiceImpl implements QualityService {
 				checkDetailDAO.save(checkDetail);
 			}
 		}
+//		Order order = orderDAO.findById(orderId);
+//		String clothesType = null;
+//		order.setAskAmount(Integer.valueOf(clothesType));
+//		orderDAO.merge(order);
 
 		// for (int i = 0; i < badList.size(); i++) {
 		// Produce produce = badList.get(i);
@@ -222,10 +214,9 @@ public class QualityServiceImpl implements QualityService {
 		data.put("isHaoDuoYi", isHaoDuoYi);
 		data.put("isSweater", isSweater);
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_QUALITY_MANAGER);
+			activitiAPIUtil.completeTask(taskId, data, ACTOR_QUALITY_MANAGER);
 			return msg;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return msg;

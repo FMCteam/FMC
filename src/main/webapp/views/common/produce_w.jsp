@@ -5,13 +5,13 @@
 		<td class="span1 title" colspan="2">样衣总数</td>
 		<td class="span1 title" colspan="2">大货总数</td>
 		<td class="span1 title" colspan="2">最迟交货时间</td>
-		<td class="span1 title" colspan="2">完工时间（天）</td>
+		<td class="span1 title" colspan="3">完工时间（天）</td>
 	</tr>
 	<tr>
 		<td class="span1" colspan="2">${orderInfo.order.sampleAmount}</td>
 		<td class="span1 ask_amount" colspan="2">${orderInfo.order.askAmount}</td>
 		<td class="span1" colspan="2">${fn:substring(orderInfo.order.askDeliverDate,0,10)}</td>
-		<td class="span1" colspan="2">${orderInfo.order.askProducePeriod}</td>
+		<td class="span1" colspan="3">${orderInfo.order.askProducePeriod}</td>
 	</tr>
 	<c:if test="${orderInfo.order.reorder==0 }">	
 		<tr>
@@ -23,6 +23,7 @@
 			<td class="span1 title">L</td>
 			<td class="span1 title">XL</td>
 			<td class="span1 title">XXL</td>
+			<td class="span1 title">均码</td>
 			<td class="span1 title">总计</td>
 		</tr>
 		<c:forEach var="sample" items="${orderInfo.sample}">
@@ -34,6 +35,7 @@
 				<td>${sample.l}</td>
 				<td>${sample.xl}</td>
 				<td>${sample.xxl}</td>
+				<td>${sample.j}</td>
 				<td>${sample.produceAmount}</td>
 			</tr>
 		</c:forEach>
@@ -52,10 +54,12 @@
 					<td class="span1 title">L</td>
 					<td class="span1 title">XL</td>
 					<td class="span1 title">XXL</td>
+					<td class="span1 title">均码</td>
 					<td class="span1 title">操作</td>
 				</tr>
 				<tr class="addrow">
 					<td><input type="text" class="span12" /></td>
+					<td><input type="text" class="span12"  value="0"/></td>
 					<td><input type="text" class="span12"  value="0"/></td>
 					<td><input type="text" class="span12"  value="0"/></td>
 					<td><input type="text" class="span12"  value="0"/></td>
@@ -73,6 +77,7 @@
 						<td class='span12 produce_l'>${produceRow.l }</td>
 						<td class='span12 produce_xl'>${produceRow.xl }</td>
 						<td class='span12 produce_xxl'>${produceRow.xxl }</td>
+						<td class='span12 produce_j'>${produceRow.j }</td>
 						<td class='span12'><a
 							onclick="deleteRow(this,'confirm_produce_table')">删除</a></td>
 					</tr>

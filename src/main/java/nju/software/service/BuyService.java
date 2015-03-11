@@ -18,7 +18,7 @@ public interface BuyService {
 
 	public Map<String, Object> getVerifyPurchaseDetail(Integer orderId);
 
-	public boolean verifyPurchaseSubmit(long taskId, boolean result,
+	public boolean verifyPurchaseSubmit(String taskId, boolean result,
 			String comment);
 
 	// ===========================采购成本核算=================================
@@ -26,7 +26,7 @@ public interface BuyService {
 
 	public Map<String, Object> getComputePurchaseCostDetail(Integer orderId);
 
-	public void computePurchaseCostSubmit(int orderId, long taskId,
+	public void computePurchaseCostSubmit(int orderId, String taskId,
 			boolean result, String comment, String[] fabric_names,
 			String[] fabric_amouts, String[] tear_per_meters,
 			String[] cost_per_meters, String[] accessory_names,
@@ -38,9 +38,9 @@ public interface BuyService {
 
 	public Map<String, Object> getPurchaseSampleMaterialDetail(Integer orderId);
 
-	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result);
+	public boolean purchaseSampleMaterialSubmit(String taskId, boolean result);
 
-	public boolean purchaseSampleMaterialSubmit(long taskId, boolean result,
+	public boolean purchaseSampleMaterialSubmit(String taskId, boolean result,
 			boolean needcraft, String orderId, String samplepurName,
 			Timestamp samplepurDate, String samplesupplierName);
 
@@ -49,9 +49,9 @@ public interface BuyService {
 
 	public Map<String, Object> getConfirmPurchaseDetail(Integer orderId);
 
-	public boolean confirmPurchaseSubmit(long taskId, boolean result);
+	public boolean confirmPurchaseSubmit(String taskId, boolean result);
 
-	public boolean confirmPurchaseSubmit(long taskId, boolean result,
+	public boolean confirmPurchaseSubmit(String taskId, boolean result,
 			String orderId);
 
 	// ===========================大货原料采购=================================
@@ -59,9 +59,9 @@ public interface BuyService {
 
 	public Map<String, Object> getPurchaseMaterialDetail(Integer orderId);
 
-	public boolean purchaseMaterialSubmit(long taskId, boolean result);
+	public boolean purchaseMaterialSubmit(String taskId, boolean result);
 
-	public boolean purchaseMaterialSubmit(long taskId, boolean result,
+	public boolean purchaseMaterialSubmit(String taskId, boolean result,
 			String orderId, String masspurName, Timestamp masspurDate,
 			String masssupplierName);
 
@@ -96,10 +96,11 @@ public interface BuyService {
 
 	public Map<String, Object> getPurchaseSweaterMaterialDetail(int orderId);
 
-	public boolean purchaseSweaterMaterialSubmit(long taskId, String orderId,
+	public boolean purchaseSweaterMaterialSubmit(String taskId, String orderId,
 			String total_price, String weight, String type,
 			String purchase_time, String supplier, String head,
 			boolean buySweaterMaterialResult);
 
+	public boolean isNeedCraft(String processId, String variableName);
 
 }

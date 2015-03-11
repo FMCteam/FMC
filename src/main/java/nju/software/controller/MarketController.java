@@ -2,26 +2,18 @@
 package nju.software.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListResourceBundle;
 import java.util.Map;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSONObject;
 import nju.software.dao.impl.DeliveryRecordDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
@@ -30,16 +22,11 @@ import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
-import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
-import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.SearchInfo;
 import nju.software.dataobject.VersionData;
-import nju.software.model.OrderInfo;
-import nju.software.model.OrderModel;
-import nju.software.model.QuoteModel;
 import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
 import nju.software.service.DesignCadService;
@@ -50,23 +37,15 @@ import nju.software.service.OrderService;
 import nju.software.service.QuoteService;
 import nju.software.service.impl.BuyServiceImpl;
 import nju.software.service.impl.DesignServiceImpl;
-import nju.software.service.impl.FinanceServiceImpl;
-import nju.software.service.impl.JbpmTest;
 import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
-import nju.software.service.impl.ServiceUtil;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
+import nju.software.util.ImageUtil;
 import nju.software.util.JavaMailUtil;
-import nju.software.util.JbpmAPIUtil;
-import nju.software.util.StringUtil;
+import nju.software.util.ListUtil;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.net.ntp.TimeStamp;
-import org.drools.command.GetDefaultValue;
-import org.drools.runtime.process.WorkflowProcessInstance;
-import org.jbpm.task.Task;
-import org.jbpm.task.query.TaskSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,13 +80,9 @@ public class MarketController {
 	@Autowired
 	private CustomerService customerService;
 	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
 	private DeliveryRecordDAO deliveryRecordDAO;
 	@Autowired
 	private JavaMailUtil javaMailUtil;
-	@Autowired
-	private JbpmTest jbpmTest;
 
 	// ================================客户下单====================================
 	@RequestMapping(value = "/market/addOrderList.do")
@@ -213,6 +188,7 @@ public class MarketController {
 		String produce_ls = request.getParameter("produce_l");
 		String produce_xls = request.getParameter("produce_xl");
 		String produce_xxls = request.getParameter("produce_xxl");
+		String produce_js = request.getParameter("produce_j");
 		String produce_color[] = produce_colors.split(",");
 		String produce_xs[] = produce_xss.split(",");
 		String produce_s[] = produce_ss.split(",");
@@ -220,6 +196,7 @@ public class MarketController {
 		String produce_l[] = produce_ls.split(",");
 		String produce_xl[] = produce_xls.split(",");
 		String produce_xxl[] = produce_xxls.split(",");
+		String produce_j[] = produce_js.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
 			if (produce_color[i].equals(""))
@@ -234,13 +211,15 @@ public class MarketController {
 			int xs = Integer.parseInt(produce_xs[i]);
 			int xl = Integer.parseInt(produce_xl[i]);
 			int xxl = Integer.parseInt(produce_xxl[i]);
+			int j = Integer.parseInt(produce_j[i]);
 			p.setL(l);
 			p.setM(m);
 			p.setS(s);
 			p.setXl(xl);
 			p.setXs(xs);
 			p.setXxl(xxl);
-			p.setProduceAmount(l + m + s + xs + xl + xxl);
+			p.setJ(j);
+			p.setProduceAmount(l + m + s + xs + xl + xxl + j);
 			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
@@ -254,6 +233,7 @@ public class MarketController {
 		String sample_produce_ls = request.getParameter("sample_produce_l");
 		String sample_produce_xls = request.getParameter("sample_produce_xl");
 		String sample_produce_xxls = request.getParameter("sample_produce_xxl");
+		String sample_produce_js = request.getParameter("sample_produce_j");
 		String sample_produce_color[] = sample_produce_colors.split(",");
 		String sample_produce_xs[] = sample_produce_xss.split(",");
 		String sample_produce_s[] = sample_produce_ss.split(",");
@@ -261,6 +241,7 @@ public class MarketController {
 		String sample_produce_l[] = sample_produce_ls.split(",");
 		String sample_produce_xl[] = sample_produce_xls.split(",");
 		String sample_produce_xxl[] = sample_produce_xxls.split(",");
+		String sample_produce_j[] = sample_produce_js.split(",");
 		List<Produce> sample_produces = new ArrayList<Produce>();
 		int sample_amount = 0;
 		for (int i = 0; i < sample_produce_color.length; i++) {
@@ -275,14 +256,16 @@ public class MarketController {
 			int xs = Integer.parseInt(sample_produce_xs[i]);
 			int xl = Integer.parseInt(sample_produce_xl[i]);
 			int xxl = Integer.parseInt(sample_produce_xxl[i]);
+			int j = Integer.parseInt(sample_produce_j[i]);
 			p.setL(l);
 			p.setM(m);
 			p.setS(s);
 			p.setXl(xl);
 			p.setXs(xs);
 			p.setXxl(xxl);
+			p.setJ(j);
 			p.setType(Produce.TYPE_SAMPLE_PRODUCE);
-			int temp = l + m + s + xs + xl + xxl;
+			int temp = l + m + s + xs + xl + xxl + j;
 			p.setProduceAmount(temp);
 			sample_amount+=temp;
 			sample_produces.add(p);
@@ -441,6 +424,7 @@ public class MarketController {
 			request.setAttribute("notify", "该订单为好多衣客户所下订单，暂时无法进行翻单！");
 		}
 		List<Map<String, Object>> list = marketService.getAddMoreOrderList(Integer.parseInt(cid));
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "下翻单");
 		model.addAttribute("url", "/market/addMoreOrderDetail.do");
@@ -470,6 +454,7 @@ public class MarketController {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService.getSearchAddMoreOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		List<Map<String,Object>> resultlist =  new ArrayList();
 		for(int i =0;i<list.size();i++){
 			Map<String, Object> model1  = list.get(i);
@@ -586,6 +571,7 @@ public class MarketController {
 		String produce_ls = request.getParameter("produce_l");
 		String produce_xls = request.getParameter("produce_xl");
 		String produce_xxls = request.getParameter("produce_xxl");
+		String produce_js = request.getParameter("produce_j");
 		String produce_color[] = produce_colors.split(",");
 		String produce_xs[] = produce_xss.split(",");
 		String produce_s[] = produce_ss.split(",");
@@ -593,6 +579,7 @@ public class MarketController {
 		String produce_l[] = produce_ls.split(",");
 		String produce_xl[] = produce_xls.split(",");
 		String produce_xxl[] = produce_xxls.split(",");
+		String produce_j[] = produce_js.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
 			if (produce_color[i].equals(""))
@@ -607,13 +594,15 @@ public class MarketController {
 			int xs = Integer.parseInt(produce_xs[i]);
 			int xl = Integer.parseInt(produce_xl[i]);
 			int xxl = Integer.parseInt(produce_xxl[i]);
+			int j = Integer.parseInt(produce_j[i]);
 			p.setL(l);
 			p.setM(m);
 			p.setS(s);
 			p.setXl(xl);
 			p.setXs(xs);
 			p.setXxl(xxl);
-			p.setProduceAmount(l + m + s + xs + xl + xxl);
+			p.setJ(j);
+			p.setProduceAmount(l + m + s + xs + xl + xxl + j);
 			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
@@ -791,33 +780,10 @@ public class MarketController {
 	@Transactional(rollbackFor = Exception.class)
 	public String precondition(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<TaskSummary> task1 = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"CAIGOUZHUGUAN", "Purchasing_accounting");
-
-		List<TaskSummary> task2 = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"SHEJIZHUGUAN", "design_accounting");
-		List<TaskSummary> task3 = jbpmAPIUtil.getAssignedTasksByTaskname(
-				"SHENGCHANZHUGUAN", "business_accounting");
-		try {
-			for (TaskSummary s1 : task1) {
-
-				jbpmAPIUtil.completeTask(s1.getId(), null, "CAIGOUZHUGUAN");
-			}
-			for (TaskSummary s1 : task2) {
-
-				jbpmAPIUtil.completeTask(s1.getId(), null, "SHEJIZHUGUAN");
-			}
-			for (TaskSummary s1 : task3) {
-
-				jbpmAPIUtil.completeTask(s1.getId(), null, "SHENGCHANZHUGUAN");
-			}
-			System.out.println("precodition satisfied");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-
+		marketService.testPrecondition("CAIGOUZHUGUAN", "Purchasing_accounting");
+		marketService.testPrecondition("SHEJIZHUGUAN", "design_accounting");
+		marketService.testPrecondition("SHENGCHANZHUGUAN", "business_accounting");
+		
 		return null;
 	}
 
@@ -845,8 +811,8 @@ public class MarketController {
 		if(!outerPrice.equals("")) outer = Float.parseFloat(outerPrice);
 		if(!s_single.equals("")) single = Float.parseFloat(s_single);
 		int id = Integer.parseInt(orderId);
-		long taskId = Long.parseLong(s_taskId);
-		long processId = Long.parseLong(s_processId);
+		String taskId = s_taskId;
+		String processId = s_processId;
 		Quote quote = quoteService.findByOrderId(orderId);
 		quote.setSingleCost(single);
 		quote.setProfitPerPiece(profit);
@@ -869,7 +835,7 @@ public class MarketController {
 		String orderId = request.getParameter("orderId");
 		// String s_processId=request.getParameter("pid");
 		int id = Integer.parseInt(orderId);
-		// long processId=Long.parseLong(s_processId);
+		// String processId=String.parseString(s_processId);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		Map<String, Object> orderInfo = marketService.getModifyQuoteDetail(id,
@@ -888,7 +854,7 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> tasks = marketService
 				.getModifyQuoteList(account.getUserId());
-
+		tasks = ListUtil.reserveList(tasks);
 		model.put("list", tasks);
 		model.addAttribute("taskName", "修改报价");
 		model.addAttribute("url", "/market/modifyQuoteDetail.do");
@@ -920,6 +886,7 @@ public class MarketController {
 		List<Map<String, Object>> tasks = marketService
 				.getSearchModifyQuoteList(account.getUserId(),ordernumber,customername,stylename,startdate,enddate,employeeIds);
 
+		tasks = ListUtil.reserveList(tasks);
 		model.put("list", tasks);
 		model.addAttribute("taskName", "修改报价订单搜索");
 		model.addAttribute("url", "/market/modifyQuoteDetail.do");
@@ -938,7 +905,7 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> tasks = marketService
 				.getModifyProductList(account.getUserId());
-
+		tasks = ListUtil.reserveList(tasks);
 		model.put("list", tasks);
 		model.addAttribute("taskName", "修改合同加工单");
 		model.addAttribute("url", "/market/modifyProductDetail.do");
@@ -971,6 +938,7 @@ public class MarketController {
 		List<Map<String, Object>> tasks = marketService
 				.getSearchModifyProductList(account.getUserId(),ordernumber,customername,stylename,startdate,enddate,employeeIds);
 
+		tasks = ListUtil.reserveList(tasks);
 		model.put("list", tasks);
 		model.addAttribute("taskName", "修改合同加工单搜索");
 		model.addAttribute("url", "/market/modifyProductDetail.do");
@@ -1004,9 +972,9 @@ public class MarketController {
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
+		String taskId = s_taskId;
 		String s_processId = request.getParameter("processId");
-		long processId = Long.parseLong(s_processId);
+		String processId = s_processId;
 		boolean editworksheetok = Boolean.parseBoolean(request
 				.getParameter("tof"));
 		// 大货加工要求
@@ -1017,6 +985,7 @@ public class MarketController {
 		String produce_ls = request.getParameter("produce_l");
 		String produce_xls = request.getParameter("produce_xl");
 		String produce_xxls = request.getParameter("produce_xxl");
+		String produce_js = request.getParameter("produce_j");
 		String produce_color[] = produce_colors.split(",");
 		String produce_xs[] = produce_xss.split(",");
 		String produce_s[] = produce_ss.split(",");
@@ -1024,6 +993,7 @@ public class MarketController {
 		String produce_l[] = produce_ls.split(",");
 		String produce_xl[] = produce_xls.split(",");
 		String produce_xxl[] = produce_xxls.split(",");
+		String produce_j[] = produce_js.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
 			if (produce_color[i].equals(""))
@@ -1037,13 +1007,15 @@ public class MarketController {
 			int xs = Integer.parseInt(produce_xs[i]);
 			int xl = Integer.parseInt(produce_xl[i]);
 			int xxl = Integer.parseInt(produce_xxl[i]);
+			int j = Integer.parseInt(produce_j[i]);
 			p.setL(l);
 			p.setM(m);
 			p.setS(s);
 			p.setXl(xl);
 			p.setXs(xs);
 			p.setXxl(xxl);
-			p.setProduceAmount(l + m + s + xs + xl + xxl);
+			p.setJ(j);
+			p.setProduceAmount(l + m + s + xs + xl + xxl + j);
 			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
@@ -1075,8 +1047,8 @@ public class MarketController {
 		if(!outerPrice.equals("")) outer = Float.parseFloat(outerPrice);
 		if(!s_single.equals("")) single = Float.parseFloat(s_single);
 		int id = Integer.parseInt(orderId);
-		long taskId = Long.parseLong(s_taskId);
-		long processId = Long.parseLong(s_processId);
+		String taskId = s_taskId;
+		String processId = s_processId;
 
 		Quote quote = quoteService.findByOrderId(orderId);
 		quote.setProfitPerPiece(profit);
@@ -1103,9 +1075,7 @@ public class MarketController {
 				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);		
 		model.addAttribute("merge_w", true);
-		String verifyQuoteComment = (String)jbpmAPIUtil.getVariable(
-				(TaskSummary) orderModel.get("task"),
-				MarketServiceImpl.VERIFY_QUOTE_COMMENT);
+		String verifyQuoteComment = marketService.getComment(orderModel.get("task"),MarketServiceImpl.VERIFY_QUOTE_COMMENT);
 		model.addAttribute("verifyQuoteComment", verifyQuoteComment);
 		return "market/mergeQuoteDetail";
 	}
@@ -1120,7 +1090,7 @@ public class MarketController {
 
 		List<Map<String, Object>> list = marketService
 				.getMergeQuoteList(account.getUserId());
-
+		list = ListUtil.reserveList(list);
 		/*if (list.size() == 0) {
 			jbpmTest.completeComputeCost(account.getAccountId() + "");
 			list = marketService.getMergeQuoteList(account.getAccountId());
@@ -1153,7 +1123,7 @@ public class MarketController {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService.getSearchMergeQuoteList(account.getUserId(),ordernumber,customername,stylename,startdate,enddate,employeeIds);
-
+		list = ListUtil.reserveList(list);
 		/*if (list.size() == 0) {
 			jbpmTest.completeComputeCost(account.getAccountId() + "");
 			list = marketService.getMergeQuoteList(account.getAccountId());
@@ -1195,8 +1165,8 @@ public class MarketController {
 		if(!outerPrice.equals("")) outer = Float.parseFloat(outerPrice);
 		if(!s_single.equals("")) single = Float.parseFloat(s_single);
 		int id = Integer.parseInt(orderId);
-		long taskId = Long.parseLong(s_taskId);
-		long processId = Long.parseLong(s_processId);
+		String taskId = s_taskId;
+		String processId = s_processId;
 		Quote quote = quoteService.findByOrderId(orderId);
 		quote.setSingleCost(single);
 		quote.setProfitPerPiece(profit);
@@ -1235,6 +1205,7 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService
 				.getVerifyQuoteList(account.getUserId());
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "审核报价");
 		model.addAttribute("url", "/market/verifyQuoteDetail.do");
@@ -1266,6 +1237,7 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSearchVerifyQuoteList(account.getUserId(),ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "审核报价订单查询");
 		model.addAttribute("url", "/market/verifyQuoteDetail.do");
@@ -1284,6 +1256,7 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> orderModelList = marketService
 				.getModifyOrderList(account.getUserId());
+		orderModelList = ListUtil.reserveList(orderModelList);
 		/*if (orderModelList.size() == 0) {
 			jbpmTest.completeVerify(account.getUserId() + "", false);
 			orderModelList = marketService.getModifyOrderList(account
@@ -1318,7 +1291,8 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		Integer userId = account.getUserId();
         list = marketService.getSearchModifyOrderList(userId,ordernumber,customername,stylename,startdate,enddate,employeeIds);
-		model.addAttribute("list", list);
+        list = ListUtil.reserveList(list);
+        model.addAttribute("list", list);
 		model.addAttribute("taskName", "修改询单");
 		model.addAttribute("url", "/market/modifyOrderDetail.do");
 		model.addAttribute("searchurl", "/market/modifyOrderListSearch.do");		
@@ -1340,15 +1314,11 @@ public class MarketController {
 		Map<String, Object> orderModel = marketService.getModifyOrderDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderModel", orderModel);
-		String purchaseComment = (String)jbpmAPIUtil.getVariable(
-				(TaskSummary) orderModel.get("task"),
-				BuyServiceImpl.RESULT_PURCHASE_COMMENT);
-		String designComment = (String)jbpmAPIUtil.getVariable(
-				(TaskSummary) orderModel.get("task"),
-				DesignServiceImpl.RESULT_DESIGN_COMMENT);
-		String produceComment = (String)jbpmAPIUtil.getVariable(
-				(TaskSummary) orderModel.get("task"), 
-				ProduceServiceImpl.RESULT_PRODUCE_COMMENT);
+		Object task = orderModel.get("task");
+		String purchaseComment = marketService.getComment(task, BuyServiceImpl.RESULT_PURCHASE_COMMENT);
+		String designComment = marketService.getComment(task, DesignServiceImpl.RESULT_DESIGN_COMMENT);
+		String produceComment = marketService.getComment(task, ProduceServiceImpl.RESULT_PRODUCE_COMMENT);
+		
 		model.addAttribute("purchaseComment", purchaseComment);
 		model.addAttribute("designComment", designComment);
 		model.addAttribute("produceComment", produceComment);
@@ -1364,7 +1334,7 @@ public class MarketController {
 		String s_id = request.getParameter("id");
 		String s_task_id = request.getParameter("task_id");
 		int id = Integer.parseInt(s_id);
-		long task_id = Long.parseLong(s_task_id);
+		String task_id = s_task_id;
 		// 保存修改该的order数据，accessory，fabric，logistics
 		// 订单数据
 
@@ -1422,6 +1392,7 @@ public class MarketController {
 		String produce_ls = request.getParameter("produce_l");
 		String produce_xls = request.getParameter("produce_xl");
 		String produce_xxls = request.getParameter("produce_xxl");
+		String produce_js = request.getParameter("produce_j");
 		String produce_color[] = produce_colors.split(",");
 		String produce_xs[] = produce_xss.split(",");
 		String produce_s[] = produce_ss.split(",");
@@ -1429,6 +1400,7 @@ public class MarketController {
 		String produce_l[] = produce_ls.split(",");
 		String produce_xl[] = produce_xls.split(",");
 		String produce_xxl[] = produce_xxls.split(",");
+		String produce_j[] = produce_js.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
 			if (produce_color[i].equals(""))
@@ -1442,13 +1414,15 @@ public class MarketController {
 			int xs = Integer.parseInt(produce_xs[i]);
 			int xl = Integer.parseInt(produce_xl[i]);
 			int xxl = Integer.parseInt(produce_xxl[i]);
+			int j = Integer.parseInt(produce_j[i]);
 			p.setL(l);
 			p.setM(m);
 			p.setS(s);
 			p.setXl(xl);
 			p.setXs(xs);
 			p.setXxl(xxl);
-			p.setProduceAmount(l + m + s + xs + xl + xxl);
+			p.setJ(j);
+			p.setProduceAmount(l + m + s + xs + xl + xxl + j);
 			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
@@ -1462,6 +1436,7 @@ public class MarketController {
 		String sample_produce_ls = request.getParameter("sample_produce_l");
 		String sample_produce_xls = request.getParameter("sample_produce_xl");
 		String sample_produce_xxls = request.getParameter("sample_produce_xxl");
+		String sample_produce_js = request.getParameter("sample_produce_j");
 		String sample_produce_color[] = sample_produce_colors.split(",");
 		String sample_produce_xs[] = sample_produce_xss.split(",");
 		String sample_produce_s[] = sample_produce_ss.split(",");
@@ -1469,6 +1444,7 @@ public class MarketController {
 		String sample_produce_l[] = sample_produce_ls.split(",");
 		String sample_produce_xl[] = sample_produce_xls.split(",");
 		String sample_produce_xxl[] = sample_produce_xxls.split(",");
+		String sample_produce_j[] = sample_produce_js.split(",");
 		List<Produce> sample_produces = new ArrayList<Produce>();
 		int sample_amount = 0;
 		for (int i = 0; i < sample_produce_color.length; i++) {
@@ -1483,14 +1459,16 @@ public class MarketController {
 			int xs = Integer.parseInt(sample_produce_xs[i]);
 			int xl = Integer.parseInt(sample_produce_xl[i]);
 			int xxl = Integer.parseInt(sample_produce_xxl[i]);
+			int j = Integer.parseInt(sample_produce_j[i]);
 			p.setL(l);
 			p.setM(m);
 			p.setS(s);
 			p.setXl(xl);
 			p.setXs(xs);
 			p.setXxl(xxl);
+			p.setJ(j);
 			p.setType(Produce.TYPE_SAMPLE_PRODUCE);
-			int temp = l + m + s + xs + xl + xxl;
+			int temp = l + m + s + xs + xl + xxl + j;
 			p.setProduceAmount(temp);
 			sample_amount+=temp;
 			sample_produces.add(p);
@@ -1617,7 +1595,10 @@ public class MarketController {
 		
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
-			File file = new File(order.getSampleClothesPicture());
+			/**
+			 * 应采用绝对路径
+			 */
+			/*File file = new File(order.getSampleClothesPicture());
 			if(file.exists()){
 				file.delete();
 			}
@@ -1626,11 +1607,34 @@ public class MarketController {
 			String url = MarketServiceImpl.UPLOAD_DIR_SAMPLE + order.getOrderId();
 			String fileid = "sample_clothes_picture";
 			FileOperateUtil.Upload(request, url, null, fileid);
+			ImageUtil.createThumbnail(url, url+File.separator);
+			order.setSampleClothesThumbnailPicture(url + "/" + "thumbnail.png");
 			url = url + "/" + filename;
-			order.setSampleClothesPicture(url);
+			order.setSampleClothesPicture(url);*/
+			
+			String curPath = request.getSession().getServletContext()
+					.getRealPath("/");
+			String fatherPath = new File(curPath).getParent();
+			
+			String filedir = fatherPath + order.getSampleClothesPicture();
+			File file = new File(filedir);
+			if(file.exists()){
+				file.delete();
+			}
+			file = new File(fatherPath + order.getSampleClothesThumbnailPicture());
+			if(file.exists()){
+				file.delete();
+			}
+			System.out.println(filedir.substring(0,filedir.lastIndexOf("/"))+"----------");
+			FileOperateUtil.Upload(request, filedir.substring(0,filedir.lastIndexOf("/")), "1","sample_clothes_picture");
+			ImageUtil.createThumbnail(filedir.substring(0,filedir.lastIndexOf("/")), filedir.substring(0,filedir.lastIndexOf("/")+1));
+			
 		}
 		if (!multipartRequest.getFile("reference_picture").isEmpty()) {
-			File file = new File(order.getReferencePicture());
+			/**
+			 * 应采用绝对路径
+			 */
+			/*File file = new File(order.getReferencePicture());
 			if(file.exists()){
 				file.delete();
 			}
@@ -1640,7 +1644,17 @@ public class MarketController {
 			String fileid = "reference_picture";
 			FileOperateUtil.Upload(request, url, null, fileid);
 			url = url + "/" + filename;
-			order.setReferencePicture(url);
+			order.setReferencePicture(url);*/
+			String curPath = request.getSession().getServletContext()
+					.getRealPath("/");
+			String fatherPath = new File(curPath).getParent();
+			
+			String filedir = fatherPath + order.getReferencePicture();
+			File file = new File(filedir);
+			if(file.exists()){
+				file.delete();
+			}
+			FileOperateUtil.Upload(request, filedir.substring(0,filedir.lastIndexOf("/")), "1","reference_picture");
 		}
 		
 		HttpSession session = request.getSession();
@@ -1672,6 +1686,7 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService
 				.getConfirmQuoteList(account.getUserId() + "");
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "确认报价");
 		model.addAttribute("url", "/market/confirmQuoteDetail.do");
@@ -1700,6 +1715,7 @@ public class MarketController {
 		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSearchConfirmQuoteList(account.getUserId() + "",ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.put("list", list);
 		model.addAttribute("taskName", "确认报价搜索");
 		model.addAttribute("url", "/market/confirmQuoteDetail.do");
@@ -1757,8 +1773,8 @@ public class MarketController {
 		Account account = (Account) request.getSession().getAttribute("cur_user");
 		String actorId = account.getUserId() + "";
 		// marketService.confirmQuoteSubmit(actorId,
-		// Long.parseLong(taskId),result);
-		marketService.confirmQuoteSubmit(actorId, Long.parseLong(taskId),
+		// String.parseString(taskId),result);
+		marketService.confirmQuoteSubmit(actorId, taskId,
 				Integer.parseInt(orderId), result, url, moneyremark);
 
 		// 1=修改报价，2=取消订单
@@ -1789,6 +1805,7 @@ public class MarketController {
 		String actorId = account.getUserId() + "";
 		List<Map<String, Object>> orderList = marketService
 				.getConfirmProductList(actorId);
+		orderList = ListUtil.reserveList(orderList);
 //		if (orderList.size() == 0) {
 //			jbpmTest.completeProduceConfirm("1", true);
 //			orderList = marketService.getConfirmProductList(actorId);
@@ -1827,6 +1844,7 @@ public class MarketController {
 //			jbpmTest.completeProduceConfirm("1", true);
 //			orderList = marketService.getConfirmProductList(actorId);
 //		}
+		orderList = ListUtil.reserveList(orderList);
 		model.put("list", orderList);
 		model.addAttribute("taskName", "确认合同加工单");
 		model.addAttribute("url", "/market/confirmProduceOrderDetail.do");
@@ -1854,9 +1872,9 @@ public class MarketController {
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
+		String taskId = s_taskId;
 		String s_processId = request.getParameter("processId");
-		long processId = Long.parseLong(s_processId);	
+		String processId = s_processId;	
 		String tof = (String)request.getParameter("tof");
 		boolean comfirmworksheet = Boolean.parseBoolean(request
 				.getParameter("tof"));
@@ -1868,6 +1886,7 @@ public class MarketController {
 		String produce_ls = request.getParameter("produce_l");
 		String produce_xls = request.getParameter("produce_xl");
 		String produce_xxls = request.getParameter("produce_xxl");
+		String produce_js = request.getParameter("produce_j");
 		String produce_color[] = produce_colors.split(",");
 		String produce_xs[] = produce_xss.split(",");
 		String produce_s[] = produce_ss.split(",");
@@ -1875,6 +1894,7 @@ public class MarketController {
 		String produce_l[] = produce_ls.split(",");
 		String produce_xl[] = produce_xls.split(",");
 		String produce_xxl[] = produce_xxls.split(",");
+		String produce_j[] = produce_js.split(",");
 		List<Produce> produces = new ArrayList<Produce>();
 		for (int i = 0; i < produce_color.length; i++) {
 			if (produce_color[i].equals(""))
@@ -1888,13 +1908,15 @@ public class MarketController {
 			int xs = Integer.parseInt(produce_xs[i]);
 			int xl = Integer.parseInt(produce_xl[i]);
 			int xxl = Integer.parseInt(produce_xxl[i]);
+			int j = Integer.parseInt(produce_j[i]);
 			p.setL(l);
 			p.setM(m);
 			p.setS(s);
 			p.setXl(xl);
 			p.setXs(xs);
 			p.setXxl(xxl);
-			p.setProduceAmount(l + m + s + xs + xl + xxl);
+			p.setJ(j);
+			p.setProduceAmount(l + m + s + xs + xl + xxl + j);
 			p.setType(Produce.TYPE_PRODUCE);
 			produces.add(p);
 		}
@@ -1931,7 +1953,7 @@ public class MarketController {
 
 			String actorId = account.getUserId() + "";
 			//上传合同，上传首定金收据，一般是截图，
-			marketService.signContractSubmit(actorId, Long.parseLong(s_taskId),
+			marketService.signContractSubmit(actorId,s_taskId,
 					Integer.parseInt(orderId), Double.parseDouble(discount),
 					Double.parseDouble(total), contractFileUrl, confirmDepositFileUrl, moneyremark);
 
@@ -1962,7 +1984,7 @@ public class MarketController {
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int id = Integer.parseInt(s_orderId_request);
 		// String s_taskId = request.getParameter("taskId");
-		// long taskId = Long.parseLong(s_taskId);
+		// String taskId = String.parseString(s_taskId);
 		Map<String, Object> orderInfo = marketService.getConfirmProductDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderInfo);
@@ -1990,9 +2012,9 @@ public class MarketController {
 		String s_orderId_request = (String) request.getParameter("id");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("task_id");
-		long taskId = Long.parseLong(s_taskId);
+		String taskId = s_taskId;
 		String s_processId = request.getParameter("process_id");
-		long processId = Long.parseLong(s_processId);
+		String processId = s_processId;
 		boolean comfirmworksheet = false;
 		marketService.confirmProduceOrderSubmit(account.getUserId() + "",
 				orderId_request, taskId, processId, comfirmworksheet, null);
@@ -2010,6 +2032,7 @@ public class MarketController {
 					"cur_user");
 			List<Map<String, Object>> list = marketService
 					.getPushRestOrderList(account.getUserId()+"");
+			list = ListUtil.reserveList(list);
 			model.put("list", list); 
 			model.addAttribute("taskName", "催尾款");
 			model.addAttribute("url", "/market/getPushRestOrderDetail.do");
@@ -2038,6 +2061,7 @@ public class MarketController {
 					"cur_user");
 			List<Map<String, Object>> list = marketService
 					.getSearchPushRestOrderList(account.getUserId() + "",ordernumber,customername,stylename,startdate,enddate,employeeIds);
+			list = ListUtil.reserveList(list);
 			model.put("list", list); 
 			model.addAttribute("taskName", "催尾款搜索");
 			model.addAttribute("url", "/market/getPushRestOrderDetail.do");
@@ -2117,7 +2141,7 @@ public class MarketController {
 
 			String orderId_string = request.getParameter("orderId");
  			String taskId_string = request.getParameter("taskId");
-			long taskId = Long.parseLong(taskId_string);
+			String taskId = taskId_string;
 			String moneyremark = request.getParameter("moneyremark");
 			//result=0，催尾款失败；result=1，确认收到尾款
 			boolean result = request.getParameter("result").equals("1");
@@ -2168,6 +2192,7 @@ public class MarketController {
 				"cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSignContractList(account.getUserId() + "");
+		list = ListUtil.reserveList(list);
 		/*if (list.size() == 0) {
 			jbpmTest.completeProduceConfirm(account.getUserId() + "", true);
 			marketService.getSignContractList(account.getUserId() + "");
@@ -2202,6 +2227,7 @@ public class MarketController {
 				"cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSearchSignContractList(account.getUserId() + "",ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		/*if (list.size() == 0) {
 			jbpmTest.completeProduceConfirm(account.getUserId() + "", true);
 			marketService.getSignContractList(account.getUserId() + "");
@@ -2264,7 +2290,7 @@ public class MarketController {
 				"cur_user");
 		String actorId = account.getUserId() + "";
 		//上传合同，上传首定金收据，一般是截图，
-		marketService.signContractSubmit(actorId, Long.parseLong(taskId),
+		marketService.signContractSubmit(actorId, taskId,
 				Integer.parseInt(orderId), Double.parseDouble(discount),
 				Double.parseDouble(total), contractFileUrl, confirmDepositFileUrl,"");//""   hcj
 
@@ -2500,6 +2526,7 @@ public class MarketController {
 			String produce_ls = request.getParameter("produce_l");
 			String produce_xls = request.getParameter("produce_xl");
 			String produce_xxls = request.getParameter("produce_xxl");
+			String produce_js = request.getParameter("produce_j");
 			String produce_color[] = produce_colors.split(",");
 			String produce_xs[] = produce_xss.split(",");
 			String produce_s[] = produce_ss.split(",");
@@ -2507,6 +2534,7 @@ public class MarketController {
 			String produce_l[] = produce_ls.split(",");
 			String produce_xl[] = produce_xls.split(",");
 			String produce_xxl[] = produce_xxls.split(",");
+			String produce_j[] = produce_js.split(",");
 			List<Produce> produces = new ArrayList<Produce>();
 			for (int i = 0; i < produce_color.length; i++) {
 				if (produce_color[i].equals(""))
@@ -2520,13 +2548,15 @@ public class MarketController {
 				int xs = Integer.parseInt(produce_xs[i]);
 				int xl = Integer.parseInt(produce_xl[i]);
 				int xxl = Integer.parseInt(produce_xxl[i]);
+				int j = Integer.parseInt(produce_j[i]);
 				p.setL(l);
 				p.setM(m);
 				p.setS(s);
 				p.setXl(xl);
 				p.setXs(xs);
 				p.setXxl(xxl);
-				p.setProduceAmount(l + m + s + xs + xl + xxl);
+				p.setJ(j);
+				p.setProduceAmount(l + m + s + xs + xl + xxl + j);
 				p.setType(Produce.TYPE_PRODUCE);
 				produces.add(p);
 			}

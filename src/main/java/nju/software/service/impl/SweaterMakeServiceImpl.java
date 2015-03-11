@@ -15,7 +15,7 @@ import nju.software.dataobject.OperateRecord;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.service.SweaterMakeService;
-import nju.software.util.JbpmAPIUtil;
+import nju.software.util.ActivitiAPIUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +51,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	}
 
 	@Override
-	public boolean sweaterSampleAndCraftSubmit(long taskId, boolean result,
+	public boolean sweaterSampleAndCraftSubmit(String taskId, boolean result,
 			String orderId,OperateRecord oprec) {
 		operateRecordDAO.save(oprec);
 		if(result==false){
@@ -59,7 +59,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 		}else{			
 			Map<String, Object> data = new HashMap<String, Object>();
 			try {
-				jbpmAPIUtil.completeTask(taskId, data, ACTOR_SWEATER_MANAGER);
+				activitiApiUtil.completeTask(taskId, data, ACTOR_SWEATER_MANAGER);
 				return true;
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -107,7 +107,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
         }
 	}
 	@Override
-	public boolean sendSweaterSubmit(long taskId, boolean result,List<Produce> produceList, Integer orderId) {
+	public boolean sendSweaterSubmit(String taskId, boolean result,List<Produce> produceList, Integer orderId) {
  		Order order = orderDAO.findById(orderId);
  		if (result) {
 			for (int i = 0; i < produceList.size(); i++) {
@@ -117,7 +117,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 		Map<String, Object> data = new HashMap<String, Object>();
  		try {
  			data.put(RESULT_SWEATER, result);
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_SWEATER_MANAGER);
+			activitiApiUtil.completeTask(taskId, data, ACTOR_SWEATER_MANAGER);
 			if(result==false){//如果result的的值为false，即为大货生产失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
@@ -149,6 +149,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	public final static String ACTOR_SWEATER_MANAGER = "SweaterMakeManager";
 	public final static String TASK_CONFIRM_SWEATER_SAMPLE_AND_CRAFT = "confirmSweaterSampleAndCraft";
 	public final static String TASK_SEND_SWEATER= "sendSweater";
+	
 	public final static String RESULT_SWEATER = "sweater";
 	public final static String RESULT_PRODUCE = "produce";
 	public final static String RESULT_PRODUCE_COMMENT = "produceComment";
@@ -161,7 +162,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	@Autowired
 	private ProduceDAO ProduceDAO;
 	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
+	private ActivitiAPIUtil activitiApiUtil;
 	@Autowired
 	private EmployeeDAO employeeDAO;
 	@Autowired
@@ -170,7 +171,6 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	
 	@Override
 	public List<Map<String, Object>> getOrders() {
-		// TODO Auto-generated method stub
 		List<Order> orders = orderDAO.getSweaterOrders();
  		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		for (Order order : orders) {
@@ -191,7 +191,6 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 
 	@Override
 	public List<Map<String, Object>> getSerachOrders(String orderState) {
-		// TODO Auto-generated method stub
 		List<Order> orders = orderDAO.getSweaterOrders();//获取所有毛衣的单子
  		List<Map<String, Object>> list = new ArrayList<>();
 		for (Order order : orders) {

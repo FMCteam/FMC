@@ -47,10 +47,10 @@ public interface OrderService {
 	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId,
 			String taskName);
 
-	public OrderModel getOrderDetail(int orderId, long taskId, long processId);
+	public OrderModel getOrderDetail(int orderId, String taskId, String processId);
 
 	// 市场专员完成修改询单的功能,就只是推进流程的进行
-	public boolean verify(int orderId, long taskId, long processId,
+	public boolean verify(int orderId, String taskId, String processId,
 			boolean editOk, String buyComment, String designComment,
 			String productComment);
 

@@ -1,5 +1,6 @@
 package nju.software.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import nju.software.model.OrderInfo;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
@@ -16,9 +16,7 @@ import nju.software.dataobject.SearchInfo;
 import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
 import nju.software.service.OrderService;
-import nju.software.service.impl.JbpmTest;
-import nju.software.util.JbpmAPIUtil;
-import nju.software.dataobject.Order;
+import nju.software.util.ListUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,7 +55,7 @@ public class LogisticsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String receiveSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		long taskId = Long.parseLong(request.getParameter("taskId"));
+		String taskId = request.getParameter("taskId");
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		Short result = Short.parseShort(request.getParameter("result"));
 		logisticsService.receiveSampleSubmit(taskId, orderId, result);
@@ -70,6 +68,7 @@ public class LogisticsController {
 	public String sendSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = logisticsService.getSendSampleList();
+		list = ListUtil.reserveList(list);
 //		if (list.size() == 0) {
 //			jbpmTest.completeProduceSample("1");
 //			list = logisticsService.getSendSampleList();
@@ -100,6 +99,7 @@ public class LogisticsController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String, Object>> list = logisticsService.getSearchSendSampleList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 //		if (list.size() == 0) {
 //			jbpmTest.completeProduceSample("1");
 //			list = logisticsService.getSendSampleList();
@@ -132,7 +132,7 @@ public class LogisticsController {
 		String orderId_string = request.getParameter("orderId");
 		Integer orderId = Integer.parseInt(orderId_string);
 		String taskId_string = request.getParameter("taskId");
-		long taskId = Long.parseLong(taskId_string);
+		String taskId = taskId_string;
 		
 		String name = "" ;//快递名称
 		String number = "";//快递单号
@@ -215,6 +215,7 @@ public class LogisticsController {
 		String colors[] = color.split(",");
 		String numbers[] = number.split(",");
 		Package pack = new Package(orderId);
+		pack.setPackageTime(new Timestamp(System.currentTimeMillis()));
 		List<PackageDetail> details = new ArrayList<PackageDetail>();
 		for (int i = 0; i < sizes.length; i++) {
 			PackageDetail detail = new PackageDetail();
@@ -320,7 +321,7 @@ public class LogisticsController {
 	public String mobileWarehouseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
-		Long taskId = Long.parseLong(request.getParameter("taskId"));
+		String taskId = request.getParameter("taskId");
 		logisticsService.mobileWarehouseSubmit(taskId, orderId);
 		
 		return "forward:/logistics/mobile/warehouseList.do";
@@ -395,7 +396,7 @@ public class LogisticsController {
 	public String sendClothesSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
-		long taskId = Long.parseLong(request.getParameter("taskId"));
+		String taskId = request.getParameter("taskId");
 		String time = request.getParameter("time");
 		String name = request.getParameter("name");
 		String number = request.getParameter("number");
@@ -411,6 +412,4 @@ public class LogisticsController {
 	private LogisticsService logisticsService;
 	@Autowired
 	private OrderService orderService;
-	@Autowired
-	private JbpmTest jbpmTest;
 }

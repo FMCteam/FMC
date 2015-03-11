@@ -14,7 +14,7 @@ public interface LogisticsService {
 
 	public Map<String, Object> getReceiveSampleDetail(Integer orderId);
 
-	public boolean receiveSampleSubmit(long taskId, Integer orderId,
+	public boolean receiveSampleSubmit(String taskId, Integer orderId,
 			Short result);
 
 	// ===========================样衣发货=================================
@@ -51,7 +51,7 @@ public interface LogisticsService {
 	public boolean updatePackage(int packageId, String warehouse, String shelf,
 			String location);
 
-	public boolean mobileWarehouseSubmit(long taskId, Integer orderId);
+	public boolean mobileWarehouseSubmit(String taskId, Integer orderId);
 
 	// ===========================产品发货=================================
 	public List<Map<String, Object>> getScanClothesList();
@@ -66,7 +66,7 @@ public interface LogisticsService {
 
 	public boolean mobileSendClothesSubmit(int orderId);
 
-	public void sendClothesSubmit(Integer orderId, long taskId, float price,
+	public void sendClothesSubmit(Integer orderId, String taskId, float price,
 			String name, String time, String number, String remark,
 			String isFinal);
 

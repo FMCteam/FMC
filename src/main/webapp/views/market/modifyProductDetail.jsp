@@ -53,7 +53,8 @@
 					id="produce_m" type="hidden" name="produce_m" /> <input
 					id="produce_l" type="hidden" name="produce_l" /> <input
 					id="produce_xl" type="hidden" name="produce_xl" /> <input
-					id="produce_xxl" type="hidden" name="produce_xxl" />
+					id="produce_xxl" type="hidden" name="produce_xxl" /><input
+					id="produce_j" type="hidden" name="produce_j" />
 		</div>
 		</form>
 		<!--row-fluid-->

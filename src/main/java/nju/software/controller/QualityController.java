@@ -17,7 +17,7 @@ import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.QualityService;
 import nju.software.util.DateUtil;
-import nju.software.util.JbpmAPIUtil;
+import nju.software.util.ListUtil;
 
 import org.drools.core.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +40,6 @@ public class QualityController {
 	@Autowired
 	private QualityService qualityService;
 	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
 	private ProduceService produceService;
 	
 	//质检列表
@@ -51,6 +49,7 @@ public class QualityController {
 			HttpServletResponse response, ModelMap model) {
 		
 		List<Map<String,Object>> orderList = qualityService.getCheckQualityList();
+		orderList = ListUtil.reserveList(orderList);
 		model.addAttribute("list", orderList);
 		model.addAttribute("taskName", "质量检查");
 		model.addAttribute("url", "/quality/checkQualityDetail.do");
@@ -76,6 +75,7 @@ public class QualityController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String,Object>> orderList = qualityService.getSearchCheckQualityList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		orderList = ListUtil.reserveList(orderList);
 		model.addAttribute("list", orderList);
 		model.addAttribute("taskName", "质量检查");
 		model.addAttribute("url", "/quality/checkQualityDetail.do");
@@ -109,12 +109,11 @@ public class QualityController {
 	* @throws 
 	*/
 	@RequestMapping(value = "quality/checkQualitySubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor=Exception.class)  
 	public String modifyProduct(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model)throws Exception {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
+		String taskId = s_taskId;
 		
 		String isFinal = request.getParameter("isFinal");//是否是最终质检
 		String repairNumberStr = request.getParameter("repair_number");
@@ -149,8 +148,9 @@ public class QualityController {
 		String goodL = request.getParameter("good_l");
 		String goodXL = request.getParameter("good_xl");
 		String goodXXL = request.getParameter("good_xxl");
+		String goodJ = request.getParameter("good_j");
 		goodList = produceService.getProduceList(orderId, goodColor, 
-				goodXS, goodS, goodM, goodL, goodXL, goodXXL, Produce.TYPE_QUALIFIED);
+				goodXS, goodS, goodM, goodL, goodXL, goodXXL, goodJ, Produce.TYPE_QUALIFIED);
 		
 //		List<Produce> badList = null;
 //		String badColor = request.getParameter("bad_color");
@@ -194,7 +194,7 @@ public class QualityController {
 //			HttpServletResponse response, ModelMap model) {
 //		int orderId = Integer.parseInt(request.getParameter("orderId"));
 //		String s_taskId = request.getParameter("taskId");
-//		long taskId = Long.parseLong(s_taskId);
+//		String taskId = String.parseString(s_taskId);
 //
 //		List<Produce> goodList = null;
 //		String goodColor = request.getParameter("good_color");

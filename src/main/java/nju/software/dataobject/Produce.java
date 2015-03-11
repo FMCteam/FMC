@@ -26,6 +26,7 @@ public class Produce implements java.io.Serializable {
 	private Integer l;
 	private Integer xl;
 	private Integer xxl;
+	private Integer j;
 	private Integer produceAmount;
 	private String type;
 	
@@ -55,7 +56,7 @@ public class Produce implements java.io.Serializable {
 	/** full constructor */
 	public Produce(Integer pid, Integer oid, String color, Integer xs,
 			Integer s, Integer m, Integer l, Integer xl, Integer xxl,
-			String type) {
+			 Integer j,String type) {
 		this.pid = pid;
 		this.oid = oid;
 		this.color = color;
@@ -65,6 +66,7 @@ public class Produce implements java.io.Serializable {
 		this.l = l;
 		this.xl = xl;
 		this.xxl = xxl;
+		this.j = j;
 		this.type = type;
 	}
 
@@ -179,6 +181,15 @@ public class Produce implements java.io.Serializable {
 		this.xxl = xxl;
 	}
 
+	@Column(name = "J")
+	public Integer getJ() {
+		return this.j;
+	}
+	
+	public void setJ(Integer j) {
+		this.j = j;
+	}
+	
 	@Column(name = "type", length = 45)
 	public String getType() {
 		return this.type;

@@ -286,6 +286,7 @@ public class OrderController {
 			String produce_ls = request.getParameter("produce_l");
 			String produce_xls = request.getParameter("produce_xl");
 			String produce_xxls = request.getParameter("produce_xxl");
+			String produce_js = request.getParameter("produce_j");
 			String produce_color[] = produce_colors.split(",");
 			String produce_xs[] = produce_xss.split(",");
 			String produce_s[] = produce_ss.split(",");
@@ -293,6 +294,7 @@ public class OrderController {
 			String produce_l[] = produce_ls.split(",");
 			String produce_xl[] = produce_xls.split(",");
 			String produce_xxl[] = produce_xxls.split(",");
+			String produce_j[] = produce_js.split(",");
 			List<Produce> produces = new ArrayList<Produce>();
 			for (int i = 0; i < produce_color.length; i++) {
 				if (produce_color[i].equals(""))
@@ -306,13 +308,15 @@ public class OrderController {
 				int xs = Integer.parseInt(produce_xs[i]);
 				int xl = Integer.parseInt(produce_xl[i]);
 				int xxl = Integer.parseInt(produce_xxl[i]);
+				int j = Integer.parseInt(produce_j[i]);
 				p.setL(l);
 				p.setM(m);
 				p.setS(s);
 				p.setXl(xl);
 				p.setXs(xs);
 				p.setXxl(xxl);
-				p.setProduceAmount(l + m + s + xs + xl + xxl);
+				p.setJ(j);
+				p.setProduceAmount(l + m + s + xs + xl + xxl + j);
 				p.setType(Produce.TYPE_PRODUCE);
 				produces.add(p);
 			}
@@ -326,6 +330,7 @@ public class OrderController {
 			String sample_produce_ls = request.getParameter("sample_produce_l");
 			String sample_produce_xls = request.getParameter("sample_produce_xl");
 			String sample_produce_xxls = request.getParameter("sample_produce_xxl");
+			String sample_produce_js = request.getParameter("sample_produce_j");
 			String sample_produce_color[] = sample_produce_colors.split(",");
 			String sample_produce_xs[] = sample_produce_xss.split(",");
 			String sample_produce_s[] = sample_produce_ss.split(",");
@@ -333,6 +338,7 @@ public class OrderController {
 			String sample_produce_l[] = sample_produce_ls.split(",");
 			String sample_produce_xl[] = sample_produce_xls.split(",");
 			String sample_produce_xxl[] = sample_produce_xxls.split(",");
+			String sample_produce_j[] = sample_produce_js.split(",");
 			List<Produce> sample_produces = new ArrayList<Produce>();
 			int sample_amount = 0;
 			for (int i = 0; i < sample_produce_color.length; i++) {
@@ -347,14 +353,16 @@ public class OrderController {
 				int xs = Integer.parseInt(sample_produce_xs[i]);
 				int xl = Integer.parseInt(sample_produce_xl[i]);
 				int xxl = Integer.parseInt(sample_produce_xxl[i]);
+				int j = Integer.parseInt(sample_produce_j[i]);
 				p.setL(l);
 				p.setM(m);
 				p.setS(s);
 				p.setXl(xl);
 				p.setXs(xs);
 				p.setXxl(xxl);
+				p.setJ(j);
 				p.setType(Produce.TYPE_SAMPLE_PRODUCE);
-				int temp = l + m + s + xs + xl + xxl;
+				int temp = l + m + s + xs + xl + xxl + j;
 				p.setProduceAmount(temp);
 				sample_amount+=temp;
 				sample_produces.add(p);
@@ -553,7 +561,7 @@ public class OrderController {
 //					: false;
 			orderService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
 					produces, sample_produces, versions, cad, account.getUserId(),fabricCosts,accessoryCosts,quote,craft);
-			return "redirect:/account/modifyOrderList.do";
+			return "redirect:/account/modify/";
 		}
 
 		// =======================被终止订单列表=================================

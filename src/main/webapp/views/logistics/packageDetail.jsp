@@ -56,6 +56,7 @@
 									<option value="L">L</option>
 									<option value="XL">XL</option>
 									<option value="XXL">XXL</option>
+									<option value="J">均码</option>
 							</select></td>
 							<td><input type="number" class="number" min="1" style="width:80px" /></td>
 							<td><a>添加</a></td>

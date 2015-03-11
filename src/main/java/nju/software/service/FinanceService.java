@@ -16,7 +16,7 @@ public interface FinanceService {
 	public Map<String, Object> getConfirmSampleMoneyDetail(String actorId,
 			Integer orderId);
 
-	public boolean confirmSampleMoneySubmit(String actorId, long taskId,
+	public boolean confirmSampleMoneySubmit(String actorId, String taskId,
 			boolean result, Money money);
 
 	// ===========================定金确认===================================
@@ -25,7 +25,7 @@ public interface FinanceService {
 	public Map<String, Object> getConfirmDepositDetail(String actorId,
 			Integer orderId);
 
-	public boolean confirmDepositSubmit(String actorId, long taskId,
+	public boolean confirmDepositSubmit(String actorId, String taskId,
 			boolean result, Money money);
 
 	// ===========================尾款确认===================================
@@ -34,10 +34,10 @@ public interface FinanceService {
 	public Map<String, Object> getConfirmFinalPaymentDetail(String actorId,
 			Integer orderId);
 
-	public boolean confirmFinalPaymentSubmit(String actorId, long taskId,
+	public boolean confirmFinalPaymentSubmit(String actorId, String taskId,
 			boolean result, Money money);
 
-	public boolean confirmFinalPaymentSubmit(String actorId, long taskId,
+	public boolean confirmFinalPaymentSubmit(String actorId, String taskId,
 			boolean result, Money money, Integer orderId);
 
 	public List<Map<String, Object>> getProcessState(Integer orderId);
@@ -64,14 +64,14 @@ public interface FinanceService {
 	public Map<String, Object> getReturnDepositDetail(String actorId,
 			int orderId);
 
-	public void returnDepositSubmit(String actorId, long taskId);
+	public void returnDepositSubmit(String actorId, String taskId);
 
-	public void returnDepositSubmit(String actorId, long taskId, Integer orderId);
+	public void returnDepositSubmit(String actorId, String taskId, Integer orderId);
 
-	public boolean confirmSampleMoneySubmit(String actorId, long taskId,
+	public boolean confirmSampleMoneySubmit(String actorId, String taskId,
 			boolean result, Money money, int orderId);
 
-	public boolean confirmDepositSubmit(String actorId, long taskId,
+	public boolean confirmDepositSubmit(String actorId, String taskId,
 			boolean result, Money money, int orderId);
 
 	List<Map<String, Object>> getReturnDepositList(String actorId,

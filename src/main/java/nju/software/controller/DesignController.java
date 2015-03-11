@@ -9,22 +9,15 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import nju.software.dataobject.Account;
-import nju.software.dataobject.Craft;
 import nju.software.dataobject.Employee;
-import nju.software.dataobject.Produce;
 import nju.software.dataobject.SearchInfo;
 import nju.software.service.DesignService;
 import nju.software.service.EmployeeService;
 import nju.software.service.MarketService;
-import nju.software.service.OrderService;
-import nju.software.service.ProduceService;
-import nju.software.service.impl.JbpmTest;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
-import nju.software.util.JbpmAPIUtil;
+import nju.software.util.ListUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,6 +45,7 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> orderList = designService
 				.getVerifyDesignList();
+		orderList = ListUtil.reserveList(orderList);
 		model.addAttribute("list", orderList);
 		model.addAttribute("taskName", "设计验证");
 		model.addAttribute("url", "/design/verifyDesignDetail.do");
@@ -80,6 +74,7 @@ public class DesignController {
 		}
 		List<Map<String, Object>> orderList = designService
 				.getSearchVerifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		orderList = ListUtil.reserveList(orderList);
 		model.addAttribute("list", orderList);
 		model.addAttribute("taskName", "设计验证订单搜索");
 		model.addAttribute("url", "/design/verifyDesignDetail.do");
@@ -105,7 +100,7 @@ public class DesignController {
 	@Transactional(rollbackFor = Exception.class)
 	public String verifyDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		long taskId = Long.parseLong(request.getParameter("taskId"));
+		String taskId = request.getParameter("taskId");
 		boolean result = Boolean
 				.parseBoolean(request.getParameter("designVal"));
 		String comment = request.getParameter("suggestion");
@@ -121,6 +116,7 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		
 		List<Map<String,Object>> list = designService.getComputeDesignCostList();
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "设计工艺验证");
 		model.addAttribute("url", "/design/computeDesignCostDetail.do");
@@ -146,6 +142,7 @@ public class DesignController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String,Object>> list = designService.getSearchComputeDesignCostList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "设计工艺验证");
 		model.addAttribute("url", "/design/computeDesignCostDetail.do");
@@ -169,7 +166,7 @@ public class DesignController {
 	public String computeDesignCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
-		long taskId = Long.parseLong(request.getParameter("taskId"));
+		String taskId = request.getParameter("taskId");
 		
 		boolean result = Boolean.parseBoolean(request.getParameter("result"));// 是否拒绝设计
 		String comment = request.getParameter("suggestion");
@@ -227,6 +224,7 @@ public class DesignController {
 	public String getUploadDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getUploadDesignList();
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 //		model.addAttribute("taskName", "录入版型数据");
 		model.addAttribute("taskName", "样衣版型录入及生产");
@@ -254,6 +252,7 @@ public class DesignController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String, Object>> list = designService.getSearchUploadDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "录入版型数据");
 		model.addAttribute("url", "/design/getUploadDesignDetail.do");
@@ -308,7 +307,7 @@ public class DesignController {
  		
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.EntryCadData(Integer.parseInt(orderId),
-				Long.parseLong(taskId), url, uploadTime, cadSide, completeTime);
+				taskId, url, uploadTime, cadSide, completeTime);
  		Map<String, Object> orderInfo = designService
 				.getUploadDesignDetail(Integer.parseInt(orderId));
 		String  orderSampleStatus =designService.getCraftInfo(Integer.parseInt(orderId));
@@ -354,7 +353,7 @@ public class DesignController {
 		
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.EntryCadData(Integer.parseInt(orderId),
-				Long.parseLong(taskId), url, uploadTime, cadSide, completeTime);
+				taskId, url, uploadTime, cadSide, completeTime);
  		Map<String, Object> orderInfo = marketService.getOrderDetail(Integer.valueOf(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		model.addAttribute("orderInfo", orderInfo);
@@ -368,7 +367,7 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		boolean result =request.getParameter("result").equals("1");
-		long taskId = Long.parseLong(request.getParameter("taskId"));
+		String taskId =request.getParameter("taskId");
 //		designService.produceSampleSubmit(taskId, result);
 		designService.produceSampleSubmit(taskId, result,orderId);
 		return "forward:/design/getUploadDesignList.do";
@@ -381,6 +380,7 @@ public class DesignController {
 	public String getModifyDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getModifyDesignList();
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "设计部确认");
 		model.addAttribute("url", "/design/getModifyDesignDetail.do");
@@ -407,6 +407,7 @@ public class DesignController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String, Object>> list = designService.getSearchModifyDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "设计部确认");
 		model.addAttribute("url", "/design/getModifyDesignDetail.do");
@@ -451,7 +452,7 @@ public class DesignController {
 		
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.modifyDesignSubmit(Integer.parseInt(orderId),
-				Long.parseLong(taskId), url, uploadTime);
+				taskId, url, uploadTime);
 		return "forward:/design/getModifyDesignList.do";
 	}
 	
@@ -462,11 +463,10 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
 		String craftLeader = request.getParameter("craftLeader");//工艺负责人
 		Timestamp completeTime = this.getTime(request.getParameter("completeTime"));//工艺完成时间
 		
-        designService.needCraftSampleSubmit(orderId, taskId, craftLeader, completeTime);
+        designService.needCraftSampleSubmit(orderId, s_taskId, craftLeader, completeTime);
 		return "redirect:/design/getNeedCraftSampleList.do";
 	}	
 	
@@ -521,6 +521,7 @@ public class DesignController {
 			HttpServletResponse response, ModelMap model) {
 //		List<Map<String, Object>> list = designService.getNeedCraftList();
 		List<Map<String, Object>> list = designService.getNeedCraftSampleList();
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "样衣工艺制作");
 		model.addAttribute("url", "/design/needCraftSampleDetail.do");
@@ -546,6 +547,7 @@ public class DesignController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String,Object>> list = designService.getSearchNeedCraftSampleList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "样衣工艺制作");
 		model.addAttribute("url", "/design/needCraftSampleDetail.do");
@@ -565,8 +567,7 @@ public class DesignController {
 		Timestamp timeProduceDate=this.getTime(crafsProduceDate);
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
-        designService.needCraftProductSubmit(orderId,taskId,crafsManName,timeProduceDate);
+        designService.needCraftProductSubmit(orderId,s_taskId,crafsManName,timeProduceDate);
 		return "redirect:/design/getNeedCraftProductList.do";
 	}	
 	
@@ -588,6 +589,7 @@ public class DesignController {
 	public String getNeedCraftList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getNeedCraftList();
+		list = ListUtil.reserveList(list);
  		model.addAttribute("list", list);
 		model.addAttribute("taskName", "大货工艺制作");
 		model.addAttribute("url", "/design/needCraftProductDetail.do");
@@ -614,7 +616,8 @@ public class DesignController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String, Object>> list = designService.getSearchNeedCraftList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
- 		model.addAttribute("list", list);
+		list = ListUtil.reserveList(list);
+		model.addAttribute("list", list);
 		model.addAttribute("taskName", "大货工艺制作");
 		model.addAttribute("url", "/design/needCraftProductDetail.do");
 		model.addAttribute("searchurl", "/design/getNeedCraftProductListSearch.do");
@@ -630,8 +633,7 @@ public class DesignController {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String cadding_side = request.getParameter("cadding_side");
 		String s_taskId = request.getParameter("taskId");
-		long taskId = Long.parseLong(s_taskId);
-        designService.getTypeSettingSliceSubmit(orderId,cadding_side,taskId);
+        designService.getTypeSettingSliceSubmit(orderId,cadding_side,s_taskId);
 		return "redirect:/design/getTypeSettingSliceList.do";
 	}	
 	
@@ -655,6 +657,7 @@ public class DesignController {
 	public String getTypeSettingSliceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getTypeSettingSliceList();
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "排版切片");
 		model.addAttribute("url", "/design/getTypeSettingSliceDetail.do");
@@ -681,6 +684,7 @@ public class DesignController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String, Object>> list = designService.getSearchTypeSettingSliceList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "排版切片任务搜索");
 		model.addAttribute("url", "/design/getTypeSettingSliceDetail.do");
@@ -696,6 +700,7 @@ public class DesignController {
 	public String getConfirmDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getConfirmDesignList();
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "设计生产确认");
 		model.addAttribute("url", "/design/getConfirmDesignDetail.do");
@@ -721,6 +726,7 @@ public class DesignController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String, Object>> list = designService.getSearchConfirmDesignList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "设计生产确认");
 		model.addAttribute("url", "/design/getConfirmDesignDetail.do");
@@ -765,7 +771,7 @@ public class DesignController {
 		
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.uploadDesignSubmit(Integer.parseInt(orderId),
-				Long.parseLong(taskId), url, uploadTime);
+				taskId, url, uploadTime);
 		return "forward:/design/getConfirmDesignList.do";
 	}
 
@@ -794,6 +800,7 @@ public class DesignController {
 	public String getConfirmCadList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getConfirmCadList();
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "确认最终版型");
 		model.addAttribute("url", "/design/getConfirmCadDetail.do");
@@ -821,6 +828,7 @@ public class DesignController {
 		}
 
 		List<Map<String, Object>> list = designService.getSearchConfirmCadList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "确认最终版型");
 		model.addAttribute("url", "/design/getConfirmCadDetail.do");
@@ -865,7 +873,7 @@ public class DesignController {
 		
 		Timestamp uploadTime = new Timestamp(new Date().getTime());
 		designService.confirmCadSubmit(Integer.parseInt(orderId),
-				Long.parseLong(taskId), url, uploadTime);
+				taskId, url, uploadTime);
 		return "forward:/design/getConfirmCadList.do";
 	}
 	
@@ -878,6 +886,4 @@ public class DesignController {
 	private DesignService designService;
 	@Autowired
 	private MarketService marketService;
-	@Autowired
-	private JbpmTest jbpmTest;
 }

@@ -8,6 +8,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Craft;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Order;
+import nju.software.service.CommonService;
 import nju.software.service.impl.BuyServiceImpl;
 import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.FinanceServiceImpl;
@@ -16,7 +17,6 @@ import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
 import nju.software.service.impl.QualityServiceImpl;
 import nju.software.service.impl.SweaterMakeServiceImpl;
-import nju.software.util.JbpmAPIUtil;
 
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -108,9 +108,9 @@ public class CommonController {
 		map.put(FinanceServiceImpl.TASK_CONFIRM_FINAL_PAYMENT,
 				FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
 
-		map.put(LogisticsServiceImpl.RESULT_RECEIVE_SAMPLE,
+		map.put(LogisticsServiceImpl.TASK_RECEIVE_SAMPLE,
 				LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
-		map.put(LogisticsServiceImpl.RESULT_SEND_SAMPLE,
+		map.put(LogisticsServiceImpl.TASK_SEND_SAMPLE,
 				LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
 		map.put(LogisticsServiceImpl.TASK_WAREHOUSE,
 				LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
@@ -151,6 +151,20 @@ public class CommonController {
 //				System.out.println(department+"任务数量"+getTaskNumber(department));
  
 		}
+		//market department task, include all tasks of all marketStaffs and admin;
+		if (isAdmin(request)) {
+			jsonobj.put("taskNumber", commonService.getAllTaskNumber());
+//			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER, commonService.getMarketStaffTaskNumber());
+			
+			jsonobj.put(MarketServiceImpl.TASK_CONFIRM_PRODUCE_ORDER, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_CONFIRM_PRODUCE_ORDER));
+			jsonobj.put(MarketServiceImpl.TASK_CONFIRM_QUOTE, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_CONFIRM_QUOTE));
+			jsonobj.put(MarketServiceImpl.TASK_MERGE_QUOTE, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_MERGE_QUOTE));
+			jsonobj.put(MarketServiceImpl.TASK_MODIFY_ORDER, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_MODIFY_ORDER));
+			jsonobj.put(MarketServiceImpl.TASK_MODIFY_PRODUCE_ORDER, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_MODIFY_PRODUCE_ORDER));
+			jsonobj.put(MarketServiceImpl.TASK_MODIFY_QUOTE, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_MODIFY_QUOTE));
+			jsonobj.put(MarketServiceImpl.TASK_PUSH_REST, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_PUSH_REST));
+			jsonobj.put(MarketServiceImpl.TASK_SIGN_CONTRACT, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_SIGN_CONTRACT));
+		}
 		// jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,
 		// getTaskNumber(actorId));
 		if (isMarketStaff(request)) {
@@ -162,6 +176,7 @@ public class CommonController {
 			map.put(MarketServiceImpl.TASK_MODIFY_PRODUCE_ORDER, actorId);
 			map.put(MarketServiceImpl.TASK_SIGN_CONTRACT, actorId);
 			map.put(MarketServiceImpl.TASK_PUSH_REST, actorId);
+//			map.put(MarketServiceImpl.TASK_VERIFY_QUOTE, actorId);
 			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,number );
  
 		}
@@ -246,6 +261,12 @@ public class CommonController {
 			return account.getUserRole();
 		}
 	}
+	
+	private boolean isAdmin(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		return account.getUserRole().equals("ADMIN");
+	}
 
 	private boolean isMarketStaff(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -268,22 +289,11 @@ public class CommonController {
     }
     
 	private Integer getTaskNumber(String actorId) {
-		List<TaskSummary> task = jbpmAPIUtil.getAssignedTasks(actorId);
-		Integer number = 0;
-		if (task != null) {
-			number = task.size();
-		}
-		return number;
+		return commonService.getTaskNumber(actorId);
 	}
 
 	private Integer getTaskNumber(String actorId, String taskName) {
-		List<TaskSummary> task = jbpmAPIUtil.getAssignedTasksByTaskname(
-				actorId, taskName);
-		Integer number = 0;
-		if (task != null) {
-			number = task.size();
-		}
-		return number;
+		return commonService.getTaskNumber(actorId, taskName);
 	}
 
 	/**
@@ -301,11 +311,12 @@ public class CommonController {
 	}
 
 	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
-	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
 	private CraftDAO craftDAO;
 	@Autowired
 	private DesignCadDAO designCadDAO;
+	
+	@Autowired
+	private CommonService commonService;
 }

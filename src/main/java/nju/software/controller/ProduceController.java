@@ -2,23 +2,19 @@ package nju.software.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.math.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import nju.software.dataobject.Order;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.SearchInfo;
-import nju.software.model.OrderInfo;
 import nju.software.service.EmployeeService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
-import nju.software.service.impl.JbpmTest;
-import nju.software.service.impl.ProduceServiceImpl;
+import nju.software.util.ListUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,8 +30,6 @@ public class ProduceController {
 	private ProduceService produceService;
 	@Autowired
 	private OrderService orderService;
-	@Autowired
-	private JbpmTest jbpmTest;
 	
 
 	@RequestMapping(value = "produce/verifyProduceList.do", method= RequestMethod.GET)
@@ -48,6 +42,7 @@ public class ProduceController {
 //		String actorId = account.getUserRole();
 
 		List<Map<String,Object>> orderList = produceService.getVerifyProduceList();
+		orderList = ListUtil.reserveList(orderList);
 		model.addAttribute("list", orderList);
 		model.addAttribute("taskName", "生产验证");
 		model.addAttribute("url", "/produce/verifyProduceDetail.do");
@@ -78,6 +73,7 @@ public class ProduceController {
 //		String actorId = account.getUserRole();
 
 		List<Map<String,Object>> orderList = produceService.getSearchVerifyProduceList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		orderList = ListUtil.reserveList(orderList);
 		model.addAttribute("list", orderList);
 		model.addAttribute("taskName", "生产验证");
 		model.addAttribute("url", "/produce/verifyProduceDetail.do");
@@ -98,7 +94,7 @@ public class ProduceController {
 	public String verifyProduceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		boolean productVal = Boolean.parseBoolean(request.getParameter("productVal"));
-		long taskId = Long.parseLong(request.getParameter("taskId"));
+		String taskId = (request.getParameter("taskId"));
 		String comment = request.getParameter("suggestion");
 		produceService.verifyProduceSubmit(taskId, productVal, comment);
 		return "redirect:/produce/verifyProduceList.do";
@@ -137,6 +133,7 @@ public class ProduceController {
 			HttpServletResponse response, ModelMap model) {
 		
 		List<Map<String,Object>> list = produceService.getComputeProduceCostList();
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "生产成本验证并核算");
 		model.addAttribute("url", "/produce/computeProduceCostDetail.do");
@@ -162,6 +159,7 @@ public class ProduceController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String,Object>> list=produceService.getSearchComputeProduceCostList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "生产成本验证并核算");
 		model.addAttribute("url", "/produce/computeProduceCostDetail.do");
@@ -201,7 +199,7 @@ public class ProduceController {
 	public String computeProduceCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
-		long taskId = Long.parseLong(request.getParameter("taskId"));
+		String taskId = (request.getParameter("taskId"));
 		
 		boolean result = Boolean.parseBoolean(request.getParameter("result"));// 是否拒绝生产
 		String comment = request.getParameter("suggestion");
@@ -256,6 +254,7 @@ public class ProduceController {
 	public String produceSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list = produceService.getProduceSampleList();
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "样衣生产");
 		model.addAttribute("url", "/produce/produceSampleDetail.do");
@@ -281,6 +280,7 @@ public class ProduceController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String,Object>> list = produceService.getSearchProduceSampleList(ordernumber,customername,stylename,startdate,enddate,employeeIds);
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "样衣生产");
 		model.addAttribute("url", "/produce/produceSampleDetail.do");
@@ -307,7 +307,7 @@ public class ProduceController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		boolean result =request.getParameter("result").equals("1");
-		long taskId = Long.parseLong(request.getParameter("taskId"));
+		String taskId = (request.getParameter("taskId"));
 		produceService.produceSampleSubmit(taskId, result,orderId);
 		return "forward:/produce/produceSampleList.do";
 	}
@@ -319,6 +319,7 @@ public class ProduceController {
 	public String produceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=produceService.getProduceList();
+		list = ListUtil.reserveList(list);
 		/*if(list.size()==0){
 			jbpmTest.completeBeforeProduce(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
 			list=produceService.getProduceList();
@@ -352,6 +353,7 @@ public class ProduceController {
 			jbpmTest.completeBeforeProduce(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
 			list=produceService.getProduceList();
 		}*/
+		list = ListUtil.reserveList(list);
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "批量生产");
 		model.addAttribute("url", "/produce/produceDetail.do");
@@ -388,15 +390,16 @@ public class ProduceController {
 			String produceL = request.getParameter("produce_l");
 			String produceXL = request.getParameter("produce_xl");
 			String produceXXL = request.getParameter("produce_xxl");
+			String produceJ = request.getParameter("produce_j");
 			String processing_side = request.getParameter("processing_side");
 			Order torder = orderService.findByOrderId(orderId+"");
 			torder.setPayAccountInfo(processing_side);
 			orderService.updateOrder(torder);
 
 			produceList = produceService.getProduceList(orderId, produceColor, produceXS, 
-					produceS, produceM, produceL, produceXL, produceXXL, Produce.TYPE_PRODUCED);
+					produceS, produceM, produceL, produceXL, produceXXL, produceJ, Produce.TYPE_PRODUCED);
 		}
-		produceService.pruduceSubmit(Long.parseLong(taskId), result, produceList,orderId);
+		produceService.pruduceSubmit(taskId, result, produceList,orderId);
 		return "forward:/produce/produceList.do";
 	}
 }

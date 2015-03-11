@@ -29,7 +29,7 @@ public interface MarketService {
 
 	public OrderInfo getConfirmQuoteDetail(String arctorId, Integer orderId);
 
-	public boolean confirmQuoteSubmit(String actorId, long taskId, String result);
+	public boolean confirmQuoteSubmit(String actorId, String taskId, String result);
 
 	// ==========================签订合同=======================
 	public List<Map<String, Object>> getSignContractList(String actorId);
@@ -37,7 +37,7 @@ public interface MarketService {
 	public Map<String, Object> getSignContractDetail(String arctorId,
 			Integer orderId);
 
-	public void signContractSubmit(String actorId, long taskId, int i,
+	public void signContractSubmit(String actorId, String taskId, int i,
 			double d, double discount, String url);
 
 	public List<Customer> getAddOrderList();
@@ -50,20 +50,20 @@ public interface MarketService {
 			List<VersionData> versions, DesignCad cad,
 			HttpServletRequest request);
 
-	// public void completeQuoteConfirmTaskSummary(long taskId,String result);
+	// public void completeQuoteConfirmTaskSummary(String taskId,String result);
 
 	public List<Product> getProductList(int orderId, String productAskAmount,
 			String productColor, String productStyle);
 
 	public boolean confirmProduceOrderSubmit(String string, int orderId,
-			long taskId, long processId, boolean comfirmworksheet,
+			String taskId, String processId, boolean comfirmworksheet,
 			List<Produce> produces);
 
 	public List<OrderInfo> getOrderInfoList(Integer employeeId);
 
-	public OrderInfo getOrderInfo(Integer orderId, long taskId);
+	public OrderInfo getOrderInfo(Integer orderId, String taskId);
 
-	// public void completeSignContract(Integer orderId,double discount,long
+	// public void completeSignContract(Integer orderId,double discount,String
 	// taskId);
 
 	// public List<QuoteConfirmTaskSummary>
@@ -71,8 +71,8 @@ public interface MarketService {
 
 	public List<Map<String, Object>> getModifyProductList(Integer userId);
 
-	public boolean modifyProductSubmit(String string, int id, long taskId,
-			long processId, boolean b, List<Produce> produces);
+	public boolean modifyProductSubmit(String string, int id, String taskId,
+			String processId, boolean b, List<Produce> produces);
 
 	public List<Map<String, Object>> getModifyQuoteList(Integer userId);
 
@@ -83,12 +83,12 @@ public interface MarketService {
 	public List<Map<String, Object>> getMergeQuoteList(Integer accountId);
 
 	public void mergeQuoteSubmit(int accountId, Quote quote, int id,
-			long taskId, long processId);
+			String taskId, String processId);
 
 	public List<Map<String, Object>> getVerifyQuoteList(Integer accountId);
 
-	public void verifyQuoteSubmit(Quote quote, int id, long taskId,
-			long processId);
+	public void verifyQuoteSubmit(Quote quote, int id, String taskId,
+			String processId);
 
 	public List<Map<String, Object>> getModifyOrderList(Integer accountId);
 
@@ -98,7 +98,7 @@ public interface MarketService {
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
 			List<VersionData> versions, DesignCad cad, boolean editok,
-			long taskId, Integer accountId);
+			String taskId, Integer accountId);
 
 	public Map<String, Object> getMergeQuoteDetail(Integer userId, int id);
 
@@ -106,8 +106,8 @@ public interface MarketService {
 
 	public Map<String, Object> getConfirmQuoteDetail(Integer userId, int id);
 
-	public void modifyQuoteSubmit(Quote quote, int id, long taskId,
-			long processId, Integer userId);
+	public void modifyQuoteSubmit(Quote quote, int id, String taskId,
+			String processId, Integer userId);
 
 	public List<Map<String, Object>> getConfirmProductList(String actorId);
 
@@ -198,31 +198,35 @@ public interface MarketService {
 
 	public ArrayList<String> getProcessStateName(Integer orderId);
 
-	public void signContractSubmit(String actorId, long parseLong,
+	public void signContractSubmit(String actorId, String parseString,
 			int parseInt, double parseDouble, double parseDouble2, String url,
 			String confirmDepositFileUrl, String moneyremark);
 
-	public boolean confirmQuoteSubmit(String actorId, long parseLong,
+	public boolean confirmQuoteSubmit(String actorId, String parseString,
 			int parseInt, String result, String url, String moneyremark);
 
 	public void signConfirmFinalPaymentFileSubmit(int orderId,
 			String confirmFinalPaymentFileUrl, String moneyremark);
 
-	public void verifyQuoteSubmit(Quote quote, int id, long taskId,
-			long processId, boolean result, String comment);
+	public void verifyQuoteSubmit(Quote quote, int id, String taskId,
+			String processId, boolean result, String comment);
 
 	public List<Map<String, Object>> getPushRestOrderList(String userId);
 
 	public Map<String, Object> getPushRestOrderDetail(String userId, int orderId);
 
-	public boolean getPushRestOrderSubmit(String actorId, long taskId,
+	public boolean getPushRestOrderSubmit(String actorId, String taskId,
 			boolean result);
 
-	public boolean getPushRestOrderSubmit(String actorId, long taskId,
+	public boolean getPushRestOrderSubmit(String actorId, String taskId,
 			boolean result, String orderId_string);
 
 	public List<Map<String, Object>> getSearchPushRestOrderList(String string,
 			String ordernumber, String customername, String stylename,
 			String startdate, String enddate, Integer[] employeeIds);
+	
+	public void testPrecondition(String userId, String taskName);
+	
+	public String getComment(Object task, String variableName);
 
 }

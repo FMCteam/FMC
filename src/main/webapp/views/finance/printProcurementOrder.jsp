@@ -110,11 +110,12 @@ line-height: 16px
 			<td class="center span2">L</td>
 			<td class="center span2">XL</td>
 			<td class="center span2">XXL</td>
+			<td class="center span2">均码</td>
 			<td class="center span2"></td>
 		</tr>
 		<c:forEach var="produce" items="${orderInfo.produce}">
 			<tr>
-				<td class="center">${produce.xs+produce.s+produce.m+produce.l+produce.xl+produce.xxl}</td>
+				<td class="center">${produce.xs+produce.s+produce.m+produce.l+produce.xl+produce.xxl+produce.j}</td>
 				<td class="center">${produce.color}</td>
 				<td class="center">${produce.xs}</td>
 				<td class="center">${produce.s}</td>
@@ -122,6 +123,7 @@ line-height: 16px
 				<td class="center">${produce.l}</td>
 				<td class="center">${produce.xl}</td>
 				<td class="center">${produce.xxl}</td>
+				<td class="center">${produce.j}</td>
 				<td></td>
 			</tr>
 		</c:forEach>
@@ -179,6 +181,7 @@ line-height: 16px
 			<td class="center span2">L</td>
 			<td class="center span2">XL</td>
 			<td class="center span2">XXL</td>
+			<td class="center span2">均码</td>
 		</tr>
 		<tr>
 			<td class="center span3">实际衣片</td>
@@ -187,10 +190,12 @@ line-height: 16px
 			<td></td>
 			<td></td>
 			<td></td>
-			<td></td>
+			<td></td>	
+			<td></td>	
 		</tr>
 		<tr>
 			<td>&nbsp</td>
+			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>

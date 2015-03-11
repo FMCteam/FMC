@@ -148,7 +148,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 				+ ", value: " + value);
 		try {
 			String queryString = "from Order as model where model."
-					+ propertyName + "= ?";
+					+ propertyName + "= ? order by model.orderTime desc";
 			return getHibernateTemplate().find(queryString, value);
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
@@ -869,6 +869,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
         Criteria criteria = session.createCriteria(Order.class);
         criteria.add(Restrictions.eq("orderState", "A"));
         criteria.add(Restrictions.eq("customerId", orderExample.getCustomerId()));
+        criteria.addOrder(org.hibernate.criterion.Order.desc("orderTime"));
 	    List<Order> customerOrdersDoingList = criteria.list();		
         session.close();
 		return customerOrdersDoingList;
@@ -880,6 +881,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
         Criteria criteria = session.createCriteria(Order.class);
         criteria.add(Restrictions.eq("orderState", "A"));
         criteria.add(Restrictions.eq("employeeId", orderExample.getEmployeeId()));
+        criteria.addOrder(org.hibernate.criterion.Order.desc("orderTime"));
 	    List<Order> employeeOrdersDoingList = criteria.list();		
         session.close();
 		return employeeOrdersDoingList;

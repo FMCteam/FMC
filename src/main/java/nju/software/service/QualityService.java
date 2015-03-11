@@ -10,7 +10,7 @@ public interface QualityService {
 
 	public List<Map<String, Object>> getCheckQualityList();
 
-	public String checkQualitySubmit(int orderId, long taskId, String isFinal,
+	public String checkQualitySubmit(int orderId, String taskId, String isFinal,
 			CheckRecord checkRecord, List<Produce> goodList)throws Exception;
 
 	public Map<String, Object> getCheckQualityDetail(int orderId);

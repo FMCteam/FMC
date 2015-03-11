@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.jbpm.task.query.TaskSummary;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,21 +17,20 @@ import nju.software.dao.impl.PackageDetailDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
-import nju.software.dataobject.Account;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.service.ProduceService;
-import nju.software.util.JbpmAPIUtil;
+import nju.software.util.ActivitiAPIUtil;
 
 @Service("produceServiceImpl")
 public class ProduceServiceImpl implements ProduceService {
 
 	@Override
 	public List<Map<String, Object>> getVerifyProduceList() {
-		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_VERIFY_PRODUCE);
 	}
+	
 
 	@Override
 	public List<Map<String, Object>> getSearchVerifyProduceList(
@@ -47,23 +43,20 @@ public class ProduceServiceImpl implements ProduceService {
 	
 	@Override
 	public Map<String, Object> getVerifyProduceDetail(int orderId) {
-		// TODO Auto-generated method stub
 		return service.getBasicOrderModelWithQuote(ACTOR_PRODUCE_MANAGER,
 				TASK_VERIFY_PRODUCE, orderId);
 	}
 
 	@Override
-	public boolean verifyProduceSubmit(long taskId, boolean result,
+	public boolean verifyProduceSubmit(String taskId, boolean result,
 			String comment) {
-		// TODO Auto-generated method stub
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_PRODUCE, result);
 		data.put(RESULT_PRODUCE_COMMENT, comment);
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			return true;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -91,7 +84,7 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public void computeProduceCostSubmit(int orderId, long taskId, boolean result, String comment,
+	public void computeProduceCostSubmit(int orderId, String taskId, boolean result, String comment,
 			float cut_cost, float manage_cost, float nali_cost,
 			float ironing_cost, float swing_cost, float package_cost,
 			float other_cost, float design_cost) {
@@ -131,9 +124,8 @@ public class ProduceServiceImpl implements ProduceService {
 		data.put(RESULT_PRODUCE, result);
 		data.put(RESULT_PRODUCE_COMMENT, comment);
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -141,7 +133,6 @@ public class ProduceServiceImpl implements ProduceService {
 	// =========================样衣生产========================
 	@Override
 	public List<Map<String, Object>> getProduceSampleList() {
-		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_PRODUCE_SAMPLE);
 	}
 
@@ -158,21 +149,18 @@ public class ProduceServiceImpl implements ProduceService {
 	
 	@Override
 	public Map<String, Object> getProduceSampleDetail(Integer orderId) {
-		// TODO Auto-generated method stub
 		return service.getBasicOrderModelWithQuote(ACTOR_PRODUCE_MANAGER,
 				TASK_PRODUCE_SAMPLE, orderId);
 	}
 
 	@Override
-	public boolean produceSampleSubmit(long taskId, boolean result) {
-		// TODO Auto-generated method stub
+	public boolean produceSampleSubmit(String taskId, boolean result) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PRODUCE, result);
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			return true;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -180,20 +168,18 @@ public class ProduceServiceImpl implements ProduceService {
 	
 	
 	@Override
-	public boolean produceSampleSubmit(long taskId, boolean result,String orderId) {
-		// TODO Auto-generated method stub
+	public boolean produceSampleSubmit(String taskId, boolean result,String orderId) {
 		Order order = orderDAO.findById(Integer.parseInt(orderId));
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PRODUCE, result);
 		try {
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			if(result==false){//如果result的的值为false，即为样衣生产失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
 			}
 			return true;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -202,7 +188,6 @@ public class ProduceServiceImpl implements ProduceService {
 	// =======================批量生产========================
 	@Override
 	public List<Map<String, Object>> getProduceList() {
-		// TODO Auto-generated method stub
 		return service.getOrderList(ACTOR_PRODUCE_MANAGER, TASK_PRODUCE);
 	}
 
@@ -223,7 +208,7 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public boolean pruduceSubmit(long taskId, boolean result,
+	public boolean pruduceSubmit(String taskId, boolean result,
 			List<Produce> produceList) {
 		if (result) {
 			 for (int i = 0; i < produceList.size(); i++) {
@@ -233,7 +218,7 @@ public class ProduceServiceImpl implements ProduceService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			data.put(RESULT_PRODUCE, result);
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -243,7 +228,7 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 	
 	@Override
-	public boolean pruduceSubmit(long taskId, boolean result,
+	public boolean pruduceSubmit(String taskId, boolean result,
 			List<Produce> produceList,Integer orderId) {
 		Order order = orderDAO.findById(orderId);
 		if (result) {
@@ -254,7 +239,7 @@ public class ProduceServiceImpl implements ProduceService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			data.put(RESULT_PRODUCE, result);
-			jbpmAPIUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
 			if(result==false){//如果result的的值为false，即为大货生产失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
@@ -271,7 +256,7 @@ public class ProduceServiceImpl implements ProduceService {
 
 	public List<Produce> getProduceList(int orderId, String produceColor,
 			String produceXS, String produceS, String produceM,
-			String produceL, String produceXL, String produceXXL, String type) {
+			String produceL, String produceXL, String produceXXL, String produceJ, String type) {
 		String[] color = produceColor.split(",");
 		String[] xs = produceXS.split(",");
 		String[] s = produceS.split(",");
@@ -279,9 +264,10 @@ public class ProduceServiceImpl implements ProduceService {
 		String[] l = produceL.split(",");
 		String[] xl = produceXL.split(",");
 		String[] xxl = produceXXL.split(",");
+		String[] j = produceJ.split(",");
 		List<Produce> produceList = new ArrayList<Produce>();
 		for (int i = 0; i < color.length; i++) {
-			System.out.println(color[i] + xs[i] + xxl[i]);
+			//System.out.println(color[i] + xs[i] + xxl[i]);
 			Produce produce = new Produce();
 			produce.setOid(orderId);
 			produce.setColor(color[i]);
@@ -291,9 +277,10 @@ public class ProduceServiceImpl implements ProduceService {
 			produce.setL(Integer.parseInt(l[i]));
 			produce.setXl(Integer.parseInt(xl[i]));
 			produce.setXxl(Integer.parseInt(xxl[i]));
+			produce.setJ(Integer.parseInt(j[i]));
 			produce.setType(type);
 			int total = produce.getXs() + produce.getS() + produce.getM() + produce.getL() +
-					produce.getXl() + produce.getXxl();
+					produce.getXl() + produce.getXxl() + produce.getJ();
 			produce.setProduceAmount(total);
 			produceList.add(produce);
 		}
@@ -304,13 +291,13 @@ public class ProduceServiceImpl implements ProduceService {
 	public final static String TASK_VERIFY_PRODUCE = "verifyProduce";
 	public final static String TASK_COMPUTE_PRODUCE_COST = "computeProduceCost";
 	public final static String TASK_PRODUCE_SAMPLE = "produceSample";
-	public final static String RESULT_PRODUCE = "produce";
 	public final static String TASK_PRODUCE = "produce";
+	public final static String RESULT_PRODUCE = "produce";
 	public final static String RESULT_PRODUCE_COMMENT = "produceComment";
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
-	private JbpmAPIUtil jbpmAPIUtil;
+	private ActivitiAPIUtil activitiApiUtil;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired

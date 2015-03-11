@@ -15,7 +15,9 @@
 		});
 		
 		$("button.btn-primary").click(function(){
+			alert(11)
 			$("input[name='tof']").val("true");
+			alert(22)
 			$("form").submit();
 		});
 		$("input[name='discount']").keyup(function(){
@@ -128,6 +130,7 @@ function getTdString(col){
 		tdString+=$("td."+col).eq(i).text()+",";
 	}
 	tdString+=$("td."+col).eq(i).text();
+	alert(tdString);
 	return tdString;
 }
 
@@ -171,6 +174,7 @@ function produce_verify(){
 		$("#produce_l").val(getTdString("produce_l"));
 		$("#produce_xl").val(getTdString("produce_xl"));
 		$("#produce_xxl").val(getTdString("produce_xxl"));
+		$("#produce_j").val(getTdString("produce_j"));
 		
 		return true;
 	}else{

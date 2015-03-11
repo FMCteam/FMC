@@ -279,7 +279,8 @@
 									type="hidden" name="produce_m" /> <input id="produce_l"
 									type="hidden" name="produce_l" /> <input id="produce_xl"
 									type="hidden" name="produce_xl" /> <input id="produce_xxl"
-									type="hidden" name="produce_xxl" /></td>
+									type="hidden" name="produce_xxl" /><input id="produce_j"
+									type="hidden" name="produce_j" /></td>
 								<td colspan="8" class="innertable">
 									<table class="span12 table produce_table">
 										<tr>
@@ -290,10 +291,12 @@
 											<td class="span1 title">L</td>
 											<td class="span1 title">XL</td>
 											<td class="span1 title">XXL</td>
+											<td class="span1 title">均码</td>
 											<td class="span1 title">操作</td>
 										</tr>
 										<tr class="addrow">
 											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
 											<td><input type="text" class="span12" value="0" /></td>
 											<td><input type="text" class="span12" value="0" /></td>
 											<td><input type="text" class="span12" value="0" /></td>
@@ -315,7 +318,9 @@
 									id="sample_produce_l" type="hidden" name="sample_produce_l" />
 									<input id="sample_produce_xl" type="hidden"
 									name="sample_produce_xl" /> <input id="sample_produce_xxl"
-									type="hidden" name="sample_produce_xxl" /></td>
+									type="hidden" name="sample_produce_xxl" />
+									<input id="sample_produce_j"
+									type="hidden" name="sample_produce_j" /></td>
 								<td colspan="8" class="innertable">
 									<table class="span12 table sample_produce_table" id="sampletable">
 										<tr>
@@ -326,10 +331,12 @@
 											<td class="span1 title">L</td>
 											<td class="span1 title">XL</td>
 											<td class="span1 title">XXL</td>
+											<td class="span1 title">均码</td>
 											<td class="span1 title">操作</td>
 										</tr>
 										<tr class="addrow">
 											<td><input type="text" class="span12" /></td>
+											<td><input type="text" class="span12" value="0" /></td>
 											<td><input type="text" class="span12" value="0" /></td>
 											<td><input type="text" class="span12" value="0" /></td>
 											<td><input type="text" class="span12" value="0" /></td>
