@@ -15,6 +15,7 @@
           http://drools.org/schema/drools-spring
           http://drools.org/schema/drools-spring.xsd" default-lazy-init="true">
 
+    
 	<!-- 组件扫描 -->
 	<context:component-scan base-package="nju.software">
 	</context:component-scan>
@@ -28,20 +29,23 @@
 	</bean>
 
 	<!-- 声明事务 -->
-	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" /> 
+	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
 	<!-- 开启注解方式下的声明式事务 -->
 	<tx:annotation-driven transaction-manager="txManager"
 		proxy-target-class="true" />
+	<!-- 事务传播特性 -->
 	 <tx:advice id="transactionAdvice" transaction-manager="txManager"> 
         <tx:attributes> 
-            <tx:method name="*" propagation="REQUIRED"/> 
+            <tx:method name="*" propagation="REQUIRED" /> 
         </tx:attributes> 
     </tx:advice>
+    
 	<aop:config> 
     <aop:pointcut id="businessService" 
-            expression="execution(* nju.software.service.*.*(..))" /> 
+            expression="execution(* nju.software.controller.*.*(..))" /> 
     <aop:advisor advice-ref="transactionAdvice" pointcut-ref="businessService" /> 
     </aop:config>
 </beans>

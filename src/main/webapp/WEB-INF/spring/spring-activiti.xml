@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+
+	<!-- Activiti的bean -->
+	
+	<!-- 流程引擎的配置bean -->
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+		<property name="dataSource" ref="dataSource" />
+		<property name="databaseSchemaUpdate" value="true"/>
+		<property name="transactionManager" ref="txManager" />
+		<property name="jpaHandleTransaction" value="true" />  
+		<property name="jpaCloseEntityManager" value="true" /> 
+	</bean>
+	<!-- 流程引擎的bean -->
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	</bean>
+	<!-- 服务组件的bean -->
+	<bean id="repositoryService" factory-bean="processEngine"
+		factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngine"
+		factory-method="getRuntimeService" />
+	<bean id="taskService" factory-bean="processEngine"
+		factory-method="getTaskService" />
+	<bean id="historyService" factory-bean="processEngine"
+		factory-method="getHistoryService" />
+	<bean id="identityService" factory-bean="processEngine"
+		factory-method="getIdentityService" />
+	<bean id="managementService" factory-bean="processEngine"
+		factory-method="getManagementService" />
+	
+	<bean id="activitiAPIUtil" class="nju.software.util.ActivitiAPIUtil" scope = "singleton">
+		<property name="processName" value="nju.software.fmc.bpmn"></property>
+		<property name="processEngineConfiguration" ref="processEngineConfiguration"></property>
+		<property name="processEngine" ref="processEngine"></property>
+		<property name="repositoryService" ref="repositoryService"></property>
+		<property name="runtimeService" ref="runtimeService"></property>
+		<property name="taskService" ref="taskService"></property>
+		<property name="historyService" ref="historyService"></property>
+		<property name="identityService" ref="identityService"></property>
+		<property name="managementService" ref="managementService"></property>
+	</bean>
+</beans>

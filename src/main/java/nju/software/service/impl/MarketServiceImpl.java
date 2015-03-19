@@ -61,6 +61,7 @@ import nju.software.util.mail.SimpleMailSender;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Service("marketServiceImpl")
@@ -150,7 +151,7 @@ public class MarketServiceImpl implements MarketService {
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
 			List<VersionData> versions, DesignCad cad,
-			HttpServletRequest request) {
+			HttpServletRequest request){
 
 		// 添加订单信息
 		orderDAO.save(order);

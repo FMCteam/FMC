@@ -8,6 +8,7 @@ import nju.software.dao.IOrderDAO;
 import nju.software.dataobject.Order;
 import nju.software.util.DateUtil;
 
+import org.antlr.grammar.v3.ANTLRv3Parser.throwsSpec_return;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -72,10 +73,10 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 */
 	public void save(Order transientInstance) {
 		log.debug("saving Order instance");
-		try {
+		try{
 			getHibernateTemplate().save(transientInstance);
 			log.debug("save successful");
-		} catch (RuntimeException re) {
+		}catch(RuntimeException re){
 			log.error("save failed", re);
 			throw re;
 		}
@@ -426,10 +427,10 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 */
 	public void attachDirty(Order instance) {
 		log.debug("attaching dirty Order instance");
-		try {
+		try{
 			getHibernateTemplate().saveOrUpdate(instance);
 			log.debug("attach successful");
-		} catch (RuntimeException re) {
+		}catch(RuntimeException re){
 			log.error("attach failed", re);
 			throw re;
 		}

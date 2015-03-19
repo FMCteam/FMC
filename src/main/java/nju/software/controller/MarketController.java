@@ -45,6 +45,7 @@ import nju.software.util.ImageUtil;
 import nju.software.util.JavaMailUtil;
 import nju.software.util.ListUtil;
 
+import org.antlr.grammar.v3.ANTLRv3Parser.throwsSpec_return;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -114,7 +115,7 @@ public class MarketController {
 	@RequestMapping(value = "/market/addOrderSubmit.do")
 	@Transactional(rollbackFor = Exception.class)
 	public String addOrderSubmit(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model){
 
 		// 订单数据
 		Integer customerId = Integer.parseInt(request
@@ -405,12 +406,15 @@ public class MarketController {
         
 		marketService.addOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, sample_produces, versions, cad, request);
-
 		//给客户邮箱发送订单信息
 		marketService.sendOrderInfoViaEmail(order, customer);
 		//给客户手机发送订单信息
 		marketService.sendOrderInfoViaPhone(order, customer);
 
+		//测试事务回滚是否成功
+//		if (true) {
+//			throw new RuntimeException();
+//		}
 		return "redirect:/market/addOrderList.do";
 	}
 
