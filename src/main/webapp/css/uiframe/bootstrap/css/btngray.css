@@ -1,0 +1,36 @@
+.btn-gray.active {
+  color: rgba(255, 255, 255, 0.75);
+}
+.btn-gray {
+   color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #d9d3b8;
+  *background-color: #d9d3b8;
+  background-image: -moz-linear-gradient(top, #d9d3b8, #d9d3b8);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d9d3b8), to(#d9d3b8));
+  background-image: -webkit-linear-gradient(top, #d9d3b8, #d9d3b8);
+  background-image: -o-linear-gradient(top, #d9d3b8, #d9d3b8);
+  background-image: linear-gradient(to bottom, #d9d3b8, #d9d3b8);
+  background-repeat: repeat-x;
+  border-color: #d9d3b8 #d9d3b8 #d9d3b8;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d9d3b8', endColorstr='#d9d3b8', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-gray:hover,
+.btn-gray:focus,
+.btn-gray:active,
+.btn-gray.active,
+.btn-gray.disabled,
+.btn-gray[disabled] {
+  color: #5a5a5a;
+  background-color: #d9d3b8;
+  *background-color: #d9d3b8;
+}
+
+.btn-gray:active,
+.btn-gray.active {
+  background-color: #d9d3b8 \9;
+}
+
