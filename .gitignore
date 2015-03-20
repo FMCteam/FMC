@@ -3,18 +3,14 @@
 \target
 
 \src\main\webapp\WEB-INF\classes
-\src\main\webapp\WEB-INF\lib
 
-\.settings
+
 \bin
 
-.classpath
 .myhibernatedata
 .mymetadata
-.project
 .springBeans
 
-\src\main\webapp\WEB-INF\jdbc.properties
 
 /target
-/.settings
+

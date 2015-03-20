@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="src/main/webapp/WEB-INF/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**/*.java" including="**/*.java" kind="src" output="src/main/webapp/WEB-INF/classes" path="src/main/resources"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/javax/mail/mail/1.4/mail-1.4.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/javax/activation/activation/1.1/activation-1.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/javax/servlet/servlet-api/2.3/servlet-api-2.3.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/javax/servlet/jstl/1.2/jstl-1.2.jar" sourcepath="M2_REPO/javax/servlet/jstl/1.2/jstl-1.2-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/javax/servlet/jstl/1.2/jstl-1.2-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar" sourcepath="M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/junit/junit/4.7/junit-4.7.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-collections/commons-collections/3.1/commons-collections-3.1.jar" sourcepath="M2_REPO/commons-collections/commons-collections/3.1/commons-collections-3.1-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-collections/commons-collections/3.1/commons-collections-3.1-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-bam/5.3.0.Final/jbpm-bam-5.3.0.Final.jar" sourcepath="M2_REPO/org/jbpm/jbpm-bam/5.3.0.Final/jbpm-bam-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-flow-builder/5.3.0.Final/jbpm-flow-builder-5.3.0.Final.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-flow/5.3.0.Final/jbpm-flow-5.3.0.Final.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/knowledge-api/5.4.0.Final/knowledge-api-5.4.0.Final.jar" sourcepath="M2_REPO/org/drools/knowledge-api/5.4.0.Final/knowledge-api-5.4.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/drools-core/5.4.0.Final/drools-core-5.4.0.Final.jar" sourcepath="M2_REPO/org/drools/drools-core/5.4.0.Final/drools-core-5.4.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/mvel/mvel2/2.1.0.drools16/mvel2-2.1.0.drools16.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/knowledge-internal-api/5.4.0.Final/knowledge-internal-api-5.4.0.Final.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/com/google/protobuf/protobuf-java/2.4.1/protobuf-java-2.4.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/drools-compiler/5.4.0.Final/drools-compiler-5.4.0.Final.jar" sourcepath="M2_REPO/org/drools/drools-compiler/5.4.0.Final/drools-compiler-5.4.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/antlr/antlr-runtime/3.3/antlr-runtime-3.3.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/antlr/antlr/3.3/antlr-3.3.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/antlr/stringtemplate/3.2.1/stringtemplate-3.2.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/antlr/antlr/2.7.6/antlr-2.7.6.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/eclipse/jdt/core/compiler/ecj/3.5.1/ecj-3.5.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.1.Final/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/hibernate/hibernate-core/3.3.2.GA/hibernate-core-3.3.2.GA.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.6.3/slf4j-api-1.6.3.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-bam/5.3.0.Final/jbpm-bam-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-workitems/5.3.0.Final/jbpm-workitems-5.3.0.Final.jar" sourcepath="M2_REPO/org/jbpm/jbpm-workitems/5.3.0.Final/jbpm-workitems-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-io/commons-io/1.4/commons-io-1.4.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/apache/commons/commons-compress/1.0/commons-compress-1.0.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/apache/commons/commons-exec/1.0.1/commons-exec-1.0.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/jivesoftware/smack/3.0.4/smack-3.0.4.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/rome/rome/0.9/rome-0.9.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/jdom/jdom/1.0/jdom-1.0.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-net/commons-net/2.0/commons-net-2.0.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-workitems/5.3.0.Final/jbpm-workitems-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-bpmn2/5.3.0.Final/jbpm-bpmn2-5.3.0.Final.jar" sourcepath="M2_REPO/org/jbpm/jbpm-bpmn2/5.3.0.Final/jbpm-bpmn2-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-bpmn2/5.3.0.Final/jbpm-bpmn2-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-persistence-jpa/5.3.0.Final/jbpm-persistence-jpa-5.3.0.Final.jar" sourcepath="M2_REPO/org/jbpm/jbpm-persistence-jpa/5.3.0.Final/jbpm-persistence-jpa-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/drools-persistence-jpa/5.4.0.Final/drools-persistence-jpa-5.4.0.Final.jar" sourcepath="M2_REPO/org/drools/drools-persistence-jpa/5.4.0.Final/drools-persistence-jpa-5.4.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/javassist/javassist/3.14.0-GA/javassist-3.14.0-GA.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/net/sf/trove4j/trove4j/3.0.2/trove4j-3.0.2.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-persistence-jpa/5.3.0.Final/jbpm-persistence-jpa-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-human-task-hornetq/5.3.0.Final/jbpm-human-task-hornetq-5.3.0.Final.jar" sourcepath="M2_REPO/org/jbpm/jbpm-human-task-hornetq/5.3.0.Final/jbpm-human-task-hornetq-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-human-task-core/5.3.0.Final/jbpm-human-task-core-5.3.0.Final.jar" sourcepath="M2_REPO/org/jbpm/jbpm-human-task-core/5.3.0.Final/jbpm-human-task-core-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/hornetq/hornetq-core/2.2.10.Final/hornetq-core-2.2.10.Final.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jboss/netty/netty/3.2.0.Final/netty-3.2.0.Final.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-human-task-hornetq/5.3.0.Final/jbpm-human-task-hornetq-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/jbpm/jbpm-human-task-core/5.3.0.Final/jbpm-human-task-core-5.3.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/drools-compiler/5.4.0.Final/drools-compiler-5.4.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/drools-core/5.4.0.Final/drools-core-5.4.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/drools-spring/5.4.0.Final/drools-spring-5.4.0.Final.jar" sourcepath="M2_REPO/org/drools/drools-spring/5.4.0.Final/drools-spring-5.4.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/drools-decisiontables/5.4.0.Final/drools-decisiontables-5.4.0.Final.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/drools-templates/5.4.0.Final/drools-templates-5.4.0.Final.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/net/sourceforge/jexcelapi/jxl/2.6.10/jxl-2.6.10.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-core/3.1.0.RELEASE/spring-core-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-asm/3.1.0.RELEASE/spring-asm-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-beans/3.1.0.RELEASE/spring-beans-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-context/3.1.0.RELEASE/spring-context-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-aop/3.1.0.RELEASE/spring-aop-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-expression/3.1.0.RELEASE/spring-expression-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/drools-spring/5.4.0.Final/drools-spring-5.4.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/drools-persistence-jpa/5.4.0.Final/drools-persistence-jpa-5.4.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/drools/knowledge-api/5.4.0.Final/knowledge-api-5.4.0.Final-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/codehaus/btm/btm/2.1.2/btm-2.1.2.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-mock/2.0.8/spring-mock-2.0.8.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-context-support/3.1.0.RELEASE/spring-context-support-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-orm/3.1.0.RELEASE/spring-orm-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-jdbc/3.1.0.RELEASE/spring-jdbc-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-tx/3.1.0.RELEASE/spring-tx-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-oxm/3.1.0.RELEASE/spring-oxm-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-lang/commons-lang/2.2/commons-lang-2.2.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-webmvc/3.1.0.RELEASE/spring-webmvc-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-web/3.1.0.RELEASE/spring-web-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-test/3.1.0.RELEASE/spring-test-3.1.0.RELEASE.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/hibernate/hibernate-annotations/3.4.0.GA/hibernate-annotations-3.4.0.GA.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/hibernate/ejb3-persistence/1.0.2.GA/ejb3-persistence-1.0.2.GA.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/hibernate/hibernate-commons-annotations/3.1.0.GA/hibernate-commons-annotations-3.1.0.GA.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-dbcp/commons-dbcp/1.3/commons-dbcp-1.3.jar" sourcepath="M2_REPO/commons-dbcp/commons-dbcp/1.3/commons-dbcp-1.3-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-dbcp/commons-dbcp/1.3/commons-dbcp-1.3-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/slf4j/slf4j-log4j12/1.6.3/slf4j-log4j12-1.6.3-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga.jar" sourcepath="M2_REPO/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/asm/asm-attrs/1.5.3/asm-attrs-1.5.3.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/cglib/cglib/2.1_3/cglib-2.1_3.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/asm/asm/1.5.3/asm-1.5.3.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/hibernate/hibernate-entitymanager/3.4.0.GA/hibernate-entitymanager-3.4.0.GA.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/javassist/javassist/3.4.GA/javassist-3.4.GA.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/mysql/mysql-connector-java/5.1.22/mysql-connector-java-5.1.22.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-fileupload/commons-fileupload/1.2.2/commons-fileupload-1.2.2.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/20030211.134440/commons-beanutils-20030211.134440.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/net/sf/ezmorph/ezmorph/1.0.6/ezmorph-1.0.6.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/com/thoughtworks/xstream/xstream/1.3.1/xstream-1.3.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/apache/poi/poi/3.9/poi-3.9.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-codec/commons-codec/1.5/commons-codec-1.5.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/apache/poi/poi-ooxml/3.9/poi-ooxml-3.9.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/apache/poi/poi-ooxml-schemas/3.9/poi-ooxml-schemas-3.9.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/apache/xmlbeans/xmlbeans/2.3.0/xmlbeans-2.3.0.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/stax/stax-api/1.0.1/stax-api-1.0.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/atmosphere/atmosphere-runtime/1.0.13/atmosphere-runtime-1.0.13.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/atmosphere/atmosphere-compat-jbossweb/1.0.13/atmosphere-compat-jbossweb-1.0.13.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/atmosphere/atmosphere-compat-tomcat/1.0.13/atmosphere-compat-tomcat-1.0.13.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/atmosphere/atmosphere-compat-tomcat7/1.0.13/atmosphere-compat-tomcat7-1.0.13.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
