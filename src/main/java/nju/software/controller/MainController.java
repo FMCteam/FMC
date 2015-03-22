@@ -60,7 +60,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "logout.do", method= RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String logout(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
@@ -103,7 +103,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "default.do", method= RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getDefaultPage(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		/**

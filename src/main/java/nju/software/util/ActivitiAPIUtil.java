@@ -108,6 +108,8 @@ public class ActivitiAPIUtil {
 		List<Task> assigedTasks = getAssignedTasksOfUser(userId);
 		List<Task> resultTasks = new ArrayList<Task>();
 		Map<String, String> nameMap = getTaskNameMap();
+//		此处不用再遍历查询
+//		taskService.createTaskQuery().taskCandidateUser(userId).taskName(taskName).singleResult();
 		for (Task task : assigedTasks) {
 			if (task.getName().equals(nameMap.get(taskName))) {
 				resultTasks.add(task);

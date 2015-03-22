@@ -37,7 +37,7 @@ public class FinanceController {
 
 	// ===========================样衣金确认=================================
 	@RequestMapping(value = "/finance/confirmSampleMoneyList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmSampleMoneyList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
@@ -61,7 +61,7 @@ public class FinanceController {
 	private EmployeeService employeeService;
 
 	@RequestMapping(value = "/finance/confirmSampleMoneyListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmSampleMoneyListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -99,7 +99,7 @@ public class FinanceController {
 	}
 
 	@RequestMapping(value = "/finance/confirmSampleMoneyDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmSampleMoneyDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -111,7 +111,7 @@ public class FinanceController {
 	}
 
 	@RequestMapping(value = "/finance/confirmSampleMoneySubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmSampleMoneySubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId_string = request.getParameter("orderId");
@@ -135,7 +135,7 @@ public class FinanceController {
 
 	// ===========================退还定金列表===================================
 	@RequestMapping(value = "/finance/returnDepositList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String returnDepositList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
@@ -152,7 +152,7 @@ public class FinanceController {
 
 	// ===========================退还定金列表搜索===================================
 	@RequestMapping(value = "/finance/returnDepositListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String returnDepositListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -186,7 +186,7 @@ public class FinanceController {
 
 	// ===========================定金确认===================================
 	@RequestMapping(value = "/finance/confirmDepositList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
@@ -202,7 +202,7 @@ public class FinanceController {
 	}
 
 	@RequestMapping(value = "/finance/confirmDepositListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -234,7 +234,7 @@ public class FinanceController {
 	}
 
 	@RequestMapping(value = "/finance/returnDepositDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String returnDepositDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -246,7 +246,7 @@ public class FinanceController {
 	}
 
 	@RequestMapping(value = "/finance/confirmDepositDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -258,7 +258,7 @@ public class FinanceController {
 	}
 
 	@RequestMapping(value = "/finance/returnDepositSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String returnDepositSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -273,7 +273,7 @@ public class FinanceController {
 	}
 
 	@RequestMapping(value = "/finance/confirmDepositSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmDepositSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -298,7 +298,7 @@ public class FinanceController {
 
 	// ===========================尾款确认===================================
 	@RequestMapping(value = "finance/confirmFinalPaymentList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -317,7 +317,7 @@ public class FinanceController {
 	}
 
 	@RequestMapping(value = "finance/confirmFinalPaymentListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -351,7 +351,7 @@ public class FinanceController {
 	}
 
 	@RequestMapping(value = "/finance/confirmFinalPaymentDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -368,7 +368,7 @@ public class FinanceController {
 
 	// 上传接收尾金截图
 	@RequestMapping(value = "/finance/confirmFinalPaymentFileSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentFileSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -398,7 +398,7 @@ public class FinanceController {
 	}
 
 	@RequestMapping(value = "/finance/confirmFinalPaymentSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmFinalPaymentSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -421,7 +421,7 @@ public class FinanceController {
 	}
 
 	@RequestMapping(value = "/image.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String image(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));

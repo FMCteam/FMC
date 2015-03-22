@@ -40,7 +40,7 @@ public class SystemController {
 	
 	
 	@RequestMapping(value = "/system/moduleMessages.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String moduleMessages(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 		/*List<TreeNode> treeNodes = systemService.findSystemMenu();
@@ -53,7 +53,7 @@ public class SystemController {
 	}
 	
 	@RequestMapping(value = "/system/rolePrivilege.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String rolePrivilege(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 
@@ -62,7 +62,7 @@ public class SystemController {
 	
 	
 	@RequestMapping(value = "/system/roleAss.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String roleAss(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 
@@ -77,7 +77,7 @@ public class SystemController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/system/findSystemMenu.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String findSystemMenu(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<TreeNode> treeNodes = systemService.findSystemMenu();
@@ -119,7 +119,7 @@ public class SystemController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/system/editSystemMenu.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String editSystemMenu(@ModelAttribute Permission ep,HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Permission eps=systemService.findSystemMessage(Integer.valueOf(ep.getPermissionId()));
@@ -134,7 +134,7 @@ public class SystemController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/system/updateSystemMessage.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String updateSystemMessage(@ModelAttribute Permission ep,HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Date date =new Date();
@@ -220,7 +220,7 @@ public class SystemController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/system/findDreeMapNew.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public RolePriView findDreeMapNew(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 		RolePriView total =systemService.findDreeMapNew();
@@ -238,7 +238,7 @@ public class SystemController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/system/findRole.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public List<UserRoleView> findRole(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 		List<Object> list= systemService.findRole();
@@ -264,7 +264,7 @@ public class SystemController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/system/saveRolePriv.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public List<UserRoleView> saveRolePriv(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 		String temp = request.getParameter("temp");
@@ -280,7 +280,7 @@ public class SystemController {
 	}
 	
 	@RequestMapping(value = "/system/addRole.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public List<UserRoleView> addRole(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 		String urViewId = request.getParameter("urViewId");
@@ -312,7 +312,7 @@ public class SystemController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/system/findRolePriv.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public List<UserRoleView> findRolePriv(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 		String rpId = request.getParameter("rpId");
@@ -330,7 +330,7 @@ public class SystemController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/system/findAccountMes.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public List<AccountView> findAccountMes(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 		List<AccountView> userList= new ArrayList<AccountView>();
@@ -357,7 +357,7 @@ public class SystemController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/system/findAccountRole.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public List<UserRoleView> findAccountRole(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 		String urViewUserId = request.getParameter("urViewUserId");
@@ -383,7 +383,7 @@ public class SystemController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/system/updateAccountRole.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public List<UserRoleView> updateAccountRole(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 		String temp = request.getParameter("temp");

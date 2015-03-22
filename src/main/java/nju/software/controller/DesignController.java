@@ -40,7 +40,7 @@ public class DesignController {
 	
 	// ===========================设计验证=================================
 	@RequestMapping(value = "/design/verifyDesignList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> orderList = designService
@@ -57,7 +57,7 @@ public class DesignController {
 	private EmployeeService employeeService;
 	// ===========================设计验证订单搜索=================================
 	@RequestMapping(value = "/design/verifyDesignListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyDesignListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -86,7 +86,7 @@ public class DesignController {
 	
 	
 	@RequestMapping(value = "/design/verifyDesignDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -97,7 +97,7 @@ public class DesignController {
 	}
 
 	@RequestMapping(value = "/design/verifyDesignSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
@@ -111,7 +111,7 @@ public class DesignController {
 	// =========================设计工艺验证===============================
 	
 	@RequestMapping(value = "design/computeDesignCostList.do", method= RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computeDesignCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
@@ -126,7 +126,7 @@ public class DesignController {
 	}
 	
 	@RequestMapping(value = "design/computeDesignCostListSearch.do" )
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computeProduceCostListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -152,7 +152,7 @@ public class DesignController {
 	}
 	
 	@RequestMapping(value = "design/computeDesignCostDetail.do", method= RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computeDesignCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
@@ -162,7 +162,7 @@ public class DesignController {
 	}
 	
 	@RequestMapping(value = "design/computeDesignCostSubmit.do", method= RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computeDesignCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -220,7 +220,7 @@ public class DesignController {
 
 	// ===========================上传版型=================================
 	@RequestMapping(value = "/design/getUploadDesignList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getUploadDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getUploadDesignList();
@@ -236,7 +236,7 @@ public class DesignController {
 
 	// ===========================上传版型搜索=================================
 	@RequestMapping(value = "/design/getUploadDesignListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getUploadDesignListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -263,7 +263,7 @@ public class DesignController {
 	}
 	
 	@RequestMapping(value = "/design/getUploadDesignDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getUploadDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -280,7 +280,7 @@ public class DesignController {
 
 	//录入版型数据
 	@RequestMapping(value = "/design/uploadDesignSubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String uploadDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -327,7 +327,7 @@ public class DesignController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/design/uploadDesignSubmit_all.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String uploadDesignSubmit_all(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -362,7 +362,7 @@ public class DesignController {
  
     //生产样衣
 	@RequestMapping(value = "/design/produceSampleSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String produceSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -376,7 +376,7 @@ public class DesignController {
 	
 	// ===========================修改版型=================================
 	@RequestMapping(value = "/design/getModifyDesignList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getModifyDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getModifyDesignList();
@@ -391,7 +391,7 @@ public class DesignController {
 
 	// ===========================修改版型=================================
 	@RequestMapping(value = "/design/getModifyDesignListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getModifyDesignListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -417,7 +417,7 @@ public class DesignController {
 	}
 	
 	@RequestMapping(value = "/design/getModifyDesignDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getModifyDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -428,7 +428,7 @@ public class DesignController {
 	}
 
 	@RequestMapping(value = "/design/modifyDesignSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = (String) request.getParameter("orderId");
@@ -458,7 +458,7 @@ public class DesignController {
 	
 	
 	@RequestMapping(value = "design/needCraftSampleSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String needCraftSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -472,7 +472,7 @@ public class DesignController {
 	
     //上传工艺制作图
 	@RequestMapping(value = "/design/uploadCraftFileSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String uploadCraftFileSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -504,7 +504,7 @@ public class DesignController {
 
 	// ===========================获取需要工艺制作的样衣=================================
 	@RequestMapping(value = "/design/needCraftSampleDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String needCraftSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -516,7 +516,7 @@ public class DesignController {
 	
 	// ===========================样衣工艺制作列表=================================
 	@RequestMapping(value = "/design/getNeedCraftSampleList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getNeedCraftSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 //		List<Map<String, Object>> list = designService.getNeedCraftList();
@@ -531,7 +531,7 @@ public class DesignController {
 	}
     
 	@RequestMapping(value="/design/getNeedCraftSampleListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getNeedCraftSampleListSearch(HttpServletRequest request,
 			HttpServletResponse response,ModelMap model){
 		String ordernumber = request.getParameter("ordernumber");
@@ -559,7 +559,7 @@ public class DesignController {
 	}
 	
 	@RequestMapping(value = "design/needCraftProductSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String needCraftProductSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws UnsupportedEncodingException {
 		String crafsManName= new String( request.getParameter("crafsManName").getBytes("iso-8859-1"), "UTF-8");
@@ -573,7 +573,7 @@ public class DesignController {
 	
 	// ===========================获取需要工艺制作的大货订单=================================
 	@RequestMapping(value = "/design/needCraftProductDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String needCraftProductDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -585,7 +585,7 @@ public class DesignController {
 	
 	// ===========================大货生产工艺制作列表=================================
 	@RequestMapping(value = "/design/getNeedCraftProductList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getNeedCraftList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getNeedCraftList();
@@ -600,7 +600,7 @@ public class DesignController {
 
 	// ===========================大货生产工艺制作列表查询=================================
 	@RequestMapping(value = "/design/getNeedCraftProductListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getNeedCraftListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -627,7 +627,7 @@ public class DesignController {
 	}
 	
 	@RequestMapping(value = "design/getTypeSettingSliceSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getTypeSettingSliceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -639,7 +639,7 @@ public class DesignController {
 	
 	// ===========================获取需要排版切片的大货订单=================================
 	@RequestMapping(value = "/design/getTypeSettingSliceDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getTypeSettingSliceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -653,7 +653,7 @@ public class DesignController {
 	
 	//=============================获取需要大货生产排版切片的任务   =============================
 	@RequestMapping(value = "/design/getTypeSettingSliceList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getTypeSettingSliceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getTypeSettingSliceList();
@@ -668,7 +668,7 @@ public class DesignController {
 	
 	//=============================获取需要大货生产排版切片的任务搜索   =============================
 	@RequestMapping(value = "/design/getTypeSettingSliceListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getTypeSettingSliceListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -696,7 +696,7 @@ public class DesignController {
 	
 	// ===========================确认版型=================================
 	@RequestMapping(value = "/design/getConfirmDesignList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getConfirmDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getConfirmDesignList();
@@ -710,7 +710,7 @@ public class DesignController {
 	}
 	
 	@RequestMapping(value = "/design/getConfirmDesignListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getConfirmDesignListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -736,7 +736,7 @@ public class DesignController {
 	}
 	
 	@RequestMapping(value = "/design/getConfirmDesignDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getConfirmDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -747,7 +747,7 @@ public class DesignController {
 	}
 
 	@RequestMapping(value = "/design/confirmDesignSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -778,7 +778,7 @@ public class DesignController {
 	
 	@RequestMapping(value = "/downloadCadSubmit.do", method = RequestMethod.POST)
 	@ResponseBody
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public void downloadCadSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String url = request.getParameter("cadUrl");
@@ -796,7 +796,7 @@ public class DesignController {
 	
 	// ===========================在排版切片之前确认最终版型=================================
 	@RequestMapping(value = "/design/getConfirmCadList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getConfirmCadList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getConfirmCadList();
@@ -811,7 +811,7 @@ public class DesignController {
 	
 	// ===========================在排版切片之前确认最终版型搜索=================================
 	@RequestMapping(value = "/design/getConfirmCadListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getConfirmCadListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -839,7 +839,7 @@ public class DesignController {
 	}
 	
 	@RequestMapping(value = "/design/getConfirmCadDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getConfirmCadDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -849,7 +849,7 @@ public class DesignController {
 		return "/design/getConfirmCadDetail";
 	}
 	@RequestMapping(value = "/design/confirmCadSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmCadSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");

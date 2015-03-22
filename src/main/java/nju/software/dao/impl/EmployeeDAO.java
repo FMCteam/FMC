@@ -7,12 +7,14 @@ import java.util.List;
 
 import nju.software.dao.IEmployeeDAO;
 import nju.software.dataobject.Employee;
+import nju.software.dataobject.Order;
 
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -280,7 +282,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findAll()
 	 */
-	public List findAll() {
+	public List<Employee> findAll() {
 		log.debug("finding all Employee instances");
 		try {
 			String queryString = "from Employee";
@@ -340,31 +342,34 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	}
 
 	public List<Employee> findByPage(int page, int numberPerPage) {
-		// TODO Auto-generated method stub
-		int first = (page-1)*numberPerPage;
-		List<Employee> list = null;
-		Session session = null;
-		try {
-			session = this.getSession();
-			Query q = session.createQuery("from Employee as model order by employee_id desc");
-			q.setFirstResult(first);
-			q.setMaxResults(numberPerPage);
-			list = q.list();
-		} catch (DataAccessResourceFailureException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (HibernateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		DetachedCriteria criteria = DetachedCriteria.forClass(Employee.class);
+		int start=numberPerPage*(page-1);
+		criteria.addOrder(org.hibernate.criterion.Order.desc("employeeId"));
+		List<Employee> list = getHibernateTemplate().findByCriteria(criteria,start, numberPerPage);
 		return list;
+		
+//		int first = (page-1)*numberPerPage;
+//		List<Employee> list = null;
+//		Session session = null;
+//		try {
+//			session = this.getSession();
+//			Query q = session.createQuery("from Employee as model order by employee_id desc");
+//			q.setFirstResult(first);
+//			q.setMaxResults(numberPerPage);
+//			list = q.list();
+//			session.flush();
+//			return list;
+//		} catch (DataAccessResourceFailureException e) {
+//			e.printStackTrace();
+//		} catch (HibernateException e) {
+//			e.printStackTrace();
+//		} catch (IllegalStateException e) {
+//			e.printStackTrace();
+//		} finally {
+//			if (session != null) {
+//				session.close();
+//			}
+//		}
 //		getHibernateTemplate().executeFind(new HibernateCallback<Employee>() {
 //			public Employee doInHibernate(Session session)
 //					throws HibernateException, SQLException {
@@ -376,6 +381,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 //			}
 //			
 //		})
+//		return list;
 	}
 
 	/**

@@ -13,7 +13,6 @@ import nju.software.dataobject.Produce;
 import nju.software.dataobject.SearchInfo;
 import nju.software.service.CustomerService;
 import nju.software.service.EmployeeService;
-import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.QualityService;
 import nju.software.util.DateUtil;
@@ -32,8 +31,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class QualityController {
 
 	@Autowired
-	private OrderService orderService;
-	@Autowired
 	private CustomerService customerService;
 	@Autowired
 	private EmployeeService employeeService;
@@ -44,7 +41,7 @@ public class QualityController {
 	
 	//质检列表
 	@RequestMapping(value = "quality/checkQualityList.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String qualityCheckList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
@@ -59,7 +56,7 @@ public class QualityController {
 	}
 
 	@RequestMapping(value = "quality/checkQualityListSearch.do" )
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String checkQualityListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -87,7 +84,7 @@ public class QualityController {
 	
 	//质检详情
 	@RequestMapping(value = "quality/checkQualityDetail.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyProductDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -189,7 +186,7 @@ public class QualityController {
 	
 //	// 质量检查
 //	@RequestMapping(value = "quality/checkQualitySubmit.do", method = RequestMethod.POST)
-//	@Transactional(rollbackFor = Exception.class)
+//	//@Transactional(rollbackFor = Exception.class)
 //	public String modifyProduct(HttpServletRequest request,
 //			HttpServletResponse response, ModelMap model) {
 //		int orderId = Integer.parseInt(request.getParameter("orderId"));

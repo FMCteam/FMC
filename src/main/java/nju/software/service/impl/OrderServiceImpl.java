@@ -1,6 +1,5 @@
 package nju.software.service.impl;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,7 +47,6 @@ import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sun.jdbc.odbc.OdbcDef;
 
 /**
  * @author 莫其凡

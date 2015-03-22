@@ -30,7 +30,7 @@ public class BuyController {
 
 	// ===========================采购验证=================================
 	@RequestMapping(value = "/buy/verifyPurchaseList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyPurchaseList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService.getVerifyPurchaseList();
@@ -46,7 +46,7 @@ public class BuyController {
 	private EmployeeService employeeService;
 	// ===========================采购验证搜索订单=================================
 	@RequestMapping(value = "/buy/verifyPurchaseListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyPurchaseListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -73,7 +73,7 @@ public class BuyController {
 	}
 	
 	@RequestMapping(value = "/buy/verifyPurchaseDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyPurchaseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -84,7 +84,7 @@ public class BuyController {
 	}
 
 	@RequestMapping(value = "/buy/verifyPurchaseSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyPurchaseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
@@ -96,7 +96,7 @@ public class BuyController {
 
 	// ===========================采购成本核算=================================
 	@RequestMapping(value = "/buy/computePurchaseCostList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computePurchaseCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService
@@ -116,7 +116,7 @@ public class BuyController {
 
 	// ===========================采购成本核算=================================
 	@RequestMapping(value = "/buy/computePurchaseCostListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computePurchaseCostListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -148,7 +148,7 @@ public class BuyController {
 	}
 	
 	@RequestMapping(value = "/buy/computePurchaseCostDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computePurchaseCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -159,7 +159,7 @@ public class BuyController {
 	}
 
 	@RequestMapping(value = "/buy/computePurchaseCostSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computePurchaseCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -274,7 +274,7 @@ public class BuyController {
 
 	// ========================样衣原料采购===========================
 	@RequestMapping(value = "/buy/purchaseSampleMaterialList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String purchaseSampleMaterialList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService
@@ -289,7 +289,7 @@ public class BuyController {
 	}
 
 	@RequestMapping(value = "/buy/purchaseSampleMaterialListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String purchaseSampleMaterialListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -317,7 +317,7 @@ public class BuyController {
 	}
 	
 	@RequestMapping(value = "/buy/purchaseSampleMaterialDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String purchaseSampleMaterialDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -329,7 +329,7 @@ public class BuyController {
 	}
 
 	@RequestMapping(value = "/buy/purchaseSampleMaterialSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String purchaseSampleMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -361,7 +361,7 @@ public class BuyController {
 
 	// ========================生产验证===========================
 	@RequestMapping(value = "/buy/confirmPurchaseList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmPurchaseList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService.getConfirmPurchaseList();
@@ -375,7 +375,7 @@ public class BuyController {
 	}
 
 	@RequestMapping(value = "/buy/confirmPurchaseListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmPurchaseListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -402,7 +402,7 @@ public class BuyController {
 
 	
 	@RequestMapping(value = "/buy/confirmPurchaseDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmPurchaseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -413,7 +413,7 @@ public class BuyController {
 	}
 
 	@RequestMapping(value = "/buy/confirmPurchaseSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmPurchaseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
@@ -453,7 +453,7 @@ public class BuyController {
 	
 	// ========================生产采购===========================
 	@RequestMapping(value = "/buy/purchaseMaterialList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String purchaseMaterialList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = buyService.getPurchaseMaterialList();
@@ -467,7 +467,7 @@ public class BuyController {
 	}
 
 	@RequestMapping(value = "/buy/purchaseMaterialListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String purchaseMaterialListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -494,7 +494,7 @@ public class BuyController {
 	}
 	
 	@RequestMapping(value = "/buy/purchaseMaterialDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String purchaseMaterialDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -505,7 +505,7 @@ public class BuyController {
 	}
 
 	@RequestMapping(value = "/buy/purchaseMaterialSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String purchaseMaterialSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -520,7 +520,7 @@ public class BuyController {
 	
  		// ========================毛衣原料采购===========================
 		@RequestMapping(value = "/buy/purchaseSweaterMaterialList.do")
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String purchaseSweaterMaterialList(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			List<Map<String, Object>> list = buyService.purchaseSweaterMaterialList();
@@ -535,7 +535,7 @@ public class BuyController {
 		
 		// ========================毛衣原料采购订单搜索===========================		
 		@RequestMapping(value = "/buy/purchaseSweaterMaterialListSearch.do")
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String purchaseSweaterMaterialListSearch(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			String ordernumber = request.getParameter("ordernumber");
@@ -560,7 +560,7 @@ public class BuyController {
 		}
 		
 		@RequestMapping(value = "/buy/purchaseSweaterMaterialDetail.do")
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String purchaseSweaterMaterialDetail(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			String orderId = request.getParameter("orderId");
@@ -575,7 +575,7 @@ public class BuyController {
 		}
 
 		@RequestMapping(value = "/buy/purchaseSweaterMaterialSubmit.do", method = RequestMethod.POST)
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String purchaseSweaterMaterialSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			String orderId = request.getParameter("orderId");
@@ -612,7 +612,7 @@ public class BuyController {
 		* @throws 
 		
 		@RequestMapping(value = "/buy/printProcurementOrder.do")
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String printProcurementOrder(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			Integer orderId=Integer.parseInt(request.getParameter("orderId"));
@@ -622,7 +622,7 @@ public class BuyController {
 		}
 		//获取样衣裁剪单信息
 		@RequestMapping(value = "/buy/printProcurementSampleOrder.do")
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String printProcurementSampleOrder(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			Integer orderId=Integer.parseInt(request.getParameter("orderId"));

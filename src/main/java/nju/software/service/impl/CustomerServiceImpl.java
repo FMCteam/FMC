@@ -110,7 +110,6 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public List<Object> listCustomer(Map<String, Object> m) {
-		// TODO Auto-generated method stub
 		try
 		{
 			List<Object> obj=this.customerDao.listCustomer(m);

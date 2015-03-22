@@ -54,7 +54,7 @@ public class SweaterMakeController {
 	
 	//=====================毛衣样衣确认和工艺制作======================
 	@RequestMapping(value = "/sweater/sweaterSampleAndCraftList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sweaterSampleAndCraftList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=sweaterMakeService.getSweaterSampleAndCraftList();
@@ -68,7 +68,7 @@ public class SweaterMakeController {
 	}
 
 	@RequestMapping(value = "/sweater/sweaterSampleAndCraftListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sweaterSampleAndCraftListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -95,7 +95,7 @@ public class SweaterMakeController {
 	}
 	
 	@RequestMapping(value = "/sweater/sweaterSampleAndCraftDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getSweaterSampleAndCraftDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
@@ -117,7 +117,7 @@ public class SweaterMakeController {
 	}
 	
 	@RequestMapping(value = "sweater/sweaterSampleAndCraftSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sweaterSampleAndCraftSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws IOException {	
 		
@@ -148,7 +148,7 @@ public class SweaterMakeController {
 	
 	//=====================毛衣外发======================
 	@RequestMapping(value = "/sweater/sendSweaterList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sendSweaterList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=sweaterMakeService.getSendSweaterList();
@@ -162,7 +162,7 @@ public class SweaterMakeController {
 	}
 
 	@RequestMapping(value = "/sweater/sendSweaterListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sendSweaterListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -188,7 +188,7 @@ public class SweaterMakeController {
 	}
 	
 	@RequestMapping(value = "/sweater/sendSweaterDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String getSendSweaterDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
@@ -202,7 +202,7 @@ public class SweaterMakeController {
 	}
 	
 	@RequestMapping(value = "sweater/sendSweaterSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sendSweaterSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {	
 		boolean result = Boolean.parseBoolean(request.getParameter("result"));
@@ -261,7 +261,7 @@ public class SweaterMakeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/sweater/sweaterOrderList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sweaterOrderList(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			List<Map<String, Object>> list = sweaterMakeService.getOrders();//查询所有订单
@@ -275,7 +275,7 @@ public class SweaterMakeController {
 		}
 	
 	@RequestMapping(value = "/sweater/sweaterOrderListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sweaterOrderListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderState = request.getParameter("orderState");

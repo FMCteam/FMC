@@ -524,7 +524,6 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 
 	@Override
 	public List getOrderList(Integer page) {
-		// TODO Auto-generated method stub
 		//Integer number_per_page=2;
 		DetachedCriteria criteria = DetachedCriteria.forClass(Order.class);
 		//criteria.add(Restrictions.eq(propertyName,value));
@@ -599,7 +598,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
         	criteria.add(Restrictions.eq("employeeId", userId));
         }
   		if(!StringUtils.isEmpty(ordernumber))
- 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
+ 			criteria.add(Restrictions.eq("	",Integer.parseInt(ordernumber) ));
  	 	if(!"CUSTOMER".equals(userRole)&&!StringUtils.isEmpty(customername))
 			criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
  		if(!StringUtils.isEmpty(stylename))
@@ -660,7 +659,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Order.class);
 
-  		if(!StringUtils.isEmpty(ordernumber))
+  		if(!StringUtils.isEmpty(ordernumber) && StringUtils.isNumeric(ordernumber))
  			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
  	 	if(!StringUtils.isEmpty(customername))
 			criteria.add(Restrictions.like("customerName", "%" + customername + "%"));

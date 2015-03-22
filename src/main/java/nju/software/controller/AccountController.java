@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AccountController {
 
 	@RequestMapping(value = "/account/employeeList.do")
-	@Transactional(rollbackFor = Exception.class)
 	public String employeeList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int page;
@@ -56,21 +55,21 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/addEmployeeDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String addEmployeeDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		return "/account/addEmployeeDetail";
 	}
 
 	@RequestMapping(value = "/account/registCustomer.do")
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String registCustomer(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		return "/customer/registCustomer";
 	}
 
 	@RequestMapping(value = "/account/addEmployeeSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String addEmployeeSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String username = request.getParameter("employee_id");
@@ -159,7 +158,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/modifyEmployeeDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String modifyEmployeeDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
@@ -189,7 +188,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/modifyEmployeeSubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String modifyEmployeeSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
@@ -316,7 +315,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/forgetPassword.do")
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String forgetPassword(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		return "/account/forgetPassword";
@@ -331,7 +330,7 @@ public class AccountController {
 	 * @return
 	 */
 	@RequestMapping(value = "/account/sendResetPassMail.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String sendResetPassMail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		System.out.println("---------------开始发送邮件----------------");
@@ -396,7 +395,7 @@ public class AccountController {
 	 * @return
 	 */
 	@RequestMapping(value = "/account/checkResetPassLink.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String checkResetLink(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String sid = request.getParameter("sid");
@@ -438,7 +437,7 @@ public class AccountController {
 	 * @return
 	 */
 	@RequestMapping(value = "/account/resetPassword.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String resetPassword(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
@@ -470,7 +469,7 @@ public class AccountController {
 	 * @return
 	 */
 	@RequestMapping(value = "/account/deleteEmployeeSubmit.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String deleteEmployeeSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		boolean success = false;
@@ -506,7 +505,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/customerList.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String customerList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int page;
@@ -537,7 +536,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/addCustomerDetail.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String addCustomerDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		System.out.println("customer add");
@@ -546,7 +545,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/addCustomerSubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String addCustomerSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -646,7 +645,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/modifyCustomerDetail.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String modifyCustomerDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String customerId = request.getParameter("customer_id");
@@ -673,7 +672,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/modifyCustomerSubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String modifyCustomerSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String customerId = request.getParameter("customer_id");
@@ -743,7 +742,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/deleteCustomerSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String deleteCustomerSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -755,7 +754,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "customer/viewCustomer.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	
 	public String viewCustomer(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String customerId = request.getParameter("customer_id");

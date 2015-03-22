@@ -14,7 +14,6 @@
           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
           http://drools.org/schema/drools-spring
           http://drools.org/schema/drools-spring.xsd" default-lazy-init="true">
-
     
 	<!-- 组件扫描 -->
 	<context:component-scan base-package="nju.software">
@@ -36,6 +35,7 @@
 	<!-- 开启注解方式下的声明式事务 -->
 	<tx:annotation-driven transaction-manager="txManager"
 		proxy-target-class="true" />
+		
 	<!-- 事务传播特性 -->
 	 <tx:advice id="transactionAdvice" transaction-manager="txManager"> 
         <tx:attributes> 
@@ -45,7 +45,7 @@
     
 	<aop:config> 
     <aop:pointcut id="businessService" 
-            expression="execution(* nju.software.controller.*.*(..))" /> 
+            expression="execution(* nju.software.service.*.*(..))" /> 
     <aop:advisor advice-ref="transactionAdvice" pointcut-ref="businessService" /> 
     </aop:config>
 </beans>

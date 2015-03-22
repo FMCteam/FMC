@@ -87,7 +87,7 @@ public class MarketController {
 
 	// ================================客户下单====================================
 	@RequestMapping(value = "/market/addOrderList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String addOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Customer> customers = marketService.getAddOrderList();
@@ -96,7 +96,7 @@ public class MarketController {
 	}
 
 	@RequestMapping(value = "/market/addOrderDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String addOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String cid = request.getParameter("cid");
@@ -113,7 +113,7 @@ public class MarketController {
 	
 	//-----------------提交订单数据---------------------------------
 	@RequestMapping(value = "/market/addOrderSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String addOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 
@@ -411,15 +411,11 @@ public class MarketController {
 		//给客户手机发送订单信息
 		marketService.sendOrderInfoViaPhone(order, customer);
 
-		//测试事务回滚是否成功
-//		if (true) {
-//			throw new RuntimeException();
-//		}
 		return "redirect:/market/addOrderList.do";
 	}
 
 	@RequestMapping(value = "/market/addMoreOrderList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String addMoreOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String cid = request.getParameter("cid");
@@ -438,7 +434,7 @@ public class MarketController {
 	}
 	
 	@RequestMapping(value = "/market/addMoreOrderListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String addMoreOrderListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -478,7 +474,7 @@ public class MarketController {
 	}
 	
 	@RequestMapping(value = "/market/addMoreOrderDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String addMoreOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
@@ -500,7 +496,7 @@ public class MarketController {
 	}
 
 	@RequestMapping(value = "/market/addMoreOrderSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String addMoreOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -781,7 +777,7 @@ public class MarketController {
 	
 	// test precondition
 	@RequestMapping(value = "market/precondition.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String precondition(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		marketService.testPrecondition("CAIGOUZHUGUAN", "Purchasing_accounting");
@@ -796,7 +792,7 @@ public class MarketController {
 
 	// 专员修改报价
 	@RequestMapping(value = "market/modifyQuoteSubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_profit = request.getParameter("profitPerPiece");
@@ -832,7 +828,7 @@ public class MarketController {
 
 	// 专员修改报价
 	@RequestMapping(value = "market/modifyQuoteDetail.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -850,7 +846,7 @@ public class MarketController {
 
 	// 专员修改报价列表
 	@RequestMapping(value = "market/modifyQuoteList.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -869,7 +865,7 @@ public class MarketController {
 
 	// 专员修改报价列表搜索
 	@RequestMapping(value = "market/modifyQuoteListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyQuoteListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -901,7 +897,7 @@ public class MarketController {
 	
 	// 专员修改加工单列表
 	@RequestMapping(value = "market/modifyProductList.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyProductList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -920,7 +916,7 @@ public class MarketController {
 
 	// 专员修改加工单列表搜索
 	@RequestMapping(value = "market/modifyProductListSearch.do" )
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyProductListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -953,7 +949,7 @@ public class MarketController {
 	
 	// 专员修改加工单详情
 	@RequestMapping(value = "market/modifyProductDetail.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyProductDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -968,7 +964,7 @@ public class MarketController {
 
 	// 专员修改加工单
 	@RequestMapping(value = "market/modifyProductSubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyProductSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
@@ -1031,7 +1027,7 @@ public class MarketController {
 
 	// 专员合并报价
 	@RequestMapping(value = "market/mergeQuoteSubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mergeQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -1068,7 +1064,7 @@ public class MarketController {
 
 	// 专员合并报价信息
 	@RequestMapping(value = "market/mergeQuoteDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mergeQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
@@ -1086,7 +1082,7 @@ public class MarketController {
 
 	// 专员合并报价List
 	@RequestMapping(value = "market/mergeQuoteList.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mergeQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
@@ -1108,7 +1104,7 @@ public class MarketController {
 	}
 	// 专员合并报价ListSearch
 	@RequestMapping(value = "market/mergeQuoteListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mergeQuoteListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -1142,7 +1138,7 @@ public class MarketController {
 	}
 	// 主管审核报价
 	@RequestMapping(value = "market/verifyQuoteSubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		/*
@@ -1186,7 +1182,7 @@ public class MarketController {
 
 	// 主管审核报价detail
 	@RequestMapping(value = "market/verifyQuoteDetail.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
@@ -1202,7 +1198,7 @@ public class MarketController {
 
 	// 主管审核报价List
 	@RequestMapping(value = "market/verifyQuoteList.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
@@ -1221,7 +1217,7 @@ public class MarketController {
 	
 	// 主管审核报价List搜索
 	@RequestMapping(value = "market/verifyQuoteListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyQuoteListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -1253,7 +1249,7 @@ public class MarketController {
 	
 	// 修改询单的列表
 	@RequestMapping(value = "market/modifyOrderList.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
@@ -1275,7 +1271,7 @@ public class MarketController {
 	}
    
 	@RequestMapping(value = "/market/modifyOrderListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyOrderSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -1306,7 +1302,7 @@ public class MarketController {
 
 	// 询单的修改界面
 	@RequestMapping(value = "market/modifyOrderDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -1331,7 +1327,7 @@ public class MarketController {
 
 	// 询单的修改界面
 	@RequestMapping(value = "market/modifyOrderSubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String modifyOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -1683,7 +1679,7 @@ public class MarketController {
 		return new Timestamp(outDate.getTime());
 	}
 	@RequestMapping(value = "/market/confirmQuoteList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
@@ -1700,7 +1696,7 @@ public class MarketController {
 	}
 
 	@RequestMapping(value = "/market/confirmQuoteListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -1729,7 +1725,7 @@ public class MarketController {
 	}
 	
 	@RequestMapping(value = "/market/confirmQuoteDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
@@ -1743,7 +1739,7 @@ public class MarketController {
 	}
 
 	@RequestMapping(value = "/market/confirmQuoteSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -1800,7 +1796,7 @@ public class MarketController {
 	 * @return
 	 */
 	@RequestMapping(value = "market/confirmProduceOrderList.do", method = RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmProduceOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -1823,7 +1819,7 @@ public class MarketController {
 	}
 
 	@RequestMapping(value = "market/confirmProduceOrderListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmProduceOrderListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -1867,7 +1863,7 @@ public class MarketController {
 	 * @return
 	 */
 	@RequestMapping(value = "market/confirmProduceOrderSubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmProduceOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -1979,7 +1975,7 @@ public class MarketController {
 	 * @return
 	 */
 	@RequestMapping(value = "market/confirmProduceOrderDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String confirmProduceOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -2006,7 +2002,7 @@ public class MarketController {
 	 * @return
 	 */
 	@RequestMapping(value = "market/cancelProduct.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String cancelSample(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -2029,7 +2025,7 @@ public class MarketController {
 	// ========================市场专员催尾款===============================
 	
 		@RequestMapping(value = "/market/getPushRestOrderList.do")
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String getPushRestOrderList(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			Account account = (Account) request.getSession().getAttribute(
@@ -2046,7 +2042,7 @@ public class MarketController {
 		
 		// ========================市场专员催尾款搜索===============================
 		@RequestMapping(value = "/market/getPushRestOrderListSearch.do")
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String getPushRestOrderListSearch(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			String ordernumber = request.getParameter("ordernumber");
@@ -2075,7 +2071,7 @@ public class MarketController {
 		}
 		
 // 		@RequestMapping(value = "/market/getPushRestOrderListSearch.do")
-//		@Transactional(rollbackFor = Exception.class)
+//		//@Transactional(rollbackFor = Exception.class)
 //		public String getPushRestOrderListSearch(HttpServletRequest request,
 //				HttpServletResponse response, ModelMap model) {
 //			Account account = (Account) request.getSession().getAttribute(
@@ -2090,7 +2086,7 @@ public class MarketController {
 //		}
 		
 		@RequestMapping(value = "/market/getPushRestOrderDetail.do")
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String getPushRestOrderDetail(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			Account account = (Account) request.getSession().getAttribute(
@@ -2103,7 +2099,7 @@ public class MarketController {
 		}
 	    //上传接收尾金截图
 		@RequestMapping(value = "/market/confirmFinalPaymentFileSubmit.do")
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String confirmFinalPaymentFileSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			String orderId = request.getParameter("orderId");
@@ -2139,7 +2135,7 @@ public class MarketController {
  
 		}
 		@RequestMapping(value = "/market/getPushRestOrderSubmit.do")
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String getPushRestOrderSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 
@@ -2189,7 +2185,7 @@ public class MarketController {
 		
 	// ========================签订合同============================
 	@RequestMapping(value = "/market/signContractList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String signContractList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
@@ -2210,7 +2206,7 @@ public class MarketController {
 	}
 
 	@RequestMapping(value = "/market/signContractListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String signContractListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
@@ -2245,7 +2241,7 @@ public class MarketController {
 	}
 	
 	@RequestMapping(value = "/market/signContractDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String signContractDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
@@ -2258,7 +2254,7 @@ public class MarketController {
 	}
 
 	@RequestMapping(value = "market/signContractSubmit.do", method = RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String signContractSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String discount = request.getParameter("discount");
@@ -2306,7 +2302,7 @@ public class MarketController {
 	}
 
 	@RequestMapping(value = "/order/orderList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String orderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -2331,7 +2327,7 @@ public class MarketController {
 	private EmployeeService employeeService;
 	
 	@RequestMapping(value = "/order/orderSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String orderSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute("cur_user");
@@ -2371,7 +2367,7 @@ public class MarketController {
 	
 	
 	@RequestMapping(value = "/order/orderDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String orderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
@@ -2398,7 +2394,7 @@ public class MarketController {
 	}
 	//正在进行中的订单  就是这个
 	@RequestMapping(value = "/order/orderListDoing.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String orderListDoing(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {		
 		Account account = (Account) request.getSession().getAttribute("cur_user");		
@@ -2419,7 +2415,7 @@ public class MarketController {
 	}
 	
 	@RequestMapping(value = "/order/orderListDoingSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String orderListDoingSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute("cur_user");
@@ -2446,7 +2442,7 @@ public class MarketController {
 	}
 
 	@RequestMapping(value = "/order/orderListDone.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String orderListDone(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute("cur_user");		
@@ -2468,7 +2464,7 @@ public class MarketController {
 	}
 	
 	@RequestMapping(value = "/order/orderListDoneSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String orderListDoneSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		//获取当前登录用户
@@ -2496,7 +2492,7 @@ public class MarketController {
 	}
 	//获取大货补货单信息 
 	@RequestMapping(value = "/market/printProcurementOrder.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String printProcurementOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
@@ -2506,7 +2502,7 @@ public class MarketController {
 	}
 	
 	@RequestMapping(value = "/market/printConfirmProcurementOrderHDY.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String printConfirmProcurementOrderHDY(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws UnsupportedEncodingException {
 		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
@@ -2518,7 +2514,7 @@ public class MarketController {
 	
 	//获取大货补货单信息   printConfirmProcurementOrder
 		@RequestMapping(value = "/market/printConfirmProcurementOrder.do")
-		@Transactional(rollbackFor = Exception.class)
+		//@Transactional(rollbackFor = Exception.class)
 		public String printConfirmProcurementOrder(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) throws UnsupportedEncodingException {
 			Integer orderId=Integer.parseInt(request.getParameter("orderId"));
@@ -2570,7 +2566,7 @@ public class MarketController {
 		}
 	//获取样衣裁剪单信息
 	@RequestMapping(value = "/market/printProcurementSampleOrder.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String printProcurementSampleOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId=Integer.parseInt(request.getParameter("orderId"));

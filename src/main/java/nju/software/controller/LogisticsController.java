@@ -15,7 +15,6 @@ import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.SearchInfo;
 import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
-import nju.software.service.OrderService;
 import nju.software.util.ListUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class LogisticsController {
 
 	// =============================收取样衣=====================================
 	@RequestMapping(value = "/logistics/receiveSampleList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String receiveSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = logisticsService
@@ -41,7 +40,7 @@ public class LogisticsController {
  
 	
 	@RequestMapping(value = "/logistics/receiveSampleDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String receiveSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -52,7 +51,7 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/receiveSampleSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String receiveSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
@@ -64,7 +63,7 @@ public class LogisticsController {
 
 	// ===========================样衣发货=================================
 	@RequestMapping(value = "/logistics/sendSampleList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sendSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = logisticsService.getSendSampleList();
@@ -83,7 +82,7 @@ public class LogisticsController {
 	@Autowired
 	private EmployeeService employeeService;
 	@RequestMapping(value = "/logistics/sendSampleListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sendSampleListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -114,7 +113,7 @@ public class LogisticsController {
 	}
 	
 	@RequestMapping(value = "/logistics/sendSampleDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sendSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId_string = request.getParameter("orderId");
@@ -126,7 +125,7 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/sendSampleSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sendSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId_string = request.getParameter("orderId");
@@ -168,7 +167,7 @@ public class LogisticsController {
 
 	// ===========================产品入库=================================
 	@RequestMapping(value = "/logistics/warehouseList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String warehouseList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> packageList = logisticsService
@@ -193,7 +192,7 @@ public class LogisticsController {
 	}
 	
 	@RequestMapping(value = "/logistics/packageDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String packageDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -204,7 +203,7 @@ public class LogisticsController {
 	}
 	
 	@RequestMapping(value = "/logistics/addPackage.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String addPackage(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -229,7 +228,7 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/removePackage.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String removePackage(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String packageId = request.getParameter("packageId");
@@ -238,7 +237,7 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/packageSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String packageSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -249,7 +248,7 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/warehouseDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String warehouseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -260,7 +259,7 @@ public class LogisticsController {
 	}
 	
 	@RequestMapping(value = "/logistics/printWarehouseDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String printWarehouseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -272,14 +271,14 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/mobile/index.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mobileIndex(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		return "/logistics/mobile/index";
 	}
 
 	@RequestMapping(value = "/logistics/mobile/warehouseList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mobileWarehouseList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> orderList = logisticsService
@@ -294,7 +293,7 @@ public class LogisticsController {
 	}
 	
 	@RequestMapping(value = "/logistics/mobile/warehouseDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mobileWarehouseDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -305,7 +304,7 @@ public class LogisticsController {
 	}
 	
 	@RequestMapping(value = "/logistics/mobile/updatePackage.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mobileUpdatePackage(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer packageId = Integer.parseInt(request.getParameter("packageId"));
@@ -317,7 +316,7 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/mobile/warehouseSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mobileWarehouseSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -329,7 +328,7 @@ public class LogisticsController {
 
 	// ===========================大货产品发货=================================
 	@RequestMapping(value = "/logistics/sendClothesList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sendClothesList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> scanList = logisticsService.getScanClothesList();
@@ -340,7 +339,7 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/scanClothesDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String scanClothesDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -351,7 +350,7 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/sendClothesDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sendClothesDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -362,7 +361,7 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/mobile/sendClothesList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mobileSendClothesList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> orderList = logisticsService
@@ -372,7 +371,7 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/mobile/sendClothesDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mobileSendClothesDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -383,7 +382,7 @@ public class LogisticsController {
 	}
 
 	@RequestMapping(value = "/logistics/mobile/sendClothesSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String mobileSendClothesSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -392,7 +391,7 @@ public class LogisticsController {
 	}
 //==============================发货完成，整个流程结束=========================================================
 	@RequestMapping(value = "/logistics/sendClothesSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String sendClothesSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -410,6 +409,4 @@ public class LogisticsController {
 
 	@Autowired
 	private LogisticsService logisticsService;
-	@Autowired
-	private OrderService orderService;
 }

@@ -241,6 +241,11 @@ public class MarketServiceImpl implements MarketService {
 		String processId = activitiApiUtil.startWorkflowProcess(params);
 		order.setProcessId(processId);
 		orderDAO.attachDirty(order);
+		
+		//测试事务回滚是否成功
+				if (true) {
+					throw new RuntimeException();
+				}
 		return true;
 	}
 

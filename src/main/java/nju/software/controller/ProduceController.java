@@ -28,12 +28,13 @@ public class ProduceController {
 
 	@Autowired
 	private ProduceService produceService;
+	
 	@Autowired
 	private OrderService orderService;
 	
 
 	@RequestMapping(value = "produce/verifyProduceList.do", method= RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyProduceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
@@ -53,7 +54,7 @@ public class ProduceController {
 	@Autowired
 	private EmployeeService employeeService;
 	@RequestMapping(value = "produce/verifyProduceListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyProduceListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -90,7 +91,7 @@ public class ProduceController {
 	 * @return
 	 */
 	@RequestMapping(value = "produce/verifyProduceSubmit.do", method= RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyProduceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		boolean productVal = Boolean.parseBoolean(request.getParameter("productVal"));
@@ -109,7 +110,7 @@ public class ProduceController {
 	 * @return
 	 */
 	@RequestMapping(value = "produce/verifyProduceDetail.do", method= RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String verifyProduceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
@@ -128,7 +129,7 @@ public class ProduceController {
 	 * @return
 	 */
 	@RequestMapping(value = "produce/computeProduceCostList.do", method= RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computeProduceCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
@@ -143,7 +144,7 @@ public class ProduceController {
 	}
 	
 	@RequestMapping(value = "produce/computeProduceCostListSearch.do" )
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computeProduceCostListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -178,7 +179,7 @@ public class ProduceController {
 	 * @return
 	 */
 	@RequestMapping(value = "produce/computeProduceCostDetail.do", method= RequestMethod.GET)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computeProduceCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
@@ -195,7 +196,7 @@ public class ProduceController {
 	 * @return
 	 */
 	@RequestMapping(value = "produce/computeProduceCostSubmit.do", method= RequestMethod.POST)
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String computeProduceCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -250,7 +251,7 @@ public class ProduceController {
 	
 	//=======================样衣生产=======================
 	@RequestMapping(value = "/produce/produceSampleList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String produceSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list = produceService.getProduceSampleList();
@@ -264,7 +265,7 @@ public class ProduceController {
 	}
 	
 	@RequestMapping(value = "/produce/produceSampleListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String produceSampleListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -291,7 +292,7 @@ public class ProduceController {
 	}
 	
 	@RequestMapping(value = "/produce/produceSampleDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String produceSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -302,7 +303,7 @@ public class ProduceController {
 	
 	
 	@RequestMapping(value = "/produce/produceSampleSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String produceSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
@@ -315,7 +316,7 @@ public class ProduceController {
 	
 	//=====================批量生产======================
 	@RequestMapping(value = "/produce/produceList.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String produceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=produceService.getProduceList();
@@ -333,7 +334,7 @@ public class ProduceController {
 	}
 
 	@RequestMapping(value = "/produce/produceListSearch.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String produceListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
@@ -364,7 +365,7 @@ public class ProduceController {
 	}
 	
 	@RequestMapping(value = "/produce/produceDetail.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String produceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
@@ -375,7 +376,7 @@ public class ProduceController {
 	
 	
 	@RequestMapping(value = "produce/produceSubmit.do")
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public String produceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {	
 		boolean result = Boolean.parseBoolean(request.getParameter("result"));
