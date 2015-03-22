@@ -242,10 +242,10 @@ public class MarketServiceImpl implements MarketService {
 		order.setProcessId(processId);
 		orderDAO.attachDirty(order);
 		
-		//测试事务回滚是否成功
-				if (true) {
-					throw new RuntimeException();
-				}
+//		//测试事务回滚是否成功
+//				if (true) {
+//					throw new RuntimeException();
+//				}
 		return true;
 	}
 

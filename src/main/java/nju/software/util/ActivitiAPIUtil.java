@@ -19,6 +19,7 @@ import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -77,14 +78,10 @@ public class ActivitiAPIUtil {
 	 * @return 任务列表
 	 */
 	public List<Task> getAssignedTasksOfGroupByTaskName(String groupId, String taskName){
-		List<Task> assignedTasks = getAssignedTasksOfGroup(groupId);
 		List<Task> resultTasks = new ArrayList<Task>();
 		Map<String, String> nameMap = getTaskNameMap();
-		for (Task task : assignedTasks) {
-			if (task.getName().equals(nameMap.get(taskName))) {
-				resultTasks.add(task);
-			}
-		}
+		TaskQuery query = taskService.createTaskQuery().taskCandidateGroup(groupId);
+		resultTasks = query.taskName(nameMap.get(taskName)).list();
 		return resultTasks;
 	}
 	
@@ -105,16 +102,9 @@ public class ActivitiAPIUtil {
 	 * @return
 	 */
 	public List<Task> getAssignedTasksOfUserByTaskName(String userId, String taskName){
-		List<Task> assigedTasks = getAssignedTasksOfUser(userId);
 		List<Task> resultTasks = new ArrayList<Task>();
-		Map<String, String> nameMap = getTaskNameMap();
-//		此处不用再遍历查询
-//		taskService.createTaskQuery().taskCandidateUser(userId).taskName(taskName).singleResult();
-		for (Task task : assigedTasks) {
-			if (task.getName().equals(nameMap.get(taskName))) {
-				resultTasks.add(task);
-			}
-		}
+		TaskQuery query = taskService.createTaskQuery().taskCandidateUser(userId);
+	    resultTasks = query.taskName(getTaskNameMap().get(taskName)).list();
 		return resultTasks;
 	}
 	
@@ -274,7 +264,7 @@ public class ActivitiAPIUtil {
 	
 	/**删除流程实例*/
 	public void abortProcess(String processId){
-		runtimeService.deleteProcessInstance(processId, "reason");
+		runtimeService.deleteProcessInstance(processId, "No reason!");
 	}
 	
 	public void setProcessName(String processName){
