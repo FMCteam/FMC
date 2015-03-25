@@ -142,7 +142,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	public List findEmployees(String propertyName, Object value) {
 		log.debug("finding Employee instance with property: " + propertyName
 				+ ", value: " + value);
-		List list =new ArrayList<>();
+		List list =new ArrayList<Employee>();
 		try {
 			String queryString = "from Employee as model where model.department = '市场部' and model."
 					+ propertyName + " like ?";
