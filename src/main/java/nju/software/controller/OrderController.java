@@ -26,7 +26,6 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
-import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.SearchInfo;
@@ -50,7 +49,6 @@ import nju.software.util.mail.MailSenderInfo;
 import nju.software.util.mail.SimpleMailSender;
 
 import org.apache.commons.lang.StringUtils;
-import org.jbpm.task.query.TaskSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;

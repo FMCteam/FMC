@@ -43,7 +43,6 @@ import nju.software.service.OrderService;
 import nju.software.util.ActivitiAPIUtil;
 
 import org.activiti.engine.task.Task;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -251,11 +250,10 @@ public class OrderServiceImpl implements OrderService {
 		if (list.isEmpty()) {
 			System.out.println("no task list");
 		}
-		WorkflowProcessInstance process = null;
 		for (Task task : list) {
 			// 需要获取task中的数据
 			String processId = task.getProcessInstanceId();
-			int orderId = (int) process.getVariable("orderId");
+			int orderId = (int) activitiAPIUtil.getProcessVariable(processId, "orderId");
 			Order order = getOrderById(orderId);
 			if (order != null) {
 				System.out.println("orderId: " + order.getOrderId());
