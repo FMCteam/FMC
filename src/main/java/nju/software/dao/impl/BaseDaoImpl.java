@@ -66,7 +66,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 					throws HibernateException, SQLException {
 				Query query = session.createSQLQuery(sql);
 				query.setFirstResult(beginNum);
-				query.setMaxResults(endNum);
+				query.setMaxResults(endNum);				
 				return query.list();
 			}
 		});

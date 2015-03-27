@@ -64,6 +64,60 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  
+    <filter>
+    <filter-name>actionFilter</filter-name>
+    <filter-class>nju.software.filter.AccessFilter</filter-class>
+    <init-param>
+      <param-name>ADMIN</param-name>
+      <param-value>employee,customer,buy,design,finance,market,produce,sweater,logistics,IS_MARKET_MANAGER_OR_ADMIN,IS_MARKET_STAFF_OR_ADMIN,order,other,account</param-value>
+    </init-param>
+    <init-param>
+      <param-name>marketManager</param-name>
+      <param-value>customer,market,IS_MARKET_MANAGER_OR_ADMIN,order,other,account</param-value>
+    </init-param>
+    <init-param>
+      <param-name>marketStaff</param-name>
+      <param-value>customer,market,IS_MARKET_STAFF_OR_ADMIN,order,other,account</param-value>
+    </init-param>
+    <init-param>
+      <param-name>purchaseManager</param-name>
+      <param-value>buy,order,other,account</param-value>
+    </init-param>
+    <init-param>
+      <param-name>designManager</param-name>
+      <param-value>design,order,other,account</param-value>
+    </init-param>
+    <init-param>
+      <param-name>financeManager</param-name>
+      <param-value>finance,order,other,account</param-value>
+    </init-param>
+    <init-param>
+      <param-name>produceManager</param-name>
+      <param-value>produce,order,other,account</param-value>
+    </init-param>
+    <init-param>
+      <param-name>sweaterManager</param-name>
+      <param-value>sweater,order,other,account</param-value>
+    </init-param>
+    <init-param>
+      <param-name>logisticManager</param-name>
+      <param-value>logistics,order,other,account</param-value>
+    </init-param>
+    <init-param>
+      <param-name>qualityManager</param-name>
+      <param-value>quality,order,other,account</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>actionFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  
+  
+  
+  
   <filter>
     <filter-name>customerFilter</filter-name>
     <filter-class>nju.software.filter.AccessFilter</filter-class>
@@ -255,7 +309,7 @@
     <url-pattern>*.do</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
-    <welcome-file>default.do</welcome-file>
+    <welcome-file>login.do</welcome-file>
   </welcome-file-list>
   <error-page>
     <error-code>404</error-code>

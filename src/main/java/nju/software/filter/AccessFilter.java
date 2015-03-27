@@ -1,8 +1,6 @@
 package nju.software.filter;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map.Entry;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -10,166 +8,83 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+//import javax.servlet.annotation.WebFilter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import nju.software.dao.BaseDao;
 import nju.software.dataobject.Account;
-import nju.software.service.impl.BuyServiceImpl;
-import nju.software.service.impl.DesignServiceImpl;
-import nju.software.service.impl.FinanceServiceImpl;
-import nju.software.service.impl.LogisticsServiceImpl;
-import nju.software.service.impl.MarketServiceImpl;
-import nju.software.service.impl.ProduceServiceImpl;
-import nju.software.service.impl.QualityServiceImpl;
-import nju.software.service.impl.SweaterMakeServiceImpl;
 
 public class AccessFilter implements Filter {
+	// @Autowired
+	// private ActivitiAPIUtil jbpmAPIUtil;
+   private BaseDao baseDao ;
 	private FilterConfig filterConfig = null;
-	public static HashMap<String, String> accessTable = new HashMap<String, String>();
-	static {
-		accessTable.put("employee", "ADMIN");
-		// accessTable.put("customer",
-		// "ADMIN, SHICHANGZHUANYUAN, SHICHANGZHUGUAN");
-		// accessTable.put("buy", "CAIGOUZHUGUAN");
-		// accessTable.put("design", "SHEJIZHUGUAN");
-		// accessTable.put("finance", "CAIWUZHUGUAN");
-		// accessTable.put("market", "marketStaff, marketManager");
-		// accessTable.put("order", "ADMIN, designManager, marketManager");
-		// accessTable.put("produce", "SHENGCHANZHUGUAN");
-		// accessTable.put("logistics", "logisticsManager");
-		// accessTable.put("quality", "qualityManager");
-        
-		accessTable.put("customer", "ADMIN,"
-				+ MarketServiceImpl.ACTOR_MARKET_MANAGER + ","
-				+ MarketServiceImpl.ACTOR_MARKET_STAFF);
-		accessTable.put("buy", "ADMIN,"+BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
-		accessTable.put("design", "ADMIN,"+DesignServiceImpl.ACTOR_DESIGN_MANAGER);
-		accessTable.put("finance","ADMIN,"+ FinanceServiceImpl.ACTOR_FINANCE_MANAGER);
-		accessTable.put("market","ADMIN,"+ MarketServiceImpl.ACTOR_MARKET_MANAGER + ","
-				+ MarketServiceImpl.ACTOR_MARKET_STAFF);
-		accessTable.put("order", "ALL");
-		accessTable.put("produce", "ADMIN,"+ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
-		accessTable.put("sweater","ADMIN,"+ SweaterMakeServiceImpl.ACTOR_SWEATER_MANAGER);
-		accessTable.put("logistics",
-				"ADMIN,"+LogisticsServiceImpl.ACTOR_LOGISTICS_MANAGER);
-		accessTable.put("quality", "ADMIN,"+QualityServiceImpl.ACTOR_QUALITY_MANAGER);
-		accessTable.put("other","ALL");
-		accessTable.put("account", "ALL");
-//		accessTable.put("customer", "ALL");
-		// accessTable.put("other",
-		// "ADMIN, SHICHANGZHUANYUAN, SHICHANGZHUGUAN");
-	};
 
+	@Override
 	public void destroy() {
-
+		// TODO Auto-generated method stub
+		filterConfig = null;
 	}
 
+	@Override
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain chain) throws IOException, ServletException {
-		String type = filterConfig.getInitParameter("type");
-		boolean has_access = false;
+		// TODO Auto-generated method stub
+		// String type = filterConfig.getInitParameter("type");
+		// String role=filterConfig.getInitParameter("role");
+		String hql="select p.MYID from permission p,account_role ar,account a,role_permission rp where p.pid=null and p.PERMISSION_ID=rp.permission_id and rp.role_id=ar.role_id and ar.account_id=a.account_id and a.username=";
+		//baseDao.findByhql2(hql);
+		
+		
+		boolean has_access2 = false;
 
 		HttpServletRequest request = (HttpServletRequest) arg0;
 		HttpServletResponse response = (HttpServletResponse) arg1;
-		HttpSession session = request.getSession();
-		 String uri = request.getRequestURI();
-		 System.out.println("urrrrrrrrrri== "+uri);
-		 String file[] = uri.split("/");
-		Account curUser = (Account) session.getAttribute("cur_user");
-		//System.out.println("null "+type);
-		if (curUser == null) {
-			 System.out.println("no user");
-			// todo 从cookie读取数据，看看是否是记住密码用户。
-			if(file[file.length-1].equals("registCustomer.do")||file[file.length-1].equals("forgetPassword.do")||file[file.length-1].equals("sendResetPassMail.do")||file[file.length-1].equals("checkResetPassLink.do")){
-				chain.doFilter(request, response);
-			}else{
-				has_access = false;
-			}
-			//System.out.println("null "+type);
-		} else {
-			String user_role = curUser.getUserRole();
-			String access = accessTable.get(type);
-			System.err.println("ddddddddddddddddd"+ access);
-			//System.out.println("null "+access);
-			if (access != null
-//					&& ((access.equals("ALL") && !user_role.equals("CUSTOMER")) || access
-					&& (access.equals("ALL")|| access
-							.contains(user_role))) {
-				has_access = true;
+		String url = request.getServletPath();
+
+		if (url.endsWith("doLogin.do") || url.endsWith("login.do")) 
+             chain.doFilter(request, response);
+		
+		else {
+			HttpSession session = request.getSession();
+			String uri = request.getRequestURI();
+			String file[] = uri.split("/");
+			Account curUser = (Account) session.getAttribute("cur_user");
+
+			if (curUser == null) {
+				System.out.println("no user");
+				// todo 从cookie读取数据，看看是否是记住密码用户。
+				if (file[file.length - 1].equals("registCustomer.do")|| file[file.length - 1].equals("forgetPassword.do")|| file[file.length - 1].equals("sendResetPassMail.do")|| file[file.length - 1].equals("checkResetPassLink.do")) {      
+					chain.doFilter(request, response);
+				} else {
+					response.sendRedirect(request.getContextPath()+ "/login.do");
+				}
 			} else {
-				has_access = false;
-			}
-//			 has_access = true;
-
-		}
-		//System.out.println("//============ "+curUser.getUserRole()+" "+has_access);
-		if (has_access) {
-			// System.out.println(curUser.getUserRole());
-
-			for (Entry<String, String> acc : accessTable.entrySet()) {
-
-				// System.out.println(acc.getKey() + "," +
-				// acc.getValue().contains(curUser.getUserRole()));
-
-				if (acc.getValue().contains(curUser.getUserRole())||acc.getValue().equals("ALL")) {
-
-					request.setAttribute("ROLE_" + acc.getKey(), true);
+                 
+				String info_role = filterConfig.getInitParameter(curUser.getUserRole());
+				System.out.println(info_role);
+                if (info_role != null) {
+					String type[] = info_role.split(",");
+					for (int i = 0; i < type.length; i++) {
+						request.setAttribute("ROLE_" + type[i], true);
+						}
 				}
 
-				// acc.getValue().contains(curUser.getUserRole()));
-				// if(acc.getValue().contains(curUser.getUserRole())){
+				request.setAttribute("USER_nick_name", curUser.getNickName());
+				request.setAttribute("USER_user_name", curUser.getUserName());
+				request.setAttribute("USER_user_role", curUser.getUserRole());
 
-				//request.setAttribute("ROLE_" + acc.getKey(), true); // acc.getValue().contains(curUser.getUserRole()));
-				// }
+				
 			}
-			//System.out.println("//============filter.do");
-			request.setAttribute("USER_nick_name", curUser.getNickName());
-			request.setAttribute("USER_user_name", curUser.getUserName());
-			request.setAttribute("USER_user_role", curUser.getUserRole());
-            if(curUser.getUserRole().equals("marketManager")||curUser.getUserRole().equals("ADMIN")){
-            	request.setAttribute("IS_MARKET_MANAGER_OR_ADMIN", true);
-            }else{
-            	request.setAttribute("IS_MARKET_MANAGER_OR_ADMIN", false);
-            }
-            
-            if(curUser.getUserRole().equals("marketStaff")||curUser.getUserRole().equals("ADMIN")){
-            	request.setAttribute("IS_MARKET_STAFF_OR_ADMIN", true);
-            }else{
-            	request.setAttribute("IS_MARKET_STAFF_OR_ADMIN", false);
-            }
-			//
-			// if(jbpmAPIUtil==null){
-			// System.out.println("jbpm null");
-			// }
-			// if(curUser.getUserRole().equals("marketStaff")){
-			// System.out.println(jbpmAPIUtil.getAssignedTasks(curUser.getUserId()+""));
-			// int
-			// taskNumber=jbpmAPIUtil.getAssignedTasks(curUser.getUserId()+"").size();
-			// request.setAttribute("taskNumber", taskNumber);
-			// }else{
-			//
-			// System.out.println(jbpmAPIUtil.getAssignedTasks(curUser.getUserId()+""));
-			// int
-			// taskNumber=jbpmAPIUtil.getAssignedTasks(curUser.getUserRole()).size();
-			// request.setAttribute("taskNumber", taskNumber);
-			// }
-			//
-			// request.setAttribute(, arg1);
-            chain.doFilter(request, response);
-		} else {
-			if(!file[file.length-1].equals("registCustomer.do")&&!file[file.length-1].equals("forgetPassword.do")&&!file[file.length-1].equals("sendResetPassMail.do")||file[file.length-1].equals("checkResetPassLink.do")){
-//				chain.doFilter(request, response);
-			response.sendRedirect(request.getContextPath() + "/login.do");
-			return ;
-			}else{
-				chain.doFilter(request, response);
-			}
+			chain.doFilter(request, response);
 		}
-		
+
 	}
 
+	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// TODO Auto-generated method stub
 		this.filterConfig = filterConfig;

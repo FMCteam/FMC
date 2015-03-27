@@ -231,5 +231,7 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
+	<bean id="SqlUtil" class="nju.software.util.SqlUtil">
+	</bean>
 	
 </beans>

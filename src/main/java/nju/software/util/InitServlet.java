@@ -30,6 +30,7 @@ import nju.software.service.impl.SweaterMakeServiceImpl;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -41,7 +42,8 @@ import com.mysql.jdbc.log.Log;
 public class InitServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
+	@Autowired
+	private SqlUtil sqlUtil ;
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException{
 		super.init(servletConfig);
@@ -55,6 +57,13 @@ public class InitServlet extends HttpServlet {
 				.getBean("repositoryService");
 		repositoryService.createDeployment().addClasspathResource("fmc.bpmn").deploy();
 		System.out.println("=============fmc.bpmn deploy success!====================");
+	  
+		//System.out.println(new TestSql().getClass().getResource(""));
+		 sqlUtil.initSQL();
+		
+		
+		
+		
 	}
 
 	@Override
@@ -65,6 +74,8 @@ public class InitServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+	
+		
 		doPost(request, response);
 	}
 
@@ -72,5 +83,8 @@ public class InitServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest reqquest,
 			HttpServletResponse response) throws ServletException, IOException {
 		response.sendError(1001, "本页面不允许发送请求");
+	}
+	public void setSqlUtil(SqlUtil sqlUtil){
+		this.sqlUtil=sqlUtil;
 	}
 }
