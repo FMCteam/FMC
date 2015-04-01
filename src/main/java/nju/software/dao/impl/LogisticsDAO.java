@@ -1,6 +1,5 @@
 package nju.software.dao.impl;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import nju.software.dao.ILogisticsDAO;
@@ -42,6 +41,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	public static final String PRODUCT_CLOTHES_PHONE = "productClothesPhone";
 	public static final String PRODUCT_CLOTHES_REMARK = "productClothesRemark";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -49,6 +49,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#save(nju.software.dataobject.Logistics)
 	 */
+	@Override
 	public void save(Logistics transientInstance) {
 		log.debug("saving Logistics instance");
 		try {
@@ -63,6 +64,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#delete(nju.software.dataobject.Logistics)
 	 */
+	@Override
 	public void delete(Logistics persistentInstance) {
 		log.debug("deleting Logistics instance");
 		try {
@@ -77,6 +79,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public Logistics findById(java.lang.Integer id) {
 		log.debug("getting Logistics instance with id: " + id);
 		try {
@@ -92,10 +95,11 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findByExample(nju.software.dataobject.Logistics)
 	 */
+	@Override
 	public List<Logistics> findByExample(Logistics instance) {
 		log.debug("finding Logistics instance by example");
 		try {
-			List<Logistics> results = (List<Logistics>) getHibernateTemplate()
+			List<Logistics> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -109,6 +113,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Logistics instance with property: " + propertyName
 				+ ", value: " + value);
@@ -125,6 +130,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findByInPostSampleClothesType(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findByInPostSampleClothesType(
 			Object inPostSampleClothesType) {
 		return findByProperty(IN_POST_SAMPLE_CLOTHES_TYPE,
@@ -134,6 +140,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findByInPostSampleClothesNumber(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findByInPostSampleClothesNumber(
 			Object inPostSampleClothesNumber) {
 		return findByProperty(IN_POST_SAMPLE_CLOTHES_NUMBER,
@@ -143,6 +150,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findBySampleClothesType(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findBySampleClothesType(Object sampleClothesType) {
 		return findByProperty(SAMPLE_CLOTHES_TYPE, sampleClothesType);
 	}
@@ -150,6 +158,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findBySampleClothesAddress(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findBySampleClothesAddress(
 			Object sampleClothesAddress) {
 		return findByProperty(SAMPLE_CLOTHES_ADDRESS, sampleClothesAddress);
@@ -158,6 +167,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findBySampleClothesName(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findBySampleClothesName(Object sampleClothesName) {
 		return findByProperty(SAMPLE_CLOTHES_NAME, sampleClothesName);
 	}
@@ -165,6 +175,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findBySampleClothesPhone(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findBySampleClothesPhone(Object sampleClothesPhone) {
 		return findByProperty(SAMPLE_CLOTHES_PHONE, sampleClothesPhone);
 	}
@@ -172,6 +183,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findBySampleClothesRemark(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findBySampleClothesRemark(Object sampleClothesRemark) {
 		return findByProperty(SAMPLE_CLOTHES_REMARK, sampleClothesRemark);
 	}
@@ -179,6 +191,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findByProductClothesType(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findByProductClothesType(Object productClothesType) {
 		return findByProperty(PRODUCT_CLOTHES_TYPE, productClothesType);
 	}
@@ -186,6 +199,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findByProductClothesAddress(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findByProductClothesAddress(
 			Object productClothesAddress) {
 		return findByProperty(PRODUCT_CLOTHES_ADDRESS, productClothesAddress);
@@ -194,6 +208,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findByProductClothesPrice(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findByProductClothesPrice(Object productClothesPrice) {
 		return findByProperty(PRODUCT_CLOTHES_PRICE, productClothesPrice);
 	}
@@ -201,6 +216,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findByProductClothesNumber(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findByProductClothesNumber(
 			Object productClothesNumber) {
 		return findByProperty(PRODUCT_CLOTHES_NUMBER, productClothesNumber);
@@ -209,6 +225,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findByProductClothesName(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findByProductClothesName(Object productClothesName) {
 		return findByProperty(PRODUCT_CLOTHES_NAME, productClothesName);
 	}
@@ -216,6 +233,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findByProductClothesPhone(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findByProductClothesPhone(Object productClothesPhone) {
 		return findByProperty(PRODUCT_CLOTHES_PHONE, productClothesPhone);
 	}
@@ -223,6 +241,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findByProductClothesRemark(java.lang.Object)
 	 */
+	@Override
 	public List<Logistics> findByProductClothesRemark(
 			Object productClothesRemark) {
 		return findByProperty(PRODUCT_CLOTHES_REMARK, productClothesRemark);
@@ -231,6 +250,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all Logistics instances");
 		try {
@@ -245,10 +265,11 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#merge(nju.software.dataobject.Logistics)
 	 */
+	@Override
 	public Logistics merge(Logistics detachedInstance) {
 		log.debug("merging Logistics instance");
 		try {
-			Logistics result = (Logistics) getHibernateTemplate().merge(
+			Logistics result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -261,6 +282,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#attachDirty(nju.software.dataobject.Logistics)
 	 */
+	@Override
 	public void attachDirty(Logistics instance) {
 		log.debug("attaching dirty Logistics instance");
 		try {
@@ -275,6 +297,7 @@ public class LogisticsDAO extends HibernateDaoSupport implements ILogisticsDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ILogisticsDAO#attachClean(nju.software.dataobject.Logistics)
 	 */
+	@Override
 	public void attachClean(Logistics instance) {
 		log.debug("attaching clean Logistics instance");
 		try {

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Produce;
-import nju.software.model.OrderInfo;
 
 public interface FinanceService {
 

@@ -21,6 +21,7 @@ public class CustomerServiceImpl implements CustomerService{
 	private CustomerDAO customerDao;
 	@Autowired
 	private AccountDAO accountDao;
+	@Override
 	@Transactional
 	public boolean addCustomer(Customer c,String userName,String password) {
 		// TODO Auto-generated method stub

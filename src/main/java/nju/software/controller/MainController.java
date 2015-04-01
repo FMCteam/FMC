@@ -118,5 +118,22 @@ public class MainController {
 		return "/index";
 	}
 
-	
+	@RequestMapping(value = "defaultContent.do", method= RequestMethod.GET)
+	//@Transactional(rollbackFor = Exception.class)
+	public String getDefaultPageContent(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		/**
+		 * 权限
+		 */
+		/*
+		 */
+		HttpSession session = request.getSession();
+		Account account = (Account)session.getAttribute("cur_user");
+		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
+		session.setAttribute("treeNodeList", list);
+//		List<Teacher> t_list = teacherService.getAllTeachers();
+//		model.addAttribute("teacherList", t_list);
+	//	System.out.println("//============default.do");
+		return "/index_new";
+	}
 }

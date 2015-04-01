@@ -14,7 +14,7 @@ public interface AccountService {
 	public boolean deleteAccount(Integer accountId);
 
 	@Transactional(rollbackFor = Exception.class)
-	public boolean addAccount(Account account);
+	public int addAccount(Account account);
 
 	@Transactional(rollbackFor = Exception.class)
 	public boolean updateAccount(Account account);
@@ -34,4 +34,8 @@ public interface AccountService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public boolean saveAccount(Customer c, String password1, String customerName);
+	@Transactional(rollbackFor = Exception.class)
+	public boolean addAccountRole(String roleName, int accountId);
+	@Transactional(rollbackFor = Exception.class)
+	public boolean deleteAccountRole(String accountId);
 }

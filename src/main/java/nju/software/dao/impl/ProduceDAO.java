@@ -35,10 +35,12 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 	public static final String J = "j";
 	public static final String TYPE = "type";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
 
+	@Override
 	public void save(Produce transientInstance) {
 		log.debug("saving Produce instance");
 		try {
@@ -50,6 +52,7 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 		}
 	}
 
+	@Override
 	public void delete(Produce persistentInstance) {
 		log.debug("deleting Produce instance");
 		try {
@@ -61,6 +64,7 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 		}
 	}
 
+	@Override
 	public Produce findById(java.lang.Integer id) {
 		log.debug("getting Produce instance with id: " + id);
 		try {
@@ -73,10 +77,11 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 		}
 	}
 
+	@Override
 	public List<Produce> findByExample(Produce instance) {
 		log.debug("finding Produce instance by example");
 		try {
-			List<Produce> results = (List<Produce>) getHibernateTemplate()
+			List<Produce> results = getHibernateTemplate()
 					.findByExample(instance);
 			if (results == null) {
 				log.error("no results found in produce");
@@ -90,6 +95,7 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 		}
 	}
 
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Produce instance with property: " + propertyName
 				+ ", value: " + value);
@@ -143,6 +149,7 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 		return findByProperty(TYPE, type);
 	}
 
+	@Override
 	public List findAll() {
 		log.debug("finding all Produce instances");
 		try {
@@ -154,10 +161,11 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 		}
 	}
 
+	@Override
 	public Produce merge(Produce detachedInstance) {
 		log.debug("merging Produce instance");
 		try {
-			Produce result = (Produce) getHibernateTemplate().merge(
+			Produce result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -167,6 +175,7 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 		}
 	}
 
+	@Override
 	public void attachDirty(Produce instance) {
 		log.debug("attaching dirty Produce instance");
 		try {
@@ -178,6 +187,7 @@ public class ProduceDAO extends HibernateDaoSupport implements IProduceDAO{
 		}
 	}
 
+	@Override
 	public void attachClean(Produce instance) {
 		log.debug("attaching clean Produce instance");
 		try {

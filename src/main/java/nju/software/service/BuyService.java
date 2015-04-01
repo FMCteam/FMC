@@ -6,12 +6,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import nju.software.dataobject.Accessory;
-import nju.software.dataobject.Fabric;
-import nju.software.dataobject.Logistics;
 import nju.software.dataobject.Produce;
-import nju.software.model.OrderInfo;
-import nju.software.model.ProductModel;
 
 public interface BuyService {
 

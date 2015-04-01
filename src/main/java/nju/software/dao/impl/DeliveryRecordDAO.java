@@ -64,7 +64,7 @@ public class DeliveryRecordDAO extends HibernateDaoSupport implements IDeliveryR
 	public List<DeliveryRecord> findByExample(DeliveryRecord instance) {
 		log.debug("finding DeliveryRecord instance by example");
 		try {
-			List<DeliveryRecord> results = (List<DeliveryRecord>) getHibernateTemplate()
+			List<DeliveryRecord> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -110,7 +110,7 @@ public class DeliveryRecordDAO extends HibernateDaoSupport implements IDeliveryR
 	public DeliveryRecord merge(DeliveryRecord detachedInstance) {
 		log.debug("merging Craft instance");
 		try {
-			DeliveryRecord result = (DeliveryRecord) getHibernateTemplate().merge(
+			DeliveryRecord result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;

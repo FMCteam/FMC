@@ -29,6 +29,7 @@ public class OperateRecordDAO extends HibernateDaoSupport implements IOperateRec
 	public static final String OPERATE_PERSON = "operatePerson";
 	public static final String OPERATE_REMARK = "operateRemark";
 
+	@Override
 	public void save(OperateRecord transientInstance) {
 		log.debug("saving OperateRecord instance");
 		try {
@@ -40,6 +41,7 @@ public class OperateRecordDAO extends HibernateDaoSupport implements IOperateRec
 		}
 	}
 
+	@Override
 	public void delete(OperateRecord persistentInstance) {
 		log.debug("deleting OperateRecord instance");
 		try {
@@ -51,6 +53,7 @@ public class OperateRecordDAO extends HibernateDaoSupport implements IOperateRec
 		}
 	}
 
+	@Override
 	public OperateRecord findById(java.lang.Integer id) {
 		log.debug("getting OperateRecord instance with id: " + id);
 		try {
@@ -77,10 +80,11 @@ public class OperateRecordDAO extends HibernateDaoSupport implements IOperateRec
 		}
 	}
 
+	@Override
 	public List findByExample(OperateRecord instance) {
 		log.debug("finding OperateRecord instance by example");
 		try {
-			List<OperateRecord> results =(List<OperateRecord>) getHibernateTemplate()
+			List<OperateRecord> results =getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -91,6 +95,7 @@ public class OperateRecordDAO extends HibernateDaoSupport implements IOperateRec
 		}
 	}
 
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding OperateRecord instance with property: "
 				+ propertyName + ", value: " + value);
@@ -104,22 +109,27 @@ public class OperateRecordDAO extends HibernateDaoSupport implements IOperateRec
 		}
 	}
 
+	@Override
 	public List<OperateRecord> findByOrderId(Object orderId) {
 		return findByProperty(ORDER_ID, orderId);
 	}
 
+	@Override
 	public List<OperateRecord> findByTaskName(Object taskName) {
 		return findByProperty(TASK_NAME, taskName);
 	}
 
+	@Override
 	public List<OperateRecord> findByOperatePerson(Object operatePerson) {
 		return findByProperty(OPERATE_PERSON, operatePerson);
 	}
 
+	@Override
 	public List<OperateRecord> findByOperateRemark(Object operateRemark) {
 		return findByProperty(OPERATE_REMARK, operateRemark);
 	}
 
+	@Override
 	public List findAll() {
 		log.debug("finding all OperateRecord instances");
 		try {
@@ -131,10 +141,11 @@ public class OperateRecordDAO extends HibernateDaoSupport implements IOperateRec
 		}
 	}
 
+	@Override
 	public OperateRecord merge(OperateRecord detachedInstance) {
 		log.debug("merging OperateRecord instance");
 		try {
-			OperateRecord result = (OperateRecord) getHibernateTemplate().merge(
+			OperateRecord result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -144,6 +155,7 @@ public class OperateRecordDAO extends HibernateDaoSupport implements IOperateRec
 		}
 	}
 
+	@Override
 	public void attachDirty(OperateRecord instance) {
 		log.debug("attaching dirty OperateRecord instance");
 		try {
@@ -155,6 +167,7 @@ public class OperateRecordDAO extends HibernateDaoSupport implements IOperateRec
 		}
 	}
 
+	@Override
 	public void attachClean(OperateRecord instance) {
 		log.debug("attaching clean OperateRecord instance");
 		try {

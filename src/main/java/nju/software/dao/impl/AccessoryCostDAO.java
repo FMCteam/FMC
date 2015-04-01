@@ -32,6 +32,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	public static final String PRICE = "price";
 	public static final String COST_PER_PIECE = "costPerPiece";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -42,6 +43,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#save(nju.software.dataobject.AccessoryCost)
 	 */
+	@Override
 	public void save(AccessoryCost transientInstance) {
 		log.debug("saving AccessoryCost instance");
 		try {
@@ -59,6 +61,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#delete(nju.software.dataobject.AccessoryCost)
 	 */
+	@Override
 	public void delete(AccessoryCost persistentInstance) {
 		log.debug("deleting AccessoryCost instance");
 		try {
@@ -76,6 +79,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public AccessoryCost findById(java.lang.Integer id) {
 		log.debug("getting AccessoryCost instance with id: " + id);
 		try {
@@ -94,10 +98,11 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#findByExample(nju.software.dataobject.AccessoryCost)
 	 */
+	@Override
 	public List<AccessoryCost> findByExample(AccessoryCost instance) {
 		log.debug("finding AccessoryCost instance by example");
 		try {
-			List<AccessoryCost> results = (List<AccessoryCost>) getHibernateTemplate()
+			List<AccessoryCost> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -114,6 +119,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding AccessoryCost instance with property: "
 				+ propertyName + ", value: " + value);
@@ -133,6 +139,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#findByOrderId(java.lang.Object)
 	 */
+	@Override
 	public List<AccessoryCost> findByOrderId(Object orderId) {
 		return findByProperty(ORDER_ID, orderId);
 	}
@@ -143,6 +150,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#findByAccessoryName(java.lang.Object)
 	 */
+	@Override
 	public List<AccessoryCost> findByAccessoryName(Object accessoryName) {
 		return findByProperty(ACCESSORY_NAME, accessoryName);
 	}
@@ -153,6 +161,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#findByTearPerPiece(java.lang.Object)
 	 */
+	@Override
 	public List<AccessoryCost> findByTearPerPiece(Object tearPerPiece) {
 		return findByProperty(TEAR_PER_PIECE, tearPerPiece);
 	}
@@ -163,6 +172,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#findByPrice(java.lang.Object)
 	 */
+	@Override
 	public List<AccessoryCost> findByPrice(Object price) {
 		return findByProperty(PRICE, price);
 	}
@@ -173,6 +183,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#findByCostPerPiece(java.lang.Object)
 	 */
+	@Override
 	public List<AccessoryCost> findByCostPerPiece(Object costPerPiece) {
 		return findByProperty(COST_PER_PIECE, costPerPiece);
 	}
@@ -183,6 +194,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all AccessoryCost instances");
 		try {
@@ -200,10 +212,11 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#merge(nju.software.dataobject.AccessoryCost)
 	 */
+	@Override
 	public AccessoryCost merge(AccessoryCost detachedInstance) {
 		log.debug("merging AccessoryCost instance");
 		try {
-			AccessoryCost result = (AccessoryCost) getHibernateTemplate()
+			AccessoryCost result = getHibernateTemplate()
 					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -219,6 +232,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#attachDirty(nju.software.dataobject.AccessoryCost)
 	 */
+	@Override
 	public void attachDirty(AccessoryCost instance) {
 		log.debug("attaching dirty AccessoryCost instance");
 		try {
@@ -236,6 +250,7 @@ public class AccessoryCostDAO extends HibernateDaoSupport implements IAccessoryC
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryCostDAO#attachClean(nju.software.dataobject.AccessoryCost)
 	 */
+	@Override
 	public void attachClean(AccessoryCost instance) {
 		log.debug("attaching clean AccessoryCost instance");
 		try {

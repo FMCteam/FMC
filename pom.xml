@@ -37,6 +37,7 @@
 	</properties>
 
 	<dependencies>
+	
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -402,7 +403,7 @@
     	<version>1.0.0.M2</version>
     </dependency-->
     
-    <dependency>
+      <dependency>
     	<groupId>org.activiti</groupId>
     	<artifactId>activiti-bpmn-model</artifactId>
     	<version>5.17.0</version>
@@ -427,9 +428,16 @@
     	<artifactId>commons-io</artifactId>
     	<version>1.3.2</version>
     </dependency>
+    <dependency>
+    	<groupId>org.apache.commons</groupId>
+    	<artifactId>commons-lang3</artifactId>
+    	<version>3.3.2</version>
+    </dependency>
 	</dependencies>
   	<build>
 		<finalName>activiti4web2</finalName>
+	<!--	<defaultGoal>compile</defaultGoal>-->
+		  <pluginManagement>
 		<plugins>
 		
 		
@@ -493,6 +501,7 @@
 				</executions>
 			</plugin>
 		</plugins>
+		 </pluginManagement>
 	</build>
 
 </project>

@@ -33,6 +33,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	public static final String CLOTHES_STYLE_COLOR = "clothesStyleColor";
 	public static final String CLOTHES_AMOUNT = "clothesAmount";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -40,6 +41,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#save(nju.software.dataobject.PackageDetail)
 	 */
+	@Override
 	public void save(PackageDetail transientInstance) {
 		log.debug("saving PackageDetail instance");
 		try {
@@ -54,6 +56,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#delete(nju.software.dataobject.PackageDetail)
 	 */
+	@Override
 	public void delete(PackageDetail persistentInstance) {
 		log.debug("deleting PackageDetail instance");
 		try {
@@ -68,6 +71,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public PackageDetail findById(java.lang.Integer id) {
 		log.debug("getting PackageDetail instance with id: " + id);
 		try {
@@ -83,10 +87,11 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#findByExample(nju.software.dataobject.PackageDetail)
 	 */
+	@Override
 	public List<PackageDetail> findByExample(PackageDetail instance) {
 		log.debug("finding PackageDetail instance by example");
 		try {
-			List<PackageDetail> results = (List<PackageDetail>) getHibernateTemplate()
+			List<PackageDetail> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -100,6 +105,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding PackageDetail instance with property: "
 				+ propertyName + ", value: " + value);
@@ -116,6 +122,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#findByPackageId(java.lang.Object)
 	 */
+	@Override
 	public List<PackageDetail> findByPackageId(Integer packageId) {
 		return findByProperty(PACKAGE_ID, packageId);
 	}
@@ -123,6 +130,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#findByClothesStyleName(java.lang.Object)
 	 */
+	@Override
 	public List<PackageDetail> findByClothesStyleName(Object clothesStyleName) {
 		return findByProperty(CLOTHES_STYLE_NAME, clothesStyleName);
 	}
@@ -130,6 +138,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#findByClothesStyleColor(java.lang.Object)
 	 */
+	@Override
 	public List<PackageDetail> findByClothesStyleColor(Object clothesStyleColor) {
 		return findByProperty(CLOTHES_STYLE_COLOR, clothesStyleColor);
 	}
@@ -137,6 +146,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#findByClothesAmount(java.lang.Object)
 	 */
+	@Override
 	public List<PackageDetail> findByClothesAmount(Object clothesAmount) {
 		return findByProperty(CLOTHES_AMOUNT, clothesAmount);
 	}
@@ -144,6 +154,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all PackageDetail instances");
 		try {
@@ -158,10 +169,11 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#merge(nju.software.dataobject.PackageDetail)
 	 */
+	@Override
 	public PackageDetail merge(PackageDetail detachedInstance) {
 		log.debug("merging PackageDetail instance");
 		try {
-			PackageDetail result = (PackageDetail) getHibernateTemplate()
+			PackageDetail result = getHibernateTemplate()
 					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -174,6 +186,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#attachDirty(nju.software.dataobject.PackageDetail)
 	 */
+	@Override
 	public void attachDirty(PackageDetail instance) {
 		log.debug("attaching dirty PackageDetail instance");
 		try {
@@ -188,6 +201,7 @@ public class PackageDetailDAO extends HibernateDaoSupport implements IPackageDet
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDetailDAO#attachClean(nju.software.dataobject.PackageDetail)
 	 */
+	@Override
 	public void attachClean(PackageDetail instance) {
 		log.debug("attaching clean PackageDetail instance");
 		try {

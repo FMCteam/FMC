@@ -1,5 +1,9 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/java/nju/software/controller/AccountController.java=UTF-8
+encoding//src/main/webapp=UTF-8
+encoding//src/main/webapp/classes/fmc.bpmn=UTF-8
 encoding//src/main/webapp/common/fmc_header.jsp=UTF-8
+encoding//src/main/webapp/common/footer.jsp=UTF-8
 encoding//src/main/webapp/common/nav.jsp=UTF-8
+encoding//src/test/java=UTF-8

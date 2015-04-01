@@ -23,10 +23,12 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 @SuppressWarnings("unchecked")
 public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 
+	@Override
 	public List<T> PaginationSelect(final Criteria c,final Pagination page) {
 		// TODO Auto-generated method stub
 		return
 		this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
 				c.setFirstResult((page.getPage()-1) * page.getPageSize());
@@ -35,6 +37,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 			}
 		});
 	}
+	@Override
 	public List<Object>  PaginationSelect(final String sql,Pagination page,final String currentPage) {
 		// TODO Auto-generated method stub
 		
@@ -42,6 +45,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		Object obj = null;
 		try {
 			obj = this.getHibernateTemplate().execute(new HibernateCallback() {
+				@Override
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					return session.createSQLQuery(num).uniqueResult();
 				}
@@ -62,6 +66,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		final int beginNum = (page.getPage() - 1) * page.getPageSize();
 		
 		return this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
 				Query query = session.createSQLQuery(sql);
@@ -72,11 +77,13 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		});
 	}
 	
+	@Override
 	public T findByEntity(final String hql){
 		T t = null;
 		try{
 		t = (T)this.getHibernateTemplate().execute(new HibernateCallback(){
 
+				@Override
 				public Object doInHibernate(Session arg0)
 						throws HibernateException, SQLException {
 					return arg0.createQuery(hql).uniqueResult();
@@ -89,22 +96,26 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		return t;
 	}	
 	
+	@Override
 	public void add(T t) {
 		
 		this.getHibernateTemplate().save(t);
 	}
 
+	@Override
 	public void deleteById(T t) {
 		
 		this.getHibernateTemplate().delete(t);
 	}
 
 
+	@Override
 	public T findById(Class<T> clazz, Serializable id) {
 		
-		return (T)this.getHibernateTemplate().get(clazz, id);
+		return this.getHibernateTemplate().get(clazz, id);
 	}
 
+	@Override
 	public List<T> findByParams(String hql,Object...params){
 		List<T> list = null;
 		try {
@@ -114,6 +125,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		}
 		return list;
 	}
+	@Override
 	public List<T> findByParams(String hql){
 		List<T> list = null;
 		try {
@@ -124,12 +136,14 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		return list;
 	}
 	
+	@Override
 	public List<T> queryById(final String hql){
 		List<T> list = new ArrayList<T>();
 		try{
 			list=this.getHibernateTemplate().executeFind(new HibernateCallback(){
 
 				
+				@Override
 				public Object doInHibernate(Session arg0)
 						throws HibernateException, SQLException {
 					return arg0.createQuery(hql).list();
@@ -141,11 +155,13 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		}
 		return list;
 	}
+	@Override
 	public void update(T t) {
 		this.getHibernateTemplate().update(t);
 	
 		
 	}
+	@Override
 	public boolean deleteByHql(String hql){
 		try {
 			return getHibernateTemplate().bulkUpdate(hql, null)>0?true:false;
@@ -153,9 +169,11 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 			throw re;
 		}
 	}
+	@Override
 	public List<T> getTotalPage(final Criteria c) {
 		
 		return this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session){
 			
 				return c.list();
@@ -190,6 +208,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 //		return CommonUtil.getPaginationList(list, page);
 //	
 //	}
+	@Override
 	public List<Object> PaginationList(String sql, Pagination page, final String currentPage) {
 		
 		
@@ -197,6 +216,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		Object obj = null;
 		try {
 			obj = this.getHibernateTemplate().execute(new HibernateCallback() {
+				@Override
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					return session.createSQLQuery(num).uniqueResult();
 				}
@@ -219,6 +239,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 				+ beginNum +","+ endNum;
 		try {
 			list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+				@Override
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					return session.createSQLQuery(paginationSql).list();
 				}
@@ -232,12 +253,14 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 
 	}
 	
+	@Override
 	public List<Object> conditionQuery(final String sql) {
 		
 		List<Object> list=new ArrayList<Object>();
 		try {
 			list = this.getHibernateTemplate().executeFind(
 					new HibernateCallback() {
+						@Override
 						public Object doInHibernate(Session session)
 								throws HibernateException, SQLException {
 							return session.createSQLQuery(sql).list();
@@ -249,15 +272,18 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		return list;
 	}
 
+	@Override
 	public void saveOrupdate(T t) {
 		this.getHibernateTemplate().saveOrUpdate(t);
 	}
 	
+	@Override
 	public List findByHql(final String hql,Pagination page,Integer pageNow){
 		List alllist = new ArrayList();
 		alllist = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 
 			
+			@Override
 			public Object doInHibernate(Session arg0)
 					throws HibernateException, SQLException {
 				return arg0.createQuery(hql).list();
@@ -272,6 +298,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		try {
 			ptList = this.getHibernateTemplate().executeFind(
 					new HibernateCallback() {
+						@Override
 						public Object doInHibernate(Session session)
 								throws HibernateException, SQLException {
 							return session
@@ -288,11 +315,13 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 
 		
 	}
+	@Override
 	public List findCutPage(final String hql, final Integer begin, final Integer end){
 		List ptList = new ArrayList();
 		try {
 			ptList = this.getHibernateTemplate().executeFind(
 					new HibernateCallback() {
+						@Override
 						public Object doInHibernate(Session session)
 								throws HibernateException, SQLException {
 							return session
@@ -308,8 +337,10 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		
 	}
 
+	@Override
 	public void del(final String  sql) {
 		this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			@Override
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
 				session.createSQLQuery(sql).executeUpdate();
@@ -318,12 +349,14 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		
 	}
 
+	@Override
 	public List<T> queryList(final String hql){
 		List<T>  list = new ArrayList<T>();
 		try{
 			list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 
 				
+				@Override
 				public Object doInHibernate(Session arg0)
 						throws HibernateException, SQLException {
 					return arg0.createQuery(hql).list();
@@ -336,6 +369,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		return list;
 	}
 	
+	@Override
 	public boolean addData(T whd){
 		try{
 			Integer i = (Integer)this.getHibernateTemplate().save(whd);
@@ -346,10 +380,12 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		}
 	}
 	
+	@Override
 	public void updhql(final String hql){
 		this.getHibernateTemplate().execute(new HibernateCallback(){
 
 			
+			@Override
 			public Object doInHibernate(Session arg0)
 					throws HibernateException, SQLException {
 				Query q = arg0.createQuery(hql);
@@ -365,6 +401,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 		try {
 			list = this.getHibernateTemplate().executeFind(
 					new HibernateCallback() {
+						@Override
 						public Object doInHibernate(Session session)
 								throws HibernateException, SQLException {
 							return session.createQuery(hql).list();

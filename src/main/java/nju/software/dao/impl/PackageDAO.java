@@ -1,6 +1,5 @@
 package nju.software.dao.impl;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import nju.software.dao.IPackageDAO;
@@ -28,6 +27,7 @@ public class PackageDAO extends HibernateDaoSupport implements IPackageDAO {
 	// property constants
 	public static final String ORDER_ID = "orderId";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -35,6 +35,7 @@ public class PackageDAO extends HibernateDaoSupport implements IPackageDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDAO#save(nju.software.dataobject.Package)
 	 */
+	@Override
 	public void save(Package transientInstance) {
 		log.debug("saving Package instance");
 		try {
@@ -49,6 +50,7 @@ public class PackageDAO extends HibernateDaoSupport implements IPackageDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDAO#delete(nju.software.dataobject.Package)
 	 */
+	@Override
 	public void delete(Package persistentInstance) {
 		log.debug("deleting Package instance");
 		try {
@@ -63,6 +65,7 @@ public class PackageDAO extends HibernateDaoSupport implements IPackageDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public Package findById(java.lang.Integer id) {
 		log.debug("getting Package instance with id: " + id);
 		try {
@@ -78,10 +81,11 @@ public class PackageDAO extends HibernateDaoSupport implements IPackageDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDAO#findByExample(nju.software.dataobject.Package)
 	 */
+	@Override
 	public List<Package> findByExample(Package instance) {
 		log.debug("finding Package instance by example");
 		try {
-			List<Package> results = (List<Package>) getHibernateTemplate()
+			List<Package> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -95,6 +99,7 @@ public class PackageDAO extends HibernateDaoSupport implements IPackageDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Package instance with property: " + propertyName
 				+ ", value: " + value);
@@ -111,6 +116,7 @@ public class PackageDAO extends HibernateDaoSupport implements IPackageDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDAO#findByOrderId(java.lang.Object)
 	 */
+	@Override
 	public List<Package> findByOrderId(Object orderId) {
 		return findByProperty(ORDER_ID, orderId);
 	}
@@ -118,6 +124,7 @@ public class PackageDAO extends HibernateDaoSupport implements IPackageDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all Package instances");
 		try {
@@ -132,10 +139,11 @@ public class PackageDAO extends HibernateDaoSupport implements IPackageDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDAO#merge(nju.software.dataobject.Package)
 	 */
+	@Override
 	public Package merge(Package detachedInstance) {
 		log.debug("merging Package instance");
 		try {
-			Package result = (Package) getHibernateTemplate().merge(
+			Package result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -148,6 +156,7 @@ public class PackageDAO extends HibernateDaoSupport implements IPackageDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDAO#attachDirty(nju.software.dataobject.Package)
 	 */
+	@Override
 	public void attachDirty(Package instance) {
 		log.debug("attaching dirty Package instance");
 		try {
@@ -162,6 +171,7 @@ public class PackageDAO extends HibernateDaoSupport implements IPackageDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IPackageDAO#attachClean(nju.software.dataobject.Package)
 	 */
+	@Override
 	public void attachClean(Package instance) {
 		log.debug("attaching clean Package instance");
 		try {

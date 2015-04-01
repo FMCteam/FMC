@@ -32,6 +32,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	public static final String PRICE = "price";
 	public static final String COST_PER_METER = "costPerMeter";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -39,6 +40,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#save(nju.software.dataobject.FabricCost)
 	 */
+	@Override
 	public void save(FabricCost transientInstance) {
 		log.debug("saving FabricCost instance");
 		try {
@@ -53,6 +55,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#delete(nju.software.dataobject.FabricCost)
 	 */
+	@Override
 	public void delete(FabricCost persistentInstance) {
 		log.debug("deleting FabricCost instance");
 		try {
@@ -67,6 +70,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public FabricCost findById(java.lang.Integer id) {
 		log.debug("getting FabricCost instance with id: " + id);
 		try {
@@ -82,10 +86,11 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#findByExample(nju.software.dataobject.FabricCost)
 	 */
+	@Override
 	public List<FabricCost> findByExample(FabricCost instance) {
 		log.debug("finding FabricCost instance by example");
 		try {
-			List<FabricCost> results = (List<FabricCost>) getHibernateTemplate()
+			List<FabricCost> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -99,6 +104,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding FabricCost instance with property: " + propertyName
 				+ ", value: " + value);
@@ -115,6 +121,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#findByOrderId(java.lang.Object)
 	 */
+	@Override
 	public List<FabricCost> findByOrderId(Object orderId) {
 		return findByProperty(ORDER_ID, orderId);
 	}
@@ -122,6 +129,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#findByFabricName(java.lang.Object)
 	 */
+	@Override
 	public List<FabricCost> findByFabricName(Object fabricName) {
 		return findByProperty(FABRIC_NAME, fabricName);
 	}
@@ -129,6 +137,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#findByTearPerMeter(java.lang.Object)
 	 */
+	@Override
 	public List<FabricCost> findByTearPerMeter(Object tearPerMeter) {
 		return findByProperty(TEAR_PER_METER, tearPerMeter);
 	}
@@ -136,6 +145,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#findByPrice(java.lang.Object)
 	 */
+	@Override
 	public List<FabricCost> findByPrice(Object price) {
 		return findByProperty(PRICE, price);
 	}
@@ -143,6 +153,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#findByCostPerMeter(java.lang.Object)
 	 */
+	@Override
 	public List<FabricCost> findByCostPerMeter(Object costPerMeter) {
 		return findByProperty(COST_PER_METER, costPerMeter);
 	}
@@ -150,6 +161,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all FabricCost instances");
 		try {
@@ -164,10 +176,11 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#merge(nju.software.dataobject.FabricCost)
 	 */
+	@Override
 	public FabricCost merge(FabricCost detachedInstance) {
 		log.debug("merging FabricCost instance");
 		try {
-			FabricCost result = (FabricCost) getHibernateTemplate().merge(
+			FabricCost result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -180,6 +193,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#attachDirty(nju.software.dataobject.FabricCost)
 	 */
+	@Override
 	public void attachDirty(FabricCost instance) {
 		log.debug("attaching dirty FabricCost instance");
 		try {
@@ -194,6 +208,7 @@ public class FabricCostDAO extends HibernateDaoSupport implements IFabricCostDAO
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricCostDAO#attachClean(nju.software.dataobject.FabricCost)
 	 */
+	@Override
 	public void attachClean(FabricCost instance) {
 		log.debug("attaching clean FabricCost instance");
 		try {

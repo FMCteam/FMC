@@ -23,6 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private ActivitiAPIUtil activitiAPIUtil;
 	
+	@Override
 	public Employee getEmployeeById(int employeeId) {
 		try {
 			Employee employee = employeeDAO.findById(employeeId);
@@ -33,6 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+	@Override
 	public int addEmployee(Employee employee) {
 		try {
 			employeeDAO.save(employee);
@@ -44,6 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+	@Override
 	public boolean deleteEmployee(int employeeId) {
 		try {
 			employeeDAO.delete(getEmployeeById(employeeId));
@@ -54,6 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+	@Override
 	public boolean updateEmployee(Employee employee) {
 		try {
 			employeeDAO.attachDirty(employee);
@@ -64,6 +68,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+	@Override
 	public List<Employee> getAllEmployee() {
 		try {
 			List<Employee> list = employeeDAO.findAll();
@@ -74,6 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+	@Override
 	public List<Employee> getEmployeeByPage(int page, int numberPerPage) {
 		try {
 			List<Employee> list = employeeDAO.findByPage(page, numberPerPage);
@@ -84,6 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+	@Override
 	public int getcount() {
 		try {
 			int count = employeeDAO.count();

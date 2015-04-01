@@ -1,6 +1,5 @@
 package nju.software.dao.impl;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import nju.software.dao.IDesignCadDAO;
@@ -31,6 +30,7 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	public static final String CAD_URL = "cadUrl";
 	public static final String CAD_VERSION = "cadVersion";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -38,6 +38,7 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#save(nju.software.dataobject.DesignCad)
 	 */
+	@Override
 	public void save(DesignCad transientInstance) {
 		log.debug("saving DesignCad instance");
 		try {
@@ -52,6 +53,7 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#delete(nju.software.dataobject.DesignCad)
 	 */
+	@Override
 	public void delete(DesignCad persistentInstance) {
 		log.debug("deleting DesignCad instance");
 		try {
@@ -66,6 +68,7 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public DesignCad findById(java.lang.Integer id) {
 		log.debug("getting DesignCad instance with id: " + id);
 		try {
@@ -81,10 +84,11 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#findByExample(nju.software.dataobject.DesignCad)
 	 */
+	@Override
 	public List<DesignCad> findByExample(DesignCad instance) {
 		log.debug("finding DesignCad instance by example");
 		try {
-			List<DesignCad> results = (List<DesignCad>) getHibernateTemplate()
+			List<DesignCad> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -98,6 +102,7 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding DesignCad instance with property: " + propertyName
 				+ ", value: " + value);
@@ -114,6 +119,7 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#findByOrderId(java.lang.Object)
 	 */
+	@Override
 	public List<DesignCad> findByOrderId(Object orderId) {
 		return findByProperty(ORDER_ID, orderId);
 	}
@@ -121,6 +127,7 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#findByCadUrl(java.lang.Object)
 	 */
+	@Override
 	public List<DesignCad> findByCadUrl(Object cadUrl) {
 		return findByProperty(CAD_URL, cadUrl);
 	}
@@ -128,6 +135,7 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#findByCadVersion(java.lang.Object)
 	 */
+	@Override
 	public List<DesignCad> findByCadVersion(Object cadVersion) {
 		return findByProperty(CAD_VERSION, cadVersion);
 	}
@@ -135,6 +143,7 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all DesignCad instances");
 		try {
@@ -149,10 +158,11 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#merge(nju.software.dataobject.DesignCad)
 	 */
+	@Override
 	public DesignCad merge(DesignCad detachedInstance) {
 		log.debug("merging DesignCad instance");
 		try {
-			DesignCad result = (DesignCad) getHibernateTemplate().merge(
+			DesignCad result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -165,6 +175,7 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#attachDirty(nju.software.dataobject.DesignCad)
 	 */
+	@Override
 	public void attachDirty(DesignCad instance) {
 		log.debug("attaching dirty DesignCad instance");
 		try {
@@ -179,6 +190,7 @@ public class DesignCadDAO extends HibernateDaoSupport implements IDesignCadDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IDesignCadDAO#attachClean(nju.software.dataobject.DesignCad)
 	 */
+	@Override
 	public void attachClean(DesignCad instance) {
 		log.debug("attaching clean DesignCad instance");
 		try {

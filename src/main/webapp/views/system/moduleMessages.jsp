@@ -181,13 +181,13 @@ li{list-style-type:none;}
 <div class="maincontent">
 	<div class="maincontentinner">
 		<div class="row-fluid" style="min-height:300px;">
-			<div style="float: left;width:220px;height: 550px ">
+			<div style="float: left;width:220px;height: 500px;">
 				<div class="zTreeDemoBackground left">
 					<ul id="treeDemo" style="margin-top: 0px;" class="ztree"></ul>
 				</div>
 			</div>
 			<div style="float: left; margin-left: 0px;width:750px;">
-				<div align="center" style="background-color: #F0F0F0; height: 50px;">
+				<div align="center" style="height: 50px;">
 					<h2>
 						<span>基本资料</span>
 					</h2>

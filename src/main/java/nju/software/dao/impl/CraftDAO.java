@@ -33,6 +33,7 @@ public class CraftDAO extends HibernateDaoSupport implements ICraftDAO{
 	public static final String CRUMPLE_MONEY = "crumpleMoney";
 	public static final String OPEN_VERSION_MONEY = "openVersionMoney";
     public static final String CRAFT_FILE_URL = "craftFileUrl";
+	@Override
 	public void save(Craft transientInstance) {
 		log.debug("saving Craft instance");
 		try {
@@ -44,6 +45,7 @@ public class CraftDAO extends HibernateDaoSupport implements ICraftDAO{
 		}
 	}
 
+	@Override
 	public void delete(Craft persistentInstance) {
 		log.debug("deleting Craft instance");
 		try {
@@ -55,6 +57,7 @@ public class CraftDAO extends HibernateDaoSupport implements ICraftDAO{
 		}
 	}
 
+	@Override
 	public Craft findById(java.lang.Integer id) {
 		log.debug("getting Craft instance with id: " + id);
 		try {
@@ -68,10 +71,11 @@ public class CraftDAO extends HibernateDaoSupport implements ICraftDAO{
 		}
 	}
 
+	@Override
 	public List<Craft> findByExample(Craft instance) {
 		log.debug("finding Craft instance by example");
 		try {
-			List<Craft> results = (List<Craft>) getHibernateTemplate()
+			List<Craft> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -82,6 +86,7 @@ public class CraftDAO extends HibernateDaoSupport implements ICraftDAO{
 		}
 	}
 
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Craft instance with property: " + propertyName
 				+ ", value: " + value);
@@ -95,10 +100,12 @@ public class CraftDAO extends HibernateDaoSupport implements ICraftDAO{
 		}
 	}
 
+	@Override
 	public List<Craft> findByOrderId(Object orderId) {
 		return findByProperty(ORDER_ID, orderId);
 	}
 
+	@Override
 	public List<Craft> findByNeedCraft(Object needCraft) {
 		return findByProperty(NEED_CRAFT, needCraft);
 	}
@@ -127,6 +134,7 @@ public class CraftDAO extends HibernateDaoSupport implements ICraftDAO{
 		return findByProperty(OPEN_VERSION_MONEY, openVersionMoney);
 	}
 
+	@Override
 	public List findAll() {
 		log.debug("finding all Craft instances");
 		try {
@@ -138,10 +146,11 @@ public class CraftDAO extends HibernateDaoSupport implements ICraftDAO{
 		}
 	}
 
+	@Override
 	public Craft merge(Craft detachedInstance) {
 		log.debug("merging Craft instance");
 		try {
-			Craft result = (Craft) getHibernateTemplate().merge(
+			Craft result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -151,6 +160,7 @@ public class CraftDAO extends HibernateDaoSupport implements ICraftDAO{
 		}
 	}
 
+	@Override
 	public void attachDirty(Craft instance) {
 		log.debug("attaching dirty Craft instance");
 		try {
@@ -162,6 +172,7 @@ public class CraftDAO extends HibernateDaoSupport implements ICraftDAO{
 		}
 	}
 
+	@Override
 	public void attachClean(Craft instance) {
 		log.debug("attaching clean Craft instance");
 		try {

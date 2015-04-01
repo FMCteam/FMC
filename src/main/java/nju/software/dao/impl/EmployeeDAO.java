@@ -1,25 +1,15 @@
 package nju.software.dao.impl;
 
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import nju.software.dao.IEmployeeDAO;
 import nju.software.dataobject.Employee;
-import nju.software.dataobject.Order;
-
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -56,6 +46,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	public static final String ADDRESS = "address";
 	public static final String CHINA_ID = "chinaId";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -63,6 +54,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#save(nju.software.dataobject.Employee)
 	 */
+	@Override
 	public void save(Employee transientInstance) {
 		log.debug("saving Employee instance");
 		try {
@@ -77,6 +69,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#delete(nju.software.dataobject.Employee)
 	 */
+	@Override
 	public void delete(Employee persistentInstance) {
 		log.debug("deleting Employee instance");
 		try {
@@ -91,6 +84,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public Employee findById(java.lang.Integer id) {
 		log.debug("getting Employee instance with id: " + id);
 		try {
@@ -106,10 +100,11 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByExample(nju.software.dataobject.Employee)
 	 */
+	@Override
 	public List<Employee> findByExample(Employee instance) {
 		log.debug("finding Employee instance by example");
 		try {
-			List<Employee> results = (List<Employee>) getHibernateTemplate()
+			List<Employee> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -123,6 +118,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Employee instance with property: " + propertyName
 				+ ", value: " + value);
@@ -156,6 +152,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByEmployeeName(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByEmployeeName(Object employeeName) {
 		return findEmployees(EMPLOYEE_NAME, employeeName);
 	}
@@ -163,6 +160,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findBySex(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findBySex(Object sex) {
 		return findByProperty(SEX, sex);
 	}
@@ -170,6 +168,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByAge(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByAge(Object age) {
 		return findByProperty(AGE, age);
 	}
@@ -177,6 +176,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByDepartment(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByDepartment(Object department) {
 		return findByProperty(DEPARTMENT, department);
 	}
@@ -184,6 +184,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByDirectLeader(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByDirectLeader(Object directLeader) {
 		return findByProperty(DIRECT_LEADER, directLeader);
 	}
@@ -191,6 +192,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByEmployeeLevel(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByEmployeeLevel(Object employeeLevel) {
 		return findByProperty(EMPLOYEE_LEVEL, employeeLevel);
 	}
@@ -198,6 +200,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByPhone1(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByPhone1(Object phone1) {
 		return findByProperty(PHONE1, phone1);
 	}
@@ -205,6 +208,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByPhone2(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByPhone2(Object phone2) {
 		return findByProperty(PHONE2, phone2);
 	}
@@ -212,6 +216,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByEmployeeState(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByEmployeeState(Object employeeState) {
 		return findByProperty(EMPLOYEE_STATE, employeeState);
 	}
@@ -219,6 +224,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByExCompany(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByExCompany(Object exCompany) {
 		return findByProperty(EX_COMPANY, exCompany);
 	}
@@ -226,6 +232,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByExBusiness(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByExBusiness(Object exBusiness) {
 		return findByProperty(EX_BUSINESS, exBusiness);
 	}
@@ -233,6 +240,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByExJob(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByExJob(Object exJob) {
 		return findByProperty(EX_JOB, exJob);
 	}
@@ -240,6 +248,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByEduBackground(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByEduBackground(Object eduBackground) {
 		return findByProperty(EDU_BACKGROUND, eduBackground);
 	}
@@ -247,6 +256,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByEduSchool(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByEduSchool(Object eduSchool) {
 		return findByProperty(EDU_SCHOOL, eduSchool);
 	}
@@ -254,6 +264,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByEduField(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByEduField(Object eduField) {
 		return findByProperty(EDU_FIELD, eduField);
 	}
@@ -261,6 +272,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByHometown(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByHometown(Object hometown) {
 		return findByProperty(HOMETOWN, hometown);
 	}
@@ -268,6 +280,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByAddress(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByAddress(Object address) {
 		return findByProperty(ADDRESS, address);
 	}
@@ -275,6 +288,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findByChinaId(java.lang.Object)
 	 */
+	@Override
 	public List<Employee> findByChinaId(Object chinaId) {
 		return findByProperty(CHINA_ID, chinaId);
 	}
@@ -282,6 +296,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findAll()
 	 */
+	@Override
 	public List<Employee> findAll() {
 		log.debug("finding all Employee instances");
 		try {
@@ -296,10 +311,11 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#merge(nju.software.dataobject.Employee)
 	 */
+	@Override
 	public Employee merge(Employee detachedInstance) {
 		log.debug("merging Employee instance");
 		try {
-			Employee result = (Employee) getHibernateTemplate().merge(
+			Employee result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -312,6 +328,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#attachDirty(nju.software.dataobject.Employee)
 	 */
+	@Override
 	public void attachDirty(Employee instance) {
 		log.debug("attaching dirty Employee instance");
 		try {
@@ -326,6 +343,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#attachClean(nju.software.dataobject.Employee)
 	 */
+	@Override
 	public void attachClean(Employee instance) {
 		log.debug("attaching clean Employee instance");
 		try {
@@ -341,6 +359,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 		return (IEmployeeDAO) ctx.getBean("EmployeeDAO");
 	}
 
+	@Override
 	public List<Employee> findByPage(int page, int numberPerPage) {
 		DetachedCriteria criteria = DetachedCriteria.forClass(Employee.class);
 		int start=numberPerPage*(page-1);
@@ -387,6 +406,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/**
 	 * return the count of records by certain property
 	 */
+	@Override
 	public int count(String propertyName, Object value) {
 		// TODO Auto-generated method stub
 		log.debug("counting Employee instance with property: " + propertyName
@@ -408,6 +428,7 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	/**
 	 * return the count of records
 	 */
+	@Override
 	public int count() {
 		// TODO Auto-generated method stub
 		log.debug("counting Employee instance");

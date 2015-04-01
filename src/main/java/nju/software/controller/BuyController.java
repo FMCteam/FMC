@@ -20,7 +20,6 @@ import nju.software.util.ListUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -200,13 +199,13 @@ public class BuyController {
 		}
 
 		int size = fabric_names_list.size();
-		String[] fabric_names = (String[]) fabric_names_list
+		String[] fabric_names = fabric_names_list
 				.toArray(new String[size]);
-		String[] fabric_amounts = (String[]) fabric_amounts_list
+		String[] fabric_amounts = fabric_amounts_list
 				.toArray(new String[size]);
-		String[] tear_per_meters = (String[]) tear_per_meters_list
+		String[] tear_per_meters = tear_per_meters_list
 				.toArray(new String[size]);
-		String[] cost_per_meters = (String[]) cost_per_meters_list
+		String[] cost_per_meters = cost_per_meters_list
 				.toArray(new String[size]);
 
 		// 辅料数据
@@ -235,13 +234,13 @@ public class BuyController {
 		}
 
 		int accessory_size = accessory_names_list.size();
-		String[] accessory_names = (String[]) accessory_names_list
+		String[] accessory_names = accessory_names_list
 				.toArray(new String[accessory_size]);
-		String[] accessory_querys = (String[]) accessory_querys_list
+		String[] accessory_querys = accessory_querys_list
 				.toArray(new String[accessory_size]);
-		String[] tear_per_piece = (String[]) tear_per_piece_list
+		String[] tear_per_piece = tear_per_piece_list
 				.toArray(new String[accessory_size]);
-		String[] cost_per_piece = (String[]) cost_per_piece_list
+		String[] cost_per_piece = cost_per_piece_list
 				.toArray(new String[accessory_size]);
 
 		// String[] fabric_names = request.getParameterValues("fabricName");

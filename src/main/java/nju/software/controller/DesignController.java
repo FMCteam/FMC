@@ -21,7 +21,6 @@ import nju.software.util.ListUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -431,7 +430,7 @@ public class DesignController {
 	//@Transactional(rollbackFor = Exception.class)
 	public String modifyDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String orderId = (String) request.getParameter("orderId");
+		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("CADFile");

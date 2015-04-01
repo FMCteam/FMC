@@ -1,4 +1,4 @@
-package nju.software.util;
+package nju.software.dao.impl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,7 +14,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-public class SqlUtil {
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+public class SqlUtilDAO extends HibernateDaoSupport{
 	/*private String url = "jdbc:mysql://localhost:3306/fmc?useUnicode=true&amp;characterEncoding=UTF-8";
 	private String driver = "com.mysql.jdbc.Driver";
 	private String userName = "root";
@@ -34,7 +40,7 @@ public class SqlUtil {
 	   private void init(){
 		   try {    
 			    String property_path=    getPath("/classes")+PROPERTY_PATH_NAME;
-			   System.out.println("=================="+property_path);
+			  // System.out.println("=================="+property_path);
 	           // InputStream in = getClass().getResourceAsStream(property_path);    
 	            Properties props = new Properties();    
 	          //  in.close();
@@ -75,7 +81,7 @@ public class SqlUtil {
 	 57          * */
 	          String sqlArr[] = sqlSb.toString().split("(;\\s*\\rr\\n)|(;\\s*\\n)");
 	          for(int i = 0; i<sqlArr.length; i++) {
-	              String sql = sqlArr[i].replaceAll("--.*", "").trim();
+	              String sql = sqlArr[i].replaceAll("--.*`", "").trim();
 	              if(!"".equals(sql)) {
 	                  sqlList.add(sql);
 	              }
@@ -97,7 +103,7 @@ public class SqlUtil {
 	      private String getPath(String sytnx){
 	    	  URL url = this.getClass().getResource("");
 	    	  String path =url.getPath();
-	    	 System.out.println("========================="+path);
+	    	 //System.out.println("========================="+path);
 	    	  return path.substring(0,(path.lastIndexOf(sytnx) + 1));
 	    	// return path.substring(1,path.indexOf("classes"));
 	      }
@@ -118,11 +124,11 @@ public class SqlUtil {
 	             conn.setAutoCommit(false);
 	             stmt = conn.createStatement();
 	              for (String sql : sqlList) {
-	                  System.out.println(sql);
+	                  //System.out.println(sql);
 	                  stmt.addBatch(sql);
 	              }
              int[] rows = stmt.executeBatch();
-	             System.out.println("Row count:" + Arrays.toString(rows));
+	            // System.out.println("Row count:" + Arrays.toString(rows));
 	             conn.commit();
 	            System.out.println("数据更新成功");
 	         } catch (Exception e) {
@@ -134,17 +140,59 @@ public class SqlUtil {
 	         }
 	         
 	      }
-	     /*
-	      * 判断是否可以插入
-	      * 
-	      */
-	      public boolean isEmpty(Connection conn) throws SQLException{
-	    	  Statement st2=  conn.createStatement();
-		         String query="select * from order";
-		         ResultSet rs =st2.executeQuery(query);
-		         boolean is_prepared=rs.first();
-		         return is_prepared;
+	      /*
+	       * 批量插入的尝试
+	       */
+	      private void BatchInsert(String sqlFile){
+	    	
+	    	  try {
+				
+	    		  final List<String> sqlList = loadSql(sqlFile);
+				
+				 this .getHibernateTemplate().execute( new HibernateCallback<Object>(){
+
+					@Override
+					public Object doInHibernate(Session session)
+							throws HibernateException, SQLException {
+						// TODO Auto-generated method stub
+						
+						Transaction transaction = session.beginTransaction(); 
+                        for (int i=0;i<sqlList.size();i++){
+                        	//System.out.println(sqlList.get(i));
+                                   session.createSQLQuery(sqlList.get(i));
+                                   
+                            if (i%20==0){
+                                          session.flush();
+                                          session.clear();
+                                   }
+                             }
+                                  
+                            transaction.commit();
+                            session.close();
+
+						
+						
+						
+						
+						return true;
+					}
+					 
+				 }
+                     
+                ) ;
+
+				
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	      
+	      
 	      }
+	      
+	    
 	     /*
 	100      * 获取sql连接
 	101      * */
@@ -162,24 +210,18 @@ public class SqlUtil {
 	        }
 	         return conn;
 	    }
+	     
 	 public void initSQL(){
+		 setPath();
 		 try {
-			 setPath();
 			execute(filePathIn);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// BatchInsert(filePathIn);
 	 }
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		try {
-			new SqlUtil().execute(filePathIn);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 
 }
