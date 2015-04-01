@@ -335,7 +335,15 @@ table.tablesorter thead tr .headerSortDown {
 								<li><a href="${ctx}/account/employeeList.do" target="maincontent">查看员工</a></li>
 							</ul></li>
 					</c:if>
-
+					<c:if test="${ROLE_employee==true}">
+						<li class="dropdown"><a href=""><span
+								class="iconfa-th-list"></span> 系统管理</a>
+							<ul>
+								<li><a href="${ctx}/system/moduleMessages.do" target="maincontent">模组资料</a></li>
+								<li><a href="${ctx}/system/rolePrivilege.do" target="maincontent">权限设置</a></li>
+								<li><a href="${ctx}/system/roleAss.do" target="maincontent">角色分配</a></li>
+							</ul></li>
+					</c:if>
 				</ul>
 			</div>
 			<!--leftmenu-->
