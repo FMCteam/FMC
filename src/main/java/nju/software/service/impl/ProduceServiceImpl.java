@@ -20,8 +20,8 @@ import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
+import nju.software.process.service.MainProcessService;
 import nju.software.service.ProduceService;
-import nju.software.util.ActivitiAPIUtil;
 
 @Service("produceServiceImpl")
 public class ProduceServiceImpl implements ProduceService {
@@ -54,7 +54,7 @@ public class ProduceServiceImpl implements ProduceService {
 		data.put(RESULT_PRODUCE, result);
 		data.put(RESULT_PRODUCE_COMMENT, comment);
 		try {
-			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PRODUCE_MANAGER, data);
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -124,7 +124,7 @@ public class ProduceServiceImpl implements ProduceService {
 		data.put(RESULT_PRODUCE, result);
 		data.put(RESULT_PRODUCE_COMMENT, comment);
 		try {
-			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PRODUCE_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -158,7 +158,7 @@ public class ProduceServiceImpl implements ProduceService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PRODUCE, result);
 		try {
-			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PRODUCE_MANAGER, data);
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -173,7 +173,7 @@ public class ProduceServiceImpl implements ProduceService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PRODUCE, result);
 		try {
-			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PRODUCE_MANAGER, data);
 			if(result==false){//如果result的的值为false，即为样衣生产失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
@@ -218,7 +218,7 @@ public class ProduceServiceImpl implements ProduceService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			data.put(RESULT_PRODUCE, result);
-			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PRODUCE_MANAGER, data);
 			return true;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -239,7 +239,7 @@ public class ProduceServiceImpl implements ProduceService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
 			data.put(RESULT_PRODUCE, result);
-			activitiApiUtil.completeTask(taskId, data, ACTOR_PRODUCE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PRODUCE_MANAGER, data);
 			if(result==false){//如果result的的值为false，即为大货生产失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
@@ -297,7 +297,7 @@ public class ProduceServiceImpl implements ProduceService {
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
-	private ActivitiAPIUtil activitiApiUtil;
+	private MainProcessService mainProcessService;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired

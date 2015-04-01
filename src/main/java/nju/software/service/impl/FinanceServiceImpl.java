@@ -29,8 +29,8 @@ import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
+import nju.software.process.service.MainProcessService;
 import nju.software.service.FinanceService;
-import nju.software.util.ActivitiAPIUtil;
 
 @Service("financeServiceImpl")
 public class FinanceServiceImpl implements FinanceService {
@@ -84,8 +84,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, actorId);
-			
+			mainProcessService.completeTask(taskId, actorId, data);
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -103,7 +102,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, actorId);
+			mainProcessService.completeTask(taskId, actorId, data);
 			if(result==false){//如果result的的值为false，即为未收取到样衣金，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
@@ -210,7 +209,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, actorId);
+			mainProcessService.completeTask(taskId, actorId, data);
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -226,7 +225,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, actorId);
+			mainProcessService.completeTask(taskId, actorId, data);
 			if(result==false){//如果result的的值为false，即为确认定金失败，流程会异常终止，将orderState设置为1
 				Order order = orderDAO.findById(orderId);
 				order.setOrderState("1");
@@ -314,7 +313,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, actorId);
+			mainProcessService.completeTask(taskId, actorId, data);
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -326,7 +325,7 @@ public class FinanceServiceImpl implements FinanceService {
 	public void returnDepositSubmit(String actorId, String taskId) {
 		Map<String, Object> data = new HashMap<>();
  		try {
-			activitiAPIUtil.completeTask(taskId, data, actorId);
+			mainProcessService.completeTask(taskId, actorId, data);
  		} catch (InterruptedException e) {
  			e.printStackTrace();
  		}
@@ -339,7 +338,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Order order = orderDAO.findById(orderId);
 		Map<String, Object> data = new HashMap<>();
  		try {
-			activitiAPIUtil.completeTask(taskId, data, actorId);
+			mainProcessService.completeTask(taskId, actorId, data);
 			order.setOrderState("1");
 			orderDAO.attachDirty(order);
  		} catch (InterruptedException e) {
@@ -350,20 +349,19 @@ public class FinanceServiceImpl implements FinanceService {
 	@Override
 	public List<Map<String, Object>> getProcessState(final Integer orderId) {
 		String processId=orderDAO.findById(orderId).getProcessId();
-		return activitiAPIUtil.getProcessStates(processId);
+		return mainProcessService.getProcessStates(processId);
 	}
 
-	//TODO  节点状态是个什么鬼
 	@Override
 	public ArrayList<String> getProcessStateName(final Integer orderId) {
 
 				Order order = orderDAO.findById(orderId);
 				String processId= order.getProcessId();
-				return activitiAPIUtil.getProcessStateNames(processId);
+				return (ArrayList<String>) mainProcessService.getProcessStateNames(processId);
 	}
 	
 	@Autowired
-	private ActivitiAPIUtil activitiAPIUtil;
+	private MainProcessService mainProcessService;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired
@@ -439,7 +437,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_MONEY, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, actorId);
+			mainProcessService.completeTask(taskId, actorId, data);
 			if(result==false){//如果result的的值为false，即为尾款收取失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");	
 			}

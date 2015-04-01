@@ -73,9 +73,6 @@ public interface MarketService {
 			List<Produce> produces);
 
 	@Transactional(rollbackFor = Exception.class)
-	public List<OrderInfo> getOrderInfoList(Integer employeeId);
-
-	@Transactional(rollbackFor = Exception.class)
 	public OrderInfo getOrderInfo(Integer orderId, String taskId);
 
 	// public void completeSignContract(Integer orderId,double discount,String
@@ -298,5 +295,12 @@ public interface MarketService {
 	
 	@Transactional(rollbackFor = Exception.class)
 	public String getComment(Object task, String variableName);
+
+	@Transactional(rollbackFor = Exception.class)
+	boolean addOrderCustomerSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			List<Produce> produces, List<Produce> sample_produces,
+			List<VersionData> versions, DesignCad cad,
+			HttpServletRequest request);
 
 }

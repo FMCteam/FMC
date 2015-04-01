@@ -13,8 +13,8 @@ import nju.software.dataobject.Craft;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
+import nju.software.process.service.MainProcessService;
 import nju.software.service.DesignService;
-import nju.software.util.ActivitiAPIUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +50,7 @@ public class DesignServiceImpl implements DesignService {
 		data.put(RESULT_DESIGN, result);
 		data.put(RESULT_DESIGN_COMMENT, comment);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_DESIGN_MANAGER, data);
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -138,7 +138,7 @@ public class DesignServiceImpl implements DesignService {
 		data.put(RESULT_DESIGN_COMMENT, comment);
 
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_DESIGN_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -220,7 +220,7 @@ public class DesignServiceImpl implements DesignService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PRODUCE, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_DESIGN_MANAGER, data);
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -235,7 +235,7 @@ public class DesignServiceImpl implements DesignService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PRODUCE, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_DESIGN_MANAGER, data);
 		
 		if (result == false) {// 如果result的的值为FALSE，即为样衣生产失败，流程会异常终止，将orderState设置为1
 			order.setOrderState("1");
@@ -299,7 +299,7 @@ public class DesignServiceImpl implements DesignService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_DESIGN, true);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_DESIGN_MANAGER, data);
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -364,7 +364,7 @@ public class DesignServiceImpl implements DesignService {
 		craft.setCrafsProduceDate(crafsProduceDate);
 		craftDAO.attachDirty(craft);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_DESIGN_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -418,7 +418,7 @@ public class DesignServiceImpl implements DesignService {
 
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_DESIGN_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -453,7 +453,7 @@ public class DesignServiceImpl implements DesignService {
 	public void getTypeSettingSliceSubmit(int orderId, String taskId) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_DESIGN_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -477,7 +477,7 @@ public class DesignServiceImpl implements DesignService {
 		designCadDAO.attachDirty(designCad);
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_DESIGN_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -531,7 +531,7 @@ public class DesignServiceImpl implements DesignService {
 
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_DESIGN_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_DESIGN_MANAGER, data);
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -558,7 +558,7 @@ public class DesignServiceImpl implements DesignService {
 	public final static String RESULT_PRODUCE = "produce";
 
 	@Autowired
-	private ActivitiAPIUtil activitiAPIUtil;
+	private MainProcessService mainProcessService;
 	@Autowired
 	private ServiceUtil service;
 	@Autowired

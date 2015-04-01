@@ -231,6 +231,15 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
+	<bean id="BasicProcessService"
+		class="nju.software.process.service.BasicProcessService">
+	</bean>
+	<bean id="MainProcessService"
+		class="nju.software.process.service.MainProcessService">
+	</bean>
+	<bean id="MarketstaffAlterProcessService"
+		class="nju.software.process.service.MarketstaffAlterProcessService">
+	</bean>
 	<bean id="SqlUtil" class="nju.software.util.SqlUtil">
 	</bean>
 	

@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.AccountDAO;
 import nju.software.dataobject.Account;
+import nju.software.process.service.MainProcessService;
+import nju.software.process.service.MarketstaffAlterProcessService;
 import nju.software.service.CommonService;
-import nju.software.util.ActivitiAPIUtil;
 
 @Service("commonServiceImpl")
 public class CommonServiceImpl implements CommonService {
@@ -18,18 +19,13 @@ public class CommonServiceImpl implements CommonService {
 
 	@Override
 	public Integer getTaskNumber(String userId) {
-		List<Task> tasks = isGroup(userId) ? activitiAPIUtil
-				.getAssignedTasksOfGroup(userId) : activitiAPIUtil
-				.getAssignedTasksOfUser(userId);
+		List<Task> tasks = mainProcessService.getTasksOfUser(userId);
 		return tasks == null ? 0 : tasks.size();
 	}
 
 	@Override
 	public Integer getTaskNumber(String userId, String taskName) {
-		List<Task> tasks = isGroup(userId) ? activitiAPIUtil
-				.getAssignedTasksOfUserByTaskName(userId, taskName)
-				: activitiAPIUtil.getAssignedTasksOfUserByTaskName(userId,
-						taskName);
+		List<Task> tasks = mainProcessService.getTasksOfUserByTaskName(userId, taskName);
 		return tasks == null ? 0 : tasks.size();
 	}
 
@@ -73,9 +69,6 @@ public class CommonServiceImpl implements CommonService {
 		return sum;
 	}
 	
-	private boolean isGroup(String userId) {
-		return false;
-	}
 
 	private String[] groups = new String[] {
 			BuyServiceImpl.ACTOR_PURCHASE_MANAGER,
@@ -89,7 +82,10 @@ public class CommonServiceImpl implements CommonService {
 			SweaterMakeServiceImpl.ACTOR_SWEATER_MANAGER };
 
 	@Autowired
-	private ActivitiAPIUtil activitiAPIUtil;
+	private MainProcessService mainProcessService;
+	
+	@Autowired
+	private MarketstaffAlterProcessService marketstaffAlterProcessService;
 
 	@Autowired
 	private AccountDAO accountDAO;

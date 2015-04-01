@@ -38,7 +38,7 @@ import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.TreeNode;
-import nju.software.util.ActivitiAPIUtil;
+import nju.software.process.service.MainProcessService;
 
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +49,7 @@ public class ServiceUtil {
 
 	public List<Map<String, Object>> getOrderList(String actorId,
 			String taskName) {
-		List<Task> tasks = activitiAPIUtil.getAssignedTasksOfUserByTaskName(
-				actorId, taskName);
+		List<Task> tasks = mainProcessService.getTasksOfUserByTaskName(actorId, taskName);
 		
 //		if (isAdminRequest(actorId)) {
 //			List<Account> accounts = accountDAO.findByUserRole(MarketServiceImpl.ACTOR_MARKET_STAFF);
@@ -63,8 +62,7 @@ public class ServiceUtil {
 		List<Map<String, Object>> list = new ArrayList<>();
 
 		for (Task task : tasks) {
-			Integer orderId = (Integer) activitiAPIUtil
-					.getProcessVariable(task, "orderId");
+			Integer orderId = mainProcessService.getOrderIdInProcess(task.getProcessInstanceId());
 			Map<String, Object> model = new HashMap<String, Object>();
 			Order order = orderDAO.findById(orderId);
 			System.out.println(orderId);
@@ -84,14 +82,13 @@ public class ServiceUtil {
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
 				 customername,stylename,startdate,enddate,employeeIds);
 		
-		List<Task> tasks = activitiAPIUtil.getAssignedTasksOfUserByTaskName(
-				actorId, taskName);
+		List<Task> tasks = mainProcessService.getTasksOfUserByTaskName(actorId, taskName);
 		
 		List<Map<String, Object>> list = new ArrayList<>();
 
 		for (Task task : tasks) {
 			boolean isSearched = false;
-			Integer orderId = (Integer) activitiAPIUtil.getProcessVariable(task, "orderId");
+			Integer orderId = mainProcessService.getOrderIdInProcess(task.getProcessInstanceId());
 			for(int k =0;k<orders.size();k++){
 				if(orderId.equals(orders.get(k).getOrderId())){
 					isSearched = true;
@@ -117,7 +114,7 @@ public class ServiceUtil {
 	public Map<String, Object> getBasicOrderModel(String actorId,
 			String taskName, Integer orderId) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Task task = activitiAPIUtil.getTask(actorId, taskName, orderId);
+		Task task = mainProcessService.getTaskOfUserByTaskNameWithSpecificOrderId(actorId, taskName, orderId);
 		Order order = orderDAO.findById(orderId);
 		model.put("task", task);
  		model.put("taskId", task.getId());
@@ -261,7 +258,7 @@ public class ServiceUtil {
 	 }
 
 	@Autowired
-	private ActivitiAPIUtil activitiAPIUtil;
+	private MainProcessService mainProcessService;
 	@Autowired
 	private AccountDAO accountDAO;
 	@Autowired

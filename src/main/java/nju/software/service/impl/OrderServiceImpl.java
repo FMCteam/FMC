@@ -38,9 +38,9 @@ import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderModel;
 import nju.software.model.QuoteModel;
+import nju.software.process.service.MainProcessService;
 import nju.software.service.FinanceService;
 import nju.software.service.OrderService;
-import nju.software.util.ActivitiAPIUtil;
 
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -245,15 +245,14 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId,
 			String taskName) {
 		List<OrderModel> orderList = new ArrayList<OrderModel>();
-		List<Task> list = activitiAPIUtil.getAssignedTasksOfUserByTaskName(
-				actorId, taskName);
+		List<Task> list = mainProcessService.getTasksOfUserByTaskName(actorId, taskName);
 		if (list.isEmpty()) {
 			System.out.println("no task list");
 		}
 		for (Task task : list) {
 			// 需要获取task中的数据
 			String processId = task.getProcessInstanceId();
-			int orderId = (int) activitiAPIUtil.getProcessVariable(processId, "orderId");
+			int orderId = mainProcessService.getOrderIdInProcess(processId);
 			Order order = getOrderById(orderId);
 			if (order != null) {
 				System.out.println("orderId: " + order.getOrderId());
@@ -272,7 +271,7 @@ public class OrderServiceImpl implements OrderService {
 	public OrderModel getOrderDetail(int orderId, String taskId, String processId) {
 		OrderModel orderModel = null;
 		
-		int orderId_process = (int)activitiAPIUtil.getProcessVariable(processId, "orderId");
+		int orderId_process = mainProcessService.getOrderIdInProcess(processId);
 		if (orderId == orderId_process) {
 			Order order = orderDAO.findById(orderId);
 			orderModel = new OrderModel(order, taskId, processId);
@@ -286,7 +285,7 @@ public class OrderServiceImpl implements OrderService {
 			String productComment) {
 		String actorId = "SHICHANGZHUANYUAN";
 		// 需要获取task中的数据
-		int orderId_process = (int) activitiAPIUtil.getProcessVariable(processId, "orderId");
+		int orderId_process = mainProcessService.getOrderIdInProcess(processId);
 		System.out.println("orderId: " + orderId);
 		if (orderId == orderId_process) {
 
@@ -298,7 +297,7 @@ public class OrderServiceImpl implements OrderService {
 			data.put("editok", editOk);
 			// 直接进入到下一个流程时
 			try {
-				activitiAPIUtil.completeTask(taskId, data, actorId);
+				mainProcessService.completeTask(taskId, actorId, data);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -332,15 +331,14 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<QuoteModel> getQuoteByActorAndTask(String actor, String taskName) {
 		List<QuoteModel> orderList = new ArrayList<QuoteModel>();
-		List<Task> list = activitiAPIUtil.getAssignedTasksOfUserByTaskName(actor,
-				taskName);
+		List<Task> list = mainProcessService.getTasksOfUserByTaskName(actor, taskName);
 		if (list.isEmpty()) {
 			System.out.println("no task list");
 		}
 		for (Task task : list) {
 			// 需要获取task中的数据
 			String processId = task.getProcessInstanceId();
-			int orderId = (int) activitiAPIUtil.getProcessVariable(processId, "orderId");
+			int orderId = mainProcessService.getOrderIdInProcess(processId);
 			List<Quote> quote = quoteDAO.findByProperty("orderId", orderId);
 			if (quote != null && quote.size() != 0) {
 
@@ -358,19 +356,18 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public QuoteModel getQuoteByOrderAndPro(String actor, String taskName,
 			int orderId) {
-		List<Task> list = activitiAPIUtil.getAssignedTasksOfUserByTaskName(actor,
-				taskName);
+		List<Task> list = mainProcessService.getTasksOfUserByTaskName(actor, taskName);
 		if (list.isEmpty()) {
 			System.out.println("no task list");
 		}
 		for (Task task : list) {
 			// 需要获取task中的数据
-			String pid = task.getProcessInstanceId();
-			int oid = (int) activitiAPIUtil.getProcessVariable(pid, "orderId");
+			String processId = task.getProcessInstanceId();
+			int oid = mainProcessService.getOrderIdInProcess(processId);
 			if (orderId == oid) {
 				List<Quote> quote = quoteDAO.findByProperty("orderId", orderId);
 				return new QuoteModel(quote.get(0), task.getId(),
-						pid);
+						processId);
 			}
 		}
 		return null;
@@ -382,7 +379,7 @@ public class OrderServiceImpl implements OrderService {
 		Order order=orderDAO.findById(orderId);
 		order.setOrderState("1");
 		orderDAO.attachDirty(order);
-		activitiAPIUtil.abortProcess(order.getProcessId());
+		mainProcessService.abortWorkflow(order.getProcessId());
 	}
 
 	@Override
@@ -523,7 +520,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Autowired
-	private ActivitiAPIUtil activitiAPIUtil;
+	private MainProcessService mainProcessService;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired
