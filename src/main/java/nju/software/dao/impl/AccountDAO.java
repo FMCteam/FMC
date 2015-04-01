@@ -6,6 +6,7 @@ import java.util.*;
 
 import nju.software.dao.IAccountDAO;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.AccountRole;
 
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
@@ -405,10 +406,56 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
     	return list ;
     	
     }
+
+	@Override
+	public boolean addAccountRole(String roleName, int accountId) {
+		// TODO Auto-generated method stub
+		Date date =new Date();
+		final String hql="select r.roleId from Role r where r.name='"+roleName+"'";
+        int roleId =  (int) this.getHibernateTemplate().execute(new HibernateCallback<Object>(){
+
+			
+			@Override
+			public Object doInHibernate(Session arg0)
+					throws HibernateException, SQLException {
+				Query q = arg0.createQuery(hql);
+				return q.uniqueResult();
+			}
+			
+		});
+        System.out.println("============================roleId:"+roleId);
+        AccountRole accountRole=  new AccountRole();
+		accountRole.setRoleId(roleId);
+		accountRole.setAccountId(accountId);
+		accountRole.setStatus("A");
+		accountRole.setCreated(date);
+		accountRole.setLastmod(date);
+		this.getHibernateTemplate().save(accountRole);
+	
+		return false;
+	}
     
     
-    
-    
+	
+	public void deleteAccountRole(AccountRole persistentInstance) {
+		log.debug("deleting Account instance");
+		try {
+			getHibernateTemplate().delete(persistentInstance);
+			log.debug("delete successful");
+		} catch (RuntimeException re) {
+			log.error("delete failed", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<AccountRole> findAccountRoleById(String accountId) {
+		// TODO Auto-generated method stub
+		String query = "from AccountRole as model where model.accountId=?";
+
+		return getHibernateTemplate().find(query, accountId );
+		//return null;
+	}
     
     
     

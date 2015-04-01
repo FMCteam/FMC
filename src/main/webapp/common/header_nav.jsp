@@ -147,7 +147,7 @@ table.tablesorter thead tr .headerSortDown {
 								</c:if>
 							</ul></li>
 					</c:if>
-					<c:if test="${IS_MARKET_MANAGER_OR_ADMIN==true}">
+					<c:if test="${ROLE_IS_MARKET_MANAGER_OR_ADMIN==true}">
 						<li class="dropdown"><a href=""><span
 								class="iconfa-briefcase"></span> 市场主管<span
 								class="marketManager2 task"></span></a>
@@ -157,7 +157,7 @@ table.tablesorter thead tr .headerSortDown {
 							</ul></li>
 					</c:if>
 	
-					<c:if test="${IS_MARKET_STAFF_OR_ADMIN==true}">
+					<c:if test="${ROLE_IS_MARKET_STAFF_OR_ADMIN==true}">
 						<li class="dropdown"><a href=""><span
 								class="iconfa-briefcase"></span> 市场部<span
 								class="marketManager task"></span></a>

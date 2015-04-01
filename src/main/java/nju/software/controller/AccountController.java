@@ -139,8 +139,10 @@ public class AccountController {
 				String userType = "EMPLOYEE";
 				String userRole = employeeRole;
 				account = new Account(employeeId, userType, userPassword,
-						username, userRole, employeeName);
-				accountService.addAccount(account);
+						username,  userRole, employeeName);
+				int accountId =accountService.addAccount(account);
+				System.out.println("=================accountId:"+accountId);
+				accountService.addAccountRole(userRole, accountId);
 				success = true;
 			}
 		} else {
@@ -487,6 +489,7 @@ public class AccountController {
 					int accountId = accountToDelete.getAccountId();
 					employeeService.deleteEmployee(employeeId);
 					accountService.deleteAccount(accountId);
+					//accountService.
 					success = true;
 				}
 			}
