@@ -35,7 +35,7 @@
 	<bean id="managementService" factory-bean="processEngine"
 		factory-method="getManagementService" />
 	
-	<bean id="activitiAPIUtil" class="nju.software.util.ActivitiAPIUtil" scope = "singleton">
+	<bean id="activitiAPIUtil" class="nju.software.util.ActivitiAPIUtil" scope = "singleton" >
 		<property name="processName" value="nju.software.fmc.bpmn"></property>
 		<property name="processEngineConfiguration" ref="processEngineConfiguration"></property>
 		<property name="processEngine" ref="processEngine"></property>

@@ -254,6 +254,7 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 
+	@Override
 	public List<Produce> getProduceList(int orderId, String produceColor,
 			String produceXS, String produceS, String produceM,
 			String produceL, String produceXL, String produceXXL, String produceJ, String type) {

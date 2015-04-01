@@ -32,6 +32,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	public static final String PRODUCE_AMOUNT = "produceAmount";
 	public static final String QUALIFIED_AMOUNT = "qualifiedAmount";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -39,6 +40,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#save(nju.software.dataobject.Product)
 	 */
+	@Override
 	public void save(Product transientInstance) {
 		log.debug("saving Product instance");
 		try {
@@ -53,6 +55,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#delete(nju.software.dataobject.Product)
 	 */
+	@Override
 	public void delete(Product persistentInstance) {
 		log.debug("deleting Product instance");
 		try {
@@ -67,6 +70,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public Product findById(java.lang.Integer id) {
 		log.debug("getting Product instance with id: " + id);
 		try {
@@ -82,10 +86,11 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#findByExample(nju.software.dataobject.Product)
 	 */
+	@Override
 	public List<Product> findByExample(Product instance) {
 		log.debug("finding Product instance by example");
 		try {
-			List<Product> results = (List<Product>) getHibernateTemplate()
+			List<Product> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -99,6 +104,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Product instance with property: " + propertyName
 				+ ", value: " + value);
@@ -115,6 +121,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#findByOrderId(java.lang.Object)
 	 */
+	@Override
 	public List<Product> findByOrderId(Object orderId) {
 		return findByProperty(ORDER_ID, orderId);
 	}
@@ -122,6 +129,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#findByStyle(java.lang.Object)
 	 */
+	@Override
 	public List<Product> findByStyle(Object style) {
 		return findByProperty(STYLE, style);
 	}
@@ -129,6 +137,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#findByColor(java.lang.Object)
 	 */
+	@Override
 	public List<Product> findByColor(Object color) {
 		return findByProperty(COLOR, color);
 	}
@@ -136,6 +145,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#findByAskAmount(java.lang.Object)
 	 */
+	@Override
 	public List<Product> findByAskAmount(Object askAmount) {
 		return findByProperty(ASK_AMOUNT, askAmount);
 	}
@@ -143,6 +153,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#findByProduceAmount(java.lang.Object)
 	 */
+	@Override
 	public List<Product> findByProduceAmount(Object produceAmount) {
 		return findByProperty(PRODUCE_AMOUNT, produceAmount);
 	}
@@ -150,6 +161,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#findByQualifiedAmount(java.lang.Object)
 	 */
+	@Override
 	public List<Product> findByQualifiedAmount(Object qualifiedAmount) {
 		return findByProperty(QUALIFIED_AMOUNT, qualifiedAmount);
 	}
@@ -157,6 +169,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all Product instances");
 		try {
@@ -171,10 +184,11 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#merge(nju.software.dataobject.Product)
 	 */
+	@Override
 	public Product merge(Product detachedInstance) {
 		log.debug("merging Product instance");
 		try {
-			Product result = (Product) getHibernateTemplate().merge(
+			Product result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -187,6 +201,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#attachDirty(nju.software.dataobject.Product)
 	 */
+	@Override
 	public void attachDirty(Product instance) {
 		log.debug("attaching dirty Product instance");
 		try {
@@ -201,6 +216,7 @@ public class ProductDAO extends HibernateDaoSupport implements IProductDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IProductDAO#attachClean(nju.software.dataobject.Product)
 	 */
+	@Override
 	public void attachClean(Product instance) {
 		log.debug("attaching clean Product instance");
 		try {

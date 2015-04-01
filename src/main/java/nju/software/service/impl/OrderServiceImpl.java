@@ -55,15 +55,18 @@ import org.springframework.stereotype.Service;
 public class OrderServiceImpl implements OrderService {
 	
 	// 新增订单
+	@Override
 	public void addOrder(Order order) {
 		orderDAO.save(order);
 	}
   
+	@Override
 	public List<Order> findAll() {
 		List<Order> order = this.orderDAO.findAll();
 		return order;
 	}
 
+	@Override
 	public Order getOrderById(int orderId) {
 		try {
 			Order order = orderDAO.findById(orderId);
@@ -74,6 +77,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
+	@Override
 	public boolean updateOrder(Order order) {
 		try {
 			orderDAO.attachDirty(order);
@@ -405,6 +409,7 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private FinanceService financeService;		
 
+	@Override
 	public List<Map<String, Object>> getOrdersEnd(String userRole, Integer userId) {
 		/*Order orderExample = new Order();
 		orderExample.setOrderState("1"); //被终止的订单
@@ -431,6 +436,7 @@ public class OrderServiceImpl implements OrderService {
 		return list;
 	}		
 			
+	@Override
 	public List<Map<String, Object>> getModifyOrderList() {
 		// TODO Auto-generated method stub
 		Order o = new Order();
@@ -467,6 +473,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return false;
 	}
+	@Override
 	public List<Map<String, Object>> getSearchOrderList(String ordernumber,
 			String customername, String stylename, String startdate,String enddate,
 			Integer[] employeeIds,String userRole,Integer userId) {

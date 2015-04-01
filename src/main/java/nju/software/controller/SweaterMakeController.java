@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,10 +15,8 @@ import nju.software.dataobject.Employee;
 import nju.software.dataobject.OperateRecord;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
-import nju.software.dataobject.SearchInfo;
 import nju.software.service.BuyService;
 import nju.software.service.EmployeeService;
-import nju.software.service.MarketService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
 import nju.software.service.SweaterMakeService;
@@ -30,7 +25,6 @@ import nju.software.util.ListUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -228,7 +222,7 @@ public class SweaterMakeController {
 			int total = produceXS + produceS + produceM + produceL +
 					produceXL + produceXXL + produceJ;
 			Produce.setProduceAmount(total);
-			Produce.setType(Produce.TYPE_PRODUCED);
+			Produce.setType(nju.software.dataobject.Produce.TYPE_PRODUCED);
 			Produce.setSendTime(sendTime);
 			Produce.setColor(produceColor);
 			Produce.setXs(produceXS);

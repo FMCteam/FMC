@@ -1,7 +1,9 @@
 package nju.software.filter;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -14,13 +16,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import nju.software.dao.BaseDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+
+import nju.software.dao.impl.AccountDAO;
 import nju.software.dataobject.Account;
+import nju.software.util.ActivitiAPIUtil;
+
+@Controller
 
 public class AccessFilter implements Filter {
-	// @Autowired
-	// private ActivitiAPIUtil jbpmAPIUtil;
-   private BaseDao baseDao ;
+	
+	//@Autowired
+	static private AccountDAO accountDao ;
+	  List permissionList ;
+	
+
 	private FilterConfig filterConfig = null;
 
 	@Override
@@ -28,18 +40,12 @@ public class AccessFilter implements Filter {
 		// TODO Auto-generated method stub
 		filterConfig = null;
 	}
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		// String type = filterConfig.getInitParameter("type");
-		// String role=filterConfig.getInitParameter("role");
-		String hql="select p.MYID from permission p,account_role ar,account a,role_permission rp where p.pid=null and p.PERMISSION_ID=rp.permission_id and rp.role_id=ar.role_id and ar.account_id=a.account_id and a.username=";
-		//baseDao.findByhql2(hql);
-		
-		
-		boolean has_access2 = false;
+			boolean has_access2 = false;
 
 		HttpServletRequest request = (HttpServletRequest) arg0;
 		HttpServletResponse response = (HttpServletResponse) arg1;
@@ -63,15 +69,19 @@ public class AccessFilter implements Filter {
 					response.sendRedirect(request.getContextPath()+ "/login.do");
 				}
 			} else {
-                 
-				String info_role = filterConfig.getInitParameter(curUser.getUserRole());
-				System.out.println(info_role);
-                if (info_role != null) {
-					String type[] = info_role.split(",");
-					for (int i = 0; i < type.length; i++) {
-						request.setAttribute("ROLE_" + type[i], true);
+				
+               List permissionList=	accountDao.findPermissionBYName(curUser.getUserName());
+				if(permissionList!=null){
+					
+					for(int i =0;i<permissionList.size();i++){
+						//System.out.println(permissionList.get(i));
+						request.setAttribute((String) permissionList.get(i), true);
+						
 						}
 				}
+				
+				
+				request.setAttribute("hasPermission", true);
 
 				request.setAttribute("USER_nick_name", curUser.getNickName());
 				request.setAttribute("USER_user_name", curUser.getUserName());
@@ -79,9 +89,10 @@ public class AccessFilter implements Filter {
 
 				
 			}
+			
 			chain.doFilter(request, response);
 		}
-
+		
 	}
 
 	@Override
@@ -90,5 +101,21 @@ public class AccessFilter implements Filter {
 		this.filterConfig = filterConfig;
 
 	}
-
+	@Autowired
+	public void setAccountDao(AccountDAO accountDao) {
+		this.accountDao = accountDao;
+		System.out.println(accountDao==null);
+	}
+	public AccountDAO getAccountDao(){
+		return accountDao ;
+		
+	}
+     public void test(){
+    	// permissionList=	accountDao.findPermissionBYName("ADMIN");
+    	 
+    	 
+    	 
+    	// System.out.println("==========accountDao:"+accountDao.getClass());
+    	
+     }
 }

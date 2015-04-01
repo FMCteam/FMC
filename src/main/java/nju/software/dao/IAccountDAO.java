@@ -33,5 +33,7 @@ public interface IAccountDAO {
 	public abstract void attachClean(Account instance);
  
 	public List<Account> findByUserIdAndUserName(String role,Integer userId);
+	 public boolean isEmptytOfTable();
+	 public List findPermissionBYName(String username);
 	
 }

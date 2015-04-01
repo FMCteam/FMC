@@ -6,8 +6,6 @@ package nju.software.dataobject;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

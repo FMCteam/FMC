@@ -5,14 +5,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 
 import nju.software.dao.impl.AccessoryCostDAO;
@@ -61,7 +57,6 @@ import nju.software.util.mail.SimpleMailSender;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Service("marketServiceImpl")
@@ -704,6 +699,7 @@ public class MarketServiceImpl implements MarketService {
 		return temp;
 	}
 
+	@Override
 	public Map<String, Object> getModifyQuoteDetail(int orderId, int accountId) {
 		return service.getBasicOrderModelWithQuote(accountId + "",
 				TASK_MODIFY_QUOTE, orderId);
@@ -947,6 +943,7 @@ public class MarketServiceImpl implements MarketService {
 		}
 	}
 
+	@Override
 	public void signContractSubmit(String actorId, String taskId, int orderId,
 			double discount, double total, String url) {
 		Order order = orderDAO.findById(orderId);
@@ -1075,6 +1072,7 @@ public class MarketServiceImpl implements MarketService {
 		return list;
 	}
 
+	@Override
 	public ArrayList<String> getProcessStateName(final Integer orderId) {
 		String processId = orderDAO.findById(orderId).getProcessId();
 		return activitiApiUtil.getProcessStateNames(processId);

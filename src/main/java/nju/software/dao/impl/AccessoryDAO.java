@@ -30,6 +30,7 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	public static final String ACCESSORY_NAME = "accessoryName";
 	public static final String ACCESSORY_QUERY = "accessoryQuery";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -37,6 +38,7 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#save(nju.software.dataobject.Accessory)
 	 */
+	@Override
 	public void save(Accessory transientInstance) {
 		log.debug("saving Accessory instance");
 		try {
@@ -51,6 +53,7 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#delete(nju.software.dataobject.Accessory)
 	 */
+	@Override
 	public void delete(Accessory persistentInstance) {
 		log.debug("deleting Accessory instance");
 		try {
@@ -65,6 +68,7 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public Accessory findById(java.lang.Integer id) {
 		log.debug("getting Accessory instance with id: " + id);
 		try {
@@ -80,10 +84,11 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#findByExample(nju.software.dataobject.Accessory)
 	 */
+	@Override
 	public List<Accessory> findByExample(Accessory instance) {
 		log.debug("finding Accessory instance by example");
 		try {
-			List<Accessory> results = (List<Accessory>) getHibernateTemplate()
+			List<Accessory> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -97,6 +102,7 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Accessory instance with property: " + propertyName
 				+ ", value: " + value);
@@ -113,6 +119,7 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#findByOrderId(java.lang.Object)
 	 */
+	@Override
 	public List<Accessory> findByOrderId(Object orderId) {
 		return findByProperty(ORDER_ID, orderId);
 	}
@@ -120,6 +127,7 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#findByAccessoryName(java.lang.Object)
 	 */
+	@Override
 	public List<Accessory> findByAccessoryName(Object accessoryName) {
 		return findByProperty(ACCESSORY_NAME, accessoryName);
 	}
@@ -127,6 +135,7 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#findByAccessoryQuery(java.lang.Object)
 	 */
+	@Override
 	public List<Accessory> findByAccessoryQuery(Object accessoryQuery) {
 		return findByProperty(ACCESSORY_QUERY, accessoryQuery);
 	}
@@ -134,6 +143,7 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all Accessory instances");
 		try {
@@ -148,10 +158,11 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#merge(nju.software.dataobject.Accessory)
 	 */
+	@Override
 	public Accessory merge(Accessory detachedInstance) {
 		log.debug("merging Accessory instance");
 		try {
-			Accessory result = (Accessory) getHibernateTemplate().merge(
+			Accessory result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -164,6 +175,7 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#attachDirty(nju.software.dataobject.Accessory)
 	 */
+	@Override
 	public void attachDirty(Accessory instance) {
 		log.debug("attaching dirty Accessory instance");
 		try {
@@ -178,6 +190,7 @@ public class AccessoryDAO extends HibernateDaoSupport implements IAccessoryDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IAccessoryDAO#attachClean(nju.software.dataobject.Accessory)
 	 */
+	@Override
 	public void attachClean(Accessory instance) {
 		log.debug("attaching clean Accessory instance");
 		try {

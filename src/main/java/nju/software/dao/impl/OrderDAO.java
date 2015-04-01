@@ -8,7 +8,6 @@ import nju.software.dao.IOrderDAO;
 import nju.software.dataobject.Order;
 import nju.software.util.DateUtil;
 
-import org.antlr.grammar.v3.ANTLRv3Parser.throwsSpec_return;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -62,6 +61,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	public static final String ORDER_SOURCE = "orderSource";
 	public static final String CLOTHES_TYPE = "clothesType";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -71,6 +71,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#save(nju.software.dataobject.Order)
 	 */
+	@Override
 	public void save(Order transientInstance) {
 		log.debug("saving Order instance");
 		try{
@@ -88,6 +89,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * @see
 	 * nju.software.dao.impl.IOrderDAO#delete(nju.software.dataobject.Order)
 	 */
+	@Override
 	public void delete(Order persistentInstance) {
 		log.debug("deleting Order instance");
 		try {
@@ -104,6 +106,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public Order findById(java.lang.Integer id) {
 		log.debug("getting Order instance with id: " + id);
 		try {
@@ -123,10 +126,11 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * nju.software.dao.impl.IOrderDAO#findByExample(nju.software.dataobject
 	 * .Order)
 	 */
+	@Override
 	public List<Order> findByExample(Order instance) {
 		log.debug("finding Order instance by example");
 		try {
-			List<Order> results = (List<Order>) getHibernateTemplate()
+			List<Order> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -144,6 +148,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * @see nju.software.dao.impl.IOrderDAO#findByProperty(java.lang.String,
 	 * java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Order instance with property: " + propertyName
 				+ ", value: " + value);
@@ -162,6 +167,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findByCustomerId(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByCustomerId(Object customerId) {
 		return findByProperty(CUSTOMER_ID, customerId);
 	}
@@ -171,6 +177,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findByEmployeeId(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByEmployeeId(Object employeeId) {
 		return findByProperty(EMPLOYEE_ID, employeeId);
 	}
@@ -180,6 +187,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findByOrderState(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByOrderState(Object orderState) {
 		return findByProperty(ORDER_STATE, orderState);
 	}
@@ -189,6 +197,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findByCustomerName(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByCustomerName(Object customerName) {
 		return findByProperty(CUSTOMER_NAME, customerName);
 	}
@@ -199,6 +208,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * @see
 	 * nju.software.dao.impl.IOrderDAO#findByCustomerCompany(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByCustomerCompany(Object customerCompany) {
 		return findByProperty(CUSTOMER_COMPANY, customerCompany);
 	}
@@ -210,6 +220,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * nju.software.dao.impl.IOrderDAO#findByCustomerCompanyFax(java.lang.Object
 	 * )
 	 */
+	@Override
 	public List<Order> findByCustomerCompanyFax(Object customerCompanyFax) {
 		return findByProperty(CUSTOMER_COMPANY_FAX, customerCompanyFax);
 	}
@@ -220,6 +231,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * @see
 	 * nju.software.dao.impl.IOrderDAO#findByCustomerPhone1(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByCustomerPhone1(Object customerPhone1) {
 		return findByProperty(CUSTOMER_PHONE1, customerPhone1);
 	}
@@ -230,6 +242,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * @see
 	 * nju.software.dao.impl.IOrderDAO#findByCustomerPhone2(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByCustomerPhone2(Object customerPhone2) {
 		return findByProperty(CUSTOMER_PHONE2, customerPhone2);
 	}
@@ -241,6 +254,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * nju.software.dao.impl.IOrderDAO#findByCustomerCompanyAddress(java.lang
 	 * .Object)
 	 */
+	@Override
 	public List<Order> findByCustomerCompanyAddress(
 			Object customerCompanyAddress) {
 		return findByProperty(CUSTOMER_COMPANY_ADDRESS, customerCompanyAddress);
@@ -251,6 +265,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findByStyleName(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByStyleName(Object styleName) {
 		return findByProperty(STYLE_NAME, styleName);
 	}
@@ -260,6 +275,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findByFabricType(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByFabricType(Object fabricType) {
 		return findByProperty(FABRIC_TYPE, fabricType);
 	}
@@ -269,6 +285,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findByStyleSex(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByStyleSex(Object styleSex) {
 		return findByProperty(STYLE_SEX, styleSex);
 	}
@@ -278,6 +295,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findByStyleSeason(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByStyleSeason(Object styleSeason) {
 		return findByProperty(STYLE_SEASON, styleSeason);
 	}
@@ -288,6 +306,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * @see
 	 * nju.software.dao.impl.IOrderDAO#findBySpecialProcess(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findBySpecialProcess(Object specialProcess) {
 		return findByProperty(SPECIAL_PROCESS, specialProcess);
 	}
@@ -298,6 +317,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * @see
 	 * nju.software.dao.impl.IOrderDAO#findByOtherRequirements(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByOtherRequirements(Object otherRequirements) {
 		return findByProperty(OTHER_REQUIREMENTS, otherRequirements);
 	}
@@ -309,6 +329,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * nju.software.dao.impl.IOrderDAO#findBySampleClothesPicture(java.lang.
 	 * Object)
 	 */
+	@Override
 	public List<Order> findBySampleClothesPicture(Object sampleClothesPicture) {
 		return findByProperty(SAMPLE_CLOTHES_PICTURE, sampleClothesPicture);
 	}
@@ -319,6 +340,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * @see
 	 * nju.software.dao.impl.IOrderDAO#findByReferencePicture(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByReferencePicture(Object referencePicture) {
 		return findByProperty(REFERENCE_PICTURE, referencePicture);
 	}
@@ -328,6 +350,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findByAskAmount(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByAskAmount(Object askAmount) {
 		return findByProperty(ASK_AMOUNT, askAmount);
 	}
@@ -338,6 +361,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * @see
 	 * nju.software.dao.impl.IOrderDAO#findByAskProducePeriod(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByAskProducePeriod(Object askProducePeriod) {
 		return findByProperty(ASK_PRODUCE_PERIOD, askProducePeriod);
 	}
@@ -348,6 +372,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * @see
 	 * nju.software.dao.impl.IOrderDAO#findByAskCodeNumber(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByAskCodeNumber(Object askCodeNumber) {
 		return findByProperty(ASK_CODE_NUMBER, askCodeNumber);
 	}
@@ -359,6 +384,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * nju.software.dao.impl.IOrderDAO#findByHasPostedSampleClothes(java.lang
 	 * .Object)
 	 */
+	@Override
 	public List<Order> findByHasPostedSampleClothes(
 			Object hasPostedSampleClothes) {
 		return findByProperty(HAS_POSTED_SAMPLE_CLOTHES, hasPostedSampleClothes);
@@ -371,6 +397,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * nju.software.dao.impl.IOrderDAO#findByIsNeedSampleClothes(java.lang.Object
 	 * )
 	 */
+	@Override
 	public List<Order> findByIsNeedSampleClothes(Object isNeedSampleClothes) {
 		return findByProperty(IS_NEED_SAMPLE_CLOTHES, isNeedSampleClothes);
 	}
@@ -380,6 +407,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findByOrderSource(java.lang.Object)
 	 */
+	@Override
 	public List<Order> findByOrderSource(Object orderSource) {
 		return findByProperty(ORDER_SOURCE, orderSource);
 	}
@@ -389,6 +417,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all Order instances");
 		try {
@@ -405,10 +434,11 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * 
 	 * @see nju.software.dao.impl.IOrderDAO#merge(nju.software.dataobject.Order)
 	 */
+	@Override
 	public Order merge(Order detachedInstance) {
 		log.debug("merging Order instance");
 		try {
-			Order result = (Order) getHibernateTemplate().merge(
+			Order result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -425,6 +455,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * nju.software.dao.impl.IOrderDAO#attachDirty(nju.software.dataobject.Order
 	 * )
 	 */
+	@Override
 	public void attachDirty(Order instance) {
 		log.debug("attaching dirty Order instance");
 		try{
@@ -443,6 +474,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	 * nju.software.dao.impl.IOrderDAO#attachClean(nju.software.dataobject.Order
 	 * )
 	 */
+	@Override
 	public void attachClean(Order instance) {
 		log.debug("attaching clean Order instance");
 		try {
@@ -457,6 +489,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	public static IOrderDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (IOrderDAO) ctx.getBean("OrderDAO");
 	}
+	@Override
 	public List<Order> findResultsByCustomerId(int customerId) {
 		try {
 			//查询可翻单的订单，根据客户id及订单状态('Done')查询     hcj
@@ -471,6 +504,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			throw re;
 		}
 	}
+	@Override
 	public List<Order> findSampleOrderAndPage(final int off_set,
 			final int length) {
 		// TODO Auto-generated method stub
@@ -505,6 +539,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	
 	
 	
+	@Override
 	public int coutSampleOrder() {
 		// TODO Auto-generated method stub
 		log.debug("find the order that need sample and that need confirm, while pageing the total count");
@@ -625,7 +660,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		     Date begindate1 = null;
 		     if(startdate.length()==10){
 				startdate = startdate+" 00:00:00";
-		        begindate1 = du.parse(startdate, strformat);
+		        begindate1 = DateUtil.parse(startdate, strformat);
 		        criteria.add(Restrictions.gt("orderTime",begindate1));
 		     }
 		}
@@ -635,7 +670,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		     Date enddate1 = null;
 		     if(enddate.length()==10){
 		    	 enddate = enddate+" 23:59:59";
-				enddate1 = du.parse(enddate, strformat);
+				enddate1 = DateUtil.parse(enddate, strformat);
 		        criteria.add(Restrictions.lt("orderTime",enddate1));
 		     }
 		}
@@ -687,7 +722,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		     Date begindate1 = null;
 		     if(startdate.length()==10){
 				startdate = startdate+" 00:00:00";
-		        begindate1 = du.parse(startdate, strformat);
+		        begindate1 = DateUtil.parse(startdate, strformat);
 		        criteria.add(Restrictions.gt("orderTime",begindate1));
 		     }
 		}
@@ -697,7 +732,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		     Date enddate1 = null;
 		     if(enddate.length()==10){
 		    	 enddate = enddate+" 23:59:59";
-				enddate1 = du.parse(enddate, strformat);
+				enddate1 = DateUtil.parse(enddate, strformat);
 		        criteria.add(Restrictions.lt("orderTime",enddate1));
 		     }
 		}
@@ -761,7 +796,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			     Date begindate1 = null;
 			     if(startdate.length()==10){
 					startdate = startdate+" 00:00:00";
-			        begindate1 = du.parse(startdate, strformat);
+			        begindate1 = DateUtil.parse(startdate, strformat);
 			        criteria.add(Restrictions.gt("orderTime",begindate1));
 			     }
 			}
@@ -771,7 +806,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			     Date enddate1 = null;
 			     if(enddate.length()==10){
 			    	 enddate = enddate+" 23:59:59";
-					enddate1 = du.parse(enddate, strformat);
+					enddate1 = DateUtil.parse(enddate, strformat);
 			        criteria.add(Restrictions.lt("orderTime",enddate1));
 			     }
 			}
@@ -834,7 +869,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			     Date begindate1 = null;
 			     if(startdate.length()==10){
 					startdate = startdate+" 00:00:00";
-			        begindate1 = du.parse(startdate, strformat);
+			        begindate1 = DateUtil.parse(startdate, strformat);
 			        criteria.add(Restrictions.gt("orderTime",begindate1));
 			     }
 			}
@@ -844,7 +879,7 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 			     Date enddate1 = null;
 			     if(enddate.length()==10){
 			    	 enddate = enddate+" 23:59:59";
-					enddate1 = du.parse(enddate, strformat);
+					enddate1 = DateUtil.parse(enddate, strformat);
 			        criteria.add(Restrictions.lt("orderTime",enddate1));
 			     }
 			}

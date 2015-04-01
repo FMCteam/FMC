@@ -17,6 +17,7 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private AccountDAO accountDAO;
 
+	@Override
 	public Account vertifyAccount(String accountName, String accountPassword) {
 		Account account = new Account();
 		String pwd = SecurityUtil.md5hex(accountPassword);
@@ -31,6 +32,7 @@ public class AccountServiceImpl implements AccountService {
 			return accountList.get(0);
 	}
 
+	@Override
 	public boolean deleteAccount(Integer accountId) {
 		// TODO Auto-generated method stub
 		try {
@@ -42,6 +44,7 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 
+	@Override
 	public boolean addAccount(Account account) {
 		// TODO Auto-generated method stub
 		try {
@@ -54,6 +57,7 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 
+	@Override
 	public boolean updateAccount(Account account) {
 		// TODO Auto-generated method stub
 		try {
@@ -66,6 +70,7 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 
+	@Override
 	public Account getAccountByUsername(String username) {
 		// TODO Auto-generated method stub
 		List<Account> accountList = accountDAO.findByUserName(username);
@@ -75,6 +80,7 @@ public class AccountServiceImpl implements AccountService {
 			return null;
 	}
 
+	@Override
 	public Account getAccountByAccountId(int accountId) {
 		// TODO Auto-generated method stub
 		List<Account> accountList = accountDAO.findByProperty("accountId",
@@ -85,6 +91,7 @@ public class AccountServiceImpl implements AccountService {
 			return null;
 	}
 
+	@Override
 	public boolean checkExit(String userName) {
 		// TODO Auto-generated method stub
 		try {

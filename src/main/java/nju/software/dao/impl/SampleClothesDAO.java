@@ -31,6 +31,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	public static final String AMOUNT = "amount";
 	public static final String PRICE = "price";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -42,6 +43,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#save(nju.software.dataobject.SampleClothes) 
 	*/
 	
+	@Override
 	public void save(SampleClothes transientInstance) {
 		log.debug("saving SampleClothes instance");
 		try {
@@ -60,6 +62,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#delete(nju.software.dataobject.SampleClothes) 
 	*/
 	
+	@Override
 	public void delete(SampleClothes persistentInstance) {
 		log.debug("deleting SampleClothes instance");
 		try {
@@ -79,6 +82,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#findById(java.lang.Integer) 
 	*/
 	
+	@Override
 	public SampleClothes findById(java.lang.Integer id) {
 		log.debug("getting SampleClothes instance with id: " + id);
 		try {
@@ -99,10 +103,11 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#findByExample(nju.software.dataobject.SampleClothes) 
 	*/
 	
+	@Override
 	public List<SampleClothes> findByExample(SampleClothes instance) {
 		log.debug("finding SampleClothes instance by example");
 		try {
-			List<SampleClothes> results = (List<SampleClothes>) getHibernateTemplate()
+			List<SampleClothes> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -122,6 +127,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#findByProperty(java.lang.String, java.lang.Object) 
 	*/
 	
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding SampleClothes instance with property: "
 				+ propertyName + ", value: " + value);
@@ -143,6 +149,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#findByOrderId(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<SampleClothes> findByOrderId(Object orderId) {
 		return findByProperty(ORDER_ID, orderId);
 	}
@@ -155,6 +162,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#findByColor(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<SampleClothes> findByColor(Object color) {
 		return findByProperty(COLOR, color);
 	}
@@ -167,6 +175,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#findByStyle(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<SampleClothes> findByStyle(Object style) {
 		return findByProperty(STYLE, style);
 	}
@@ -179,6 +188,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#findByAmount(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<SampleClothes> findByAmount(Object amount) {
 		return findByProperty(AMOUNT, amount);
 	}
@@ -191,6 +201,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#findByPrice(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<SampleClothes> findByPrice(Object price) {
 		return findByProperty(PRICE, price);
 	}
@@ -202,6 +213,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#findAll() 
 	*/
 	
+	@Override
 	public List findAll() {
 		log.debug("finding all SampleClothes instances");
 		try {
@@ -221,10 +233,11 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#merge(nju.software.dataobject.SampleClothes) 
 	*/
 	
+	@Override
 	public SampleClothes merge(SampleClothes detachedInstance) {
 		log.debug("merging SampleClothes instance");
 		try {
-			SampleClothes result = (SampleClothes) getHibernateTemplate()
+			SampleClothes result = getHibernateTemplate()
 					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -241,6 +254,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#attachDirty(nju.software.dataobject.SampleClothes) 
 	*/
 	
+	@Override
 	public void attachDirty(SampleClothes instance) {
 		log.debug("attaching dirty SampleClothes instance");
 		try {
@@ -259,6 +273,7 @@ public class SampleClothesDAO extends HibernateDaoSupport implements ISampleClot
 	* @see nju.software.dataobject.ISampleClothesDAO#attachClean(nju.software.dataobject.SampleClothes) 
 	*/
 	
+	@Override
 	public void attachClean(SampleClothes instance) {
 		log.debug("attaching clean SampleClothes instance");
 		try {

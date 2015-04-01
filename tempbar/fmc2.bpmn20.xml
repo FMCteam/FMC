@@ -1,0 +1,2332 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://www.jboss.org/drools"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <itemDefinition id="_orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_designItem" structureRef="Boolean" />
+  <itemDefinition id="_produceItem" structureRef="Boolean" />
+  <itemDefinition id="_purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_designCommentItem" structureRef="String" />
+  <itemDefinition id="_produceCommentItem" structureRef="String" />
+  <itemDefinition id="_modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_quoteItem" structureRef="Integer" />
+  <itemDefinition id="_receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_7-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_7-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_7-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_7-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_7-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_7-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_7-designItem" structureRef="Boolean" />
+  <itemDefinition id="_7-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_7-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_7-designCommentItem" structureRef="String" />
+  <itemDefinition id="_7-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_7-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_7-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_7-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_7-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_7-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_10-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_10-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_10-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_10-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_10-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_10-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_10-designItem" structureRef="Boolean" />
+  <itemDefinition id="_10-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_10-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_10-designCommentItem" structureRef="String" />
+  <itemDefinition id="_10-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_10-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_10-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_10-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_10-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_10-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_11-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_11-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_11-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_11-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_11-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_11-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_11-designItem" structureRef="Boolean" />
+  <itemDefinition id="_11-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_11-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_11-designCommentItem" structureRef="String" />
+  <itemDefinition id="_11-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_11-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_11-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_11-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_11-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_11-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_12-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_12-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_12-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_12-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_12-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_12-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_12-designItem" structureRef="Boolean" />
+  <itemDefinition id="_12-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_12-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_12-designCommentItem" structureRef="String" />
+  <itemDefinition id="_12-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_12-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_12-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_12-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_12-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_12-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_19-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_19-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_19-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_19-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_19-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_19-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_19-designItem" structureRef="Boolean" />
+  <itemDefinition id="_19-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_19-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_19-designCommentItem" structureRef="String" />
+  <itemDefinition id="_19-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_19-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_19-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_19-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_19-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_19-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_23-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_23-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_23-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_23-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_23-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_23-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_23-designItem" structureRef="Boolean" />
+  <itemDefinition id="_23-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_23-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_23-designCommentItem" structureRef="String" />
+  <itemDefinition id="_23-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_23-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_23-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_23-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_23-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_23-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_25-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_25-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_25-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_25-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_25-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_25-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_25-designItem" structureRef="Boolean" />
+  <itemDefinition id="_25-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_25-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_25-designCommentItem" structureRef="String" />
+  <itemDefinition id="_25-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_25-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_25-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_25-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_25-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_25-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_29-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_29-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_29-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_29-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_29-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_29-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_29-designItem" structureRef="Boolean" />
+  <itemDefinition id="_29-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_29-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_29-designCommentItem" structureRef="String" />
+  <itemDefinition id="_29-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_29-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_29-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_29-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_29-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_29-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_28-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_28-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_28-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_28-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_28-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_28-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_28-designItem" structureRef="Boolean" />
+  <itemDefinition id="_28-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_28-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_28-designCommentItem" structureRef="String" />
+  <itemDefinition id="_28-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_28-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_28-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_28-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_28-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_28-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_34-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_34-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_34-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_34-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_34-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_34-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_34-designItem" structureRef="Boolean" />
+  <itemDefinition id="_34-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_34-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_34-designCommentItem" structureRef="String" />
+  <itemDefinition id="_34-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_34-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_34-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_34-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_34-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_34-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_33-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_33-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_33-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_33-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_33-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_33-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_33-designItem" structureRef="Boolean" />
+  <itemDefinition id="_33-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_33-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_33-designCommentItem" structureRef="String" />
+  <itemDefinition id="_33-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_33-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_33-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_33-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_33-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_33-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_41-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_41-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_41-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_41-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_41-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_41-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_41-designItem" structureRef="Boolean" />
+  <itemDefinition id="_41-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_41-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_41-designCommentItem" structureRef="String" />
+  <itemDefinition id="_41-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_41-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_41-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_41-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_41-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_41-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_47-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_47-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_47-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_47-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_47-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_47-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_47-designItem" structureRef="Boolean" />
+  <itemDefinition id="_47-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_47-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_47-designCommentItem" structureRef="String" />
+  <itemDefinition id="_47-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_47-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_47-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_47-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_47-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_47-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_48-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_48-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_48-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_48-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_48-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_48-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_48-designItem" structureRef="Boolean" />
+  <itemDefinition id="_48-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_48-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_48-designCommentItem" structureRef="String" />
+  <itemDefinition id="_48-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_48-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_48-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_48-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_48-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_48-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_54-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_54-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_54-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_54-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_54-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_54-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_54-designItem" structureRef="Boolean" />
+  <itemDefinition id="_54-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_54-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_54-designCommentItem" structureRef="String" />
+  <itemDefinition id="_54-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_54-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_54-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_54-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_54-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_54-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_59-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_59-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_59-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_59-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_59-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_59-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_59-designItem" structureRef="Boolean" />
+  <itemDefinition id="_59-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_59-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_59-designCommentItem" structureRef="String" />
+  <itemDefinition id="_59-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_59-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_59-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_59-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_59-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_59-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_62-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_62-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_62-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_62-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_62-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_62-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_62-designItem" structureRef="Boolean" />
+  <itemDefinition id="_62-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_62-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_62-designCommentItem" structureRef="String" />
+  <itemDefinition id="_62-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_62-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_62-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_62-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_62-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_62-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_69-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_69-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_69-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_69-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_69-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_69-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_69-designItem" structureRef="Boolean" />
+  <itemDefinition id="_69-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_69-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_69-designCommentItem" structureRef="String" />
+  <itemDefinition id="_69-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_69-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_69-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_69-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_69-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_69-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_70-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_70-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_70-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_70-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_70-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_70-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_70-designItem" structureRef="Boolean" />
+  <itemDefinition id="_70-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_70-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_70-designCommentItem" structureRef="String" />
+  <itemDefinition id="_70-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_70-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_70-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_70-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_70-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_70-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_74-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_74-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_74-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_74-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_74-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_74-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_74-designItem" structureRef="Boolean" />
+  <itemDefinition id="_74-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_74-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_74-designCommentItem" structureRef="String" />
+  <itemDefinition id="_74-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_74-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_74-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_74-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_74-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_74-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_75-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_75-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_75-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_75-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_75-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_75-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_75-designItem" structureRef="Boolean" />
+  <itemDefinition id="_75-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_75-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_75-designCommentItem" structureRef="String" />
+  <itemDefinition id="_75-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_75-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_75-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_75-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_75-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_75-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_87-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_87-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_87-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_87-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_87-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_87-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_87-designItem" structureRef="Boolean" />
+  <itemDefinition id="_87-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_87-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_87-designCommentItem" structureRef="String" />
+  <itemDefinition id="_87-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_87-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_87-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_87-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_87-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_87-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_80-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_80-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_80-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_80-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_80-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_80-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_80-designItem" structureRef="Boolean" />
+  <itemDefinition id="_80-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_80-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_80-designCommentItem" structureRef="String" />
+  <itemDefinition id="_80-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_80-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_80-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_80-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_80-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_80-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_88-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_88-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_88-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_88-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_88-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_88-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_88-designItem" structureRef="Boolean" />
+  <itemDefinition id="_88-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_88-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_88-designCommentItem" structureRef="String" />
+  <itemDefinition id="_88-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_88-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_88-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_88-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_88-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_88-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_103-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_103-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_103-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_103-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_103-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_103-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_103-designItem" structureRef="Boolean" />
+  <itemDefinition id="_103-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_103-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_103-designCommentItem" structureRef="String" />
+  <itemDefinition id="_103-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_103-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_103-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_103-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_103-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_103-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_96-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_96-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_96-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_96-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_96-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_96-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_96-designItem" structureRef="Boolean" />
+  <itemDefinition id="_96-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_96-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_96-designCommentItem" structureRef="String" />
+  <itemDefinition id="_96-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_96-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_96-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_96-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_96-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_96-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_110-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_110-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_110-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_110-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_110-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_110-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_110-designItem" structureRef="Boolean" />
+  <itemDefinition id="_110-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_110-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_110-designCommentItem" structureRef="String" />
+  <itemDefinition id="_110-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_110-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_110-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_110-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_110-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_110-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_107-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_107-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_107-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_107-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_107-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_107-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_107-designItem" structureRef="Boolean" />
+  <itemDefinition id="_107-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_107-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_107-designCommentItem" structureRef="String" />
+  <itemDefinition id="_107-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_107-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_107-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_107-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_107-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_107-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <itemDefinition id="_115-orderIdItem" structureRef="Integer" />
+  <itemDefinition id="_115-marketStaffItem" structureRef="Integer" />
+  <itemDefinition id="_115-reorderItem" structureRef="Boolean" />
+  <itemDefinition id="_115-receiveSampleItem" structureRef="Integer" />
+  <itemDefinition id="_115-sendSampleItem" structureRef="Integer" />
+  <itemDefinition id="_115-purchaseItem" structureRef="Boolean" />
+  <itemDefinition id="_115-designItem" structureRef="Boolean" />
+  <itemDefinition id="_115-produceItem" structureRef="Boolean" />
+  <itemDefinition id="_115-purchaseCommentItem" structureRef="String" />
+  <itemDefinition id="_115-designCommentItem" structureRef="String" />
+  <itemDefinition id="_115-produceCommentItem" structureRef="String" />
+  <itemDefinition id="_115-modifyOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_115-quoteItem" structureRef="Integer" />
+  <itemDefinition id="_115-receiveMoneyItem" structureRef="Boolean" />
+  <itemDefinition id="_115-confirmProduceOrderItem" structureRef="Boolean" />
+  <itemDefinition id="_115-modifyProduceOrderItem" structureRef="Boolean" />
+
+  <process processType="Private" isExecutable="true" id="nju.software.fmc.bpmn" name="Sample Process" tns:packageName="defaultPackage" >
+
+    <!-- process variables -->
+    <property id="orderId" itemSubjectRef="_orderIdItem"/>
+    <property id="marketStaff" itemSubjectRef="_marketStaffItem"/>
+    <property id="reorder" itemSubjectRef="_reorderItem"/>
+    <property id="receiveSample" itemSubjectRef="_receiveSampleItem"/>
+    <property id="sendSample" itemSubjectRef="_sendSampleItem"/>
+    <property id="purchase" itemSubjectRef="_purchaseItem"/>
+    <property id="design" itemSubjectRef="_designItem"/>
+    <property id="produce" itemSubjectRef="_produceItem"/>
+    <property id="purchaseComment" itemSubjectRef="_purchaseCommentItem"/>
+    <property id="designComment" itemSubjectRef="_designCommentItem"/>
+    <property id="produceComment" itemSubjectRef="_produceCommentItem"/>
+    <property id="modifyOrder" itemSubjectRef="_modifyOrderItem"/>
+    <property id="quote" itemSubjectRef="_quoteItem"/>
+    <property id="receiveMoney" itemSubjectRef="_receiveMoneyItem"/>
+    <property id="confirmProduceOrder" itemSubjectRef="_confirmProduceOrderItem"/>
+    <property id="modifyProduceOrder" itemSubjectRef="_modifyProduceOrderItem"/>
+
+    <laneSet>
+      <lane name="financeManager" >
+        <flowNodeRef>_41</flowNodeRef>
+        <flowNodeRef>_80</flowNodeRef>
+        <flowNodeRef>_110</flowNodeRef>
+      </lane>
+      <lane name="marketStaff" >
+        <flowNodeRef>_19</flowNodeRef>
+        <flowNodeRef>_28</flowNodeRef>
+        <flowNodeRef>_34</flowNodeRef>
+        <flowNodeRef>_33</flowNodeRef>
+        <flowNodeRef>_62</flowNodeRef>
+        <flowNodeRef>_74</flowNodeRef>
+        <flowNodeRef>_75</flowNodeRef>
+      </lane>
+      <lane name="logisticsManager" >
+        <flowNodeRef>_7</flowNodeRef>
+        <flowNodeRef>_59</flowNodeRef>
+        <flowNodeRef>_107</flowNodeRef>
+        <flowNodeRef>_115</flowNodeRef>
+      </lane>
+      <lane name="produceManager" >
+        <flowNodeRef>_12</flowNodeRef>
+        <flowNodeRef>_25</flowNodeRef>
+        <flowNodeRef>_54</flowNodeRef>
+        <flowNodeRef>_96</flowNodeRef>
+      </lane>
+      <lane name="marketManager" >
+        <flowNodeRef>_29</flowNodeRef>
+      </lane>
+      <lane name="designManager" >
+        <flowNodeRef>_11</flowNodeRef>
+        <flowNodeRef>_48</flowNodeRef>
+        <flowNodeRef>_70</flowNodeRef>
+        <flowNodeRef>_88</flowNodeRef>
+      </lane>
+      <lane name="purchaseManager" >
+        <flowNodeRef>_10</flowNodeRef>
+        <flowNodeRef>_23</flowNodeRef>
+        <flowNodeRef>_47</flowNodeRef>
+        <flowNodeRef>_69</flowNodeRef>
+      </lane>
+      <lane name="qualityManager" >
+        <flowNodeRef>_103</flowNodeRef>
+      </lane>
+    </laneSet>
+    <!-- nodes -->
+    <inclusiveGateway id="_136" name="翻单" gatewayDirection="Diverging" />
+    <startEvent id="_1" name="StartProcess" />
+    <inclusiveGateway id="_139" name="receivedsample" gatewayDirection="Diverging" />
+    <endEvent id="_138" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <exclusiveGateway id="_140" name="Gateway" gatewayDirection="Converging" />
+    <inclusiveGateway id="_6" name="sendclothes" gatewayDirection="Diverging" />
+    <userTask id="_7" name="收取样衣" >
+      <ioSpecification>
+        <dataInput id="_7_TaskNameInput" name="TaskName" />
+        <dataInput id="_7_PriorityInput" name="Priority" />
+        <dataOutput id="_7_receiveSampleOutput" name="receiveSample" />
+        <inputSet>
+          <dataInputRefs>_7_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_7_PriorityInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_7_receiveSampleOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_7_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">receiveSample</from>
+          <to xsi:type="tFormalExpression">_7_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_7_PriorityInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_7_receiveSampleOutput</sourceRef>
+        <targetRef>receiveSample</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>logisticsManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <exclusiveGateway id="_8" name="enterVerification" gatewayDirection="Converging" />
+    <userTask id="_10" name="采购验证" >
+      <ioSpecification>
+        <dataInput id="_10_TaskNameInput" name="TaskName" />
+        <dataOutput id="_10_purchaseCommentOutput" name="purchaseComment" />
+        <dataOutput id="_10_purchaseOutput" name="purchase" />
+        <inputSet>
+          <dataInputRefs>_10_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_10_purchaseCommentOutput</dataOutputRefs>
+          <dataOutputRefs>_10_purchaseOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_10_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">verifyPurchase</from>
+          <to xsi:type="tFormalExpression">_10_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_10_purchaseCommentOutput</sourceRef>
+        <targetRef>purchaseComment</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_10_purchaseOutput</sourceRef>
+        <targetRef>purchase</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>purchaseManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_11" name="设计验证" >
+      <ioSpecification>
+        <dataInput id="_11_TaskNameInput" name="TaskName" />
+        <dataOutput id="_11_designCommentOutput" name="designComment" />
+        <dataOutput id="_11_designOutput" name="design" />
+        <inputSet>
+          <dataInputRefs>_11_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_11_designCommentOutput</dataOutputRefs>
+          <dataOutputRefs>_11_designOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_11_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">verifyDesign</from>
+          <to xsi:type="tFormalExpression">_11_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_11_designCommentOutput</sourceRef>
+        <targetRef>designComment</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_11_designOutput</sourceRef>
+        <targetRef>design</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>designManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_12" name="生产验证" >
+      <ioSpecification>
+        <dataInput id="_12_TaskNameInput" name="TaskName" />
+        <dataOutput id="_12_produceCommentOutput" name="produceComment" />
+        <dataOutput id="_12_produceOutput" name="produce" />
+        <inputSet>
+          <dataInputRefs>_12_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_12_produceCommentOutput</dataOutputRefs>
+          <dataOutputRefs>_12_produceOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_12_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">verifyProduce</from>
+          <to xsi:type="tFormalExpression">_12_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_12_produceCommentOutput</sourceRef>
+        <targetRef>produceComment</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_12_produceOutput</sourceRef>
+        <targetRef>produce</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>produceManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <parallelGateway id="_13" name="verify" gatewayDirection="Diverging" />
+    <exclusiveGateway id="_135" name="Gateway" gatewayDirection="Converging" />
+    <parallelGateway id="_15" name="Gateway" gatewayDirection="Converging" />
+    <inclusiveGateway id="_17" name="editOrder" gatewayDirection="Diverging" />
+    <userTask id="_19" name="修改询单" >
+      <ioSpecification>
+        <dataInput id="_19_TaskNameInput" name="TaskName" />
+        <dataOutput id="_19_modifyOrderOutput" name="modifyOrder" />
+        <inputSet>
+          <dataInputRefs>_19_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_19_modifyOrderOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_19_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">modifyOrder</from>
+          <to xsi:type="tFormalExpression">_19_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_19_modifyOrderOutput</sourceRef>
+        <targetRef>modifyOrder</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <endEvent id="_21" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <userTask id="_23" name="采购成本核算" >
+      <ioSpecification>
+        <dataInput id="_23_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_23_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_23_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">computePurchaseCost</from>
+          <to xsi:type="tFormalExpression">_23_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>purchaseManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_22" name="editok" gatewayDirection="Diverging" />
+    <userTask id="_25" name="生产成本核算" >
+      <ioSpecification>
+        <dataInput id="_25_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_25_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_25_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">computeProduceCost</from>
+          <to xsi:type="tFormalExpression">_25_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>produceManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <parallelGateway id="_27" name="Gateway" gatewayDirection="Converging" />
+    <parallelGateway id="_26" name="Gateway" gatewayDirection="Diverging" />
+    <userTask id="_29" name="主管审核报价" >
+      <ioSpecification>
+        <dataInput id="_29_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_29_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_29_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">verifyQuote</from>
+          <to xsi:type="tFormalExpression">_29_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>marketManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_28" name="专员合并报价" >
+      <ioSpecification>
+        <dataInput id="_28_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_28_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_28_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">mergeQuote</from>
+          <to xsi:type="tFormalExpression">_28_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_34" name="商定报价" >
+      <ioSpecification>
+        <dataInput id="_34_TaskNameInput" name="TaskName" />
+        <dataOutput id="_34_quoteOutput" name="quote" />
+        <inputSet>
+          <dataInputRefs>_34_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_34_quoteOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_34_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">confirmQuote</from>
+          <to xsi:type="tFormalExpression">_34_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_34_quoteOutput</sourceRef>
+        <targetRef>quote</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_33" name="修改报价" >
+      <ioSpecification>
+        <dataInput id="_33_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_33_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_33_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">modifyQuote</from>
+          <to xsi:type="tFormalExpression">_33_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_36" name="confirmquote" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_37" name="samplejin" gatewayDirection="Diverging" />
+    <endEvent id="_43" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <endEvent id="_40" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <userTask id="_41" name="确认样衣制作金" >
+      <ioSpecification>
+        <dataInput id="_41_TaskNameInput" name="TaskName" />
+        <dataOutput id="_41_receiveMoneyOutput" name="receiveMoney" />
+        <inputSet>
+          <dataInputRefs>_41_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_41_receiveMoneyOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_41_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">confirmSampleMoney</from>
+          <to xsi:type="tFormalExpression">_41_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_41_receiveMoneyOutput</sourceRef>
+        <targetRef>receiveMoney</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>financeManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_47" name="采购确认" >
+      <ioSpecification>
+        <dataInput id="_47_TaskNameInput" name="TaskName" />
+        <dataOutput id="_47_purchaseOutput" name="purchase" />
+        <inputSet>
+          <dataInputRefs>_47_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_47_purchaseOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_47_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">purchaseSampleMaterial</from>
+          <to xsi:type="tFormalExpression">_47_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_47_purchaseOutput</sourceRef>
+        <targetRef>purchase</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>purchaseManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_44" name="receivedsamplejin" gatewayDirection="Diverging" />
+    <parallelGateway id="_50" name="shengchan" gatewayDirection="Converging" />
+    <parallelGateway id="_49" name="Gateway" gatewayDirection="Diverging" />
+    <userTask id="_48" name="录入版型" >
+      <ioSpecification>
+        <dataInput id="_48_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_48_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_48_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">uploadDegisn</from>
+          <to xsi:type="tFormalExpression">_48_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>designManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_55" name="producterror" gatewayDirection="Diverging" />
+    <userTask id="_54" name="生产样衣" >
+      <ioSpecification>
+        <dataInput id="_54_CommentInput" name="Comment" />
+        <dataInput id="_54_SkippableInput" name="Skippable" />
+        <dataInput id="_54_LocaleInput" name="Locale" />
+        <dataInput id="_54_TaskNameInput" name="TaskName" />
+        <dataInput id="_54_GroupIdInput" name="GroupId" />
+        <dataInput id="_54_PriorityInput" name="Priority" />
+        <dataOutput id="_54_produceOutput" name="produce" />
+        <inputSet>
+          <dataInputRefs>_54_CommentInput</dataInputRefs>
+          <dataInputRefs>_54_SkippableInput</dataInputRefs>
+          <dataInputRefs>_54_LocaleInput</dataInputRefs>
+          <dataInputRefs>_54_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_54_GroupIdInput</dataInputRefs>
+          <dataInputRefs>_54_PriorityInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_54_produceOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_54_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_54_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_54_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_54_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_54_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_54_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_54_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">produceSample</from>
+          <to xsi:type="tFormalExpression">_54_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_54_GroupIdInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_54_GroupIdInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_54_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_54_PriorityInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_54_produceOutput</sourceRef>
+        <targetRef>produce</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>produceManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_59" name="样衣发货" >
+      <ioSpecification>
+        <dataInput id="_59_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_59_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_59_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">sendSample</from>
+          <to xsi:type="tFormalExpression">_59_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>logisticsManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <endEvent id="_58" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <endEvent id="_57" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <inclusiveGateway id="_56" name="purchaseerror" gatewayDirection="Diverging" />
+    <userTask id="_62" name="确认加工单" >
+      <ioSpecification>
+        <dataInput id="_62_TaskNameInput" name="TaskName" />
+        <dataOutput id="_62_confirmProduceOrderOutput" name="confirmProduceOrder" />
+        <inputSet>
+          <dataInputRefs>_62_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_62_confirmProduceOrderOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_62_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">confirmProduceOrder</from>
+          <to xsi:type="tFormalExpression">_62_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_62_confirmProduceOrderOutput</sourceRef>
+        <targetRef>confirmProduceOrder</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_68" name="editworksheetok" gatewayDirection="Diverging" />
+    <userTask id="_69" name="采购部确认" >
+      <ioSpecification>
+        <dataInput id="_69_CommentInput" name="Comment" />
+        <dataInput id="_69_SkippableInput" name="Skippable" />
+        <dataInput id="_69_LocaleInput" name="Locale" />
+        <dataInput id="_69_TaskNameInput" name="TaskName" />
+        <dataInput id="_69_GroupIdInput" name="GroupId" />
+        <dataInput id="_69_PriorityInput" name="Priority" />
+        <dataOutput id="_69_purchaseOutput" name="purchase" />
+        <inputSet>
+          <dataInputRefs>_69_CommentInput</dataInputRefs>
+          <dataInputRefs>_69_SkippableInput</dataInputRefs>
+          <dataInputRefs>_69_LocaleInput</dataInputRefs>
+          <dataInputRefs>_69_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_69_GroupIdInput</dataInputRefs>
+          <dataInputRefs>_69_PriorityInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_69_purchaseOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_69_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_69_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_69_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_69_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_69_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_69_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_69_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">confirmPurchase</from>
+          <to xsi:type="tFormalExpression">_69_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_69_GroupIdInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_69_GroupIdInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_69_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_69_PriorityInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_69_purchaseOutput</sourceRef>
+        <targetRef>purchase</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>purchaseManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_70" name="设计部确认" >
+      <ioSpecification>
+        <dataInput id="_70_TaskNameInput" name="TaskName" />
+        <dataOutput id="_70_designOutput" name="design" />
+        <inputSet>
+          <dataInputRefs>_70_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_70_designOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_70_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">modifyDesign</from>
+          <to xsi:type="tFormalExpression">_70_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_70_designOutput</sourceRef>
+        <targetRef>design</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>designManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <endEvent id="_71" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <inclusiveGateway id="_64" name="comfirmworksheet" gatewayDirection="Diverging" />
+    <endEvent id="_65" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <exclusiveGateway id="_66" name="Gateway" gatewayDirection="Converging" />
+    <parallelGateway id="_67" name="Gateway" gatewayDirection="Diverging" />
+    <inclusiveGateway id="_76" name="isworksheet" gatewayDirection="Diverging" />
+    <parallelGateway id="_72" name="Gateway" gatewayDirection="Converging" />
+    <userTask id="_74" name="签订合同" >
+      <ioSpecification>
+        <dataInput id="_74_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_74_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_74_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">signContract</from>
+          <to xsi:type="tFormalExpression">_74_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_75" name="修改加工单" >
+      <ioSpecification>
+        <dataInput id="_75_TaskNameInput" name="TaskName" />
+        <dataOutput id="_75_modifyProduceOrderOutput" name="modifyProduceOrder" />
+        <inputSet>
+          <dataInputRefs>_75_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_75_modifyProduceOrderOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_75_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">modifyProduceOrder</from>
+          <to xsi:type="tFormalExpression">_75_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_75_modifyProduceOrderOutput</sourceRef>
+        <targetRef>modifyProduceOrder</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>#{marketStaff}</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_84" name="epositok" gatewayDirection="Diverging" />
+    <userTask id="_87" name="生产原料采购" >
+      <ioSpecification>
+        <dataInput id="_87_TaskNameInput" name="TaskName" />
+        <dataOutput id="_87_purchaseOutput" name="purchase" />
+        <inputSet>
+          <dataInputRefs>_87_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_87_purchaseOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_87_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">purchaseMaterial</from>
+          <to xsi:type="tFormalExpression">_87_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_87_purchaseOutput</sourceRef>
+        <targetRef>purchase</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>purchaseManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <endEvent id="_86" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <userTask id="_80" name="30%定金确认" >
+      <ioSpecification>
+        <dataInput id="_80_CommentInput" name="Comment" />
+        <dataInput id="_80_SkippableInput" name="Skippable" />
+        <dataInput id="_80_LocaleInput" name="Locale" />
+        <dataInput id="_80_TaskNameInput" name="TaskName" />
+        <dataInput id="_80_GroupIdInput" name="GroupId" />
+        <dataInput id="_80_PriorityInput" name="Priority" />
+        <dataOutput id="_80_receiveMoneyOutput" name="receiveMoney" />
+        <inputSet>
+          <dataInputRefs>_80_CommentInput</dataInputRefs>
+          <dataInputRefs>_80_SkippableInput</dataInputRefs>
+          <dataInputRefs>_80_LocaleInput</dataInputRefs>
+          <dataInputRefs>_80_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_80_GroupIdInput</dataInputRefs>
+          <dataInputRefs>_80_PriorityInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_80_receiveMoneyOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_80_CommentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_80_CommentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_80_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">false</from>
+          <to xsi:type="tFormalExpression">_80_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_80_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_80_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_80_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">confirmDeposit</from>
+          <to xsi:type="tFormalExpression">_80_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_80_GroupIdInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_80_GroupIdInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_80_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"></from>
+          <to xsi:type="tFormalExpression">_80_PriorityInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_80_receiveMoneyOutput</sourceRef>
+        <targetRef>receiveMoney</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>financeManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_94" name="procurementerror" gatewayDirection="Diverging" />
+    <parallelGateway id="_89" name="Gateway" gatewayDirection="Diverging" />
+    <userTask id="_88" name="设计生产确认" >
+      <ioSpecification>
+        <dataInput id="_88_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_88_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_88_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">confirmDesign</from>
+          <to xsi:type="tFormalExpression">_88_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>designManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <parallelGateway id="_91" name="Gateway" gatewayDirection="Converging" />
+    <inclusiveGateway id="_102" name="volumeproduction" gatewayDirection="Diverging" />
+    <userTask id="_103" name="质量检测" >
+      <ioSpecification>
+        <dataInput id="_103_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_103_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_103_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">checkQuality</from>
+          <to xsi:type="tFormalExpression">_103_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>qualityManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <endEvent id="_100" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <endEvent id="_99" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <userTask id="_96" name="批量生产" >
+      <ioSpecification>
+        <dataInput id="_96_TaskNameInput" name="TaskName" />
+        <dataOutput id="_96_produceOutput" name="produce" />
+        <inputSet>
+          <dataInputRefs>_96_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_96_produceOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_96_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">produce</from>
+          <to xsi:type="tFormalExpression">_96_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_96_produceOutput</sourceRef>
+        <targetRef>produce</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>produceManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_110" name="70%金额确认" >
+      <ioSpecification>
+        <dataInput id="_110_TaskNameInput" name="TaskName" />
+        <dataOutput id="_110_receiveMoneyOutput" name="receiveMoney" />
+        <inputSet>
+          <dataInputRefs>_110_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_110_receiveMoneyOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_110_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">confirmFinalPayment</from>
+          <to xsi:type="tFormalExpression">_110_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_110_receiveMoneyOutput</sourceRef>
+        <targetRef>receiveMoney</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>financeManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <userTask id="_107" name="入库" >
+      <ioSpecification>
+        <dataInput id="_107_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_107_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_107_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">warehouse</from>
+          <to xsi:type="tFormalExpression">_107_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>logisticsManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <endEvent id="_116" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <userTask id="_115" name="发货" >
+      <ioSpecification>
+        <dataInput id="_115_TaskNameInput" name="TaskName" />
+        <inputSet>
+          <dataInputRefs>_115_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_115_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">sendClothes</from>
+          <to xsi:type="tFormalExpression">_115_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>logisticsManager</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <inclusiveGateway id="_114" name="paymentok" gatewayDirection="Diverging" />
+    <endEvent id="_127" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+
+    <!-- connections -->
+    <sequenceFlow id="_1-_136" sourceRef="_1" targetRef="_136" />
+    <sequenceFlow id="_7-_139" sourceRef="_7" targetRef="_139" />
+    <sequenceFlow id="_139-_138" sourceRef="_139" targetRef="_138" name="未收到样衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveSample==1;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_28-_140" sourceRef="_28" targetRef="_140" />
+    <sequenceFlow id="_33-_140" sourceRef="_33" targetRef="_140" />
+    <sequenceFlow id="_136-_6" sourceRef="_136" targetRef="_6" name="不是翻单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  !reorder;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_6-_7" sourceRef="_6" targetRef="_7" name="提供样衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveSample!=0;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_6-_8" sourceRef="_6" targetRef="_8" name="不提供样衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveSample==0;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_22-_8" sourceRef="_22" targetRef="_8" name="修改完成" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return modifyOrder;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_139-_8" sourceRef="_139" targetRef="_8" name="收到样衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveSample==2;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_13-_10" sourceRef="_13" targetRef="_10" />
+    <sequenceFlow id="_13-_11" sourceRef="_13" targetRef="_11" />
+    <sequenceFlow id="_13-_12" sourceRef="_13" targetRef="_12" />
+    <sequenceFlow id="_8-_13" sourceRef="_8" targetRef="_13" />
+    <sequenceFlow id="_59-_135" sourceRef="_59" targetRef="_135" />
+    <sequenceFlow id="_37-_135" sourceRef="_37" targetRef="_135" name="不制作样衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return sendSample==0;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_10-_15" sourceRef="_10" targetRef="_15" />
+    <sequenceFlow id="_11-_15" sourceRef="_11" targetRef="_15" />
+    <sequenceFlow id="_12-_15" sourceRef="_12" targetRef="_15" />
+    <sequenceFlow id="_15-_17" sourceRef="_15" targetRef="_17" />
+    <sequenceFlow id="_17-_19" sourceRef="_17" targetRef="_19" name="验证不通过" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!purchase){
+	return true;
+}
+if(!design){
+	return true;
+}
+if(!produce){
+	return true;
+}
+return false;
+
+
+</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_22-_21" sourceRef="_22" targetRef="_21" name="放弃修改" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !modifyOrder;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_26-_23" sourceRef="_26" targetRef="_23" />
+    <sequenceFlow id="_19-_22" sourceRef="_19" targetRef="_22" />
+    <sequenceFlow id="_26-_25" sourceRef="_26" targetRef="_25" />
+    <sequenceFlow id="_23-_27" sourceRef="_23" targetRef="_27" />
+    <sequenceFlow id="_25-_27" sourceRef="_25" targetRef="_27" />
+    <sequenceFlow id="_17-_26" sourceRef="_17" targetRef="_26" name="验证通过" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!purchase){
+	return false;
+}
+if(!design){
+	return false;
+}
+if(!produce){
+	return false;
+}
+return true;
+
+
+
+</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_140-_29" sourceRef="_140" targetRef="_29" />
+    <sequenceFlow id="_27-_28" sourceRef="_27" targetRef="_28" />
+    <sequenceFlow id="_29-_34" sourceRef="_29" targetRef="_34" />
+    <sequenceFlow id="_36-_33" sourceRef="_36" targetRef="_33" name="报价修改" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return quote==1;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_34-_36" sourceRef="_34" targetRef="_36" />
+    <sequenceFlow id="_36-_37" sourceRef="_36" targetRef="_37" name="报价确认" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return quote==0;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_44-_43" sourceRef="_44" targetRef="_43" name="未收到制作金" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receiveMoney;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_36-_40" sourceRef="_36" targetRef="_40" name="放弃订单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return quote==2;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_37-_41" sourceRef="_37" targetRef="_41" name="制作样衣" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return sendSample!=0;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_49-_47" sourceRef="_49" targetRef="_47" />
+    <sequenceFlow id="_41-_44" sourceRef="_41" targetRef="_44" />
+    <sequenceFlow id="_48-_50" sourceRef="_48" targetRef="_50" />
+    <sequenceFlow id="_56-_50" sourceRef="_56" targetRef="_50" name="采购完成" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return purchase;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_44-_49" sourceRef="_44" targetRef="_49" name="收到制作金" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveMoney;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_49-_48" sourceRef="_49" targetRef="_48" />
+    <sequenceFlow id="_54-_55" sourceRef="_54" targetRef="_55" />
+    <sequenceFlow id="_50-_54" sourceRef="_50" targetRef="_54" />
+    <sequenceFlow id="_55-_59" sourceRef="_55" targetRef="_59" name="生产完成" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return produce;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_55-_58" sourceRef="_55" targetRef="_58" name="生产失败" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !produce;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_56-_57" sourceRef="_56" targetRef="_57" name="采购失败" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !purchase;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_47-_56" sourceRef="_47" targetRef="_56" />
+    <sequenceFlow id="_135-_62" sourceRef="_135" targetRef="_62" />
+    <sequenceFlow id="_75-_68" sourceRef="_75" targetRef="_68" />
+    <sequenceFlow id="_67-_69" sourceRef="_67" targetRef="_69" />
+    <sequenceFlow id="_67-_70" sourceRef="_67" targetRef="_70" />
+    <sequenceFlow id="_68-_71" sourceRef="_68" targetRef="_71" name="放弃订单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !modifyProduceOrder;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_62-_64" sourceRef="_62" targetRef="_64" />
+    <sequenceFlow id="_64-_65" sourceRef="_64" targetRef="_65" name="取消订单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !confirmProduceOrder;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_64-_66" sourceRef="_64" targetRef="_66" name="确认加工单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return confirmProduceOrder;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_68-_66" sourceRef="_68" targetRef="_66" name="修改完成" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return modifyProduceOrder;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_136-_66" sourceRef="_136" targetRef="_66" name="是翻单" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return  reorder;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_66-_67" sourceRef="_66" targetRef="_67" />
+    <sequenceFlow id="_72-_76" sourceRef="_72" targetRef="_76" />
+    <sequenceFlow id="_69-_72" sourceRef="_69" targetRef="_72" />
+    <sequenceFlow id="_70-_72" sourceRef="_70" targetRef="_72" />
+    <sequenceFlow id="_76-_74" sourceRef="_76" targetRef="_74" name="验证通过" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!design){
+	return false;
+}
+if(!purchase){
+	return false;
+}
+return true;
+
+</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_76-_75" sourceRef="_76" targetRef="_75" name="验证不通过" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >if(!design){
+	return true;
+}
+if(!purchase){
+	return true;
+}
+return false;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_80-_84" sourceRef="_80" targetRef="_84" />
+    <sequenceFlow id="_89-_87" sourceRef="_89" targetRef="_87" />
+    <sequenceFlow id="_84-_86" sourceRef="_84" targetRef="_86" name="未收到大货定金" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !receiveMoney;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_74-_80" sourceRef="_74" targetRef="_80" />
+    <sequenceFlow id="_87-_94" sourceRef="_87" targetRef="_94" />
+    <sequenceFlow id="_84-_89" sourceRef="_84" targetRef="_89" name="收到大货定金" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return receiveMoney;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_89-_88" sourceRef="_89" targetRef="_88" />
+    <sequenceFlow id="_88-_91" sourceRef="_88" targetRef="_91" />
+    <sequenceFlow id="_94-_91" sourceRef="_94" targetRef="_91" name="采购完成" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return purchase;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_96-_102" sourceRef="_96" targetRef="_102" />
+    <sequenceFlow id="_102-_103" sourceRef="_102" targetRef="_103" name="生产完成" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return produce;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_102-_100" sourceRef="_102" targetRef="_100" name="生产失败" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !produce;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_94-_99" sourceRef="_94" targetRef="_99" name="采购失败" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return !purchase;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_91-_96" sourceRef="_91" targetRef="_96" />
+    <sequenceFlow id="_107-_110" sourceRef="_107" targetRef="_110" />
+    <sequenceFlow id="_103-_107" sourceRef="_103" targetRef="_107" />
+    <sequenceFlow id="_114-_116" sourceRef="_114" targetRef="_116" name="未收到大货尾金" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" >return !receiveMoney;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_114-_115" sourceRef="_114" targetRef="_115" name="收到大货尾金" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" >return receiveMoney;</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_110-_114" sourceRef="_110" targetRef="_114" />
+    <sequenceFlow id="_115-_127" sourceRef="_115" targetRef="_127" />
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="nju.software.fmc.bpmn" >
+      <bpmndi:BPMNShape bpmnElement="_136" >
+        <dc:Bounds x="55" y="186" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_1" >
+        <dc:Bounds x="55" y="54" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_139" >
+        <dc:Bounds x="495" y="57" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_138" >
+        <dc:Bounds x="631" y="57" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_140" >
+        <dc:Bounds x="646" y="504" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_6" >
+        <dc:Bounds x="274" y="186" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_7" >
+        <dc:Bounds x="249" y="57" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_8" >
+        <dc:Bounds x="495" y="186" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_10" >
+        <dc:Bounds x="683" y="235" width="99" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_11" >
+        <dc:Bounds x="682" y="305" width="100" height="52" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_12" >
+        <dc:Bounds x="684" y="375" width="100" height="47" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_13" >
+        <dc:Bounds x="495" y="306" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_135" >
+        <dc:Bounds x="272" y="805" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_15" >
+        <dc:Bounds x="899" y="306" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_17" >
+        <dc:Bounds x="1044" y="306" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_19" >
+        <dc:Bounds x="1018" y="186" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_21" >
+        <dc:Bounds x="790" y="55" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_23" >
+        <dc:Bounds x="933" y="456" width="102" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_22" >
+        <dc:Bounds x="790" y="186" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_25" >
+        <dc:Bounds x="933" y="557" width="100" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_27" >
+        <dc:Bounds x="876" y="505" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_26" >
+        <dc:Bounds x="1044" y="507" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_29" >
+        <dc:Bounds x="511" y="504" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_28" >
+        <dc:Bounds x="729" y="505" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_34" >
+        <dc:Bounds x="371" y="505" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_33" >
+        <dc:Bounds x="245" y="425" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_36" >
+        <dc:Bounds x="272" y="505" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_37" >
+        <dc:Bounds x="272" y="674" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_43" >
+        <dc:Bounds x="554" y="587" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_40" >
+        <dc:Bounds x="169" y="506" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_41" >
+        <dc:Bounds x="377" y="674" width="127" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_47" >
+        <dc:Bounds x="771" y="607" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_44" >
+        <dc:Bounds x="554" y="673" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_50" >
+        <dc:Bounds x="958" y="708" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_49" >
+        <dc:Bounds x="673" y="673" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_48" >
+        <dc:Bounds x="788" y="709" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_55" >
+        <dc:Bounds x="883" y="806" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_54" >
+        <dc:Bounds x="1010" y="806" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_59" >
+        <dc:Bounds x="611" y="806" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_58" >
+        <dc:Bounds x="883" y="928" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_57" >
+        <dc:Bounds x="1128" y="608" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_56" >
+        <dc:Bounds x="930" y="607" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_62" >
+        <dc:Bounds x="250" y="912" width="93" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_68" >
+        <dc:Bounds x="188" y="1111" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_69" >
+        <dc:Bounds x="169" y="1205" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_70" >
+        <dc:Bounds x="163" y="1322" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_71" >
+        <dc:Bounds x="294" y="1061" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_64" >
+        <dc:Bounds x="272" y="996" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_65" >
+        <dc:Bounds x="413" y="997" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_66" >
+        <dc:Bounds x="55" y="996" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_67" >
+        <dc:Bounds x="55" y="1265" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_76" >
+        <dc:Bounds x="435" y="1263" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_72" >
+        <dc:Bounds x="318" y="1263" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_74" >
+        <dc:Bounds x="576" y="1263" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_75" >
+        <dc:Bounds x="391" y="1112" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_84" >
+        <dc:Bounds x="1051" y="1263" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_87" >
+        <dc:Bounds x="913" y="1359" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_86" >
+        <dc:Bounds x="1052" y="1150" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_80" >
+        <dc:Bounds x="786" y="1266" width="100" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_94" >
+        <dc:Bounds x="799" y="1359" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_89" >
+        <dc:Bounds x="1051" y="1409" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_88" >
+        <dc:Bounds x="920" y="1469" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_91" >
+        <dc:Bounds x="799" y="1469" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_102" >
+        <dc:Bounds x="524" y="1469" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_103" >
+        <dc:Bounds x="333" y="1470" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_100" >
+        <dc:Bounds x="525" y="1366" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_99" >
+        <dc:Bounds x="696" y="1360" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_96" >
+        <dc:Bounds x="651" y="1469" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_110" >
+        <dc:Bounds x="94" y="1598" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_107" >
+        <dc:Bounds x="95" y="1470" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_116" >
+        <dc:Bounds x="276" y="1696" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_115" >
+        <dc:Bounds x="466" y="1598" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_114" >
+        <dc:Bounds x="276" y="1598" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_127" >
+        <dc:Bounds x="685" y="1598" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_1-_136" >
+        <di:waypoint x="79" y="78" />
+        <di:waypoint x="79" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_7-_139" >
+        <di:waypoint x="299" y="81" />
+        <di:waypoint x="519" y="81" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_139-_138" >
+        <di:waypoint x="519" y="81" />
+        <di:waypoint x="655" y="81" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_28-_140" >
+        <di:waypoint x="779" y="529" />
+        <di:waypoint x="670" y="528" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_33-_140" >
+        <di:waypoint x="295" y="449" />
+        <di:waypoint x="670" y="448" />
+        <di:waypoint x="670" y="528" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_136-_6" >
+        <di:waypoint x="79" y="210" />
+        <di:waypoint x="298" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_6-_7" >
+        <di:waypoint x="298" y="210" />
+        <di:waypoint x="299" y="81" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_6-_8" >
+        <di:waypoint x="298" y="210" />
+        <di:waypoint x="519" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_22-_8" >
+        <di:waypoint x="814" y="210" />
+        <di:waypoint x="519" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_139-_8" >
+        <di:waypoint x="519" y="81" />
+        <di:waypoint x="519" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_13-_10" >
+        <di:waypoint x="519" y="330" />
+        <di:waypoint x="732" y="259" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_13-_11" >
+        <di:waypoint x="519" y="330" />
+        <di:waypoint x="732" y="331" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_13-_12" >
+        <di:waypoint x="519" y="330" />
+        <di:waypoint x="734" y="398" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_8-_13" >
+        <di:waypoint x="519" y="210" />
+        <di:waypoint x="519" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_59-_135" >
+        <di:waypoint x="661" y="830" />
+        <di:waypoint x="296" y="829" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_37-_135" >
+        <di:waypoint x="296" y="698" />
+        <di:waypoint x="296" y="829" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_10-_15" >
+        <di:waypoint x="732" y="259" />
+        <di:waypoint x="923" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_11-_15" >
+        <di:waypoint x="732" y="331" />
+        <di:waypoint x="923" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_12-_15" >
+        <di:waypoint x="734" y="398" />
+        <di:waypoint x="923" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_15-_17" >
+        <di:waypoint x="923" y="330" />
+        <di:waypoint x="1068" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_17-_19" >
+        <di:waypoint x="1068" y="330" />
+        <di:waypoint x="1068" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_22-_21" >
+        <di:waypoint x="814" y="210" />
+        <di:waypoint x="814" y="79" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_26-_23" >
+        <di:waypoint x="1068" y="531" />
+        <di:waypoint x="984" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_19-_22" >
+        <di:waypoint x="1068" y="210" />
+        <di:waypoint x="814" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_26-_25" >
+        <di:waypoint x="1068" y="531" />
+        <di:waypoint x="983" y="582" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_23-_27" >
+        <di:waypoint x="984" y="480" />
+        <di:waypoint x="900" y="529" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_25-_27" >
+        <di:waypoint x="983" y="582" />
+        <di:waypoint x="900" y="529" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_17-_26" >
+        <di:waypoint x="1068" y="330" />
+        <di:waypoint x="1068" y="531" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_140-_29" >
+        <di:waypoint x="670" y="528" />
+        <di:waypoint x="561" y="528" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_27-_28" >
+        <di:waypoint x="900" y="529" />
+        <di:waypoint x="779" y="529" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_29-_34" >
+        <di:waypoint x="561" y="528" />
+        <di:waypoint x="421" y="529" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_36-_33" >
+        <di:waypoint x="296" y="529" />
+        <di:waypoint x="295" y="449" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_34-_36" >
+        <di:waypoint x="421" y="529" />
+        <di:waypoint x="296" y="529" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_36-_37" >
+        <di:waypoint x="296" y="529" />
+        <di:waypoint x="296" y="698" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_44-_43" >
+        <di:waypoint x="578" y="697" />
+        <di:waypoint x="578" y="611" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_36-_40" >
+        <di:waypoint x="296" y="529" />
+        <di:waypoint x="193" y="530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_37-_41" >
+        <di:waypoint x="296" y="698" />
+        <di:waypoint x="440" y="698" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_49-_47" >
+        <di:waypoint x="697" y="697" />
+        <di:waypoint x="821" y="631" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_41-_44" >
+        <di:waypoint x="440" y="698" />
+        <di:waypoint x="578" y="697" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_48-_50" >
+        <di:waypoint x="838" y="733" />
+        <di:waypoint x="982" y="732" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_56-_50" >
+        <di:waypoint x="954" y="631" />
+        <di:waypoint x="982" y="732" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_44-_49" >
+        <di:waypoint x="578" y="697" />
+        <di:waypoint x="697" y="697" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_49-_48" >
+        <di:waypoint x="697" y="697" />
+        <di:waypoint x="838" y="733" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_54-_55" >
+        <di:waypoint x="1060" y="830" />
+        <di:waypoint x="907" y="830" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_50-_54" >
+        <di:waypoint x="982" y="732" />
+        <di:waypoint x="1060" y="830" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_55-_59" >
+        <di:waypoint x="907" y="830" />
+        <di:waypoint x="661" y="830" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_55-_58" >
+        <di:waypoint x="907" y="830" />
+        <di:waypoint x="907" y="952" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_56-_57" >
+        <di:waypoint x="954" y="631" />
+        <di:waypoint x="1152" y="632" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_47-_56" >
+        <di:waypoint x="821" y="631" />
+        <di:waypoint x="954" y="631" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_135-_62" >
+        <di:waypoint x="296" y="829" />
+        <di:waypoint x="296" y="936" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_75-_68" >
+        <di:waypoint x="441" y="1136" />
+        <di:waypoint x="212" y="1135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_67-_69" >
+        <di:waypoint x="79" y="1289" />
+        <di:waypoint x="219" y="1229" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_67-_70" >
+        <di:waypoint x="79" y="1289" />
+        <di:waypoint x="213" y="1346" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_68-_71" >
+        <di:waypoint x="212" y="1135" />
+        <di:waypoint x="318" y="1085" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_62-_64" >
+        <di:waypoint x="296" y="936" />
+        <di:waypoint x="296" y="1020" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_64-_65" >
+        <di:waypoint x="296" y="1020" />
+        <di:waypoint x="437" y="1021" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_64-_66" >
+        <di:waypoint x="296" y="1020" />
+        <di:waypoint x="79" y="1020" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_68-_66" >
+        <di:waypoint x="212" y="1135" />
+        <di:waypoint x="79" y="1020" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_136-_66" >
+        <di:waypoint x="79" y="210" />
+        <di:waypoint x="79" y="1020" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_66-_67" >
+        <di:waypoint x="79" y="1020" />
+        <di:waypoint x="79" y="1289" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_72-_76" >
+        <di:waypoint x="342" y="1287" />
+        <di:waypoint x="459" y="1287" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_69-_72" >
+        <di:waypoint x="219" y="1229" />
+        <di:waypoint x="342" y="1287" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_70-_72" >
+        <di:waypoint x="213" y="1346" />
+        <di:waypoint x="342" y="1287" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_76-_74" >
+        <di:waypoint x="459" y="1287" />
+        <di:waypoint x="626" y="1287" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_76-_75" >
+        <di:waypoint x="459" y="1287" />
+        <di:waypoint x="441" y="1136" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_80-_84" >
+        <di:waypoint x="836" y="1288" />
+        <di:waypoint x="1075" y="1287" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_89-_87" >
+        <di:waypoint x="1075" y="1433" />
+        <di:waypoint x="963" y="1383" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_84-_86" >
+        <di:waypoint x="1075" y="1287" />
+        <di:waypoint x="1076" y="1174" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_74-_80" >
+        <di:waypoint x="626" y="1287" />
+        <di:waypoint x="836" y="1288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_87-_94" >
+        <di:waypoint x="963" y="1383" />
+        <di:waypoint x="823" y="1383" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_84-_89" >
+        <di:waypoint x="1075" y="1287" />
+        <di:waypoint x="1075" y="1433" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_89-_88" >
+        <di:waypoint x="1075" y="1433" />
+        <di:waypoint x="970" y="1493" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_88-_91" >
+        <di:waypoint x="970" y="1493" />
+        <di:waypoint x="823" y="1493" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_94-_91" >
+        <di:waypoint x="823" y="1383" />
+        <di:waypoint x="823" y="1493" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_96-_102" >
+        <di:waypoint x="701" y="1493" />
+        <di:waypoint x="548" y="1493" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_102-_103" >
+        <di:waypoint x="548" y="1493" />
+        <di:waypoint x="383" y="1494" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_102-_100" >
+        <di:waypoint x="548" y="1493" />
+        <di:waypoint x="549" y="1390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_94-_99" >
+        <di:waypoint x="823" y="1383" />
+        <di:waypoint x="720" y="1384" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_91-_96" >
+        <di:waypoint x="823" y="1493" />
+        <di:waypoint x="701" y="1493" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_107-_110" >
+        <di:waypoint x="145" y="1494" />
+        <di:waypoint x="144" y="1622" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_103-_107" >
+        <di:waypoint x="383" y="1494" />
+        <di:waypoint x="145" y="1494" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_114-_116" >
+        <di:waypoint x="300" y="1622" />
+        <di:waypoint x="300" y="1720" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_114-_115" >
+        <di:waypoint x="300" y="1622" />
+        <di:waypoint x="516" y="1622" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_110-_114" >
+        <di:waypoint x="144" y="1622" />
+        <di:waypoint x="300" y="1622" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_115-_127" >
+        <di:waypoint x="516" y="1622" />
+        <di:waypoint x="709" y="1622" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>

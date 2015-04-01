@@ -18,7 +18,6 @@ import nju.software.util.ListUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -114,7 +113,7 @@ public class ProduceController {
 	public String verifyProduceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		String s_orderId_request = (String) request.getParameter("orderId");
+		String s_orderId_request = request.getParameter("orderId");
 		int orderId = Integer.parseInt(s_orderId_request);
 		Map<String,Object> orderInfo = produceService.getVerifyProduceDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);

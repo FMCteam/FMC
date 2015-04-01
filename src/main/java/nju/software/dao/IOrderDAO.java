@@ -1,8 +1,6 @@
 package nju.software.dao;
 
 import java.util.List;
-import java.util.Map;
-
 import nju.software.dataobject.Order;
 
 public interface IOrderDAO {

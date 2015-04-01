@@ -59,7 +59,7 @@ public class CheckDetailDAO extends HibernateDaoSupport implements ICheckDetailD
 	public List<CheckDetail> findByExample(CheckDetail instance) {
 		log.debug("finding CheckDetail instance by example");
 		try {
-			List<CheckDetail> results = (List<CheckDetail>) getHibernateTemplate()
+			List<CheckDetail> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -105,7 +105,7 @@ public class CheckDetailDAO extends HibernateDaoSupport implements ICheckDetailD
 	public CheckDetail merge(CheckDetail detachedInstance) {
 		log.debug("merging Craft instance");
 		try {
-			CheckDetail result = (CheckDetail) getHibernateTemplate().merge(
+			CheckDetail result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;

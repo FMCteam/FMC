@@ -37,6 +37,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	public static final String INNER_PRICE = "innerPrice";
 	public static final String OUTER_PRICE = "outerPrice";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -44,6 +45,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#save(nju.software.dataobject.Quote)
 	 */
+	@Override
 	public void save(Quote transientInstance) {
 		log.debug("saving Quote instance");
 		try {
@@ -58,6 +60,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#delete(nju.software.dataobject.Quote)
 	 */
+	@Override
 	public void delete(Quote persistentInstance) {
 		log.debug("deleting Quote instance");
 		try {
@@ -72,6 +75,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public Quote findById(java.lang.Integer id) {
 		log.debug("getting Quote instance with id: " + id);
 		try {
@@ -87,10 +91,11 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByExample(nju.software.dataobject.Quote)
 	 */
+	@Override
 	public List<Quote> findByExample(Quote instance) {
 		log.debug("finding Quote instance by example");
 		try {
-			List<Quote> results = (List<Quote>) getHibernateTemplate()
+			List<Quote> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -104,6 +109,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Quote instance with property: " + propertyName
 				+ ", value: " + value);
@@ -120,6 +126,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByDesignCost(java.lang.Object)
 	 */
+	@Override
 	public List<Quote> findByDesignCost(Object designCost) {
 		return findByProperty(DESIGN_COST, designCost);
 	}
@@ -127,6 +134,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByCutCost(java.lang.Object)
 	 */
+	@Override
 	public List<Quote> findByCutCost(Object cutCost) {
 		return findByProperty(CUT_COST, cutCost);
 	}
@@ -134,6 +142,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByManageCost(java.lang.Object)
 	 */
+	@Override
 	public List<Quote> findByManageCost(Object manageCost) {
 		return findByProperty(MANAGE_COST, manageCost);
 	}
@@ -141,6 +150,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findBySwingCost(java.lang.Object)
 	 */
+	@Override
 	public List<Quote> findBySwingCost(Object swingCost) {
 		return findByProperty(SWING_COST, swingCost);
 	}
@@ -148,6 +158,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByIroningCost(java.lang.Object)
 	 */
+	@Override
 	public List<Quote> findByIroningCost(Object ironingCost) {
 		return findByProperty(IRONING_COST, ironingCost);
 	}
@@ -155,6 +166,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByNailCost(java.lang.Object)
 	 */
+	@Override
 	public List<Quote> findByNailCost(Object nailCost) {
 		return findByProperty(NAIL_COST, nailCost);
 	}
@@ -162,6 +174,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByPackageCost(java.lang.Object)
 	 */
+	@Override
 	public List<Quote> findByPackageCost(Object packageCost) {
 		return findByProperty(PACKAGE_COST, packageCost);
 	}
@@ -169,6 +182,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByOtherCost(java.lang.Object)
 	 */
+	@Override
 	public List<Quote> findByOtherCost(Object otherCost) {
 		return findByProperty(OTHER_COST, otherCost);
 	}
@@ -176,6 +190,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByProfitPerPiece(java.lang.Object)
 	 */
+	@Override
 	public List<Quote> findByProfitPerPiece(Object profitPerPiece) {
 		return findByProperty(PROFIT_PER_PIECE, profitPerPiece);
 	}
@@ -183,6 +198,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByInnerPrice(java.lang.Object)
 	 */
+	@Override
 	public List<Quote> findByInnerPrice(Object innerPrice) {
 		return findByProperty(INNER_PRICE, innerPrice);
 	}
@@ -190,6 +206,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findByOuterPrice(java.lang.Object)
 	 */
+	@Override
 	public List<Quote> findByOuterPrice(Object outerPrice) {
 		return findByProperty(OUTER_PRICE, outerPrice);
 	}
@@ -197,6 +214,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all Quote instances");
 		try {
@@ -211,10 +229,11 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#merge(nju.software.dataobject.Quote)
 	 */
+	@Override
 	public Quote merge(Quote detachedInstance) {
 		log.debug("merging Quote instance");
 		try {
-			Quote result = (Quote) getHibernateTemplate().merge(
+			Quote result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -227,6 +246,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#attachDirty(nju.software.dataobject.Quote)
 	 */
+	@Override
 	public void attachDirty(Quote instance) {
 		log.debug("attaching dirty Quote instance");
 		try {
@@ -241,6 +261,7 @@ public class QuoteDAO extends HibernateDaoSupport implements IQuoteDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IQuoteDAO#attachClean(nju.software.dataobject.Quote)
 	 */
+	@Override
 	public void attachClean(Quote instance) {
 		log.debug("attaching clean Quote instance");
 		try {

@@ -9,20 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import nju.software.dataobject.Accessory;
-import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
-import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
-import nju.software.model.OrderModel;
-import nju.software.model.ProductModel;
 
 public interface MarketService {
 

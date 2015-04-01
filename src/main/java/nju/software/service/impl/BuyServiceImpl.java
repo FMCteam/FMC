@@ -36,6 +36,7 @@ import nju.software.util.ActivitiAPIUtil;
 public class BuyServiceImpl implements BuyService {
 
 	// ===========================采购验证=================================
+	@Override
 	public List<Map<String, Object>> getVerifyPurchaseList() {
 		return service.getOrderList(ACTOR_PURCHASE_MANAGER,
 				TASK_VERIFY_PURCHASE);

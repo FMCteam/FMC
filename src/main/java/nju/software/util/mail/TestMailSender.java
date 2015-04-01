@@ -16,7 +16,7 @@ public class TestMailSender {
                 "<br/>提示：本邮件超过30分钟，链接将会失效，需要重新申请");
 		// 这个类主要来发送邮件
 		SimpleMailSender sms = new SimpleMailSender();
-		sms.sendTextMail(mailInfo);// 发送文文本格式
-		sms.sendHtmlMail(mailInfo);// 发送Html格式
+		SimpleMailSender.sendTextMail(mailInfo);// 发送文文本格式
+		SimpleMailSender.sendHtmlMail(mailInfo);// 发送Html格式
 	}
 }

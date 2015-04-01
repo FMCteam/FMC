@@ -45,11 +45,9 @@ import nju.software.util.ImageUtil;
 import nju.software.util.JavaMailUtil;
 import nju.software.util.ListUtil;
 
-import org.antlr.grammar.v3.ANTLRv3Parser.throwsSpec_return;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -969,7 +967,7 @@ public class MarketController {
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		String s_orderId_request = (String) request.getParameter("orderId");
+		String s_orderId_request = request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
 		String taskId = s_taskId;
@@ -1869,13 +1867,13 @@ public class MarketController {
 
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		String s_orderId_request = (String) request.getParameter("orderId");
+		String s_orderId_request = request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
 		String taskId = s_taskId;
 		String s_processId = request.getParameter("processId");
 		String processId = s_processId;	
-		String tof = (String)request.getParameter("tof");
+		String tof = request.getParameter("tof");
 		boolean comfirmworksheet = Boolean.parseBoolean(request
 				.getParameter("tof"));
 		// 大货加工要求
@@ -1981,7 +1979,7 @@ public class MarketController {
 
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		String s_orderId_request = (String) request.getParameter("orderId");
+		String s_orderId_request = request.getParameter("orderId");
 		int id = Integer.parseInt(s_orderId_request);
 		// String s_taskId = request.getParameter("taskId");
 		// String taskId = String.parseString(s_taskId);
@@ -2009,7 +2007,7 @@ public class MarketController {
 		System.out.println("cancel product ===============");
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
-		String s_orderId_request = (String) request.getParameter("id");
+		String s_orderId_request = request.getParameter("id");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("task_id");
 		String taskId = s_taskId;

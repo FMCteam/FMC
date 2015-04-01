@@ -399,4 +399,5 @@ public class ActivitiAPIUtil {
 		nameMap.put("sendSweater", "外发");
 		return nameMap;
 	}
+	
 }
