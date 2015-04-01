@@ -200,7 +200,7 @@ function doAddRole(){
 			<table>
 				<tr>
 					<td valign="top">
-						<div id="treeboxbox_tree"style="width: 750px; height: 500px; overflow: auto;" />
+						<div id="treeboxbox_tree" style="width: 500px; height: 500px; overflow: auto;" />
 					</td>
 				</tr>
 			</table>
