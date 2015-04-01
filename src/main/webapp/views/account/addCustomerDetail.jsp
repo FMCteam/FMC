@@ -1,13 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@include file="/common/header.jsp"%> 
-<!--  <div class="pageheader">
-           
-            <div class="pageicon"><span class="iconfa-laptop"></span></div>
-            <div class="pagetitle">
-                <h5>服装快速响应供应链</h5>
-                <h1>智造链</h1>
-            </div>
-        </div>pageheader -->
+<%@include file="/common/header.jsp"%>
 
 <div class="maincontent">
 	<div class="maincontentinner">
@@ -16,8 +8,7 @@
 			<div class="widget">
 				<h4 class="widgettitle">添加客户</h4>
 				<div class="widgetcontent">
-					<form id="customerForm" class="stdform"
-						action="${ctx}/account/addCustomerSubmit.do" method="post">
+					<form id="customerForm" class="stdform" action="${ctx}/account/addCustomerSubmit.do" method="POST">
 
 						<table>
 							<tr>
@@ -121,8 +112,7 @@
 									</select>
 								</span></td>
 							</tr>
-
-
+							
 							<tr>
 								<td>
 									<div class="par">
@@ -146,25 +136,12 @@
 								</td>
 							</tr>
 
-
-
-
-
-
-
-
-
-
-
-
 						</table>
 					</form>
 				</div>
 				<!--widgetcontent-->
 			</div>
-
-
-
+		
 		</div>
 		<!--row-fluid-->
 
@@ -178,29 +155,24 @@
 
 	</div>
 	<!--maincontentinner-->
-</div>
-<!--maincontent-->
-
-<%@include file="/common/js_file.jsp"%>
-<%@include file="/common/js_form_file.jsp"%>
-
-<!-- 这里引入你需要的js文件 -->
-<script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<script type="text/javascript" src="${ctx }/js/addcustomer.js"></script>
-<script src="${ctx }/js/messages_cn.js" type="text/javascript"></script>
-<script type="text/javascript">
-	$().ready(function() {
-
+	<script type="text/javascript" src="${ctx }/js/addcustomer.js"></script>
+	<script type="text/javascript" src="${ctx }/js/messages_cn.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$("#datepicker").datepicker({
+			dateFormat:"yy-mm-dd"	
+		}); 
+		
 		$("#customerForm").validate({
 
 			rules : {
 				user_name : "required",
 				customer_name : "required",
-				
+
 				company_name : "required",
-			
+
 				contact_phone_1 : "required",
-                 buy_contact:"required",
+				buy_contact : "required",
 				register_date : {
 					date : true,
 					required : true
@@ -211,17 +183,41 @@
 			messages : {
 				user_name : "请输入用户登录名称",
 				customer_name : "请输入用户真实姓名",
-				buy_contact:"请输入采购联系人姓名",
+				buy_contact : "请输入采购联系人姓名",
 				company_name : "请输入公司姓名",
-			
+
 				register_date : "请输入正确的注册日期",
 				contact_phone_1 : "请输入采购联系人电话"
 
 			}
 
 		});
-
 	});
-	
-</script>
+		/*function doSomething(){
+			var action="${ctx}/account/addCustomerSubmit.do"; 
+			$.ajax({
+				async:false,
+				url:action,
+				type:"POST",
+				data:$("#customerForm").serialize(),
+				success:function(data){
+					alert("Success");
+					$('.maincontent').html($(data).find(".maincontent").html());
+				},
+				error:function(){
+					alert("Fail");
+				}
+			});
+		}*/
+	</script>
+</div>
+<!--maincontent-->
+
+<%@include file="/common/js_file.jsp"%>
+<%@include file="/common/js_form_file.jsp"%>
+
+<!-- 这里引入你需要的js文件 -->
+<script type="text/javascript" src="${ctx }/js/custom.js"></script>
+<script type="text/javascript" src="${ctx }/js/addcustomer.js"></script>
+<script src="${ctx }/js/messages_cn.js" type="text/javascript"></script>
 <%@include file="/common/footer.jsp"%>

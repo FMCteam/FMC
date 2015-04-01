@@ -535,7 +535,6 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/addCustomerDetail.do", method = RequestMethod.GET)
-	
 	public String addCustomerDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		System.out.println("customer add");
@@ -544,7 +543,6 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/addCustomerSubmit.do", method = RequestMethod.POST)
-	
 	public String addCustomerSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -578,10 +576,9 @@ public class AccountController {
 
 		boolean exist = accountService.checkExit(userName);
 		if (exist) {
-
 			model.addAttribute("exist", true);
 			model.addAttribute("success", false);
-			return "redirct:/customer/add.do";
+			return "redirect:/account/addCustomerDetail.do";
 		} else {
 			Customer c = new Customer();
 
