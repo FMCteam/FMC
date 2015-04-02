@@ -14,6 +14,7 @@ import nju.software.dataobject.Customer;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.MarketstaffAlter;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
@@ -25,6 +26,59 @@ import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
 
 public interface MarketService {
+	
+	
+	/**
+	 * 申请更换专员
+	 * @param alterInfo 申请信息
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public boolean applyForAlterMarketStaffSubmit(MarketstaffAlter alterInfo, String reason);
+	
+	/**
+	 * 专员查看当前正在审批中的订单列表
+	 * @param actorId 专员ID
+	 * @return
+	 */
+	public List<Map<String, Object>> getOrderAlterDoingList(String actorId);
+	
+		
+	/**
+	 * 获取专员变更申请详细信息
+	 * @param alterId 专员变更记录的id
+	 * @return
+	 */
+	public Map<String, Object> getApplyAlterInfo(Integer alterId);
+
+	/**
+	 * 查看专员申请列表
+	 * @param actorId 市场主管ID
+	 * @return 
+	 */
+	public List<Map<String, Object>> getApplyAlterOrderList(String actorId);
+	
+	/**
+	 * 市场经理审批专员申请
+	 * @param orderId 被申请更换专员的订单ID
+	 * @param actorId 市场主管
+	 * @param result  审批结果
+	 * @param comment 审批备注
+	 * @return 没有返回
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public void verifyAlterMarketstaffSubmit(Integer alterId, boolean result, String comment);
+	
+	/**
+	 * 更换专员
+	 * @param orderId 更换专员的订单ID
+	 * @param actorId 市场主管
+	 * @param applyUserId 申请专员ID
+	 * @param newUserId 订单的新专员ID
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public void changeMarketstaffSubmit(Integer alterId, String applyUserId, String newUserId);
 
 	// ==========================报价商定=======================
 	@Transactional(rollbackFor = Exception.class)

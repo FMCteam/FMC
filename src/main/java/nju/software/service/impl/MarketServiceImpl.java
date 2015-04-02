@@ -23,6 +23,7 @@ import nju.software.dao.impl.EmployeeDAO;
 import nju.software.dao.impl.FabricCostDAO;
 import nju.software.dao.impl.FabricDAO;
 import nju.software.dao.impl.LogisticsDAO;
+import nju.software.dao.impl.MarketstaffAlterDAO;
 import nju.software.dao.impl.MoneyDAO;
 import nju.software.dao.impl.OrderDAO;
 import nju.software.dao.impl.ProduceDAO;
@@ -36,9 +37,11 @@ import nju.software.dataobject.Craft;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.DeliveryRecord;
 import nju.software.dataobject.DesignCad;
+import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.MarketstaffAlter;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
@@ -49,6 +52,7 @@ import nju.software.model.OrderInfo;
 import nju.software.process.service.MainProcessService;
 import nju.software.service.FinanceService;
 import nju.software.service.MarketService;
+import nju.software.util.ActivitiAPIUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.ImageUtil;
 import nju.software.util.StringUtil;
@@ -130,7 +134,118 @@ public class MarketServiceImpl implements MarketService {
 	private ServiceUtil service;
 	@Autowired
 	private DeliveryRecordDAO deliveryRecordDAO;
+	@Autowired
+	private MarketstaffAlterDAO marketstaffAlterDAO;
+	
+	@Override
+	public boolean applyForAlterMarketStaffSubmit(MarketstaffAlter alterInfo, String reason) {
+		marketstaffAlterDAO=new MarketstaffAlterDAO();
+		marketstaffAlterDAO.save(alterInfo);
+		Map<String, Object> params = new HashMap<>();
+		params.put("reason", reason);
+//		activitiApiUtil.startWorkflowProcessByKey(ActivitiAPIUtil.PROCESS_ALTER_MARKETSTAFF, params);
+		//TODO 涉及流程启动
+		
+		
+		return true;
+	}
 
+	@Override
+	public List<Map<String, Object>> getOrderAlterDoingList(String actorId) {
+		MarketstaffAlter example = new MarketstaffAlter();
+		List<MarketstaffAlter> results = new ArrayList<>();
+		example.setVerifyState(MarketstaffAlter.STATE_TODO);
+		example.setEmployeeId(Integer.valueOf(actorId));
+		results = marketstaffAlterDAO.findByExample(example);
+		
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (MarketstaffAlter marketstaffAlter : results) {
+			Integer orderId = marketstaffAlter.getOrderId();
+			Order order = orderDAO.findById(orderId);
+			Map<String, Object> model = new HashMap<>();
+			model.put("alterId", marketstaffAlter.getAlterId());
+			model.put("order", order);
+			model.put("verify_state", marketstaffAlter.getVerifyState());
+			list.add(model);
+		}
+		return list;
+	}
+
+
+
+
+	
+	@Override
+	public Map<String, Object> getApplyAlterInfo(Integer alterId) {
+		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
+		Map<String,Object> alterMap=new HashMap<String ,Object>();
+		Order order=orderDAO.findById(alter.getAlterId());
+		Employee employee=employeeDAO.findById(alter.getEmployeeId());
+		Employee nextEmployee=employeeDAO.findById(alter.getNextEmployeeId());
+		
+		alterMap.put("alterId", alter.getAlterId());
+		alterMap.put("order", order);
+		alterMap.put("employee", employee);
+		alterMap.put("nextEmployee", nextEmployee);
+		alterMap.put("currentOrderTaskName",alter.getCurrentTaskName());
+		alterMap.put("applyTime", alter.getApplyTime());
+		alterMap.put("endTime",alter.getEndTime());
+		alterMap.put("verify_state", alter.getVerifyState());
+		
+		return alterMap;
+	}
+
+
+
+	@Override
+	public void verifyAlterMarketstaffSubmit(Integer alterId, boolean result, String comment) {
+		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
+		if (result==true)alter.setVerifyState(MarketstaffAlter.STATE_AGREE);
+		else alter.setVerifyState(MarketstaffAlter.STATE_DISAGREE);
+		
+		
+		//TODO 
+		//涉及流程 comment  
+		marketstaffAlterDAO.save(alter);
+		
+	}
+
+
+
+	@Override
+	public void changeMarketstaffSubmit(Integer alterId,
+			String applyUserId, String newUserId) {
+
+		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
+		alter.setNextEmployeeId(Integer.parseInt(newUserId));
+		marketstaffAlterDAO.save(alter);
+		Order order=orderDAO.findById(alter.getOrderId());
+		order.setEmployeeId(Integer.parseInt(newUserId));
+		orderDAO.save(order);
+		//TODO 结束流程
+				
+		
+	}
+
+	@Override
+	public List<Map<String, Object>> getApplyAlterOrderList(String actorId) {
+		MarketstaffAlter example = new MarketstaffAlter();
+		List<MarketstaffAlter> results = new ArrayList<>();
+		example.setVerifyState(MarketstaffAlter.STATE_TODO);
+		results = marketstaffAlterDAO.findByExample(example);
+		
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (MarketstaffAlter marketstaffAlter : results) {
+			Integer orderId = marketstaffAlter.getOrderId();
+			Order order = orderDAO.findById(orderId);
+			Map<String, Object> model = new HashMap<>();
+			model.put("order", order);
+			model.put("verify_state", marketstaffAlter.getVerifyState());
+			list.add(model);
+		}
+		return list;
+	}
+	
 	@Override
 	public List<Customer> getAddOrderList() {
 		// TODO Auto-generated method stub

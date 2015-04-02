@@ -81,6 +81,8 @@
 				<value>nju.software.dataobject.CheckDetail</value>
 				<value>nju.software.dataobject.OperateRecord</value>
 				
+				<value>nju.software.dataobject.MarketstaffAlter</value>
+				
 				<value>nju.software.dataobject.AccountRole</value>
 				<value>nju.software.dataobject.AccountView</value>
 				<value>nju.software.dataobject.Permission</value>
@@ -92,6 +94,13 @@
 				
 				
 			</list>
+		</property>
+	</bean>
+	
+	
+	<bean id="MarketstaffAlterDAO" class="nju.software.dao.impl.MarketstaffAlterDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
 		</property>
 	</bean>
 	
