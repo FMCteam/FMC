@@ -1,12 +1,15 @@
 package nju.software.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.AccountDAO;
+import nju.software.dao.impl.BaseDaoImpl;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.AccountRole;
 import nju.software.dataobject.Customer;
 import nju.software.service.AccountService;
 import nju.software.util.Constants;
@@ -16,7 +19,9 @@ import nju.software.util.SecurityUtil;
 public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private AccountDAO accountDAO;
-
+	@Autowired
+	private BaseDaoImpl baseDao;
+	@Override
 	public Account vertifyAccount(String accountName, String accountPassword) {
 		Account account = new Account();
 		String pwd = SecurityUtil.md5hex(accountPassword);
@@ -31,6 +36,7 @@ public class AccountServiceImpl implements AccountService {
 			return accountList.get(0);
 	}
 
+	@Override
 	public boolean deleteAccount(Integer accountId) {
 		// TODO Auto-generated method stub
 		try {
@@ -42,18 +48,21 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 
-	public boolean addAccount(Account account) {
+	@Override
+	public int addAccount(Account account) {
 		// TODO Auto-generated method stub
 		try {
 			accountDAO.save(account);
-			return true;
+			int id = account.getAccountId();
+			return id;
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return -1;
 		}
 	}
 
+	@Override
 	public boolean updateAccount(Account account) {
 		// TODO Auto-generated method stub
 		try {
@@ -66,6 +75,7 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 
+	@Override
 	public Account getAccountByUsername(String username) {
 		// TODO Auto-generated method stub
 		List<Account> accountList = accountDAO.findByUserName(username);
@@ -75,6 +85,7 @@ public class AccountServiceImpl implements AccountService {
 			return null;
 	}
 
+	@Override
 	public Account getAccountByAccountId(int accountId) {
 		// TODO Auto-generated method stub
 		List<Account> accountList = accountDAO.findByProperty("accountId",
@@ -85,6 +96,7 @@ public class AccountServiceImpl implements AccountService {
 			return null;
 	}
 
+	@Override
 	public boolean checkExit(String userName) {
 		// TODO Auto-generated method stub
 		try {
@@ -127,4 +139,31 @@ public class AccountServiceImpl implements AccountService {
 		return false;
 	}
 
+	@Override
+	public boolean addAccountRole(String roleName, int accountId) {
+		// TODO Auto-generated method stub
+		
+		accountDAO.addAccountRole(roleName, accountId);
+		
+		
+		
+		return true;
+	}
+
+	@Override
+	public boolean deleteAccountRole(String accountId) {
+		// TODO Auto-generated method stub
+		try {
+			List<AccountRole> list = accountDAO.findAccountRoleById(accountId);
+			if(list!=null){
+			for(AccountRole ar : list)
+			    accountDAO.deleteAccountRole(ar);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+   
 }

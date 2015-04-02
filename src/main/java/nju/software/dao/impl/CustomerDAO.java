@@ -1,16 +1,13 @@
 package nju.software.dao.impl;
 
-import java.sql.Timestamp;
 import java.util.*;
 
 import nju.software.dao.ICustomerDAO;
-import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 
 import org.hibernate.LockMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -51,6 +48,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	public static final String BOSS_PHONE = "bossPhone";
 	public static final String REGISTER_EMPLOYEE_ID = "registerEmployeeId";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -58,6 +56,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#save(nju.software.dataobject.Customer)
 	 */
+	@Override
 	public void save(Customer transientInstance) {
 		log.debug("saving Customer instance");
 		try {
@@ -72,6 +71,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#delete(nju.software.dataobject.Customer)
 	 */
+	@Override
 	public void delete(Customer persistentInstance) {
 		log.debug("deleting Customer instance");
 		try {
@@ -86,6 +86,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public Customer findById(java.lang.Integer id) {
 		log.debug("getting Customer instance with id: " + id);
 		try {
@@ -101,10 +102,11 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByExample(nju.software.dataobject.Customer)
 	 */
+	@Override
 	public List<Customer> findByExample(Customer instance) {
 		log.debug("finding Customer instance by example");
 		try {
-			List<Customer> results = (List<Customer>) getHibernateTemplate()
+			List<Customer> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -118,6 +120,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Customer instance with property: " + propertyName
 				+ ", value: " + value);
@@ -134,6 +137,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByCompanyId(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByCompanyId(Object companyId) {
 		return findByProperty(COMPANY_ID, companyId);
 	}
@@ -141,6 +145,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByCompanyName(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByCompanyName(Object companyName) {
 		return findByProperty(COMPANY_NAME, companyName);
 	}
@@ -148,6 +153,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByCustomerName(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByCustomerName(Object customerName) {
 		return findByProperty(CUSTOMER_NAME, customerName);
 	}
@@ -155,6 +161,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByProvince(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByProvince(Object province) {
 		return findByProperty(PROVINCE, province);
 	}
@@ -162,6 +169,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByCity(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByCity(Object city) {
 		return findByProperty(CITY, city);
 	}
@@ -169,6 +177,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByWebsiteUrl(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByWebsiteUrl(Object websiteUrl) {
 		return findByProperty(WEBSITE_URL, websiteUrl);
 	}
@@ -176,6 +185,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByWebsiteType(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByWebsiteType(Object websiteType) {
 		return findByProperty(WEBSITE_TYPE, websiteType);
 	}
@@ -183,6 +193,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByCompanyAddress(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByCompanyAddress(Object companyAddress) {
 		return findByProperty(COMPANY_ADDRESS, companyAddress);
 	}
@@ -190,6 +201,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByCompanyFax(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByCompanyFax(Object companyFax) {
 		return findByProperty(COMPANY_FAX, companyFax);
 	}
@@ -197,6 +209,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByCompanyPhone(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByCompanyPhone(Object companyPhone) {
 		return findByProperty(COMPANY_PHONE, companyPhone);
 	}
@@ -204,6 +217,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByBuyContact(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByBuyContact(Object buyContact) {
 		return findByProperty(BUY_CONTACT, buyContact);
 	}
@@ -211,6 +225,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByContactPhone1(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByContactPhone1(Object contactPhone1) {
 		return findByProperty(CONTACT_PHONE1, contactPhone1);
 	}
@@ -218,6 +233,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByContactPhone2(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByContactPhone2(Object contactPhone2) {
 		return findByProperty(CONTACT_PHONE2, contactPhone2);
 	}
@@ -225,6 +241,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByQq(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByQq(Object qq) {
 		return findByProperty(QQ, qq);
 	}
@@ -232,6 +249,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByEmail(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByEmail(Object email) {
 		return findByProperty(EMAIL, email);
 	}
@@ -239,6 +257,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByCustomerPhone(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByCustomerPhone(Object customerPhone) {
 		return findByProperty(CUSTOMER_PHONE, customerPhone);
 	}
@@ -246,6 +265,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByBossName(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByBossName(Object bossName) {
 		return findByProperty(BOSS_NAME, bossName);
 	}
@@ -253,6 +273,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByBossPhone(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByBossPhone(Object bossPhone) {
 		return findByProperty(BOSS_PHONE, bossPhone);
 	}
@@ -260,6 +281,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findByRegisterEmployeeId(java.lang.Object)
 	 */
+	@Override
 	public List<Customer> findByRegisterEmployeeId(Object registerEmployeeId) {
 		return findByProperty(REGISTER_EMPLOYEE_ID, registerEmployeeId);
 	}
@@ -267,6 +289,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all Customer instances");
 		try {
@@ -281,10 +304,11 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#merge(nju.software.dataobject.Customer)
 	 */
+	@Override
 	public Customer merge(Customer detachedInstance) {
 		log.debug("merging Customer instance");
 		try {
-			Customer result = (Customer) getHibernateTemplate().merge(
+			Customer result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -297,6 +321,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#attachDirty(nju.software.dataobject.Customer)
 	 */
+	@Override
 	public void attachDirty(Customer instance) {
 		log.debug("attaching dirty Customer instance");
 		try {
@@ -311,6 +336,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.ICustomerDAO#attachClean(nju.software.dataobject.Customer)
 	 */
+	@Override
 	public void attachClean(Customer instance) {
 		log.debug("attaching clean Customer instance");
 		try {
@@ -378,6 +404,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 		params.put("start", start);
 		return params;
 	}
+	@Override
 	public List<Object> findByPropertyCustomerPage(
 			String propertyName,String propertyValue,Map<String, Object> params) {
 		// TODO Auto-generated method stub
@@ -412,6 +439,7 @@ public class CustomerDAO extends HibernateDaoSupport implements ICustomerDAO {
 		
 	}
 
+	@Override
 	public int countByProperty(String propertyName,String propertyValue) {
 		// TODO Auto-generated method stub
 		log.debug("finding all Customer instances by property");

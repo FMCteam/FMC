@@ -2,7 +2,6 @@ package nju.software.dao;
 
 import java.util.*;
 
-import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 
 public interface ICustomerDAO {

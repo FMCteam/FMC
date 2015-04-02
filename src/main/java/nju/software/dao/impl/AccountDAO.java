@@ -1,19 +1,22 @@
 package nju.software.dao.impl;
 
+import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.*;
 
 import nju.software.dao.IAccountDAO;
 import nju.software.dataobject.Account;
-import nju.software.dataobject.Customer;
+import nju.software.dataobject.AccountRole;
 
-import org.drools.lang.dsl.DSLMapParser.statement_return;
+import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.dao.DataAccessException;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -36,6 +39,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	public static final String USER_NAME = "userName";
 	public static final String USER_ROLE = "userRole";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -52,6 +56,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * @see
 	 * nju.software.dao.impl.IAccoutDAO#save(nju.software.dataobject.Account)
 	 */
+	@Override
 	public void save(Account transientInstance) {
 		log.debug("saving Account instance");
 		try {
@@ -75,6 +80,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * @see
 	 * nju.software.dao.impl.IAccoutDAO#delete(nju.software.dataobject.Account)
 	 */
+	@Override
 	public void delete(Account persistentInstance) {
 		log.debug("deleting Account instance");
 		try {
@@ -96,6 +102,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * 
 	 * @see nju.software.dao.impl.IAccoutDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public Account findById(java.lang.Integer id) {
 		log.debug("getting Account instance with id: " + id);
 		try {
@@ -122,10 +129,11 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * nju.software.dao.impl.IAccoutDAO#findByExample(nju.software.dataobject
 	 * .Account)
 	 */
+	@Override
 	public List<Account> findByExample(Account instance) {
 		log.debug("finding Account instance by example");
 		try {
-			List<Account> results = (List<Account>) getHibernateTemplate()
+			List<Account> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -148,6 +156,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * @see nju.software.dao.impl.IAccoutDAO#findByProperty(java.lang.String,
 	 * java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Account instance with property: " + propertyName
 				+ ", value: " + value);
@@ -171,6 +180,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * 
 	 * @see nju.software.dao.impl.IAccoutDAO#findByUserId(java.lang.Object)
 	 */
+	@Override
 	public List<Account> findByUserId(Object userId) {
 		return findByProperty(USER_ID, userId);
 	}
@@ -185,6 +195,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * 
 	 * @see nju.software.dao.impl.IAccoutDAO#findByUserType(java.lang.Object)
 	 */
+	@Override
 	public List<Account> findByUserType(Object userType) {
 		return findByProperty(USER_TYPE, userType);
 	}
@@ -206,6 +217,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * @see
 	 * nju.software.dao.impl.IAccoutDAO#findByUserPassword(java.lang.Object)
 	 */
+	@Override
 	public List<Account> findByUserPassword(Object userPassword) {
 		return findByProperty(USER_PASSWORD, userPassword);
 	}
@@ -220,6 +232,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * 
 	 * @see nju.software.dao.impl.IAccoutDAO#findByUserName(java.lang.Object)
 	 */
+	@Override
 	public List<Account> findByUserName(Object userName) {
 		return findByProperty(USER_NAME, userName);
 	}
@@ -234,6 +247,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * 
 	 * @see nju.software.dao.impl.IAccoutDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all Account instances");
 		try {
@@ -257,10 +271,11 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * @see
 	 * nju.software.dao.impl.IAccoutDAO#merge(nju.software.dataobject.Account)
 	 */
+	@Override
 	public Account merge(Account detachedInstance) {
 		log.debug("merging Account instance");
 		try {
-			Account result = (Account) getHibernateTemplate().merge(
+			Account result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -284,6 +299,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * nju.software.dao.impl.IAccoutDAO#attachDirty(nju.software.dataobject.
 	 * Account)
 	 */
+	@Override
 	public void attachDirty(Account instance) {
 		log.debug("attaching dirty Account instance");
 		try {
@@ -309,6 +325,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	 * nju.software.dao.impl.IAccoutDAO#attachClean(nju.software.dataobject.
 	 * Account)
 	 */
+	@Override
 	public void attachClean(Account instance) {
 		log.debug("attaching clean Account instance");
 		try {
@@ -341,5 +358,111 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 		}
 		
 	}
+    @Override
+	public boolean isEmptytOfTable(){
+    	
+    	
+    	final String num="select count(*) from account a";
+		Object obj = null;
+		try {
+			obj = this.getHibernateTemplate().execute(new HibernateCallback() {
+				@Override
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					return session.createSQLQuery(num).uniqueResult();
+				}
+			});
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+    	
+		BigInteger big =new BigInteger(String.valueOf(0));
+    	//System.out.println("=============obj:"+obj);
+    	if((obj.equals(big))){
+    		System.out.println("in");
+    		return true ;
+    	}
+    	
+    	
+    	return false ;   	
+    }
+   
+	@Override
+	public List findPermissionBYName(String username){
+    	List list = null;
+    	
+		final String hql="select distinct p.MYID from permission p,account_role ar,account a,role_permission rp where p.PID is null and p.PERMISSION_ID=rp.permission_id and rp.role_id=ar.role_id and ar.account_id=a.account_id and a.user_name='"+username+"'";
+                
+		list =  this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			@Override
+			public Object doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				Query query = session.createSQLQuery(hql);
+								
+				
+				return query.list();
+			}
+		});
+    	//System.out.println("============list:"+list.toString());
+    	return list ;
+    	
+    }
 
+	@Override
+	public boolean addAccountRole(String roleName, int accountId) {
+		// TODO Auto-generated method stub
+		Date date =new Date();
+		final String hql="select r.roleId from Role r where r.name='"+roleName+"'";
+        int roleId =  (int) this.getHibernateTemplate().execute(new HibernateCallback<Object>(){
+
+			
+			@Override
+			public Object doInHibernate(Session arg0)
+					throws HibernateException, SQLException {
+				Query q = arg0.createQuery(hql);
+				return q.uniqueResult();
+			}
+			
+		});
+        System.out.println("============================roleId:"+roleId);
+        AccountRole accountRole=  new AccountRole();
+		accountRole.setRoleId(roleId);
+		accountRole.setAccountId(accountId);
+		accountRole.setStatus("A");
+		accountRole.setCreated(date);
+		accountRole.setLastmod(date);
+		this.getHibernateTemplate().save(accountRole);
+	
+		return false;
+	}
+    
+    
+	
+	public void deleteAccountRole(AccountRole persistentInstance) {
+		log.debug("deleting Account instance");
+		try {
+			getHibernateTemplate().delete(persistentInstance);
+			log.debug("delete successful");
+		} catch (RuntimeException re) {
+			log.error("delete failed", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<AccountRole> findAccountRoleById(String accountId) {
+		// TODO Auto-generated method stub
+		String query = "from AccountRole as model where model.accountId=?";
+
+		return getHibernateTemplate().find(query, accountId );
+		//return null;
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

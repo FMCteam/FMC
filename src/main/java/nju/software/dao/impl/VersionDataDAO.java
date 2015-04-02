@@ -37,6 +37,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	public static final String SKIRT = "skirt";
 	public static final String SLEEVES = "sleeves";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -48,6 +49,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#save(nju.software.dataobject.VersionData) 
 	*/
 	
+	@Override
 	public void save(VersionData transientInstance) {
 		log.debug("saving VersionData instance");
 		try {
@@ -66,6 +68,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#delete(nju.software.dataobject.VersionData) 
 	*/
 	
+	@Override
 	public void delete(VersionData persistentInstance) {
 		log.debug("deleting VersionData instance");
 		try {
@@ -85,6 +88,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findById(java.lang.Integer) 
 	*/
 	
+	@Override
 	public VersionData findById(java.lang.Integer id) {
 		log.debug("getting VersionData instance with id: " + id);
 		try {
@@ -105,10 +109,11 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findByExample(nju.software.dataobject.VersionData) 
 	*/
 	
+	@Override
 	public List<VersionData> findByExample(VersionData instance) {
 		log.debug("finding VersionData instance by example");
 		try {
-			List<VersionData> results = (List<VersionData>) getHibernateTemplate()
+			List<VersionData> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -128,6 +133,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findByProperty(java.lang.String, java.lang.Object) 
 	*/
 	
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding VersionData instance with property: " + propertyName
 				+ ", value: " + value);
@@ -149,6 +155,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findByOrderId(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<VersionData> findByOrderId(Object orderId) {
 		return findByProperty(ORDER_ID, orderId);
 	}
@@ -161,6 +168,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findBySize(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<VersionData> findBySize(Object size) {
 		return findByProperty(SIZE, size);
 	}
@@ -173,6 +181,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findByCenterBackLength(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<VersionData> findByCenterBackLength(Object centerBackLength) {
 		return findByProperty(CENTER_BACK_LENGTH, centerBackLength);
 	}
@@ -185,6 +194,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findByBust(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<VersionData> findByBust(Object bust) {
 		return findByProperty(BUST, bust);
 	}
@@ -197,6 +207,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findByWaistline(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<VersionData> findByWaistline(Object waistline) {
 		return findByProperty(WAISTLINE, waistline);
 	}
@@ -209,6 +220,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findByShoulder(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<VersionData> findByShoulder(Object shoulder) {
 		return findByProperty(SHOULDER, shoulder);
 	}
@@ -221,6 +233,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findByButtock(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<VersionData> findByButtock(Object buttock) {
 		return findByProperty(BUTTOCK, buttock);
 	}
@@ -233,6 +246,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findByHem(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<VersionData> findByHem(Object hem) {
 		return findByProperty(HEM, hem);
 	}
@@ -245,6 +259,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findByTrousers(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<VersionData> findByTrousers(Object trousers) {
 		return findByProperty(TROUSERS, trousers);
 	}
@@ -257,6 +272,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findBySkirt(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<VersionData> findBySkirt(Object skirt) {
 		return findByProperty(SKIRT, skirt);
 	}
@@ -269,6 +285,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findBySleeves(java.lang.Object) 
 	*/
 	
+	@Override
 	public List<VersionData> findBySleeves(Object sleeves) {
 		return findByProperty(SLEEVES, sleeves);
 	}
@@ -280,6 +297,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#findAll() 
 	*/
 	
+	@Override
 	public List findAll() {
 		log.debug("finding all VersionData instances");
 		try {
@@ -299,10 +317,11 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#merge(nju.software.dataobject.VersionData) 
 	*/
 	
+	@Override
 	public VersionData merge(VersionData detachedInstance) {
 		log.debug("merging VersionData instance");
 		try {
-			VersionData result = (VersionData) getHibernateTemplate().merge(
+			VersionData result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -319,6 +338,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#attachDirty(nju.software.dataobject.VersionData) 
 	*/
 	
+	@Override
 	public void attachDirty(VersionData instance) {
 		log.debug("attaching dirty VersionData instance");
 		try {
@@ -337,6 +357,7 @@ public class VersionDataDAO extends HibernateDaoSupport implements IVersionDataD
 	* @see nju.software.dataobject.IVersionDataDAO#attachClean(nju.software.dataobject.VersionData) 
 	*/
 	
+	@Override
 	public void attachClean(VersionData instance) {
 		log.debug("attaching clean VersionData instance");
 		try {

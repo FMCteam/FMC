@@ -29,6 +29,7 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	public static final String FABRIC_NAME = "fabricName";
 	public static final String FABRIC_AMOUNT = "fabricAmount";
 
+	@Override
 	protected void initDao() {
 		// do nothing
 	}
@@ -36,6 +37,7 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#save(nju.software.dataobject.Fabric)
 	 */
+	@Override
 	public void save(Fabric transientInstance) {
 		log.debug("saving Fabric instance");
 		try {
@@ -50,6 +52,7 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#delete(nju.software.dataobject.Fabric)
 	 */
+	@Override
 	public void delete(Fabric persistentInstance) {
 		log.debug("deleting Fabric instance");
 		try {
@@ -64,6 +67,7 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#findById(java.lang.Integer)
 	 */
+	@Override
 	public Fabric findById(java.lang.Integer id) {
 		log.debug("getting Fabric instance with id: " + id);
 		try {
@@ -79,10 +83,11 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#findByExample(nju.software.dataobject.Fabric)
 	 */
+	@Override
 	public List<Fabric> findByExample(Fabric instance) {
 		log.debug("finding Fabric instance by example");
 		try {
-			List<Fabric> results = (List<Fabric>) getHibernateTemplate()
+			List<Fabric> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -96,6 +101,7 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#findByProperty(java.lang.String, java.lang.Object)
 	 */
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Fabric instance with property: " + propertyName
 				+ ", value: " + value);
@@ -112,6 +118,7 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#findByOrderId(java.lang.Object)
 	 */
+	@Override
 	public List<Fabric> findByOrderId(Object orderId) {
 		return findByProperty(ORDER_ID, orderId);
 	}
@@ -119,6 +126,7 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#findByFabricName(java.lang.Object)
 	 */
+	@Override
 	public List<Fabric> findByFabricName(Object fabricName) {
 		return findByProperty(FABRIC_NAME, fabricName);
 	}
@@ -126,6 +134,7 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#findByFabricAmount(java.lang.Object)
 	 */
+	@Override
 	public List<Fabric> findByFabricAmount(Object fabricAmount) {
 		return findByProperty(FABRIC_AMOUNT, fabricAmount);
 	}
@@ -133,6 +142,7 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#findAll()
 	 */
+	@Override
 	public List findAll() {
 		log.debug("finding all Fabric instances");
 		try {
@@ -147,10 +157,11 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#merge(nju.software.dataobject.Fabric)
 	 */
+	@Override
 	public Fabric merge(Fabric detachedInstance) {
 		log.debug("merging Fabric instance");
 		try {
-			Fabric result = (Fabric) getHibernateTemplate().merge(
+			Fabric result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -163,6 +174,7 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#attachDirty(nju.software.dataobject.Fabric)
 	 */
+	@Override
 	public void attachDirty(Fabric instance) {
 		log.debug("attaching dirty Fabric instance");
 		try {
@@ -177,6 +189,7 @@ public class FabricDAO extends HibernateDaoSupport implements IFabricDAO {
 	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IFabricDAO#attachClean(nju.software.dataobject.Fabric)
 	 */
+	@Override
 	public void attachClean(Fabric instance) {
 		log.debug("attaching clean Fabric instance");
 		try {

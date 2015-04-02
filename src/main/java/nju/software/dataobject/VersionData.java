@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
-import static javax.persistence.GenerationType.SEQUENCE;
 import javax.persistence.Id;
 import javax.persistence.Table;
 

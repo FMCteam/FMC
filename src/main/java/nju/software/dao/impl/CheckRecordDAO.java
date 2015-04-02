@@ -62,7 +62,7 @@ public class CheckRecordDAO extends HibernateDaoSupport implements ICheckRecordD
 	public List<CheckRecord> findByExample(CheckRecord instance) {
 		log.debug("finding CheckRecord instance by example");
 		try {
-			List<CheckRecord> results = (List<CheckRecord>) getHibernateTemplate()
+			List<CheckRecord> results = getHibernateTemplate()
 					.findByExample(instance);
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -108,7 +108,7 @@ public class CheckRecordDAO extends HibernateDaoSupport implements ICheckRecordD
 	public CheckRecord merge(CheckRecord detachedInstance) {
 		log.debug("merging Craft instance");
 		try {
-			CheckRecord result = (CheckRecord) getHibernateTemplate().merge(
+			CheckRecord result = getHibernateTemplate().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;

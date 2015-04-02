@@ -18,34 +18,73 @@ USE `fmc`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `account_role`
+-- Table structure for table `role`
 --
 
-DROP TABLE IF EXISTS `account_role`;
+DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_role` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `account_id` int(11) DEFAULT NULL,
+CREATE TABLE `role` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
   `created` date DEFAULT NULL,
-  `creater` int(11) DEFAULT NULL,
+  `creater` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `description` varchar(500) COLLATE utf8_bin DEFAULT NULL,
   `lastmod` date DEFAULT NULL,
-  `modifyer` int(11) DEFAULT NULL,
-  `role_id` int(11) DEFAULT NULL,
-  `status` varchar(1) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `ID` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `modifyer` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `name` varchar(55) COLLATE utf8_bin DEFAULT NULL,
+  `sort` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`role_id`),
+  UNIQUE KEY `role_id` (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `account_role`
+-- Dumping data for table `role`
 --
 
-LOCK TABLES `account_role` WRITE;
-/*!40000 ALTER TABLE `account_role` DISABLE KEYS */;
-INSERT INTO `account_role` VALUES (1,4,'2015-03-17',NULL,'2015-03-17',NULL,1,'A'),(2,1,'2015-03-25',NULL,'2015-03-25',NULL,4,'I'),(3,1,'2015-03-25',NULL,'2015-03-25',NULL,4,'A');
-/*!40000 ALTER TABLE `account_role` ENABLE KEYS */;
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'2015-03-17',NULL,'设计部','2015-03-25',NULL,'设计部','1','A'),(2,'2015-03-17',NULL,'市场主管','2015-03-25',NULL,'市场主管','1','A'),(3,'2015-03-25',NULL,'市场专员','2015-03-25',NULL,'市场专员','1','A'),(4,'2015-03-25',NULL,'管理员','2015-03-25',NULL,'管理员','1','A'),(5,'2015-03-25',NULL,'采购部','2015-03-25',NULL,'采购部','1','A'),(6,'2015-03-25',NULL,'工艺部','2015-03-25',NULL,'工艺部','1','A'),(7,'2015-03-25',NULL,'生产部','2015-03-25',NULL,'生产部','1','A'),(8,'2015-03-25',NULL,'毛衣制作部','2015-03-25',NULL,'毛衣制作部','1','A'),(9,'2015-03-25',NULL,'财务部','2015-03-25',NULL,'财务部','1','A'),(10,'2015-03-25',NULL,'物流部','2015-03-25',NULL,'物流部','1','A'),(11,'2015-03-25',NULL,'质检部','2015-03-25',NULL,'质检部','1','A'),(12,'2015-03-25',NULL,'人事部','2015-03-25',NULL,'人事部','1','A');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `account`
+--
+
+DROP TABLE IF EXISTS `account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `account` (
+  `account_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `user_type` varchar(250) NOT NULL DEFAULT '0' COMMENT '用户类型，EMPLOYEE, CUSTOMER, ADMIN',
+  `user_password` varchar(250) NOT NULL COMMENT '用户密码，加密后存储。',
+  `user_name` varchar(250) NOT NULL COMMENT '用户登录账号名。',
+  `user_role` varchar(250) NOT NULL COMMENT '用户角色，如果user_type是CUMTOMER或ADMIN，则user_role是CUSTOMER或ADMIN. 否则，代表在公司的角色。这个角色涉及权限。包括 SHICHANGZHUANYUAN,  SHICHANGZHUGUAN, CAIGOUZHUGUAN, SHEJIZHUGUAN, CAIWUZHUGUAN, SHENGCHANZHUGUAN, ZHIJIANZHUGUAN, WULIUZHUGUAN',
+  `nick_name` varchar(250) NOT NULL COMMENT '用户姓名，冗余字段。对应customer_name和employee_name',
+  `big_avatar` varchar(250) DEFAULT NULL COMMENT '大头像',
+  `small_avatar` varchar(250) DEFAULT NULL COMMENT '小头像',
+  `password_cookie_value` varchar(250) DEFAULT NULL,
+  `password_cookie_time` datetime DEFAULT NULL,
+  `user_cookie_time` datetime DEFAULT NULL,
+  `user_cookie_value` varchar(250) DEFAULT NULL,
+  `reset_link_fail_time` datetime DEFAULT NULL,
+  `validate_code` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`account_id`),
+  UNIQUE KEY `user_name_UNIQUE` (`user_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account`
+--
+
+LOCK TABLES `account` WRITE;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES (1,1,'ADMIN','21232f297a57a5a743894a0e4a801fc3','admin','ADMIN','管理员',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -80,35 +119,34 @@ INSERT INTO `role_permission` VALUES (1,'2015-03-25',NULL,'2015-03-25',NULL,4,4,
 UNLOCK TABLES;
 
 --
--- Table structure for table `role`
+-- Table structure for table `account_role`
 --
 
-DROP TABLE IF EXISTS `role`;
+DROP TABLE IF EXISTS `account_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `role` (
-  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `account_role` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `account_id` int(11) DEFAULT NULL,
   `created` date DEFAULT NULL,
-  `creater` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `description` varchar(500) COLLATE utf8_bin DEFAULT NULL,
+  `creater` int(11) DEFAULT NULL,
   `lastmod` date DEFAULT NULL,
-  `modifyer` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `name` varchar(55) COLLATE utf8_bin DEFAULT NULL,
-  `sort` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`role_id`),
-  UNIQUE KEY `role_id` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `modifyer` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  `status` varchar(1) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `role`
+-- Dumping data for table `account_role`
 --
 
-LOCK TABLES `role` WRITE;
-/*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'2015-03-17',NULL,'设计部','2015-03-25',NULL,'设计部','1','A'),(2,'2015-03-17',NULL,'市场主管','2015-03-25',NULL,'市场主管','1','A'),(3,'2015-03-25',NULL,'市场专员','2015-03-25',NULL,'市场专员','1','A'),(4,'2015-03-25',NULL,'管理员','2015-03-25',NULL,'管理员','1','A'),(5,'2015-03-25',NULL,'采购部','2015-03-25',NULL,'采购部','1','A'),(6,'2015-03-25',NULL,'工艺部','2015-03-25',NULL,'工艺部','1','A'),(7,'2015-03-25',NULL,'生产部','2015-03-25',NULL,'生产部','1','A'),(8,'2015-03-25',NULL,'毛衣制作部','2015-03-25',NULL,'毛衣制作部','1','A'),(9,'2015-03-25',NULL,'财务部','2015-03-25',NULL,'财务部','1','A'),(10,'2015-03-25',NULL,'物流部','2015-03-25',NULL,'物流部','1','A'),(11,'2015-03-25',NULL,'质检部','2015-03-25',NULL,'质检部','1','A'),(12,'2015-03-25',NULL,'人事部','2015-03-25',NULL,'人事部','1','A'),(13,'2015-03-25',NULL,'管理员','2015-03-25',NULL,'管理员','1','A');
-/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+LOCK TABLES `account_role` WRITE;
+/*!40000 ALTER TABLE `account_role` DISABLE KEYS */;
+INSERT INTO `account_role` VALUES (1,4,'2015-03-17',NULL,'2015-03-17',NULL,1,'A'),(2,1,'2015-03-25',NULL,'2015-03-25',NULL,4,'I'),(3,1,'2015-03-25',NULL,'2015-03-25',NULL,4,'A');
+/*!40000 ALTER TABLE `account_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -160,4 +198,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-26  1:16:11
+-- Dump completed on 2015-03-30 12:15:30

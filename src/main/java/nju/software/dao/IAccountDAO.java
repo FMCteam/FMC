@@ -3,6 +3,7 @@ package nju.software.dao;
 import java.util.*;
 
 import nju.software.dataobject.Account;
+import nju.software.dataobject.AccountRole;
 
 public interface IAccountDAO {
 
@@ -34,4 +35,12 @@ public interface IAccountDAO {
  
 	public List<Account> findByUserIdAndUserName(String role,Integer userId);
 	
+	public boolean isEmptytOfTable();
+	 
+	public List findPermissionBYName(String username);
+	 
+	public boolean addAccountRole(String roleId,int accountId);
+	
+	public void deleteAccountRole(AccountRole persistentInstance);
+	public List<AccountRole> findAccountRoleById(String accountId);
 }

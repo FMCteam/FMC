@@ -240,7 +240,14 @@
 	<bean id="MarketstaffAlterProcessService"
 		class="nju.software.process.service.MarketstaffAlterProcessService">
 	</bean>
-	<bean id="SqlUtil" class="nju.software.util.SqlUtil">
-	</bean>
 	
+	<bean id="SqlUtilDAO" class="nju.software.dao.impl.SqlUtilDAO">
+	<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		
+	</bean>
+	 <bean id="accessFilter" class="nju.software.filter.AccessFilter" init-method="test">
+	 <property name="accountDao"><ref bean="AccountDAO"/></property>
+	</bean>	
 </beans>

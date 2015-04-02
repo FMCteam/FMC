@@ -25,7 +25,6 @@ import nju.software.util.mail.*;
 import org.drools.core.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -140,8 +139,10 @@ public class AccountController {
 				String userType = "EMPLOYEE";
 				String userRole = employeeRole;
 				account = new Account(employeeId, userType, userPassword,
-						username, userRole, employeeName);
-				accountService.addAccount(account);
+						username,  userRole, employeeName);
+				int accountId =accountService.addAccount(account);
+				System.out.println("=================accountId:"+accountId);
+				accountService.addAccountRole(userRole, accountId);
 				success = true;
 			}
 		} else {
@@ -488,6 +489,7 @@ public class AccountController {
 					int accountId = accountToDelete.getAccountId();
 					employeeService.deleteEmployee(employeeId);
 					accountService.deleteAccount(accountId);
+					//accountService.
 					success = true;
 				}
 			}
@@ -536,7 +538,6 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/addCustomerDetail.do", method = RequestMethod.GET)
-	
 	public String addCustomerDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		System.out.println("customer add");
@@ -545,7 +546,6 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/addCustomerSubmit.do", method = RequestMethod.POST)
-	
 	public String addCustomerSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
@@ -579,10 +579,9 @@ public class AccountController {
 
 		boolean exist = accountService.checkExit(userName);
 		if (exist) {
-
 			model.addAttribute("exist", true);
 			model.addAttribute("success", false);
-			return "redirct:/customer/add.do";
+			return "redirect:/account/addCustomerDetail.do";
 		} else {
 			Customer c = new Customer();
 
