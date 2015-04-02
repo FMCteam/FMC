@@ -96,8 +96,7 @@
 	</bean>
 	
 	
-	<bean id="AccountDAO" class="nju.software.dao.impl.AccountDAO">
-		<property name="sessionFactory">
+<bean id="AccountDAO" class="nju.software.dao.impl.AccountDAO">		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
@@ -249,7 +248,5 @@
 		<property name="accountDao"><ref bean="AccountDAO"/></property>
 	</bean>
 	 <bean id="accessFilter" class="nju.software.filter.AccessFilter" init-method="test">
-	 
-	 <property name="accountDao"><ref bean="AccountDAO"/></property>
-	</bean>	
+	 <property name="accountDao"><ref bean="AccountDAO"/></property>	</bean>	
 </beans>
