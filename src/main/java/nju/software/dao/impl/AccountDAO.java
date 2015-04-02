@@ -430,7 +430,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 		accountRole.setStatus("A");
 		accountRole.setCreated(date);
 		accountRole.setLastmod(date);
-		this.getHibernateTemplate().save(accountRole);
+		this.getHibernateTemplate().saveOrUpdate(accountRole);
 	
 		return false;
 	}
@@ -457,11 +457,10 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 		//return null;
 	}
     
-    
-    
-    
-    
-    
+	public void SaveOrUpDate(Account account){
+		this.getHibernateTemplate().saveOrUpdate(account);
+	}
+	
     
     
     

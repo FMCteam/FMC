@@ -11,8 +11,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+
+import nju.software.dataobject.Account;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -33,7 +37,15 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	private String password ;
 	static String filePathIn ;
 	String PROPERTY_PATH_NAME="jdbc.properties";
-	String INIT_SQL_NAME="init.sql";
+	String INIT_SQL_All="init.sql";
+	String INIT_SQL_other="init_other.sql";
+	
+	static AccountDAO accountDao ;
+	
+
+
+
+
 	/*
 	 * properties 初始化 配置
 	 */
@@ -64,10 +76,12 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	 40      * */
 	      private List<String> loadSql(String sqlFile) throws Exception {
 	         List<String> sqlList = new ArrayList<String>();
-	        /*
+	         filePathIn =  setPath(sqlFile);
+	         
+	         /*
 	           * 读取文件的内容并写道StringBuffer中去
 	           * */
-	         InputStream sqlFileIn = new FileInputStream(sqlFile);
+	         InputStream sqlFileIn = new FileInputStream(filePathIn);
 	          StringBuffer sqlSb = new StringBuffer();
 	          byte[] buff = new byte[sqlFileIn.available()];
 	          int byteRead = 0;
@@ -92,9 +106,9 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	      /*
 	       * 设置路径
 	       */
-	      private void setPath(){
+	      private String setPath(String sqlfile){
 	    	  
-	    	  filePathIn= getPath("/nju")+INIT_SQL_NAME;
+	    	 return getPath("/nju")+sqlfile;
 	    	 	
 	    	 	      }
 	      /*
@@ -211,16 +225,71 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	         return conn;
 	    }
 	     
-	 public void initSQL(){
-		 setPath();
+	 public void initSQL_All(){
+		// setPath();
 		 try {
-			execute(filePathIn);
+			execute(INIT_SQL_All);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// BatchInsert(filePathIn);
 	 }
+	/*
+	 * 
+	 */
+	
+	 public void initSQL_other(){
+		// setPath();
+		 try {
+			execute(INIT_SQL_other);
+			initAccountRole();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 }
+	
+	 public void initAccountRole(){
+			List<Account> list =accountDao.findAll();
+			List<Account> newList = new ArrayList();
+			Map map = new HashMap();
+			map.put("marketManager", "市场主管");
+			map.put("marketStaff", "市场专员");
+			map.put("designManager", "设计部");
+			map.put("purchaseManager", "采购部");
+			map.put("produceManager", "生产部");
+			map.put("logisticsManager", "物流部");
+			map.put("financeManager", "财务部");
+			map.put("qualityManager", "质检部");
+			map.put("SweaterMakeManager", "毛衣部");
+			map.put("ADMIN", "管理员");
+			/*String roleList[] ={"marketManager","marketStaff","designManager","purchaseManager","produceManager",
+					"logisticsManager","financeManager","qualityManager","SweaterMakeManager","ADMIN"};
+			String roleName[]={"市场主管","市场专员","设计部","采购部","生产部","物流部","财务部","质检部","毛衣部","管理员"};
+		*/
+			System.out.println();
+			for(Account b : list){
+				
+				Object role =  map.get(b.getUserRole());
+				if(role!=null){
+				//System.out.print(role+",");
+				b.setUserRole((String)role);
+				newList.add(b);
+				accountDao.SaveOrUpDate(b);
+				}
+			}
+			
+			
+			for(Account a :newList){
+				accountDao.addAccountRole(a.getUserRole(), a.getAccountId());
+			}
+		}
+	    
+	    
+	 public static void setAccountDao(AccountDAO accountDao) {
+			SqlUtilDAO.accountDao = accountDao;
+		}
 	
 	
 
