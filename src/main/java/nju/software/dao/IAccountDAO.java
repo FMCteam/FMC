@@ -43,4 +43,5 @@ public interface IAccountDAO {
 	
 	public void deleteAccountRole(AccountRole persistentInstance);
 	public List<AccountRole> findAccountRoleById(String accountId);
+	
 }

@@ -235,7 +235,7 @@
 	<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
-		
+		<property name="accountDao"><ref bean="accountdao"/></property>
 	</bean>
 	 <bean id="accessFilter" class="nju.software.filter.AccessFilter" init-method="test">
 	 <property name="accountDao"><ref bean="accountdao"/></property>
