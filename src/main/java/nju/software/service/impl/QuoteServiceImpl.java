@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Quote;
+import nju.software.process.service.MainProcessService;
 import nju.software.service.QuoteService;
-import nju.software.util.ActivitiAPIUtil;
 
 @Service("quoteServiceImpl")
 public class QuoteServiceImpl implements QuoteService {
@@ -18,7 +18,7 @@ public class QuoteServiceImpl implements QuoteService {
 	@Autowired
 	private QuoteDAO quoteDAO;
 	@Autowired
-	private ActivitiAPIUtil activitiAPIUtil;
+	private MainProcessService mainProcessService;
 	
 	@Override
 	public Quote findByOrderId(String orderId) {
@@ -43,7 +43,7 @@ public class QuoteServiceImpl implements QuoteService {
 			
 			// 需要获取task中的数据
 			
-			int orderId_process = (int) activitiAPIUtil.getProcessVariable(processId, "orderId");
+			int orderId_process = mainProcessService.getOrderIdInProcess(processId);
 			System.out.println("orderId: " + id);
 			if (id == orderId_process) {
 
@@ -52,7 +52,7 @@ public class QuoteServiceImpl implements QuoteService {
 
 				// 直接进入到下一个流程时
 
-				activitiAPIUtil.completeTask(taskId, null, actor);
+				mainProcessService.completeTask(taskId, actor, data);
 
 			}
 			return true;

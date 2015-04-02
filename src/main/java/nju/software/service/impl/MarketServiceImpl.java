@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import nju.software.dao.impl.AccessoryCostDAO;
@@ -45,9 +46,9 @@ import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
+import nju.software.process.service.MainProcessService;
 import nju.software.service.FinanceService;
 import nju.software.service.MarketService;
-import nju.software.util.ActivitiAPIUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.ImageUtil;
 import nju.software.util.StringUtil;
@@ -57,6 +58,7 @@ import nju.software.util.mail.SimpleMailSender;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Service("marketServiceImpl")
@@ -99,7 +101,7 @@ public class MarketServiceImpl implements MarketService {
 	@Autowired
 	private QuoteDAO quoteDAO;
 	@Autowired
-	private ActivitiAPIUtil activitiApiUtil;
+	private MainProcessService mainProcessService;
 	@Autowired
 	private AccessoryDAO accessoryDAO;
 	@Autowired
@@ -141,6 +143,110 @@ public class MarketServiceImpl implements MarketService {
 		return customerDAO.findById(cid);
 	}
 
+	@Override
+	public boolean addOrderCustomerSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			List<Produce> produces, List<Produce> sample_produces,
+			List<VersionData> versions, DesignCad cad,
+			HttpServletRequest request){
+
+		OrderDAO orderDAO=new OrderDAO();
+		// 添加订单信息
+		orderDAO.save(order);
+
+		Integer orderId = order.getOrderId();
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
+		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
+			// String filedir = request.getSession().getServletContext()
+			// .getRealPath("/upload/sample/" + orderId);
+
+			String curPath = request.getSession().getServletContext()
+					.getRealPath("/");
+			String fatherPath = new File(curPath).getParent();
+			String relativePath = File.separator + "upload" + File.separator
+					+ "sample" + File.separator + orderId;
+			String filedir = fatherPath + relativePath;
+			File file = FileOperateUtil.Upload(request, filedir, "1",
+					"sample_clothes_picture");
+			System.out.println("-------" + filedir + File.separator);
+			ImageUtil.createThumbnail(filedir.replaceAll("\\\\", "\\\\\\\\"),
+					filedir + File.separator);
+			order.setSampleClothesPicture(UPLOAD_DIR_SAMPLE + orderId + "/"
+					+ file.getName());
+			order.setSampleClothesThumbnailPicture(UPLOAD_DIR_SAMPLE + orderId
+					+ "/" + "thumbnail.png");
+		}
+
+		if (!multipartRequest.getFile("reference_picture").isEmpty()) {
+			// String filedir = request.getSession().getServletContext()
+			// .getRealPath("/upload/reference/" + orderId);
+
+			String curPath = request.getSession().getServletContext()
+					.getRealPath("/");
+			String fatherPath = new File(curPath).getParent();
+			String relativePath = File.separator + "upload" + File.separator
+					+ "reference" + File.separator + orderId;
+			String filedir = fatherPath + relativePath;
+
+			File file = FileOperateUtil.Upload(request, filedir, "1",
+					"reference_picture");
+			order.setReferencePicture(UPLOAD_DIR_REFERENCE + orderId + "/"
+					+ file.getName());
+		}
+
+		orderDAO.attachDirty(order);
+
+		// 添加面料信息
+		for (Fabric fabric : fabrics) {
+			fabric.setOrderId(orderId);
+			fabricDAO.save(fabric);
+		}
+
+		// 添加辅料信息
+		for (Accessory accessory : accessorys) {
+			accessory.setOrderId(orderId);
+			accessoryDAO.save(accessory);
+		}
+
+		// 添加大货加工单信息
+		for (Produce produce : produces) {
+			produce.setOid(orderId);
+			produceDAO.save(produce);
+		}
+
+		// 添加样衣加工单信息
+		for (Produce produce : sample_produces) {
+			produce.setOid(orderId);
+			produceDAO.save(produce);
+		}
+
+		// 添加版型信息
+		for (VersionData versionData : versions) {
+			versionData.setOrderId(orderId);
+			versionDataDAO.save(versionData);
+		}
+
+		// 添加物流信息
+		logistics.setOrderId(orderId);
+		logisticsDAO.save(logistics);
+
+		// cad
+		cad.setOrderId(orderId);
+		cadDAO.save(cad);
+//		// 启动流程
+//		Map<String, Object> params = getParams(order);
+//		String processId = activitiApiUtil.startWorkflowProcess(params);
+//		order.setProcessId(processId);
+//		orderDAO.attachDirty(order);
+		
+//		//测试事务回滚是否成功
+//				if (true) {
+//					throw new RuntimeException();
+//				}
+		return true;
+	}
+	
 	@Override
 	public boolean addOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
@@ -233,7 +339,7 @@ public class MarketServiceImpl implements MarketService {
 		cadDAO.save(cad);
 		// 启动流程
 		Map<String, Object> params = getParams(order);
-		String processId = activitiApiUtil.startWorkflowProcess(params);
+		String processId = mainProcessService.startWorkflow(params);
 		order.setProcessId(processId);
 		orderDAO.attachDirty(order);
 		
@@ -385,7 +491,7 @@ public class MarketServiceImpl implements MarketService {
 		params.put(RESULT_REORDER, true);
 		params.put(DesignServiceImpl.RESULT_NEED_CRAFT, isNeedCraft);// 翻单是否需要工艺
 
-		String processId = activitiApiUtil.startWorkflowProcess(params);
+		String processId = mainProcessService.startWorkflow(params);
 		order.setProcessId(processId);
 		orderDAO.attachDirty(order);
 	}
@@ -464,7 +570,7 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put(RESULT_MODIFY_ORDER, editok);
 		try {
-			activitiApiUtil.completeTask(taskId, params, accountId + "");
+			mainProcessService.completeTask(taskId, accountId + "",  params);
 			if (editok == false) {// 如果editok的的值为false，即为未收取到样衣，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.merge(order);
@@ -501,8 +607,7 @@ public class MarketServiceImpl implements MarketService {
 			String taskId, String processId, boolean comfirmworksheet,
 			List<Produce> productList) {
 		// 需要获取task中的数据
-		int orderId_process = (int) activitiApiUtil.getProcessVariable(
-				processId, "orderId");
+		int orderId_process = mainProcessService.getOrderIdInProcess(processId);
 
 		if (orderId == orderId_process) {
 			// 如果通过，创建合同加工单
@@ -523,7 +628,7 @@ public class MarketServiceImpl implements MarketService {
 			data.put(RESULT_CONFIRM_PRODUCE_ORDER_CONTRACT, comfirmworksheet);
 			// 直接进入到下一个流程时
 			try {
-				activitiApiUtil.completeTask(taskId, data, actorId);
+				mainProcessService.completeTask(taskId, actorId, data);
 				if (comfirmworksheet == false) {// 如果result的的值为false，即为确认加工单并签订合同失败，流程会异常终止，将orderState设置为1
 					Order order = orderDAO.findById(orderId);
 					order.setOrderState("1");
@@ -539,23 +644,6 @@ public class MarketServiceImpl implements MarketService {
 
 	}
 
-	@Override
-	public List<OrderInfo> getOrderInfoList(Integer employeeId) {
-		List<Task> tasks = activitiApiUtil.getAssignedTasksOfUserByTaskName(
-				"SHICHANGZHUANYUAN", "sign_contract");
-		List<OrderInfo> taskSummarys = new ArrayList<>();
-		for (Task task : tasks) {
-			if (activitiApiUtil.getProcessVariable(task, "employeeId").equals(
-					employeeId)) {
-				Integer orderId = (Integer) activitiApiUtil.getProcessVariable(
-						task, "orderId");
-				OrderInfo summary = new OrderInfo(orderDAO.findById(orderId),
-						task.getId());
-				taskSummarys.add(summary);
-			}
-		}
-		return taskSummarys;
-	}
 
 	@Override
 	public OrderInfo getOrderInfo(Integer orderId, String taskId) {
@@ -584,12 +672,10 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public boolean modifyProductSubmit(String userId, int id, String taskId,
 			String processId, boolean editworksheetok, List<Produce> productList) {
-		List<Task> tasks = activitiApiUtil.getAssignedTasksOfUserByTaskName(userId,
-				TASK_MODIFY_PRODUCE_ORDER);
+		List<Task> tasks = mainProcessService.getModifyProduceOrderTasks(userId);
 		for (Task task : tasks) {
 			if (task.getId() == taskId
-					&& activitiApiUtil.getProcessVariable(task, "orderId")
-							.equals(id)) {
+					&& (mainProcessService.getOrderIdInProcess(processId) == id)) {
 				produceDAO.deleteProduceByProperty("oid", id);
 				if (editworksheetok) {
 					for (Produce produce : productList) {
@@ -602,7 +688,7 @@ public class MarketServiceImpl implements MarketService {
 				data.put(RESULT_MODIFY_PRODUCE_ORDER, editworksheetok);
 				// 直接进入到下一个流程时
 				try {
-					activitiApiUtil.completeTask(taskId, data, userId);
+					mainProcessService.completeTask(taskId, userId, data);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -631,8 +717,7 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public OrderInfo getConfirmQuoteDetail(String arctorId, Integer orderId) {
-		Task task = activitiApiUtil.getTask(arctorId, TASK_CONFIRM_QUOTE,
-				orderId);
+		Task task = mainProcessService.getTaskOfUserByTaskNameWithSpecificOrderId(arctorId, TASK_CONFIRM_QUOTE, orderId);
 		OrderInfo model = new OrderInfo();
 		model.setOrder(orderDAO.findById(orderId));
 		model.setTask(task);
@@ -646,7 +731,7 @@ public class MarketServiceImpl implements MarketService {
 
 		data.put(RESULT_QUOTE, Integer.parseInt(result));
 		try {
-			activitiApiUtil.completeTask(taskId, data, actorId);
+			mainProcessService.completeTask(taskId, actorId, data);
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -669,7 +754,7 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_QUOTE, Integer.parseInt(result));
 		try {
-			activitiApiUtil.completeTask(taskId, data, actorId);
+			mainProcessService.completeTask(taskId, actorId, data);
 			if (result.equals("2")) {// 如果result的的值为2，即为取消订单，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
@@ -699,7 +784,6 @@ public class MarketServiceImpl implements MarketService {
 		return temp;
 	}
 
-	@Override
 	public Map<String, Object> getModifyQuoteDetail(int orderId, int accountId) {
 		return service.getBasicOrderModelWithQuote(accountId + "",
 				TASK_MODIFY_QUOTE, orderId);
@@ -815,7 +899,7 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_PUSH_RESTMONEY, result);
 		try {
-			activitiApiUtil.completeTask(taskId, data, actorId);
+			mainProcessService.completeTask(taskId, actorId, data);
 			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -831,7 +915,7 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> data = new HashMap<>();
 		data.put(RESULT_PUSH_RESTMONEY, result);
 		try {
-			activitiApiUtil.completeTask(taskId, data, actorId);
+			mainProcessService.completeTask(taskId, actorId, data);
 			if (result == false) {// 如果result的的值为false，即为催尾款失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
@@ -866,8 +950,7 @@ public class MarketServiceImpl implements MarketService {
 	public void mergeQuoteSubmit(int accountId, Quote q, int id, String taskId,
 			String processId) {
 		// 需要获取task中的数据
-		int orderId_process = (int) activitiApiUtil.getProcessVariable(
-				processId, "orderId");
+		int orderId_process = mainProcessService.getOrderIdInProcess(processId);
 		Order order = orderDAO.findById(id);
 		// String orderSource = order.getOrderSource();
 		//
@@ -883,7 +966,7 @@ public class MarketServiceImpl implements MarketService {
 			data.put(RESULT_IS_HAODUOYI, isHaoDuoYi2);
 			quoteDAO.merge(q);
 			try {
-				activitiApiUtil.completeTask(taskId, data, accountId + "");
+				mainProcessService.completeTask(taskId, accountId+"", data);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -911,13 +994,11 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public void verifyQuoteSubmit(Quote q, int id, String taskId,
 			String processId) {
-		int orderId_process = (int) activitiApiUtil.getProcessVariable(
-				processId, "orderId");
+		int orderId_process = mainProcessService.getOrderIdInProcess(processId);
 		if (id == orderId_process) {
 			quoteDAO.merge(q);
 			try {
-				activitiApiUtil
-						.completeTask(taskId, null, ACTOR_MARKET_MANAGER);
+				mainProcessService.completeTask(taskId, ACTOR_MARKET_MANAGER, null);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -927,23 +1008,20 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public void verifyQuoteSubmit(Quote quote, int id, String taskId,
 			String processId, boolean result, String comment) {
-		int orderId_process = (int) activitiApiUtil.getProcessVariable(
-				processId, "orderId");
+		int orderId_process = mainProcessService.getOrderIdInProcess(processId);
 		if (id == orderId_process) {
 			quoteDAO.merge(quote);
 			Map<String, Object> data = new HashMap<>();
 			data.put(RESULT_VERIFY_QUOTE, result);
 			data.put(VERIFY_QUOTE_COMMENT, comment);
 			try {
-				activitiApiUtil
-						.completeTask(taskId, data, ACTOR_MARKET_MANAGER);
+				mainProcessService.completeTask(taskId, ACTOR_MARKET_MANAGER, data);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	@Override
 	public void signContractSubmit(String actorId, String taskId, int orderId,
 			double discount, double total, String url) {
 		Order order = orderDAO.findById(orderId);
@@ -1018,12 +1096,11 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public void modifyQuoteSubmit(Quote q, int id, String taskId,
 			String processId, Integer userId) {
-		int orderId_process = (int) activitiApiUtil.getProcessVariable(
-				processId, "orderId");
+		int orderId_process = mainProcessService.getOrderIdInProcess(processId);
 		if (id == orderId_process) {
 			quoteDAO.merge(q);
 			try {
-				activitiApiUtil.completeTask(taskId, null, userId + "");
+				mainProcessService.completeTask(taskId, userId+"", null);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -1072,10 +1149,9 @@ public class MarketServiceImpl implements MarketService {
 		return list;
 	}
 
-	@Override
 	public ArrayList<String> getProcessStateName(final Integer orderId) {
 		String processId = orderDAO.findById(orderId).getProcessId();
-		return activitiApiUtil.getProcessStateNames(processId);
+		return (ArrayList<String>) mainProcessService.getProcessStateNames(processId);
 
 	}
 
@@ -1542,11 +1618,10 @@ public class MarketServiceImpl implements MarketService {
 	// TODO 这也不知道是什么鬼，保留原有的接口吧
 	@Override
 	public void testPrecondition(String userId, String taskName) {
-		List<Task> tasks = activitiApiUtil.getAssignedTasksOfUserByTaskName(userId,
-				taskName);
+		List<Task> tasks = mainProcessService.getTasksOfUserByTaskName(userId, taskName);
 		try {
 			for (Task task : tasks) {
-				activitiApiUtil.completeTask(task.getId(), null, userId);
+				mainProcessService.completeTask(task.getId(), userId, null);
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -1555,7 +1630,7 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public String getComment(Object task, String variableName) {
-		return (String) activitiApiUtil.getProcessVariable((Task)task, variableName);
+		return (String) mainProcessService.getVariable(((Task)task).getProcessInstanceId(), variableName);
 	}
 
 	/*

@@ -14,8 +14,8 @@ import nju.software.dao.impl.ProduceDAO;
 import nju.software.dataobject.OperateRecord;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
+import nju.software.process.service.MainProcessService;
 import nju.software.service.SweaterMakeService;
-import nju.software.util.ActivitiAPIUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +59,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 		}else{			
 			Map<String, Object> data = new HashMap<String, Object>();
 			try {
-				activitiApiUtil.completeTask(taskId, data, ACTOR_SWEATER_MANAGER);
+				mainProcessService.completeTask(taskId, ACTOR_SWEATER_MANAGER, data);
 				return true;
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -117,7 +117,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 		Map<String, Object> data = new HashMap<String, Object>();
  		try {
  			data.put(RESULT_SWEATER, result);
-			activitiApiUtil.completeTask(taskId, data, ACTOR_SWEATER_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_SWEATER_MANAGER, data);
 			if(result==false){//如果result的的值为false，即为大货生产失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
@@ -162,7 +162,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	@Autowired
 	private ProduceDAO ProduceDAO;
 	@Autowired
-	private ActivitiAPIUtil activitiApiUtil;
+	private MainProcessService mainProcessService;
 	@Autowired
 	private EmployeeDAO employeeDAO;
 	@Autowired

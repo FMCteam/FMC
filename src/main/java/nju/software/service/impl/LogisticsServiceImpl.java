@@ -27,8 +27,8 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Produce;
+import nju.software.process.service.MainProcessService;
 import nju.software.service.LogisticsService;
-import nju.software.util.ActivitiAPIUtil;
 import nju.software.util.DateUtil;
 
 import org.activiti.engine.task.Task;
@@ -41,12 +41,10 @@ public class LogisticsServiceImpl implements LogisticsService {
 	// ===========================收取样衣=================================
 	@Override
 	public List<Map<String, Object>> getReceiveSampleList() {
-		List<Task> tasks = activitiApiUtil.getAssignedTasksOfUserByTaskName(
-				ACTOR_LOGISTICS_MANAGER, TASK_RECEIVE_SAMPLE);
+		List<Task> tasks = mainProcessService.getReceiveSampleTasks(ACTOR_LOGISTICS_MANAGER);
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Task task : tasks) {
-			Integer orderId = (Integer) activitiApiUtil
-					.getProcessVariable(task, "orderId");
+			Integer orderId = mainProcessService.getOrderIdInProcess(task.getProcessInstanceId());
 			Map<String, Object> model = new HashMap<String, Object>();
 			Order order = orderDAO.findById(orderId);
 			model.put("order",order);
@@ -66,13 +64,11 @@ public class LogisticsServiceImpl implements LogisticsService {
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
 				 customername,  stylename,  startdate,enddate,employeeIds,userRole,userId);
 		
-		List<Task> tasks = activitiApiUtil.getAssignedTasksOfUserByTaskName(
-				ACTOR_LOGISTICS_MANAGER, TASK_RECEIVE_SAMPLE);	
+		List<Task> tasks = mainProcessService.getReceiveSampleTasks(ACTOR_LOGISTICS_MANAGER);	
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Task task : tasks) {
 			boolean isSearched = false;
-			Integer orderId = (Integer) activitiApiUtil
-					.getProcessVariable(task, "orderId");
+			Integer orderId = mainProcessService.getOrderIdInProcess(task.getProcessInstanceId());
 			for(int k =0;k<orders.size();k++){
 				if(orderId.equals(orders.get(k).getOrderId())){
 					isSearched = true;
@@ -109,7 +105,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 		Map<String, Object> data = new HashMap<String, Object>();
 			data.put(RESULT_RECEIVE_SAMPLE, (int) result);
 			try {
-				activitiApiUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+				mainProcessService.completeTask(taskId, ACTOR_LOGISTICS_MANAGER, data);
+				mainProcessService.completeTask(taskId, ACTOR_LOGISTICS_MANAGER, data);
 			if(result.intValue()==1){//如果result的的值为1，即为未收取到样衣，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);
@@ -189,7 +186,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 //		data.put(key, value);
 //		data.put(RESULT_TAKE_SAMPLE_Money, takeSampleMoney);
 			try {
-				activitiApiUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+				mainProcessService.completeTask(taskId, ACTOR_LOGISTICS_MANAGER, data);
 				return true;
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -285,13 +282,11 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	@Override
 	public List<Map<String, Object>> getMobileWarehouseList() {
-		List<Task> tasks = activitiApiUtil.getAssignedTasksOfUserByTaskName(
-				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE);
+		List<Task> tasks = mainProcessService.getWarehouseTasks(ACTOR_LOGISTICS_MANAGER);
 		List<Map<String, Object>> list = new ArrayList<>();
 		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
 		for (Task task : tasks) {
-			Integer orderId = (Integer) activitiApiUtil
-					.getProcessVariable(task, "orderId");
+			Integer orderId = mainProcessService.getOrderIdInProcess(task.getProcessInstanceId());
 			Map<String, Object> model = new HashMap<String, Object>();
 			Order order = orderDAO.findById(orderId);
 			model.put("order", order);
@@ -307,13 +302,11 @@ public class LogisticsServiceImpl implements LogisticsService {
 	
 	@Override
 	public List<Map<String, Object>> getMobileWarehouseHaoDuoYiList() {
-		List<Task> tasks = activitiApiUtil.getAssignedTasksOfUserByTaskName(
-				ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE_HAODUOYI);
+		List<Task> tasks = mainProcessService.getWarehouseHaoduoyiTasks(ACTOR_LOGISTICS_MANAGER);
 		List<Map<String, Object>> list = new ArrayList<>();
 		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
 		for (Task task : tasks) {
-			Integer orderId = (Integer) activitiApiUtil
-					.getProcessVariable(task, "orderId");
+			Integer orderId = mainProcessService.getOrderIdInProcess(task.getProcessInstanceId());
 			Map<String, Object> model = new HashMap<String, Object>();
 			Order order = orderDAO.findById(orderId);
 			model.put("order", order);
@@ -336,11 +329,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 		short isHaoDuoYi = order.getIsHaoDuoYi();
 		Task task = null;
 		if (isHaoDuoYi == 1) {
-			task = activitiApiUtil.getTask(ACTOR_LOGISTICS_MANAGER,
-					TASK_WAREHOUSE_HAODUOYI, orderId);
+			task = mainProcessService.getTaskOfUserByTaskNameWithSpecificOrderId(ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE_HAODUOYI, orderId);
 		} else {
-			task = activitiApiUtil.getTask(ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE,
-					orderId);
+			task = mainProcessService.getTaskOfUserByTaskNameWithSpecificOrderId(ACTOR_LOGISTICS_MANAGER, TASK_WAREHOUSE, orderId);
 		}
 		
 		model.put("order", order);
@@ -387,7 +378,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_IS_HAODUOYI, is_hao_duo_yi);
 			try {
-				activitiApiUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+				mainProcessService.completeTask(taskId, ACTOR_LOGISTICS_MANAGER, data);
 			
 			//如果是好多衣，入库完则直接结束整个流程（无需发货）
 			if(is_hao_duo_yi){
@@ -433,12 +424,10 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	@Override
 	public List<Map<String, Object>> getMobileSendClothesList() {
-		List<Task> tasks = activitiApiUtil.getAssignedTasksOfUserByTaskName(
-				ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES);
+		List<Task> tasks = mainProcessService.getSendClothesTasks(ACTOR_LOGISTICS_MANAGER);
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		for (Task task : tasks) {
-			Integer orderId = (Integer) activitiApiUtil
-					.getProcessVariable(task, "orderId");
+			Integer orderId = mainProcessService.getOrderIdInProcess(task.getProcessInstanceId());
 			Map<String, Object> model = new HashMap<String, Object>();
 			Order order = orderDAO.findById(orderId);
 			if (order.getLogisticsState() == 2) {
@@ -454,8 +443,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	@Override
 	public Map<String, Object> getMobileSendClothesDetail(Integer orderId) {
-		Task task = activitiApiUtil.getTask(ACTOR_LOGISTICS_MANAGER,
-				TASK_SEND_CLOTHES, orderId);
+		Task task = mainProcessService.getTaskOfUserByTaskNameWithSpecificOrderId(ACTOR_LOGISTICS_MANAGER, TASK_SEND_CLOTHES, orderId);
 		Map<String, Object> model = new HashMap<String, Object>();
 		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
 		Order order = orderDAO.findById(orderId);
@@ -517,7 +505,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 			try {
-				activitiApiUtil.completeTask(taskId, data, ACTOR_LOGISTICS_MANAGER);
+				mainProcessService.completeTask(taskId, ACTOR_LOGISTICS_MANAGER, data);
 			/*
 			 * whh:设置orderstate字段表示order结束状态
 			 */
@@ -563,7 +551,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	@Autowired
-	private ActivitiAPIUtil activitiApiUtil;
+	private MainProcessService mainProcessService;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired

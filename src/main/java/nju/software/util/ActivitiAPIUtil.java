@@ -79,9 +79,8 @@ public class ActivitiAPIUtil {
 	 */
 	public List<Task> getAssignedTasksOfGroupByTaskName(String groupId, String taskName){
 		List<Task> resultTasks = new ArrayList<Task>();
-		Map<String, String> nameMap = getTaskNameMap();
 		TaskQuery query = taskService.createTaskQuery().taskCandidateGroup(groupId);
-		resultTasks = query.taskName(nameMap.get(taskName)).list();
+		resultTasks = query.taskName(taskName).list();
 		return resultTasks;
 	}
 	
@@ -104,7 +103,7 @@ public class ActivitiAPIUtil {
 	public List<Task> getAssignedTasksOfUserByTaskName(String userId, String taskName){
 		List<Task> resultTasks = new ArrayList<Task>();
 		TaskQuery query = taskService.createTaskQuery().taskCandidateUser(userId);
-	    resultTasks = query.taskName(getTaskNameMap().get(taskName)).list();
+	    resultTasks = query.taskName(taskName).list();
 		return resultTasks;
 	}
 	
@@ -160,11 +159,11 @@ public class ActivitiAPIUtil {
 	 * @param orderId 订单的ID
 	 * @return
 	 */
-	public Task getTask(String userId, String taskName, Integer orderId){
+	public Task getTask(String userId, String taskName, String key, Object value){
 		List<Task> tasks = getAssignedTasksOfUser(userId);
-		Map<String, String> nameMap = getTaskNameMap();
 		for (Task task : tasks) {
-			if (task.getName().equals(nameMap.get(taskName)) && getProcessVariable(task, "orderId").equals(orderId)) {
+			if (task.getName().equals(taskName) && getProcessVariable(task.getProcessInstanceId(), key).equals(value)) {
+				
 				return task;
 			}
 		}
@@ -175,7 +174,7 @@ public class ActivitiAPIUtil {
 	 * 启动流程实例并返回实例ID
 	 * @return
 	 */
-	public String startWorkflowProcess(Map<String, Object> params) throws RuntimeException{
+	public String startWorkflowProcessByKey(String key, Map<String, Object> params) throws RuntimeException{
 		this.params = params;
 			ProcessInstance pi = runtimeService.startProcessInstanceByKey(processName, params);
 			System.out.println("流程实例启动成功, Id号为： "+ pi.getId());
@@ -343,61 +342,5 @@ public class ActivitiAPIUtil {
 		return processEngineConfiguration;
 	}
 	
-	/**
-	 * 从流程图中获取到的taskname为中文，而前端需要英文名<span class..>，因此做了个映射
-	 * @return
-	 */
-	private Map<String, String> getTaskNameMap(){
-		Map<String, String> nameMap = new HashMap<>();
-		//BuyService
-		nameMap.put("verifyPurchase","采购验证");
-		nameMap.put("computePurchaseCost","采购成本验证并核算");
-		nameMap.put( "purchaseSampleMaterial","样衣面料采购");
-		nameMap.put( "confirmPurchase","采购确认");
-		nameMap.put( "purchaseMaterial","大货面料采购确认");
-		nameMap.put( "buySweaterMaterial","购买组织原料");
-		//DesignService
-		nameMap.put( "verifyDesign","设计验证");
-		nameMap.put("computeDesignCost","设计验证");
-		nameMap.put("uploadDegisn", "录入版型数据及生产样衣");
-		nameMap.put("modifyDesign", "修改设计");
-		nameMap.put("confirmDesign", "设计验证");
-		nameMap.put("craftSample", "样衣工艺制作");
-		nameMap.put("craft", "大货工艺制作");
-		nameMap.put("typeSettingSlice", "排版切片");
-		nameMap.put("confirmCad", "确认版型");
-		//FinanceService
-		nameMap.put("confirmSampleMoney", "确认样衣制作金");
-		nameMap.put("confirmDeposit", "30%定金确认");
-		nameMap.put("returnDeposit", "退还定金");
-		nameMap.put("confirmFinalPayment", "尾款金额确认");
-		//LogisticsService
-		nameMap.put("receiveSample", "收取样衣");
-		nameMap.put("sendSample", "样衣发货");
-		nameMap.put("warehouse", "入库");
-		nameMap.put("warehouse_haoduoyi", "好多衣入库");
-		nameMap.put("sendClothes", "发货");
-		//MarketService
-		nameMap.put("modifyOrder", "修改询单");
-		nameMap.put("mergeQuote", "专员合并报价");
-		nameMap.put("verifyQuote", "主管审核报价");
-		nameMap.put("confirmQuote", "商定报价");
-		nameMap.put("modifyQuote", "修改报价");
-		nameMap.put("confirmProduceOrder", "确认加工单并签订合同");
-		nameMap.put("modifyProduceOrder", "修改加工订单");
-		nameMap.put("signContract", "签订合同");
-		nameMap.put("pushRest", "催尾款");
-		//ProduceService
-		nameMap.put("verifyProduce", "生产验证");
-		nameMap.put("computeProduceCost", "生产成本验证并核算");
-		nameMap.put("produceSample", "生产样衣");
-		nameMap.put("produce", "批量生产");
-		//QualityService
-		nameMap.put("checkQuality", "质量检测");
-		//SweaterMakeService
-		nameMap.put("confirmSweaterSampleAndCraft", "打小样&制作工艺&制版打样&样衣确认");
-		nameMap.put("sendSweater", "外发");
-		return nameMap;
-	}
-	
 }
+

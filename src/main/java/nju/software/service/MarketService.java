@@ -9,16 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import nju.software.dataobject.Accessory;
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
+import nju.software.model.OrderModel;
+import nju.software.model.ProductModel;
 
 public interface MarketService {
 
@@ -67,9 +71,6 @@ public interface MarketService {
 	public boolean confirmProduceOrderSubmit(String string, int orderId,
 			String taskId, String processId, boolean comfirmworksheet,
 			List<Produce> produces);
-
-	@Transactional(rollbackFor = Exception.class)
-	public List<OrderInfo> getOrderInfoList(Integer employeeId);
 
 	@Transactional(rollbackFor = Exception.class)
 	public OrderInfo getOrderInfo(Integer orderId, String taskId);
@@ -294,5 +295,12 @@ public interface MarketService {
 	
 	@Transactional(rollbackFor = Exception.class)
 	public String getComment(Object task, String variableName);
+
+	@Transactional(rollbackFor = Exception.class)
+	boolean addOrderCustomerSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			List<Produce> produces, List<Produce> sample_produces,
+			List<VersionData> versions, DesignCad cad,
+			HttpServletRequest request);
 
 }

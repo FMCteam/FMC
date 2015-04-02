@@ -29,14 +29,13 @@ import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
+import nju.software.process.service.MainProcessService;
 import nju.software.service.BuyService;
-import nju.software.util.ActivitiAPIUtil;
 
 @Service("buyServiceImpl")
 public class BuyServiceImpl implements BuyService {
 
 	// ===========================采购验证=================================
-	@Override
 	public List<Map<String, Object>> getVerifyPurchaseList() {
 		return service.getOrderList(ACTOR_PURCHASE_MANAGER,
 				TASK_VERIFY_PURCHASE);
@@ -64,7 +63,7 @@ public class BuyServiceImpl implements BuyService {
 		data.put(RESULT_PURCHASE, result);
 		data.put(RESULT_PURCHASE_COMMENT, comment);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PURCHASE_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return false;
@@ -199,7 +198,7 @@ public class BuyServiceImpl implements BuyService {
 		data.put(RESULT_PURCHASE, result);
 		data.put(RESULT_PURCHASE_COMMENT, comment);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PURCHASE_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -232,7 +231,7 @@ public class BuyServiceImpl implements BuyService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PURCHASE, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PURCHASE_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return false;
@@ -262,7 +261,7 @@ public class BuyServiceImpl implements BuyService {
 		data.put(RESULT_PURCHASE, result);
 		data.put(RESULT_NEED_CRAFT, needcraft);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PURCHASE_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return false;
@@ -301,7 +300,7 @@ public class BuyServiceImpl implements BuyService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PURCHASE, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PURCHASE_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return false;
@@ -316,7 +315,7 @@ public class BuyServiceImpl implements BuyService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PURCHASE, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PURCHASE_MANAGER, data);
 		
 		if (result == false) {// 如果result的的值为false，即为大货面料采购失败，流程会异常终止，将orderState设置为1
 			order.setOrderState("1");
@@ -372,7 +371,7 @@ public class BuyServiceImpl implements BuyService {
 		orderDAO.merge(order);
 		data.put("sweaterMaterial", buySweaterMaterialResult);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PURCHASE_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return false;
@@ -407,7 +406,7 @@ public class BuyServiceImpl implements BuyService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put(RESULT_PURCHASE, result);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PURCHASE_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return false;
@@ -433,7 +432,7 @@ public class BuyServiceImpl implements BuyService {
 			}
 		}
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_PURCHASE_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_PURCHASE_MANAGER, data);
 			orderDAO.attachDirty(order);
 			return true;
 		} catch (InterruptedException e) {
@@ -469,7 +468,7 @@ public class BuyServiceImpl implements BuyService {
 	}
 	@Override
 	public boolean isNeedCraft(String processId, String variableName) {
-		return (boolean) activitiAPIUtil.getProcessVariable(processId, variableName);
+		return (boolean) mainProcessService.getVariable(processId, variableName);
 	}
 
 	@Autowired
@@ -477,7 +476,7 @@ public class BuyServiceImpl implements BuyService {
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
-	private ActivitiAPIUtil activitiAPIUtil;
+	private MainProcessService mainProcessService;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired

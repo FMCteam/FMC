@@ -14,8 +14,8 @@ import nju.software.dataobject.CheckDetail;
 import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
+import nju.software.process.service.MainProcessService;
 import nju.software.service.QualityService;
-import nju.software.util.ActivitiAPIUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class QualityServiceImpl implements QualityService  {
 	@Autowired
 	private CustomerDAO customerDAO;
 	@Autowired
-	private ActivitiAPIUtil activitiAPIUtil;
+	private MainProcessService mainProcessService;
 	@Autowired
 	private ServiceUtil service;
 	@Autowired
@@ -214,7 +214,7 @@ public class QualityServiceImpl implements QualityService  {
 		data.put("isHaoDuoYi", isHaoDuoYi);
 		data.put("isSweater", isSweater);
 		try {
-			activitiAPIUtil.completeTask(taskId, data, ACTOR_QUALITY_MANAGER);
+			mainProcessService.completeTask(taskId, ACTOR_QUALITY_MANAGER, data);
 			return msg;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
