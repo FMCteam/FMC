@@ -2,18 +2,22 @@
 package nju.software.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 
+import net.sf.json.JSONObject;
 import nju.software.dao.impl.DeliveryRecordDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
@@ -22,6 +26,7 @@ import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
+import nju.software.dataobject.MarketstaffAlter;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
@@ -53,6 +58,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -84,7 +90,7 @@ public class MarketController {
 	private DeliveryRecordDAO deliveryRecordDAO;
 	@Autowired
 	private JavaMailUtil javaMailUtil;
-
+	
 	// ================================客户下单====================================
 	@RequestMapping(value = "/market/addOrderList.do")
 	//@Transactional(rollbackFor = Exception.class)
@@ -2869,5 +2875,43 @@ public class MarketController {
 		info.setStylename(stylename);
 		
 		return info;
-	} 
+	}
+	/**
+	 * 申请更改市场专员
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/market/applyForAlterMarketStaffSubmit.do")
+	public void applyForAlterMarketStaffSubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		//TODO 需要先确定是否存在申请
+		
+		//若不存在则提交申请
+		String reason = request.getParameter("reason");
+		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
+		Integer employeeId = Integer.parseInt(request.getParameter("employeeId"));
+		
+		Date date = new Date();
+		Timestamp applyTime = new Timestamp(date.getTime());
+		
+		MarketstaffAlter alterInfo = new MarketstaffAlter(employeeId, orderId, applyTime);
+		
+		boolean result = marketService.applyForAlterMarketStaffSubmit(alterInfo, reason);
+		
+		Map<String, Object>	map = new HashMap<>();
+		map.put("result", result);
+		map.put("reason", reason);
+		
+		JSONObject jsonObject = JSONObject.fromObject(map);
+		String json = jsonObject.toString();
+		
+		response.setContentType("application/json");
+		try {
+			response.getWriter().write(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

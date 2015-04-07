@@ -10,12 +10,40 @@
 	<persistence-unit name="org.jbpm.persistence.jpa"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>nju.software.dataobject.Accessory</class>
+		<class>nju.software.dataobject.AccessoryCost</class>
+		<class>nju.software.dataobject.Account</class>
+		<class>nju.software.dataobject.AccountRole</class>
+		<class>nju.software.dataobject.CheckDetail</class>
+		<class>nju.software.dataobject.CheckRecord</class>
+		<class>nju.software.dataobject.Craft</class>
+		<class>nju.software.dataobject.Customer</class>
+		<class>nju.software.dataobject.DeliveryRecord</class>
+		<class>nju.software.dataobject.Description</class>
+		<class>nju.software.dataobject.DesignCad</class>
+		<class>nju.software.dataobject.Employee</class>
+		<class>nju.software.dataobject.Fabric</class>
+		<class>nju.software.dataobject.FabricCost</class>
+		<class>nju.software.dataobject.Logistics</class>
+		<class>nju.software.dataobject.MarketstaffAlter</class>
+		<class>nju.software.dataobject.Money</class>
+		<class>nju.software.dataobject.OperateRecord</class>
+		<class>nju.software.dataobject.Order</class>
+		<class>nju.software.dataobject.Package</class>
+		<class>nju.software.dataobject.PackageDetail</class>
+		<class>nju.software.dataobject.Permission</class>
+		<class>nju.software.dataobject.Produce</class>
+		<class>nju.software.dataobject.Product</class>
+		<class>nju.software.dataobject.Quote</class>
+		<class>nju.software.dataobject.Role</class>
+		<class>nju.software.dataobject.RolePermission</class>
+		<class>nju.software.dataobject.SampleClothes</class>
+		<class>nju.software.dataobject.VersionData</class>
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
 			<property name="hibernate.max_fetch_depth" value="7" />
 			<property name="hibernate.jdbc.fetch_size" value="18" />
-			<property name="hibernate.jdbc.fetch_size" value="10" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.transaction.manager_lookup_class"
 				value="org.hibernate.transaction.BTMTransactionManagerLookup" />
