@@ -139,7 +139,6 @@ public class MarketServiceImpl implements MarketService {
 	
 	@Override
 	public boolean applyForAlterMarketStaffSubmit(MarketstaffAlter alterInfo, String reason) {
-		marketstaffAlterDAO=new MarketstaffAlterDAO();
 		marketstaffAlterDAO.save(alterInfo);
 		Map<String, Object> params = new HashMap<>();
 		params.put("reason", reason);

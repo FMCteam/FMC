@@ -8,6 +8,7 @@
 
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">订单详情</li>
+				<li><a href="#changeMarket" data-toggle="tab">更换专员</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
@@ -26,6 +27,9 @@
 				</div>
 				<div class="tab-pane" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
+				</div>
+				<div class="tab-pane" id="changeMarket">
+					<%@include file="/views/market/changeMarketStaff.jsp"%>
 				</div>
 			</div>
 			<c:if test="${role=='designManager'}">
@@ -115,6 +119,18 @@ $(function(){
 	var minute = date.getMinutes()>9?date.getMinutes():"0"+date.getMinutes();
 	var second = date.getSeconds()>9?date.getSeconds():"0"+date.getSeconds();
 	$("#input_day").val(date.getFullYear()+"/"+month+"/"+day+" "+hour+":"+minute+":"+second);
+	
+	$("#applySubmit").click(function(){
+		$.get("${ctx}/market/applyForAlterMarketStaffSubmit.do",{"reason":$("#reason").val(),"orderId":${orderInfo.order.orderId},"employeeId":${orderInfo.order.employeeId}},function(data){
+			if(data.result == true){
+				$(".result").css("color","red").html("已提交");
+				$("#reason").html($("#reason").val());
+			}
+			else{
+				$(".result").css("color","blue").html("请不要重复提交");
+			}
+		});
+	});
 });
 </script>
 <%@include file="/common/footer.jsp"%>

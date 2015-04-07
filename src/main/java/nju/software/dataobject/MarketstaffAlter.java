@@ -78,7 +78,7 @@ public class MarketstaffAlter {
 	
 	@Id
 	@GeneratedValue(strategy= IDENTITY)
-	@Column(name="alter_id", unique = true, nullable= false)
+	@Column(name="alter_id", unique = true, nullable = true)
 	public Integer getAlterId() {
 		return alterId;
 	}
@@ -130,7 +130,7 @@ public class MarketstaffAlter {
 		this.verifyState = verifyState;
 	}
 	
-	@Column(name="process_id", nullable=false)
+	@Column(name="process_id", nullable = true)
 	public String getProcessId() {
 		return processId;
 	}
