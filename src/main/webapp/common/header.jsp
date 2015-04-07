@@ -82,4 +82,4 @@ table.tablesorter thead tr .headerSortDown {
 
 </head>
 <body>
-	<div id="mainwrapper" class="mainwrapper">
+	<div id="mainwrapper">
