@@ -430,6 +430,7 @@
 	</dependencies>
   	<build>
 		<finalName>fmc</finalName>
+		<pluginManagement>
 		<plugins>
 		
 			<plugin>
@@ -492,6 +493,7 @@
 				</executions>
 			</plugin>
 		</plugins>
+		</pluginManagement>
 	</build>
 
 </project>
