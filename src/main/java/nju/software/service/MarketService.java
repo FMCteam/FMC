@@ -12,6 +12,7 @@ import nju.software.dataobject.Accessory;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.DesignCad;
+import nju.software.dataobject.Employee;
 import nju.software.dataobject.Fabric;
 import nju.software.dataobject.Logistics;
 import nju.software.dataobject.MarketstaffAlter;
@@ -27,6 +28,14 @@ import nju.software.model.ProductModel;
 
 public interface MarketService {
 	
+	/**
+	 * 获取所有未审批的申请和理由
+	 * @return 返回申请信息对象和理由
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public List<Map<String, Object>>  getAlltoDoAlterInfo();
+	       
+
 	/**
 	 *提交流程相关的信息
 	 *@param alter 申请信息
