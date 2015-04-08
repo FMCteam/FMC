@@ -2979,10 +2979,12 @@ public class MarketController {
 			                MarketstaffAlter AlterModel = marketService.getMarketStaffAlterById(alterId);
 			                List<Employee> employeeList = employeeService.getAllEmployee();
 			                //System.out.println("=============employeeList.size:"+employeeList.size());
-			                Map<String, Object> orderModel = marketService.getVerifyQuoteDetail(
+			             /*   Map<String, Object> orderModel = marketService.getVerifyQuoteDetail(
 			        				0, orderId);
 			               
-			        		model.addAttribute("orderInfo", orderModel);
+			        		*/
+			                Map<String, Object> orderModel = marketService.getOrderDetail(orderId);
+			                model.addAttribute("orderInfo", orderModel);
 			                model.addAttribute("AlterInfo", AlterModel);
 	                        model.addAttribute("employeeList",employeeList);
 	                       // model.addAttribute("employee",employeeList.get(0));
