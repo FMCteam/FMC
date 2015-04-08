@@ -5,28 +5,44 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
-		<form id="verifyAlterDetailForm" class="verify" method="post" action="${ctx}/market/verifyAlterSubmit.do" onSubmit="return quote_verify()">
+		<form id="verifyAlterDetailForm" class="verify" method="post" action="${ctx}/market/verifyAlterSubmit.do" >
 			<div class="row-fluid" style="min-height:300px;">
-				<!--  如果是其它页面，这里是填充具体的内容。 -->
+				<!--  如果是其它页面，这里是填充具体的内容。 --><!--onSubmit="return quote_verify()"  -->
 				<ul class="nav nav-tabs detail" id="tab">
 					<li class="task-name">审核变更申请</li>
-					<li  class="active"><a href="#quote" data-toggle="tab">变更申请信息</a></li>
-				<!--	<li><a href="#cad" data-toggle="tab">版型信息</a></li>
+					<li  class="active"><a href="#alterApply" data-toggle="tab">变更申请信息</a></li>
+					<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 					<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 					<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
 					<li><a href="#material" data-toggle="tab">面辅信息</a></li>
-					<li><a href="#basic" data-toggle="tab">基本信息</a></li> -->
+					<li><a href="#basic" data-toggle="tab">基本信息</a></li>
 				</ul>
 
 				<div class="tab-content">
-				
-					<div class="tab-pane  active" id="quote">
-						<%@include file="/views/common/quote_w.jsp"%>
+				<div class="tab-pane" id="basic">
+						<%@include file="/views/common/basic.jsp"%>
+					</div>
+					<div class="tab-pane" id="material">
+						<%@include file="/views/common/material.jsp"%>
+					</div>
+					<div class="tab-pane" id="sample">
+						<%@include file="/views/common/sample.jsp"%>
+					</div>
+					<div class="tab-pane" id="produce">
+						<%@include file="/views/common/produce.jsp"%>
+					</div>
+					<div class="tab-pane" id="cad">
+						<%@include file="/views/common/cad.jsp"%>
+					</div>
+					<div class="tab-pane  active" id="alterApply">
+						<!-- @include file="/views/common/quote_w.jsp" --> 
+                        <td class="span2">原因</td>
                         <textarea class="span12"
 							disabled="disabled"	style="resize:vertical" rows="5" name="reason">${AlterInfo.reason}</textarea>
 					</div>
 				</div>
- 				<table class="table table-striped table-bordered table-hover detail">
+ 				<table class="table table-striped table-bordered table-hover detail">  
+ 				    
 					<tr>
 						<td class="span2">意见</td>
 						<td colspan="6"><textarea class="span12"
@@ -52,16 +68,18 @@
                    
                     <tr id="changeStaff">
 						<td>变更专员</td>
-                        <td> <select name="nextEmployeeId" id="nextEmployee"
-									  >
-                             <c:forEach var="emplyee" items="${employeeList}">       
-                                    <option value="${employee.emyloyeeId}">${employee.employeeName}</option>
-                                    
-                               </c:forEach>     
-                                    
-                                    
-                                    
-                                    </select>   </td>
+                        <td> <select name="nextEmployeeId" id="nextEmployee">
+                             <c:forEach var="employee" items="${employeeList}">       
+                                    <option value="${employee.employeeId}">${employee.employeeName}</option>
+                              </c:forEach>     
+                              </select>  
+                              <a id="agreeChange" class="btn btn-primary btn-rounded" style="float: right;">
+							 <i class="icon-ok icon-white"></i> 确认</a>
+                               </td>
+                             
+                    </tr>
+                    
+                   
 				</table>
 				
 			</div>
@@ -106,5 +124,5 @@
 <script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
 <script type="text/javascript" src="${ctx}/js/order/add_quote.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<script type="text/javascript" src="${ctx}/views/market/verifyQuoteDetail.js"></script>
+<script type="text/javascript" src="${ctx}/views/market/verifyAlterDetail.js"></script>
 <%@include file="/common/footer.jsp"%>

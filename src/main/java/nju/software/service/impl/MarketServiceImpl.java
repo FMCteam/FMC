@@ -3,6 +3,7 @@ package nju.software.service.impl;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -150,7 +151,18 @@ public class MarketServiceImpl implements MarketService {
 		MarketstaffAlter example = new MarketstaffAlter();
 		List<MarketstaffAlter> results = new ArrayList<>();
 		example.setVerifyState(MarketstaffAlter.STATE_TODO);
-		results = marketstaffAlterDAO.findByExample(example);
+		//results = marketstaffAlterDAO.findByExample(example);
+		example.setAlterId(1);
+		example.setEmployeeId(1);
+		example.setOrderId(1);
+		Date d = new Date();
+		Timestamp time = new Timestamp(d.getTime());
+		example.setApplyTime(time);
+		example.setEndTime(time);
+		results.add(example);
+		
+		
+		
 		return results;
 	}
 

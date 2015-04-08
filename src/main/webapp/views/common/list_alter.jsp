@@ -41,7 +41,7 @@
 <div class="OrderListWrap" style="margin-top:20px;margin-left:25px;"> 
 	<div class="OrderList">
 		<ul id="itemContainer" style="list-style:none;">
-			<c:forEach var="model" items="${AlterInfo_list}">
+			<c:forEach var="model" items="${list}">
 				<div class="orderWrap" style="width:25%; float:left; margin-bottom:20px;">
 					<li>
 						<div>
@@ -74,12 +74,12 @@
 									</tr>
 									<tr>
 										<td>审批状态：</td>
-										<td>${model.Alter.VerifyState}</td>
+										<td>${model.Alter.verifyState}</td>
 									</tr>
 									
 									<tr>
 										<td>操作：</td>
-										<td><a href="${ctx}${url}?orderId=${model.order.orderId}&alterId=${model.Alter.alterId}">查看详情</a></td>
+										<td><a href="${ctx}${url}?orderId=${model.Alter.orderId}&alterId=${model.Alter.alterId}">查看详情</a></td>
 									</tr>
 								</tbody>
 							</table>

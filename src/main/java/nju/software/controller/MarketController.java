@@ -50,6 +50,8 @@ import nju.software.util.FileOperateUtil;
 import nju.software.util.ImageUtil;
 import nju.software.util.JavaMailUtil;
 import nju.software.util.ListUtil;
+import nju.software.util.mail.MailSenderInfo;
+import nju.software.util.mail.SimpleMailSender;
 
 import org.antlr.grammar.v3.ANTLRv3Parser.throwsSpec_return;
 import org.apache.commons.lang.StringUtils;
@@ -2953,7 +2955,8 @@ public class MarketController {
 		}
 		
 	           // marketService.verifyQuoteSubmit(Alter, suggestion);
-                 marketService.verifyAlterSubmit(Alter, taskId, processId,result,suggestion);
+               //  marketService.verifyAlterSubmit(Alter, taskId, processId,result,suggestion);
+		//marketService.verifyAlterMarketstaffSubmit(alterId, result, suggestion);
 		return "redirect:/market/verifyAlterList.do";
 		}
 	
@@ -2966,37 +2969,54 @@ public class MarketController {
 	 * @return
 	 */
 	
-	// 主管审核报价detail
+	// 主管审核申请表detail
 		@RequestMapping(value = "market/verifyAlterDetail.do", method = RequestMethod.GET)
 		//@Transactional(rollbackFor = Exception.class)
 		public String verifyAlterDetail(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			                int alterId = Integer.parseInt(request.getParameter("alterId"));
+			                int orderId =Integer.parseInt(request.getParameter("orderId"));
 			                MarketstaffAlter AlterModel = marketService.getMarketStaffAlterById(alterId);
 			                List<Employee> employeeList = employeeService.getAllEmployee();
-	                        model.addAttribute("AlterInfo", AlterModel);
+			                //System.out.println("=============employeeList.size:"+employeeList.size());
+			                Map<String, Object> orderModel = marketService.getVerifyQuoteDetail(
+			        				0, orderId);
+			               
+			        		model.addAttribute("orderInfo", orderModel);
+			                model.addAttribute("AlterInfo", AlterModel);
 	                        model.addAttribute("employeeList",employeeList);
+	                       // model.addAttribute("employee",employeeList.get(0));
 
 			return "market/verifyAlterDetail";	
 	}
 
 	
-		// 主管审核报价List
+		// 主管审核申请表List
 		@RequestMapping(value = "market/verifyAlterList.do", method = RequestMethod.GET)
 		//@Transactional(rollbackFor = Exception.class)
 		public String verifyAlterList(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 		    List<MarketstaffAlter> alterList = marketService.getAlltoDoAlter();
-		    List<StaffAlterInfo> AlterInfo_list = new ArrayList();
+		    List<Map<String, Object>> list = new ArrayList<>();
+		   
+		    
 		    for(MarketstaffAlter staffAlter :alterList){
+		    	
+		    Map<String, Object> alterInfo = new HashMap<String, Object>();
 		    Employee employee_next =null;
 		    Employee employee =employeeService.getEmployeeById(staffAlter.getEmployeeId());
-		    StaffAlterInfo alterInfo= new StaffAlterInfo(staffAlter,employee,employee_next);
-		    AlterInfo_list.add(alterInfo);
+		   // StaffAlterInfo alterInfo= new StaffAlterInfo(staffAlter,employee,employee_next);
+		    alterInfo.put("employee", employee);
+		    alterInfo.put("employeeNext",employee_next);
+		    alterInfo.put("Alter",staffAlter );
+		    list.add(alterInfo);
 		 
 		    }
+		    
+		    
+		    
 	       // AlterInfo_list (Alter,employee_next,employee);
-	        model.put("list", AlterInfo_list);
+	        model.put("list", list);
 			model.addAttribute("taskName", "审核申请");
 			model.addAttribute("url", "/market/verifyAlterDetail.do");
 			model.addAttribute("searchurl", "/market/verifyAlterListSearch.do");
@@ -3009,7 +3029,7 @@ public class MarketController {
 
 	}
 
-	
+		
 	
 	
 	
