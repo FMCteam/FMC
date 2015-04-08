@@ -153,7 +153,7 @@ public class MarketServiceImpl implements MarketService {
 		example.setVerifyState(MarketstaffAlter.STATE_TODO);
 		//results = marketstaffAlterDAO.findByExample(example);
 		example.setAlterId(1);
-		example.setEmployeeId(1);
+		example.setEmployeeId(13);
 		example.setOrderId(1);
 		Date d = new Date();
 		Timestamp time = new Timestamp(d.getTime());
@@ -1229,7 +1229,7 @@ public class MarketServiceImpl implements MarketService {
 
 		return model;
 	}
-
+    
 	@Override
 	public Map<String, Object> getVerifyQuoteDetail(Integer userId, int orderId) {
 		return service.getBasicOrderModelWithQuote(ACTOR_MARKET_MANAGER,
