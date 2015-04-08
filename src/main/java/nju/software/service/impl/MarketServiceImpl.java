@@ -94,6 +94,8 @@ public class MarketServiceImpl implements MarketService {
 	public final static String UPLOAD_DIR_REFERENCE = "/upload/reference/";
 	public final static String RESULT_VERIFY_QUOTE = "verifyQuoteSuccess";
 	public final static String VERIFY_QUOTE_COMMENT = "verifyQuoteComment";
+	public final static String RESULT_REASON="reason";
+	public final static String RESULT_ALTERINFO="alterInfo";
 
 	@Autowired
 	private ProductDAO productDAO;
@@ -139,6 +141,27 @@ public class MarketServiceImpl implements MarketService {
 	private MarketstaffAlterDAO marketstaffAlterDAO;
 	
 	
+	
+	@Override
+	public List<Map<String, Object>> getAlltoDoAlterInfo() {
+		MarketstaffAlter example = new MarketstaffAlter();
+		List<MarketstaffAlter> list = new ArrayList<>();
+		example.setVerifyState(MarketstaffAlter.STATE_TODO);
+		list = marketstaffAlterDAO.findByExample(example);
+		List<Map<String, Object>> mapList= new ArrayList<>();
+		for (MarketstaffAlter alter:list){
+			String reasonString =null;
+			//TODO reason
+			Map<String,Object> alterInfo=new HashMap<String,Object>();
+			alterInfo.put(MarketServiceImpl.RESULT_REASON, reasonString);
+			alterInfo.put(MarketServiceImpl.RESULT_ALTERINFO, alter);
+			mapList.add(alterInfo);
+			
+			
+		}
+		return mapList;
+	}
+
 	
 	@Override
 	public void verifyAlterSubmit(MarketstaffAlter alter, String taskId,
@@ -232,15 +255,15 @@ public class MarketServiceImpl implements MarketService {
 
 
 	@Override
-	public void verifyAlterMarketstaffSubmit(Integer alterId, boolean result, String comment) {
-		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
-		if (result==true)alter.setVerifyState(MarketstaffAlter.STATE_AGREE);
-		else alter.setVerifyState(MarketstaffAlter.STATE_DISAGREE);
+	public void verifyAlterMarketstaffSubmit(MarketstaffAlter alterInfo,  boolean result, String comment) {
+//		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
+		if (result==true)alterInfo.setVerifyState(MarketstaffAlter.STATE_AGREE);
+		else alterInfo.setVerifyState(MarketstaffAlter.STATE_DISAGREE);
 		
 		
 		//TODO 
 		//涉及流程 comment  
-		marketstaffAlterDAO.save(alter);
+		marketstaffAlterDAO.save(alterInfo);
 		
 	}
 
@@ -1840,6 +1863,8 @@ public class MarketServiceImpl implements MarketService {
 		params.put("isSweater", isSweater);
 		return params;
 	}
+
+	
 
 	
 

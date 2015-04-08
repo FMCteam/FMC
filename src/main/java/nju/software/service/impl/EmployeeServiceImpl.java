@@ -23,6 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private ActivitiAPIUtil activitiAPIUtil;
 	
+	public final static String DEPARTMENT="市场部";
+	
 	@Override
 	public Employee getEmployeeById(int employeeId) {
 		try {
@@ -105,6 +107,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> getEmployeeByName(String employeename) {
 		List<Employee> employees = employeeDAO.findByEmployeeName(employeename);
 		return employees;
+	}
+
+	@Override
+	public List<Employee> getAllManagerStaff() {
+		Employee instance=new Employee();
+		instance.setDepartment(EmployeeServiceImpl.DEPARTMENT);
+		List<Employee> eList=employeeDAO.findByExample(instance);
+		
+		return eList;
 	}
 
 }
