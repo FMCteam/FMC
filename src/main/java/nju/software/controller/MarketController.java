@@ -32,6 +32,7 @@ import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.SearchInfo;
 import nju.software.dataobject.VersionData;
+import nju.software.model.StaffAlterInfo;
 import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
 import nju.software.service.DesignCadService;
@@ -2914,4 +2915,103 @@ public class MarketController {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 主管审核申请
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "market/verifyAlterSubmit.do", method = RequestMethod.POST)
+	//@Transactional(rollbackFor = Exception.class)
+	public String verifySubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		int taskId =Integer.parseInt(request.getParameter("taskId"));
+		int processId =	Integer.parseInt(request.getParameter("processId"));	
+		int alterId = Integer.parseInt(request.getParameter("alterId"));
+		boolean result = Boolean.parseBoolean(request.getParameter("verifyAlterSuccessVal"));
+		
+		String verifyState =request.getParameter("verifyState");
+		
+		String suggestion=request.getParameter("suggestion");
+		
+		MarketstaffAlter Alter = marketService.getMarketStaffAlterById(alterId) ;
+		Date date = new Date();
+		Timestamp endTime = new Timestamp(date.getTime());
+		
+		Alter.setEndTime(endTime);
+		
+		Alter.setVerifyState(verifyState);
+		
+		//是否同意 ，设置了下一个专员
+		if(result){
+		int nextEmployeeId = Integer.parseInt(request.getParameter("nextEmployeeId"));
+		Alter.setNextEmployeeId(nextEmployeeId);
+		}
+		else {
+			Alter.setNextEmployeeId(Alter.getEmployeeId());
+		}
+		
+	           // marketService.verifyQuoteSubmit(Alter, suggestion);
+                 marketService.verifyAlterSubmit(Alter, taskId, processId,result,suggestion);
+		return "redirect:/market/verifyAlterList.do";
+		}
+	
+	
+	/**
+	 * 主管审核申请表详细
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	
+	// 主管审核报价detail
+		@RequestMapping(value = "market/verifyAlterDetail.do", method = RequestMethod.GET)
+		//@Transactional(rollbackFor = Exception.class)
+		public String verifyAlterDetail(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			                int alterId = Integer.parseInt(request.getParameter("alterId"));
+			                MarketstaffAlter AlterModel = marketService.getMarketStaffAlterById(alterId);
+			                List<Employee> employeeList = employeeService.getAllEmployee();
+	                        model.addAttribute("AlterInfo", AlterModel);
+	                        model.addAttribute("employeeList",employeeList);
+
+			return "market/verifyAlterDetail";	
+	}
+
+	
+		// 主管审核报价List
+		@RequestMapping(value = "market/verifyAlterList.do", method = RequestMethod.GET)
+		//@Transactional(rollbackFor = Exception.class)
+		public String verifyAlterList(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+		    List<MarketstaffAlter> alterList = marketService.getAlltoDoAlter();
+		    List<StaffAlterInfo> AlterInfo_list = new ArrayList();
+		    for(MarketstaffAlter staffAlter :alterList){
+		    Employee employee_next =null;
+		    Employee employee =employeeService.getEmployeeById(staffAlter.getEmployeeId());
+		    StaffAlterInfo alterInfo= new StaffAlterInfo(staffAlter,employee,employee_next);
+		    AlterInfo_list.add(alterInfo);
+		 
+		    }
+	       // AlterInfo_list (Alter,employee_next,employee);
+	        model.put("list", AlterInfo_list);
+			model.addAttribute("taskName", "审核申请");
+			model.addAttribute("url", "/market/verifyAlterDetail.do");
+			model.addAttribute("searchurl", "/market/verifyAlterListSearch.do");
+
+			return "market/verifyAlterList";
+
+
+
+
+
+	}
+
+	
+	
+	
+	
+	
 }
