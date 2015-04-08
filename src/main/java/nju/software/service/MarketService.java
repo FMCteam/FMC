@@ -27,6 +27,35 @@ import nju.software.model.ProductModel;
 
 public interface MarketService {
 	
+	/**
+	 *提交流程相关的信息
+	 *@param alter 申请信息
+	 *@param taskId 
+	 *@param processId
+	 *@param result
+	 *@param suggestion
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public void verifyAlterSubmit(MarketstaffAlter alter, String taskId,
+			String processId, boolean result, String suggestion);//提交ApplyAlter审批
+	
+	/**
+	 * 获取所有未审批的申请
+	 * @return 未审批的申请列表
+	 */	
+	@Transactional(rollbackFor = Exception.class)
+	public List<MarketstaffAlter> getAlltoDoAlter();
+	
+	
+	/**
+	 * 根据id获取申请信息
+	 * @param alterId
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public MarketstaffAlter getMarketStaffAlterById(int alterId);
+	
+	
 	
 	/**
 	 * 申请更换专员

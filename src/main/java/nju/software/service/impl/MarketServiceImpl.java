@@ -137,6 +137,29 @@ public class MarketServiceImpl implements MarketService {
 	@Autowired
 	private MarketstaffAlterDAO marketstaffAlterDAO;
 	
+	
+	
+	@Override
+	public void verifyAlterSubmit(MarketstaffAlter alter, String taskId,
+			String processId, boolean result, String suggestion) {
+		//TODO
+	}
+	
+	@Override
+	public List<MarketstaffAlter> getAlltoDoAlter() {
+		MarketstaffAlter example = new MarketstaffAlter();
+		List<MarketstaffAlter> results = new ArrayList<>();
+		example.setVerifyState(MarketstaffAlter.STATE_TODO);
+		results = marketstaffAlterDAO.findByExample(example);
+		return results;
+	}
+
+	@Override
+	public MarketstaffAlter getMarketStaffAlterById(int alterId) {
+		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
+		return alter;
+	}
+
 	@Override
 	public boolean applyForAlterMarketStaffSubmit(MarketstaffAlter alterInfo, String reason) {
 		marketstaffAlterDAO.save(alterInfo);
@@ -1806,4 +1829,7 @@ public class MarketServiceImpl implements MarketService {
 		return params;
 	}
 
+	
+
+	
 }

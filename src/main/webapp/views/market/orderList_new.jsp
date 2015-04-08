@@ -67,12 +67,13 @@
 								<li>
 									<div>
 										<a href="${ctx}${url}?orderId=${model.order.orderId}&cid=${cid}" title="查看详情">
-										<c:if test="${empty model.order.sampleClothesThumbnailPicture}">
+										<!--<c:if test="${empty model.order.sampleClothesThumbnailPicture}">
 											<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >	
 										</c:if>
 										<c:if test="${not empty model.order.sampleClothesThumbnailPicture}">
 											<img src="${model.order.sampleClothesThumbnailPicture}" title="查看详情" style="height:225px;width:225px" >
-										</c:if>
+										</c:if>-->
+											<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >	
 										</a>
 									</div>
 							
