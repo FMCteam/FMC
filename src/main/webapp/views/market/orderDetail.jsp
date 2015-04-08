@@ -125,9 +125,18 @@ $(function(){
 			if(data.result == true){
 				$(".result").css("color","red").html("已提交");
 				$("#reason").html($("#reason").val());
+				noty({
+					text : '申请提交成功',
+					layout : 'topCenter',
+					timeout : 2000
+				});
 			}
 			else{
-				$(".result").css("color","blue").html("请不要重复提交");
+				noty({
+					text : '申请提交失败',
+					layout : 'topCenter',
+					timeout : 2000
+				});
 			}
 		});
 	});
