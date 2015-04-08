@@ -89,14 +89,13 @@ public interface MarketService {
 	
 	/**
 	 * 市场经理审批专员申请
-	 * @param orderId 被申请更换专员的订单ID
-	 * @param actorId 市场主管
+	 * @param alterInfo 申请信息
 	 * @param result  审批结果
 	 * @param comment 审批备注
 	 * @return 没有返回
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void verifyAlterMarketstaffSubmit(Integer alterId, boolean result, String comment);
+	public void verifyAlterMarketstaffSubmit(MarketstaffAlter alterInfo, boolean result, String comment);
 	
 	/**
 	 * 更换专员

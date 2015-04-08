@@ -220,15 +220,15 @@ public class MarketServiceImpl implements MarketService {
 
 
 	@Override
-	public void verifyAlterMarketstaffSubmit(Integer alterId, boolean result, String comment) {
-		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
-		if (result==true)alter.setVerifyState(MarketstaffAlter.STATE_AGREE);
-		else alter.setVerifyState(MarketstaffAlter.STATE_DISAGREE);
+	public void verifyAlterMarketstaffSubmit(MarketstaffAlter alterInfo,  boolean result, String comment) {
+//		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
+		if (result==true)alterInfo.setVerifyState(MarketstaffAlter.STATE_AGREE);
+		else alterInfo.setVerifyState(MarketstaffAlter.STATE_DISAGREE);
 		
 		
 		//TODO 
 		//涉及流程 comment  
-		marketstaffAlterDAO.save(alter);
+		marketstaffAlterDAO.save(alterInfo);
 		
 	}
 
