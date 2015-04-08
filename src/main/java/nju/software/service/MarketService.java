@@ -28,6 +28,25 @@ import nju.software.model.ProductModel;
 public interface MarketService {
 	
 	
+	
+	/**
+	 * 获取所有未审批的申请
+	 * @return 未审批的申请列表
+	 */	
+	@Transactional(rollbackFor = Exception.class)
+	public List<MarketstaffAlter> getAlltoDoAlter();
+	
+	
+	/**
+	 * 根据id获取申请信息
+	 * @param alterId
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public MarketstaffAlter getMarketStaffAlterById(int alterId);
+	
+	
+	
 	/**
 	 * 申请更换专员
 	 * @param alterInfo 申请信息
