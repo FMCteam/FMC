@@ -140,6 +140,12 @@ public class MarketServiceImpl implements MarketService {
 	
 	
 	@Override
+	public void verifyAlterSubmit(MarketstaffAlter alter, String taskId,
+			String processId, boolean result, String suggestion) {
+		//TODO
+	}
+	
+	@Override
 	public List<MarketstaffAlter> getAlltoDoAlter() {
 		MarketstaffAlter example = new MarketstaffAlter();
 		List<MarketstaffAlter> results = new ArrayList<>();
@@ -1822,6 +1828,8 @@ public class MarketServiceImpl implements MarketService {
 		params.put("isSweater", isSweater);
 		return params;
 	}
+
+	
 
 	
 }
