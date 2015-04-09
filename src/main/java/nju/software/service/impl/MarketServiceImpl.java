@@ -174,15 +174,15 @@ public class MarketServiceImpl implements MarketService {
 		MarketstaffAlter example = new MarketstaffAlter();
 		List<MarketstaffAlter> results = new ArrayList<>();
 		example.setVerifyState(MarketstaffAlter.STATE_TODO);
-		//results = marketstaffAlterDAO.findByExample(example);
-		example.setAlterId(1);
+		results = marketstaffAlterDAO.findByExample(example);
+		/*example.setAlterId(1);
 		example.setEmployeeId(13);
 		example.setOrderId(1);
 		Date d = new Date();
 		Timestamp time = new Timestamp(d.getTime());
 		example.setApplyTime(time);
 		example.setEndTime(time);
-		results.add(example);
+		results.add(example);*/
 		
 		
 		

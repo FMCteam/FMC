@@ -2928,9 +2928,11 @@ public class MarketController {
 	//@Transactional(rollbackFor = Exception.class)
 	public String verifySubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		int taskId =Integer.parseInt(request.getParameter("taskId"));
+		/*int taskId =Integer.parseInt(request.getParameter("taskId"));
 		int processId =	Integer.parseInt(request.getParameter("processId"));	
-		int alterId = Integer.parseInt(request.getParameter("alterId"));
+		待定
+		*/
+		int alterId = Integer.parseInt(request.getParameter("alter_id"));
 		boolean result = Boolean.parseBoolean(request.getParameter("verifyAlterSuccessVal"));
 		
 		String verifyState =request.getParameter("verifyState");
@@ -2956,7 +2958,7 @@ public class MarketController {
 		
 	           // marketService.verifyQuoteSubmit(Alter, suggestion);
                //  marketService.verifyAlterSubmit(Alter, taskId, processId,result,suggestion);
-		//marketService.verifyAlterMarketstaffSubmit(alterId, result, suggestion);
+		marketService.verifyAlterMarketstaffSubmit(Alter, result, suggestion);
 		return "redirect:/market/verifyAlterList.do";
 		}
 	
@@ -2977,16 +2979,19 @@ public class MarketController {
 			                int alterId = Integer.parseInt(request.getParameter("alterId"));
 			                int orderId =Integer.parseInt(request.getParameter("orderId"));
 			                MarketstaffAlter AlterModel = marketService.getMarketStaffAlterById(alterId);
-			                List<Employee> employeeList = employeeService.getAllEmployee();
+			                List<Employee> employeeList =  employeeService.getAllManagerStaff();
 			                //System.out.println("=============employeeList.size:"+employeeList.size());
 			             /*   Map<String, Object> orderModel = marketService.getVerifyQuoteDetail(
 			        				0, orderId);
 			               
 			        		*/
+			                System.out.println("=============alterId:"+AlterModel.getAlterId());
 			                Map<String, Object> orderModel = marketService.getOrderDetail(orderId);
+			                String reason ="";
 			                model.addAttribute("orderInfo", orderModel);
 			                model.addAttribute("AlterInfo", AlterModel);
 	                        model.addAttribute("employeeList",employeeList);
+	                        model.addAttribute("reason",reason);
 	                       // model.addAttribute("employee",employeeList.get(0));
 
 			return "market/verifyAlterDetail";	
@@ -3007,6 +3012,7 @@ public class MarketController {
 		    Map<String, Object> alterInfo = new HashMap<String, Object>();
 		    Employee employee_next =null;
 		    Employee employee =employeeService.getEmployeeById(staffAlter.getEmployeeId());
+		   
 		   // StaffAlterInfo alterInfo= new StaffAlterInfo(staffAlter,employee,employee_next);
 		    alterInfo.put("employee", employee);
 		    alterInfo.put("employeeNext",employee_next);

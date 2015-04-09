@@ -38,7 +38,7 @@
 						<!-- @include file="/views/common/quote_w.jsp" --> 
                         <td class="span2">原因</td>
                         <textarea class="span12"
-							disabled="disabled"	style="resize:vertical" rows="5" name="reason">${AlterInfo.reason}</textarea>
+							disabled="disabled"	style="resize:vertical" rows="5" name="reason">${reason}</textarea>
 					</div>
 				</div>
  				<table class="table table-striped table-bordered table-hover detail">  
@@ -51,9 +51,9 @@
 					<tr>
 						<td>操作</td>
 						<td colspan="6">
-				            <input type="hidden" name="taskId" value="${AlterInfo.taskid}" />
+				           <%--  <input type="hidden" name="taskId" value="${AlterInfo.taskid}" /> --%>
 				            <input type="hidden" name="order_id" value="${AlterInfo.orderId }" />
-				            <input type="hidden" name="order_id" value="${AlterInfo.alterId }" />
+				            <input type="hidden" name="alter_id" value="${AlterInfo.alterId }" />
 				           <!-- <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />-->
 				            <input type="hidden" name="verifyAlterSuccessVal" id="verifyAlterSuccess_val" value="" /> 
 				             <input type="hidden" name="verifyState" id="verifyState_val" value="" /> 
