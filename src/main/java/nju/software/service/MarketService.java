@@ -29,6 +29,14 @@ import nju.software.model.ProductModel;
 public interface MarketService {
 	
 	/**
+	 * 根据获取所有未审批的申请和理由
+	 * @param orderId
+	 * @return 返回申请信息对象和理由
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public List<Map<String, Object>>  getAlterInfoByOrderId(Integer orderId);
+	
+	/**
 	 * 获取所有未审批的申请和理由
 	 * @return 返回申请信息对象和理由
 	 */
