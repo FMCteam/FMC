@@ -154,6 +154,8 @@ table.tablesorter thead tr .headerSortDown {
 							<ul>
 								<li><a href="${ctx}/market/verifyQuoteList.do" target="maincontent">审核报价<span
 										class="verifyQuote"></span></a></li>
+								<li><a href="${ctx}/market/verifyAlterList.do" target="maincontent">审核变更专员申请<span
+										class="verifyAlter"></span></a></li>		
 							</ul></li>
 					</c:if>
 	

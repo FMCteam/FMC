@@ -32,6 +32,7 @@ import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.SearchInfo;
 import nju.software.dataobject.VersionData;
+import nju.software.model.StaffAlterInfo;
 import nju.software.service.BuyService;
 import nju.software.service.CustomerService;
 import nju.software.service.DesignCadService;
@@ -49,6 +50,8 @@ import nju.software.util.FileOperateUtil;
 import nju.software.util.ImageUtil;
 import nju.software.util.JavaMailUtil;
 import nju.software.util.ListUtil;
+import nju.software.util.mail.MailSenderInfo;
+import nju.software.util.mail.SimpleMailSender;
 
 import org.antlr.grammar.v3.ANTLRv3Parser.throwsSpec_return;
 import org.apache.commons.lang.StringUtils;
@@ -2914,4 +2917,129 @@ public class MarketController {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 主管审核申请
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "market/verifyAlterSubmit.do", method = RequestMethod.POST)
+	//@Transactional(rollbackFor = Exception.class)
+	public String verifySubmit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		/*int taskId =Integer.parseInt(request.getParameter("taskId"));
+		int processId =	Integer.parseInt(request.getParameter("processId"));	
+		待定
+		*/
+		int alterId = Integer.parseInt(request.getParameter("alter_id"));
+		boolean result = Boolean.parseBoolean(request.getParameter("verifyAlterSuccessVal"));
+		
+		String verifyState =request.getParameter("verifyState");
+		
+		String suggestion=request.getParameter("suggestion");
+		
+		MarketstaffAlter Alter = marketService.getMarketStaffAlterById(alterId) ;
+		Date date = new Date();
+		Timestamp endTime = new Timestamp(date.getTime());
+		
+		Alter.setEndTime(endTime);
+		
+		Alter.setVerifyState(verifyState);
+		
+		//是否同意 ，设置了下一个专员
+		if(result){
+		int nextEmployeeId = Integer.parseInt(request.getParameter("nextEmployeeId"));
+		Alter.setNextEmployeeId(nextEmployeeId);
+		}
+		else {
+			Alter.setNextEmployeeId(Alter.getEmployeeId());
+		}
+		
+	           // marketService.verifyQuoteSubmit(Alter, suggestion);
+               //  marketService.verifyAlterSubmit(Alter, taskId, processId,result,suggestion);
+		marketService.verifyAlterMarketstaffSubmit(Alter, result, suggestion);
+		return "redirect:/market/verifyAlterList.do";
+		}
+	
+	
+	/**
+	 * 主管审核申请表详细
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	
+	// 主管审核申请表detail
+		@RequestMapping(value = "market/verifyAlterDetail.do", method = RequestMethod.GET)
+		//@Transactional(rollbackFor = Exception.class)
+		public String verifyAlterDetail(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			                int alterId = Integer.parseInt(request.getParameter("alterId"));
+			                int orderId =Integer.parseInt(request.getParameter("orderId"));
+			                MarketstaffAlter AlterModel = marketService.getMarketStaffAlterById(alterId);
+			                List<Employee> employeeList =  employeeService.getAllManagerStaff();
+			                //System.out.println("=============employeeList.size:"+employeeList.size());
+			             /*   Map<String, Object> orderModel = marketService.getVerifyQuoteDetail(
+			        				0, orderId);
+			               
+			        		*/
+			                System.out.println("=============alterId:"+AlterModel.getAlterId());
+			                Map<String, Object> orderModel = marketService.getOrderDetail(orderId);
+			                String reason ="";
+			                model.addAttribute("orderInfo", orderModel);
+			                model.addAttribute("AlterInfo", AlterModel);
+	                        model.addAttribute("employeeList",employeeList);
+	                        model.addAttribute("reason",reason);
+	                       // model.addAttribute("employee",employeeList.get(0));
+
+			return "market/verifyAlterDetail";	
+	}
+
+	
+		// 主管审核申请表List
+		@RequestMapping(value = "market/verifyAlterList.do", method = RequestMethod.GET)
+		//@Transactional(rollbackFor = Exception.class)
+		public String verifyAlterList(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+		    List<MarketstaffAlter> alterList = marketService.getAlltoDoAlter();
+		    List<Map<String, Object>> list = new ArrayList<>();
+		   
+		    
+		    for(MarketstaffAlter staffAlter :alterList){
+		    	
+		    Map<String, Object> alterInfo = new HashMap<String, Object>();
+		    Employee employee_next =null;
+		    Employee employee =employeeService.getEmployeeById(staffAlter.getEmployeeId());
+		   
+		   // StaffAlterInfo alterInfo= new StaffAlterInfo(staffAlter,employee,employee_next);
+		    alterInfo.put("employee", employee);
+		    alterInfo.put("employeeNext",employee_next);
+		    alterInfo.put("Alter",staffAlter );
+		    list.add(alterInfo);
+		 
+		    }
+		    
+		    
+		    
+	       // AlterInfo_list (Alter,employee_next,employee);
+	        model.put("list", list);
+			model.addAttribute("taskName", "审核申请");
+			model.addAttribute("url", "/market/verifyAlterDetail.do");
+			model.addAttribute("searchurl", "/market/verifyAlterListSearch.do");
+
+			return "market/verifyAlterList";
+
+
+
+
+
+	}
+
+		
+	
+	
+	
+	
 }

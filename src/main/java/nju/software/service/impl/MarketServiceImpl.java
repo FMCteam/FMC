@@ -3,6 +3,7 @@ package nju.software.service.impl;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -193,6 +194,17 @@ public class MarketServiceImpl implements MarketService {
 		List<MarketstaffAlter> results = new ArrayList<>();
 		example.setVerifyState(MarketstaffAlter.STATE_TODO);
 		results = marketstaffAlterDAO.findByExample(example);
+		/*example.setAlterId(1);
+		example.setEmployeeId(13);
+		example.setOrderId(1);
+		Date d = new Date();
+		Timestamp time = new Timestamp(d.getTime());
+		example.setApplyTime(time);
+		example.setEndTime(time);
+		results.add(example);*/
+		
+		
+		
 		return results;
 	}
 
@@ -1259,7 +1271,7 @@ public class MarketServiceImpl implements MarketService {
 
 		return model;
 	}
-
+    
 	@Override
 	public Map<String, Object> getVerifyQuoteDetail(Integer userId, int orderId) {
 		return service.getBasicOrderModelWithQuote(ACTOR_MARKET_MANAGER,
