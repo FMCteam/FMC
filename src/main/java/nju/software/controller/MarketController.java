@@ -2889,23 +2889,67 @@ public class MarketController {
 	@RequestMapping(value = "/market/applyForAlterMarketStaffSubmit.do")
 	public void applyForAlterMarketStaffSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		//TODO 需要先确定是否存在申请
-		
-		//若不存在则提交申请
 		String reason = request.getParameter("reason");
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		Integer employeeId = Integer.parseInt(request.getParameter("employeeId"));
 		
-		Date date = new Date();
-		Timestamp applyTime = new Timestamp(date.getTime());
+		//判断是否存在重复申请
+		boolean existRepetition = false;
+		List<Map<String, Object>> applyList = marketService.getAlterInfoByOrderId(orderId);
+		for(Map<String,Object> applyInfo : applyList){
+			MarketstaffAlter marketstaffAlter = (MarketstaffAlter)applyInfo.get(MarketServiceImpl.RESULT_ALTERINFO);
+			//存在重复申请
+			if(employeeId.equals(marketstaffAlter.getEmployeeId()) && MarketstaffAlter.STATE_TODO.equals(marketstaffAlter.getVerifyState())){
+				existRepetition = true;
+				break;
+			}
+		}
+		String json;
+		//若不存在则提交申请
+		if(!existRepetition){
+			Date date = new Date();
+			Timestamp applyTime = new Timestamp(date.getTime());
+			
+			MarketstaffAlter alterInfo = new MarketstaffAlter(employeeId, orderId, applyTime);
+			alterInfo.setVerifyState(MarketstaffAlter.STATE_TODO);
+			
+			boolean result = marketService.applyForAlterMarketStaffSubmit(alterInfo, reason);
+			
+			Map<String, Object>	map = new HashMap<>();
+			map.put("result", result);
+			map.put("reason", reason);
 		
-		MarketstaffAlter alterInfo = new MarketstaffAlter(employeeId, orderId, applyTime);
+			JSONObject jsonObject = JSONObject.fromObject(map);
+			json = jsonObject.toString();
+		}
+		else{
+			Map<String, Object>	map = new HashMap<>();
+			map.put("result", "existRepetition");
+			JSONObject jsonObject = JSONObject.fromObject(map);
+			json = jsonObject.toString();
+		}
+		response.setContentType("application/json");
+		try {
+			response.getWriter().write(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 市场专员获得当前已有的更换专员申请
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping(value = "/market/getAlterInfoByOrderId.do")
+	public void getAlterInfoByOrderId(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		
-		boolean result = marketService.applyForAlterMarketStaffSubmit(alterInfo, reason);
-		
+		List<Map<String, Object>> alterInfoList = marketService.getAlterInfoByOrderId(orderId);
 		Map<String, Object>	map = new HashMap<>();
-		map.put("result", result);
-		map.put("reason", reason);
+		map.put("alterInfoList", alterInfoList);
 		
 		JSONObject jsonObject = JSONObject.fromObject(map);
 		String json = jsonObject.toString();
@@ -2917,6 +2961,7 @@ public class MarketController {
 			e.printStackTrace();
 		}
 	}
+	
 	/**
 	 * 主管审核申请
 	 * @param request
