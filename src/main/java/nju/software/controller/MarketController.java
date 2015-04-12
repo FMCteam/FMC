@@ -2897,7 +2897,7 @@ public class MarketController {
 		boolean existRepetition = false;
 		List<Map<String, Object>> applyList = marketService.getAlterInfoByOrderId(orderId);
 		for(Map<String,Object> applyInfo : applyList){
-			MarketstaffAlter marketstaffAlter = (MarketstaffAlter)applyInfo.get(MarketServiceImpl.RESULT_ALTERINFO);
+			MarketstaffAlter marketstaffAlter = (MarketstaffAlter)applyInfo.get(MarketServiceImpl.ALTER_ALTERINFO);
 			//存在重复申请
 			if(employeeId.equals(marketstaffAlter.getEmployeeId()) && MarketstaffAlter.STATE_TODO.equals(marketstaffAlter.getVerifyState())){
 				existRepetition = true;
@@ -3003,7 +3003,7 @@ public class MarketController {
 		
 	           // marketService.verifyQuoteSubmit(Alter, suggestion);
                //  marketService.verifyAlterSubmit(Alter, taskId, processId,result,suggestion);
-		marketService.verifyAlterMarketstaffSubmit(Alter, result, suggestion);
+//		marketService.verifyAlterMarketstaffSubmit(Alter, result, suggestion);
 		return "redirect:/market/verifyAlterList.do";
 		}
 	

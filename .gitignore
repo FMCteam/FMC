@@ -15,3 +15,4 @@
 /target
 
 /bin
+/src/main/webapp/WEB-INF/jdbc.properties

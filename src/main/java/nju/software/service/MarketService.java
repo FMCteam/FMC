@@ -378,13 +378,30 @@ public interface MarketService {
 	@Transactional(rollbackFor = Exception.class)
 	public String getComment(Object task, String variableName);
 
+	/**
+	 * 用户自主下单提交订单
+	 * @param order
+	 * @param fabrics
+	 * @param accessorys
+	 * @param logistics
+	 * @param produces
+	 * @param sample_produces
+	 * @param versions
+	 * @param cad
+	 * @param request
+	 * @return
+	 */
 	@Transactional(rollbackFor = Exception.class)
-	boolean addOrderCustomerSubmit(Order order, List<Fabric> fabrics,
+	public boolean addOrderCustomerSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<Produce> sample_produces,
 			List<VersionData> versions, DesignCad cad,
 			HttpServletRequest request);
-	
-	
+	/**
+	 * 获取没有专员认领的订单
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public List<Order> getTodoOrders();
 
 }
