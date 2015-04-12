@@ -51,6 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public boolean deleteEmployee(int employeeId) {
 		try {
+			System.out.println("============employeeName:"+getEmployeeById(employeeId).getEmployeeName());
 			employeeDAO.delete(getEmployeeById(employeeId));
 			return true;
 		} catch (Exception e) {

@@ -1,6 +1,7 @@
 package nju.software.service.impl;
 
 import java.io.File;
+import java.io.ObjectOutputStream.PutField;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
@@ -51,6 +52,7 @@ import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.process.service.MainProcessService;
+import nju.software.process.service.MarketstaffAlterProcessService;
 import nju.software.service.FinanceService;
 import nju.software.service.MarketService;
 import nju.software.util.ActivitiAPIUtil;
@@ -94,9 +96,15 @@ public class MarketServiceImpl implements MarketService {
 	public final static String UPLOAD_DIR_REFERENCE = "/upload/reference/";
 	public final static String RESULT_VERIFY_QUOTE = "verifyQuoteSuccess";
 	public final static String VERIFY_QUOTE_COMMENT = "verifyQuoteComment";
-	public final static String RESULT_REASON="reason";
-	public final static String RESULT_ALTERINFO="alterInfo";
+	public final static String ALTER_REASON="reason";
+	public final static String ALTER_ALTERINFO="alterInfo";
+	public final static String ALTER_RESULT="result";
+	public final static String ALTER_PROCESSID="processId";
+	public static final String ALTER_COMMENT = "comment";
 
+	
+	@Autowired
+	private MarketstaffAlterProcessService marketstaffAlterProcessServices;
 	@Autowired
 	private ProductDAO productDAO;
 	@Autowired
@@ -150,11 +158,11 @@ public class MarketServiceImpl implements MarketService {
 		list = marketstaffAlterDAO.findByExample(example);
 		List<Map<String, Object>> mapList= new ArrayList<>();
 		for (MarketstaffAlter alter:list){
-			String reasonString =null;
-			//TODO reason
+						
+			String reasonString=(String) marketstaffAlterProcessServices.getReason(alter.getProcessId());
 			Map<String,Object> alterInfo=new HashMap<String,Object>();
-			alterInfo.put(MarketServiceImpl.RESULT_REASON, reasonString);
-			alterInfo.put(MarketServiceImpl.RESULT_ALTERINFO, alter);
+			alterInfo.put(MarketServiceImpl.ALTER_REASON, reasonString);
+			alterInfo.put(MarketServiceImpl.ALTER_ALTERINFO, alter);
 			mapList.add(alterInfo);		
 			
 		}
@@ -170,10 +178,9 @@ public class MarketServiceImpl implements MarketService {
 		List<Map<String, Object>> mapList= new ArrayList<>();
 		for (MarketstaffAlter alter:list){
 			String reasonString =null;
-			//TODO reason
 			Map<String,Object> alterInfo=new HashMap<String,Object>();
-			alterInfo.put(MarketServiceImpl.RESULT_REASON, reasonString);
-			alterInfo.put(MarketServiceImpl.RESULT_ALTERINFO, alter);
+			alterInfo.put(MarketServiceImpl.ALTER_REASON, reasonString);
+			alterInfo.put(MarketServiceImpl.ALTER_ALTERINFO, alter);
 			mapList.add(alterInfo);
 			
 			
@@ -185,7 +192,17 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public void verifyAlterSubmit(MarketstaffAlter alter, String taskId,
 			String processId, boolean result, String suggestion) {
-		//TODO
+		marketstaffAlterDAO.attachDirty(alter);
+		Map<String, Object> params = new HashMap<>();
+		params.put(MarketServiceImpl.ALTER_RESULT, result);
+		params.put(MarketServiceImpl.ALTER_COMMENT, suggestion);
+		params.put(MarketServiceImpl.ALTER_PROCESSID, processId);
+		try {
+			marketstaffAlterProcessServices.completeVerifyAterTask(taskId, params);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		//TODO Mail
 	}
 	
 	@Override
@@ -193,17 +210,7 @@ public class MarketServiceImpl implements MarketService {
 		MarketstaffAlter example = new MarketstaffAlter();
 		List<MarketstaffAlter> results = new ArrayList<>();
 		example.setVerifyState(MarketstaffAlter.STATE_TODO);
-		results = marketstaffAlterDAO.findByExample(example);
-		/*example.setAlterId(1);
-		example.setEmployeeId(13);
-		example.setOrderId(1);
-		Date d = new Date();
-		Timestamp time = new Timestamp(d.getTime());
-		example.setApplyTime(time);
-		example.setEndTime(time);
-		results.add(example);*/
-		
-		
+		results = marketstaffAlterDAO.findByExample(example);	
 		
 		return results;
 	}
@@ -218,11 +225,10 @@ public class MarketServiceImpl implements MarketService {
 	public boolean applyForAlterMarketStaffSubmit(MarketstaffAlter alterInfo, String reason) {
 		marketstaffAlterDAO.save(alterInfo);
 		Map<String, Object> params = new HashMap<>();
-		params.put("reason", reason);
-//		activitiApiUtil.startWorkflowProcessByKey(ActivitiAPIUtil.PROCESS_ALTER_MARKETSTAFF, params);
-		//TODO 涉及流程启动
-		
-		
+		params.put(MarketServiceImpl.ALTER_REASON, reason);
+		String processId=marketstaffAlterProcessServices.startWorkflow(params);
+		alterInfo.setProcessId(processId);
+		marketstaffAlterDAO.attachDirty(alterInfo);
 		return true;
 	}
 
@@ -273,35 +279,11 @@ public class MarketServiceImpl implements MarketService {
 
 
 
-	@Override
-	public void verifyAlterMarketstaffSubmit(MarketstaffAlter alterInfo,  boolean result, String comment) {
-//		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
-		if (result==true)alterInfo.setVerifyState(MarketstaffAlter.STATE_AGREE);
-		else alterInfo.setVerifyState(MarketstaffAlter.STATE_DISAGREE);
-		
-		
-		//TODO 
-		//涉及流程 comment  
-		marketstaffAlterDAO.save(alterInfo);
-		
-	}
+	
 
 
 
-	@Override
-	public void changeMarketstaffSubmit(Integer alterId,
-			String applyUserId, String newUserId) {
 
-		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
-		alter.setNextEmployeeId(Integer.parseInt(newUserId));
-		marketstaffAlterDAO.save(alter);
-		Order order=orderDAO.findById(alter.getOrderId());
-		order.setEmployeeId(Integer.parseInt(newUserId));
-		orderDAO.save(order);
-		//TODO 结束流程
-				
-		
-	}
 
 	@Override
 	public List<Map<String, Object>> getApplyAlterOrderList(String actorId) {
@@ -316,6 +298,7 @@ public class MarketServiceImpl implements MarketService {
 			Order order = orderDAO.findById(orderId);
 			Map<String, Object> model = new HashMap<>();
 			model.put("order", order);
+			model.put("task", marketstaffAlterProcessServices.getVerifyAlterTasksOfMarketManager());
 			model.put("verify_state", marketstaffAlter.getVerifyState());
 			list.add(model);
 		}
@@ -324,13 +307,11 @@ public class MarketServiceImpl implements MarketService {
 	
 	@Override
 	public List<Customer> getAddOrderList() {
-		// TODO Auto-generated method stub
 		return customerDAO.findAll();
 	}
 
 	@Override
 	public Customer getAddOrderDetail(Integer cid) {
-		// TODO Auto-generated method stub
 		return customerDAO.findById(cid);
 	}
 

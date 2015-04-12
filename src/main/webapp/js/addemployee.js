@@ -81,7 +81,7 @@ var _cityInfo = [{ "n": "市场部", "c": ["市场主管", "市场专员"] },
         
         function getOptionValue(role){
         	switch(role){
-        		/*case "市场主管": return "marketManager";
+        		case "市场主管": return "marketManager";
         		case "市场专员": return "marketStaff";
         		case "设计主管": return "designManager";
         		case "采购主管": return "purchaseManager";
@@ -89,9 +89,9 @@ var _cityInfo = [{ "n": "市场部", "c": ["市场主管", "市场专员"] },
         		case "物流主管": return "logisticsManager";
         		case "财务主管": return "financeManager";
         		case "质检主管": return "qualityManager";
-        		case "毛衣部主管": return "SweaterMakeManager";*/
+        		case "毛衣部主管": return "SweaterMakeManager";
         		
-        		case "市场主管": return "市场主管";
+        		/*case "市场主管": return "市场主管";
         		case "市场专员": return "市场专员";
         		case "设计主管": return "设计部";
         		case "采购主管": return "采购部";
@@ -99,7 +99,7 @@ var _cityInfo = [{ "n": "市场部", "c": ["市场主管", "市场专员"] },
         		case "物流主管": return "物流部";
         		case "财务主管": return "财务部";
         		case "质检主管": return "质检部";
-        		case "毛衣部主管": return "毛衣部";
+        		case "毛衣部主管": return "毛衣部";*/
         	
         		//case "人事主管": return "humanManager";
         	}

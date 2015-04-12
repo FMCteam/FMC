@@ -26,6 +26,14 @@ public class MarketstaffAlterProcessService {
 		return service.getAssignTasksOfUserByTaskName(MarketServiceImpl.ACTOR_MARKET_MANAGER, TASK_VERIFY_ALTER);
 	}
 	
+	public Object getReason(String processId){
+		return service.getProcessVariable(processId, MarketServiceImpl.ALTER_REASON);
+	}
+	
+	public Object getComment(String processId){
+		return service.getProcessVariable(processId, MarketServiceImpl.ALTER_COMMENT);
+	}
+	
 	public void abortWorkflow(String processId){
 		service.abortWorkflow(processId);
 	}

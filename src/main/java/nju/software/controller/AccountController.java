@@ -485,11 +485,12 @@ public class AccountController {
 				String role = "EMPLOYEE";
 				accountToDelete = accountService.getAccoutByUserIdAndUserRole(
 						role, employeeId);
+				System.out.println("============employeeId:"+employeeId);
 				if (accountToDelete != null) {
 					int accountId = accountToDelete.getAccountId();
 					employeeService.deleteEmployee(employeeId);
 					accountService.deleteAccount(accountId);
-					//accountService.
+					accountService.deleteAccountRole(accountId);
 					success = true;
 				}
 			}

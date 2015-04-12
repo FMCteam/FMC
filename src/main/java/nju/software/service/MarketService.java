@@ -45,7 +45,7 @@ public interface MarketService {
 	       
 
 	/**
-	 *提交流程相关的信息
+	 *提交ApplyAlter审批
 	 *@param alter 申请信息
 	 *@param taskId 
 	 *@param processId
@@ -54,7 +54,7 @@ public interface MarketService {
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	public void verifyAlterSubmit(MarketstaffAlter alter, String taskId,
-			String processId, boolean result, String suggestion);//提交ApplyAlter审批
+			String processId, boolean result, String suggestion);
 	
 	/**
 	 * 获取所有未审批的申请
@@ -104,26 +104,9 @@ public interface MarketService {
 	 */
 	public List<Map<String, Object>> getApplyAlterOrderList(String actorId);
 	
-	/**
-	 * 市场经理审批专员申请
-	 * @param alterInfo 申请信息
-	 * @param result  审批结果
-	 * @param comment 审批备注
-	 * @return 没有返回
-	 */
-	@Transactional(rollbackFor = Exception.class)
-	public void verifyAlterMarketstaffSubmit(MarketstaffAlter alterInfo, boolean result, String comment);
 	
-	/**
-	 * 更换专员
-	 * @param orderId 更换专员的订单ID
-	 * @param actorId 市场主管
-	 * @param applyUserId 申请专员ID
-	 * @param newUserId 订单的新专员ID
-	 * @return
-	 */
-	@Transactional(rollbackFor = Exception.class)
-	public void changeMarketstaffSubmit(Integer alterId, String applyUserId, String newUserId);
+	
+	
 
 	// ==========================报价商定=======================
 	@Transactional(rollbackFor = Exception.class)

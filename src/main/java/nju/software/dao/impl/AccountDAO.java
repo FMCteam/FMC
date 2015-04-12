@@ -390,7 +390,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	public List findPermissionBYName(String username){
     	List list = null;
     	
-		final String hql="select distinct p.MYID from permission p,account_role ar,account a,role_permission rp where p.PID is null and p.PERMISSION_ID=rp.permission_id and rp.role_id=ar.role_id and ar.account_id=a.account_id and a.user_name='"+username+"'";
+		final String hql="select distinct p.MYID from permission p,account_role ar,account a,role_permission rp where p.PID is null and p.PERMISSION_ID=rp.permission_id and rp.role_id=ar.role_id and ar.account_id=a.account_id and ar.status='A'and a.user_name='"+username+"'";
                 
 		list =  this.getHibernateTemplate().executeFind(new HibernateCallback() {
 			@Override
@@ -449,7 +449,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	}
 
 	@Override
-	public List<AccountRole> findAccountRoleById(String accountId) {
+	public List<AccountRole> findAccountRoleById(int accountId) {
 		// TODO Auto-generated method stub
 		String query = "from AccountRole as model where model.accountId=?";
 
