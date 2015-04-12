@@ -281,9 +281,9 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 				accountDao.SaveOrUpDate(b);
 				}
 			}
-			if(isEmptytOfTable("Role")){
+			if(isEmptytOfTable("Account_Role")){
 			
-			for(Account a :newList){
+			for(Account a :list){
 				accountDao.addAccountRole(a.getUserRole(), a.getAccountId());
 			}
 			}
