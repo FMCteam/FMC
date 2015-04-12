@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import nju.software.dao.impl.AccountDAO;
 import nju.software.dataobject.Account;
+import nju.software.service.SystemService;
 import nju.software.util.ActivitiAPIUtil;
 
 @Controller
@@ -31,14 +32,15 @@ public class AccessFilter implements Filter {
 	//@Autowired
 	static private AccountDAO accountDao ;
 	  List permissionList ;
-	
-
+	//@Autowired
+   // SystemService systemService ;
 	private FilterConfig filterConfig = null;
 
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
 		filterConfig = null;
+		
 	}
 	@Transactional(rollbackFor = Exception.class)
 	@Override
@@ -46,7 +48,7 @@ public class AccessFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 			boolean has_access2 = false;
-
+			//System.out.println("=======================systemService"+systemService.getClass());
 		HttpServletRequest request = (HttpServletRequest) arg0;
 		HttpServletResponse response = (HttpServletResponse) arg1;
 		String url = request.getServletPath();

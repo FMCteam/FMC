@@ -42,6 +42,6 @@ public interface IAccountDAO {
 	public boolean addAccountRole(String roleId,int accountId);
 	
 	public void deleteAccountRole(AccountRole persistentInstance);
-	public List<AccountRole> findAccountRoleById(String accountId);
+	public List<AccountRole> findAccountRoleById(int accountId);
 	
 }

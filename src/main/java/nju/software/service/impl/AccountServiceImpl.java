@@ -151,7 +151,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public boolean deleteAccountRole(String accountId) {
+	public boolean deleteAccountRole(int accountId) {
 		// TODO Auto-generated method stub
 		try {
 			List<AccountRole> list = accountDAO.findAccountRoleById(accountId);

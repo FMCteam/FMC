@@ -3,6 +3,7 @@ package nju.software.dao.impl;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,6 +22,7 @@ import nju.software.dataobject.Account;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -254,16 +256,16 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 			List<Account> list =accountDao.findAll();
 			List<Account> newList = new ArrayList();
 			Map map = new HashMap();
-			map.put("marketManager", "市场主管");
-			map.put("marketStaff", "市场专员");
-			map.put("designManager", "设计部");
-			map.put("purchaseManager", "采购部");
-			map.put("produceManager", "生产部");
-			map.put("logisticsManager", "物流部");
-			map.put("financeManager", "财务部");
-			map.put("qualityManager", "质检部");
-			map.put("SweaterMakeManager", "毛衣部");
-			map.put("ADMIN", "管理员");
+			map.put("市场主管", "marketManager");
+			map.put("市场专员", "marketStaff");
+			map.put("设计部", "designManager");
+			map.put("采购部", "purchaseManager");
+			map.put("生产部", "produceManager");
+			map.put("物流部", "logisticsManager");
+			map.put("财务部", "financeManager");
+			map.put("质检部", "qualityManager");
+			map.put("毛衣部", "SweaterMakeManager");
+			map.put("管理员", "ADMIN");
 			/*String roleList[] ={"marketManager","marketStaff","designManager","purchaseManager","produceManager",
 					"logisticsManager","financeManager","qualityManager","SweaterMakeManager","ADMIN"};
 			String roleName[]={"市场主管","市场专员","设计部","采购部","生产部","物流部","财务部","质检部","毛衣部","管理员"};
@@ -279,10 +281,11 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 				accountDao.SaveOrUpDate(b);
 				}
 			}
-			
+			if(isEmptytOfTable("Role")){
 			
 			for(Account a :newList){
 				accountDao.addAccountRole(a.getUserRole(), a.getAccountId());
+			}
 			}
 		}
 	    
@@ -291,6 +294,31 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 			SqlUtilDAO.accountDao = accountDao;
 		}
 	
-	
+	 public boolean isEmptytOfTable(String tableName){
+	    	
+	    	
+	    	final String num="select count(*) from "+tableName+" a";
+			Object obj = null;
+			try {
+				obj = this.getHibernateTemplate().execute(new HibernateCallback() {
+					@Override
+					public Object doInHibernate(Session session) throws HibernateException, SQLException {
+						return session.createSQLQuery(num).uniqueResult();
+					}
+				});
+			} catch (DataAccessException e) {
+				e.printStackTrace();
+			}
+	    	
+			BigInteger big =new BigInteger(String.valueOf(0));
+	    	//System.out.println("=============obj:"+obj);
+	    	if((obj.equals(big))){
+	    		System.out.println("in");
+	    		return true ;
+	    	}
+	    	
+	    	
+	    	return false ;   	
+	    }
 
 }

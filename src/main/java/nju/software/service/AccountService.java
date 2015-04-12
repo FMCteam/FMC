@@ -37,5 +37,5 @@ public interface AccountService {
 	@Transactional(rollbackFor = Exception.class)
 	public boolean addAccountRole(String roleName, int accountId);
 	@Transactional(rollbackFor = Exception.class)
-	public boolean deleteAccountRole(String accountId);
+	public boolean deleteAccountRole(int accountId);
 }
