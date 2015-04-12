@@ -141,6 +141,25 @@ public class MarketServiceImpl implements MarketService {
 	private MarketstaffAlterDAO marketstaffAlterDAO;
 	
 	
+	@Override
+	public List<Map<String, Object>> getAlterInfoByOrderId(Integer orderId) {
+
+		MarketstaffAlter example = new MarketstaffAlter();
+		List<MarketstaffAlter> list = new ArrayList<>();
+		example.setOrderId(orderId);
+		list = marketstaffAlterDAO.findByExample(example);
+		List<Map<String, Object>> mapList= new ArrayList<>();
+		for (MarketstaffAlter alter:list){
+			String reasonString =null;
+			//TODO reason
+			Map<String,Object> alterInfo=new HashMap<String,Object>();
+			alterInfo.put(MarketServiceImpl.RESULT_REASON, reasonString);
+			alterInfo.put(MarketServiceImpl.RESULT_ALTERINFO, alter);
+			mapList.add(alterInfo);		
+			
+		}
+		return mapList;
+	}
 	
 	@Override
 	public List<Map<String, Object>> getAlltoDoAlterInfo() {
@@ -1863,6 +1882,9 @@ public class MarketServiceImpl implements MarketService {
 		params.put("isSweater", isSweater);
 		return params;
 	}
+
+
+	
 
 	
 

@@ -18,3 +18,7 @@
 	</tr>
 
 </table>
+
+<table class="table table-striped table-bordered" id="allApplication">
+	
+</table>
