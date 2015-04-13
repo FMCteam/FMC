@@ -756,6 +756,11 @@ public class AccountController {
 		String customer_id = request.getParameter("customer_id");
 		boolean sucess = customerService.deleteCustomerById(Integer
 				.parseInt(customer_id));
+		Account account =accountService.getAccoutByUserIdAndUserRole("CUSTOMER", Integer
+				.parseInt(customer_id));
+		int accountId =account.getAccountId();
+		accountService.deleteAccount(accountId);
+		accountService.deleteAccountRole(accountId);
 		System.out.println("customer delete successfully" + sucess);
 		return "redirect:/account/customerList.do";
 	}
