@@ -14,7 +14,7 @@ public class BasicProcessService {
 	public ActivitiAPIUtil activitiAPIUtil;
 	
 	public  String startWorkflow(String processId, Map<String, Object> params){
-		return activitiAPIUtil.startWorkflowProcessById(processId, params);
+		return activitiAPIUtil.startWorkflowProcessByKey(processId, params);
 	}
 	
 	public void abortWorkflow(String processId){
@@ -37,6 +37,14 @@ public class BasicProcessService {
 		return activitiAPIUtil.getProcessVariable(processId, key);
 	}
 	
+	/**
+	 * 
+	 * @param userId
+	 * @param taskName
+	 * @param key
+	 * @param value
+	 * @return
+	 */
 	public Task getTask(String userId, String taskName, String key, Object value){
 		return activitiAPIUtil.getTask(userId, taskName, key, value);
 	}
@@ -45,11 +53,11 @@ public class BasicProcessService {
 		return activitiAPIUtil.getAssignedTasksOfGroup(groupId);
 	}
 
-	public List<Task> getAssignTasksByUser(String userId){
+	public List<Task> getTasksOfUser(String userId){
 		return activitiAPIUtil.getAssignedTasksOfUser(userId);
 	}
 	
-	public List<Task> getAssignTasksOfUserByTaskName(String userId, String taskName){
+	public List<Task> getTasksOfUserByTaskName(String userId, String taskName){
 		return activitiAPIUtil.getAssignedTasksOfUserByTaskName(userId, taskName);
 	}
 	

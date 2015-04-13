@@ -55,6 +55,7 @@ public class CommonController {
 
 		map.put(MarketServiceImpl.TASK_VERIFY_QUOTE,
 				MarketServiceImpl.ACTOR_MARKET_MANAGER);
+		map.put(MarketServiceImpl.TASK_VERIFY_ALTER, MarketServiceImpl.ACTOR_MARKET_MANAGER);
 		
 		map.put(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST,
 				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
@@ -136,17 +137,7 @@ public class CommonController {
 		JSONObject jsonobj = new JSONObject();
 		jsonobj.put("taskNumber", number);
 		for (String department : departments) {
-//			if(department.equals(MarketServiceImpl.ACTOR_MARKET_MANAGER)){
-//				Integer verifyQuoteTaskNumber = getTaskNumber((String) map.get(MarketServiceImpl.TASK_VERIFY_QUOTE), MarketServiceImpl.TASK_VERIFY_QUOTE);
-//				Integer marketDepartmentTasks = getTaskNumber(MarketServiceImpl.ACTOR_MARKET_MANAGER);
-//				int result = marketDepartmentTasks.intValue() - verifyQuoteTaskNumber.intValue();
-//				Integer marketStaffTasks = new Integer(result);
-//				System.out.println("marketDepartmentTasks"+marketDepartmentTasks);
-//				jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,marketStaffTasks );
-//			} 
-				
-				jsonobj.put(department, getTaskNumber(department));
-//				System.out.println(department+"任务数量"+getTaskNumber(department));
+			jsonobj.put(department, getTaskNumber(department));
  
 		}
 		//market department task, include all tasks of all marketStaffs and admin;
@@ -163,8 +154,6 @@ public class CommonController {
 			jsonobj.put(MarketServiceImpl.TASK_PUSH_REST, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_PUSH_REST));
 			jsonobj.put(MarketServiceImpl.TASK_SIGN_CONTRACT, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_SIGN_CONTRACT));
 		}
-		// jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,
-		// getTaskNumber(actorId));
 		if (isMarketStaff(request)) {
 			map.put(MarketServiceImpl.TASK_MODIFY_ORDER, actorId);
 			map.put(MarketServiceImpl.TASK_MERGE_QUOTE, actorId);
@@ -180,12 +169,11 @@ public class CommonController {
 
 		for (String task : map.keySet()) {
 			jsonobj.put(task, getTaskNumber((String) map.get(task), task));
- 			if(task.equals(MarketServiceImpl.TASK_VERIFY_QUOTE)){
-				//市场主管的task class 设为"marketManager2",设置为市场主管的审核报价的任务数 为市场主管所有的任务数
-				jsonobj.put("marketManager2", getTaskNumber((String) map.get(task), task));
- 				
-			}
 		}
+		
+		//市场主管的task class 设为"marketManager2",设置为市场主管的审核报价的任务数以及审核专员变更申请 为市场主管所有的任务数
+		jsonobj.put("marketManager2", getMarketManagerTaskNumber());
+		
 		//设计部门分为设计部和工艺部
 		int totalNumber = jsonobj.getInt(DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 		// 工艺部任务数量
@@ -271,19 +259,10 @@ public class CommonController {
 		return account.getUserRole().equals(
 				MarketServiceImpl.ACTOR_MARKET_STAFF);
 	}
-    private boolean isMarketManager(HttpServletRequest request){
-    	HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
-		return account.getUserRole().equals(
-				MarketServiceImpl.ACTOR_MARKET_MANAGER);
-    }
-    
-    private boolean isDesignManager(HttpServletRequest request){
-    	HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
-		return account.getUserRole().equals(
-				DesignServiceImpl.ACTOR_DESIGN_MANAGER);
-    }
+	
+	private Integer getMarketManagerTaskNumber(){
+		return getTaskNumber(MarketServiceImpl.ACTOR_MARKET_MANAGER);
+	}
     
 	private Integer getTaskNumber(String actorId) {
 		return commonService.getTaskNumber(actorId);

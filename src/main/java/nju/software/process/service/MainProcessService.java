@@ -14,267 +14,241 @@ import nju.software.service.impl.QualityServiceImpl;
 import nju.software.service.impl.SweaterMakeServiceImpl;
 
 import org.activiti.engine.task.Task;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
-public class MainProcessService{
+public class MainProcessService extends BasicProcessService{
 	public static final String PROCESS_NAME = "nju.software.fmc.bpmn";
 	private static final String KEY_ORDER_ID = "orderId";
-	@Autowired
-	private BasicProcessService service;
-	
 
 	public String startWorkflow(Map<String, Object> params) {
-		return service.startWorkflow(PROCESS_NAME, params);
-	}
-	
-	public void abortWorkflow(String processId){
-		service.abortWorkflow(processId);
-	}
-	
-	public void completeTask(String taskId, String userId, Map<String, Object> params) throws InterruptedException{
-		service.completeTask(taskId, userId, params);
-	}
-	
-	public List<String> getProcessStateNames(String processId){
-		return service.getProcessStateNames(processId);
-	}
-	
-	public List<Map<String, Object>> getProcessStates(String processId){
-		return service.getProcessStates(processId);
-	}
-	
-	public Object getVariable(String processId, String key){
-		return service.getProcessVariable(processId, key);
+		return startWorkflow(PROCESS_NAME, params);
 	}
 	
 	public int getOrderIdInProcess(String processId){
-		return (int) service.getProcessVariable(processId, KEY_ORDER_ID);
+		return (int) getProcessVariable(processId, KEY_ORDER_ID);
 	}
 	
 	public Task getTaskOfUserByTaskNameWithSpecificOrderId(String userId,String taskName, Object value){
 		String newName = getTaskNameInBPMN(taskName);
-		return service.getTask(userId, newName, KEY_ORDER_ID, value);
+		return getTask(userId, newName, KEY_ORDER_ID, value);
 	}
 	
-	public List<Task> getTasksOfUserByTaskName(String userId, String taskName){
+	public List<Task> getAllTasksOfUserByTaskName(String userId, String taskName){
 		String newName = getTaskNameInBPMN(taskName);
-		return service.getAssignTasksOfUserByTaskName(userId, newName);
-	}
-	
-	public List<Task> getTasksOfUser(String userId){
-		return service.getAssignTasksByUser(userId);
+		if (newName != null) {
+			return getTasksOfUserByTaskName(userId, newName);
+		}
+		return null;
 	}
 	
 	//===================================市场部专员部分=============================================
 	
 	public List<Task> getConfirmProduceOrderTasks(String userId){
 		String taskName = getTaskNameInBPMN(MarketServiceImpl.TASK_CONFIRM_PRODUCE_ORDER);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getComfirmQuoteTasks(String userId){
 		String taskName = getTaskNameInBPMN(MarketServiceImpl.TASK_CONFIRM_QUOTE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getMergeQuoteTasks(String userId){
 		String taskName = getTaskNameInBPMN(MarketServiceImpl.TASK_MERGE_QUOTE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getModifyOrderTasks(String userId){
 		String taskName = getTaskNameInBPMN(MarketServiceImpl.TASK_MODIFY_ORDER);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getModifyProduceOrderTasks(String userId){
 		String taskName = getTaskNameInBPMN(MarketServiceImpl.TASK_MODIFY_PRODUCE_ORDER);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getModifyQuoteTasks(String userId){
 		String taskName = getTaskNameInBPMN(MarketServiceImpl.TASK_MODIFY_QUOTE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getPushRestTasks(String userId) {
 		String taskName = getTaskNameInBPMN(MarketServiceImpl.TASK_PUSH_REST);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getSignContractTasks(String userId){
 		String taskName = getTaskNameInBPMN(MarketServiceImpl.TASK_SIGN_CONTRACT);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 
 	//=======================================市场主管部分========================================
 	public List<Task> getVerifyQuoteTasks(String userId){
 		String taskName = getTaskNameInBPMN(MarketServiceImpl.TASK_VERIFY_QUOTE);
-		return service.getAssignTasksOfUserByTaskName(MarketServiceImpl.ACTOR_MARKET_MANAGER, taskName);
+		return getTasksOfUserByTaskName(MarketServiceImpl.ACTOR_MARKET_MANAGER, taskName);
 	}
 	
 	//======================================设计部=============================================
 	public List<Task> getComputDesignCostTasks(String userId){
 		String taskName = getTaskNameInBPMN(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getConfirmCadTasks(String userId){
 		String taskName = getTaskNameInBPMN(DesignServiceImpl.TASK_CONFIRM_CAD);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getConfirmDesignTasks(String userId){
 		String taskName = getTaskNameInBPMN(DesignServiceImpl.TASK_CONFIRM_DESIGN);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getCraftProductTasks(String userId){
 		String taskName = getTaskNameInBPMN(DesignServiceImpl.TASK_CRAFT_PRODUCT);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getCraftSampleTasks(String userId){
 		String taskName = getTaskNameInBPMN(DesignServiceImpl.TASK_CRAFT_SAMPLE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getModifyDesignTasks(String userId){
 		String taskName  = getTaskNameInBPMN(DesignServiceImpl.TASK_MODIFY_DESIGN);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getTypeSettingSliceTasks(String userId){
 		String taskName = getTaskNameInBPMN(DesignServiceImpl.TASK_TYPESETTING_SLICE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getUploadDesignTasks(String userId){
 		String taskName = getTaskNameInBPMN(DesignServiceImpl.TASK_UPLOAD_DESIGN);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getVerifyDesignTasks(String userId){
 		String taskName = getTaskNameInBPMN(DesignServiceImpl.TASK_VERIFY_DESIGN);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	//====================================采购部分============================================
 	public List<Task> getBuySweaterMaterialTasks(String userId){
 		String taskName = getTaskNameInBPMN(BuyServiceImpl.TASK_BUY_SWEATER_MATERIAL);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getComputePurchaseCostTasks(String userId){
 		String taskName = getTaskNameInBPMN(BuyServiceImpl.TASK_COMPUTE_PURCHASE_COST);
-		System.err.println("================================/" + taskName);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getConfirmPurchaseTasks(String userId){
 		String taskName = getTaskNameInBPMN(BuyServiceImpl.TASK_CONFIRM_PURCHASE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getPurchaseMaterialTasks(String userId){
 		String taskName = getTaskNameInBPMN(BuyServiceImpl.TASK_PURCHASE_MATERIAL);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getPurchaseSampleMaterialTasks(String userId){
 		String taskName = getTaskNameInBPMN(BuyServiceImpl.TASK_PURCHASE_SAMPLE_MATERIAL);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 
 	public List<Task> getVerifyPurchaseTasks(String userId){
 		String taskName = getTaskNameInBPMN(BuyServiceImpl.TASK_VERIFY_PURCHASE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	//=====================================生产部==============================================
 	public List<Task> getComputeProduceCostTasks(String userId){
 		String taskName = getTaskNameInBPMN(ProduceServiceImpl.TASK_COMPUTE_PRODUCE_COST);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getProduceTasks(String userId){
 		String taskName = getTaskNameInBPMN(ProduceServiceImpl.TASK_PRODUCE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getProduceSampleTasks(String userId){
 		String taskName = getTaskNameInBPMN(ProduceServiceImpl.TASK_PRODUCE_SAMPLE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getVerifyProduceTasks(String userId){
 		String taskName = getTaskNameInBPMN(ProduceServiceImpl.TASK_VERIFY_PRODUCE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	//====================================财务部==============================================
 	public List<Task> getConfirmDepositTasks(String userId){
 		String taskName = getTaskNameInBPMN(FinanceServiceImpl.TASK_CONFIRM_DEPOSIT);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getConfirmFinalPaymentTasks(String userId){
 		String taskName = getTaskNameInBPMN(FinanceServiceImpl.TASK_CONFIRM_FINAL_PAYMENT);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getConfirmSampleMoneyTasks(String userId){
 		String taskName = getTaskNameInBPMN(FinanceServiceImpl.TASK_CONFIRM_SAMPLE_MONEY);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getReturnDepositTasks(String userId){
 		String taskName = getTaskNameInBPMN(FinanceServiceImpl.TASK_RETURN_DEPOSIT);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	//====================================物流部================================================
 	public List<Task> getReceiveSampleTasks(String userId){
 		String taskName = getTaskNameInBPMN(LogisticsServiceImpl.TASK_RECEIVE_SAMPLE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getSendClothesTasks(String userId){
 		String taskName = getTaskNameInBPMN(LogisticsServiceImpl.TASK_SEND_CLOTHES);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 
 	public List<Task> getSendSampleTasks(String userId){
 		String taskName = getTaskNameInBPMN(LogisticsServiceImpl.TASK_SEND_SAMPLE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getWarehouseTasks(String userId){
 		String taskName = getTaskNameInBPMN(LogisticsServiceImpl.TASK_WAREHOUSE);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getWarehouseHaoduoyiTasks(String userId){
 		String taskName = getTaskNameInBPMN(LogisticsServiceImpl.TASK_WAREHOUSE_HAODUOYI);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	//=======================================质检部==============================================
 	public List<Task> getCheckQualityTasks(String userId){
 		String taskName = getTaskNameInBPMN(QualityServiceImpl.TASK_CHECK_QUALITY);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	//=======================================毛衣制作部===========================================
 	public List<Task> getConfrimSweaterSampleAndCraftTasks(String userId){
 		String taskName = getTaskNameInBPMN(SweaterMakeServiceImpl.TASK_CONFIRM_SWEATER_SAMPLE_AND_CRAFT);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	public List<Task> getSendSweaterTasks(String userId){
 		String taskName = getTaskNameInBPMN(SweaterMakeServiceImpl.TASK_SEND_SWEATER);
-		return service.getAssignTasksOfUserByTaskName(userId, taskName);
+		return getTasksOfUserByTaskName(userId, taskName);
 	}
 	
 	private String getTaskNameInBPMN(String taskName){
@@ -295,10 +269,10 @@ public class MainProcessService{
 		nameMap.put(BuyServiceImpl.TASK_BUY_SWEATER_MATERIAL,"购买组织原料");
 		//DesignService
 		nameMap.put(DesignServiceImpl.TASK_VERIFY_DESIGN,"设计验证");
-		nameMap.put(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST,"设计验证");
+		nameMap.put(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST,"设计工艺验证");
 		nameMap.put(DesignServiceImpl.TASK_UPLOAD_DESIGN, "录入版型数据及生产样衣");
 		nameMap.put(DesignServiceImpl.TASK_MODIFY_DESIGN, "修改设计");
-		nameMap.put(DesignServiceImpl.TASK_CONFIRM_DESIGN, "设计验证");
+		nameMap.put(DesignServiceImpl.TASK_CONFIRM_DESIGN, "确认设计");
 		nameMap.put(DesignServiceImpl.TASK_CRAFT_SAMPLE, "样衣工艺制作");
 		nameMap.put(DesignServiceImpl.TASK_CRAFT_PRODUCT, "大货工艺制作");
 		nameMap.put(DesignServiceImpl.TASK_TYPESETTING_SLICE, "排版切片");
@@ -318,6 +292,7 @@ public class MainProcessService{
 		nameMap.put(MarketServiceImpl.TASK_MODIFY_ORDER, "修改询单");
 		nameMap.put(MarketServiceImpl.TASK_MERGE_QUOTE, "专员合并报价");
 		nameMap.put(MarketServiceImpl.TASK_VERIFY_QUOTE, "主管审核报价");
+		nameMap.put(MarketServiceImpl.TASK_VERIFY_ALTER, "verifyAlter");
 		nameMap.put(MarketServiceImpl.TASK_CONFIRM_QUOTE, "商定报价");
 		nameMap.put(MarketServiceImpl.TASK_MODIFY_QUOTE, "修改报价");
 		nameMap.put(MarketServiceImpl.TASK_CONFIRM_PRODUCE_ORDER, "确认加工单并签订合同");

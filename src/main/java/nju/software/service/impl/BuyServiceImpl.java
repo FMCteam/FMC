@@ -468,7 +468,7 @@ public class BuyServiceImpl implements BuyService {
 	}
 	@Override
 	public boolean isNeedCraft(String processId, String variableName) {
-		return (boolean) mainProcessService.getVariable(processId, variableName);
+		return (boolean) mainProcessService.getProcessVariable(processId, variableName);
 	}
 
 	@Autowired

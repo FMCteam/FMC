@@ -239,7 +239,7 @@
       <dataInputAssociation>
         <targetRef>_11_TaskNameInput</targetRef>
         <assignment>
-          <from xsi:type="tFormalExpression">computeDesignCost</from>
+          <from xsi:type="tFormalExpression">verifyDesign</from>
           <to xsi:type="tFormalExpression">_11_TaskNameInput</to>
         </assignment>
       </dataInputAssociation>
