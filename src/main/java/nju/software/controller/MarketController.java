@@ -3045,8 +3045,10 @@ public class MarketController {
 		
 	           // marketService.verifyQuoteSubmit(Alter, suggestion);
                //  marketService.verifyAlterSubmit(Alter, taskId, processId,result,suggestion);
+		String taskId = request.getParameter("taskId");
+		String processId = request.getParameter("processId");
 
-//		marketService.verifyAlterSubmit(Alter, taskId, processId, result, suggestion);
+		marketService.verifyAlterSubmit(Alter, taskId, processId, result, suggestion);
 
 		return "redirect:/market/verifyAlterList.do";
 		}
@@ -3077,6 +3079,9 @@ public class MarketController {
 			                System.out.println("=============alterId:"+AlterModel.getAlterId());
 			                Map<String, Object> orderModel = marketService.getOrderDetail(orderId);
 			                String reason ="";
+			                HttpSession session = request.getSession();
+			        		Account account = (Account) session.getAttribute("cur_user");
+			                model.addAttribute("task", marketService.getTask(account.getUserId(),  alterId));
 			                model.addAttribute("orderInfo", orderModel);
 			                model.addAttribute("AlterInfo", AlterModel);
 	                        model.addAttribute("employeeList",employeeList);

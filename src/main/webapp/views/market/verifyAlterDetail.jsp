@@ -51,10 +51,10 @@
 					<tr>
 						<td>操作</td>
 						<td colspan="6">
-				           <%--  <input type="hidden" name="taskId" value="${AlterInfo.taskid}" /> --%>
+				            <input type="hidden" name="taskId" value="${task.taskid}" /> 
 				            <input type="hidden" name="order_id" value="${AlterInfo.orderId }" />
 				            <input type="hidden" name="alter_id" value="${AlterInfo.alterId }" />
-				           <!-- <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />-->
+				           <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
 				            <input type="hidden" name="verifyAlterSuccessVal" id="verifyAlterSuccess_val" value="" /> 
 				             <input type="hidden" name="verifyState" id="verifyState_val" value="" /> 
 				            <a id="disagree" class="btn btn-danger btn-rounded" style="float: left;">

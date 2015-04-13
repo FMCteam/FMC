@@ -51,6 +51,7 @@ import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
+import nju.software.process.service.BasicProcessService;
 import nju.software.process.service.MainProcessService;
 import nju.software.process.service.MarketstaffAlterProcessService;
 import nju.software.service.FinanceService;
@@ -99,6 +100,7 @@ public class MarketServiceImpl implements MarketService {
 	public final static String RESULT_VERIFY_QUOTE = "verifyQuoteSuccess";
 	public final static String VERIFY_QUOTE_COMMENT = "verifyQuoteComment";
 	public final static String ALTER_REASON="reason";
+	public final static String ALTER_ID="alterId";
 	public final static String ALTER_ALTERINFO="alterInfo";
 	public final static String ALTER_RESULT="result";
 	public final static String ALTER_PROCESSID="processId";
@@ -119,6 +121,8 @@ public class MarketServiceImpl implements MarketService {
 	private QuoteDAO quoteDAO;
 	@Autowired
 	private MainProcessService mainProcessService;
+	@Autowired
+	private BasicProcessService basicProcessService;
 	@Autowired
 	private AccessoryDAO accessoryDAO;
 	@Autowired
@@ -195,6 +199,13 @@ public class MarketServiceImpl implements MarketService {
 	public void verifyAlterSubmit(MarketstaffAlter alter, String taskId,
 			String processId, boolean result, String suggestion) {
 		marketstaffAlterDAO.attachDirty(alter);
+		if (result==true){
+			Order order=orderDAO.findById(alter.getOrderId());
+			order.setOrderState("A");
+			order.setEmployeeId(alter.getNextEmployeeId());
+			orderDAO.attachDirty(order);
+		
+		}			
 		Map<String, Object> params = new HashMap<>();
 		params.put(MarketServiceImpl.ALTER_RESULT, result);
 		params.put(MarketServiceImpl.ALTER_COMMENT, suggestion);
@@ -225,12 +236,19 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public boolean applyForAlterMarketStaffSubmit(MarketstaffAlter alterInfo, String reason) {
+		
 		marketstaffAlterDAO.save(alterInfo);
+		
+		
 		Map<String, Object> params = new HashMap<>();
 		params.put(MarketServiceImpl.ALTER_REASON, reason);
+		params.put(ALTER_ID, alterInfo.getAlterId());
 		String processId=marketstaffAlterProcessServices.startWorkflow(params);
 		alterInfo.setProcessId(processId);
 		marketstaffAlterDAO.attachDirty(alterInfo);
+		Order order=orderDAO.findById(alterInfo.getOrderId());
+		order.setOrderState("TODO");
+		orderDAO.attachDirty(order);
 		return true;
 	}
 
@@ -1873,6 +1891,14 @@ public class MarketServiceImpl implements MarketService {
 		List<Order> orderlist=orderDAO.findByExample(instance);
 		
 		return orderlist;
+	}
+
+	@Override
+	public Task getTask(Integer userId,int alterId) {
+		System.out.println(userId+"   "+(String)marketstaffAlterDAO.findById(alterId).getProcessId());
+		Task  task=mainProcessService.
+		System.out.println(task.getId());
+		return task;
 	}
 
 
