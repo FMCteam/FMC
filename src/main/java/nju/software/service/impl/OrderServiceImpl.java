@@ -245,7 +245,7 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderModel> getOrderByActorIdAndTaskname(String actorId,
 			String taskName) {
 		List<OrderModel> orderList = new ArrayList<OrderModel>();
-		List<Task> list = mainProcessService.getTasksOfUserByTaskName(actorId, taskName);
+		List<Task> list = mainProcessService.getAllTasksOfUserByTaskName(actorId, taskName);
 		if (list.isEmpty()) {
 			System.out.println("no task list");
 		}
@@ -331,7 +331,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<QuoteModel> getQuoteByActorAndTask(String actor, String taskName) {
 		List<QuoteModel> orderList = new ArrayList<QuoteModel>();
-		List<Task> list = mainProcessService.getTasksOfUserByTaskName(actor, taskName);
+		List<Task> list = mainProcessService.getAllTasksOfUserByTaskName(actor, taskName);
 		if (list.isEmpty()) {
 			System.out.println("no task list");
 		}
@@ -356,7 +356,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public QuoteModel getQuoteByOrderAndPro(String actor, String taskName,
 			int orderId) {
-		List<Task> list = mainProcessService.getTasksOfUserByTaskName(actor, taskName);
+		List<Task> list = mainProcessService.getAllTasksOfUserByTaskName(actor, taskName);
 		if (list.isEmpty()) {
 			System.out.println("no task list");
 		}

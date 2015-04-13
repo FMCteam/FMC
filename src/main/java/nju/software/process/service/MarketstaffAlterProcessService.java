@@ -6,36 +6,31 @@ import java.util.Map;
 import nju.software.service.impl.MarketServiceImpl;
 
 import org.activiti.engine.task.Task;
-import org.springframework.beans.factory.annotation.Autowired;
 
-public class MarketstaffAlterProcessService {
+public class MarketstaffAlterProcessService extends BasicProcessService{
 	public static final String PROCESS_NAME = "nju.software.marketStaffAlter.bpmn";
-	public static final String TASK_VERIFY_ALTER = "verifyAlter";
-	@Autowired
-	private BasicProcessService service;
 	
 	public String startWorkflow(Map<String, Object> params){
-		return service.startWorkflow(PROCESS_NAME, params);
+		return startWorkflow(PROCESS_NAME, params);
 	}
 	
 	public void completeVerifyAterTask(String taskId, Map<String, Object> params) throws InterruptedException{
-		service.completeTask(taskId, MarketServiceImpl.ACTOR_MARKET_MANAGER, params);
+		completeTask(taskId, MarketServiceImpl.ACTOR_MARKET_MANAGER, params);
 	}
 	
 	public List<Task> getVerifyAlterTasksOfMarketManager(){
-		return service.getAssignTasksOfUserByTaskName(MarketServiceImpl.ACTOR_MARKET_MANAGER, TASK_VERIFY_ALTER);
+		return getTasksOfUserByTaskName(MarketServiceImpl.ACTOR_MARKET_MANAGER, MarketServiceImpl.TASK_VERIFY_ALTER);
 	}
 	
 	public Object getReason(String processId){
-		return service.getProcessVariable(processId, MarketServiceImpl.ALTER_REASON);
+		return getProcessVariable(processId, MarketServiceImpl.ALTER_REASON);
 	}
 	
 	public Object getComment(String processId){
-		return service.getProcessVariable(processId, MarketServiceImpl.ALTER_COMMENT);
+		return getProcessVariable(processId, MarketServiceImpl.ALTER_COMMENT);
 	}
 	
-	public void abortWorkflow(String processId){
-		service.abortWorkflow(processId);
+	public Task getTaskWithSpecificAlterId(String value){
+		return getTask(MarketServiceImpl.ACTOR_MARKET_MANAGER,MarketServiceImpl.TASK_VERIFY_ALTER, "alterId", value);
 	}
-
 }

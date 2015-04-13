@@ -20,13 +20,13 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public Integer getTaskNumber(String userId) {
 		List<Task> tasks = mainProcessService.getTasksOfUser(userId);
-		return tasks == null ? 0 : tasks.size();
+		return tasks == null ? 0: tasks.size();
 	}
 
 	@Override
 	public Integer getTaskNumber(String userId, String taskName) {
-		List<Task> tasks = mainProcessService.getTasksOfUserByTaskName(userId, taskName);
-		return tasks == null ? 0 : tasks.size();
+		List<Task> tasks = mainProcessService.getAllTasksOfUserByTaskName(userId, taskName);
+		return tasks == null ? 0: tasks.size();
 	}
 
 	@Override
