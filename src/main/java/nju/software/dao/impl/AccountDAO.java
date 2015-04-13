@@ -411,6 +411,8 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	public boolean addAccountRole(String roleName, int accountId) {
 		// TODO Auto-generated method stub
 		Date date =new Date();
+		
+		System.out.print("==================roleName:"+roleName+",");
 		final String hql="select r.roleId from Role r where r.name='"+roleName+"'";
         int roleId =  (int) this.getHibernateTemplate().execute(new HibernateCallback<Object>(){
 

@@ -243,13 +243,14 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	
 	 public void initSQL_other(){
 		// setPath();
-		 try {
-			execute(INIT_SQL_other);
-			initAccountRole();
+		 initAccountRole();
+		/* try {
+			 execute(INIT_SQL_other);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	 }
 	
 	 public void initAccountRole(){
@@ -275,7 +276,7 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 				
 				Object role =  map.get(b.getUserRole());
 				if(role!=null){
-				//System.out.print(role+",");
+				
 				b.setUserRole((String)role);
 				newList.add(b);
 				accountDao.SaveOrUpDate(b);
@@ -284,6 +285,7 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 			if(isEmptytOfTable("Account_Role")){
 			
 			for(Account a :list){
+				
 				accountDao.addAccountRole(a.getUserRole(), a.getAccountId());
 			}
 			}
