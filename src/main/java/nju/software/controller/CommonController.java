@@ -174,7 +174,6 @@ public class CommonController {
 			map.put(MarketServiceImpl.TASK_MODIFY_PRODUCE_ORDER, actorId);
 			map.put(MarketServiceImpl.TASK_SIGN_CONTRACT, actorId);
 			map.put(MarketServiceImpl.TASK_PUSH_REST, actorId);
-//			map.put(MarketServiceImpl.TASK_VERIFY_QUOTE, actorId);
 			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER,number );
  
 		}

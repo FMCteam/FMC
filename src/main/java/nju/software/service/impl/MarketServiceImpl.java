@@ -63,6 +63,7 @@ import nju.software.util.mail.MailSenderInfo;
 import nju.software.util.mail.SimpleMailSender;
 
 import org.activiti.engine.task.Task;
+import org.drools.lang.dsl.DSLMapParser.statement_return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,8 +93,9 @@ public class MarketServiceImpl implements MarketService {
 	public final static String RESULT_CONFIRM_PRODUCE_ORDER_CONTRACT = "confirmProduceOrderContract";
 	public final static String RESULT_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
 	public final static String RESULT_PUSH_RESTMONEY = "pushRestMoney";
-	public final static String UPLOAD_DIR_SAMPLE = "/upload/sample/";
-	public final static String UPLOAD_DIR_REFERENCE = "/upload/reference/";
+	public final static String UPLOAD_DIR = "upload_new";
+	public final static String UPLOAD_DIR_SAMPLE = "/"+ UPLOAD_DIR + "/sample/";
+	public final static String UPLOAD_DIR_REFERENCE = "/"+ UPLOAD_DIR + "/reference/";
 	public final static String RESULT_VERIFY_QUOTE = "verifyQuoteSuccess";
 	public final static String VERIFY_QUOTE_COMMENT = "verifyQuoteComment";
 	public final static String ALTER_REASON="reason";
@@ -336,7 +338,7 @@ public class MarketServiceImpl implements MarketService {
 			String curPath = request.getSession().getServletContext()
 					.getRealPath("/");
 			String fatherPath = new File(curPath).getParent();
-			String relativePath = File.separator + "upload" + File.separator
+			String relativePath = File.separator + UPLOAD_DIR + File.separator
 					+ "sample" + File.separator + orderId;
 			String filedir = fatherPath + relativePath;
 			File file = FileOperateUtil.Upload(request, filedir, "1",
@@ -357,7 +359,7 @@ public class MarketServiceImpl implements MarketService {
 			String curPath = request.getSession().getServletContext()
 					.getRealPath("/");
 			String fatherPath = new File(curPath).getParent();
-			String relativePath = File.separator + "upload" + File.separator
+			String relativePath = File.separator + UPLOAD_DIR + File.separator
 					+ "reference" + File.separator + orderId;
 			String filedir = fatherPath + relativePath;
 
@@ -439,7 +441,7 @@ public class MarketServiceImpl implements MarketService {
 			String curPath = request.getSession().getServletContext()
 					.getRealPath("/");
 			String fatherPath = new File(curPath).getParent();
-			String relativePath = File.separator + "upload" + File.separator
+			String relativePath = File.separator + UPLOAD_DIR + File.separator
 					+ "sample" + File.separator + orderId;
 			String filedir = fatherPath + relativePath;
 			File file = FileOperateUtil.Upload(request, filedir, "1",
@@ -460,7 +462,7 @@ public class MarketServiceImpl implements MarketService {
 			String curPath = request.getSession().getServletContext()
 					.getRealPath("/");
 			String fatherPath = new File(curPath).getParent();
-			String relativePath = File.separator + "upload" + File.separator
+			String relativePath = File.separator + UPLOAD_DIR + File.separator
 					+ "reference" + File.separator + orderId;
 			String filedir = fatherPath + relativePath;
 

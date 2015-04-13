@@ -67,15 +67,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class MarketController {
-//	private final static String CONTRACT_URL = "C:/fmc/contract/";//合同图片
-//	private final static String CONFIRM_SAMPLEMONEY_URL="C:/fmc/confirmSampleMoneyFile/";//样衣金收取钱款图片
-//	private final static String CONFIRM_DEPOSIT_URL="C:/fmc/confirmDepositFile/";//大货首定金收取钱款图片
-//	private final static String CONFIRM_FINALPAYMENT_URL="C:/fmc/confirmFinalPaymentFile/";//大货首定金收取钱款图片
-	
-	private final static String CONTRACT_URL = "/upload/contract/";//合同图片
-	private final static String CONFIRM_SAMPLEMONEY_URL="/upload/confirmSampleMoneyFile/";//样衣金收取钱款图片
-	private final static String CONFIRM_DEPOSIT_URL="/upload/confirmDepositFile/";//大货首定金收取钱款图片
-	private final static String CONFIRM_FINALPAYMENT_URL="/upload/confirmFinalPaymentFile/";//大货首定金收取钱款图片
+	private final static String UPLOAD_DIR = "upload_new";
+	private final static String CONTRACT_URL = "/upload_new/contract/";//合同图片
+	private final static String CONFIRM_SAMPLEMONEY_URL="/upload_new/confirmSampleMoneyFile/";//样衣金收取钱款图片
+	private final static String CONFIRM_DEPOSIT_URL="/upload_new/confirmDepositFile/";//大货首定金收取钱款图片
+	private final static String CONFIRM_FINALPAYMENT_URL="/upload_new/confirmFinalPaymentFile/";//大货首定金收取钱款图片
 
 	@Autowired
 	private OrderService orderService;
@@ -2229,9 +2225,9 @@ public class MarketController {
 			String curPath = request.getSession().getServletContext()
 					.getRealPath("/");// 获取当前路径
 			String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
-			String contractRelativePath = File.separator + "upload"
+			String contractRelativePath = File.separator + UPLOAD_DIR
 					+ File.separator + "contract" + File.separator + orderId;
-			String depositRelativePath = File.separator + "upload"
+			String depositRelativePath = File.separator + UPLOAD_DIR
 					+ File.separator + "confirmDepositFile" + File.separator + orderId;
 			String contractFileDir = fatherPath + contractRelativePath;// 最终合同保存的路径
 			String depositFileDir = fatherPath + depositRelativePath;// 最终首定金要保存的路径
@@ -2404,7 +2400,7 @@ public class MarketController {
 			String curPath = request.getSession().getServletContext()
 					.getRealPath("/");// 获取当前路径
 			String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
-			String relativePath = File.separator + "upload" + File.separator
+			String relativePath = File.separator + UPLOAD_DIR + File.separator
 					+ "confirmFinalPaymentFile" + File.separator
 					+ orderId;
 			String filedir = fatherPath + relativePath;// 最终要保存的路径
@@ -2449,7 +2445,7 @@ public class MarketController {
 				String curPath = request.getSession().getServletContext()
 						.getRealPath("/");// 获取当前路径
 				String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
-				String relativePath = File.separator + "upload" + File.separator
+				String relativePath = File.separator + UPLOAD_DIR + File.separator
 						+ "confirmFinalPaymentFile" + File.separator
 						+ orderId_string;
 				String filedir = fatherPath + relativePath;// 最终要保存的路径
@@ -2560,13 +2556,13 @@ public class MarketController {
 		String contractFileName = contractFile.getOriginalFilename();
 		String confirmDepositFileName = confirmDepositFile.getOriginalFilename();
 		
-		// 将图片保存在和项目根目录同级的文件夹upload下
+		// 将图片保存在和项目根目录同级的文件夹upload_new下
 		String curPath = request.getSession().getServletContext()
 				.getRealPath("/");// 获取当前路径
 		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
-		String contractRelativePath = File.separator + "upload"
+		String contractRelativePath = File.separator + UPLOAD_DIR
 				+ File.separator + "contract" + File.separator + orderId;
-		String depositRelativePath = File.separator + "upload"
+		String depositRelativePath = File.separator + UPLOAD_DIR
 				+ File.separator + "confirmDepositFile" + File.separator + orderId;
 		String contractFileDir = fatherPath + contractRelativePath;// 最终合同保存的路径
 		String depositFileDir = fatherPath + depositRelativePath;// 最终首定金要保存的路径
@@ -3003,7 +2999,9 @@ public class MarketController {
 		
 	           // marketService.verifyQuoteSubmit(Alter, suggestion);
                //  marketService.verifyAlterSubmit(Alter, taskId, processId,result,suggestion);
-//		marketService.verifyAlterMarketstaffSubmit(Alter, result, suggestion);
+
+//		marketService.verifyAlterSubmit(Alter, taskId, processId, result, suggestion);
+
 		return "redirect:/market/verifyAlterList.do";
 		}
 	

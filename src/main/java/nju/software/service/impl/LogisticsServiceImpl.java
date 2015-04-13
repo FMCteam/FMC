@@ -106,7 +106,6 @@ public class LogisticsServiceImpl implements LogisticsService {
 			data.put(RESULT_RECEIVE_SAMPLE, (int) result);
 			try {
 				mainProcessService.completeTask(taskId, ACTOR_LOGISTICS_MANAGER, data);
-				mainProcessService.completeTask(taskId, ACTOR_LOGISTICS_MANAGER, data);
 			if(result.intValue()==1){//如果result的的值为1，即为未收取到样衣，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
 				orderDAO.attachDirty(order);

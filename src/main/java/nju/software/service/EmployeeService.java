@@ -39,4 +39,6 @@ public interface EmployeeService {
 	@Transactional(rollbackFor = Exception.class)
 	public List<Employee> getEmployeeByName(String employeename);
 
+	public List<Employee> getAllManagerStaff();
+
 }
