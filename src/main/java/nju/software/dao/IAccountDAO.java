@@ -44,4 +44,17 @@ public interface IAccountDAO {
 	public void deleteAccountRole(AccountRole persistentInstance);
 	public List<AccountRole> findAccountRoleById(int accountId);
 	
+	/**
+	 * 以用户名降序返回关键字搜索结果
+	 * @param propertyName 关键字 
+	 * @param value 关键字的值
+	 * @return 结果列表
+	 */
+	public List findByPropertyinDESC(String propertyName, Object value);
+	
+	/**
+	 * 获取全部市场专员
+	 * @return
+	 */
+	public List getAllManagerStaff();
 }

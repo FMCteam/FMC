@@ -3045,7 +3045,9 @@ public class MarketController {
 		
 	           // marketService.verifyQuoteSubmit(Alter, suggestion);
                //  marketService.verifyAlterSubmit(Alter, taskId, processId,result,suggestion);
+
 //		marketService.verifyAlterSubmit(Alter, taskId, processId, result, suggestion);
+
 		return "redirect:/market/verifyAlterList.do";
 		}
 	

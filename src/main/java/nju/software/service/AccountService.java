@@ -1,5 +1,7 @@
 package nju.software.service;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import nju.software.dataobject.Account;
@@ -7,6 +9,14 @@ import nju.software.dataobject.Customer;
 
 public interface AccountService {
 
+	
+	/**
+	 *  获取所有专员的列表
+	 * @return 专员列表
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public List<Account>   getAllManagerStaff();  
+	
 	@Transactional(rollbackFor = Exception.class)
 	public Account vertifyAccount(String accountName, String accountPassword);
 
