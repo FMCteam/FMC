@@ -16,5 +16,8 @@
 
 /bin
 /src/main/webapp/WEB-INF/jdbc.properties
+<<<<<<< HEAD
+=======
 /src/main/webapp/WEB-INF/jdbc.properties
 /src/main/webapp/WEB-INF/jdbc.properties
+>>>>>>> cd3f5a94b0a6669082ae5400a5652b2306df4096

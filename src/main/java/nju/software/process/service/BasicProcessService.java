@@ -13,8 +13,8 @@ public class BasicProcessService {
 	@Autowired
 	public ActivitiAPIUtil activitiAPIUtil;
 	
-	public  String startWorkflow(String processName, Map<String, Object> params){
-		return activitiAPIUtil.startWorkflowProcessByKey(processName, params);
+	public  String startWorkflow(String processId, Map<String, Object> params){
+		return activitiAPIUtil.startWorkflowProcessById(processId, params);
 	}
 	
 	public void abortWorkflow(String processId){

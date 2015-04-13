@@ -246,7 +246,7 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 		 initAccountRole();
 		/* try {
 			 execute(INIT_SQL_other);
-			
+			 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -283,6 +283,13 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 				}
 			}
 			if(isEmptytOfTable("Account_Role")){
+				try {
+					 execute(INIT_SQL_other);
+					 
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			
 			for(Account a :list){
 				

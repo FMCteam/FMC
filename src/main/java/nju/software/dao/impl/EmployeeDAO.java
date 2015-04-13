@@ -5,6 +5,7 @@ import java.util.List;
 
 import nju.software.dao.IEmployeeDAO;
 import nju.software.dataobject.Employee;
+
 import org.hibernate.LockMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
@@ -67,21 +68,6 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 	}
 
 	/* (non-Javadoc)
-	 * @see nju.software.dao.impl.IEmployeeDAO#delete(nju.software.dataobject.Employee)
-	 */
-	@Override
-	public void delete(Employee persistentInstance) {
-		log.debug("deleting Employee instance");
-		try {
-			getHibernateTemplate().delete(persistentInstance);
-			log.debug("delete successful");
-		} catch (RuntimeException re) {
-			log.error("delete failed", re);
-			throw re;
-		}
-	}
-
-	/* (non-Javadoc)
 	 * @see nju.software.dao.impl.IEmployeeDAO#findById(java.lang.Integer)
 	 */
 	@Override
@@ -111,6 +97,21 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
+			throw re;
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see nju.software.dao.impl.IEmployeeDAO#delete(nju.software.dataobject.Employee)
+	 */
+	@Override
+	public void delete(Employee persistentInstance) {
+		log.debug("deleting Employee instance");
+		try {
+			getHibernateTemplate().delete(persistentInstance);
+			log.debug("delete successful");
+		} catch (RuntimeException re) {
+			log.error("delete failed", re);
 			throw re;
 		}
 	}
@@ -441,5 +442,21 @@ public class EmployeeDAO extends HibernateDaoSupport implements IEmployeeDAO {
 			throw re;
 		}
 	}
+	
+	
+	@Override
+	public List findByPropertyinDESC(String propertyName, Object value) {
+		log.debug("finding Employee instance with property: " + propertyName
+				+ ", value: " + value);
+		try {
+			String queryString = "from Employee as model where model."
+					+ propertyName + "= ? order by model.employee_name desc";
+			return getHibernateTemplate().find(queryString, value);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+//	public List getAll
 
 }
