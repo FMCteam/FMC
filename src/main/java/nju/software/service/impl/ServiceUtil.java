@@ -49,15 +49,15 @@ public class ServiceUtil {
 
 	public List<Map<String, Object>> getOrderList(String actorId,
 			String taskName) {
-		List<Task> tasks = mainProcessService.getTasksOfUserByTaskName(actorId, taskName);
-		
-//		if (isAdminRequest(actorId)) {
-//			List<Account> accounts = accountDAO.findByUserRole(MarketServiceImpl.ACTOR_MARKET_STAFF);
-//			for (Account account : accounts) {
-//				List<Task> tasks2 = activitiAPIUtil.getAssignedTasksOfUserByTaskName(account.getUserId()+"", taskName);
-//				tasks.addAll(tasks2);
-//			}
-//		}
+		List<Task> tasks = mainProcessService.getAllTasksOfUserByTaskName(actorId, taskName);
+		//如果是管理员查看时，展现所有专员的任务
+		if (isAdminRequest(actorId)) {
+			List<Account> accounts = accountDAO.findByUserRole(MarketServiceImpl.ACTOR_MARKET_STAFF);
+			for (Account account : accounts) {
+				List<Task> tasks2 = mainProcessService.getAllTasksOfUserByTaskName(account.getUserId()+"", taskName);
+				tasks.addAll(tasks2);
+			}
+		}
 
 		List<Map<String, Object>> list = new ArrayList<>();
 
@@ -82,7 +82,7 @@ public class ServiceUtil {
 		List<Order> orders = orderDAO.getSearchOrderList( ordernumber,
 				 customername,stylename,startdate,enddate,employeeIds);
 		
-		List<Task> tasks = mainProcessService.getTasksOfUserByTaskName(actorId, taskName);
+		List<Task> tasks = mainProcessService.getAllTasksOfUserByTaskName(actorId, taskName);
 		
 		List<Map<String, Object>> list = new ArrayList<>();
 
@@ -254,7 +254,7 @@ public class ServiceUtil {
 		 List<Account> accounts = accountDAO.findByUserRole(CommonServiceImpl.ACTOR_ADMIN);
 		 //这边管理员默认只有一个
 		 Account admin = accounts.get(0);
-		 return actorId.equals(admin.getAccountId()+"");
+		 return actorId.equals(admin.getUserId()+"");
 	 }
 
 	@Autowired

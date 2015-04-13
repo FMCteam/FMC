@@ -106,7 +106,7 @@ table.tablesorter thead tr .headerSortDown {
 								<h5>${USER_nick_name }<small>- ${USER_user_name }</small>
 								</h5>
 								<ul>
-									<li><a href="${ctx }/account/modifyEmployeeDetail.do">修改账户</a></li>
+									<li><a href="${ctx }/account/modifyEmployeeDetail.do" target="maincontent">修改账户</a></li>
 									<li><a href="${ctx }/logout.do">退出</a></li>
 								</ul>
 							</div>

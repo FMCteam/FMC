@@ -8,7 +8,6 @@
 
 			<ul class="nav nav-tabs detail" id="tab">
 				<li class="task-name">订单详情</li>
-				<li><a href="#changeMarket" data-toggle="tab">更换专员</a></li>
 				<li><a href="#cad" data-toggle="tab">版型信息</a></li>
 				<li><a href="#produce" data-toggle="tab">加工信息</a></li>
 				<li><a href="#sample" data-toggle="tab">样衣信息</a></li>
@@ -27,9 +26,6 @@
 				</div>
 				<div class="tab-pane" id="cad">
 					<%@include file="/views/common/cad.jsp"%>
-				</div>
-				<div class="tab-pane" id="changeMarket">
-					<%@include file="/views/market/changeMarketStaff.jsp"%>
 				</div>
 			</div>
 			<c:if test="${role=='designManager'}">
@@ -119,57 +115,6 @@ $(function(){
 	var minute = date.getMinutes()>9?date.getMinutes():"0"+date.getMinutes();
 	var second = date.getSeconds()>9?date.getSeconds():"0"+date.getSeconds();
 	$("#input_day").val(date.getFullYear()+"/"+month+"/"+day+" "+hour+":"+minute+":"+second);
-	
-	updateAllApplicationTable(${orderInfo.order.orderId});
-	$("#applySubmit").click(function(){
-		$.get("${ctx}/market/applyForAlterMarketStaffSubmit.do",{"reason":$("#reason").val(),"orderId":${orderInfo.order.orderId},"employeeId":${orderInfo.order.employeeId}},function(data){
-			if(data.result == true){
-				$(".result").css("color","red").html("已提交");
-				updateAllApplicationTable(${orderInfo.order.orderId});
-				noty({
-					text : '申请提交成功',
-					layout : 'topCenter',
-					timeout : 2000
-				});
-			}
-			else if(data.result == "existRepetition"){
-				noty({
-					text : '您提交的申请还未审批,请勿重复提交',
-					layout : 'topCenter',
-					timeout : 2000
-				});
-			}
-			else{
-				noty({
-					text : '申请提交失败',
-					layout : 'topCenter',
-					timeout : 2000
-				});
-			}
-		});
-	});
-	
-	function updateAllApplicationTable(orderId){
-		$.get("${ctx}/market/getAlterInfoByOrderId.do",{"orderId":orderId},function(data){
-			var str = "<tr><td>申请时间</td><td>申请专员ID</td><td>申请理由</td><td>审批状态</td></tr>";
-			for(var i=0;i<data.alterInfoList.length;i++){
-				var info = data.alterInfoList[i];
-				
-				var date = new Date(info.alterInfo.applyTime.time);
-				
-				var month = date.getMonth()>8?date.getMonth()+1:"0"+(date.getMonth()+1);
-				var day = date.getDate()>9?date.getDate():"0"+date.getDate();
-				var hour = date.getHours()>9?date.getHours():"0"+date.getHours();
-				var minute = date.getMinutes()>9?date.getMinutes():"0"+date.getMinutes();
-				var second = date.getSeconds()>9?date.getSeconds():"0"+date.getSeconds();
-				
-				var datetime = date.getFullYear()+"/"+month+"/"+day+" "+hour+":"+minute+":"+second;
-				
-				str+="<tr><td>"+datetime+"</td><td>"+info.alterInfo.employeeId+"</td><td>"+(info.reason==null?"":info.reason)+"</td><td>"+info.alterInfo.verifyState+"</td></tr>";
-			}
-			$("#allApplication").html(str);
-		});
-	}
 	
 });
 </script>

@@ -2942,7 +2942,7 @@ public class MarketController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/market/applyForAlterMarketStaffSubmit.do")
+	@RequestMapping(value = "/market/applyForAlterMarketStaffSubmit.do", method = RequestMethod.POST)
 	public void applyForAlterMarketStaffSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String reason = request.getParameter("reason");
