@@ -187,6 +187,7 @@ table.tablesorter thead tr .headerSortDown {
 										class="pushRest"></span></a></li>
 								<li><a href="${ctx}/market/modifyProductList.do" target="maincontent">修改大货合同<span
 										class="modifyProduceOrder"></span></a></li>
+								<li><a href="${ctx}/market/applyForAlterMarketStaff.do" target="maincontent">申请更换专员</a></li>
 							</ul></li>
 					</c:if>
 					<c:if test="${ROLE_design==true}">

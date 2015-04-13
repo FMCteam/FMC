@@ -2875,6 +2875,52 @@ public class MarketController {
 		
 		return info;
 	}
+	
+	
+	@RequestMapping(value = "/market/applyForAlterMarketStaff.do")
+	public String applyForAlterMarketStaff(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");
+		List<Map<String, Object>> list = null;
+		
+		//客户和市场专员只能看到与自己相关的订单
+		if("CUSTOMER".equals(account.getUserRole()) || "marketStaff".equals(account.getUserRole())){
+			list = marketService.getOrders(account.getUserRole(), account.getUserId());
+		} else {
+			list = marketService.getOrders();
+		}
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "订单列表");
+		model.addAttribute("url", "/market/showApplyForAlterMarketStaff.do");
+		model.addAttribute("searchurl", "/order/orderSearch.do");
+		return "/market/orderList_new";
+	}
+	
+	@RequestMapping(value = "/market/showApplyForAlterMarketStaff.do")
+	public String showApplyForAlterMarketStaff(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		Account account = (Account) request.getSession().getAttribute(
+				"cur_user");		
+		String orderStateName = "";
+        Integer orderId = Integer.parseInt(request.getParameter("orderId"));
+        ArrayList<String>  orderProcessStateNames = marketService.getProcessStateName(orderId);
+        if(orderProcessStateNames.size()>0){
+        	for(int i=0;i<orderProcessStateNames.size();i++){
+        		if(!orderProcessStateNames.get(i).equals("Gateway")){
+        		    if(i>0)
+        			    orderStateName+=" | ";
+        		    orderStateName+=orderProcessStateNames.get(i);
+        		}
+        	}
+        }
+        if(orderStateName!=""){
+        	request.setAttribute("orderStateMessage", "当前任务是："+orderStateName);
+        }
+		Map<String, Object> orderInfo = marketService.getOrderDetail(orderId);
+		model.addAttribute("orderInfo", orderInfo);
+		model.addAttribute("role",account.getUserRole());
+		return "/market/applyForAlterMarketStaff";
+	}
+	
 	/**
 	 * 申请更改市场专员
 	 * @param request
