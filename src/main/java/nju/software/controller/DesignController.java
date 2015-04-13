@@ -19,6 +19,7 @@ import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.ListUtil;
 
+import org.drools.lang.dsl.DSLMapParser.statement_return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,9 +34,9 @@ public class DesignController {
 	
 //	private final static String CAD_URL = "C:/fmc/cad/";
 //	private final static String CRAFT_FILE_URL = "C:/fmc/craft/";
-	
-	private final static String CAD_URL = "/upload/cad/";
-	private final static String CRAFT_FILE_URL = "/upload/craft/";
+	private final static String UPLOAD_DIR = "upload_new";
+	private final static String CAD_URL = "/upload_new/cad/";
+	private final static String CRAFT_FILE_URL = "/upload_new/craft/";
 	
 	// ===========================设计验证=================================
 	@RequestMapping(value = "/design/verifyDesignList.do")
@@ -295,7 +296,7 @@ public class DesignController {
 		String curPath = request.getSession().getServletContext()
 				.getRealPath("/");// 获取当前路径
 		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
-		String relativePath = File.separator + "upload" + File.separator
+		String relativePath = File.separator + UPLOAD_DIR + File.separator
 				+ "cad" + File.separator + orderId;
 		String filedir = fatherPath + relativePath;// 最终要保存的路径
 		
@@ -341,7 +342,7 @@ public class DesignController {
 		String curPath = request.getSession().getServletContext()
 				.getRealPath("/");// 获取当前路径
 		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
-		String relativePath = File.separator + "upload" + File.separator
+		String relativePath = File.separator + UPLOAD_DIR + File.separator
 				+ "cad" + File.separator + orderId;
 		String filedir = fatherPath + relativePath;// 最终要保存的路径
 		
@@ -440,7 +441,7 @@ public class DesignController {
 		String curPath = request.getSession().getServletContext()
 				.getRealPath("/");// 获取当前路径
 		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
-		String relativePath = File.separator + "upload" + File.separator
+		String relativePath = File.separator + UPLOAD_DIR + File.separator
 				+ "cad" + File.separator + orderId;
 		String filedir = fatherPath + relativePath;// 最终要保存的路径
 		
@@ -483,7 +484,7 @@ public class DesignController {
 		String curPath = request.getSession().getServletContext()
 				.getRealPath("/");// 获取当前路径
 		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
-		String relativePath = File.separator + "upload" + File.separator
+		String relativePath = File.separator + UPLOAD_DIR + File.separator
 				+ "craft" + File.separator + orderId;
 		String filedir = fatherPath + relativePath;// 最终要保存的路径
 		String craftFileName = craftFile.getOriginalFilename();
@@ -759,7 +760,7 @@ public class DesignController {
 		String curPath = request.getSession().getServletContext()
 				.getRealPath("/");// 获取当前路径
 		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
-		String relativePath = File.separator + "upload" + File.separator
+		String relativePath = File.separator + UPLOAD_DIR + File.separator
 				+ "cad" + File.separator + orderId;
 		String filedir = fatherPath + relativePath;// 最终要保存的路径
 		
@@ -861,7 +862,7 @@ public class DesignController {
 		String curPath = request.getSession().getServletContext()
 				.getRealPath("/");// 获取当前路径
 		String fatherPath = new File(curPath).getParent();// 当前路径的上级目录
-		String relativePath = File.separator + "upload" + File.separator
+		String relativePath = File.separator + UPLOAD_DIR + File.separator
 				+ "cad" + File.separator + orderId;
 		String filedir = fatherPath + relativePath;// 最终要保存的路径
 		
