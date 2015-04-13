@@ -613,7 +613,8 @@ public class AccountController {
 
 				boolean test = this.customerService.addCustomer(c, userName,
 						userPassword);
-
+				
+				accountService.addAccountRole("CUSTOMER", c.getCustomerId());
 				if (test) {
 
 					model.addAttribute("exist", false);
@@ -629,7 +630,7 @@ public class AccountController {
 
 				boolean test = this.customerService.addCustomer(c, userName,
 						userPassword);
-
+				
 				if (test) {
 
 					model.addAttribute("exist", false);

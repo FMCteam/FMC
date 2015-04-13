@@ -3099,11 +3099,13 @@ public class MarketController {
 		    Map<String, Object> alterInfo = new HashMap<String, Object>();
 		    Employee employee_next =null;
 		    Employee employee =employeeService.getEmployeeById(staffAlter.getEmployeeId());
-		   
+		    Map order = marketService.getOrderDetail(staffAlter.getOrderId());
 		   // StaffAlterInfo alterInfo= new StaffAlterInfo(staffAlter,employee,employee_next);
+		    
 		    alterInfo.put("employee", employee);
 		    alterInfo.put("employeeNext",employee_next);
 		    alterInfo.put("Alter",staffAlter );
+		    alterInfo.put("order", order.get("order"));
 		    list.add(alterInfo);
 		 
 		    }
