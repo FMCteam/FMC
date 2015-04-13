@@ -614,7 +614,9 @@ public class AccountController {
 				boolean test = this.customerService.addCustomer(c, userName,
 						userPassword);
 				
-				accountService.addAccountRole("CUSTOMER", c.getCustomerId());
+				Account account_Customer =accountService.getAccoutByUserIdAndUserRole("CUSTOMER", c.getCustomerId());
+				System.out.println("customer:"+account_Customer.getAccountId());
+				accountService.addAccountRole("CUSTOMER", account_Customer.getAccountId());
 				if (test) {
 
 					model.addAttribute("exist", false);
@@ -630,7 +632,11 @@ public class AccountController {
 
 				boolean test = this.customerService.addCustomer(c, userName,
 						userPassword);
-				
+				Account account_Customer =accountService.getAccoutByUserIdAndUserRole("CUSTOMER", c.getCustomerId());
+				System.out.println("customer:"+account_Customer.getAccountId());
+				accountService.addAccountRole("CUSTOMER", account_Customer.getAccountId());
+			
+			//	accountService.addAccountRole("CUSTOMER", c.g);
 				if (test) {
 
 					model.addAttribute("exist", false);
