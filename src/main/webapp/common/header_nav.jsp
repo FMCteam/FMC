@@ -41,7 +41,7 @@ $(function() {
 		$("table.tablesorter").tablesorter();
 		//	}
 
-		getTaskNumber();
+		//getTaskNumber();
 		//$("li span.task").css("color","white");
 		
 	});
@@ -358,7 +358,7 @@ table.tablesorter thead tr .headerSortDown {
 					class="separator"></span></li>
 				<li>欢迎！</li>
 			</ul>
-			<iframe id="maincontent" class="maincontent" name="maincontent" width="100%" frameborder="0" scrolling="no" src="${ctx}/defaultContent.do" onload="reinitIframe()"></iframe>
+			<iframe id="maincontent" class="maincontent" name="maincontent" width="100%" frameborder="0" scrolling="auto" src="${ctx}/defaultContent.do" onload="reinitIframe()"></iframe>
 			<script type="text/javascript">
 				function reinitIframe() {
 					var iframe = document.getElementById("maincontent");
@@ -369,5 +369,7 @@ table.tablesorter thead tr .headerSortDown {
 						iframe.height = height;
 					} catch (ex) {
 					}
+					//刷新导航栏的任务数量
+					getTaskNumber();
 				}
 			</script>
