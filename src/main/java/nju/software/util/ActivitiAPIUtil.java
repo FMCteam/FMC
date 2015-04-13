@@ -25,9 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ActivitiAPIUtil {
 	
-	/** 流程实例名称*/
-	private String processName;
-	
 	@Autowired
 	private ProcessEngineConfiguration processEngineConfiguration;
 	
@@ -114,7 +111,6 @@ public class ActivitiAPIUtil {
 	 * @return
 	 */
 	public Object getProcessVariable(Task task, String name){
-		//TODO  不清楚是什么的东西的参数
 		return runtimeService.getVariable(task.getProcessInstanceId(), name);
 	}
 	
@@ -174,9 +170,9 @@ public class ActivitiAPIUtil {
 	 * 启动流程实例并返回实例ID
 	 * @return
 	 */
-	public String startWorkflowProcessByKey(String key, Map<String, Object> params) throws RuntimeException{
+	public String startWorkflowProcessById(String processId, Map<String, Object> params) throws RuntimeException{
 		this.params = params;
-			ProcessInstance pi = runtimeService.startProcessInstanceByKey(processName, params);
+			ProcessInstance pi = runtimeService.startProcessInstanceByKey(processId, params);
 			System.out.println("流程实例启动成功, Id号为： "+ pi.getId());
 			return pi.getId();
 	}
@@ -264,14 +260,6 @@ public class ActivitiAPIUtil {
 	/**删除流程实例*/
 	public void abortProcess(String processId){
 		runtimeService.deleteProcessInstance(processId, "No reason!");
-	}
-	
-	public void setProcessName(String processName){
-		this.processName = processName;
-	}
-	
-	public String getProcessName(){
-		return processName;
 	}
 	
 	public void setParams(Map<String, Object> params){

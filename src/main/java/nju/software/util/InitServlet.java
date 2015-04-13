@@ -32,7 +32,7 @@ public class InitServlet extends HttpServlet {
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException{
 		super.init(servletConfig);
-		System.out.println("==============program start=====================");
+		System.out.println("==============program start!");
 		ServletContext servletContext = servletConfig.getServletContext();
 		// 获取Spring上下文
 		WebApplicationContext webApplicationContext = WebApplicationContextUtils
@@ -41,7 +41,9 @@ public class InitServlet extends HttpServlet {
 		RepositoryService repositoryService = (RepositoryService) webApplicationContext
 				.getBean("repositoryService");
 		repositoryService.createDeployment().addClasspathResource("fmc.bpmn").deploy();
-		System.out.println("=============fmc.bpmn deploy success!====================");
+		System.out.println("=============fmc.bpmn deploy success!");
+		repositoryService.createDeployment().addClasspathResource("marketStaffAlter.bpmn").deploy();
+		System.out.println("=============marketStaffAlter.bpmn deploy sucess!");
 		//System.out.println("==========="+accountdao.getClass());
 		//System.out.println(new TestSql().getClass().getResource(""));
 		boolean isEmpty =accountdao.isEmptytOfTable();

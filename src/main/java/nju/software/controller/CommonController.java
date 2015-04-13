@@ -152,7 +152,7 @@ public class CommonController {
 		//market department task, include all tasks of all marketStaffs and admin;
 		if (isAdmin(request)) {
 			jsonobj.put("taskNumber", commonService.getAllTaskNumber());
-//			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER, commonService.getMarketStaffTaskNumber());
+			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER, commonService.getMarketStaffTaskNumber());
 			
 			jsonobj.put(MarketServiceImpl.TASK_CONFIRM_PRODUCE_ORDER, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_CONFIRM_PRODUCE_ORDER));
 			jsonobj.put(MarketServiceImpl.TASK_CONFIRM_QUOTE, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_CONFIRM_QUOTE));
