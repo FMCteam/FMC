@@ -65,4 +65,6 @@ public interface IEmployeeDAO {
 	public abstract void attachDirty(Employee instance);
 
 	public abstract void attachClean(Employee instance);
+
+	public abstract List findByPropertyinDESC(String propertyName, Object value);
 }

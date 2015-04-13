@@ -165,5 +165,11 @@ public class AccountServiceImpl implements AccountService {
 			return false;
 		}
 	}
+
+	@Override
+	public List<Account> getAllManagerStaff() {
+		
+		return accountDAO.getAllManagerStaff();
+	}
    
 }

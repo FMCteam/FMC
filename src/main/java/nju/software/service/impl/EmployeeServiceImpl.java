@@ -110,13 +110,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employees;
 	}
 
-	@Override
-	public List<Employee> getAllManagerStaff() {
-		Employee instance=new Employee();
-		instance.setDepartment(EmployeeServiceImpl.DEPARTMENT);
-		List<Employee> eList=employeeDAO.findByExample(instance);
-		
-		return eList;
-	}
+//	@Override
+//	public List<Employee> getAllManagerStaff() {
+//		Employee instance=new Employee();
+//		instance.setDepartment(EmployeeServiceImpl.DEPARTMENT);
+//		List<Employee> eList=employeeDAO.findByExample(instance);
+//		
+//		return eList;
+//	}
 
 }

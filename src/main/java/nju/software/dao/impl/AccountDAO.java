@@ -38,7 +38,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	public static final String USER_PASSWORD = "userPassword";
 	public static final String USER_NAME = "userName";
 	public static final String USER_ROLE = "userRole";
-
+	public static final String ROLE_MARKETSTAFF="marketStaff";
 	@Override
 	protected void initDao() {
 		// do nothing
@@ -459,6 +459,28 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
     
 	public void SaveOrUpDate(Account account){
 		this.getHibernateTemplate().saveOrUpdate(account);
+	}
+
+	@Override
+	public List findByPropertyinDESC(String propertyName, Object value) {
+
+		
+			log.debug("finding Account instance with property: " + propertyName
+					+ ", value: " + value);
+			try {
+				String queryString = "from Employee as model where model."
+						+ propertyName + "= ? order by model.user_name desc";
+				return getHibernateTemplate().find(queryString, value);
+			} catch (RuntimeException re) {
+				log.error("find by property name failed", re);
+				throw re;
+			}
+		
+	}
+
+	@Override
+	public List getAllManagerStaff() {
+		return findByPropertyinDESC(USER_ROLE,ROLE_MARKETSTAFF);
 	}
 	
     

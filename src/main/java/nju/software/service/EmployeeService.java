@@ -7,13 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import nju.software.dataobject.Employee;
 
 public interface EmployeeService {
-
-	/**
-	 *  获取所有专员的列表
-	 * @return 专员列表
-	 */
-	@Transactional(rollbackFor = Exception.class)
-	public List<Employee>   getAllManagerStaff();  
+//
+//	/**
+//	 *  获取所有专员的列表
+//	 * @return 专员列表
+//	 */
+//	@Transactional(rollbackFor = Exception.class)
+//	public List<Employee>   getAllManagerStaff();  
 	
 	@Transactional(rollbackFor = Exception.class)
 	public Employee getEmployeeById(int employeeId);
