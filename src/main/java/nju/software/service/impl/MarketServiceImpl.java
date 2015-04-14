@@ -1,10 +1,8 @@
 package nju.software.service.impl;
 
 import java.io.File;
-import java.io.ObjectOutputStream.PutField;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,10 +62,8 @@ import nju.software.util.mail.MailSenderInfo;
 import nju.software.util.mail.SimpleMailSender;
 
 import org.activiti.engine.task.Task;
-import org.drools.lang.dsl.DSLMapParser.statement_return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Service("marketServiceImpl")
@@ -123,8 +119,6 @@ public class MarketServiceImpl implements MarketService {
 	private QuoteDAO quoteDAO;
 	@Autowired
 	private MainProcessService mainProcessService;
-	@Autowired
-	private BasicProcessService basicProcessService;
 	@Autowired
 	private AccessoryDAO accessoryDAO;
 	@Autowired
@@ -1895,9 +1889,8 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public Task getTask(Integer userId,int alterId) {
-		System.out.println(userId+"   "+(String)marketstaffAlterDAO.findById(alterId).getProcessId());
-		Task  task=mainProcessService.
+	public Task getTask(int alterId) {		
+		Task  task=marketstaffAlterProcessServices.getTaskWithSpecificAlterId(alterId);
 		System.out.println(task.getId());
 		return task;
 	}

@@ -31,11 +31,10 @@ public interface MarketService {
 	
 	/**
 	 * 根据参数获得task
-	 * @param userid
 	 * @param alterId
 	 * @return
 	 */
-	public Task getTask(Integer userid, int alterId);
+	public Task getTask(int alterId);
 	/**
 	 * 根据获取所有未审批的申请和理由
 	 * @param orderId
