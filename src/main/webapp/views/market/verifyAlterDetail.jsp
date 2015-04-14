@@ -37,7 +37,7 @@
 					<div class="tab-pane  active" id="alterApply">
 						<!-- @include file="/views/common/quote_w.jsp" --> 
                         <td class="span2">原因</td>
-                        <textarea class="span12"
+                        <textarea class="span11"
 							disabled="disabled"	style="resize:vertical" rows="5" name="reason">${reason}</textarea>
 					</div>
 				</div>
@@ -45,7 +45,7 @@
  				    
 					<tr>
 						<td class="span2">意见</td>
-						<td colspan="6"><textarea class="span12"
+						<td colspan="6"><textarea id="suggestion_v" class="span12"
 								style="resize:vertical" rows="5" name="suggestion"></textarea></td>
 					</tr>
 					<tr>
@@ -121,8 +121,8 @@
 <link rel="stylesheet" href="${ctx}/css/fmc/table.css">
 <script type="text/javascript" src="${ctx}/js/fmc/table.js"></script>
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
-<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
-<script type="text/javascript" src="${ctx}/js/order/add_quote.js"></script>
-<script type="text/javascript" src="${ctx }/js/custom.js"></script>
-<script type="text/javascript" src="${ctx}/views/market/verifyAlterDetail.js"></script>
+<%--<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
+ <script type="text/javascript" src="${ctx}/js/order/add_quote.js"></script>
+<script type="text/javascript" src="${ctx }/js/custom.js"></script> --%>
+<script type="text/javascript" src="${ctx}/views/market/verifyAlterDetail_2.js"></script>
 <%@include file="/common/footer.jsp"%>

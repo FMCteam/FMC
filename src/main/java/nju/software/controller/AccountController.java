@@ -613,7 +613,10 @@ public class AccountController {
 
 				boolean test = this.customerService.addCustomer(c, userName,
 						userPassword);
-
+				
+				Account account_Customer =accountService.getAccoutByUserIdAndUserRole("CUSTOMER", c.getCustomerId());
+				System.out.println("customer:"+account_Customer.getAccountId());
+				accountService.addAccountRole("CUSTOMER", account_Customer.getAccountId());
 				if (test) {
 
 					model.addAttribute("exist", false);
@@ -629,7 +632,11 @@ public class AccountController {
 
 				boolean test = this.customerService.addCustomer(c, userName,
 						userPassword);
-
+				Account account_Customer =accountService.getAccoutByUserIdAndUserRole("CUSTOMER", c.getCustomerId());
+				System.out.println("customer:"+account_Customer.getAccountId());
+				accountService.addAccountRole("CUSTOMER", account_Customer.getAccountId());
+			
+			//	accountService.addAccountRole("CUSTOMER", c.g);
 				if (test) {
 
 					model.addAttribute("exist", false);
@@ -749,6 +756,11 @@ public class AccountController {
 		String customer_id = request.getParameter("customer_id");
 		boolean sucess = customerService.deleteCustomerById(Integer
 				.parseInt(customer_id));
+		Account account =accountService.getAccoutByUserIdAndUserRole("CUSTOMER", Integer
+				.parseInt(customer_id));
+		int accountId =account.getAccountId();
+		accountService.deleteAccount(accountId);
+		accountService.deleteAccountRole(accountId);
 		System.out.println("customer delete successfully" + sucess);
 		return "redirect:/account/customerList.do";
 	}

@@ -1,4 +1,4 @@
-package nju.software.dao.impl;
+﻿package nju.software.dao.impl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -140,7 +140,7 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	             conn.setAutoCommit(false);
 	             stmt = conn.createStatement();
 	              for (String sql : sqlList) {
-	                  //System.out.println(sql);
+	                 // System.out.println(sql);
 	                  stmt.addBatch(sql);
 	              }
              int[] rows = stmt.executeBatch();
@@ -231,6 +231,7 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 		// setPath();
 		 try {
 			execute(INIT_SQL_All);
+                        execute("permission_update.sql");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -244,13 +245,13 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	 public void initSQL_other(){
 		// setPath();
 		 initAccountRole();
-		/* try {
-			 execute(INIT_SQL_other);
+		 try {
+			 execute("permission_update.sql");
 			 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 	 }
 	
 	 public void initAccountRole(){

@@ -91,6 +91,20 @@ public class MarketController {
 	private JavaMailUtil javaMailUtil;
 	
 	// ================================客户下单====================================
+		@RequestMapping(value = "/market/addOrder.do")
+		//@Transactional(rollbackFor = Exception.class)
+		public String addOrder(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			List<Customer> customers = new ArrayList();
+			HttpSession session = request.getSession();
+			Account account = (Account) session.getAttribute("cur_user");
+			Customer customer = marketService.getAddOrderDetail(account.getUserId());
+			customers.add(customer);
+			model.addAttribute("customers", customers);
+			return "/market/addOrderList";
+		}
+
+	// ================================客户下单====================================
 	@RequestMapping(value = "/market/addOrderList.do")
 	//@Transactional(rollbackFor = Exception.class)
 	public String addOrderList(HttpServletRequest request,
@@ -3104,11 +3118,13 @@ public class MarketController {
 		    Map<String, Object> alterInfo = new HashMap<String, Object>();
 		    Employee employee_next =null;
 		    Employee employee =employeeService.getEmployeeById(staffAlter.getEmployeeId());
-		   
+		    Map order = marketService.getOrderDetail(staffAlter.getOrderId());
 		   // StaffAlterInfo alterInfo= new StaffAlterInfo(staffAlter,employee,employee_next);
+		    
 		    alterInfo.put("employee", employee);
 		    alterInfo.put("employeeNext",employee_next);
 		    alterInfo.put("Alter",staffAlter );
+		    alterInfo.put("order", order.get("order"));
 		    list.add(alterInfo);
 		 
 		    }
