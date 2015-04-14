@@ -140,7 +140,7 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	             conn.setAutoCommit(false);
 	             stmt = conn.createStatement();
 	              for (String sql : sqlList) {
-	                  //System.out.println(sql);
+	                 // System.out.println(sql);
 	                  stmt.addBatch(sql);
 	              }
              int[] rows = stmt.executeBatch();
