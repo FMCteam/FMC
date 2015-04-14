@@ -268,11 +268,11 @@ public class MainProcessService extends BasicProcessService{
 		nameMap.put(BuyServiceImpl.TASK_PURCHASE_MATERIAL,"大货面料采购确认");
 		nameMap.put(BuyServiceImpl.TASK_BUY_SWEATER_MATERIAL,"购买组织原料");
 		//DesignService
-		nameMap.put(DesignServiceImpl.TASK_VERIFY_DESIGN,"设计验证");
-		nameMap.put(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST,"设计工艺验证");
+		nameMap.put(DesignServiceImpl.TASK_VERIFY_DESIGN,"设计验证2");
+		nameMap.put(DesignServiceImpl.TASK_COMPUTE_DESIGN_COST,"设计验证");
 		nameMap.put(DesignServiceImpl.TASK_UPLOAD_DESIGN, "录入版型数据及生产样衣");
 		nameMap.put(DesignServiceImpl.TASK_MODIFY_DESIGN, "修改设计");
-		nameMap.put(DesignServiceImpl.TASK_CONFIRM_DESIGN, "确认设计");
+		nameMap.put(DesignServiceImpl.TASK_CONFIRM_DESIGN, "设计验证");
 		nameMap.put(DesignServiceImpl.TASK_CRAFT_SAMPLE, "样衣工艺制作");
 		nameMap.put(DesignServiceImpl.TASK_CRAFT_PRODUCT, "大货工艺制作");
 		nameMap.put(DesignServiceImpl.TASK_TYPESETTING_SLICE, "排版切片");

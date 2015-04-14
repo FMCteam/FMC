@@ -1251,7 +1251,11 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> model = service.getBasicOrderModelWithQuote(userId
 				+ "", TASK_MERGE_QUOTE, orderId);
 		// 工艺报价信息
-		Craft craft = craftDAO.findByOrderId(orderId).get(0);
+		List<Craft> crafts = craftDAO.findByOrderId(orderId);
+		Craft craft = new Craft();
+		if (crafts.size() < 0) {
+			craft = crafts.get(0);
+		}
 		model.put("craft", craft);
 
 		return model;

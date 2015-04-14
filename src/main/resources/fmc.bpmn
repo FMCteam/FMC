@@ -1661,7 +1661,7 @@
     <sequenceFlow id="_144-_49" sourceRef="_144" targetRef="_49" />
     <sequenceFlow id="_153-_164" sourceRef="_153" targetRef="_164" />
     <sequenceFlow id="_56-_57" sourceRef="_56" targetRef="_57" name="采购失败" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression"  ><![CDATA[${pushRestMoney}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"  ><![CDATA[${!purchase}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_175-_177" sourceRef="_175" targetRef="_177" />
     <sequenceFlow id="_47-_56" sourceRef="_47" targetRef="_56" />
@@ -1689,7 +1689,7 @@
     </sequenceFlow>
     <sequenceFlow id="_135-_62" sourceRef="_135" targetRef="_62" />
     <sequenceFlow id="_94-_183" sourceRef="_94" targetRef="_183" name="采购失败" tns:priority="1" >
-      <conditionExpression xsi:type="tFormalExpression"  ><![CDATA[${pushRestMoney}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"  ><![CDATA[${!purchase}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_103-_181" sourceRef="_103" targetRef="_181" />
     <sequenceFlow id="_62-_64" sourceRef="_62" targetRef="_64" />
