@@ -142,7 +142,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public boolean addAccountRole(String roleName, int accountId) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("===================accountId:"+accountId);
 		accountDAO.addAccountRole(roleName, accountId);
 		
 		

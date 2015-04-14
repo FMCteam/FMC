@@ -137,7 +137,8 @@ table.tablesorter thead tr .headerSortDown {
 					<c:if test="${ROLE_order==true}">
 						<li class="dropdown"><a href=""><span
 								class="iconfa-pencil"></span> 订单管理</a>
-							<ul>
+							<ul><c:if test="${ROlE_addOrder==true}">
+							    <li><a href="${ctx}/market/addOrder.do" target="maincontent">客户下单</a></li></c:if>
 								<li><a href="${ctx}/order/orderList.do" target="maincontent">查看所有订单</a></li>
 								<li><a href="${ctx}/order/orderListDoing.do" target="maincontent">查看正在进行订单</a></li>
 								<li><a href="${ctx}/order/orderListDone.do" target="maincontent">已经完成订单</a></li>

@@ -161,6 +161,7 @@ public class MarketServiceImpl implements MarketService {
 		example.setOrderId(orderId);
 		list = marketstaffAlterDAO.findByExample(example);
 		List<Map<String, Object>> mapList= new ArrayList<>();
+		
 		for (MarketstaffAlter alter:list){
 						
 			String reasonString=(String) marketstaffAlterProcessServices.getReason(alter.getProcessId());
@@ -214,7 +215,11 @@ public class MarketServiceImpl implements MarketService {
 		MarketstaffAlter example = new MarketstaffAlter();
 		List<MarketstaffAlter> results = new ArrayList<>();
 		example.setVerifyState(MarketstaffAlter.STATE_TODO);
-		results = marketstaffAlterDAO.findByExample(example);	
+		example.setAlterId(1);
+		example.setEmployeeId(1);
+		example.setOrderId(1);
+		results.add(example);
+		//results = marketstaffAlterDAO.findByExample(example);	
 		
 		return results;
 	}
@@ -222,7 +227,13 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public MarketstaffAlter getMarketStaffAlterById(int alterId) {
 		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
-		return alter;
+		MarketstaffAlter example = new MarketstaffAlter();
+		example.setVerifyState(MarketstaffAlter.STATE_TODO);
+		example.setAlterId(1);
+		example.setEmployeeId(1);
+		example.setOrderId(1);
+		//return alter;
+		return example ;
 	}
 
 	@Override
