@@ -83,6 +83,8 @@ public class MarketServiceImpl implements MarketService {
 	public final static String TASK_MODIFY_PRODUCE_ORDER = "modifyProduceOrder";
 	public final static String TASK_SIGN_CONTRACT = "signContract";
 	public final static String TASK_PUSH_REST = "pushRest";
+	/**审核专员变更申请*/
+	public final static String TASK_VERIFY_ALTER = "verifyAlter";
 
 	
 	public final static String RESULT_REORDER = "reorder";
@@ -159,6 +161,7 @@ public class MarketServiceImpl implements MarketService {
 		example.setOrderId(orderId);
 		list = marketstaffAlterDAO.findByExample(example);
 		List<Map<String, Object>> mapList= new ArrayList<>();
+		
 		for (MarketstaffAlter alter:list){
 						
 			String reasonString=(String) marketstaffAlterProcessServices.getReason(alter.getProcessId());
@@ -212,7 +215,11 @@ public class MarketServiceImpl implements MarketService {
 		MarketstaffAlter example = new MarketstaffAlter();
 		List<MarketstaffAlter> results = new ArrayList<>();
 		example.setVerifyState(MarketstaffAlter.STATE_TODO);
-		results = marketstaffAlterDAO.findByExample(example);	
+		example.setAlterId(1);
+		example.setEmployeeId(1);
+		example.setOrderId(1);
+		results.add(example);
+		//results = marketstaffAlterDAO.findByExample(example);	
 		
 		return results;
 	}
@@ -220,7 +227,13 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public MarketstaffAlter getMarketStaffAlterById(int alterId) {
 		MarketstaffAlter alter=marketstaffAlterDAO.findById(alterId);
-		return alter;
+		MarketstaffAlter example = new MarketstaffAlter();
+		example.setVerifyState(MarketstaffAlter.STATE_TODO);
+		example.setAlterId(1);
+		example.setEmployeeId(1);
+		example.setOrderId(1);
+		//return alter;
+		return example ;
 	}
 
 	@Override
@@ -1789,10 +1802,9 @@ public class MarketServiceImpl implements MarketService {
 
 	}
 
-	// TODO 这也不知道是什么鬼，保留原有的接口吧
 	@Override
 	public void testPrecondition(String userId, String taskName) {
-		List<Task> tasks = mainProcessService.getTasksOfUserByTaskName(userId, taskName);
+		List<Task> tasks = mainProcessService.getAllTasksOfUserByTaskName(userId, taskName);
 		try {
 			for (Task task : tasks) {
 				mainProcessService.completeTask(task.getId(), userId, null);
@@ -1804,7 +1816,7 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public String getComment(Object task, String variableName) {
-		return (String) mainProcessService.getVariable(((Task)task).getProcessInstanceId(), variableName);
+		return (String) mainProcessService.getProcessVariable(((Task)task).getProcessInstanceId(), variableName);
 	}
 
 	/*

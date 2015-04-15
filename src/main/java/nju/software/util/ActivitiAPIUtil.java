@@ -148,11 +148,13 @@ public class ActivitiAPIUtil {
 		return null;
 	}
 	
+
 	/**
-	 * 根据用户ID和任务ID获得任务
-	 * @param userId 用户ID
-	 * @param taskName 任务名
-	 * @param orderId 订单的ID
+	 * 根据用户ID和任务名，以及特定参数获取任务
+	 * @param userId
+	 * @param taskName
+	 * @param key
+	 * @param value
 	 * @return
 	 */
 	public Task getTask(String userId, String taskName, String key, Object value){
@@ -170,9 +172,9 @@ public class ActivitiAPIUtil {
 	 * 启动流程实例并返回实例ID
 	 * @return
 	 */
-	public String startWorkflowProcessById(String processId, Map<String, Object> params) throws RuntimeException{
+	public String startWorkflowProcessByKey(String processName, Map<String, Object> params) throws RuntimeException{
 		this.params = params;
-			ProcessInstance pi = runtimeService.startProcessInstanceByKey(processId, params);
+			ProcessInstance pi = runtimeService.startProcessInstanceByKey(processName, params);
 			System.out.println("流程实例启动成功, Id号为： "+ pi.getId());
 			return pi.getId();
 	}
