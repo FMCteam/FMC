@@ -2,7 +2,6 @@ package nju.software.service.impl;
 
 import java.util.List;
 
-import javax.persistence.EntityManagerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeDAO employeeDAO;
-	@Autowired
-	private EntityManagerFactory emf;
 	@Autowired
 	private ActivitiAPIUtil activitiAPIUtil;
 	
