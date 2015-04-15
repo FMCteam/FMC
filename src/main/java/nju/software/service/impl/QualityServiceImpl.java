@@ -76,7 +76,7 @@ public class QualityServiceImpl implements QualityService  {
 	@Override
 	@Transactional(rollbackFor=Exception.class)
 	public String checkQualitySubmit(int orderId, String taskId, String isFinal,
-			CheckRecord checkRecord, List<Produce> goodList) throws RuntimeException {
+			CheckRecord checkRecord, List<Produce> goodList) throws RuntimeException, InterruptedException {
 		String msg = "";
 
 		// 先根据orderId找出本次订单大货生产总数（外发总数）
@@ -213,11 +213,12 @@ public class QualityServiceImpl implements QualityService  {
 		Map<String, Object> data = new HashMap<>();
 		data.put("isHaoDuoYi", isHaoDuoYi);
 		data.put("isSweater", isSweater);
-		try {
-			mainProcessService.completeTask(taskId, ACTOR_QUALITY_MANAGER, data);
-			return msg;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		mainProcessService.completeTask(taskId, ACTOR_QUALITY_MANAGER, data);
+		if (isSweater) {
+			Order order = orderDAO.findById(orderId);
+			order.setOrderProcessStateName("已完成");
+			order.setOrderState("Done");
+			orderDAO.merge(order);
 		}
 		return msg;
 	}

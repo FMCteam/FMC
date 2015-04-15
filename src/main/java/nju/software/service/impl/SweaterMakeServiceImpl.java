@@ -120,6 +120,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 			mainProcessService.completeTask(taskId, ACTOR_SWEATER_MANAGER, data);
 			if(result==false){//如果result的的值为false，即为大货生产失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
+				order.setOrderProcessStateName("被终止");
 				orderDAO.attachDirty(order);
 			}
 			return true;

@@ -105,6 +105,7 @@ public class FinanceServiceImpl implements FinanceService {
 			mainProcessService.completeTask(taskId, actorId, data);
 			if(result==false){//如果result的的值为false，即为未收取到样衣金，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
+				order.setOrderProcessStateName("被终止");
 				orderDAO.attachDirty(order);
 			}
 			return true;
@@ -229,6 +230,7 @@ public class FinanceServiceImpl implements FinanceService {
 			if(result==false){//如果result的的值为false，即为确认定金失败，流程会异常终止，将orderState设置为1
 				Order order = orderDAO.findById(orderId);
 				order.setOrderState("1");
+				order.setOrderProcessStateName("被终止");
 				orderDAO.merge(order);
 				}
 			return true;
@@ -340,6 +342,7 @@ public class FinanceServiceImpl implements FinanceService {
  		try {
 			mainProcessService.completeTask(taskId, actorId, data);
 			order.setOrderState("1");
+			order.setOrderProcessStateName("被终止");
 			orderDAO.attachDirty(order);
  		} catch (InterruptedException e) {
  			e.printStackTrace();
@@ -440,6 +443,7 @@ public class FinanceServiceImpl implements FinanceService {
 			mainProcessService.completeTask(taskId, actorId, data);
 			if(result==false){//如果result的的值为false，即为尾款收取失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");	
+				order.setOrderProcessStateName("被终止");
 			}
 			orderDAO.attachDirty(order);
 			return true;

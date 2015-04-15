@@ -55,7 +55,6 @@ public class ActivitiAPIUtil {
 	public void completeTask(String taskId, Map<String, Object> data, String userId) throws InterruptedException{
 		taskService.complete(taskId, data);
 	}
-	
 	/**
 	 * 根据候选组的的ID返回其待办事务
 	 * @param groupId
@@ -160,8 +159,7 @@ public class ActivitiAPIUtil {
 	public Task getTask(String userId, String taskName, String key, Object value){
 		List<Task> tasks = getAssignedTasksOfUser(userId);
 		for (Task task : tasks) {
-			if (task.getName().equals(taskName) && getProcessVariable(task.getProcessInstanceId(), key).equals(value)) {
-				
+			if (task.getName().equals(taskName) && value.equals(getProcessVariable(task.getProcessInstanceId(), key))) {
 				return task;
 			}
 		}

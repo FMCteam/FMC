@@ -176,6 +176,7 @@ public class ProduceServiceImpl implements ProduceService {
 			mainProcessService.completeTask(taskId, ACTOR_PRODUCE_MANAGER, data);
 			if(result==false){//如果result的的值为false，即为样衣生产失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
+				order.setOrderProcessStateName("被终止");
 				orderDAO.attachDirty(order);
 			}
 			return true;
@@ -242,6 +243,7 @@ public class ProduceServiceImpl implements ProduceService {
 			mainProcessService.completeTask(taskId, ACTOR_PRODUCE_MANAGER, data);
 			if(result==false){//如果result的的值为false，即为大货生产失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
+				order.setOrderProcessStateName("被终止");
 				orderDAO.attachDirty(order);
 			}
 			return true;

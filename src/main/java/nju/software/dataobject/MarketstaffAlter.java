@@ -83,8 +83,6 @@ public class MarketstaffAlter {
 		return alterId;
 	}
 	
-	
-	
 	@Column(name="employee_id", nullable = false)
 	public Integer getEmployeeId() {
 		return employeeId;

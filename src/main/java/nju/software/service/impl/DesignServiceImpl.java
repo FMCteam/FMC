@@ -239,6 +239,7 @@ public class DesignServiceImpl implements DesignService {
 		
 		if (result == false) {// 如果result的的值为FALSE，即为样衣生产失败，流程会异常终止，将orderState设置为1
 			order.setOrderState("1");
+			order.setOrderProcessStateName("被终止");
 			orderDAO.merge(order);
 			
 		}

@@ -36,6 +36,9 @@ public interface MarketService {
 	@Transactional(rollbackFor = Exception.class)
 	public List<Map<String, Object>>  getAlterInfoByOrderId(Integer orderId);
 	
+	@Transactional(rollbackFor = Exception.class)
+	public Map<String, Object>  getAlterInfoByAlterId(Integer alterId);
+	
 	/**
 	 * 获取所有未审批的申请和理由
 	 * @return 返回申请信息对象和理由
@@ -71,7 +74,6 @@ public interface MarketService {
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	public MarketstaffAlter getMarketStaffAlterById(int alterId);
-	
 	
 	
 	/**
