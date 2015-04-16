@@ -165,7 +165,11 @@ public class MarketServiceImpl implements MarketService {
 		List<Map<String, Object>> mapList = new ArrayList<>();
 
 		for (MarketstaffAlter alter : list) {
-
+			//判断该审批流程是否已结束
+			String processId = alter.getProcessId();
+			if (!marketstaffAlterProcessServices.isProcessInstanceActive(processId)) {
+				continue;
+			}
 			String reasonString = (String) marketstaffAlterProcessServices
 					.getReason(alter.getProcessId());
 			Map<String, Object> alterInfo = new HashMap<String, Object>();
@@ -216,23 +220,27 @@ public class MarketServiceImpl implements MarketService {
 		params.put(MarketServiceImpl.ALTER_RESULT, result);
 		params.put(MarketServiceImpl.ALTER_COMMENT, comment);
 		params.put(MarketServiceImpl.ALTER_PROCESSID, processId);
-		params.put("old_staff", alter.getEmployeeId());
-		params.put("new_staff", alter.getNextEmployeeId());
 		
 		Order order = orderDAO.findById(alter.getOrderId());
 		Customer customer = customerDAO.findById(order.getCustomerId());
 		Employee employeeOld = employeeDAO.findById(alter.getEmployeeId());
 
 		mailCustomerAlter(order, customer);
+		//若同意
 		if (result) {
+			params.put("old_staff", alter.getEmployeeId());
+			params.put("new_staff", alter.getNextEmployeeId());
 			alter.setCurrentTaskName(marketstaffAlterProcessServices.getCurrentTaskNames(processId));
-			marketstaffAlterDAO.attachDirty(alter);
 			order.setEmployeeId(alter.getNextEmployeeId());
 			Employee employeeNew = employeeDAO.findById(alter
 					.getNextEmployeeId());
 			mailNewStaffAlter(order, employeeNew);
 		}
+		else {
+			alter.setVerifyState(MarketstaffAlter.STATE_DISAGREE);
+		}
 		mailOldStaffAlter(alter, employeeOld, comment, result);
+		marketstaffAlterDAO.attachDirty(alter);
 		marketstaffAlterProcessServices.completeVerifyAlterTask(taskId,
 				params);
 	}
