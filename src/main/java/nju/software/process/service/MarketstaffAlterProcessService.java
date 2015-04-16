@@ -15,13 +15,15 @@ public class MarketstaffAlterProcessService extends BasicProcessService{
 	}
 	
 	public void completeVerifyAlterTask(String taskId, Map<String, Object> params) throws InterruptedException{
-		//更换专员流程ID
-		String processId = (String) params.get(MarketServiceImpl.ALTER_PROCESSID);
-		//被申请更换专员order的执行流程ID
-		String orderProcessId = (String) getProcessVariable(processId, MarketServiceImpl.ALTER_ORDER_PROCESSID);
-		String old_userId = String.valueOf(params.get("old_staff"));
-		String new_userId = String.valueOf(params.get("new_staff"));
-		alterAssignee(orderProcessId, old_userId, new_userId);
+		if (params.containsKey("old_staff") && params.containsKey("new_staff")) {
+			//更换专员流程ID
+			String processId = (String) params.get(MarketServiceImpl.ALTER_PROCESSID);
+			//被申请更换专员order的执行流程ID
+			String orderProcessId = (String) getProcessVariable(processId, MarketServiceImpl.ALTER_ORDER_PROCESSID);
+			String old_userId = String.valueOf(params.get("old_staff"));
+			String new_userId = String.valueOf(params.get("new_staff"));
+			alterAssignee(orderProcessId, old_userId, new_userId);
+		}
 		completeTask(taskId, MarketServiceImpl.ACTOR_MARKET_MANAGER, params);
 	}
 	

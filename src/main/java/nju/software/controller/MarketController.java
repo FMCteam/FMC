@@ -3014,7 +3014,7 @@ public class MarketController {
 
 		String taskId = request.getParameter("taskId");
 		String processId = request.getParameter("processId");
-
+		
 		marketService.verifyAlterSubmit(Alter, taskId, processId, result,
 				suggestion);
 
