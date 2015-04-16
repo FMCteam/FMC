@@ -30,7 +30,7 @@ public class MarketstaffAlterProcessService extends BasicProcessService{
 		return getProcessVariable(processId, MarketServiceImpl.ALTER_COMMENT);
 	}
 	
-	public Task getTaskWithSpecificAlterId(String value){
+	public Task getTaskWithSpecificAlterId(int value){
 		return getTask(MarketServiceImpl.ACTOR_MARKET_MANAGER,MarketServiceImpl.TASK_VERIFY_ALTER, "alterId", value);
 	}
 }
