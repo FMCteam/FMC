@@ -38,7 +38,7 @@ public class CommonInterceptor implements HandlerInterceptor{
 		}
 		if(currentUser == null){
 			logger.info("session超时,跳转到overtime.jsp页面");
-			arg1.sendRedirect(arg0.getContextPath()+"/overtime.jsp");
+			arg1.sendRedirect("overtime.do");
 			return false;
 		}
 		return true;

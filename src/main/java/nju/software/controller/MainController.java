@@ -111,15 +111,19 @@ public class MainController {
 	//@Transactional(rollbackFor = Exception.class)
 	public String getDefaultPageContent(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		/**
-		 * 权限
-		 */
-		/*
-		 */
+		
 		HttpSession session = request.getSession();
 		Account account = (Account)session.getAttribute("cur_user");
 		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
 		session.setAttribute("treeNodeList", list);
 		return "/index_new";
+	}
+	
+	@RequestMapping(value = "overtime.do", method= RequestMethod.GET)
+	//@Transactional(rollbackFor = Exception.class)
+	public String getOverTimePageContent(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		return "/overtime";
 	}
 }
