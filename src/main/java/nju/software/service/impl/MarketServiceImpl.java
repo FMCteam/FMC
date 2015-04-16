@@ -219,9 +219,6 @@ public class MarketServiceImpl implements MarketService {
 		params.put("old_staff", alter.getEmployeeId());
 		params.put("new_staff", alter.getNextEmployeeId());
 		
-		
-		marketstaffAlterProcessServices.completeVerifyAlterTask(taskId,
-					params);
 		Order order = orderDAO.findById(alter.getOrderId());
 		Customer customer = customerDAO.findById(order.getCustomerId());
 		Employee employeeOld = employeeDAO.findById(alter.getEmployeeId());
@@ -236,6 +233,8 @@ public class MarketServiceImpl implements MarketService {
 			mailNewStaffAlter(order, employeeNew);
 		}
 		mailOldStaffAlter(alter, employeeOld, comment, result);
+		marketstaffAlterProcessServices.completeVerifyAlterTask(taskId,
+				params);
 	}
 
 	@Override
