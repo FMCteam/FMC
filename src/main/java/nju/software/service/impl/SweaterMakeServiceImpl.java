@@ -178,9 +178,11 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 			ArrayList<String>  orderProcessStateNames = MarketService.getProcessStateName(order.getOrderId());
 			if(orderProcessStateNames.size()>0){
 				order.setOrderProcessStateName(orderProcessStateNames.get(0));
-			}else{
+			}else{				
 				order.setOrderProcessStateName("");
 			}
+			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
+			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
