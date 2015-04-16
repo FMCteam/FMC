@@ -168,11 +168,11 @@
         <sourceRef>_7_receiveSampleOutput</sourceRef>
         <targetRef>receiveSample</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(logisticsManager)</formalExpression>
+          <formalExpression>logisticsManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <exclusiveGateway id="_8" name="enterVerification" gatewayDirection="Converging" >
     </exclusiveGateway> 
@@ -213,11 +213,11 @@
         <sourceRef>_10_purchaseOutput</sourceRef>
         <targetRef>purchase</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(purchaseManager)</formalExpression>
+          <formalExpression>purchaseManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <userTask id="_11" name="设计验证" >
       <ioSpecification>
@@ -262,11 +262,11 @@
         <sourceRef>_11_designOutput</sourceRef>
         <targetRef>design</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(designManager)</formalExpression>
+          <formalExpression>designManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <userTask id="_12" name="生产成本验证并核算" >
       <ioSpecification>
@@ -305,11 +305,11 @@
         <sourceRef>_12_produceOutput</sourceRef>
         <targetRef>produce</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(produceManager)</formalExpression>
+          <formalExpression>produceManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <parallelGateway id="_13" name="verify" gatewayDirection="Diverging" >
     </parallelGateway>
@@ -346,11 +346,11 @@
           <to xsi:type="tFormalExpression">_152_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(designManager)</formalExpression>
+          <formalExpression>designManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <userTask id="_154" name="排版切片" >
       <ioSpecification>
@@ -377,11 +377,11 @@
           <to xsi:type="tFormalExpression">_154_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(designManager)</formalExpression>
+          <formalExpression>designManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <userTask id="_19" name="修改询单" >
       <ioSpecification>
@@ -414,11 +414,11 @@
         <sourceRef>_19_modifyOrderOutput</sourceRef>
         <targetRef>modifyOrder</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(${marketStaff})</formalExpression>
+          <formalExpression>${marketStaff}</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <parallelGateway id="_156" name="Gateway" gatewayDirection="Diverging" >
     </parallelGateway>
@@ -453,11 +453,11 @@
         <sourceRef>_155_pushRestMoneyOutput</sourceRef>
         <targetRef>pushRestMoney</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(${marketStaff})</formalExpression>
+          <formalExpression>${marketStaff}</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <inclusiveGateway id="_157" name="Gateway" gatewayDirection="Diverging" >
     </inclusiveGateway>
@@ -514,11 +514,11 @@
         <sourceRef>_29_verifyQuoteSuccessOutput</sourceRef>
         <targetRef>verifyQuoteSuccess</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(marketManager)</formalExpression>
+          <formalExpression>marketManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <exclusiveGateway id="_149" name="Gateway" gatewayDirection="Converging" >
     </exclusiveGateway>
@@ -594,11 +594,11 @@
           <to xsi:type="tFormalExpression">_148_PriorityInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(designManager)</formalExpression>
+          <formalExpression>designManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <inclusiveGateway id="_151" name="Gateway" gatewayDirection="Diverging" >
     </inclusiveGateway>
@@ -635,11 +635,11 @@
         <sourceRef>_28_isHaoDuoYiOutput</sourceRef>
         <targetRef>isHaoDuoYi</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(${marketStaff})</formalExpression>
+          <formalExpression>${marketStaff}</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <userTask id="_150" name="退还定金" > 
       <ioSpecification>
@@ -666,11 +666,11 @@
           <to xsi:type="tFormalExpression">_150_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(financeManager)</formalExpression>
+          <formalExpression>financeManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <userTask id="_169" name="确认版型" >
       <ioSpecification>
@@ -697,11 +697,11 @@
           <to xsi:type="tFormalExpression">_169_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(designManager)</formalExpression>
+          <formalExpression>designManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <endEvent id="_168" name="End" >
         <terminateEventDefinition />
@@ -737,11 +737,11 @@
         <sourceRef>_34_quoteOutput</sourceRef>
         <targetRef>quote</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(${marketStaff})</formalExpression>
+          <formalExpression>${marketStaff}</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <userTask id="_170" name="好多衣入库" >
       <ioSpecification>
@@ -768,11 +768,11 @@
           <to xsi:type="tFormalExpression">_170_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(logisticsManager)</formalExpression>
+          <formalExpression>logisticsManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <inclusiveGateway id="_36" name="confirmquote" gatewayDirection="Diverging" >
     </inclusiveGateway>
@@ -803,11 +803,11 @@
           <to xsi:type="tFormalExpression">_33_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(${marketStaff})</formalExpression>
+          <formalExpression>${marketStaff}</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <userTask id="_175" name="打小样&amp;制作工艺&amp;制版打样&amp;样衣确认" >
       <ioSpecification>
@@ -834,11 +834,11 @@
           <to xsi:type="tFormalExpression">_175_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(SweaterMakeManager)</formalExpression>
+          <formalExpression>SweaterMakeManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <endEvent id="_40" name="End" >
         <terminateEventDefinition />
@@ -873,11 +873,11 @@
           <to xsi:type="tFormalExpression">_172_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(purchaseManager)</formalExpression>
+          <formalExpression>purchaseManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <inclusiveGateway id="_167" name="isHaoDuoYi" gatewayDirection="Diverging" >
     </inclusiveGateway>
@@ -912,11 +912,11 @@
         <sourceRef>_41_receiveMoneyOutput</sourceRef>
         <targetRef>receiveMoney</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(financeManager)</formalExpression>
+          <formalExpression>financeManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <parallelGateway id="_160" name="Gateway" gatewayDirection="Diverging" >
     </parallelGateway>
@@ -957,11 +957,11 @@
         <sourceRef>_47_purchaseOutput</sourceRef>
         <targetRef>purchase</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(purchaseManager)</formalExpression>
+          <formalExpression>purchaseManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <inclusiveGateway id="_166" name="isHaoDuoYi" gatewayDirection="Diverging" >
     </inclusiveGateway>
@@ -996,11 +996,11 @@
         <sourceRef>_48_produceOutput</sourceRef>
         <targetRef>produce</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(designManager)</formalExpression>
+          <formalExpression>designManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <endEvent id="_184" name="End" >
         <terminateEventDefinition />
@@ -1037,11 +1037,11 @@
           <to xsi:type="tFormalExpression">_177_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(SweaterMakeManager)</formalExpression>
+          <formalExpression>SweaterMakeManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <inclusiveGateway id="_56" name="purchaseerror" gatewayDirection="Diverging" >
     </inclusiveGateway>
@@ -1074,11 +1074,11 @@
           <to xsi:type="tFormalExpression">_59_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(logisticsManager)</formalExpression>
+          <formalExpression>logisticsManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <endEvent id="_179" name="End" >
         <terminateEventDefinition />
@@ -1122,11 +1122,11 @@
         <sourceRef>_87_purchaseOutput</sourceRef>
         <targetRef>purchase</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(purchaseManager)</formalExpression>
+          <formalExpression>purchaseManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <endEvent id="_86" name="End" >
         <terminateEventDefinition />
@@ -1162,11 +1162,11 @@
         <sourceRef>_62_confirmProduceOrderContractOutput</sourceRef>
         <targetRef>confirmProduceOrderContract</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(${marketStaff})</formalExpression>
+          <formalExpression>${marketStaff}</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <inclusiveGateway id="_183" name="isHaoDuoYi" gatewayDirection="Diverging" >
     </inclusiveGateway>
@@ -1211,11 +1211,11 @@
         <sourceRef>_110_receiveMoneyOutput</sourceRef>
         <targetRef>receiveMoney</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(financeManager)</formalExpression>
+          <formalExpression>financeManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <userTask id="_96" name="批量生产" >
       <ioSpecification>
@@ -1293,11 +1293,11 @@
         <sourceRef>_96_produceOutput</sourceRef>
         <targetRef>produce</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(produceManager)</formalExpression>
+          <formalExpression>produceManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <inclusiveGateway id="_94" name="procurementerror" gatewayDirection="Diverging" >
     </inclusiveGateway>
@@ -1377,11 +1377,11 @@
         <sourceRef>_80_receiveMoneyOutput</sourceRef>
         <targetRef>receiveMoney</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(financeManager)</formalExpression>
+          <formalExpression>financeManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <userTask id="_103" name="质量检测" >
       <ioSpecification>
@@ -1420,11 +1420,11 @@
         <sourceRef>_103_isHaoDuoYiOutput</sourceRef>
         <targetRef>isHaoDuoYi</targetRef>
       </dataOutputAssociation-->
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(qualityManager)</formalExpression>
+          <formalExpression>qualityManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <inclusiveGateway id="_102" name="volumeproduction" gatewayDirection="Diverging" >
     </inclusiveGateway>
@@ -1459,11 +1459,11 @@
           <to xsi:type="tFormalExpression">_107_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(logisticsManager)</formalExpression>
+          <formalExpression>logisticsManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
     <inclusiveGateway id="_114" name="paymentok" gatewayDirection="Diverging" >
     </inclusiveGateway>
@@ -1492,11 +1492,11 @@
           <to xsi:type="tFormalExpression">_115_NodeNameInput</to>
         </assignment>
       </dataInputAssociation>
-      <potentialOwner>
+      <humanPerformer>
         <resourceAssignmentExpression>
-          <formalExpression>user(logisticsManager)</formalExpression>
+          <formalExpression>logisticsManager</formalExpression>
         </resourceAssignmentExpression>
-      </potentialOwner>
+      </humanPerformer>
     </userTask>
 
     <!-- connections -->

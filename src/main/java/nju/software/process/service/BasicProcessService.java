@@ -3,6 +3,7 @@ package nju.software.process.service;
 import java.util.List;
 import java.util.Map;
 
+import nju.software.service.impl.MarketServiceImpl;
 import nju.software.util.ActivitiAPIUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,10 @@ public class BasicProcessService {
 		return activitiAPIUtil.getProcessVariable(processId, key);
 	}
 	
+	public boolean isProcessInstanceActive(String processId){
+		return activitiAPIUtil.isProcessInstanceExist(processId);
+	}
+	
 	/**
 	 * 
 	 * @param userId
@@ -59,6 +64,10 @@ public class BasicProcessService {
 	
 	public List<Task> getTasksOfUserByTaskName(String userId, String taskName){
 		return activitiAPIUtil.getAssignedTasksOfUserByTaskName(userId, taskName);
+	}
+	
+	public void alterAssignee(String processId, String old_userId, String new_userId){
+		activitiAPIUtil.updateProcessVariable(processId, MarketServiceImpl.ACTOR_MARKET_STAFF, new_userId);
 	}
 	
 }

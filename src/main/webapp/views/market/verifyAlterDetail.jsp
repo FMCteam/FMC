@@ -55,6 +55,7 @@
 				            <input type="hidden" name="alter_id" value="${alterModel.alterInfo.alterId }" />
 				           <input type="hidden" name="taskId" value="${alterModel.taskId}" />
 				           <input type="hidden" name="processId" value="${alterModel.processInstanceId}" />
+
 				            <input type="hidden" name="verifyAlterSuccessVal" id="verifyAlterSuccess_val" value="" /> 
 				             <input type="hidden" name="verifyState" id="verifyState_val" value="" /> 
 				            <a id="disagree" class="btn btn-danger btn-rounded" style="float: left;">
@@ -124,5 +125,5 @@
 <%--<script type="text/javascript" src="${ctx}/js/order/add_order.js"></script>
  <script type="text/javascript" src="${ctx}/js/order/add_quote.js"></script>
 <script type="text/javascript" src="${ctx }/js/custom.js"></script> --%>
-<script type="text/javascript" src="${ctx}/views/market/verifyAlterDetail_2.js"></script>
+<script type="text/javascript" src="${ctx}/views/market/verifyAlterDetail.js"></script>
 <%@include file="/common/footer.jsp"%>

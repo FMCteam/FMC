@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.activiti.engine.task.Task;
 import org.springframework.transaction.annotation.Transactional;
 
 import nju.software.dataobject.Accessory;
@@ -28,11 +29,6 @@ import nju.software.model.ProductModel;
 
 public interface MarketService {
 	
-	/**
-	 * 根据获取所有未审批的申请和理由
-	 * @param orderId
-	 * @return 返回申请信息对象和理由
-	 */
 	@Transactional(rollbackFor = Exception.class)
 	public List<Map<String, Object>>  getAlterInfoByOrderId(Integer orderId);
 	
@@ -57,7 +53,7 @@ public interface MarketService {
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	public void verifyAlterSubmit(MarketstaffAlter alter, String taskId,
-			String processId, boolean result, String suggestion);
+			String processId, boolean result, String suggestion) throws InterruptedException;
 	
 	/**
 	 * 获取所有未审批的申请
@@ -79,10 +75,12 @@ public interface MarketService {
 	/**
 	 * 申请更换专员
 	 * @param alterInfo 申请信息
+	 * @param reason 申请理由
+	 * @param processId 被申请订单的流程实例ID
 	 * @return
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public boolean applyForAlterMarketStaffSubmit(MarketstaffAlter alterInfo, String reason);
+	public boolean applyForAlterMarketStaffSubmit(MarketstaffAlter alterInfo, String reason, String processId);
 	
 	/**
 	 * 专员查看当前正在审批中的订单列表
@@ -405,5 +403,7 @@ public interface MarketService {
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	public List<Order> getTodoOrders();
+	
+
 
 }

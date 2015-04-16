@@ -17,6 +17,7 @@ import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
@@ -86,7 +87,7 @@ public class ActivitiAPIUtil {
 	 * @return
 	 */
 	public List<Task> getAssignedTasksOfUser(String userId){
-		List<Task> assignedTasks = taskService.createTaskQuery().taskCandidateUser(userId).list();
+		List<Task> assignedTasks = taskService.createTaskQuery().taskAssignee(userId).list();
 		return assignedTasks;
 	}
 	
@@ -98,9 +99,20 @@ public class ActivitiAPIUtil {
 	 */
 	public List<Task> getAssignedTasksOfUserByTaskName(String userId, String taskName){
 		List<Task> resultTasks = new ArrayList<Task>();
-		TaskQuery query = taskService.createTaskQuery().taskCandidateUser(userId);
+		TaskQuery query = taskService.createTaskQuery().taskAssignee(userId);
 	    resultTasks = query.taskName(taskName).list();
 		return resultTasks;
+	}
+	
+	/**
+	 * 获取特定流程实例下，某个用户的任务列表
+	 * @param processId
+	 * @param userId
+	 * @return
+	 */
+	public List<Task> getTasksOfUserWithSpecificProcessInstance(String processId, String userId){
+		List<Task> tasks = taskService.createTaskQuery().processInstanceId(processId).taskAssignee(userId).list();
+		return tasks;
 	}
 	
 	/**
@@ -226,6 +238,12 @@ public class ActivitiAPIUtil {
 	}
 	
 	
+	public void updateProcessVariable(String processId, String key, Object value){
+		List<Execution> executions = runtimeService.createExecutionQuery().processInstanceId(processId).list();
+		for (Execution execution : executions) {
+			runtimeService.setVariable(execution.getId(), key, value);
+		}
+	}
 	/**
 	 * 根据流程ID获取当前活动任务节点
 	 * @param processId
@@ -247,7 +265,7 @@ public class ActivitiAPIUtil {
 		ProcessDefinitionEntity entity =(ProcessDefinitionEntity) ((RepositoryServiceImpl)repositoryService).getDeployedProcessDefinition(processDefinitionId);
 		//获取流程中所有节点实例
 		List<ActivityImpl> activities = entity.getActivities();
-		
+	
 		for (ActivityImpl activityImpl : activities) {
 			//如果当前执行任务DefKey和节点ID相同
 			if (currentTaskDefs.contains(activityImpl.getId())) {
@@ -256,6 +274,7 @@ public class ActivitiAPIUtil {
 		}
 		return lists;
 	}
+	
 	
 	/**删除流程实例*/
 	public void abortProcess(String processId){
