@@ -41,7 +41,7 @@ $(function() {
 		$("table.tablesorter").tablesorter();
 		//	}
 
-		//getTaskNumber();
+		getTaskNumber();
 		//$("li span.task").css("color","white");
 		
 	});

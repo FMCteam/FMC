@@ -120,9 +120,6 @@ public class MainController {
 		Account account = (Account)session.getAttribute("cur_user");
 		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
 		session.setAttribute("treeNodeList", list);
-//		List<Teacher> t_list = teacherService.getAllTeachers();
-//		model.addAttribute("teacherList", t_list);
-	//	System.out.println("//============default.do");
 		return "/index_new";
 	}
 }
