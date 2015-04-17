@@ -774,20 +774,18 @@ public class MarketController {
 	//认领客户新单
 	@RequestMapping(value="/market/claimCustomerOrderList.do", method = RequestMethod.GET)
 	public String claimCustomerOrderList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
-		List<Map<String, Object>> orderInfo = marketService.getTodoOrders();
-		model.put("order", orderInfo);
+		List<Map<String, Object>> list = marketService.getTodoOrders();
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "客户新单列表");
 		model.put("url", "/market/claimCustomerOrderDetail.do");
-		model.put("search", "/market/claimCustomerOrderSearch.do");
+		model.put("searchurl", "/market/claimCustomerOrderSearch.do");
 		return "/market/claimCustomerOrderList";
 	}
 	
 	@RequestMapping(value="/market/claimCustomerOrderDetail.do", method = RequestMethod.GET)
 	public String claimCustomerOrderDetail(HttpServletRequest request, HttpServletResponse response, ModelMap model){
-
 		String orderId = request.getParameter("orderId");
 		int id = Integer.parseInt(orderId);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
 		Map<String, Object> orderInfo = marketService.getOrderDetail(id);
 		model.addAttribute("orderInfo", orderInfo);
 		return "/market/claimCustomerOrderDetail";
@@ -795,13 +793,40 @@ public class MarketController {
 	
 	@RequestMapping(value="/market/claimCustomerOrderSearch.do", method = RequestMethod.GET)
 	public String claimCustomerOrderSearch(HttpServletRequest request, HttpServletResponse response, ModelMap model){
-		//TODO
+		String ordernumber = request.getParameter("ordernumber");
+		String customername = request.getParameter("customername");
+		String stylename = request.getParameter("stylename");
+		String startdate = request.getParameter("startdate");
+		String enddate = request.getParameter("enddate");
+		List<Map<String, Object>> list = marketService.getSearchTodoOrderList(ordernumber, customername, stylename, startdate, enddate);
+
+		//修改界面无专员和无进度问题
+		for (Map<String, Object> a:list){
+			
+			Order o=(Order) a.get("order");
+			if (o.getOrderState().equals("TODO")){			
+				o.setOrderProcessStateName("未选定专员");
+				Employee employee=new Employee();
+				employee.setEmployeeName("无");
+				a.put("order", o);
+				a.put("employee", employee);
+			
+			}
+			
+		}
+		model.addAttribute("list", list);
+		model.addAttribute("taskName", "订单列表");
+		model.put("url", "/market/claimCustomerOrderDetail.do");
+		model.put("searchurl", "/market/claimCustomerOrderSearch.do");
 		return "/market/claimCustomerOrderSearch";
 	}
 	
 	@RequestMapping(value="/market/claimCustomerOrderSubmit.do")
 	public String claimCustomerOrderSubmit(HttpServletRequest request, HttpServletResponse response, ModelMap model){
-		//TODO
+		int orderId =  (int) request.getAttribute("orderId");
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		marketService.claimCustomerOrder(orderId, account.getAccountId());
 		return "/market/claimCustomerOrderList.do";
 	}
 

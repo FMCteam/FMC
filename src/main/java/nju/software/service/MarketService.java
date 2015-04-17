@@ -40,7 +40,7 @@ public interface MarketService {
 	 * @param order;
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void claimCustomerOrder(Order order);
+	public void claimCustomerOrder(Integer orderId, Integer userId);
 	
 	@Transactional(rollbackFor = Exception.class)
 	public List<Map<String, Object>>  getAlterInfoByOrderId(Integer orderId);
