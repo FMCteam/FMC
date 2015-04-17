@@ -52,6 +52,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -769,9 +770,43 @@ public class MarketController {
 
 		return "redirect:/market/addOrderCustomerList.do";
 	}
+	
+	//认领客户新单
+	@RequestMapping(value="/market/claimCustomerOrderList.do", method = RequestMethod.GET)
+	public String claimCustomerOrderList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+		List<Map<String, Object>> orderInfo = marketService.getTodoOrders();
+		model.put("order", orderInfo);
+		model.put("url", "/market/claimCustomerOrderDetail.do");
+		model.put("search", "/market/claimCustomerOrderSearch.do");
+		return "/market/claimCustomerOrderList";
+	}
+	
+	@RequestMapping(value="/market/claimCustomerOrderDetail.do", method = RequestMethod.GET)
+	public String claimCustomerOrderDetail(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+
+		String orderId = request.getParameter("orderId");
+		int id = Integer.parseInt(orderId);
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		Map<String, Object> orderInfo = marketService.getOrderDetail(id);
+		model.addAttribute("orderInfo", orderInfo);
+		return "/market/claimCustomerOrderDetail";
+	}
+	
+	@RequestMapping(value="/market/claimCustomerOrderSearch.do", method = RequestMethod.GET)
+	public String claimCustomerOrderSearch(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+		//TODO
+		return "/market/claimCustomerOrderSearch";
+	}
+	
+	@RequestMapping(value="/market/claimCustomerOrderSubmit.do")
+	public String claimCustomerOrderSubmit(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+		//TODO
+		return "/market/claimCustomerOrderList.do";
+	}
 
 	// test precondition
-	@RequestMapping(value = "market/precondition.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/market/precondition.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
 	public String precondition(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {

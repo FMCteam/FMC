@@ -20,15 +20,15 @@ import javax.persistence.Table;
 public class OrderSource implements Serializable{
 	
 	/**来自专员自己下的订单*/
-	public static final String SOURCE_SELF = "Self";
+	public static final String SOURCE_SELF = "自己下单";
 	/**来自客户指定专员的订单*/
-	public static final String SOURCE_CUSTOMER = "Customer";
+	public static final String SOURCE_CUSTOMER = "客户指定";
 	/**来自市场秘书分配的订单*/
-	public static final String SOURCE_ALLOCATE ="Allocate";
+	public static final String SOURCE_ALLOCATE ="市场秘书分配";
 	/**专员认领的客户订单*/
-	public static final String SOURCE_CALIM = "Claim";
+	public static final String SOURCE_CALIM = "认领订单";
 	/**来自市场主管同意变更申请后，指定专员的订单*/
-	public static final String SOURCE_ALTER ="Alter";
+	public static final String SOURCE_ALTER ="主管指定";
 	
 	private Integer sourceId;
 	private Integer orderId;
