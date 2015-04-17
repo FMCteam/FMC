@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.Source;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
@@ -27,6 +28,7 @@ import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.MarketstaffAlterDAO;
 import nju.software.dao.impl.MoneyDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.OrderSourceDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
@@ -46,6 +48,7 @@ import nju.software.dataobject.Logistics;
 import nju.software.dataobject.MarketstaffAlter;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.OrderSource;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
@@ -109,6 +112,8 @@ public class MarketServiceImpl implements MarketService {
 	public final static String ALTER_PROCESSID = "processId";
 	public static final String ALTER_COMMENT = "comment";
 
+	@Autowired
+	private OrderSourceDAO orderSourceDAO;
 	@Autowired
 	private MarketstaffAlterProcessService marketstaffAlterProcessServices;
 	@Autowired
@@ -235,6 +240,19 @@ public class MarketServiceImpl implements MarketService {
 			Employee employeeNew = employeeDAO.findById(alter
 					.getNextEmployeeId());
 			mailNewStaffAlter(order, employeeNew);
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			
+			if (orderSource==null){
+				orderSource=new OrderSource();
+				orderSource.setOrderId(order.getOrderId());
+				orderSource.setSource(OrderSource.SOURCE_ALTER);
+				orderSourceDAO.save(orderSource);
+			}else{								
+				orderSource.setSource(OrderSource.SOURCE_ALTER);
+				orderSourceDAO.attachDirty(orderSource);
+			}
+			
+			
 		}
 		else {
 			alter.setVerifyState(MarketstaffAlter.STATE_DISAGREE);
@@ -444,11 +462,6 @@ public class MarketServiceImpl implements MarketService {
 		// String processId = activitiApiUtil.startWorkflowProcess(params);
 		// order.setProcessId(processId);
 		// orderDAO.attachDirty(order);
-
-		// //测试事务回滚是否成功
-		// if (true) {
-		// throw new RuntimeException();
-		// }
 		return true;
 	}
 
@@ -547,6 +560,10 @@ public class MarketServiceImpl implements MarketService {
 		String processId = mainProcessService.startWorkflow(params);
 		order.setProcessId(processId);
 		orderDAO.attachDirty(order);
+		OrderSource orderSource=new OrderSource();
+		orderSource.setOrderId(order.getOrderId());
+		orderSource.setSource(OrderSource.SOURCE_SELF);
+		orderSourceDAO.save(orderSource);
 
 		// //测试事务回滚是否成功
 		// if (true) {
@@ -699,6 +716,10 @@ public class MarketServiceImpl implements MarketService {
 		String processId = mainProcessService.startWorkflow(params);
 		order.setProcessId(processId);
 		orderDAO.attachDirty(order);
+		OrderSource orderSource=new OrderSource();
+		orderSource.setOrderId(order.getOrderId());
+		orderSource.setSource(OrderSource.SOURCE_SELF);
+		orderSourceDAO.save(orderSource);
 	}
 
 	@Override
@@ -1408,6 +1429,13 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
+			
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", "");
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
+			
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
@@ -1441,6 +1469,13 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 
 			Map<String, Object> model = new HashMap<String, Object>();
+			
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", "");
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
+			
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
@@ -1466,6 +1501,13 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
+			
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", "");
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
+			
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
@@ -1503,6 +1545,13 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
+			
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", "");
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
+			
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
@@ -1945,12 +1994,21 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public List<Order> getTodoOrders() {
+	public List<Map<String,Object>> getTodoOrders() {
 		Order instance = new Order();
 		instance.setOrderState("TODO");
 		List<Order> orderlist = orderDAO.findByExample(instance);
+		List<Map<String,Object>> mapList=new ArrayList<>();
+		for(Order order:orderlist){
+			Customer customer=customerDAO.findById(order.getCustomerId());
+			Map<String , Object> map=new HashMap<>();
+			map.put("order", order);
+			map.put("customerName", customer.getCustomerName());
+			map.put("customerCompany", customer.getCompanyName());
+			mapList.add(map);		
+		}
 
-		return orderlist;
+		return mapList;
 	}
 
 	private void mailNewStaffAlter(Order order, Employee e) {
@@ -2017,6 +2075,180 @@ public class MarketServiceImpl implements MarketService {
 		mailSenderInfo.setContent(emailContent);
 		mailSenderInfo.setToAddress(customer.getEmail());
 		SimpleMailSender.sendHtmlMail(mailSenderInfo);
+	}
+
+	@Override
+	public void claimCustomerOrder(Order order) {
+		//认领客户订单，启动流程；
+		Map<String, Object> params = getParams(order);
+		String processId = mainProcessService.startWorkflow(params);
+		order.setProcessId(processId);
+		orderDAO.attachDirty(order);
+		OrderSource orderSource=new OrderSource();
+		orderSource.setOrderId(order.getOrderId());
+		orderSource.setSource(OrderSource.SOURCE_CALIM);
+		orderSourceDAO.save(orderSource);
+	}
+
+	@Override
+	public void assignCustomerOrder(Order order) {
+		//分配订单，启动流程；
+		Map<String, Object> params = getParams(order);
+		String processId = mainProcessService.startWorkflow(params);
+		order.setProcessId(processId);
+		orderDAO.attachDirty(order);
+		OrderSource orderSource=new OrderSource();
+		orderSource.setOrderId(order.getOrderId());
+		orderSource.setSource(OrderSource.SOURCE_ALLOCATE);
+		orderSourceDAO.save(orderSource);
+	}
+
+	@Override
+	public void addMoreCustomerOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			List<Produce> produces, List<VersionData> versions, DesignCad cad,
+			HttpServletRequest request) {
+		
+	// 添加订单信息
+	orderDAO.save(order);
+
+	Integer orderId = order.getOrderId();
+
+	// 添加面料信息
+	for (Fabric fabric : fabrics) {
+		fabric.setOrderId(orderId);
+		fabricDAO.save(fabric);
+	}
+
+	// 添加辅料信息
+	for (Accessory accessory : accessorys) {
+		accessory.setOrderId(orderId);
+		accessoryDAO.save(accessory);
+	}
+
+	// 添加大货加工单信息
+	for (Produce produce : produces) {
+		produce.setOid(orderId);
+		produceDAO.save(produce);
+	}
+
+	// 添加样衣加工单信息
+	// for (Produce produce : sample_produces) {
+	// produce.setOid(orderId);
+	// produceDAO.save(produce);
+	// }
+
+	// 添加版型信息
+	for (VersionData versionData : versions) {
+		versionData.setOrderId(orderId);
+		versionDataDAO.save(versionData);
+	}
+
+	// 添加物流信息
+	logistics.setOrderId(orderId);
+	logisticsDAO.save(logistics);
+
+	// cad
+	cad.setOrderId(orderId);
+	cadDAO.save(cad);
+
+	// 报价
+	String sourceId = request.getParameter("sourceId");
+	System.out.println("sourceId:-------->" + sourceId);
+	System.out.println("orderId:-------->" + orderId);
+	Integer source = Integer.parseInt(sourceId);
+
+	Quote quote = quoteDAO.findById(source);
+	try {
+		Quote newQuote = (Quote) copy(quote);
+		newQuote.setOrderId(orderId);
+		quoteDAO.save(newQuote);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+	// 工艺报价
+	List<Craft> craftList = craftDAO.findByOrderId(source);
+	Craft craft = null;
+	boolean isNeedCraft = false;
+	if (craftList != null && craftList.size() > 0) {
+		craft = craftList.get(0);
+	}
+	if (craft.getNeedCraft() == 1) {// 如果需要工艺
+		isNeedCraft = true;
+	}
+	try {
+		Craft newCraft = (Craft) copy(craft);
+		newCraft.setOrderId(orderId);
+		craftDAO.save(newCraft);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+	List<FabricCost> fabricCosts = fabricCostDAO.findByOrderId(source);
+	for (FabricCost fc : fabricCosts) {
+		FabricCost newFC = new FabricCost();
+		newFC.setCostPerMeter(fc.getCostPerMeter());
+		newFC.setFabricName(fc.getFabricName());
+		newFC.setOrderId(orderId);
+		newFC.setPrice(fc.getPrice());
+		newFC.setTearPerMeter(fc.getTearPerMeter());
+		fabricCostDAO.save(newFC);
+	}
+	List<AccessoryCost> accessoryCosts = accessoryCostDAO
+			.findByOrderId(source);
+	for (AccessoryCost ac : accessoryCosts) {
+		AccessoryCost newAC = new AccessoryCost();
+		newAC.setAccessoryName(ac.getAccessoryName());
+		newAC.setCostPerPiece(ac.getCostPerPiece());
+		newAC.setOrderId(orderId);
+		newAC.setPrice(ac.getPrice());
+		newAC.setTearPerPiece(ac.getTearPerPiece());
+		accessoryCostDAO.save(newAC);
+	}
+
+	// 图片
+	Order sourceOrder = orderDAO.findById(source);
+	/*
+	 * System.out.println("--------------"); HttpSession httpSession =
+	 * request.getSession(); ServletContext servletContext =
+	 * httpSession.getServletContext(); String curPath =
+	 * servletContext.getRealPath("/");
+	 */
+	// String curPath =
+	// request.getSession().getServletContext().getRealPath("/");
+	// String fatherPath = new File(curPath).getParent();
+	String rePath = new File(request.getSession().getServletContext()
+			.getRealPath("/")).getParent();
+	String sourcePicture = rePath + sourceOrder.getSampleClothesPicture();
+	System.out.println(sourcePicture);
+	String targetPicture = rePath + UPLOAD_DIR_SAMPLE + orderId;
+
+	File newSamplePic = FileOperateUtil.CopyAndPaste(sourcePicture,
+			targetPicture);
+	File newRefPic = FileOperateUtil.CopyAndPaste(
+			rePath + sourceOrder.getReferencePicture(), rePath
+					+ UPLOAD_DIR_REFERENCE + orderId);
+	order.setSampleClothesPicture(newSamplePic
+			.getAbsolutePath()
+			.substring(rePath.length(),
+					newSamplePic.getAbsolutePath().length())
+			.replace('\\', '/'));
+	order.setReferencePicture(newRefPic
+			.getAbsolutePath()
+			.substring(rePath.length(),
+					newRefPic.getAbsolutePath().length())
+			.replace('\\', '/'));
+
+
+	Map<String, Object> params = getParams(order);
+	params.put(RESULT_REORDER, true);
+	params.put(DesignServiceImpl.RESULT_NEED_CRAFT, isNeedCraft);// 翻单是否需要工艺
+	// 启动流程
+//	String processId = mainProcessService.startWorkflow(params);
+//	order.setProcessId(processId);
+//	orderDAO.attachDirty(order);
+		
 	}
 
 }

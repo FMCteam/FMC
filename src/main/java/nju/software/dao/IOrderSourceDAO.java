@@ -16,7 +16,7 @@ public interface IOrderSourceDAO {
 	
 	public List<OrderSource> findByExample(OrderSource example);
 	
-	public List<OrderSource> findByOrderId(Integer orderId);
+	public OrderSource findByOrderId(Integer orderId);
 	
 	public List<OrderSource> findBySource(String source);
 	
