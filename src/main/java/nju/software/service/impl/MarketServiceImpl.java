@@ -2004,6 +2004,7 @@ public class MarketServiceImpl implements MarketService {
 			Map<String , Object> map=new HashMap<>();
 			map.put("order", order);
 			map.put("customerName", customer.getCustomerName());
+			map.put("customerCompany", customer.getCompanyName());
 			mapList.add(map);		
 		}
 
