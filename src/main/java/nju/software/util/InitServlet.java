@@ -48,6 +48,7 @@ public class InitServlet extends HttpServlet {
 		//System.out.println(new TestSql().getClass().getResource(""));
 		boolean isEmpty =accountdao.isEmptytOfTable();
 		System.out.println("===========isEmpty:"+isEmpty);
+		//System.out.println("===========isEmpty2:"+sqlUtilDAO.isEmptyTable("Account"));
 		if(isEmpty){
 		sqlUtilDAO.initSQL_All();
 		}

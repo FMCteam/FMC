@@ -303,7 +303,8 @@ public class AccountController {
 				accountToModify.setUserPassword(userPassword);
 			}
 			accountService.updateAccount(accountToModify);
-
+			System.out.println("============employeeRole:"+employeeRole);
+			accountService.updateAccountRole(accountToModify.getAccountId(),employeeRole );
 			model.addAttribute("notify", "修改成功！");
 			success = true;
 		}

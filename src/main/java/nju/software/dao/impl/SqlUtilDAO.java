@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -245,13 +246,13 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	 public void initSQL_other(){
 		// setPath();
 		 initAccountRole();
-		 try {
+		/* try {
 			 execute("permission_update.sql");
 			 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	 }
 	
 	 public void initAccountRole(){
@@ -330,5 +331,27 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	    	
 	    	return false ;   	
 	    }
+	 
+	 /*public boolean isEmptyTable(String tableName){
+		 Connection conn = getHibernateTemplate().getSessionFactory().getCurrentSession().connection();  
+	        DatabaseMetaData metaData;
+			try {
+				metaData = conn.getMetaData();
+				ResultSet rs = metaData.getTables(null, "fmc", tableName, new String[]{"TABLE"});  
+		        if(rs.next()){  
+		            logger.info("表存在...");  
+		            return true;  
+		        }  
+		        else{  
+		            logger.info("表不存在...");  
+		            return false;  
+		        }          
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false ;
+			}       
+	        
+	 }*/
 
 }
