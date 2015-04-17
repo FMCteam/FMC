@@ -29,6 +29,7 @@
 		<class>nju.software.dataobject.Money</class>
 		<class>nju.software.dataobject.OperateRecord</class>
 		<class>nju.software.dataobject.Order</class>
+		<class>nju.software.dataobject.OrderSource</class>
 		<class>nju.software.dataobject.Package</class>
 		<class>nju.software.dataobject.PackageDetail</class>
 		<class>nju.software.dataobject.Permission</class>

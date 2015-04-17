@@ -120,6 +120,11 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
+	<bean id="OrderSourceDAO" class="nju.software.dao.impl.OrderSourceDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
 	<bean id="PackageDetailDAO"
 		class="nju.software.dao.impl.PackageDetailDAO">
 		<property name="sessionFactory">
