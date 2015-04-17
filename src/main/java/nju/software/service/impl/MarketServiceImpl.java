@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.Source;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
@@ -27,6 +28,7 @@ import nju.software.dao.impl.LogisticsDAO;
 import nju.software.dao.impl.MarketstaffAlterDAO;
 import nju.software.dao.impl.MoneyDAO;
 import nju.software.dao.impl.OrderDAO;
+import nju.software.dao.impl.OrderSourceDAO;
 import nju.software.dao.impl.ProduceDAO;
 import nju.software.dao.impl.ProductDAO;
 import nju.software.dao.impl.QuoteDAO;
@@ -46,6 +48,7 @@ import nju.software.dataobject.Logistics;
 import nju.software.dataobject.MarketstaffAlter;
 import nju.software.dataobject.Money;
 import nju.software.dataobject.Order;
+import nju.software.dataobject.OrderSource;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Product;
 import nju.software.dataobject.Quote;
@@ -109,6 +112,8 @@ public class MarketServiceImpl implements MarketService {
 	public final static String ALTER_PROCESSID = "processId";
 	public static final String ALTER_COMMENT = "comment";
 
+	@Autowired
+	private OrderSourceDAO orderSourceDAO;
 	@Autowired
 	private MarketstaffAlterProcessService marketstaffAlterProcessServices;
 	@Autowired
@@ -235,6 +240,19 @@ public class MarketServiceImpl implements MarketService {
 			Employee employeeNew = employeeDAO.findById(alter
 					.getNextEmployeeId());
 			mailNewStaffAlter(order, employeeNew);
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			
+			if (orderSource==null){
+				orderSource=new OrderSource();
+				orderSource.setOrderId(order.getOrderId());
+				orderSource.setSource(OrderSource.SOURCE_ALTER);
+				orderSourceDAO.save(orderSource);
+			}else{								
+				orderSource.setSource(OrderSource.SOURCE_ALTER);
+				orderSourceDAO.attachDirty(orderSource);
+			}
+			
+			
 		}
 		else {
 			alter.setVerifyState(MarketstaffAlter.STATE_DISAGREE);
@@ -542,6 +560,10 @@ public class MarketServiceImpl implements MarketService {
 		String processId = mainProcessService.startWorkflow(params);
 		order.setProcessId(processId);
 		orderDAO.attachDirty(order);
+		OrderSource orderSource=new OrderSource();
+		orderSource.setOrderId(order.getOrderId());
+		orderSource.setSource(OrderSource.SOURCE_SELF);
+		orderSourceDAO.save(orderSource);
 
 		// //测试事务回滚是否成功
 		// if (true) {
@@ -694,6 +716,10 @@ public class MarketServiceImpl implements MarketService {
 		String processId = mainProcessService.startWorkflow(params);
 		order.setProcessId(processId);
 		orderDAO.attachDirty(order);
+		OrderSource orderSource=new OrderSource();
+		orderSource.setOrderId(order.getOrderId());
+		orderSource.setSource(OrderSource.SOURCE_SELF);
+		orderSourceDAO.save(orderSource);
 	}
 
 	@Override
@@ -1403,6 +1429,13 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
+			
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", "");
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
+			
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
@@ -1436,6 +1469,13 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 
 			Map<String, Object> model = new HashMap<String, Object>();
+			
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", "");
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
+			
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
@@ -1461,6 +1501,13 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
+			
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", "");
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
+			
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
@@ -1498,6 +1545,13 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
+			
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", "");
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
+			
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
@@ -2021,6 +2075,10 @@ public class MarketServiceImpl implements MarketService {
 		String processId = mainProcessService.startWorkflow(params);
 		order.setProcessId(processId);
 		orderDAO.attachDirty(order);
+		OrderSource orderSource=new OrderSource();
+		orderSource.setOrderId(order.getOrderId());
+		orderSource.setSource(OrderSource.SOURCE_CALIM);
+		orderSourceDAO.save(orderSource);
 	}
 
 	@Override
@@ -2030,6 +2088,10 @@ public class MarketServiceImpl implements MarketService {
 		String processId = mainProcessService.startWorkflow(params);
 		order.setProcessId(processId);
 		orderDAO.attachDirty(order);
+		OrderSource orderSource=new OrderSource();
+		orderSource.setOrderId(order.getOrderId());
+		orderSource.setSource(OrderSource.SOURCE_ALLOCATE);
+		orderSourceDAO.save(orderSource);
 	}
 
 	@Override
