@@ -2818,7 +2818,7 @@ public class MarketController {
 		// 客户和市场专员只能看到与自己相关的订单
 		if ("CUSTOMER".equals(account.getUserRole())
 				|| "marketStaff".equals(account.getUserRole())) {
-			list = marketService.getOrders(account.getUserRole(),
+			list = marketService.getOrdersDoing(account.getUserRole(),
 					account.getUserId());
 		} else {
 			list = marketService.getOrders();

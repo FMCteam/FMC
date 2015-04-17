@@ -1,12 +1,18 @@
 package nju.software.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+
+
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import nju.software.dao.impl.AccountDAO;
 import nju.software.dao.impl.EmployeeDAO;
+import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
 import nju.software.service.EmployeeService;
 import nju.software.util.ActivitiAPIUtil;
@@ -15,6 +21,8 @@ import nju.software.util.ActivitiAPIUtil;
 @Service("employeeServiceImpl")
 public class EmployeeServiceImpl implements EmployeeService {
 
+	@Autowired
+	private AccountDAO accountDao;
 	@Autowired
 	private EmployeeDAO employeeDAO;
 	@Autowired
@@ -108,11 +116,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Employee> getAllManagerStaff() {
-		Employee instance=new Employee();
-		instance.setDepartment(EmployeeServiceImpl.DEPARTMENT);
-		List<Employee> eList=employeeDAO.findByExample(instance);
-		
+	public List<Employee> getAllManagerStaff() {		
+		Account account=new Account();
+		account.setUserRole("marketStaff");
+		List<Account> accounts=accountDao.findByExample(account);
+		List<Employee> eList=new ArrayList<Employee>();
+		for (Account a:accounts) {
+			eList.add(employeeDAO.findById(a.getUserId()));
+		}
 		return eList;
 	}
 
