@@ -47,14 +47,18 @@
 		</property>
 	</bean>
 	
+	 <!-- 拦截器-->  
+	<bean  
+        class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" >  
+        <property name="interceptors">  
+           <!-- 多个拦截器,顺序执行 -->  
+           <list>  
+              <ref bean="commonInterceptor"/>  
+           </list>  
+        </property>  
+    </bean>  
 	
-	
-	
-	 
-	
-	
-	
-	
-	
+    <bean id="commonInterceptor" class="nju.software.controller.interceptor.CommonInterceptor">  
+    </bean>  
 	
 </beans>

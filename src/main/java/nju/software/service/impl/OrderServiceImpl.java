@@ -378,6 +378,7 @@ public class OrderServiceImpl implements OrderService {
 	public void endOrder(Integer orderId) {
 		Order order=orderDAO.findById(orderId);
 		order.setOrderState("1");
+		order.setOrderProcessStateName("被终止");
 		orderDAO.attachDirty(order);
 		mainProcessService.abortWorkflow(order.getProcessId());
 	}

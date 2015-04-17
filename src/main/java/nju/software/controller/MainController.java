@@ -20,15 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class MainController {
-//	@Autowired
-//	private JbpmAPIUtil jbpmAPIUtil;
-	
 	@Autowired
 	private AccountService accountService;
 	@Autowired
 	private SystemService systemService;	
-//	@Autowired
-//	private EmployeeService employeeService;
 	
 	private static Logger logger = Logger.getLogger(MainController.class);
 
@@ -36,9 +31,6 @@ public class MainController {
 	public String login(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-//		List<Teacher> t_list = teacherService.getAllTeachers();
-//		model.addAttribute("teacherList", t_list);
-		//System.out.println("hree");
 		HttpSession session = request.getSession();
 		Account cur_user = (Account) session.getAttribute("cur_user");
 		 
@@ -112,9 +104,6 @@ public class MainController {
 		Account account = (Account)session.getAttribute("cur_user");
 		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
 		session.setAttribute("treeNodeList", list);
-//		List<Teacher> t_list = teacherService.getAllTeachers();
-//		model.addAttribute("teacherList", t_list);
-	//	System.out.println("//============default.do");
 		return "/index";
 	}
 
@@ -122,18 +111,19 @@ public class MainController {
 	//@Transactional(rollbackFor = Exception.class)
 	public String getDefaultPageContent(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		/**
-		 * 权限
-		 */
-		/*
-		 */
+		
 		HttpSession session = request.getSession();
 		Account account = (Account)session.getAttribute("cur_user");
 		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
 		session.setAttribute("treeNodeList", list);
-//		List<Teacher> t_list = teacherService.getAllTeachers();
-//		model.addAttribute("teacherList", t_list);
-	//	System.out.println("//============default.do");
 		return "/index_new";
+	}
+	
+	@RequestMapping(value = "overtime.do", method= RequestMethod.GET)
+	//@Transactional(rollbackFor = Exception.class)
+	public String getOverTimePageContent(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		
+		return "/overtime";
 	}
 }

@@ -108,6 +108,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 				mainProcessService.completeTask(taskId, ACTOR_LOGISTICS_MANAGER, data);
 			if(result.intValue()==1){//如果result的的值为1，即为未收取到样衣，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
+				order.setOrderProcessStateName("被终止");
 				orderDAO.attachDirty(order);
 				
 			}
@@ -371,6 +372,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			order.setLogisticsState(2);
 			if(is_hao_duo_yi){
 				order.setOrderState("Done");
+				order.setOrderProcessStateName("已完成");
 			}
 			orderDAO.attachDirty(order);
 		}
@@ -382,6 +384,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			//如果是好多衣，入库完则直接结束整个流程（无需发货）
 			if(is_hao_duo_yi){
 				order.setOrderState("Done");
+				order.setOrderProcessStateName("已完成");
 				orderDAO.merge(order);
 			}
 			return true;
@@ -510,6 +513,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			 */
 			Order order = orderDAO.findById(orderId);
 			order.setOrderState("Done");
+			order.setOrderProcessStateName("已完成");
 			orderDAO.merge(order);
 		} catch (InterruptedException e) {
 			e.printStackTrace();

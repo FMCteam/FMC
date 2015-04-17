@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
+import nju.software.dao.impl.AccountDAO;
 import nju.software.dao.impl.CheckRecordDAO;
 import nju.software.dao.impl.CraftDAO;
 import nju.software.dao.impl.CustomerDAO;
@@ -32,6 +33,7 @@ import nju.software.dao.impl.QuoteDAO;
 import nju.software.dao.impl.VersionDataDAO;
 import nju.software.dataobject.Accessory;
 import nju.software.dataobject.AccessoryCost;
+import nju.software.dataobject.Account;
 import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Craft;
 import nju.software.dataobject.Customer;
@@ -101,6 +103,7 @@ public class MarketServiceImpl implements MarketService {
 	public final static String VERIFY_QUOTE_COMMENT = "verifyQuoteComment";
 	public final static String ALTER_REASON = "reason";
 	public final static String ALTER_ID = "alterId";
+	public final static String ALTER_ORDER_PROCESSID = "order_processId";
 	public final static String ALTER_ALTERINFO = "alterInfo";
 	public final static String ALTER_RESULT = "result";
 	public final static String ALTER_PROCESSID = "processId";
@@ -114,6 +117,8 @@ public class MarketServiceImpl implements MarketService {
 	private CustomerDAO customerDAO;
 	@Autowired
 	private EmployeeDAO employeeDAO;
+	@Autowired
+	private AccountDAO accountDAO;
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
@@ -153,7 +158,6 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public List<Map<String, Object>> getAlterInfoByOrderId(Integer orderId) {
-
 		MarketstaffAlter example = new MarketstaffAlter();
 		List<MarketstaffAlter> list = new ArrayList<>();
 		example.setOrderId(orderId);
@@ -161,7 +165,11 @@ public class MarketServiceImpl implements MarketService {
 		List<Map<String, Object>> mapList = new ArrayList<>();
 
 		for (MarketstaffAlter alter : list) {
-
+			//判断该审批流程是否已结束
+			String processId = alter.getProcessId();
+			if (!marketstaffAlterProcessServices.isProcessInstanceActive(processId)) {
+				continue;
+			}
 			String reasonString = (String) marketstaffAlterProcessServices
 					.getReason(alter.getProcessId());
 			Map<String, Object> alterInfo = new HashMap<String, Object>();
@@ -171,6 +179,20 @@ public class MarketServiceImpl implements MarketService {
 
 		}
 		return mapList;
+	}
+
+	@Override
+	public Map<String, Object> getAlterInfoByAlterId(Integer alterId) {
+		MarketstaffAlter alter = marketstaffAlterDAO.findById(alterId);
+		String reasonString = (String) marketstaffAlterProcessServices
+				.getReason(alter.getProcessId());
+		Map<String, Object> alterInfo = new HashMap<String, Object>();
+		Task task = marketstaffAlterProcessServices.getTaskWithSpecificAlterId(alterId);
+		alterInfo.put("taskId", task.getId());
+		alterInfo.put("processInstanceId", task.getProcessInstanceId());
+		alterInfo.put(MarketServiceImpl.ALTER_REASON, reasonString);
+		alterInfo.put(MarketServiceImpl.ALTER_ALTERINFO, alter);
+		return alterInfo;
 	}
 
 	@Override
@@ -193,30 +215,34 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public void verifyAlterSubmit(MarketstaffAlter alter, String taskId,
-			String processId, boolean result, String comment) {
-		marketstaffAlterDAO.attachDirty(alter);
+			String processId, boolean result, String comment) throws InterruptedException {
 		Map<String, Object> params = new HashMap<>();
 		params.put(MarketServiceImpl.ALTER_RESULT, result);
 		params.put(MarketServiceImpl.ALTER_COMMENT, comment);
 		params.put(MarketServiceImpl.ALTER_PROCESSID, processId);
-		try {
-			marketstaffAlterProcessServices.completeVerifyAterTask(taskId,
-					params);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		
 		Order order = orderDAO.findById(alter.getOrderId());
 		Customer customer = customerDAO.findById(order.getCustomerId());
 		Employee employeeOld = employeeDAO.findById(alter.getEmployeeId());
 
 		mailCustomerAlter(order, customer);
+		//若同意
 		if (result) {
+			params.put("old_staff", alter.getEmployeeId());
+			params.put("new_staff", alter.getNextEmployeeId());
+			alter.setCurrentTaskName(marketstaffAlterProcessServices.getCurrentTaskNames(processId));
+			order.setEmployeeId(alter.getNextEmployeeId());
 			Employee employeeNew = employeeDAO.findById(alter
 					.getNextEmployeeId());
 			mailNewStaffAlter(order, employeeNew);
 		}
+		else {
+			alter.setVerifyState(MarketstaffAlter.STATE_DISAGREE);
+		}
 		mailOldStaffAlter(alter, employeeOld, comment, result);
-
+		marketstaffAlterDAO.attachDirty(alter);
+		marketstaffAlterProcessServices.completeVerifyAlterTask(taskId,
+				params);
 	}
 
 	@Override
@@ -224,36 +250,26 @@ public class MarketServiceImpl implements MarketService {
 		MarketstaffAlter example = new MarketstaffAlter();
 		List<MarketstaffAlter> results = new ArrayList<>();
 		example.setVerifyState(MarketstaffAlter.STATE_TODO);
-		example.setAlterId(1);
-		example.setEmployeeId(1);
-		example.setOrderId(1);
-		results.add(example);
-		// results = marketstaffAlterDAO.findByExample(example);
-
+		results = marketstaffAlterDAO.findByExample(example);
 		return results;
 	}
 
 	@Override
 	public MarketstaffAlter getMarketStaffAlterById(int alterId) {
 		MarketstaffAlter alter = marketstaffAlterDAO.findById(alterId);
-		MarketstaffAlter example = new MarketstaffAlter();
-		example.setVerifyState(MarketstaffAlter.STATE_TODO);
-		example.setAlterId(1);
-		example.setEmployeeId(1);
-		example.setOrderId(1);
-		// return alter;
-		return example;
+		return alter;
 	}
 
 	@Override
 	public boolean applyForAlterMarketStaffSubmit(MarketstaffAlter alterInfo,
-			String reason) {
-
+			String reason, String orderProcessId) {
 		marketstaffAlterDAO.save(alterInfo);
 
 		Map<String, Object> params = new HashMap<>();
-		params.put(MarketServiceImpl.ALTER_REASON, reason);
+		params.put(ALTER_REASON, reason);
 		params.put(ALTER_ID, alterInfo.getAlterId());
+		params.put(ALTER_ORDER_PROCESSID, orderProcessId);
+		//新启动的流程实例ID
 		String processId = marketstaffAlterProcessServices
 				.startWorkflow(params);
 		alterInfo.setProcessId(processId);
@@ -704,8 +720,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public Map<String, Object> getModifyOrderDetail(int accountId, int id) {
+		Order order = orderDAO.findById(id);
+		String userId = order.getEmployeeId()+ "";
 		return service
-				.getBasicOrderModel(accountId + "", TASK_MODIFY_ORDER, id);
+				.getBasicOrderModel(userId, TASK_MODIFY_ORDER, id);
 
 	}
 
@@ -762,6 +780,7 @@ public class MarketServiceImpl implements MarketService {
 			mainProcessService.completeTask(taskId, accountId + "", params);
 			if (editok == false) {// 如果editok的的值为false，即为未收取到样衣，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
+				order.setOrderProcessStateName("被终止");
 				orderDAO.merge(order);
 			}
 		} catch (InterruptedException e) {
@@ -821,6 +840,7 @@ public class MarketServiceImpl implements MarketService {
 				if (comfirmworksheet == false) {// 如果result的的值为false，即为确认加工单并签订合同失败，流程会异常终止，将orderState设置为1
 					Order order = orderDAO.findById(orderId);
 					order.setOrderState("1");
+					order.setOrderProcessStateName("被终止");
 					orderDAO.merge(order);
 				}
 			} catch (InterruptedException e) {
@@ -948,6 +968,7 @@ public class MarketServiceImpl implements MarketService {
 			mainProcessService.completeTask(taskId, actorId, data);
 			if (result.equals("2")) {// 如果result的的值为2，即为取消订单，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
+				order.setOrderProcessStateName("被终止");
 				orderDAO.attachDirty(order);
 			}
 			return true;
@@ -976,14 +997,18 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	public Map<String, Object> getModifyQuoteDetail(int orderId, int accountId) {
-		return service.getBasicOrderModelWithQuote(accountId + "",
+		Order order = orderDAO.findById(orderId);
+		String userId = order.getEmployeeId()+ "";
+		return service.getBasicOrderModelWithQuote(userId,
 				TASK_MODIFY_QUOTE, orderId);
 	}
 
 	@Override
 	public Map<String, Object> getModifyProductDetail(int orderId,
 			Integer accountId) {
-		return service.getBasicOrderModelWithQuote(accountId + "",
+		Order order = orderDAO.findById(orderId);
+		String userId = order.getEmployeeId()+ "";
+		return service.getBasicOrderModelWithQuote(userId,
 				TASK_MODIFY_PRODUCE_ORDER, orderId);
 	}
 
@@ -1008,7 +1033,9 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public Map<String, Object> getSignContractDetail(String actorId,
 			Integer orderId) {
-		return service.getBasicOrderModelWithQuote(actorId, TASK_SIGN_CONTRACT,
+		Order order = orderDAO.findById(orderId);
+		String userId = order.getEmployeeId()+ "";
+		return service.getBasicOrderModelWithQuote(userId, TASK_SIGN_CONTRACT,
 				orderId);
 
 	}
@@ -1034,7 +1061,9 @@ public class MarketServiceImpl implements MarketService {
 	// ==========================取得催尾款订单=======================
 	@Override
 	public Map<String, Object> getPushRestOrderDetail(String userId, int orderId) {
-		Map<String, Object> model = service.getBasicOrderModelWithQuote(userId,
+		Order order_s = orderDAO.findById(orderId);
+		String user_id = order_s.getEmployeeId()+ "";
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(user_id,
 				TASK_PUSH_REST, orderId);
 		Order order = (Order) model.get("order");
 		Quote quote = (Quote) model.get("quote");
@@ -1109,6 +1138,7 @@ public class MarketServiceImpl implements MarketService {
 			mainProcessService.completeTask(taskId, actorId, data);
 			if (result == false) {// 如果result的的值为false，即为催尾款失败，流程会异常终止，将orderState设置为1
 				order.setOrderState("1");
+				order.setOrderProcessStateName("被终止");
 				orderDAO.attachDirty(order);
 			}
 			return true;
@@ -1265,10 +1295,16 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public Map<String, Object> getMergeQuoteDetail(Integer userId, int orderId) {
-		Map<String, Object> model = service.getBasicOrderModelWithQuote(userId
+		Order order = orderDAO.findById(orderId);
+		String user_id = order.getEmployeeId()+ "";
+		Map<String, Object> model = service.getBasicOrderModelWithQuote(user_id
 				+ "", TASK_MERGE_QUOTE, orderId);
 		// 工艺报价信息
-		Craft craft = craftDAO.findByOrderId(orderId).get(0);
+		List<Craft> crafts = craftDAO.findByOrderId(orderId);
+		Craft craft = new Craft();
+		if (crafts.size() < 0) {
+			craft = crafts.get(0);
+		}
 		model.put("craft", craft);
 
 		return model;
@@ -1282,7 +1318,9 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public Map<String, Object> getConfirmQuoteDetail(Integer userId, int orderId) {
-		return service.getBasicOrderModelWithQuote(userId + "",
+		Order order = orderDAO.findById(orderId);
+		String user_id = order.getEmployeeId()+ "";
+		return service.getBasicOrderModelWithQuote(user_id,
 				TASK_CONFIRM_QUOTE, orderId);
 	}
 
@@ -1321,7 +1359,9 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public Map<String, Object> getConfirmProductDetail(Integer userId,
 			int orderId) {
-		return service.getBasicOrderModelWithQuote(userId + "",
+		Order order = orderDAO.findById(orderId);
+		String user_id = order.getEmployeeId()+ "";
+		return service.getBasicOrderModelWithQuote(user_id,
 				TASK_CONFIRM_PRODUCE_ORDER, orderId);
 	}
 
@@ -1365,6 +1405,8 @@ public class MarketServiceImpl implements MarketService {
 			} else {
 				order.setOrderProcessStateName("");
 			}
+			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
+			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -1395,6 +1437,8 @@ public class MarketServiceImpl implements MarketService {
 			} else {
 				order.setOrderProcessStateName("");
 			}
+			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
+			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
@@ -1419,6 +1463,8 @@ public class MarketServiceImpl implements MarketService {
 			} else {
 				order.setOrderProcessStateName("");
 			}
+			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
+			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -1454,6 +1500,8 @@ public class MarketServiceImpl implements MarketService {
 			} else {
 				order.setOrderProcessStateName("");
 			}
+			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
+			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -1475,6 +1523,8 @@ public class MarketServiceImpl implements MarketService {
 			} else {
 				order.setOrderProcessStateName("");
 			}
+			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
+			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -1510,6 +1560,8 @@ public class MarketServiceImpl implements MarketService {
 			} else {
 				order.setOrderProcessStateName("");
 			}
+			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
+			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -1524,6 +1576,7 @@ public class MarketServiceImpl implements MarketService {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Order order = orderDAO.findById(orderId);
 		model.put("order", order);
+		model.put("orderProcessId", order.getProcessId());
 		model.put("orderId", service.getOrderId(order));
 		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 		model.put("logistics", logisticsDAO.findById(orderId));
@@ -1633,7 +1686,11 @@ public class MarketServiceImpl implements MarketService {
 		model.put("accessorys", accessoryDAO.findByOrderId(orderId));// 辅料信息
 		model.put("designCad", cadDAO.findByOrderId(orderId));// 制版信息
 		model.put("orderId", service.getOrderId(order));
-		model.put("craft", craftDAO.findByOrderId(orderId).get(0));// 工艺信息
+		
+		List<Craft> crafts = craftDAO.findByOrderId(orderId);
+		if (crafts != null && crafts.size() > 0) {
+			model.put("craft", craftDAO.findByOrderId(orderId).get(0));// 工艺信息
+		}
 
 		Produce produce = new Produce();
 		produce.setOid(orderId);
@@ -1894,14 +1951,6 @@ public class MarketServiceImpl implements MarketService {
 		List<Order> orderlist = orderDAO.findByExample(instance);
 
 		return orderlist;
-	}
-
-	@Override
-	public Task getTask(int alterId) {
-		Task task = marketstaffAlterProcessServices
-				.getTaskWithSpecificAlterId(alterId);
-		System.out.println(task.getId());
-		return task;
 	}
 
 	private void mailNewStaffAlter(Order order, Employee e) {

@@ -268,6 +268,7 @@ public class BuyServiceImpl implements BuyService {
 		}
 		if (result == false) {// 如果result的的值为false，即为样衣面料采购失败，流程会异常终止，将orderState设置为1
 			order.setOrderState("1");
+			order.setOrderProcessStateName("被终止");
 		}
 		orderDAO.attachDirty(order);
 		return true;
@@ -319,6 +320,7 @@ public class BuyServiceImpl implements BuyService {
 		
 		if (result == false) {// 如果result的的值为false，即为大货面料采购失败，流程会异常终止，将orderState设置为1
 			order.setOrderState("1");
+			order.setOrderProcessStateName("被终止");
 			orderDAO.attachDirty(order);
 		}
 		}

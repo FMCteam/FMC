@@ -38,7 +38,7 @@
 						<!-- @include file="/views/common/quote_w.jsp" --> 
                         <td class="span2">原因</td>
                         <textarea class="span11"
-							disabled="disabled"	style="resize:vertical" rows="5" name="reason">${reason}</textarea>
+							disabled="disabled"	style="resize:vertical" rows="5" name="reason">${alterModel.reason}</textarea>
 					</div>
 				</div>
  				<table class="table table-striped table-bordered table-hover detail">  
@@ -51,10 +51,11 @@
 					<tr>
 						<td>操作</td>
 						<td colspan="6">
-				            <input type="hidden" name="taskId" value="${task.taskid}" /> 
-				            <input type="hidden" name="order_id" value="${AlterInfo.orderId }" />
-				            <input type="hidden" name="alter_id" value="${AlterInfo.alterId }" />
-				           <input type="hidden" name="processId" value="${task.processInstanceId}" />
+				            <input type="hidden" name="order_id" value="${alterModel.alterInfo.orderId }" />
+				            <input type="hidden" name="alter_id" value="${alterModel.alterInfo.alterId }" />
+				           <input type="hidden" name="taskId" value="${alterModel.taskId}" />
+				           <input type="hidden" name="processId" value="${alterModel.processInstanceId}" />
+
 				            <input type="hidden" name="verifyAlterSuccessVal" id="verifyAlterSuccess_val" value="" /> 
 				             <input type="hidden" name="verifyState" id="verifyState_val" value="" /> 
 				            <a id="disagree" class="btn btn-danger btn-rounded" style="float: left;">

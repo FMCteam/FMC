@@ -284,7 +284,7 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 				accountDao.SaveOrUpDate(b);
 				}
 			}
-			if(isEmptytOfTable("Account_Role")){
+			if(isEmptytOfTable("account_role")){
 				try {
 					 execute(INIT_SQL_other);
 					 
@@ -323,11 +323,9 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	    	
 			BigInteger big =new BigInteger(String.valueOf(0));
 	    	//System.out.println("=============obj:"+obj);
-	    	if((obj.equals(big))){
-	    		System.out.println("in");
+	    	if((obj == null) || (obj.equals(big))){
 	    		return true ;
 	    	}
-	    	
 	    	
 	    	return false ;   	
 	    }

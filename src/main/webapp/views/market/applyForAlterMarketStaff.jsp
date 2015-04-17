@@ -122,7 +122,7 @@ $(function(){
 	
 	updateAllApplicationTable(${orderInfo.order.orderId});
 	$("#applySubmit").click(function(){
-		$.post("${ctx}/market/applyForAlterMarketStaffSubmit.do",{"reason":$("#reason").val(),"orderId":${orderInfo.order.orderId},"employeeId":${orderInfo.order.employeeId}},function(data){
+		$.post("${ctx}/market/applyForAlterMarketStaffSubmit.do",{"reason":$("#reason").val(),"orderId":${orderInfo.order.orderId},"orderProcessId":${orderInfo.order.processId},"employeeId":${orderInfo.order.employeeId}},function(data){
 			if(data.result == true){
 				$(".result").css("color","red").html("已提交");
 				updateAllApplicationTable(${orderInfo.order.orderId});

@@ -33,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
 		account.setUserPassword(pwd);
 
 		List<Account> accountList = accountDAO.findByExample(account);
-		if (accountList.isEmpty()) {
+		if (accountList == null || accountList.isEmpty()) {
 			return null;
 		} else
 			return accountList.get(0);

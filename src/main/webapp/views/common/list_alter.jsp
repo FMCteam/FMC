@@ -19,7 +19,7 @@
 						<span > 输入截止日期:</span>
 						<input style="width: 210px" type="date" name="enddate" value="${info.enddate }" placeholder="输入订单截止日期">
 						<c:if test="${USER_user_role ne 'marketStaff'}">
-							<span >原市场专员名称:</span>
+							<span >申请人</span>
 							<input type="text" style="width: 130px;" name="employeename" value="${info.employeename }" placeholder="输入原市场专员名称">
 						</c:if>
 						<c:if test="${USER_user_role eq 'marketStaff'}">
@@ -46,7 +46,7 @@
 				     
 					<li>
 						<div>
-							<a href="${ctx}${url}?orderId=${model.order.orderId}&cid=${cid}" title="查看详情">
+							<a href="${ctx}${url}?orderId=${model.order.orderId}&cid=${cid}&alterId=${model.Alter.alterId}" title="查看详情">
 							<c:if test="${empty model.order.sampleClothesThumbnailPicture}">
 								<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >	
 							</c:if>
@@ -78,7 +78,7 @@
                                     <tr>
 										<td>新市场专员：</td>
                                         <c:if test="${empty model.employeeNext}">
-										<td>待确定</td>
+										<td>待定</td>
                                         </c:if>
                                         <c:if test="${not empty model.employeeNext}">
                                         <td>${model.employeeNext.employeeName}</td>
@@ -86,7 +86,7 @@
 									</tr>
 									<tr>
 										<td>审批状态：</td>
-										<td>${model.Alter.verifyState}</td>
+										<td>待审核</td>
 									</tr>
 									
 									<tr>
