@@ -41,7 +41,7 @@ public interface MarketService {
 	 * @param userId;
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void claimCustomerOrder(Integer orderId, Integer userId);
+	public void claimCustomerOrder(Integer orderId, Integer employeeId);
 	
 	/**
 	 * 搜索未被认领的订单列表

@@ -91,10 +91,10 @@
 													<td>开始时间：</td>
 													<td>${model.order.orderTime}</td>
 												</tr>
-												<c:if test="${ROLE_IS_MARKET_STAFF_OR_ADMIN==true}">
+												<c:if test="${USER_user_role eq 'marketStaff'}">
 													<tr>
-														<td>订单来源</td>
-														<td>${model.order.orderSource}</td>
+														<td>订单来源:</td>
+														<td>${model.orderSource}</td>
 													</tr>
 												</c:if>
 												<tr>

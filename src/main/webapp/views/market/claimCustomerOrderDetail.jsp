@@ -3,6 +3,9 @@
 
 <div class="maincontent">
 	<div class="maincontentinner">
+	<form id="claimCustomOrderForm" method="post"
+			action="${ctx }/market/claimCustomerOrderSubmit.do"
+			enctype="multipart/form-data">
 		<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->
 
@@ -31,13 +34,15 @@
 			<br>
 			<br>
 			<button class="btn btn-primary" onclick="history.back();">返回</button>
-			<a id="agree" class="btn btn-primary btn-rounded" href="/market/claimCustomerOrderSubmit.do"
+			<input type="hidden" id="orderId" name="orderId" value="${orderInfo.order.orderId}" />
+			<button id="agree" class="btn btn-primary btn-rounded"
 				style="float: right;"> <i class="icon-ok icon-white"></i> 认领
-			</a>
+			</button>
 
 		</div>
-
+	</form>
 	</div>
+	
 	<!--row-fluid-->
 	<div class="footer">
 		<div class="footer-left">
@@ -57,21 +62,10 @@
 <link rel="stylesheet" href="${ctx}/css/fmc/detail.css">
 <script type="text/javascript" src="${ctx }/js/custom.js"></script>
 <script type="text/javascript">
-	$(function() {
-		var date = new Date();
-		var month = date.getMonth() > 8 ? date.getMonth() + 1 : "0"
-				+ (date.getMonth() + 1);
-		var day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
-		var hour = date.getHours() > 9 ? date.getHours() : "0"
-				+ date.getHours();
-		var minute = date.getMinutes() > 9 ? date.getMinutes() : "0"
-				+ date.getMinutes();
-		var second = date.getSeconds() > 9 ? date.getSeconds() : "0"
-				+ date.getSeconds();
-		$("#input_day").val(
-				date.getFullYear() + "/" + month + "/" + day + " " + hour + ":"
-						+ minute + ":" + second);
-
-	});
+jQuery("#agree").click(function(){
+	jQuery("#claimCustomOrderForm").submit();
+	
+	
+});
 </script>
 <%@include file="/common/footer.jsp"%>

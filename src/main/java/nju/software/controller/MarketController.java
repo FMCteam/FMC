@@ -794,9 +794,9 @@ public class MarketController {
 		List<Map<String, Object>> list = marketService.getTodoOrders();
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "客户新单列表");
-		model.put("url", "/market/claimCustomerOrderDetail.do");
-		model.put("searchurl", "/market/claimCustomerOrderSearch.do");
-		return "/market/claimCustomerOrderList";
+		model.addAttribute("url", "/market/claimCustomerOrderDetail.do");
+		model.addAttribute("searchurl", "/market/claimCustomerOrderSearch.do");
+		return "market/claimCustomerOrderList";
 	}
 	
 	@RequestMapping(value="/market/claimCustomerOrderDetail.do", method = RequestMethod.GET)
@@ -805,10 +805,10 @@ public class MarketController {
 		int id = Integer.parseInt(orderId);
 		Map<String, Object> orderInfo = marketService.getOrderDetail(id);
 		model.addAttribute("orderInfo", orderInfo);
-		return "/market/claimCustomerOrderDetail";
+		return "market/claimCustomerOrderDetail";
 	}
 	
-	@RequestMapping(value="/market/claimCustomerOrderSearch.do", method = RequestMethod.GET)
+	@RequestMapping(value="/market/claimCustomerOrderSearch.do", method=RequestMethod.POST)
 	public String claimCustomerOrderSearch(HttpServletRequest request, HttpServletResponse response, ModelMap model){
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -833,18 +833,18 @@ public class MarketController {
 		}
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
-		model.put("url", "/market/claimCustomerOrderDetail.do");
-		model.put("searchurl", "/market/claimCustomerOrderSearch.do");
-		return "/market/claimCustomerOrderSearch";
+		model.addAttribute("url", "/market/claimCustomerOrderDetail.do");
+		model.addAttribute("searchurl", "/market/claimCustomerOrderSearch.do");
+		return "market/claimCustomerOrderList";
 	}
 	
-	@RequestMapping(value="/market/claimCustomerOrderSubmit.do")
+	@RequestMapping(value="/market/claimCustomerOrderSubmit.do", method=RequestMethod.POST)
 	public String claimCustomerOrderSubmit(HttpServletRequest request, HttpServletResponse response, ModelMap model){
-		int orderId =  (int) request.getAttribute("orderId");
+		int orderId =  Integer.valueOf(request.getParameter("orderId"));
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		marketService.claimCustomerOrder(orderId, account.getAccountId());
-		return "/market/claimCustomerOrderList.do";
+		marketService.claimCustomerOrder(orderId, account.getUserId());
+		return "redirect:/market/claimCustomerOrderList.do";
 	}
 
 	// test precondition

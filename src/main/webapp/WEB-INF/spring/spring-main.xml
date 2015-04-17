@@ -80,7 +80,7 @@
 				<value>nju.software.dataobject.CheckRecord</value>
 				<value>nju.software.dataobject.CheckDetail</value>
 				<value>nju.software.dataobject.OperateRecord</value>
-				
+				<value>nju.software.dataobject.OrderSource</value>
 				<value>nju.software.dataobject.MarketstaffAlter</value>
 				
 				<value>nju.software.dataobject.AccountRole</value>
