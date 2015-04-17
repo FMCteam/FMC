@@ -91,6 +91,12 @@
 													<td>开始时间：</td>
 													<td>${model.order.orderTime}</td>
 												</tr>
+												<c:if test="${ROLE_IS_MARKET_STAFF_OR_ADMIN==true}">
+													<tr>
+														<td>订单来源</td>
+														<td>${model.order.orderSource}</td>
+													</tr>
+												</c:if>
 												<tr>
 													<td>订单状态：</td>
 													<td><span style="color:red;" id="newName${status.index + 1}">${model.order.orderProcessStateName}</span></td>

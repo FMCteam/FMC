@@ -129,8 +129,15 @@ public class MarketController {
 		model.addAttribute("customer", customer);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		if ("CUSTOMER".equals(account.getUserRole()))
-			model.addAttribute("employee_name", "待定");
+		if ("CUSTOMER".equals(account.getUserRole())){
+			List<Employee> employeeList = employeeService.getAllManagerStaff();
+			//放在列表第一个，表明不指定市场专员
+			Employee defaultNoEmployee = new Employee();
+			defaultNoEmployee.setEmployeeId(-1);
+			defaultNoEmployee.setEmployeeName("不指定专员");
+			employeeList.add(0, defaultNoEmployee);
+			model.addAttribute("employeeList", employeeList);
+		}
 		else
 			model.addAttribute("employee_name", account.getNickName());
 		return "/market/addOrderDetail";
@@ -429,9 +436,19 @@ public class MarketController {
 			order.setOrderSource("好多衣");
 		}
 
-
+		//如果是客户下单
 		if ("CUSTOMER".equals(account.getUserRole())) {
-			order.setOrderState("TODO");
+			int marketStaffId = Integer.parseInt(request
+					.getParameter("marketStaffId"));
+			//未选定市场专员
+			if (marketStaffId == -1) {
+				order.setOrderState("TODO");
+				
+			}
+			else {
+				//设定市场专员
+				order.setEmployeeId(marketStaffId);
+			}
 			marketService.addOrderCustomerSubmit(order, fabrics, accessorys,
 					logistics, produces, sample_produces, versions, cad,
 					request);
