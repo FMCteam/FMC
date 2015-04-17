@@ -290,7 +290,7 @@
     <servlet-name>InitServlet</servlet-name>
     <servlet-class>nju.software.util.DelegatingServletProxy
 		</servlet-class>
-    <load-on-startup>1</load-on-startup>
+    <load-on-startup>2</load-on-startup>
   </servlet>
   <servlet>
     <servlet-name>dispatcher</servlet-name>
@@ -302,7 +302,7 @@
 				/WEB-INF/dispatch-servlet.xml,/WEB-INF/spring/spring-main.xml
 			</param-value>
     </init-param>
-    <load-on-startup>2</load-on-startup>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>dispatcher</servlet-name>

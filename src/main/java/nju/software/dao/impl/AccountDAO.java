@@ -7,6 +7,7 @@ import java.util.*;
 import nju.software.dao.IAccountDAO;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.AccountRole;
+import nju.software.dataobject.Role;
 
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
@@ -438,7 +439,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	}
     
     
-	
+	@Override
 	public void deleteAccountRole(AccountRole persistentInstance) {
 		log.debug("deleting Account instance");
 		try {
@@ -458,11 +459,12 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 		return getHibernateTemplate().find(query, accountId );
 		//return null;
 	}
+	
     
 	public void SaveOrUpDate(Account account){
 		this.getHibernateTemplate().saveOrUpdate(account);
 	}
-
+    
 	@Override
 	public List findByPropertyinDESC(String propertyName, Object value) {
 
@@ -483,6 +485,16 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	@Override
 	public List getAllManagerStaff() {
 		return findByPropertyinDESC(USER_ROLE,ROLE_MARKETSTAFF);
+	}
+	@Override
+	public Role getRoleByName(String roleName){
+		String hql = "from Role where name=?";
+		ArrayList<Role> list = (ArrayList<Role>) getHibernateTemplate().find(hql,roleName);
+		if(list!=null)
+		    return list.get(0);
+		else
+			return null ;
+		
 	}
 	
     

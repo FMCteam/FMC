@@ -1,5 +1,6 @@
 package nju.software.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import nju.software.dao.impl.BaseDaoImpl;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.AccountRole;
 import nju.software.dataobject.Customer;
+import nju.software.dataobject.Role;
+import nju.software.dataobject.RolePermission;
 import nju.software.service.AccountService;
 import nju.software.util.Constants;
 import nju.software.util.SecurityUtil;
@@ -149,7 +152,40 @@ public class AccountServiceImpl implements AccountService {
 		
 		return true;
 	}
-
+    
+	public boolean updateAccountRole(int accountId,String newRole){
+    	String hql="FROM AccountRole E WHERE E.status = 'A' and E.accountId="+accountId;
+		List<AccountRole> rpList= baseDao.queryList(hql);
+		System.out.println(rpList+"-----------"+rpList.size());
+		List<String> tempList =new ArrayList<String>();
+		
+		Role role = accountDAO.getRoleByName(newRole);
+		int roleId =role.getRoleId();
+		System.out.println("===================roleID:"+roleId);
+		boolean isRoleChanged = true ;
+		for (AccountRole accountRole : rpList){
+			if( accountRole.getRoleId().equals(roleId)){
+				isRoleChanged= false ;
+				break ;
+			}
+				
+		}
+		if(isRoleChanged){
+		for (AccountRole accountRole : rpList) {
+			accountRole.setStatus("I");
+			baseDao.saveOrupdate(accountRole);
+		}
+		boolean success =accountDAO.addAccountRole(newRole, accountId);
+		
+		
+		
+		return success ;
+		}
+		return true ;
+		
+		
+		
+    }
 	@Override
 	public boolean deleteAccountRole(int accountId) {
 		// TODO Auto-generated method stub
@@ -165,7 +201,7 @@ public class AccountServiceImpl implements AccountService {
 			return false;
 		}
 	}
-
+    
 	@Override
 	public List<Account> getAllManagerStaff() {
 		

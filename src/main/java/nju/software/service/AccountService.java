@@ -48,4 +48,6 @@ public interface AccountService {
 	public boolean addAccountRole(String roleName, int accountId);
 	@Transactional(rollbackFor = Exception.class)
 	public boolean deleteAccountRole(int accountId);
+	@Transactional(rollbackFor = Exception.class)
+	public boolean updateAccountRole(int accountId,String newRole);
 }
