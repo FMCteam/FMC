@@ -28,6 +28,19 @@ import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
 
 public interface MarketService {
+	/**
+	 * 市场秘书分配订单
+	 * @param order
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public void assignCustomerOrder(Order order);
+	
+	/**
+	 * 市场专员认领客户订单
+	 * @param order;
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public void claimCustomerOrder(Order order);
 	
 	@Transactional(rollbackFor = Exception.class)
 	public List<Map<String, Object>>  getAlterInfoByOrderId(Integer orderId);
@@ -404,6 +417,22 @@ public interface MarketService {
 	@Transactional(rollbackFor = Exception.class)
 	public List<Order> getTodoOrders();
 	
+	/**
+	 * 用户自主下翻单提交订单
+	 * @param order
+	 * @param fabrics
+	 * @param accessorys
+	 * @param logistics
+	 * @param produces
+	 * @param versions
+	 * @param cad
+	 * @param request
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public void addMoreCustomerOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			List<Produce> produces, List<VersionData> versions, DesignCad cad,
+			HttpServletRequest request);
 
 
 }
