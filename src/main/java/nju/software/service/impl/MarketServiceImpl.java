@@ -1994,12 +1994,20 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public List<Order> getTodoOrders() {
+	public List<Map<String,Object>> getTodoOrders() {
 		Order instance = new Order();
 		instance.setOrderState("TODO");
 		List<Order> orderlist = orderDAO.findByExample(instance);
+		List<Map<String,Object>> mapList=new ArrayList<>();
+		for(Order order:orderlist){
+			Customer customer=customerDAO.findById(order.getCustomerId());
+			Map<String , Object> map=new HashMap<>();
+			map.put("order", order);
+			map.put("customerName", customer.getCustomerName());
+			mapList.add(map);		
+		}
 
-		return orderlist;
+		return mapList;
 	}
 
 	private void mailNewStaffAlter(Order order, Employee e) {
