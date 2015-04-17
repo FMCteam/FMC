@@ -4,6 +4,7 @@ import java.util.*;
 
 import nju.software.dataobject.Account;
 import nju.software.dataobject.AccountRole;
+import nju.software.dataobject.Role;
 
 public interface IAccountDAO {
 
@@ -43,7 +44,7 @@ public interface IAccountDAO {
 	
 	public void deleteAccountRole(AccountRole persistentInstance);
 	public List<AccountRole> findAccountRoleById(int accountId);
-	
+	public Role getRoleByName(String roleName);
 	/**
 	 * 以用户名降序返回关键字搜索结果
 	 * @param propertyName 关键字 
