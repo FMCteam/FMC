@@ -457,11 +457,17 @@ public class MarketServiceImpl implements MarketService {
 		// cad
 		cad.setOrderId(orderId);
 		cadDAO.save(cad);
-		// // 启动流程
-		// Map<String, Object> params = getParams(order);
-		// String processId = activitiApiUtil.startWorkflowProcess(params);
-		// order.setProcessId(processId);
-		// orderDAO.attachDirty(order);
+		if (order.getOrderState().equals("A")){
+			 // 启动流程
+			 Map<String, Object> params = getParams(order);
+			 String processId = mainProcessService.startWorkflow(params);
+			 order.setProcessId(processId);
+			 orderDAO.attachDirty(order);
+			 OrderSource orderSource=new OrderSource();
+				orderSource.setOrderId(order.getOrderId());
+				orderSource.setSource(OrderSource.SOURCE_SELF);
+				orderSourceDAO.save(orderSource);			 
+		}
 		return true;
 	}
 
@@ -1816,7 +1822,17 @@ public class MarketServiceImpl implements MarketService {
 			} else {
 				order.setOrderProcessStateName("");
 			}
+			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
+			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
+			
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", "");
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
+			
+			
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
@@ -1851,6 +1867,13 @@ public class MarketServiceImpl implements MarketService {
 				order.setOrderProcessStateName("");
 			}
 			Map<String, Object> model = new HashMap<String, Object>();
+			
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", "");
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
+			
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
 			model.put("orderId", service.getOrderId(order));
@@ -1877,6 +1900,8 @@ public class MarketServiceImpl implements MarketService {
 			} else {
 				order.setOrderProcessStateName("");
 			}
+			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
+			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
 			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
@@ -2078,8 +2103,10 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public void claimCustomerOrder(Order order) {
+	public void claimCustomerOrder(Integer orderId, Integer userId) {
 		//认领客户订单，启动流程；
+		Order order=orderDAO.findById(orderId);
+		order.setEmployeeId(userId);
 		Map<String, Object> params = getParams(order);
 		String processId = mainProcessService.startWorkflow(params);
 		order.setProcessId(processId);
@@ -2249,6 +2276,33 @@ public class MarketServiceImpl implements MarketService {
 //	order.setProcessId(processId);
 //	orderDAO.attachDirty(order);
 		
+	}
+
+
+	@Override
+	public List<Map<String, Object>> getSearchTodoOrderList(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate) {
+		
+		List<Order> orderList = orderDAO
+				.getSearchOrderTodoList(ordernumber, customername, stylename,
+						startdate, enddate);
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (Order order : orderList) {
+			ArrayList<String> orderProcessStateNames = getProcessStateName(order
+					.getOrderId());
+			if (orderProcessStateNames.size() > 0) {
+				order.setOrderProcessStateName(orderProcessStateNames.get(0));
+			} else {
+				order.setOrderProcessStateName("");
+			}
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("order", order);
+			model.put("taskTime", order.getOrderTime());
+			model.put("orderId", service.getOrderId(order));
+			list.add(model);
+		}
+		return list;
 	}
 
 }

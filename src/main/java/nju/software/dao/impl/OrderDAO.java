@@ -951,6 +951,44 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		return null;
 	}
 
+	public List<Order> getSearchOrderTodoList(String ordernumber,
+			String customername, String stylename, String startdate,
+			String enddate) {      
+		Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Order.class);
+        criteria.add(Restrictions.eq("orderState", "TODO"));      
+ 		if(!StringUtils.isEmpty(ordernumber))
+ 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber)));	 
+		if(!StringUtils.isEmpty(stylename))
+
+			criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));
+
+		if(!(StringUtils.isEmpty(startdate))){
+			String strformat = "yyyy-MM-dd HH:mm:ss";
+			 DateUtil du = new DateUtil();
+		     Date begindate1 = null;
+		     if(startdate.length()==10){
+				startdate = startdate+" 00:00:00";
+		        begindate1 = DateUtil.parse(startdate, strformat);
+		        criteria.add(Restrictions.gt("orderTime",begindate1));
+		     }
+		}
+		if(!(StringUtils.isEmpty(enddate))){
+			String strformat = "yyyy-MM-dd HH:mm:ss";
+			 DateUtil du = new DateUtil();
+		     Date enddate1 = null;
+		     if(enddate.length()==10){
+		    	 enddate = enddate+" 23:59:59";
+				enddate1 = DateUtil.parse(enddate, strformat);
+		        criteria.add(Restrictions.lt("orderTime",enddate1));
+		     }
+		}
+		
+	    List<Order> orderList = criteria.list();	
+	    session.close();
+		return orderList;
+	}
+
 
 
 
