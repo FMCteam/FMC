@@ -39,7 +39,7 @@
 				class="animate2 bounceIn">0</span> <span class="animate3 bounceIn">4</span>
 			<div class="errorbtns animate4 fadeInUp">
 				<a onclick="history.back()" class="btn btn-primary btn-large">回退页面</a>
-				<a href="${ctx}" class="btn btn-large">返回主页</a>
+				<a href="${ctx}/defaultContent.do" class="btn btn-large">返回主页</a>
 			</div>
 			<div class="errorbtns animate4 fadeInUp">
 				将在倒计时 <span class="time"
