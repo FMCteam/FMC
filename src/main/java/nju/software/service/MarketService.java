@@ -38,9 +38,22 @@ public interface MarketService {
 	/**
 	 * 市场专员认领客户订单
 	 * @param order;
+	 * @param userId;
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	public void claimCustomerOrder(Integer orderId, Integer userId);
+	
+	/**
+	 * 搜索未被认领的订单列表
+	 * @param ordernumber
+	 * @param customername
+	 * @param stylename
+	 * @param startdate
+	 * @param enddate
+	 * @return 
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public List<Map<String, Object>> getSearchTodoOrderList(String ordernumber,String customername,String stylename,String startdate,String enddate);
 	
 	@Transactional(rollbackFor = Exception.class)
 	public List<Map<String, Object>>  getAlterInfoByOrderId(Integer orderId);
