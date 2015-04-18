@@ -104,7 +104,7 @@
 				<value>nju.software.dataobject.CheckRecord</value>
 				<value>nju.software.dataobject.CheckDetail</value>
 				<value>nju.software.dataobject.OperateRecord</value>
-				
+				<value>nju.software.dataobject.OrderSource</value>
 				<value>nju.software.dataobject.MarketstaffAlter</value>
 				
 				<value>nju.software.dataobject.AccountRole</value>
@@ -277,6 +277,8 @@
 	</bean>
 	<bean id="MarketstaffAlterProcessService"
 		class="nju.software.process.service.MarketstaffAlterProcessService">
+	</bean>
+	<bean id="JSONUtil" class="nju.software.util.JSONUtil">
 	</bean>
 	
 	<bean id="SqlUtilDAO" class="nju.software.dao.impl.SqlUtilDAO">

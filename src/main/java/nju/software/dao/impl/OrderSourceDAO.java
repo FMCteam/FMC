@@ -75,7 +75,7 @@ public class OrderSourceDAO extends HibernateDaoSupport implements IOrderSourceD
 	@Override
 	public OrderSource findByOrderId(Integer orderId) {
 		List<OrderSource>orderSourcesList=findByProperty(ORDER_ID, orderId);
-		if (orderSourcesList!=null)
+		if (orderSourcesList!=null && orderSourcesList.size() >0 )
 			return orderSourcesList.get(0);
 		return null;
 	}

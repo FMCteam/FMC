@@ -1477,7 +1477,7 @@ public class MarketServiceImpl implements MarketService {
 			Map<String, Object> model = new HashMap<String, Object>();
 			
 			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
-			model.put("orderSource", "");
+			model.put("orderSource", OrderSource.SOURCE_SELF);
 			if (orderSource!=null){
 				model.put("orderSource", orderSource.getSource());
 			}
@@ -1509,7 +1509,7 @@ public class MarketServiceImpl implements MarketService {
 			Map<String, Object> model = new HashMap<String, Object>();
 			
 			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
-			model.put("orderSource", "");
+			model.put("orderSource", OrderSource.SOURCE_SELF);
 			if (orderSource!=null){
 				model.put("orderSource", orderSource.getSource());
 			}
@@ -1553,7 +1553,7 @@ public class MarketServiceImpl implements MarketService {
 			Map<String, Object> model = new HashMap<String, Object>();
 			
 			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
-			model.put("orderSource", "");
+			model.put("orderSource", "——");
 			if (orderSource!=null){
 				model.put("orderSource", orderSource.getSource());
 			}
@@ -2036,8 +2036,13 @@ public class MarketServiceImpl implements MarketService {
 		List<Map<String,Object>> mapList=new ArrayList<>();
 		for(Order order:orderlist){
 			Customer customer=customerDAO.findById(order.getCustomerId());
+			//客户自主下单，还未有专员
+			Employee employee = new Employee();
+			employee.setEmployeeName("暂无");
 			Map<String , Object> map=new HashMap<>();
 			map.put("order", order);
+			map.put("orderId", service.getOrderId(order));
+			map.put("employee", employee);
 			map.put("customerName", customer.getCustomerName());
 			map.put("customerCompany", customer.getCompanyName());
 			mapList.add(map);		
@@ -2113,10 +2118,11 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public void claimCustomerOrder(Integer orderId, Integer userId) {
+	public void claimCustomerOrder(Integer orderId, Integer employeeId) {
 		//认领客户订单，启动流程；
 		Order order=orderDAO.findById(orderId);
-		order.setEmployeeId(userId);
+		order.setEmployeeId(employeeId);
+		order.setOrderState("A");
 		Map<String, Object> params = getParams(order);
 		String processId = mainProcessService.startWorkflow(params);
 		order.setProcessId(processId);

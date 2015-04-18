@@ -88,7 +88,7 @@ public class MarketController {
 	// @Transactional(rollbackFor = Exception.class)
 	public String addOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<Customer> customers = new ArrayList();
+		List<Customer> customers = new ArrayList<>();
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		Customer customer = marketService
@@ -129,8 +129,15 @@ public class MarketController {
 		model.addAttribute("customer", customer);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		if ("CUSTOMER".equals(account.getUserRole()))
-			model.addAttribute("employee_name", "待定");
+		if ("CUSTOMER".equals(account.getUserRole())){
+			List<Employee> employeeList = employeeService.getAllManagerStaff();
+			//放在列表第一个，表明不指定市场专员
+			Employee defaultNoEmployee = new Employee();
+			defaultNoEmployee.setEmployeeId(-1);
+			defaultNoEmployee.setEmployeeName("不指定专员");
+			employeeList.add(0, defaultNoEmployee);
+			model.addAttribute("employeeList", employeeList);
+		}
 		else
 			model.addAttribute("employee_name", account.getNickName());
 		return "/market/addOrderDetail";
@@ -429,9 +436,19 @@ public class MarketController {
 			order.setOrderSource("好多衣");
 		}
 
-
+		//如果是客户下单
 		if ("CUSTOMER".equals(account.getUserRole())) {
-			order.setOrderState("TODO");
+			int marketStaffId = Integer.parseInt(request
+					.getParameter("marketStaffId"));
+			//未选定市场专员
+			if (marketStaffId == -1) {
+				order.setOrderState("TODO");
+				
+			}
+			else {
+				//设定市场专员
+				order.setEmployeeId(marketStaffId);
+			}
 			marketService.addOrderCustomerSubmit(order, fabrics, accessorys,
 					logistics, produces, sample_produces, versions, cad,
 					request);
@@ -777,9 +794,9 @@ public class MarketController {
 		List<Map<String, Object>> list = marketService.getTodoOrders();
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "客户新单列表");
-		model.put("url", "/market/claimCustomerOrderDetail.do");
-		model.put("searchurl", "/market/claimCustomerOrderSearch.do");
-		return "/market/claimCustomerOrderList";
+		model.addAttribute("url", "/market/claimCustomerOrderDetail.do");
+		model.addAttribute("searchurl", "/market/claimCustomerOrderSearch.do");
+		return "market/claimCustomerOrderList";
 	}
 	
 	@RequestMapping(value="/market/claimCustomerOrderDetail.do", method = RequestMethod.GET)
@@ -788,10 +805,10 @@ public class MarketController {
 		int id = Integer.parseInt(orderId);
 		Map<String, Object> orderInfo = marketService.getOrderDetail(id);
 		model.addAttribute("orderInfo", orderInfo);
-		return "/market/claimCustomerOrderDetail";
+		return "market/claimCustomerOrderDetail";
 	}
 	
-	@RequestMapping(value="/market/claimCustomerOrderSearch.do", method = RequestMethod.GET)
+	@RequestMapping(value="/market/claimCustomerOrderSearch.do", method=RequestMethod.POST)
 	public String claimCustomerOrderSearch(HttpServletRequest request, HttpServletResponse response, ModelMap model){
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -816,18 +833,18 @@ public class MarketController {
 		}
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "订单列表");
-		model.put("url", "/market/claimCustomerOrderDetail.do");
-		model.put("searchurl", "/market/claimCustomerOrderSearch.do");
-		return "/market/claimCustomerOrderSearch";
+		model.addAttribute("url", "/market/claimCustomerOrderDetail.do");
+		model.addAttribute("searchurl", "/market/claimCustomerOrderSearch.do");
+		return "market/claimCustomerOrderList";
 	}
 	
-	@RequestMapping(value="/market/claimCustomerOrderSubmit.do")
+	@RequestMapping(value="/market/claimCustomerOrderSubmit.do", method=RequestMethod.POST)
 	public String claimCustomerOrderSubmit(HttpServletRequest request, HttpServletResponse response, ModelMap model){
-		int orderId =  (int) request.getAttribute("orderId");
+		int orderId =  Integer.valueOf(request.getParameter("orderId"));
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		marketService.claimCustomerOrder(orderId, account.getAccountId());
-		return "/market/claimCustomerOrderList.do";
+		marketService.claimCustomerOrder(orderId, account.getUserId());
+		return "redirect:/market/claimCustomerOrderList.do";
 	}
 
 	// test precondition
@@ -3130,7 +3147,7 @@ public class MarketController {
 			alterInfo.put("employee", employee);
 			alterInfo.put("employeeNext", employee_next);
 			alterInfo.put("Alter", staffAlter);
-			alterInfo.put("order", order.get("order"));
+			alterInfo.put("orderInfo", order);
 			list.add(alterInfo);
 
 		}

@@ -34,7 +34,19 @@
 								<td>待生成</td>
 								<td colspan="2"><input class="span8" type="text"
 									required="required" id="input_day"  readonly="readonly"/></td>
-								<td>${employee_name}</td>
+								<!-- 如果是客户下单 -->
+								<c:if test="${ROlE_addOrder==true}">
+									<td>
+										<select name="marketStaffId" id="marketStaffId">
+                             				<c:forEach var="employee" items="${employeeList}">       
+                                    			<option value="${employee.employeeId}">${employee.employeeName}</option>
+                             			 	</c:forEach>     
+                             			</select>  
+                             		</td>
+								</c:if>
+								<c:if test="${ROlE_addOrder!=true}">
+									<td>${employee_name}</td>
+								</c:if>
 								<td><input type="text" class="span12" name="order_source"
 									value="${orderModel.order.orderSource }" required="required" />
 									<input type="hidden" name="ishaoduoyi" value="${orderModel.order.isHaoDuoYi }" />
