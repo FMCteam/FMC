@@ -3244,7 +3244,7 @@ public class MarketController {
 			order.setOrderState("A");
 			marketService.assignCustomerOrder(order);
 			
-			return "/market/allocateOrderList";
+			return "redirect:/market/allocateOrderList.do";
 		}
 		//搜索 需要分配的订单
 		@RequestMapping(value = "/market/allocateOrderSearch.do")
