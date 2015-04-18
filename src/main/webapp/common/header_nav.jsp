@@ -166,6 +166,7 @@ table.tablesorter thead tr .headerSortDown {
 								class="marketManager task"></span></a>
 							<ul>
 								<li><a href="${ctx}/market/addOrderList.do" target="maincontent">客户下单</a></li>
+								<li><a href="${ctx}/market/claimCustomerOrderList.do" target="maincontent">认领客户新单</a></li>
 								<li><a href="${ctx}/market/modifyOrderList.do" target="maincontent">修改询单<span
 										class="modifyOrder"></span></a></li>
 								<li><a href="${ctx}/market/mergeQuoteList.do" target="maincontent">合并报价<span

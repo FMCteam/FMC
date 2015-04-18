@@ -5,7 +5,7 @@
 	<artifactId>fmc</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>activiti4web2 Maven Webapp</name>
+	<name>fmc</name>
 	<url>http://maven.apache.org</url>
 
  <repositories>  

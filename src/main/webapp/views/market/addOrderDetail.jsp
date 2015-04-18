@@ -49,7 +49,19 @@
 									required="required" readonly="readonly"/></td>
 								<td><input type="text" class="span12" name="order_source"
 									required="required" /></td>
-								<td>${employee_name}</td>
+								<!-- 如果是客户下单 -->
+								<c:if test="${ROlE_addOrder==true}">
+									<td>
+										<select name="marketStaffId" id="marketStaffId">
+                             				<c:forEach var="employee" items="${employeeList}">       
+                                    			<option value="${employee.employeeId}">${employee.employeeName}</option>
+                             			 	</c:forEach>     
+                             			</select>  
+                             		</td>
+								</c:if>
+								<c:if test="${ROlE_addOrder!=true}">
+									<td>${employee_name}</td>
+								</c:if>
 								<td>否</td>
 							</tr>
 

@@ -28,6 +28,32 @@ import nju.software.model.OrderModel;
 import nju.software.model.ProductModel;
 
 public interface MarketService {
+	/**
+	 * 市场秘书分配订单
+	 * @param order
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public void assignCustomerOrder(Order order);
+	
+	/**
+	 * 市场专员认领客户订单
+	 * @param order;
+	 * @param userId;
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public void claimCustomerOrder(Integer orderId, Integer employeeId);
+	
+	/**
+	 * 搜索未被认领的订单列表
+	 * @param ordernumber
+	 * @param customername
+	 * @param stylename
+	 * @param startdate
+	 * @param enddate
+	 * @return 
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public List<Map<String, Object>> getSearchTodoOrderList(String ordernumber,String customername,String stylename,String startdate,String enddate);
 	
 	@Transactional(rollbackFor = Exception.class)
 	public List<Map<String, Object>>  getAlterInfoByOrderId(Integer orderId);
@@ -402,8 +428,24 @@ public interface MarketService {
 	 * @return
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public List<Order> getTodoOrders();
+	public List<Map<String, Object>> getTodoOrders();
 	
+	/**
+	 * 用户自主下翻单提交订单
+	 * @param order
+	 * @param fabrics
+	 * @param accessorys
+	 * @param logistics
+	 * @param produces
+	 * @param versions
+	 * @param cad
+	 * @param request
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public void addMoreCustomerOrderSubmit(Order order, List<Fabric> fabrics,
+			List<Accessory> accessorys, Logistics logistics,
+			List<Produce> produces, List<VersionData> versions, DesignCad cad,
+			HttpServletRequest request);
 
 
 }
