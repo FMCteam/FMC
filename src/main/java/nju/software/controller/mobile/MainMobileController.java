@@ -84,6 +84,7 @@ public class MainMobileController {
 				return "redirect:/logistics/mobile/index.do";
 			}
 		//	System.out.println("//============doLogin.do");
+			jsonUtil.sendJson(response, account);
 			return "redirect:moblie_default.do";
 		} else {
 			model.addAttribute("state", "wrong");
@@ -99,7 +100,7 @@ public class MainMobileController {
 	
 	@RequestMapping(value = "moblie_default.do", method= RequestMethod.GET)
 	//@Transactional(rollbackFor = Exception.class)
-	public String getDefaultPage(HttpServletRequest request,
+	public void getDefaultPage(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		/**
 		 * 权限
@@ -113,26 +114,23 @@ public class MainMobileController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("account", account);
 		jsonUtil.sendJson(response, map);
-		return "/moblie_index";
 	}
 
 	@RequestMapping(value = "moblie_defaultContent.do", method= RequestMethod.GET)
 	//@Transactional(rollbackFor = Exception.class)
-	public String getDefaultPageContent(HttpServletRequest request,
+	public void getDefaultPageContent(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		HttpSession session = request.getSession();
 		Account account = (Account)session.getAttribute("cur_user");
 		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
 		session.setAttribute("treeNodeList", list);
-		return "/moblie_index_new";
 	}
 	
 	@RequestMapping(value = "moblie_overtime.do", method= RequestMethod.GET)
 	//@Transactional(rollbackFor = Exception.class)
-	public String getOverTimePageContent(HttpServletRequest request,
+	public void getOverTimePageContent(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		return "/moblie_overtime";
 	}
 }
