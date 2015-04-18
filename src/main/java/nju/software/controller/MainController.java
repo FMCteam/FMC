@@ -1,15 +1,19 @@
 package nju.software.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.TreeNode;
 import nju.software.service.AccountService;
 import nju.software.service.SystemService;
+import nju.software.util.JSONUtil;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +27,9 @@ public class MainController {
 	@Autowired
 	private AccountService accountService;
 	@Autowired
-	private SystemService systemService;	
+	private SystemService systemService;
+	@Autowired
+	private JSONUtil jsonUtil;
 	
 	private static Logger logger = Logger.getLogger(MainController.class);
 
@@ -81,6 +87,9 @@ public class MainController {
 			return "redirect:default.do";
 		} else {
 			model.addAttribute("state", "wrong");
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("state", "wrong");
+			jsonUtil.sendJson(response, JSONObject.fromObject(map));
 			
 			if(is_wm) {
 				return "login";
