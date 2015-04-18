@@ -191,6 +191,18 @@ table.tablesorter thead tr .headerSortDown {
 								<li><a href="${ctx}/market/applyForAlterMarketStaff.do" target="maincontent">申请更换专员</a></li>
 							</ul></li>
 					</c:if>
+					<c:if test="${ROLE_secretary==true}">
+						<li class="dropdown"><a href=""><span
+								class="iconfa-th-list"></span> 秘书部<span
+								class="MarketSecretary task"></span></a>
+							<ul>
+								<li><a href="${ctx}/market/allocateOrderList.do" target="maincontent">分配订单<span
+										class="allocateOrder"></span></a></li>
+								
+							</ul>
+						</li>
+					
+					</c:if>
 					<c:if test="${ROLE_design==true}">
 						<li class="dropdown"><a href=""><span
 								class="iconfa-th-list"></span> 设计部<span

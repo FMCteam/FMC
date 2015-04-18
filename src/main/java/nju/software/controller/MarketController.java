@@ -81,7 +81,8 @@ public class MarketController {
 	private DeliveryRecordDAO deliveryRecordDAO;
 	@Autowired
 	private JavaMailUtil javaMailUtil;
-
+	@Autowired
+	private EmployeeService employeeService;
 	// ================================客户下单====================================
 	@RequestMapping(value = "/market/addOrder.do")
 	// @Transactional(rollbackFor = Exception.class)
@@ -1276,7 +1277,63 @@ public class MarketController {
 		return "market/verifyQuoteList";
 
 	}
+	
+	//秘书部分配订单列表
+	@RequestMapping(value = "market/allocateOrderList.do", method = RequestMethod.GET)
+	// @Transactional(rollbackFor = Exception.class)
+	public String AllocateOrderList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		
+		
+		List<Map<String, Object>> orderModelList = marketService.getOrdersDoing();
+				
+		
+		
+		orderModelList = ListUtil.reserveList(orderModelList);
+		/*
+		 * if (orderModelList.size() == 0) {
+		 * jbpmTest.completeVerify(account.getUserId() + "", false);
+		 * orderModelList = marketService.getModifyOrderList(account
+		 * .getUserId()); }
+		 */
+		model.put("list", orderModelList);
+		model.addAttribute("taskName", "分配订单");
+		model.addAttribute("url", "/market/allocateOrderDetail.do");
+		model.addAttribute("searchurl", "/market/modifyOrderListSearch.do");
 
+		return "market/allocateOrderList";
+	}
+	// 秘书分配订单detail
+		@RequestMapping(value = "market/allocateOrderDetail.do", method = RequestMethod.GET)
+		// @Transactional(rollbackFor = Exception.class)
+		public String allocateOrderDetail(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			String s_id = request.getParameter("orderId");
+			int id = Integer.parseInt(s_id);
+			HttpSession session = request.getSession();
+			Account account = (Account) session.getAttribute("cur_user");
+			Map<String, Object> orderModel = marketService.getOrderDetail(id);
+			List<Employee> employeeList = employeeService.getAllManagerStaff();
+			model.addAttribute("orderInfo", orderModel);
+			model.addAttribute("employeeList", employeeList);
+			return "market/allocateOrderDetail";
+
+		}
+		// 分配订单
+		@RequestMapping(value = "market/AllocateOrderSubmit.do", method = RequestMethod.POST)
+		// @Transactional(rollbackFor = Exception.class)
+		public String allocateOrderSubmit(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			int EmployeeId = Integer.parseInt(request.getParameter("nextEmployeeId"));
+			int order_id =  Integer.parseInt(request.getParameter("order_id"));
+			
+			//marketService.
+			
+			return "market/allocateOrderList";
+		}
+		
 	// 修改询单的列表
 	@RequestMapping(value = "market/modifyOrderList.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
@@ -2438,8 +2495,7 @@ public class MarketController {
 		return "/market/orderList_new";
 	}
 
-	@Autowired
-	private EmployeeService employeeService;
+	
 
 	@RequestMapping(value = "/order/orderSearch.do")
 	// @Transactional(rollbackFor = Exception.class)
