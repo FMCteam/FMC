@@ -70,31 +70,18 @@ public class MainMobileController {
 	
 	
 	@RequestMapping(value = "moblie_doLogin.do", method= RequestMethod.POST)
-	public String doLogin(HttpServletRequest request,
+	public void doLogin(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String user_name = request.getParameter("user_name");
 		String user_password = request.getParameter("user_password");
 		HttpSession session = request.getSession();
 		Account account = accountService.vertifyAccount(user_name, user_password);		
-		String user_agent = request.getHeader("user-agent").toLowerCase();
-		boolean is_wm = user_agent.contains("windows phone") || user_agent.contains("android") || user_agent.contains("iphone");
 		if (account != null) {
 			session.setAttribute("cur_user", account);
-			if("ADMIN, WULIUZHUGUAN".contains(account.getUserRole()) && is_wm) {
-				return "redirect:/logistics/mobile/index.do";
-			}
-		//	System.out.println("//============doLogin.do");
 			jsonUtil.sendJson(response, account);
-			return "redirect:moblie_default.do";
 		} else {
 			model.addAttribute("state", "wrong");
 			jsonUtil.sendJson(response, model);
-			if(is_wm) {
-				return "moblie_login";
-			} else {
-				return "moblie_login";
-			}
-			 
 		}
 	}
 	
