@@ -1630,10 +1630,20 @@ public class MarketServiceImpl implements MarketService {
 	public Map<String, Object> getOrderDetail(Integer orderId) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Order order = orderDAO.findById(orderId);
+		Employee employee=employeeDAO.findById(order.getEmployeeId());
+		if (employee==null){
+			employee=new Employee();
+			employee.setEmployeeName("暂无");
+			employee.setEmail("");
+			employee.setPhone1("");
+			employee.setPhone2("");
+			employee.setQq("");
+			
+		}
 		model.put("order", order);
 		model.put("orderProcessId", order.getProcessId());
 		model.put("orderId", service.getOrderId(order));
-		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+		model.put("employee",employee);
 		model.put("logistics", logisticsDAO.findById(orderId));
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));
 		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
