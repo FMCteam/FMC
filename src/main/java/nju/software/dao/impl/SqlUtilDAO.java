@@ -42,6 +42,8 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	String PROPERTY_PATH_NAME="jdbc.properties";
 	String INIT_SQL_All="init.sql";
 	String INIT_SQL_other="init_other.sql";
+	String INIT_SQL_ALTER="init_alter.sql";
+	String INIT_SQL_ORDERSOURCE = "init_orderSource.sql";
 	
 	static AccountDAO accountDao ;
 	
@@ -246,7 +248,9 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 	 public void initSQL_other(){
 		// setPath();
 		 initAccountRole();
-		 try {
+		 initAlterTable();
+		 initOrderSourceTable();
+		/* try {
 			 execute("permission_update.sql");
 			 
 		} catch (SQLException e) {
@@ -300,7 +304,27 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 			}
 		}
 	    
+	 private void initAlterTable(){
+		 if (isEmptytOfTable("marketstaff_alter")) {
+			try {
+				execute(INIT_SQL_ALTER);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	 }
 	    
+	 
+	 private void initOrderSourceTable(){
+		 if (isEmptytOfTable("order_source")) {
+			try {
+				execute(INIT_SQL_ORDERSOURCE);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	 }
+	 
 	 public static void setAccountDao(AccountDAO accountDao) {
 			SqlUtilDAO.accountDao = accountDao;
 		}

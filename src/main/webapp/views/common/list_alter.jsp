@@ -46,12 +46,12 @@
 				     
 					<li>
 						<div>
-							<a href="${ctx}${url}?orderId=${model.order.orderId}&cid=${cid}&alterId=${model.Alter.alterId}" title="查看详情">
-							<c:if test="${empty model.order.sampleClothesThumbnailPicture}">
-								<img src="${model.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >	
+							<a href="${ctx}${url}?orderId=${model.orderInfo.order.orderId}&cid=${cid}&alterId=${model.Alter.alterId}" title="查看详情">
+							<c:if test="${empty model.orderInfo.order.sampleClothesThumbnailPicture}">
+								<img src="${model.orderInfo.order.sampleClothesPicture}" title="查看详情" style="height:225px;width:225px" >	
 							</c:if>
-							<c:if test="${not empty model.order.sampleClothesThumbnailPicture}">
-								<img src="${model.order.sampleClothesThumbnailPicture}" title="查看详情" style="height:225px;width:225px" >
+							<c:if test="${not empty model.orderInfo.order.sampleClothesThumbnailPicture}">
+								<img src="${model.orderInfo.order.sampleClothesThumbnailPicture}" title="查看详情" style="height:225px;width:225px" >
 							</c:if>
 							
 							</a>
@@ -65,7 +65,7 @@
 									
                                     <tr>
 										<td>订单号：</td>
-										<td>${model.Alter.orderId}</td>
+										<td>${model.orderInfo.orderId}</td>
 									</tr>
 									<tr>
 										<td>申请时间：</td>

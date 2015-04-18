@@ -1553,7 +1553,7 @@ public class MarketServiceImpl implements MarketService {
 			Map<String, Object> model = new HashMap<String, Object>();
 			
 			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
-			model.put("orderSource", "");
+			model.put("orderSource", "——");
 			if (orderSource!=null){
 				model.put("orderSource", orderSource.getSource());
 			}

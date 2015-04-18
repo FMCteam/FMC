@@ -89,7 +89,7 @@ public class MarketController {
 	// @Transactional(rollbackFor = Exception.class)
 	public String addOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		List<Customer> customers = new ArrayList();
+		List<Customer> customers = new ArrayList<>();
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		Customer customer = marketService
@@ -3148,7 +3148,7 @@ public class MarketController {
 			alterInfo.put("employee", employee);
 			alterInfo.put("employeeNext", employee_next);
 			alterInfo.put("Alter", staffAlter);
-			alterInfo.put("order", order.get("order"));
+			alterInfo.put("orderInfo", order);
 			list.add(alterInfo);
 
 		}

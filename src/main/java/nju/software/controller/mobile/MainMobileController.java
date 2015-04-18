@@ -1,4 +1,4 @@
-package nju.software.controller;
+package nju.software.controller.mobile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class MainController {
+public class MainMobileController {
 	@Autowired
 	private AccountService accountService;
 	@Autowired
@@ -31,9 +31,9 @@ public class MainController {
 	@Autowired
 	private JSONUtil jsonUtil;
 	
-	private static Logger logger = Logger.getLogger(MainController.class);
+	private static Logger logger = Logger.getLogger(MainMobileController.class);
 
-	@RequestMapping(value = "login.do")
+	@RequestMapping(value = "moblie_login.do")
 	public String login(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
@@ -41,20 +41,20 @@ public class MainController {
 		Account cur_user = (Account) session.getAttribute("cur_user");
 		 
 		if(cur_user != null) {
-			return "redirect:default.do";
+			return "redirect:moblie_default.do";
 		} else {
 			String user_agent = request.getHeader("user-agent").toLowerCase();
 			
 			if(user_agent.contains("windows phone") || user_agent.contains("android") || user_agent.contains("iphone")) {
-				return "login";
+				return "moblie_login";
 			} else {
-				return "login";
+				return "moblie_login";
 			}
 			
 		}
 	}
 	
-	@RequestMapping(value = "logout.do", method= RequestMethod.GET)
+	@RequestMapping(value = "moblie_logout.do", method= RequestMethod.GET)
 	//@Transactional(rollbackFor = Exception.class)
 	public String logout(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -63,12 +63,12 @@ public class MainController {
 		session.setAttribute("cur_user", null);
 		session.removeAttribute("treeNodeList");
 		
-		return "redirect:/login.do";
+		return "redirect:/moblie_login.do";
 
 	}
 	
 	
-	@RequestMapping(value = "doLogin.do", method= RequestMethod.POST)
+	@RequestMapping(value = "moblie_doLogin.do", method= RequestMethod.POST)
 	public String doLogin(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
  
@@ -84,19 +84,20 @@ public class MainController {
 				return "redirect:/logistics/mobile/index.do";
 			}
 		//	System.out.println("//============doLogin.do");
-			return "redirect:default.do";
+			return "redirect:moblie_default.do";
 		} else {
 			model.addAttribute("state", "wrong");
+			jsonUtil.sendJson(response, model);
 			if(is_wm) {
-				return "login";
+				return "moblie_login";
 			} else {
-				return "login";
+				return "moblie_login";
 			}
 			 
 		}
 	}
 	
-	@RequestMapping(value = "default.do", method= RequestMethod.GET)
+	@RequestMapping(value = "moblie_default.do", method= RequestMethod.GET)
 	//@Transactional(rollbackFor = Exception.class)
 	public String getDefaultPage(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -109,10 +110,13 @@ public class MainController {
 		Account account = (Account)session.getAttribute("cur_user");
 		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
 		session.setAttribute("treeNodeList", list);
-		return "/index";
+		Map<String, Object> map = new HashMap<>();
+		map.put("account", account);
+		jsonUtil.sendJson(response, map);
+		return "/moblie_index";
 	}
 
-	@RequestMapping(value = "defaultContent.do", method= RequestMethod.GET)
+	@RequestMapping(value = "moblie_defaultContent.do", method= RequestMethod.GET)
 	//@Transactional(rollbackFor = Exception.class)
 	public String getDefaultPageContent(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -121,14 +125,14 @@ public class MainController {
 		Account account = (Account)session.getAttribute("cur_user");
 		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
 		session.setAttribute("treeNodeList", list);
-		return "/index_new";
+		return "/moblie_index_new";
 	}
 	
-	@RequestMapping(value = "overtime.do", method= RequestMethod.GET)
+	@RequestMapping(value = "moblie_overtime.do", method= RequestMethod.GET)
 	//@Transactional(rollbackFor = Exception.class)
 	public String getOverTimePageContent(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		return "/overtime";
+		return "/moblie_overtime";
 	}
 }

@@ -254,6 +254,8 @@
 	<bean id="MarketstaffAlterProcessService"
 		class="nju.software.process.service.MarketstaffAlterProcessService">
 	</bean>
+	<bean id="JSONUtil" class="nju.software.util.JSONUtil">
+	</bean>
 	
 	<bean id="SqlUtilDAO" class="nju.software.dao.impl.SqlUtilDAO">
 	<property name="sessionFactory">
