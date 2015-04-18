@@ -250,13 +250,13 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 		 initAccountRole();
 		 initAlterTable();
 		 initOrderSourceTable();
-		/* try {
+		 try {
 			 execute("permission_update.sql");
 			 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 	 }
 	
 	 public void initAccountRole(){
