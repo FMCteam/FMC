@@ -3124,11 +3124,11 @@ public class MarketController {
 
 		// model.addAttribute("employee",employeeList.get(0));
 
-		return "market/verifyAlterDetail";
+		return "/market/verifyAlterDetail";
 	}
 
 	// 主管审核申请表List
-	@RequestMapping(value = "market/verifyAlterList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/market/verifyAlterList.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
 	public String verifyAlterList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -3159,11 +3159,11 @@ public class MarketController {
 		model.addAttribute("url", "/market/verifyAlterDetail.do");
 		model.addAttribute("searchurl", "/market/verifyAlterListSearch.do");
 
-		return "market/verifyAlterList";
+		return "/market/verifyAlterList";
 
 	}
 	//秘书部分配订单列表
-	@RequestMapping(value = "market/allocateOrderList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/market/allocateOrderList.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
 	public String AllocateOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -3201,10 +3201,10 @@ public class MarketController {
 		model.addAttribute("url", "/market/allocateOrderDetail.do");
 		model.addAttribute("searchurl", "/market/allocateOrderSearch.do");
 
-		return "market/allocateOrderList";
+		return "/market/allocateOrderList";
 	}
 	// 秘书分配订单detail
-		@RequestMapping(value = "market/allocateOrderDetail.do", method = RequestMethod.GET)
+		@RequestMapping(value = "/market/allocateOrderDetail.do", method = RequestMethod.GET)
 		// @Transactional(rollbackFor = Exception.class)
 		public String allocateOrderDetail(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
@@ -3230,11 +3230,11 @@ public class MarketController {
 			List<Employee> employeeList = employeeService.getAllManagerStaff();
 			model.addAttribute("orderInfo", orderModel);
 			model.addAttribute("employeeList", employeeList);
-			return "market/allocateOrderDetail";
+			return "/market/allocateOrderDetail";
 
 		}
 		// 分配订单
-		@RequestMapping(value = "market/AllocateOrderSubmit.do", method = RequestMethod.POST)
+		@RequestMapping(value = "/market/AllocateOrderSubmit.do", method = RequestMethod.POST)
 		// @Transactional(rollbackFor = Exception.class)
 		public String allocateOrderSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
@@ -3245,10 +3245,10 @@ public class MarketController {
 			order.setOrderState("A");
 			marketService.assignCustomerOrder(order);
 			
-			return "market/allocateOrderList";
+			return "/market/allocateOrderList";
 		}
 		//搜索 需要分配的订单
-		@RequestMapping(value = "/order/allocateOrderSearch.do")
+		@RequestMapping(value = "/market/allocateOrderSearch.do")
 		// @Transactional(rollbackFor = Exception.class)
 		public String allocateOrderSearch(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
@@ -3303,7 +3303,7 @@ public class MarketController {
 			model.addAttribute("searchurl", "/market/allocateOrderSearch.do");
 			model.addAttribute("info", searchInfo);// 将查询条件传回页面 hcj
 
-			return "market/allocateOrderList";
+			return "/market/allocateOrderList";
 		}
 
 }
