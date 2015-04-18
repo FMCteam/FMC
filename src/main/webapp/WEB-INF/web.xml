@@ -65,59 +65,20 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   
-   
-   <!--  <filter>
-    <filter-name>actionFilter</filter-name>
+  <filter>
+  	<filter-name>accessFilter</filter-name>
     <filter-class>nju.software.filter.AccessFilter</filter-class>
     <init-param>
-      <param-name>ADMIN</param-name>
-      <param-value>employee,customer,buy,design,finance,market,produce,sweater,logistics,IS_MARKET_MANAGER_OR_ADMIN,IS_MARKET_STAFF_OR_ADMIN,order,other,account</param-value>
-    </init-param>
-    <init-param>
-      <param-name>marketManager</param-name>
-      <param-value>customer,market,IS_MARKET_MANAGER_OR_ADMIN,order,other,account</param-value>
-    </init-param>
-    <init-param>
-      <param-name>marketStaff</param-name>
-      <param-value>customer,market,IS_MARKET_STAFF_OR_ADMIN,order,other,account</param-value>
-    </init-param>
-    <init-param>
-      <param-name>purchaseManager</param-name>
-      <param-value>buy,order,other,account</param-value>
-    </init-param>
-    <init-param>
-      <param-name>designManager</param-name>
-      <param-value>design,order,other,account</param-value>
-    </init-param>
-    <init-param>
-      <param-name>financeManager</param-name>
-      <param-value>finance,order,other,account</param-value>
-    </init-param>
-    <init-param>
-      <param-name>produceManager</param-name>
-      <param-value>produce,order,other,account</param-value>
-    </init-param>
-    <init-param>
-      <param-name>sweaterManager</param-name>
-      <param-value>sweater,order,other,account</param-value>
-    </init-param>
-    <init-param>
-      <param-name>logisticManager</param-name>
-      <param-value>logistics,order,other,account</param-value>
-    </init-param>
-    <init-param>
-      <param-name>qualityManager</param-name>
-      <param-value>quality,order,other,account</param-value>
+    	<param-name>excludePath</param-name>
+    	<param-value>login.do;doLogin.do;overtime.do;registCustomer.do;forgetPassword.do;sendResetPassMail.do;checkResetPassLink.do</param-value>
     </init-param>
   </filter>
   <filter-mapping>
-    <filter-name>actionFilter</filter-name>
+    <filter-name>accessFilter</filter-name>
     <url-pattern>*.do</url-pattern>
-  </filter-mapping>  -->
+  </filter-mapping>
   
-  
-  
-  
+  <!-- 
   <filter>
     <filter-name>customerFilter</filter-name>
     <filter-class>nju.software.filter.AccessFilter</filter-class>
@@ -286,6 +247,10 @@
     <filter-name>otherFilter</filter-name>
     <url-pattern>/default.do</url-pattern>
   </filter-mapping>
+  
+   -->
+   
+   
   <servlet>
     <servlet-name>InitServlet</servlet-name>
     <servlet-class>nju.software.util.DelegatingServletProxy
@@ -324,6 +289,6 @@
     <location>/views/error.jsp</location>
   </error-page>
   <session-config>
-    <session-timeout>20</session-timeout>
+    <session-timeout>1</session-timeout>
   </session-config>
 </web-app>

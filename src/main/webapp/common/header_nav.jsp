@@ -57,6 +57,16 @@ $(function() {
 			}
 		});
 	}
+	
+	//刷新页面url
+	$("a").on('click',function(){
+		var url = this.attr("href");
+		changeUrl(url);
+	});
+	
+	function changeUrl(url){
+		window.history.pushState({},0,url);
+	}
 
 </script>
 <style type="text/css">
@@ -364,6 +374,7 @@ table.tablesorter thead tr .headerSortDown {
 			<iframe id="maincontent" class="maincontent" name="maincontent" width="100%" frameborder="0" scrolling="auto" src="${ctx}/defaultContent.do" onload="reinitIframe()"></iframe>
 			<script type="text/javascript">
 				function reinitIframe() {
+					//调整页面大小
 					var iframe = document.getElementById("maincontent");
 					try {
 						var bHeight = iframe.contentWindow.document.body.scrollHeight;
