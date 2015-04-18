@@ -57,6 +57,16 @@ $(function() {
 			}
 		});
 	}
+	
+	//刷新页面url
+	$("a").on('click',function(){
+		var url = this.attr("href");
+		changeUrl(url);
+	});
+	
+	function changeUrl(url){
+		window.history.pushState({},0,url);
+	}
 
 </script>
 <style type="text/css">
@@ -191,6 +201,18 @@ table.tablesorter thead tr .headerSortDown {
 										class="modifyProduceOrder"></span></a></li>
 								<li><a href="${ctx}/market/applyForAlterMarketStaff.do" target="maincontent">申请更换专员</a></li>
 							</ul></li>
+					</c:if>
+					<c:if test="${ROLE_secretary==true}">
+						<li class="dropdown"><a href=""><span
+								class="iconfa-th-list"></span> 秘书部<span
+								class="MarketSecretary task"></span></a>
+							<ul>
+								<li><a href="${ctx}/market/allocateOrderList.do" target="maincontent">分配订单<span
+										class="allocateOrder"></span></a></li>
+								
+							</ul>
+						</li>
+					
 					</c:if>
 					<c:if test="${ROLE_design==true}">
 						<li class="dropdown"><a href=""><span
@@ -364,6 +386,7 @@ table.tablesorter thead tr .headerSortDown {
 			<iframe id="maincontent" class="maincontent" name="maincontent" width="100%" frameborder="0" scrolling="auto" src="${ctx}/defaultContent.do" onload="reinitIframe()"></iframe>
 			<script type="text/javascript">
 				function reinitIframe() {
+					//调整页面大小
 					var iframe = document.getElementById("maincontent");
 					try {
 						var bHeight = iframe.contentWindow.document.body.scrollHeight;

@@ -2,7 +2,7 @@ jQuery(document).ready(function(){
 	initProv("#department", "#role", "市场部","市场主管");
 });
 
-var _cityInfo = [{ "n": "市场部", "c": ["市场主管", "市场专员"] },
+var _cityInfo = [{ "n": "市场部", "c": ["市场主管", "市场专员","市场秘书"] },
 
 		{ "n": "设计部", "c": ["设计主管"] },
 
@@ -18,7 +18,7 @@ var _cityInfo = [{ "n": "市场部", "c": ["市场主管", "市场专员"] },
         
 		
 		{ "n": "毛衣制作部", "c": ["毛衣部主管"] },
-
+       
 		];
 
 
@@ -90,7 +90,7 @@ var _cityInfo = [{ "n": "市场部", "c": ["市场主管", "市场专员"] },
         		case "财务主管": return "financeManager";
         		case "质检主管": return "qualityManager";
         		case "毛衣部主管": return "SweaterMakeManager";
-        		
+        		case "市场秘书": return "marketSecretary";
         		/*case "市场主管": return "市场主管";
         		case "市场专员": return "市场专员";
         		case "设计主管": return "设计部";

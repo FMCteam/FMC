@@ -250,18 +250,18 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 		 initAccountRole();
 		 initAlterTable();
 		 initOrderSourceTable();
-		/* try {
+		 try {
 			 execute("permission_update.sql");
 			 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 	 }
 	
 	 public void initAccountRole(){
 			List<Account> list =accountDao.findAll();
-			List<Account> newList = new ArrayList();
+			/*List<Account> newList = new ArrayList();
 			Map map = new HashMap();
 			map.put("市场主管", "marketManager");
 			map.put("市场专员", "marketStaff");
@@ -273,10 +273,10 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 			map.put("质检部", "qualityManager");
 			map.put("毛衣部", "SweaterMakeManager");
 			map.put("管理员", "ADMIN");
-			/*String roleList[] ={"marketManager","marketStaff","designManager","purchaseManager","produceManager",
+			String roleList[] ={"marketManager","marketStaff","designManager","purchaseManager","produceManager",
 					"logisticsManager","financeManager","qualityManager","SweaterMakeManager","ADMIN"};
 			String roleName[]={"市场主管","市场专员","设计部","采购部","生产部","物流部","财务部","质检部","毛衣部","管理员"};
-		*/
+		
 			System.out.println();
 			for(Account b : list){
 				
@@ -287,7 +287,7 @@ public class SqlUtilDAO extends HibernateDaoSupport{
 				newList.add(b);
 				accountDao.SaveOrUpDate(b);
 				}
-			}
+			}*/
 			if(isEmptytOfTable("account_role")){
 				try {
 					 execute(INIT_SQL_other);
