@@ -14,7 +14,9 @@ public class JSONUtil {
 	 * @param response
 	 * @param jsonobj
 	 */
-	public void sendJson(HttpServletResponse response, JSONObject jsonobj){
+	public void sendJson(HttpServletResponse response, Object object){
+		JSONObject jsonobj = JSONObject.fromObject(object);
+		response.setContentType("application/json;charset=UTF-8");
 		try {
 			PrintWriter out = response.getWriter();
 			out.print(jsonobj);
