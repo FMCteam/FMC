@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
+import nju.software.dao.impl.AccountDAO;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.TreeNode;
 import nju.software.service.AccountService;
@@ -71,7 +72,6 @@ public class MainMobileController {
 	@RequestMapping(value = "moblie_doLogin.do", method= RequestMethod.POST)
 	public String doLogin(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
- 
 		String user_name = request.getParameter("user_name");
 		String user_password = request.getParameter("user_password");
 		HttpSession session = request.getSession();
@@ -107,7 +107,7 @@ public class MainMobileController {
 		/*
 		 */
 		HttpSession session = request.getSession();
-		Account account = (Account)session.getAttribute("cur_user");
+		Account account = (Account) session.getAttribute("cur_user");
 		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
 		session.setAttribute("treeNodeList", list);
 		Map<String, Object> map = new HashMap<>();

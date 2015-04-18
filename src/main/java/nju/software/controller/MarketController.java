@@ -3163,13 +3163,12 @@ public class MarketController {
 
 	}
 	//秘书部分配订单列表
-	@RequestMapping(value = "market/allocateOrderList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/market/allocateOrderList.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
-	public String AllocateOrderList(HttpServletRequest request,
+	public String allocateOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		
 		
 		List<Map<String, Object>> orderModelList = marketService.getTodoOrders();
 		
@@ -3204,7 +3203,7 @@ public class MarketController {
 		return "market/allocateOrderList";
 	}
 	// 秘书分配订单detail
-		@RequestMapping(value = "market/allocateOrderDetail.do", method = RequestMethod.GET)
+		@RequestMapping(value = "/market/allocateOrderDetail.do", method = RequestMethod.GET)
 		// @Transactional(rollbackFor = Exception.class)
 		public String allocateOrderDetail(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
@@ -3234,7 +3233,7 @@ public class MarketController {
 
 		}
 		// 分配订单
-		@RequestMapping(value = "market/AllocateOrderSubmit.do", method = RequestMethod.POST)
+		@RequestMapping(value = "/market/AllocateOrderSubmit.do", method = RequestMethod.POST)
 		// @Transactional(rollbackFor = Exception.class)
 		public String allocateOrderSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
