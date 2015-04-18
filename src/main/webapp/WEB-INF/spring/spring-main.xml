@@ -52,7 +52,7 @@
 				hibernate.dialect=${hibernate.dialect}
 				hibernate.query.substitutions=true 'Y', false 'N'
 				hibernate.show_sql=false
-				hibernate.hbm2ddl.auto=none
+				hibernate.hbm2ddl.auto=update
 			</value>
 		</property>
 		<property name="annotatedClasses">
