@@ -17,7 +17,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "order_source", catalog = "fmc")
-public class OrderSource implements Serializable{
+//implements Serializable
+public class OrderSource implements java.io.Serializable {
 	
 	/**来自专员自己下的订单*/
 	public static final String SOURCE_SELF = "专员下单";

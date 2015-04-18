@@ -82,7 +82,8 @@ public class MarketController {
 	private DeliveryRecordDAO deliveryRecordDAO;
 	@Autowired
 	private JavaMailUtil javaMailUtil;
-
+	@Autowired
+	private EmployeeService employeeService;
 	// ================================客户下单====================================
 	@RequestMapping(value = "/market/addOrder.do")
 	// @Transactional(rollbackFor = Exception.class)
@@ -1353,6 +1354,7 @@ public class MarketController {
 		return "market/verifyQuoteList";
 
 	}
+	
 
 	// 修改询单的列表
 	@RequestMapping(value = "market/modifyOrderList.do", method = RequestMethod.GET)
@@ -2515,8 +2517,7 @@ public class MarketController {
 		return "/market/orderList_new";
 	}
 
-	@Autowired
-	private EmployeeService employeeService;
+	
 
 	@RequestMapping(value = "/order/orderSearch.do")
 	// @Transactional(rollbackFor = Exception.class)
@@ -3161,5 +3162,148 @@ public class MarketController {
 		return "market/verifyAlterList";
 
 	}
+	//秘书部分配订单列表
+	@RequestMapping(value = "market/allocateOrderList.do", method = RequestMethod.GET)
+	// @Transactional(rollbackFor = Exception.class)
+	public String AllocateOrderList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
+		
+		
+		List<Map<String, Object>> orderModelList = marketService.getTodoOrders();
+		
+		
+		
+		orderModelList = ListUtil.reserveList(orderModelList);
+		//修改界面无专员和无进度问题
+		for (Map<String, Object> a:orderModelList){
+			
+			Order o=(Order) a.get("order");
+			if (o.getOrderState().equals("TODO")){			
+				o.setOrderProcessStateName("未选定专员");
+				Employee employee=new Employee();
+				employee.setEmployeeName("无");
+				a.put("order", o);
+				a.put("employee", employee);
+			
+			}
+			
+		}
+		/*
+		 * if (orderModelList.size() == 0) {
+		 * jbpmTest.completeVerify(account.getUserId() + "", false);
+		 * orderModelList = marketService.getModifyOrderList(account
+		 * .getUserId()); }
+		 */
+		model.put("list", orderModelList);
+		model.addAttribute("taskName", "分配订单");
+		model.addAttribute("url", "/market/allocateOrderDetail.do");
+		model.addAttribute("searchurl", "/market/allocateOrderSearch.do");
+
+		return "market/allocateOrderList";
+	}
+	// 秘书分配订单detail
+		@RequestMapping(value = "market/allocateOrderDetail.do", method = RequestMethod.GET)
+		// @Transactional(rollbackFor = Exception.class)
+		public String allocateOrderDetail(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			String s_id = request.getParameter("orderId");
+			int id = Integer.parseInt(s_id);
+			HttpSession session = request.getSession();
+			Account account = (Account) session.getAttribute("cur_user");
+			Map<String, Object> orderModel = marketService.getOrderDetail(id);
+			//修改界面无专员和无进度问题
+			
+				
+				Order o=(Order) orderModel.get("order");
+				if (o.getOrderState().equals("TODO")){			
+					o.setOrderProcessStateName("未选定专员");
+					Employee employee=new Employee();
+					employee.setEmployeeName("无");
+					orderModel.put("order", o);
+					orderModel.put("employee", employee);
+				
+				}
+				
+			
+			List<Employee> employeeList = employeeService.getAllManagerStaff();
+			model.addAttribute("orderInfo", orderModel);
+			model.addAttribute("employeeList", employeeList);
+			return "market/allocateOrderDetail";
+
+		}
+		// 分配订单
+		@RequestMapping(value = "market/AllocateOrderSubmit.do", method = RequestMethod.POST)
+		// @Transactional(rollbackFor = Exception.class)
+		public String allocateOrderSubmit(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			int employeeId = Integer.parseInt(request.getParameter("nextEmployeeId"));
+			int order_id =  Integer.parseInt(request.getParameter("order_id"));
+			Order order = orderService.getOrderById(order_id);
+			order.setEmployeeId(employeeId);
+			order.setOrderState("A");
+			marketService.assignCustomerOrder(order);
+			
+			return "market/allocateOrderList";
+		}
+		//搜索 需要分配的订单
+		@RequestMapping(value = "/order/allocateOrderSearch.do")
+		// @Transactional(rollbackFor = Exception.class)
+		public String allocateOrderSearch(HttpServletRequest request,
+				HttpServletResponse response, ModelMap model) {
+			Account account = (Account) request.getSession().getAttribute(
+					"cur_user");
+
+			String ordernumber = request.getParameter("ordernumber");
+			String customername = request.getParameter("customername");
+			String stylename = request.getParameter("stylename");
+			String employeename = request.getParameter("employeename");
+			String startdate = request.getParameter("startdate");
+			String enddate = request.getParameter("enddate");
+			/*
+			 * int j=0; SearchInfo info = null;
+			 */
+			SearchInfo searchInfo = getSearchInfo(ordernumber, customername,
+					stylename, startdate, enddate, employeename);
+			// 将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+			List<Employee> employees = employeeService
+					.getEmployeeByName(employeename);
+			Integer[] employeeIds = new Integer[employees.size()];
+			for (int i = 0; i < employeeIds.length; i++) {
+				employeeIds[i] = employees.get(i).getEmployeeId();
+			}
+			/*
+			 * SearchInfo info = new SearchInfo();
+			 * info.setCustomername(customername);
+			 * info.setEmployeename(employeename); info.setEnddate(enddate);
+			 * info.setOrdernumber(ordernumber); info.setStartdate(startdate);
+			 * info.setStylename(stylename);
+			 * System.out.println("--------"+info.getStylename());
+			 */
+			List<Map<String, Object>> list = marketService.getSearchTodoOrderList(ordernumber, customername, stylename, startdate, enddate);
+
+			//修改界面无专员和无进度问题
+			for (Map<String, Object> a:list){
+				
+				Order o=(Order) a.get("order");
+				if (o.getOrderState().equals("TODO")){			
+					o.setOrderProcessStateName("未选定专员");
+					Employee employee=new Employee();
+					employee.setEmployeeName("无");
+					a.put("order", o);
+					a.put("employee", employee);
+				
+				}
+				
+			}
+			model.addAttribute("list", list);
+			model.addAttribute("taskName", "订单列表查找");
+			model.addAttribute("url", "/market/allocateOrderDetail.do");
+			model.addAttribute("searchurl", "/market/allocateOrderSearch.do");
+			model.addAttribute("info", searchInfo);// 将查询条件传回页面 hcj
+
+			return "market/allocateOrderList";
+		}
 
 }
