@@ -372,7 +372,7 @@ public interface MarketService {
 			int parseInt, String result, String url, String moneyremark);
 
 	@Transactional(rollbackFor = Exception.class)
-	public void signConfirmFinalPaymentFileSubmit(int orderId,
+	public boolean signConfirmFinalPaymentFileSubmit(int orderId,
 			String confirmFinalPaymentFileUrl, String moneyremark);
 
 	@Transactional(rollbackFor = Exception.class)

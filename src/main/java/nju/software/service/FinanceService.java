@@ -83,10 +83,10 @@ public interface FinanceService {
 			int orderId);
 
 	@Transactional(rollbackFor = Exception.class)
-	public void returnDepositSubmit(String actorId, String taskId);
+	public boolean returnDepositSubmit(String actorId, String taskId);
 
 	@Transactional(rollbackFor = Exception.class)
-	public void returnDepositSubmit(String actorId, String taskId, Integer orderId);
+	public boolean returnDepositSubmit(String actorId, String taskId, Integer orderId);
 
 	@Transactional(rollbackFor = Exception.class)
 	public boolean confirmSampleMoneySubmit(String actorId, String taskId,

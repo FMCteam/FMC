@@ -324,19 +324,21 @@ public class FinanceServiceImpl implements FinanceService {
 	}
 
 	@Override
-	public void returnDepositSubmit(String actorId, String taskId) {
+	public boolean returnDepositSubmit(String actorId, String taskId) {
 		Map<String, Object> data = new HashMap<>();
  		try {
 			mainProcessService.completeTask(taskId, actorId, data);
+			return true;
  		} catch (InterruptedException e) {
  			e.printStackTrace();
+ 			return false;
  		}
 		
 	}
 	
 
 	@Override
-	public void returnDepositSubmit(String actorId, String taskId, Integer orderId) {
+	public boolean returnDepositSubmit(String actorId, String taskId, Integer orderId) {
 		Order order = orderDAO.findById(orderId);
 		Map<String, Object> data = new HashMap<>();
  		try {
@@ -344,8 +346,10 @@ public class FinanceServiceImpl implements FinanceService {
 			order.setOrderState("1");
 			order.setOrderProcessStateName("被终止");
 			orderDAO.attachDirty(order);
+			return true;
  		} catch (InterruptedException e) {
  			e.printStackTrace();
+ 			return false;
  		}
 	}
 	

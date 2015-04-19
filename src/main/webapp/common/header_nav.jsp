@@ -44,6 +44,17 @@ $(function() {
 		getTaskNumber();
 		//$("li span.task").css("color","white");
 		
+		//刷新页面url
+		//TODO
+		var linkLength =  $("a").length;
+		for(var i = 0; i < linkLength; i++){
+			if($("a:eq("+i+")").hasClass("link")){
+				$("a:eq("+i+")").on('click',function(){
+					var url = $("a:eq("+i+")").attr("href");
+					changeUrl(url);
+				});
+			}
+		}
 	});
 	
 	function getTaskNumber() {
@@ -57,12 +68,6 @@ $(function() {
 			}
 		});
 	}
-	
-	//刷新页面url
-	$("a").on('click',function(){
-		var url = this.attr("href");
-		changeUrl(url);
-	});
 	
 	function changeUrl(url){
 		window.history.pushState({},0,url);
