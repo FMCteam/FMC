@@ -90,7 +90,7 @@ public class MarketMobileController {
 	// ================================客户下单====================================
 	@RequestMapping(value = "/market/mobile_addOrder.do")
 	// @Transactional(rollbackFor = Exception.class)
-	public String addOrder(HttpServletRequest request,
+	public void addOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Customer> customers = new ArrayList<>();
 		HttpSession session = request.getSession();
@@ -100,13 +100,12 @@ public class MarketMobileController {
 		customers.add(customer);
 		model.addAttribute("customers", customers);
 		jsonUtil.sendJson(response, model);
-		return "/market/mobile_addOrderList";
 	}
 
 	// ================================客户下单====================================
 	@RequestMapping(value = "/market/mobile_addOrderList.do")
 	// @Transactional(rollbackFor = Exception.class)
-	public String addOrderList(HttpServletRequest request,
+	public void addOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
@@ -121,7 +120,7 @@ public class MarketMobileController {
 			customers = marketService.getAddOrderList();
 		}
 		model.addAttribute("customers", customers);
-		return "/market/mobile_addOrderList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/market/mobile_addOrderDetail.do")
