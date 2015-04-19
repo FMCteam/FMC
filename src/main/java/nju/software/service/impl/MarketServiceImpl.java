@@ -2293,10 +2293,17 @@ public class MarketServiceImpl implements MarketService {
 	params.put(RESULT_REORDER, true);
 	params.put(DesignServiceImpl.RESULT_NEED_CRAFT, isNeedCraft);// 翻单是否需要工艺
 	// 启动流程
-//	String processId = mainProcessService.startWorkflow(params);
-//	order.setProcessId(processId);
-//	orderDAO.attachDirty(order);
-		
+	if (order.getOrderState().equals("A")){
+		 // 启动流程
+		 String processId = mainProcessService.startWorkflow(params);
+		 order.setProcessId(processId);
+		 orderDAO.attachDirty(order);
+		 OrderSource orderSource=new OrderSource();
+			orderSource.setOrderId(order.getOrderId());
+			orderSource.setSource(OrderSource.SOURCE_SELF);
+			orderSourceDAO.save(orderSource);	 
+	
+	}
 	}
 
 
