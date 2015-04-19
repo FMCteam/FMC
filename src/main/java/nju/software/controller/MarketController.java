@@ -444,6 +444,7 @@ public class MarketController {
 			//未选定市场专员
 			if (marketStaffId == -1) {
 				order.setOrderState("TODO");
+				order.setEmployeeId(-1);;
 				
 			}
 			else {
@@ -786,14 +787,33 @@ public class MarketController {
 		order.setIsNeedSampleClothes(isNeedSampleClothes);
 		order.setOrderSource(orderSource);
 		order.setIsHaoDuoYi(ishaoduoyi);
-
-		marketService.addMoreOrderSubmit(order, fabrics, accessorys, logistics,
+		
+		//如果是客户下单
+		if ("CUSTOMER".equals(account.getUserRole())) {
+			int marketStaffId = Integer.parseInt(request
+					.getParameter("marketStaffId"));
+		    //未选定市场专员
+			if (marketStaffId == -1) {
+				order.setOrderState("TODO");
+				order.setEmployeeId(-1);;
+						
+			}
+			else {
+				//设定市场专员
+				order.setEmployeeId(marketStaffId);
+			}
+			marketService.addMoreCustomerOrderSubmit(order, fabrics, accessorys, logistics, produces, versions, cad, request);
+		}
+		//专员下单
+		else{
+			marketService.addMoreOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, versions, cad, request);
 
-		// 给客户邮箱发送订单信息
-		marketService.sendOrderInfoViaEmail(order, customer);
-		// 给客户手机发送订单信息
-		marketService.sendOrderInfoViaPhone(order, customer);
+			// 给客户邮箱发送订单信息
+			marketService.sendOrderInfoViaEmail(order, customer);
+			// 给客户手机发送订单信息
+			marketService.sendOrderInfoViaPhone(order, customer);
+		}
 
 		return "redirect:/market/addOrderList.do";
 	}

@@ -448,6 +448,7 @@ public class MarketMobileController {
 			//未选定市场专员
 			if (marketStaffId == -1) {
 				order.setOrderState("TODO");
+				order.setEmployeeId(-1);
 				
 			}
 			else {
@@ -781,16 +782,32 @@ public class MarketMobileController {
 		order.setOrderSource(orderSource);
 		order.setIsHaoDuoYi(ishaoduoyi);
 
-		boolean isSucess = false;
-		isSucess = marketService.addMoreOrderSubmit(order, fabrics, accessorys, logistics,
+		//如果是客户下单
+		if ("CUSTOMER".equals(account.getUserRole())) {
+			int marketStaffId = Integer.parseInt(request
+					.getParameter("marketStaffId"));
+		    //未选定市场专员
+			if (marketStaffId == -1) {
+				order.setOrderState("TODO");
+				order.setEmployeeId(-1);;
+						
+			}
+			else {
+				//设定市场专员
+				order.setEmployeeId(marketStaffId);
+			}
+			marketService.addMoreCustomerOrderSubmit(order, fabrics, accessorys, logistics, produces, versions, cad, request);
+		}
+		else{
+			marketService.addMoreOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, versions, cad, request);
-
-		model.addAttribute(IS_SUCCESS, isSucess);
-		jsonUtil.sendJson(response, model);
+		}
 		// 给客户邮箱发送订单信息
 		marketService.sendOrderInfoViaEmail(order, customer);
 		// 给客户手机发送订单信息
 		marketService.sendOrderInfoViaPhone(order, customer);
+		model.addAttribute(IS_SUCCESS, true);
+		jsonUtil.sendJson(response, model);
 	}
 	
 	//认领客户新单
