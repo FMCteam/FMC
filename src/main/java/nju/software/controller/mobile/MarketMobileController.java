@@ -476,13 +476,16 @@ public class MarketMobileController {
 			HttpServletResponse response, ModelMap model) {
 		String cid = request.getParameter("cid");
 		String result = request.getParameter("result");
+		String notify = "";
 		if (result != null) {
-			request.setAttribute("notify", "该订单为好多衣客户所下订单，暂时无法进行翻单！");
+			notify = "该订单为好多衣客户所下订单，暂时无法进行翻单！";
+			request.setAttribute("notify", notify);
 		}
 		List<Map<String, Object>> list = marketService
 				.getAddMoreOrderList(Integer.parseInt(cid));
 		list = ListUtil.reserveList(list);
 		model.put("list", list);
+		model.addAttribute("notify", notify);
 		model.addAttribute("taskName", "下翻单");
 		model.addAttribute("url", "/market/mobile_addMoreOrderDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_addMoreOrderListSearch.do");

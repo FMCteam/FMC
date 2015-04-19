@@ -32,7 +32,7 @@ public class MainMobileController {
 	
 	private static Logger logger = Logger.getLogger(MainMobileController.class);
 
-	@RequestMapping(value = "moblie_login.do")
+	@RequestMapping(value = "mobile_login.do")
 	public String login(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
@@ -40,20 +40,20 @@ public class MainMobileController {
 		Account cur_user = (Account) session.getAttribute("cur_user");
 		 
 		if(cur_user != null) {
-			return "redirect:moblie_default.do";
+			return "redirect:mobile_default.do";
 		} else {
 			String user_agent = request.getHeader("user-agent").toLowerCase();
 			
 			if(user_agent.contains("windows phone") || user_agent.contains("android") || user_agent.contains("iphone")) {
-				return "moblie_login";
+				return "mobile_login";
 			} else {
-				return "moblie_login";
+				return "mobile_login";
 			}
 			
 		}
 	}
 	
-	@RequestMapping(value = "moblie_logout.do", method= RequestMethod.GET)
+	@RequestMapping(value = "mobile_logout.do", method= RequestMethod.GET)
 	//@Transactional(rollbackFor = Exception.class)
 	public String logout(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -62,12 +62,12 @@ public class MainMobileController {
 		session.setAttribute("cur_user", null);
 		session.removeAttribute("treeNodeList");
 		
-		return "redirect:/moblie_login.do";
+		return "redirect:/mobile_login.do";
 
 	}
 	
 	
-	@RequestMapping(value = "moblie_doLogin.do", method= RequestMethod.POST)
+	@RequestMapping(value = "mobile_doLogin.do", method= RequestMethod.POST)
 	public void doLogin(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String user_name = request.getParameter("user_name");
@@ -83,7 +83,7 @@ public class MainMobileController {
 		}
 	}
 	
-	@RequestMapping(value = "moblie_default.do", method= RequestMethod.GET)
+	@RequestMapping(value = "mobile_default.do", method= RequestMethod.GET)
 	public void getDefaultPage(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		/**
@@ -100,7 +100,7 @@ public class MainMobileController {
 		jsonUtil.sendJson(response, map);
 	}
 
-	@RequestMapping(value = "moblie_defaultContent.do", method= RequestMethod.GET)
+	@RequestMapping(value = "mobile_defaultContent.do", method= RequestMethod.GET)
 	//@Transactional(rollbackFor = Exception.class)
 	public void getDefaultPageContent(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -111,7 +111,7 @@ public class MainMobileController {
 		session.setAttribute("treeNodeList", list);
 	}
 	
-	@RequestMapping(value = "moblie_overtime.do", method= RequestMethod.GET)
+	@RequestMapping(value = "mobile_overtime.do", method= RequestMethod.GET)
 	//@Transactional(rollbackFor = Exception.class)
 	public void getOverTimePageContent(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
