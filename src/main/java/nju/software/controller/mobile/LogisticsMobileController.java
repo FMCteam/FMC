@@ -82,7 +82,7 @@ public class LogisticsMobileController {
 	}
 	@Autowired
 	private EmployeeService employeeService;
-	@RequestMapping(value = "/logistics/sendSampleListSearch.do")
+	@RequestMapping(value = "/logistics/mobile_sendSampleListSearch.do")
 	//@Transactional(rollbackFor = Exception.class)
 	public void sendSampleListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
