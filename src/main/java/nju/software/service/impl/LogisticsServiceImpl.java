@@ -475,7 +475,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	@Override
-	public void sendClothesSubmit(Integer orderId, String taskId, float price,
+	public boolean sendClothesSubmit(Integer orderId, String taskId, float price,
 			String name, String time, String number, String remark, String isFinal) {
 		//更新物流信息
 		Logistics logistics = logisticsDAO.findById(orderId);
@@ -502,7 +502,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		
 		//如果不是最终的样衣发货，不执行completeTask方法，直接返回
 		if(isFinal.equals("false")){
-			return;
+			return false;
 		}
 		
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -515,8 +515,10 @@ public class LogisticsServiceImpl implements LogisticsService {
 			order.setOrderState("Done");
 			order.setOrderProcessStateName("已完成");
 			orderDAO.merge(order);
+			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 

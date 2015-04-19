@@ -94,7 +94,7 @@ public interface LogisticsService {
 	public boolean mobileSendClothesSubmit(int orderId);
 
 	@Transactional(rollbackFor = Exception.class)
-	public void sendClothesSubmit(Integer orderId, String taskId, float price,
+	public boolean sendClothesSubmit(Integer orderId, String taskId, float price,
 			String name, String time, String number, String remark,
 			String isFinal);
 
