@@ -1312,13 +1312,13 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public void signConfirmFinalPaymentFileSubmit(int orderId,
+	public boolean signConfirmFinalPaymentFileSubmit(int orderId,
 			String confirmFinalPaymentFileUrl, String moneyremark) {
 		Order order = orderDAO.findById(orderId);
 		order.setMoneyremark(moneyremark);
 		order.setConfirmFinalPaymentFile(confirmFinalPaymentFileUrl);
 		orderDAO.merge(order);
-
+		return true;
 	}
 
 	@Override
