@@ -61,6 +61,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class MarketMobileController {
+	private final static String IS_SUCCESS = "isSuccess";
 	private final static String UPLOAD_DIR = "upload_new";
 	private final static String CONTRACT_URL = "/upload_new/contract/";// 合同图片
 	private final static String CONFIRM_SAMPLEMONEY_URL = "/upload_new/confirmSampleMoneyFile/";// 样衣金收取钱款图片
@@ -143,6 +144,7 @@ public class MarketMobileController {
 		}
 		else
 			model.addAttribute("employee_name", account.getNickName());
+		jsonUtil.sendJson(response, model);
 	}
 
 	// -----------------提交订单数据---------------------------------
@@ -463,14 +465,13 @@ public class MarketMobileController {
 			// 给客户手机发送订单信息
 			marketService.sendOrderInfoViaPhone(order, customer);
 		}
-		model.addAttribute("isSucess", isSuccess);
+		model.addAttribute(IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 
 	}
 
 	@RequestMapping(value = "/market/mobile_addMoreOrderList.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String addMoreOrderList(HttpServletRequest request,
+	public void addMoreOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String cid = request.getParameter("cid");
 		String result = request.getParameter("result");
@@ -485,12 +486,11 @@ public class MarketMobileController {
 		model.addAttribute("url", "/market/mobile_addMoreOrderDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_addMoreOrderListSearch.do");
 		model.addAttribute("cid", cid);
-		return "/market/mobile_addMoreOrderList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/market/mobile_addMoreOrderListSearch.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String addMoreOrderListSearch(HttpServletRequest request,
+	public void addMoreOrderListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -528,36 +528,37 @@ public class MarketMobileController {
 		model.addAttribute("cid", cid);
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "/market/mobile_addMoreOrderList";
-
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/market/mobile_addMoreOrderDetail.do")
 	// @Transactional(rollbackFor = Exception.class)
-	public String addMoreOrderDetail(HttpServletRequest request,
+	public void addMoreOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String cid = request.getParameter("cid");
 		String s_id = request.getParameter("orderId");
 		int id = Integer.parseInt(s_id);
 		Map<String, Object> orderModel = marketService
 				.getAddMoreOrderDetail(id);
+		boolean isSuccess = false; 
 		if (orderModel == null) {
-			// request.setAttribute("notify", "该订单未签订过大货合同，无法进行翻单！");
+			model.addAttribute("isSuccess", isSuccess);
+			model.addAttribute("notify", "该订单未签订过大货合同，无法进行翻单！");
 			// 若无法进行翻单，返回翻单列表
-			return "redirect:/market/mobile_addMoreOrderList.do?result=0&cid=" + cid;
+			jsonUtil.sendJson(response, model);
 		}
 		model.addAttribute("orderModel", orderModel);
 		model.addAttribute("initId", id);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		model.addAttribute("employee_name", account.getNickName());
-		return "/market/mobile_addMoreOrderDetail";
+		jsonUtil.sendJson(response, model);
 
 	}
 
 	@RequestMapping(value = "/market/mobile_addMoreOrderSubmit.do")
 	// @Transactional(rollbackFor = Exception.class)
-	public String addMoreOrderSubmit(HttpServletRequest request,
+	public void addMoreOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		// 订单数据
@@ -780,39 +781,40 @@ public class MarketMobileController {
 		order.setOrderSource(orderSource);
 		order.setIsHaoDuoYi(ishaoduoyi);
 
-		marketService.addMoreOrderSubmit(order, fabrics, accessorys, logistics,
+		boolean isSucess = false;
+		isSucess = marketService.addMoreOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, versions, cad, request);
 
+		model.addAttribute(IS_SUCCESS, isSucess);
+		jsonUtil.sendJson(response, model);
 		// 给客户邮箱发送订单信息
 		marketService.sendOrderInfoViaEmail(order, customer);
 		// 给客户手机发送订单信息
 		marketService.sendOrderInfoViaPhone(order, customer);
-
-		return "redirect:/market/mobile_addOrderCustomerList.do";
 	}
 	
 	//认领客户新单
 	@RequestMapping(value="/market/mobile_claimCustomerOrderList.do", method = RequestMethod.GET)
-	public String claimCustomerOrderList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+	public void claimCustomerOrderList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
 		List<Map<String, Object>> list = marketService.getTodoOrders();
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "客户新单列表");
 		model.addAttribute("url", "/market/mobile_claimCustomerOrderDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_claimCustomerOrderSearch.do");
-		return "market/mobile_claimCustomerOrderList";
+		jsonUtil.sendJson(response, model);
 	}
 	
 	@RequestMapping(value="/market/mobile_claimCustomerOrderDetail.do", method = RequestMethod.GET)
-	public String claimCustomerOrderDetail(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+	public void claimCustomerOrderDetail(HttpServletRequest request, HttpServletResponse response, ModelMap model){
 		String orderId = request.getParameter("orderId");
 		int id = Integer.parseInt(orderId);
 		Map<String, Object> orderInfo = marketService.getOrderDetail(id);
 		model.addAttribute("orderInfo", orderInfo);
-		return "market/mobile_claimCustomerOrderDetail";
+		jsonUtil.sendJson(response, model);
 	}
 	
 	@RequestMapping(value="/market/mobile_claimCustomerOrderSearch.do", method=RequestMethod.POST)
-	public String claimCustomerOrderSearch(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+	public void claimCustomerOrderSearch(HttpServletRequest request, HttpServletResponse response, ModelMap model){
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -838,16 +840,16 @@ public class MarketMobileController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/market/mobile_claimCustomerOrderDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_claimCustomerOrderSearch.do");
-		return "market/mobile_claimCustomerOrderList";
+		jsonUtil.sendJson(response, model);
 	}
 	
 	@RequestMapping(value="/market/mobile_claimCustomerOrderSubmit.do", method=RequestMethod.POST)
-	public String claimCustomerOrderSubmit(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+	public void claimCustomerOrderSubmit(HttpServletRequest request, HttpServletResponse response, ModelMap model){
 		int orderId =  Integer.valueOf(request.getParameter("orderId"));
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
-		marketService.claimCustomerOrder(orderId, account.getUserId());
-		return "redirect:/market/mobile_claimCustomerOrderList.do";
+		boolean isSuccess = marketService.claimCustomerOrder(orderId, account.getUserId());
+		model.addAttribute(IS_SUCCESS, isSuccess);
 	}
 
 	// test precondition
@@ -869,8 +871,7 @@ public class MarketMobileController {
 
 	// 专员修改报价
 	@RequestMapping(value = "market/mobile_mobile_modifyQuoteSubmit.do", method = RequestMethod.POST)
-	// @Transactional(rollbackFor = Exception.class)
-	public String modifyQuoteSubmit(HttpServletRequest request,
+	public void modifyQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_profit = request.getParameter("profitPerPiece");
 		String innerPrice = request.getParameter("inner_price");
@@ -903,14 +904,14 @@ public class MarketMobileController {
 		Account account = (Account) session.getAttribute("cur_user");
 		marketService.modifyQuoteSubmit(quote, id, taskId, processId,
 				account.getUserId());
-
-		return "redirect:/market/mobile_confirmQuoteList.do";
+		model.addAttribute(IS_SUCCESS, true);
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 专员修改报价
 	@RequestMapping(value = "market/mobile_modifyQuoteDetail.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
-	public String modifyQuoteDetail(HttpServletRequest request,
+	public void modifyQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		String orderId = request.getParameter("orderId");
@@ -922,13 +923,13 @@ public class MarketMobileController {
 		Map<String, Object> orderInfo = marketService.getModifyQuoteDetail(id,
 				account.getUserId());
 		model.addAttribute("orderInfo", orderInfo);
-		return "market/mobile_modifyQuoteDetail";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 专员修改报价列表
 	@RequestMapping(value = "market/mobile_mobile_modifyQuoteList.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
-	public String modifyQuoteList(HttpServletRequest request,
+	public void modifyQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		HttpSession session = request.getSession();
@@ -940,14 +941,13 @@ public class MarketMobileController {
 		model.addAttribute("taskName", "修改报价");
 		model.addAttribute("url", "/market/mobile_modifyQuoteDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_modifyQuoteListSearch.do");
-
-		return "market/mobile_modifyQuoteList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 专员修改报价列表搜索
 	@RequestMapping(value = "market/mobile_modifyQuoteListSearch.do")
 	// @Transactional(rollbackFor = Exception.class)
-	public String modifyQuoteListSearch(HttpServletRequest request,
+	public void modifyQuoteListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -977,13 +977,13 @@ public class MarketMobileController {
 		model.addAttribute("searchurl", "/market/mobile_modifyQuoteListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "market/mobile_modifyQuoteList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 专员修改加工单列表
 	@RequestMapping(value = "market/mobile_modifyProductList.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
-	public String modifyProductList(HttpServletRequest request,
+	public void modifyProductList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		HttpSession session = request.getSession();
@@ -996,13 +996,12 @@ public class MarketMobileController {
 		model.addAttribute("url", "/market/mobile_modifyProductDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_modifyProductListSearch.do");
 
-		return "market/mobile_modifyProductList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 专员修改加工单列表搜索
 	@RequestMapping(value = "market/mobile_modifyProductListSearch.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String modifyProductListSearch(HttpServletRequest request,
+	public void modifyProductListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -1033,13 +1032,12 @@ public class MarketMobileController {
 		model.addAttribute("searchurl", "/market/mobile_modifyProductListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "market/mobile_modifyProductList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 专员修改加工单详情
 	@RequestMapping(value = "market/mobile_modifyProductDetail.do", method = RequestMethod.GET)
-	// @Transactional(rollbackFor = Exception.class)
-	public String modifyProductDetail(HttpServletRequest request,
+	public void modifyProductDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		int id = Integer.parseInt(orderId);
@@ -1048,13 +1046,12 @@ public class MarketMobileController {
 		Map<String, Object> oi = marketService.getModifyProductDetail(id,
 				account.getUserId());
 		model.addAttribute("orderInfo", oi);
-		return "market/mobile_modifyProductDetail";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 专员修改加工单
 	@RequestMapping(value = "market/mobile_modifyProductSubmit.do", method = RequestMethod.POST)
-	// @Transactional(rollbackFor = Exception.class)
-	public String modifyProductSubmit(HttpServletRequest request,
+	public void modifyProductSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -1109,15 +1106,16 @@ public class MarketMobileController {
 			produces.add(p);
 		}
 
-		marketService.modifyProductSubmit(account.getUserId() + "",
+		boolean isSuccess = marketService.modifyProductSubmit(account.getUserId() + "",
 				orderId_request, taskId, processId, editworksheetok, produces);
-		return "redirect:/market/mobile_modifyProductList.do";
+		model.addAttribute(IS_SUCCESS, isSuccess);
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 专员合并报价
 	@RequestMapping(value = "market/mobile_mergeQuoteSubmit.do", method = RequestMethod.POST)
 	// @Transactional(rollbackFor = Exception.class)
-	public String mergeQuoteSubmit(HttpServletRequest request,
+	public void mergeQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		String s_profit = request.getParameter("profitPerPiece");
@@ -1152,13 +1150,14 @@ public class MarketMobileController {
 		Account account = (Account) session.getAttribute("cur_user");
 		marketService.mergeQuoteSubmit(account.getUserId(), quote, id, taskId,
 				processId);
-		return "redirect:/market/mobile_mergeQuoteList.do";
+		model.addAttribute(IS_SUCCESS, true);
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 专员合并报价信息
 	@RequestMapping(value = "market/mobile_mergeQuoteDetail.do")
 	// @Transactional(rollbackFor = Exception.class)
-	public String mergeQuoteDetail(HttpServletRequest request,
+	public void mergeQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
 		int id = Integer.parseInt(s_id);
@@ -1171,13 +1170,13 @@ public class MarketMobileController {
 		String verifyQuoteComment = marketService.getComment(
 				orderModel.get("task"), MarketServiceImpl.VERIFY_QUOTE_COMMENT);
 		model.addAttribute("verifyQuoteComment", verifyQuoteComment);
-		return "market/mobile_mergeQuoteDetail";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 专员合并报价List
 	@RequestMapping(value = "market/mobile_mergeQuoteList.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
-	public String mergeQuoteList(HttpServletRequest request,
+	public void mergeQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
@@ -1195,13 +1194,12 @@ public class MarketMobileController {
 		model.addAttribute("taskName", "合并报价");
 		model.addAttribute("url", "/market/mobile_mergeQuoteDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_mergeQuoteListSearch.do");
-		return "market/mobile_mergeQuoteList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 专员合并报价ListSearch
 	@RequestMapping(value = "market/mobile_mergeQuoteListSearch.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String mergeQuoteListSearch(HttpServletRequest request,
+	public void mergeQuoteListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -1235,13 +1233,13 @@ public class MarketMobileController {
 		model.addAttribute("searchurl", "/market/mobile_mergeQuoteListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "market/mobile_mergeQuoteList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 主管审核报价
 	@RequestMapping(value = "market/mobile_verifyQuoteSubmit.do", method = RequestMethod.POST)
 	// @Transactional(rollbackFor = Exception.class)
-	public String verifyQuoteSubmit(HttpServletRequest request,
+	public void verifyQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		/*
 		 * Map params = new HashMap(); params.put("page", 1);
@@ -1283,13 +1281,14 @@ public class MarketMobileController {
 		// marketService.verifyQuoteSubmit(quote, id, taskId, processId);
 		marketService.verifyQuoteSubmit(quote, id, taskId, processId, result,
 				comment);
-		return "redirect:/market/mobile_verifyQuoteList.do";
+		model.addAttribute(IS_SUCCESS, true);
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 主管审核报价detail
 	@RequestMapping(value = "market/mobile_verifyQuoteDetail.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
-	public String verifyQuoteDetail(HttpServletRequest request,
+	public void verifyQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
 		int id = Integer.parseInt(s_id);
@@ -1298,14 +1297,13 @@ public class MarketMobileController {
 		Map<String, Object> orderModel = marketService.getVerifyQuoteDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
-		return "market/mobile_verifyQuoteDetail";
-
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 主管审核报价List
 	@RequestMapping(value = "market/mobile_verifyQuoteList.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
-	public String verifyQuoteList(HttpServletRequest request,
+	public void verifyQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
@@ -1317,14 +1315,13 @@ public class MarketMobileController {
 		model.addAttribute("url", "/market/mobile_verifyQuoteDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_verifyQuoteListSearch.do");
 
-		return "market/mobile_verifyQuoteList";
+		jsonUtil.sendJson(response, model);
 
 	}
 
 	// 主管审核报价List搜索
 	@RequestMapping(value = "market/mobile_verifyQuoteListSearch.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String verifyQuoteListSearch(HttpServletRequest request,
+	public void verifyQuoteListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -1353,15 +1350,14 @@ public class MarketMobileController {
 		model.addAttribute("searchurl", "/market/mobile_verifyQuoteListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "market/mobile_verifyQuoteList";
+		jsonUtil.sendJson(response, model);
 
 	}
 	
 
 	// 修改询单的列表
 	@RequestMapping(value = "market/mobile_modifyOrderList.do", method = RequestMethod.GET)
-	// @Transactional(rollbackFor = Exception.class)
-	public String modifyOrderList(HttpServletRequest request,
+	public void modifyOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
@@ -1378,13 +1374,11 @@ public class MarketMobileController {
 		model.addAttribute("taskName", "修改询单");
 		model.addAttribute("url", "/market/mobile_modifyOrderDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_modifyOrderListSearch.do");
-
-		return "market/mobile_modifyOrderList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/market/mobile_modifyOrderListSearch.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String modifyOrderSearch(HttpServletRequest request,
+	public void modifyOrderSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -1426,13 +1420,13 @@ public class MarketMobileController {
 		model.addAttribute("searchurl", "/market/mobile_modifyOrderListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "market/mobile_modifyOrderList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 询单的修改界面
 	@RequestMapping(value = "market/mobile_modifyOrderDetail.do")
 	// @Transactional(rollbackFor = Exception.class)
-	public String modifyOrderDetail(HttpServletRequest request,
+	public void modifyOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		String s_id = request.getParameter("orderId");
@@ -1454,13 +1448,12 @@ public class MarketMobileController {
 		model.addAttribute("purchaseComment", purchaseComment);
 		model.addAttribute("designComment", designComment);
 		model.addAttribute("produceComment", produceComment);
-		return "market/mobile_modifyOrderDetail";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 询单的修改界面
 	@RequestMapping(value = "market/mobile_modifyOrderSubmit.do", method = RequestMethod.POST)
-	// @Transactional(rollbackFor = Exception.class)
-	public String modifyOrderSubmit(HttpServletRequest request,
+	public void modifyOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		String s_id = request.getParameter("id");
@@ -1803,7 +1796,8 @@ public class MarketMobileController {
 		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, sample_produces, versions, cad, editok, task_id,
 				account.getUserId());
-		return "redirect:/market/mobile_modifyOrderList.do";
+		model.addAttribute(IS_SUCCESS, true);
+		jsonUtil.sendJson(response, model);
 	}
 
 	public static Timestamp getTime(String time) {
@@ -1821,8 +1815,7 @@ public class MarketMobileController {
 	}
 
 	@RequestMapping(value = "/market/mobile_confirmQuoteList.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String confirmQuoteList(HttpServletRequest request,
+	public void confirmQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
@@ -1834,12 +1827,11 @@ public class MarketMobileController {
 		model.addAttribute("url", "/market/mobile_confirmQuoteDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_confirmQuoteListSearch.do");
 
-		return "market/mobile_confirmQuoteList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/market/mobile_confirmQuoteListSearch.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String confirmQuoteListSearch(HttpServletRequest request,
+	public void confirmQuoteListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -1866,12 +1858,11 @@ public class MarketMobileController {
 		model.addAttribute("searchurl", "/market/mobile_confirmQuoteListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "market/mobile_confirmQuoteList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/market/mobile_confirmQuoteDetail.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String confirmQuoteDetail(HttpServletRequest request,
+	public void confirmQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
 		int id = Integer.parseInt(s_id);
@@ -1880,12 +1871,11 @@ public class MarketMobileController {
 		Map<String, Object> orderModel = marketService.getConfirmQuoteDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
-		return "market/mobile_confirmQuoteDetail";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/market/mobile_confirmQuoteSubmit.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String confirmQuoteSubmit(HttpServletRequest request,
+	public void confirmQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		String result = request.getParameter("result");
@@ -1921,15 +1911,17 @@ public class MarketMobileController {
 		String actorId = account.getUserId() + "";
 		// marketService.confirmQuoteSubmit(actorId,
 		// String.parseString(taskId),result);
-		marketService.confirmQuoteSubmit(actorId, taskId,
+		boolean isSuccess = marketService.confirmQuoteSubmit(actorId, taskId,
 				Integer.parseInt(orderId), result, url, moneyremark);
 
 		// 1=修改报价，2=取消订单
 		if (result.equals("1")) {
-			return "redirect:/market/mobile_modifyQuoteList.do?id=" + orderId;
+			model.addAttribute("result", "modifyQuote");
 		} else {
-			return "redirect:/market/mobile_confirmQuoteList.do";
+			model.addAttribute("result", "cancelOrder");
 		}
+		model.addAttribute(IS_SUCCESS, isSuccess);
+		jsonUtil.sendJson(response, model);
 	}
 
 	// ============================确认合同加工单===========================
@@ -1944,7 +1936,7 @@ public class MarketMobileController {
 	 */
 	@RequestMapping(value = "market/mobile_confirmProduceOrderList.do", method = RequestMethod.GET)
 	// @Transactional(rollbackFor = Exception.class)
-	public String confirmProduceOrderList(HttpServletRequest request,
+	public void confirmProduceOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		Account account = (Account) request.getSession().getAttribute(
@@ -1963,12 +1955,12 @@ public class MarketMobileController {
 		model.addAttribute("searchurl",
 				"/market/mobile_confirmProduceOrderListSearch.do");
 
-		return "market/mobile_confirmProductList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "market/mobile_confirmProduceOrderListSearch.do")
 	// @Transactional(rollbackFor = Exception.class)
-	public String confirmProduceOrderListSearch(HttpServletRequest request,
+	public void confirmProduceOrderListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -2004,7 +1996,7 @@ public class MarketMobileController {
 				"/market/mobile_confirmProduceOrderListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "market/mobile_confirmProductList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	/**
@@ -2016,8 +2008,7 @@ public class MarketMobileController {
 	 * @return
 	 */
 	@RequestMapping(value = "market/mobile_confirmProduceOrderSubmit.do", method = RequestMethod.POST)
-	// @Transactional(rollbackFor = Exception.class)
-	public String confirmProduceOrderSubmit(HttpServletRequest request,
+	public void confirmProduceOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		Account account = (Account) request.getSession().getAttribute(
@@ -2120,9 +2111,10 @@ public class MarketMobileController {
 
 		}
 
-		marketService.confirmProduceOrderSubmit(account.getUserId() + "",
+		boolean isSuccess = marketService.confirmProduceOrderSubmit(account.getUserId() + "",
 				orderId_request, taskId, processId, comfirmworksheet, produces);
-		return "redirect:/market/mobile_confirmProduceOrderList.do";
+		model.addAttribute(IS_SUCCESS, isSuccess);
+		jsonUtil.sendJson(response, model);
 	}
 
 	/**
@@ -2134,8 +2126,7 @@ public class MarketMobileController {
 	 * @return
 	 */
 	@RequestMapping(value = "market/mobile_confirmProduceOrderDetail.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String confirmProduceOrderDetail(HttpServletRequest request,
+	public void confirmProduceOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		Account account = (Account) request.getSession().getAttribute(
@@ -2147,8 +2138,7 @@ public class MarketMobileController {
 		Map<String, Object> orderInfo = marketService.getConfirmProductDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderInfo);
-
-		return "market/mobile_confirmProductDetail";
+		jsonUtil.sendJson(response, model);
 	}
 
 	/**
@@ -2160,8 +2150,7 @@ public class MarketMobileController {
 	 * @return
 	 */
 	@RequestMapping(value = "market/mobile_cancelProduct.do", method = RequestMethod.POST)
-	// @Transactional(rollbackFor = Exception.class)
-	public String cancelSample(HttpServletRequest request,
+	public void cancelSample(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		System.out.println("cancel product ===============");
@@ -2174,17 +2163,16 @@ public class MarketMobileController {
 		String s_processId = request.getParameter("process_id");
 		String processId = s_processId;
 		boolean comfirmworksheet = false;
-		marketService.confirmProduceOrderSubmit(account.getUserId() + "",
+		boolean isSuccess = marketService.confirmProduceOrderSubmit(account.getUserId() + "",
 				orderId_request, taskId, processId, comfirmworksheet, null);
-
-		return "redirect:/market/mobile_confirmProduceOrderList.do";
+		model.addAttribute(IS_SUCCESS, isSuccess);
+		jsonUtil.sendJson(response, model);
 	}
 
 	// ========================市场专员催尾款===============================
 
 	@RequestMapping(value = "/market/mobile_getPushRestOrderList.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String getPushRestOrderList(HttpServletRequest request,
+	public void getPushRestOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -2195,13 +2183,12 @@ public class MarketMobileController {
 		model.addAttribute("taskName", "催尾款");
 		model.addAttribute("url", "/market/mobile_getPushRestOrderDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_getPushRestOrderListSearch.do");
-		return "/market/mobile_getPushRestOrderList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// ========================市场专员催尾款搜索===============================
 	@RequestMapping(value = "/market/mobile_getPushRestOrderListSearch.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String getPushRestOrderListSearch(HttpServletRequest request,
+	public void getPushRestOrderListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -2229,7 +2216,7 @@ public class MarketMobileController {
 		model.addAttribute("searchurl", "/market/mobile_getPushRestOrderListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "/market/mobile_getPushRestOrderList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// @RequestMapping(value = "/market/mobile_getPushRestOrderListSearch.do")
@@ -2248,8 +2235,7 @@ public class MarketMobileController {
 	// }
 
 	@RequestMapping(value = "/market/mobile_getPushRestOrderDetail.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String getPushRestOrderDetail(HttpServletRequest request,
+	public void getPushRestOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -2257,13 +2243,12 @@ public class MarketMobileController {
 		Map<String, Object> orderInfo = marketService.getPushRestOrderDetail(
 				account.getUserId() + "", Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
-		return "/market/mobile_getPushRestOrderDetail";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 上传接收尾金截图
 	@RequestMapping(value = "/market/mobile_confirmFinalPaymentFileSubmit.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String confirmFinalPaymentFileSubmit(HttpServletRequest request,
+	public void confirmFinalPaymentFileSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -2298,13 +2283,13 @@ public class MarketMobileController {
 		Map<String, Object> orderInfo = marketService.getPushRestOrderDetail(
 				account.getUserId() + "", Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
-		return "/market/mobile_getPushRestOrderDetail";
+		jsonUtil.sendJson(response, model);
 
 	}
 
 	@RequestMapping(value = "/market/mobile_getPushRestOrderSubmit.do")
 	// @Transactional(rollbackFor = Exception.class)
-	public String getPushRestOrderSubmit(HttpServletRequest request,
+	public void getPushRestOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		String orderId_string = request.getParameter("orderId");
@@ -2345,15 +2330,15 @@ public class MarketMobileController {
 				"cur_user");
 		String actorId = account.getUserId() + "";
 
-		marketService.getPushRestOrderSubmit(actorId, taskId, result,
+		boolean isSuccess = marketService.getPushRestOrderSubmit(actorId, taskId, result,
 				orderId_string);
-		return "forward:/market/mobile_getPushRestOrderList.do";
+		model.addAttribute(IS_SUCCESS, isSuccess);
+		jsonUtil.sendJson(response, model);
 	}
 
 	// ========================签订合同============================
 	@RequestMapping(value = "/market/mobile_signContractList.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String signContractList(HttpServletRequest request,
+	public void signContractList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -2370,12 +2355,11 @@ public class MarketMobileController {
 		model.addAttribute("url", "/market/mobile_signContractDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_signContractListSearch.do");
 
-		return "/market/mobile_signContractList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/market/mobile_signContractListSearch.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String signContractListSearch(HttpServletRequest request,
+	public void signContractListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		String ordernumber = request.getParameter("ordernumber");
@@ -2410,12 +2394,12 @@ public class MarketMobileController {
 		model.addAttribute("searchurl", "/market/mobile_signContractListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "/market/mobile_signContractList";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/market/mobile_signContractDetail.do")
 	// @Transactional(rollbackFor = Exception.class)
-	public String signContractDetail(HttpServletRequest request,
+	public void signContractDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -2423,12 +2407,11 @@ public class MarketMobileController {
 		Map<String, Object> orderInfo = marketService.getSignContractDetail(
 				account.getUserId() + "", Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
-		return "/market/mobile_signContractDetail";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "market/mobile_signContractSubmit.do", method = RequestMethod.POST)
-	// @Transactional(rollbackFor = Exception.class)
-	public String signContractSubmit(HttpServletRequest request,
+	public void signContractSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String discount = request.getParameter("discount");
 		String total = request.getParameter("totalmoney");
@@ -2477,13 +2460,11 @@ public class MarketMobileController {
 		Map<String, Object> orderInfo = marketService.getConfirmProductDetail(
 				account.getUserId(), Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
-		return "market/mobile_confirmProductDetail";
-		// return "redirect:/market/mobile_signContractList.do";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/order/mobile_orderList.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String orderList(HttpServletRequest request,
+	public void orderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
 		Account account = (Account) request.getSession().getAttribute(
@@ -2516,14 +2497,13 @@ public class MarketMobileController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/mobile_orderDetail.do");
 		model.addAttribute("searchurl", "/order/mobile_orderSearch.do");
-		return "/market/mobile_orderList_new";
+		jsonUtil.sendJson(response, model);
 	}
 
 	
 
 	@RequestMapping(value = "/order/mobile_orderSearch.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String orderSearch(HttpServletRequest request,
+	public void orderSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -2578,12 +2558,11 @@ public class MarketMobileController {
 		model.addAttribute("searchurl", "/order/mobile_orderSearch.do");
 		model.addAttribute("info", searchInfo);// 将查询条件传回页面 hcj
 
-		return "/market/mobile_orderList_new";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/order/mobile_orderDetail.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String orderDetail(HttpServletRequest request,
+	public void orderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -2606,13 +2585,12 @@ public class MarketMobileController {
 		Map<String, Object> orderInfo = marketService.getOrderDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		model.addAttribute("role", account.getUserRole());
-		return "/market/mobile_orderDetail";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 正在进行中的订单 就是这个
 	@RequestMapping(value = "/order/mobile_orderListDoing.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String orderListDoing(HttpServletRequest request,
+	public void orderListDoing(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -2645,12 +2623,11 @@ public class MarketMobileController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/mobile_orderDetail.do");
 		model.addAttribute("searchurl", "/order/mobile_orderListDoingSearch.do");
-		return "/market/mobile_orderList_new";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/order/mobile_orderListDoingSearch.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String orderListDoingSearch(HttpServletRequest request,
+	public void orderListDoingSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -2694,12 +2671,11 @@ public class MarketMobileController {
 		model.addAttribute("searchurl", "/order/mobile_orderListDoingSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "/market/mobile_orderList_new";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/order/mobile_orderListDone.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String orderListDone(HttpServletRequest request,
+	public void orderListDone(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -2731,12 +2707,11 @@ public class MarketMobileController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/order/mobile_orderDetail.do");
 		model.addAttribute("searchurl", "/order/mobile_orderListDoneSearch.do");
-		return "/market/mobile_orderList_new";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/order/mobile_orderListDoneSearch.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String orderListDoneSearch(HttpServletRequest request,
+	public void orderListDoneSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		// 获取当前登录用户
 		Account account = (Account) request.getSession().getAttribute(
@@ -2778,38 +2753,35 @@ public class MarketMobileController {
 		model.addAttribute("searchurl", "/order/mobile_orderListDoneSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername,
 				stylename, employeename, startdate, enddate));// 将查询条件传回页面 hcj
-		return "/market/mobile_orderList_new";
+		jsonUtil.sendJson(response, model);
 	}
 		
 
 	// 获取大货补货单信息
 	@RequestMapping(value = "/market/mobile_printProcurementOrder.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String printProcurementOrder(HttpServletRequest request,
+	public void printProcurementOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		Map<String, Object> orderInfo = buyService
 				.getPrintProcurementOrderDetail(orderId, null);
 		model.addAttribute("orderInfo", orderInfo);
-		return "/finance/printProcurementOrder";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/market/mobile_printConfirmProcurementOrderHDY.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String printConfirmProcurementOrderHDY(HttpServletRequest request,
+	public void printConfirmProcurementOrderHDY(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model)
 			throws UnsupportedEncodingException {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		Map<String, Object> orderInfo = buyService
 				.getPrintProcurementOrderDetail(orderId, null);
 		model.addAttribute("orderInfo", orderInfo);
-		return "/finance/printProcurementOrder";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 获取大货补货单信息 printConfirmProcurementOrder
 	@RequestMapping(value = "/market/mobile_printConfirmProcurementOrder.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String printConfirmProcurementOrder(HttpServletRequest request,
+	public void printConfirmProcurementOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model)
 			throws UnsupportedEncodingException {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -2859,19 +2831,18 @@ public class MarketMobileController {
 		Map<String, Object> orderInfo = buyService
 				.getPrintProcurementOrderDetail(orderId, produces);
 		model.addAttribute("orderInfo", orderInfo);
-		return "/finance/printProcurementOrder";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 获取样衣裁剪单信息
 	@RequestMapping(value = "/market/mobile_printProcurementSampleOrder.do")
-	// @Transactional(rollbackFor = Exception.class)
-	public String printProcurementSampleOrder(HttpServletRequest request,
+	public void printProcurementSampleOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		Map<String, Object> orderInfo = buyService
 				.getPrintProcurementOrderDetail(orderId, null);
 		model.addAttribute("orderInfo", orderInfo);
-		return "/finance/printProcurementSampleOrder";
+		jsonUtil.sendJson(response, model);
 	}
 
 	public SearchInfo getSearchInfo(String ordernumber, String customername,
@@ -2889,7 +2860,7 @@ public class MarketMobileController {
 	}
 
 	@RequestMapping(value = "/market/mobile_applyForAlterMarketStaff.do")
-	public String applyForAlterMarketStaff(HttpServletRequest request,
+	public void applyForAlterMarketStaff(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -2921,11 +2892,11 @@ public class MarketMobileController {
 		model.addAttribute("taskName", "订单列表");
 		model.addAttribute("url", "/market/mobile_showApplyForAlterMarketStaff.do");
 		model.addAttribute("searchurl", "/order/mobile_orderSearch.do");
-		return "/market/mobile_orderList_new";
+		jsonUtil.sendJson(response, model);
 	}
 
 	@RequestMapping(value = "/market/mobile_showApplyForAlterMarketStaff.do")
-	public String showApplyForAlterMarketStaff(HttpServletRequest request,
+	public void showApplyForAlterMarketStaff(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Account account = (Account) request.getSession().getAttribute(
 				"cur_user");
@@ -2948,7 +2919,7 @@ public class MarketMobileController {
 		Map<String, Object> orderInfo = marketService.getOrderDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		model.addAttribute("role", account.getUserRole());
-		return "/market/mobile_applyForAlterMarketStaff";
+		jsonUtil.sendJson(response, model);
 	}
 
 	/**
@@ -3056,8 +3027,7 @@ public class MarketMobileController {
 	 * @throws InterruptedException 
 	 */
 	@RequestMapping(value = "/market/mobile_verifyAlterSubmit.do", method = RequestMethod.POST)
-	// @Transactional(rollbackFor = Exception.class)
-	public String verifySubmit(HttpServletRequest request,
+	public void verifySubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws InterruptedException {
 		/*
 		 * int taskId =Integer.parseInt(request.getParameter("taskId")); int
@@ -3097,8 +3067,10 @@ public class MarketMobileController {
 		
 		marketService.verifyAlterSubmit(Alter, taskId, processId, result,
 				suggestion);
+		model.addAttribute("result", result);
+		model.addAttribute(IS_SUCCESS, true);
+		jsonUtil.sendJson(response, model);
 
-		return "redirect:/market/mobile_verifyAlterList.do";
 	}
 
 	/**
@@ -3112,8 +3084,7 @@ public class MarketMobileController {
 
 	// 主管审核申请表detail
 	@RequestMapping(value = "market/mobile_verifyAlterDetail.do", method = RequestMethod.GET)
-	// @Transactional(rollbackFor = Exception.class)
-	public String verifyAlterDetail(HttpServletRequest request,
+	public void verifyAlterDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		int alterId = Integer.parseInt(request.getParameter("alterId"));
@@ -3123,16 +3094,12 @@ public class MarketMobileController {
 		model.addAttribute("orderInfo", orderModel);
 		model.addAttribute("alterModel", alterModel);
 		model.addAttribute("employeeList", employeeList);
-
-		// model.addAttribute("employee",employeeList.get(0));
-
-		return "/market/mobile_verifyAlterDetail";
+		jsonUtil.sendJson(response, model);
 	}
 
 	// 主管审核申请表List
 	@RequestMapping(value = "/market/mobile_verifyAlterList.do", method = RequestMethod.GET)
-	// @Transactional(rollbackFor = Exception.class)
-	public String verifyAlterList(HttpServletRequest request,
+	public void verifyAlterList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<MarketstaffAlter> alterList = marketService.getAlltoDoAlter();
 		List<Map<String, Object>> list = new ArrayList<>();
@@ -3161,16 +3128,13 @@ public class MarketMobileController {
 		model.addAttribute("url", "/market/mobile_verifyAlterDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_verifyAlterListSearch.do");
 
-		return "/market/mobile_verifyAlterList";
+		jsonUtil.sendJson(response, model);
 
 	}
 	//秘书部分配订单列表
 	@RequestMapping(value = "/market/mobile_allocateOrderList.do", method = RequestMethod.GET)
-	// @Transactional(rollbackFor = Exception.class)
-	public String allocateOrderList(HttpServletRequest request,
+	public void allocateOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
 		
 		List<Map<String, Object>> orderModelList = marketService.getTodoOrders();
 		
@@ -3202,17 +3166,15 @@ public class MarketMobileController {
 		model.addAttribute("url", "/market/mobile_allocateOrderDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_allocateOrderSearch.do");
 
-		return "/market/mobile_allocateOrderList";
+		jsonUtil.sendJson(response, model);
 	}
 	// 秘书分配订单detail
 		@RequestMapping(value = "/market/mobile_allocateOrderDetail.do", method = RequestMethod.GET)
-		// @Transactional(rollbackFor = Exception.class)
-		public String allocateOrderDetail(HttpServletRequest request,
+		public void allocateOrderDetail(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			String s_id = request.getParameter("orderId");
 			int id = Integer.parseInt(s_id);
 			HttpSession session = request.getSession();
-			Account account = (Account) session.getAttribute("cur_user");
 			Map<String, Object> orderModel = marketService.getOrderDetail(id);
 			//修改界面无专员和无进度问题
 			
@@ -3231,13 +3193,12 @@ public class MarketMobileController {
 			List<Employee> employeeList = employeeService.getAllManagerStaff();
 			model.addAttribute("orderInfo", orderModel);
 			model.addAttribute("employeeList", employeeList);
-			return "/market/mobile_allocateOrderDetail";
+			jsonUtil.sendJson(response, model);
 
 		}
 		// 分配订单
 		@RequestMapping(value = "/market/mobile_AllocateOrderSubmit.do", method = RequestMethod.POST)
-		// @Transactional(rollbackFor = Exception.class)
-		public String allocateOrderSubmit(HttpServletRequest request,
+		public void allocateOrderSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			int employeeId = Integer.parseInt(request.getParameter("nextEmployeeId"));
 			int order_id =  Integer.parseInt(request.getParameter("order_id"));
@@ -3245,13 +3206,11 @@ public class MarketMobileController {
 			order.setEmployeeId(employeeId);
 			order.setOrderState("A");
 			marketService.assignCustomerOrder(order);
-			
-			return "redirect:/market/mobile_allocateOrderList.do";
+			model.addAttribute(IS_SUCCESS, true);
 		}
 		//搜索 需要分配的订单
 		@RequestMapping(value = "/market/mobile_allocateOrderSearch.do")
-		// @Transactional(rollbackFor = Exception.class)
-		public String allocateOrderSearch(HttpServletRequest request,
+		public void allocateOrderSearch(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			Account account = (Account) request.getSession().getAttribute(
 					"cur_user");
@@ -3304,7 +3263,7 @@ public class MarketMobileController {
 			model.addAttribute("searchurl", "/market/mobile_allocateOrderSearch.do");
 			model.addAttribute("info", searchInfo);// 将查询条件传回页面 hcj
 
-			return "/market/mobile_allocateOrderList";
+			jsonUtil.sendJson(response, model);
 		}
 
 }

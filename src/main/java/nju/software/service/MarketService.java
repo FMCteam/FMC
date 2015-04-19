@@ -41,7 +41,7 @@ public interface MarketService {
 	 * @param userId;
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void claimCustomerOrder(Integer orderId, Integer employeeId);
+	public boolean claimCustomerOrder(Integer orderId, Integer employeeId);
 	
 	/**
 	 * 搜索未被认领的订单列表
@@ -269,7 +269,7 @@ public interface MarketService {
 	public Map<String, Object> getAddMoreOrderDetail(int id);
 
 	@Transactional(rollbackFor = Exception.class)
-	public void addMoreOrderSubmit(Order order, List<Fabric> fabrics,
+	public boolean addMoreOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<VersionData> versions, DesignCad cad,
 			HttpServletRequest request);
