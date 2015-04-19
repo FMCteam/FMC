@@ -786,7 +786,7 @@ public class MarketController {
 		// 给客户手机发送订单信息
 		marketService.sendOrderInfoViaPhone(order, customer);
 
-		return "redirect:/market/addOrderCustomerList.do";
+		return "redirect:/market/addOrderList.do";
 	}
 	
 	//认领客户新单
