@@ -26,7 +26,7 @@ public interface ProduceService {
 	public Map<String, Object> getComputeProduceCostInfo(Integer orderId);
 
 	@Transactional(rollbackFor = Exception.class)
-	public void computeProduceCostSubmit(int orderId, String taskId,
+	public boolean computeProduceCostSubmit(int orderId, String taskId,
 			boolean result, String comment, float cut_cost, float manage_cost,
 			float nali_cost, float ironing_cost, float swing_cost,
 			float package_cost, float other_cost, float design_cost);

@@ -94,7 +94,7 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public void computePurchaseCostSubmit(int orderId, String taskId,
+	public boolean computePurchaseCostSubmit(int orderId, String taskId,
 			boolean result, String comment, String[] fabric_names,
 			String[] fabric_amounts, String[] tear_per_meters,
 			String[] cost_per_meters, String[] accessory_names,
@@ -201,7 +201,9 @@ public class BuyServiceImpl implements BuyService {
 			mainProcessService.completeTask(taskId, ACTOR_PURCHASE_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 
 	// ===========================采购样衣原料=================================
