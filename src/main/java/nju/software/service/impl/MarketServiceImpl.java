@@ -579,7 +579,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public void addMoreOrderSubmit(Order order, List<Fabric> fabrics,
+	public boolean addMoreOrderSubmit(Order order, List<Fabric> fabrics,
 			List<Accessory> accessorys, Logistics logistics,
 			List<Produce> produces, List<VersionData> versions, DesignCad cad,
 			HttpServletRequest request) {
@@ -726,6 +726,7 @@ public class MarketServiceImpl implements MarketService {
 		orderSource.setOrderId(order.getOrderId());
 		orderSource.setSource(OrderSource.SOURCE_SELF);
 		orderSourceDAO.save(orderSource);
+		return true;
 	}
 
 	@Override
@@ -1311,13 +1312,13 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public void signConfirmFinalPaymentFileSubmit(int orderId,
+	public boolean signConfirmFinalPaymentFileSubmit(int orderId,
 			String confirmFinalPaymentFileUrl, String moneyremark) {
 		Order order = orderDAO.findById(orderId);
 		order.setMoneyremark(moneyremark);
 		order.setConfirmFinalPaymentFile(confirmFinalPaymentFileUrl);
 		orderDAO.merge(order);
-
+		return true;
 	}
 
 	@Override
@@ -2118,7 +2119,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public void claimCustomerOrder(Integer orderId, Integer employeeId) {
+	public boolean claimCustomerOrder(Integer orderId, Integer employeeId) {
 		//认领客户订单，启动流程；
 		Order order=orderDAO.findById(orderId);
 		order.setEmployeeId(employeeId);
@@ -2131,6 +2132,7 @@ public class MarketServiceImpl implements MarketService {
 		orderSource.setOrderId(order.getOrderId());
 		orderSource.setSource(OrderSource.SOURCE_CALIM);
 		orderSourceDAO.save(orderSource);
+		return true;
 	}
 
 	@Override

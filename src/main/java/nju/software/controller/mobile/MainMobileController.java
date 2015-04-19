@@ -84,7 +84,6 @@ public class MainMobileController {
 	}
 	
 	@RequestMapping(value = "moblie_default.do", method= RequestMethod.GET)
-	//@Transactional(rollbackFor = Exception.class)
 	public void getDefaultPage(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		/**
