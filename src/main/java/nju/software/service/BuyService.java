@@ -29,7 +29,7 @@ public interface BuyService {
 	public Map<String, Object> getComputePurchaseCostDetail(Integer orderId);
 
 	@Transactional(rollbackFor = Exception.class)
-	public void computePurchaseCostSubmit(int orderId, String taskId,
+	public boolean computePurchaseCostSubmit(int orderId, String taskId,
 			boolean result, String comment, String[] fabric_names,
 			String[] fabric_amouts, String[] tear_per_meters,
 			String[] cost_per_meters, String[] accessory_names,

@@ -163,8 +163,8 @@ public class LogisticsMobileController {
 			model.addAttribute("orderInfo", orderInfo);
 			model.addAttribute("notify", "没有样衣发货记录，不能完成最终发货");
 			model.addAttribute("isSucess", success);
-			jsonUtil.sendJson(response, model);
 		}
+		jsonUtil.sendJson(response, model);
 	}
 
 	// ===========================产品入库=================================
