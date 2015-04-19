@@ -45,6 +45,7 @@ public class CommonController {
 
 	static {
 		departments.add(MarketServiceImpl.ACTOR_MARKET_MANAGER);
+		departments.add(MarketServiceImpl.ACTOR_MARKET_SECRETARY);
 		departments.add(DesignServiceImpl.ACTOR_DESIGN_MANAGER);
 		departments.add(BuyServiceImpl.ACTOR_PURCHASE_MANAGER);
 		departments.add(ProduceServiceImpl.ACTOR_PRODUCE_MANAGER);
@@ -53,6 +54,7 @@ public class CommonController {
 		departments.add(QualityServiceImpl.ACTOR_QUALITY_MANAGER);
 		departments.add(SweaterMakeServiceImpl.ACTOR_SWEATER_MANAGER);
 
+		map.put(MarketServiceImpl.TASK_ALLOCATE_ORDER, MarketServiceImpl.ACTOR_MARKET_SECRETARY);
 		map.put(MarketServiceImpl.TASK_VERIFY_QUOTE,
 				MarketServiceImpl.ACTOR_MARKET_MANAGER);
 		map.put(MarketServiceImpl.TASK_VERIFY_ALTER, MarketServiceImpl.ACTOR_MARKET_MANAGER);
@@ -171,6 +173,10 @@ public class CommonController {
 			jsonobj.put(task, getTaskNumber((String) map.get(task), task));
 		}
 		
+		//市场秘书
+		jsonobj.put(MarketServiceImpl.TASK_ALLOCATE_ORDER, getMarketSecrtayTaskNumber());
+		jsonobj.put(MarketServiceImpl.ACTOR_MARKET_SECRETARY, getMarketSecrtayTaskNumber());
+		
 		//市场主管的task class 设为"marketManager2",设置为市场主管的审核报价的任务数以及审核专员变更申请 为市场主管所有的任务数
 		jsonobj.put("marketManager2", getMarketManagerTaskNumber());
 		
@@ -262,6 +268,10 @@ public class CommonController {
 	
 	private Integer getMarketManagerTaskNumber(){
 		return getTaskNumber(MarketServiceImpl.ACTOR_MARKET_MANAGER);
+	}
+	
+	private Integer getMarketSecrtayTaskNumber(){
+		return commonService.getMarketSecrtaryTaskNumber();
 	}
     
 	private Integer getTaskNumber(String actorId) {

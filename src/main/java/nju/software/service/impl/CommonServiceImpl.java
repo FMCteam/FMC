@@ -1,6 +1,7 @@
 package nju.software.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.AccountDAO;
 import nju.software.dataobject.Account;
+import nju.software.dataobject.Order;
 import nju.software.process.service.MainProcessService;
 import nju.software.process.service.MarketstaffAlterProcessService;
 import nju.software.service.CommonService;
+import nju.software.service.MarketService;
 
 @Service("commonServiceImpl")
 public class CommonServiceImpl implements CommonService {
@@ -69,6 +72,15 @@ public class CommonServiceImpl implements CommonService {
 		return sum;
 	}
 	
+	@Override
+	public Integer getMarketSecrtaryTaskNumber() {
+		List<Map<String, Object>> orders = marketService.getTodoOrders();
+		if (orders!=null) {
+			return orders.size();
+		}
+		return 0;
+	}
+	
 
 	private String[] groups = new String[] {
 			BuyServiceImpl.ACTOR_PURCHASE_MANAGER,
@@ -88,5 +100,9 @@ public class CommonServiceImpl implements CommonService {
 	private MarketstaffAlterProcessService marketstaffAlterProcessService;
 
 	@Autowired
+	private MarketService marketService;
+	
+	@Autowired
 	private AccountDAO accountDAO;
+
 }

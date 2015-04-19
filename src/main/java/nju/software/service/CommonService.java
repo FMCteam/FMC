@@ -18,4 +18,6 @@ public interface CommonService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Integer getMarketStaffTaskNumber(String taskName);
+	
+	public Integer getMarketSecrtaryTaskNumber();
 }

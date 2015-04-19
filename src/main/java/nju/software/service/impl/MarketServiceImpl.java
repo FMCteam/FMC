@@ -76,6 +76,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class MarketServiceImpl implements MarketService {
 
 	public final static String ACTOR_MARKET_MANAGER = "marketManager";
+	public final static String ACTOR_MARKET_SECRETARY = "marketSecretary";
 	public final static String ACTOR_MARKET_STAFF = "marketStaff";
 	public final static String TASK_MODIFY_ORDER = "modifyOrder";
 	public final static String TASK_MERGE_QUOTE = "mergeQuote";
@@ -88,6 +89,8 @@ public class MarketServiceImpl implements MarketService {
 	public final static String TASK_PUSH_REST = "pushRest";
 	/** 审核专员变更申请 */
 	public final static String TASK_VERIFY_ALTER = "verifyAlter";
+	/**市场秘书分配专员*/
+	public final static String TASK_ALLOCATE_ORDER = "allocateOrder";
 
 	public final static String RESULT_REORDER = "reorder";
 	public final static String RESULT_MODIFY_ORDER = "modifyOrder";

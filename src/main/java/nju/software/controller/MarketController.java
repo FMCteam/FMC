@@ -534,6 +534,8 @@ public class MarketController {
 	// @Transactional(rollbackFor = Exception.class)
 	public String addMoreOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("cur_user");
 		String cid = request.getParameter("cid");
 		String s_id = request.getParameter("orderId");
 		int id = Integer.parseInt(s_id);
@@ -544,10 +546,17 @@ public class MarketController {
 			// 若无法进行翻单，返回翻单列表
 			return "redirect:/market/addMoreOrderList.do?result=0&cid=" + cid;
 		}
+		if ("CUSTOMER".equals(account.getUserRole())){
+			List<Employee> employeeList = employeeService.getAllManagerStaff();
+			//放在列表第一个，表明不指定市场专员
+			Employee defaultNoEmployee = new Employee();
+			defaultNoEmployee.setEmployeeId(-1);
+			defaultNoEmployee.setEmployeeName("不指定专员");
+			employeeList.add(0, defaultNoEmployee);
+			model.addAttribute("employeeList", employeeList);
+		}
 		model.addAttribute("orderModel", orderModel);
 		model.addAttribute("initId", id);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
 		model.addAttribute("employee_name", account.getNickName());
 		return "/market/addMoreOrderDetail";
 
