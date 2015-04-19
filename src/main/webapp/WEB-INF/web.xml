@@ -71,9 +71,6 @@
     <init-param>
     	<param-name>excludePath</param-name>
     	<param-value>login.do;doLogin.do;overtime.do;registCustomer.do;forgetPassword.do;sendResetPassMail.do;checkResetPassLink.do;
-    	moblie_doLogin.do;moblie_default.do;
-    	mobile_customerList.do;
-    	mobile_addOrder.do;mobile_addOrderSubmit.do
     	</param-value>
     </init-param>
   </filter>

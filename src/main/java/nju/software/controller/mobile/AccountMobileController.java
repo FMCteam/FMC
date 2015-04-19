@@ -23,6 +23,7 @@ import nju.software.util.SecurityUtil;
 import nju.software.util.mail.*;
 
 import org.drools.core.util.StringUtils;
+import org.drools.lang.DRLExpressions.literal_return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,9 +32,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class AccountMobileController {
+	private final static String IS_SUCCESS = "isSuccess";
 
 		@RequestMapping(value = "/account/mobile_employeeList.do")
-		public String employeeList(HttpServletRequest request,
+		public void employeeList(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			int page;
 			int numberPerPage = 10;
@@ -50,24 +52,11 @@ public class AccountMobileController {
 			model.addAttribute("page_number", pageNumber);
 			model.addAttribute("page", page);
 			jsonUtil.sendJson(response, model);
-			return "/account/mobile_employeeList";
 		}
 
-		@RequestMapping(value = "/account/mobile_addEmployeeDetail.do")
-		public String addEmployeeDetail(HttpServletRequest request,
-				HttpServletResponse response, ModelMap model) {
-			return "/account/mobile_addEmployeeDetail";
-		}
 
-		@RequestMapping(value = "/account/mobile_registCustomer.do")
-		public String registCustomer(HttpServletRequest request,
-				HttpServletResponse response, ModelMap model) {
-			return "/customer/registCustomer";
-		}
-
-		//TODO
 		@RequestMapping(value = "/account/mobile_addEmployeeSubmit.do")
-		public String addEmployeeSubmit(HttpServletRequest request,
+		public void addEmployeeSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			String username = request.getParameter("employee_id");
 			String employeeName = request.getParameter("employee_name");
@@ -149,16 +138,15 @@ public class AccountMobileController {
 
 			if (success) {
 				model.addAttribute("notify", "添加员工成功！");
-				return "redirect:/account/mobile_employeeList.do";
 			} else {
 				model.addAttribute("notify", "添加员工失败！");
-				return "redirect:/account/mobile_addEmployeeDetail.do";
 			}
+			model.addAttribute(IS_SUCCESS, success);
+			jsonUtil.sendJson(response, model);
 		}
 
-		//TODO
 		@RequestMapping(value = "/account/mobile_modifyEmployeeDetail.do")
-		public String modifyEmployeeDetail(HttpServletRequest request,
+		public void modifyEmployeeDetail(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			HttpSession session = request.getSession();
 			Account account = (Account) session.getAttribute("cur_user");
@@ -182,19 +170,15 @@ public class AccountMobileController {
 			}
 			model.addAttribute("account_to_modify", modifyAccount);
 			model.addAttribute("employee_to_modify", modifyEmployee);
-			System.out.println("employee modify");
-			return "/account/mobile_modifyEmployeeDetail";
+			jsonUtil.sendJson(response, model);
 		}
 
-		//TODO
 		@RequestMapping(value = "/account/mobile_modifyEmployeeSubmit.do", method = RequestMethod.POST)
-		public String modifyEmployeeSubmit(HttpServletRequest request,
+		public void modifyEmployeeSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			HttpSession session = request.getSession();
 			String username = request.getParameter("employee_id");
-			System.out.println("username: " + username);
-			String password1 = request.getParameter("password1");
-			String password2 = request.getParameter("password2");
+			String password1 = request.getParameter("password");
 			String employeeName = request.getParameter("employee_name");
 			Short employeeSex = Short
 					.parseShort(request.getParameter("radiofield"));
@@ -202,7 +186,6 @@ public class AccountMobileController {
 					.getParameter("employee_age"));
 			String department = request.getParameter("department");
 			String employeeRole = request.getParameter("role");
-			// System.out.println(request.getParameter("in_date"));
 			String inTime = request.getParameter("in_date");
 			Date inDate = DateUtil.parse(inTime, DateUtil.newFormat);
 			Timestamp entryTime = new Timestamp(inDate.getTime());
@@ -230,12 +213,6 @@ public class AccountMobileController {
 			String jobphone = request.getParameter("jobphone");
 			String email = request.getParameter("email");
 			String qq = request.getParameter("qq");
-			// 两次输入密码不相同
-			if (!password1.equals(password2)) {
-				model.addAttribute("notify", "两次输入密码不相同！");
-				System.out.println("password");
-				return "redirect:/account/mobile_modifyEmployeeDetail.do";
-			}
 
 			boolean success = false;
 			Account account = (Account) session.getAttribute("cur_user");
@@ -306,19 +283,8 @@ public class AccountMobileController {
 				model.addAttribute("notify", "修改成功！");
 				success = true;
 			}
-
-			if (success) {
-				return "index";
-			} else {
-				return "redirect:/account/mobile_modifyEmployeeDetail.do";
-			}
-		}
-
-		//TODO
-		@RequestMapping(value = "/account/mobile_forgetPassword.do")
-		public String forgetPassword(HttpServletRequest request,
-				HttpServletResponse response, ModelMap model) {
-			return "/account/mobile_forgetPassword";
+			model.addAttribute(IS_SUCCESS, success);
+			jsonUtil.sendJson(response, model);
 		}
 
 		/**
@@ -330,15 +296,18 @@ public class AccountMobileController {
 		 * @return
 		 */
 		@RequestMapping(value = "/account/mobile_sendResetPassMail.do", method = RequestMethod.POST)
-		public String sendResetPassMail(HttpServletRequest request,
+		public void sendResetPassMail(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			System.out.println("---------------开始发送邮件----------------");
 			String username = request.getParameter("username");
 			Account account = accountService.getAccountByUsername(username);
 
+			boolean isSuccess = false; 
 			if (null == account) { // 登录名不存在
 				model.addAttribute("notify", "登录名不存在");
-				return "/account/mobile_sendEmailSuccess";
+				model.addAttribute(IS_SUCCESS, isSuccess);
+				jsonUtil.sendJson(response, model);
+				return;
 			}
 
 			Customer customer = customerService.findByCustomerId(account
@@ -375,14 +344,17 @@ public class AccountMobileController {
 					mailSenderInfo.setToAddress(customer.getEmail());
 					SimpleMailSender.sendHtmlMail(mailSenderInfo);
 
+					isSuccess = true;
 					model.addAttribute("notify", "操作成功，已经发送找回密码链接到您邮箱。请在30分钟内重置密码");
 				} catch (Exception e) {
 					e.printStackTrace();
+					isSuccess = false;
 					model.addAttribute("notify", "邮箱不存在？未知错误，请联系管理员。");
 				}
 			}
 			System.out.println("---------------邮件发送完成----------------");
-			return "/account/mobile_sendEmailSuccess";
+			model.addAttribute(IS_SUCCESS, isSuccess);
+			jsonUtil.sendJson(response, model);
 		}
 
 		/**
@@ -394,24 +366,31 @@ public class AccountMobileController {
 		 * @return
 		 */
 		@RequestMapping(value = "/account/mobile_checkResetPassLink.do", method = RequestMethod.GET)
-		public String checkResetLink(HttpServletRequest request,
+		public void checkResetLink(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			String sid = request.getParameter("sid");
 			String userName = request.getParameter("userName");
+			boolean isSuccess = false;
 			if (sid.equals("") || userName.equals("")) {
 				model.addAttribute("notify", "链接不完整，请重新生成");
-				return "/account/mobile_forgetPassword";
+				model.addAttribute(IS_SUCCESS, isSuccess);
+				jsonUtil.sendJson(response, model);
+				return;
 			}
 
 			Account account = accountService.getAccountByUsername(userName);
 			if (null == account) {
 				model.addAttribute("notify", "链接错误，无法找到匹配用户，请重新申请找回密码");
-				return "/account/mobile_forgetPassword";
+				model.addAttribute(IS_SUCCESS, isSuccess);
+				jsonUtil.sendJson(response, model);
+				return;
 			}
 			Timestamp failTime = account.getResetLinkFailTime();
 			if (failTime.getTime() <= System.currentTimeMillis()) { // 表示已经过期
 				model.addAttribute("notify", "链接已经过期，请重新申请找回密码");
-				return "/account/mobile_forgetPassword";
+				model.addAttribute(IS_SUCCESS, isSuccess);
+				jsonUtil.sendJson(response, model);
+				return;
 			}
 			String key = account.getUserName() + "$" + failTime.getTime() / 1000
 					* 1000 + "$" + account.getValidataCode(); // 数字签名
@@ -419,11 +398,15 @@ public class AccountMobileController {
 			System.out.println(key + "\t" + digitalSignature);
 			if (!digitalSignature.equals(sid)) {
 				model.addAttribute("notify", "链接不正确，是否已经过期了？请重新申请");
-				return "/account/mobile_forgetPassword";
+				model.addAttribute(IS_SUCCESS, isSuccess);
+				jsonUtil.sendJson(response, model);
+				return;
 			}
 
 			request.getSession().setAttribute("cur_user", account);
-			return "/account/mobile_resetPassword";
+			isSuccess = true;
+			model.addAttribute(IS_SUCCESS, isSuccess);
+			jsonUtil.sendJson(response, model);
 		}
 
 		/**
@@ -435,10 +418,11 @@ public class AccountMobileController {
 		 * @return
 		 */
 		@RequestMapping(value = "/account/mobile_resetPassword.do", method = RequestMethod.POST)
-		public String resetPassword(HttpServletRequest request,
+		public void resetPassword(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			Account account = (Account) request.getSession().getAttribute(
 					"cur_user");
+			boolean isSuccess = false;
 			if (null != account) {
 				String password1 = request.getParameter("new_pass");
 				String password2 = request.getParameter("cfm_new_pass");
@@ -446,14 +430,21 @@ public class AccountMobileController {
 				if (StringUtils.isEmpty(password1)
 						|| StringUtils.isEmpty(password2)
 						|| !password1.equals(password2)) {
-					return "account/resetPassword";
+					model.addAttribute(IS_SUCCESS, isSuccess);
+					jsonUtil.sendJson(response, model);
+					return;
 				} else {
 					account.setUserPassword(SecurityUtil.md5hex(password1));
 					accountService.updateAccount(account);
-					return "login";
+					isSuccess = true;
+					model.addAttribute(IS_SUCCESS, isSuccess);
+					jsonUtil.sendJson(response, model);
+					return;
 				}
 			} else {
-				return "account/forgetPassword";
+				isSuccess = false;
+				model.addAttribute(IS_SUCCESS, isSuccess);
+				jsonUtil.sendJson(response, model);
 			}
 		}
 
@@ -466,7 +457,7 @@ public class AccountMobileController {
 		 * @return
 		 */
 		@RequestMapping(value = "/account/mobile_deleteEmployeeSubmit.do", method = RequestMethod.GET)
-		public String deleteEmployeeSubmit(HttpServletRequest request,
+		public void deleteEmployeeSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			boolean success = false;
 			HttpSession session = request.getSession();
@@ -494,15 +485,16 @@ public class AccountMobileController {
 			if (success) {
 				model.addAttribute("notify", "删除成功！");
 				System.out.println("employee delete success");
-				return "redirect:/account/mobile_employeeList.do";
+				model.addAttribute(IS_SUCCESS, success);
 			} else {
 				model.addAttribute("notify", "删除失败！");
 				System.out.println("employee delete failed");
-				return "redirect:/account/mobile_employeeList.do";
+				model.addAttribute(IS_SUCCESS, !success);
 			}
+			jsonUtil.sendJson(response, model);
 		}
 
-		@RequestMapping(value = "/account/mobile_mobile_customerList.do", method = RequestMethod.GET)
+		@RequestMapping(value = "/account/mobile_customerList.do", method = RequestMethod.GET)
 		public void customerList(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			int page;
@@ -532,16 +524,8 @@ public class AccountMobileController {
 			jsonUtil.sendJson(response, model);
 		}
 
-		@RequestMapping(value = "/account/mobile_addCustomerDetail.do", method = RequestMethod.GET)
-		public String addCustomerDetail(HttpServletRequest request,
-				HttpServletResponse response, ModelMap model) {
-			System.out.println("customer add");
-			return "/account/mobile_addCustomerDetail";
-
-		}
-
 		@RequestMapping(value = "/account/mobile_addCustomerSubmit.do", method = RequestMethod.POST)
-		public String addCustomerSubmit(HttpServletRequest request,
+		public void addCustomerSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 
 			String companyId = request.getParameter("company_id");
@@ -575,8 +559,9 @@ public class AccountMobileController {
 			boolean exist = accountService.checkExit(userName);
 			if (exist) {
 				model.addAttribute("exist", true);
-				model.addAttribute("success", false);
-				return "redirect:/account/mobile_addCustomerDetail.do";
+				model.addAttribute(IS_SUCCESS, false);
+				jsonUtil.sendJson(response, model);
+				return;
 			} else {
 				Customer c = new Customer();
 
@@ -614,12 +599,14 @@ public class AccountMobileController {
 					if (test) {
 
 						model.addAttribute("exist", false);
-						model.addAttribute("success", true);
-						return "redirect:/account/mobile_customerList.do";
+						model.addAttribute(IS_SUCCESS, true);
+						jsonUtil.sendJson(response, model);
+						return;
 					} else {
 						model.addAttribute("exist", false);
-						model.addAttribute("success", false);
-						return "redirect:/account/mobile_customerList.do";
+						model.addAttribute(IS_SUCCESS, false);
+						jsonUtil.sendJson(response, model);
+						return;
 					}
 				} else {
 					c.setRegisterEmployeeId(0);
@@ -634,19 +621,18 @@ public class AccountMobileController {
 					if (test) {
 
 						model.addAttribute("exist", false);
-						model.addAttribute("success", true);
-						return "login";
+						model.addAttribute(IS_SUCCESS, true);
 					} else {
 						model.addAttribute("exist", false);
-						model.addAttribute("success", false);
-						return "login";
+						model.addAttribute(IS_SUCCESS, false);
 					}
 				}
 			}
+			jsonUtil.sendJson(response, model);
 		}
 
 		@RequestMapping(value = "/account/mobile_modifyCustomerDetail.do", method = RequestMethod.GET)
-		public String modifyCustomerDetail(HttpServletRequest request,
+		public void modifyCustomerDetail(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			String customerId = request.getParameter("customer_id");
 			int id = 0;
@@ -668,11 +654,11 @@ public class AccountMobileController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return "/account/mobile_modifyCustomerDetail";
+			jsonUtil.sendJson(response, model);
 		}
 
 		@RequestMapping(value = "/account/mobile_modifyCustomerSubmit.do", method = RequestMethod.POST)
-		public String modifyCustomerSubmit(HttpServletRequest request,
+		public void modifyCustomerSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			String customerId = request.getParameter("customer_id");
 			String companyId = request.getParameter("company_id");
@@ -694,13 +680,8 @@ public class AccountMobileController {
 			String bossName = request.getParameter("boss_name");
 			String bossPhone = request.getParameter("boss_phone");
 			String employeId = request.getParameter("register_employee_id");
-			String password1 = request.getParameter("password1");
-			String password2 = request.getParameter("password2");
-			if (password1 != null && password2 != null
-					&& (!password1.equals(password2))) {
-				model.addAttribute("msg", "两次密码不相同");
-				return "customer/doModify.do";
-			}
+			String password1 = request.getParameter("password");
+			
 			Customer c = customerService.findByCustomerId(Integer
 					.parseInt(customerId));
 
@@ -725,23 +706,20 @@ public class AccountMobileController {
 			boolean success1 = this.customerService.saveCustomer(c);
 			boolean success2 = false;
 			// save account operation
-			if (password1 != null && password2 != null
-					&& password1.equals(password2)) {
-				success2 = this.accountService.saveAccount(c, password1,
+			
+			success2 = this.accountService.saveAccount(c, password1,
 						customerName);
-			}
 
 			if (success1 && success2) {
-				System.out.println("customer modify successfully");
-				return "redirect:/account/mobile_customerList.do";
+				model.addAttribute(IS_SUCCESS, true);
 			} else {
-				model.put("customer_id", customerId);
-				return "redirect:/account/mobile_customerList.do";
+				model.addAttribute(IS_SUCCESS, false);
 			}
+			jsonUtil.sendJson(response, model);
 		}
 
 		@RequestMapping(value = "/account/mobile_deleteCustomerSubmit.do")
-		public String deleteCustomerSubmit(HttpServletRequest request,
+		public void deleteCustomerSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 
 			String customer_id = request.getParameter("customer_id");
@@ -750,21 +728,21 @@ public class AccountMobileController {
 			Account account =accountService.getAccoutByUserIdAndUserRole("CUSTOMER", Integer
 					.parseInt(customer_id));
 			int accountId =account.getAccountId();
-			accountService.deleteAccount(accountId);
-			accountService.deleteAccountRole(accountId);
-			System.out.println("customer delete successfully" + sucess);
-			return "redirect:/account/mobile_customerList.do";
+			boolean sucess1 = accountService.deleteAccount(accountId);
+			boolean sucess2 = accountService.deleteAccountRole(accountId);
+			model.addAttribute(IS_SUCCESS, sucess && sucess1 && sucess2);
+			jsonUtil.sendJson(response, model);
 		}
 
 		@RequestMapping(value = "customer/mobile_viewCustomer.do", method = RequestMethod.GET)
-		public String viewCustomer(HttpServletRequest request,
+		public void viewCustomer(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			String customerId = request.getParameter("customer_id");
 			int id = Integer.parseInt(customerId);
 			Customer c = this.customerService.findByCustomerId(id);
 
 			model.addAttribute("customer", c);
-			return "account/mobile_show_customer";
+			jsonUtil.sendJson(response, model);
 		}
 		
 		public String test = "test";

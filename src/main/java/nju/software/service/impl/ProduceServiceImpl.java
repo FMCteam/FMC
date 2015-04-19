@@ -84,7 +84,7 @@ public class ProduceServiceImpl implements ProduceService {
 	}
 
 	@Override
-	public void computeProduceCostSubmit(int orderId, String taskId, boolean result, String comment,
+	public boolean computeProduceCostSubmit(int orderId, String taskId, boolean result, String comment,
 			float cut_cost, float manage_cost, float nali_cost,
 			float ironing_cost, float swing_cost, float package_cost,
 			float other_cost, float design_cost) {
@@ -127,7 +127,9 @@ public class ProduceServiceImpl implements ProduceService {
 			mainProcessService.completeTask(taskId, ACTOR_PRODUCE_MANAGER, data);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 
 	// =========================样衣生产========================

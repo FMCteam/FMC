@@ -85,10 +85,10 @@ public class AccessFilter implements Filter {
 	}
 	
 	public boolean isContain(String url,String[] excludePaths){
-		if(url.contains("mobile")){
+		//移动端的访问链接不做过滤
+		if ( url.contains("mobile")) {
 			return true;
 		}
-		
 		for (int i = 0; i < excludePaths.length; i++) {
 			if (url.endsWith(excludePaths[i])) {
 				return true;
