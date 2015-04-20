@@ -56,9 +56,6 @@ public class AccessFilter implements Filter {
 				System.out.println("session超时");
 				response.sendRedirect(request.getContextPath() + "/overtime.do");
 			} else {
-				if(accountDao == null){
-					System.out.println("account null");
-				}
 				List permissionList = accountDao.findPermissionBYName(curUser.getUserName());
 				if (permissionList != null) {
 	
