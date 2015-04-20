@@ -14,6 +14,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Employee;
 import nju.software.dataobject.SearchInfo;
 import nju.software.service.BuyService;
+import nju.software.service.CommonService;
 import nju.software.service.EmployeeService;
 import nju.software.util.DateUtil;
 import nju.software.util.JSONUtil;
@@ -342,8 +343,6 @@ public class BuyMobileController {
 		String samplepurName = request.getParameter("samplepurName");
 		Timestamp samplepurDate = getTime(request.getParameter("samplepurDate")) ;
 		String samplesupplierName = request.getParameter("samplesupplierName");
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");		 
 		boolean needCraft = buyService.isNeedCraft(processId, "needCraft");
 		
 		System.out.println("need craft 是这个值："+needCraft);
@@ -435,8 +434,6 @@ public class BuyMobileController {
 		String samplepurName = request.getParameter("samplepurName");
 		Timestamp samplepurDate = getTime(request.getParameter("samplepurDate")) ;
 		String samplesupplierName = request.getParameter("samplesupplierName");
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");		 
 		boolean needCraft =  buyService.isNeedCraft(processId, "needCraft");
 		
 		System.out.println("need craft 是这个值："+needCraft);
@@ -572,8 +569,10 @@ public class BuyMobileController {
 			Map<String, Object> orderInfo = buyService
 					.getPurchaseSweaterMaterialDetail(Integer.parseInt(orderId));
 			//从session中取默认责任人
-			HttpSession session = request.getSession();
-			Account account = (Account) session.getAttribute("cur_user");
+			Account account = commonService.getCurAccount(request, response);
+			if (account == null) {
+				return;
+			}
 			model.addAttribute("employee_name", account.getUserName());
 			model.addAttribute("orderInfo", orderInfo);
 			jsonUtil.sendJson(response, model);
@@ -642,4 +641,6 @@ public class BuyMobileController {
 	private JSONUtil jsonUtil;
 	@Autowired
 	private BuyService buyService;
+	@Autowired
+	private CommonService commonService;
 }

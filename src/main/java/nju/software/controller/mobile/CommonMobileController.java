@@ -1,4 +1,4 @@
-package nju.software.controller;
+package nju.software.controller.mobile;
 
 import net.sf.json.JSONObject;
 import nju.software.dao.impl.CraftDAO;
@@ -30,7 +30,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,7 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class CommonController {
+public class CommonMobileController {
 	private static List<String> departments = new ArrayList<String>();
 	private static Map<String, Object> map = new HashMap<String,Object>();
 
@@ -129,9 +128,15 @@ public class CommonController {
 				SweaterMakeServiceImpl.ACTOR_SWEATER_MANAGER);
 	}
 
+	@RequestMapping(value = "/common/mobile_getTaskNumber.do")
+	@ResponseBody
 	public void getTaskNumber(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		String actorId = getActorId(request);
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
+		String actorId = getActorId(account);
 		Integer number = getTaskNumber(actorId);
 		JSONObject jsonobj = new JSONObject();
 		jsonobj.put("taskNumber", number);
@@ -140,7 +145,7 @@ public class CommonController {
  
 		}
 		//market department task, include all tasks of all marketStaffs and admin;
-		if (isAdmin(request)) {
+		if (isAdmin(account)) {
 			jsonobj.put("taskNumber", commonService.getAllTaskNumber());
 			jsonobj.put(MarketServiceImpl.ACTOR_MARKET_MANAGER, commonService.getMarketStaffTaskNumber());
 			
@@ -153,7 +158,7 @@ public class CommonController {
 			jsonobj.put(MarketServiceImpl.TASK_PUSH_REST, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_PUSH_REST));
 			jsonobj.put(MarketServiceImpl.TASK_SIGN_CONTRACT, commonService.getMarketStaffTaskNumber(MarketServiceImpl.TASK_SIGN_CONTRACT));
 		}
-		if (isMarketStaff(request)) {
+		if (isMarketStaff(account)) {
 			map.put(MarketServiceImpl.TASK_MODIFY_ORDER, actorId);
 			map.put(MarketServiceImpl.TASK_MERGE_QUOTE, actorId);
 			map.put(MarketServiceImpl.TASK_CONFIRM_QUOTE, actorId);
@@ -195,6 +200,8 @@ public class CommonController {
 		sendJson(response, jsonobj);
 	}
 
+	@RequestMapping(value = "/common/mobile_getPic.do")
+	//@Transactional(rollbackFor = Exception.class)
 	public void getPic(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		response.setContentType("image/jpg"); // 设置返回的文件类型
@@ -238,9 +245,7 @@ public class CommonController {
 	}
 
 	
-	private String getActorId(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+	private String getActorId(Account account) {
 		if (account.getUserRole().equals(MarketServiceImpl.ACTOR_MARKET_STAFF)) {
 			return account.getUserId() + "";
 		} else {
@@ -248,15 +253,11 @@ public class CommonController {
 		}
 	}
 	
-	private boolean isAdmin(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+	private boolean isAdmin(Account account){
 		return account.getUserRole().equals("ADMIN");
 	}
 
-	private boolean isMarketStaff(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+	private boolean isMarketStaff(Account account) {
 		return account.getUserRole().equals(
 				MarketServiceImpl.ACTOR_MARKET_STAFF);
 	}

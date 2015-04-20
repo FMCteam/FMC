@@ -1,7 +1,12 @@
 package nju.software.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +19,9 @@ import nju.software.process.service.MainProcessService;
 import nju.software.process.service.MarketstaffAlterProcessService;
 import nju.software.service.CommonService;
 import nju.software.service.MarketService;
+import nju.software.util.Constants;
+import nju.software.util.JSONUtil;
+import nju.software.util.SessionUtil;
 
 @Service("commonServiceImpl")
 public class CommonServiceImpl implements CommonService {
@@ -72,6 +80,7 @@ public class CommonServiceImpl implements CommonService {
 		return sum;
 	}
 	
+	
 	@Override
 	public Integer getMarketSecrtaryTaskNumber() {
 		List<Map<String, Object>> orders = marketService.getTodoOrders();
@@ -81,6 +90,21 @@ public class CommonServiceImpl implements CommonService {
 		return 0;
 	}
 	
+	@Override
+	public Account getCurAccount(HttpServletRequest request, HttpServletResponse response){
+		String jsessionId = request.getParameter(Constants.PARAM_SESSION_ID);
+		HttpSession session = SessionUtil.getSession(request, jsessionId);
+		Map<String, Object> result = new HashMap<>();
+		//session不存在，则通知session过期，操作失败
+		if (session == null) {
+			result.put(Constants.PARAM_IS_SUCCESS, false);
+			result.put(Constants.PARAM_NOTIFY, "session overdue");
+			jsonUtil.sendJson(response, result);
+			return null;
+		}
+		Account account = (Account) session.getAttribute(Constants.PARAM_CUR_ACCOUNT);
+		return account;
+	}
 
 	private String[] groups = new String[] {
 			BuyServiceImpl.ACTOR_PURCHASE_MANAGER,
@@ -105,4 +129,6 @@ public class CommonServiceImpl implements CommonService {
 	@Autowired
 	private AccountDAO accountDAO;
 
+	@Autowired
+	public JSONUtil jsonUtil;
 }

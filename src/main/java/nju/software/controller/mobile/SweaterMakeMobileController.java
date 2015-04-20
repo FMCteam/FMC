@@ -17,6 +17,7 @@ import nju.software.dataobject.OperateRecord;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.service.BuyService;
+import nju.software.service.CommonService;
 import nju.software.service.EmployeeService;
 import nju.software.service.OrderService;
 import nju.software.service.ProduceService;
@@ -47,6 +48,8 @@ public class SweaterMakeMobileController {
 	private ProduceService produceService;
 	@Autowired
 	private BuyService buyService;
+	@Autowired
+	private CommonService commonService;
 	@Autowired
 	private  JSONUtil  jsonUtil ;
 
@@ -107,8 +110,10 @@ public class SweaterMakeMobileController {
 		boolean sweaterMaterial = (boolean) process.getVariable("/sweaterMaterial");
 		model.addAttribute("buySweaterMaterial",sweaterMaterial);*/
 		//从session中取默认责任人
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return "";
+		}
 		model.addAttribute("employee_name", account.getUserName());
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response,model);
@@ -198,8 +203,10 @@ public class SweaterMakeMobileController {
 		String orderId=request.getParameter("orderId");
 		Map<String,Object> orderInfo=sweaterMakeService.getSendSweaterDetail(Integer.parseInt(orderId));
 		//从session中取默认责任人
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return "";
+		}
 		model.addAttribute("employee_name", account.getUserName());
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response,model);

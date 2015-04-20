@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,6 +32,7 @@ import nju.software.dataobject.Quote;
 import nju.software.dataobject.SearchInfo;
 import nju.software.dataobject.VersionData;
 import nju.software.service.BuyService;
+import nju.software.service.CommonService;
 import nju.software.service.CustomerService;
 import nju.software.service.DesignCadService;
 import nju.software.service.EmployeeService;
@@ -42,15 +44,18 @@ import nju.software.service.impl.BuyServiceImpl;
 import nju.software.service.impl.DesignServiceImpl;
 import nju.software.service.impl.MarketServiceImpl;
 import nju.software.service.impl.ProduceServiceImpl;
+import nju.software.util.Constants;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.ImageUtil;
 import nju.software.util.JSONUtil;
 import nju.software.util.JavaMailUtil;
 import nju.software.util.ListUtil;
+import nju.software.util.SessionUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -61,7 +66,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class MarketMobileController {
-	private final static String IS_SUCCESS = "isSuccess";
 	private final static String UPLOAD_DIR = "upload_new";
 	private final static String CONTRACT_URL = "/upload_new/contract/";// 合同图片
 	private final static String CONFIRM_SAMPLEMONEY_URL = "/upload_new/confirmSampleMoneyFile/";// 样衣金收取钱款图片
@@ -87,19 +91,24 @@ public class MarketMobileController {
 	@Autowired
 	private EmployeeService employeeService;
 	@Autowired
+	private CommonService commonService;
+	@Autowired
 	private JSONUtil jsonUtil;
+	
 	// ================================客户下单====================================
 	@RequestMapping(value = "/market/mobile_addOrder.do")
 	// @Transactional(rollbackFor = Exception.class)
 	public void addOrder(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Customer> customers = new ArrayList<>();
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		Customer customer = marketService
 				.getAddOrderDetail(account.getUserId());
 		customers.add(customer);
-		model.addAttribute("customers", customers);
+		model.addAttribute(Constants.PARAM_CUSTOMERS, customers);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -108,8 +117,10 @@ public class MarketMobileController {
 	// @Transactional(rollbackFor = Exception.class)
 	public void addOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Customer> customers;
 		if ("CUSTOMER".equals(account.getUserRole())) {
 			customers = new ArrayList();
@@ -120,7 +131,7 @@ public class MarketMobileController {
 		else {
 			customers = marketService.getAddOrderList();
 		}
-		model.addAttribute("customers", customers);
+		model.addAttribute(Constants.PARAM_CUSTOMERS, customers);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -130,20 +141,22 @@ public class MarketMobileController {
 		String cid = request.getParameter("cid");
 		Customer customer = marketService.getAddOrderDetail(Integer
 				.parseInt(cid));
-		model.addAttribute("customer", customer);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
-		if ("CUSTOMER".equals(account.getUserRole())){
+		model.addAttribute(Constants.PARAM_CUSTOMER, customer);
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
+		if (Constants.USER_ROLE_CUSTOMER.equals(account.getUserRole())){
 			List<Employee> employeeList = employeeService.getAllManagerStaff();
 			//放在列表第一个，表明不指定市场专员
 			Employee defaultNoEmployee = new Employee();
 			defaultNoEmployee.setEmployeeId(-1);
 			defaultNoEmployee.setEmployeeName("不指定专员");
 			employeeList.add(0, defaultNoEmployee);
-			model.addAttribute("employeeList", employeeList);
+			model.addAttribute(Constants.PARAM_EMPLOYEE_LIST, employeeList);
 		}
 		else
-			model.addAttribute("employee_name", account.getNickName());
+			model.addAttribute(Constants.PARAM_EMPLOYEE_NAME, account.getNickName());
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -157,8 +170,10 @@ public class MarketMobileController {
 		Integer customerId = Integer.parseInt(request
 				.getParameter("customerId"));
 		Customer customer = customerService.findByCustomerId(customerId);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		Integer employeeId = account.getUserId();
 		String orderState = "A";
 		Timestamp orderTime = new Timestamp(new Date().getTime());
@@ -442,7 +457,7 @@ public class MarketMobileController {
 
 		boolean isSuccess = false; 
 		//如果是客户下单
-		if ("CUSTOMER".equals(account.getUserRole())) {
+		if (Constants.USER_ROLE_CUSTOMER.equals(account.getUserRole())) {
 			int marketStaffId = Integer.parseInt(request
 					.getParameter("marketStaffId"));
 			//未选定市场专员
@@ -466,7 +481,7 @@ public class MarketMobileController {
 			// 给客户手机发送订单信息
 			marketService.sendOrderInfoViaPhone(order, customer);
 		}
-		model.addAttribute(IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 
 	}
@@ -479,13 +494,13 @@ public class MarketMobileController {
 		String notify = "";
 		if (result != null) {
 			notify = "该订单为好多衣客户所下订单，暂时无法进行翻单！";
-			request.setAttribute("notify", notify);
+			request.setAttribute(Constants.PARAM_NOTIFY, notify);
 		}
 		List<Map<String, Object>> list = marketService
 				.getAddMoreOrderList(Integer.parseInt(cid));
 		list = ListUtil.reserveList(list);
 		model.put("list", list);
-		model.addAttribute("notify", notify);
+		model.addAttribute(Constants.PARAM_NOTIFY, notify);
 		model.addAttribute("taskName", "下翻单");
 		model.addAttribute("url", "/market/mobile_addMoreOrderDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_addMoreOrderListSearch.do");
@@ -511,8 +526,6 @@ public class MarketMobileController {
 		}
 
 		String cid = request.getParameter("cid");
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSearchAddMoreOrderList(ordernumber, customername,
 						stylename, startdate, enddate, employeeIds);
@@ -546,16 +559,18 @@ public class MarketMobileController {
 				.getAddMoreOrderDetail(id);
 		boolean isSuccess = false; 
 		if (orderModel == null) {
-			model.addAttribute("isSuccess", isSuccess);
-			model.addAttribute("notify", "该订单未签订过大货合同，无法进行翻单！");
+			model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
+			model.addAttribute(Constants.PARAM_NOTIFY, "该订单未签订过大货合同，无法进行翻单！");
 			// 若无法进行翻单，返回翻单列表
 			jsonUtil.sendJson(response, model);
 		}
 		model.addAttribute("orderModel", orderModel);
 		model.addAttribute("initId", id);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
-		model.addAttribute("employee_name", account.getNickName());
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
+		model.addAttribute(Constants.PARAM_EMPLOYEE_NAME, account.getNickName());
 		jsonUtil.sendJson(response, model);
 
 	}
@@ -569,8 +584,10 @@ public class MarketMobileController {
 		Integer customerId = Integer.parseInt(request
 				.getParameter("customerId"));
 		Customer customer = customerService.findByCustomerId(customerId);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		Integer employeeId = account.getUserId();
 		String orderState = "A";
 		Timestamp orderTime = new Timestamp(new Date().getTime());
@@ -809,7 +826,7 @@ public class MarketMobileController {
 		marketService.sendOrderInfoViaEmail(order, customer);
 		// 给客户手机发送订单信息
 		marketService.sendOrderInfoViaPhone(order, customer);
-		model.addAttribute(IS_SUCCESS, true);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 	}
 	
@@ -866,10 +883,12 @@ public class MarketMobileController {
 	@RequestMapping(value="/market/mobile_claimCustomerOrderSubmit.do", method=RequestMethod.POST)
 	public void claimCustomerOrderSubmit(HttpServletRequest request, HttpServletResponse response, ModelMap model){
 		int orderId =  Integer.valueOf(request.getParameter("orderId"));
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		boolean isSuccess = marketService.claimCustomerOrder(orderId, account.getUserId());
-		model.addAttribute(IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
 	}
 
 	// test precondition
@@ -920,11 +939,13 @@ public class MarketMobileController {
 		quote.setProfitPerPiece(profit);
 		quote.setInnerPrice(inner);
 		quote.setOuterPrice(outer);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		marketService.modifyQuoteSubmit(quote, id, taskId, processId,
 				account.getUserId());
-		model.addAttribute(IS_SUCCESS, true);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -938,8 +959,10 @@ public class MarketMobileController {
 		// String s_processId=request.getParameter("pid");
 		int id = Integer.parseInt(orderId);
 		// String processId=String.parseString(s_processId);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		Map<String, Object> orderInfo = marketService.getModifyQuoteDetail(id,
 				account.getUserId());
 		model.addAttribute("orderInfo", orderInfo);
@@ -952,8 +975,10 @@ public class MarketMobileController {
 	public void modifyQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> tasks = marketService
 				.getModifyQuoteList(account.getUserId());
 		tasks = ListUtil.reserveList(tasks);
@@ -983,8 +1008,10 @@ public class MarketMobileController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> tasks = marketService
 				.getSearchModifyQuoteList(account.getUserId(), ordernumber,
 						customername, stylename, startdate, enddate,
@@ -1006,8 +1033,10 @@ public class MarketMobileController {
 	public void modifyProductList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> tasks = marketService
 				.getModifyProductList(account.getUserId());
 		tasks = ListUtil.reserveList(tasks);
@@ -1038,8 +1067,10 @@ public class MarketMobileController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> tasks = marketService
 				.getSearchModifyProductList(account.getUserId(), ordernumber,
 						customername, stylename, startdate, enddate,
@@ -1061,8 +1092,10 @@ public class MarketMobileController {
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		int id = Integer.parseInt(orderId);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		Map<String, Object> oi = marketService.getModifyProductDetail(id,
 				account.getUserId());
 		model.addAttribute("orderInfo", oi);
@@ -1073,8 +1106,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "market/mobile_modifyProductSubmit.do", method = RequestMethod.POST)
 	public void modifyProductSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
@@ -1128,7 +1163,7 @@ public class MarketMobileController {
 
 		boolean isSuccess = marketService.modifyProductSubmit(account.getUserId() + "",
 				orderId_request, taskId, processId, editworksheetok, produces);
-		model.addAttribute(IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -1137,7 +1172,10 @@ public class MarketMobileController {
 	// @Transactional(rollbackFor = Exception.class)
 	public void mergeQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String s_profit = request.getParameter("profitPerPiece");
 		String innerPrice = request.getParameter("inner_price");
 		String outerPrice = request.getParameter("outer_price");
@@ -1166,11 +1204,10 @@ public class MarketMobileController {
 		quote.setInnerPrice(inner);
 		quote.setOuterPrice(outer);
 		quote.setSingleCost(single);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		
 		marketService.mergeQuoteSubmit(account.getUserId(), quote, id, taskId,
 				processId);
-		model.addAttribute(IS_SUCCESS, true);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -1179,10 +1216,12 @@ public class MarketMobileController {
 	// @Transactional(rollbackFor = Exception.class)
 	public void mergeQuoteDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String s_id = request.getParameter("orderId");
 		int id = Integer.parseInt(s_id);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
 		Map<String, Object> orderModel = marketService.getMergeQuoteDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
@@ -1198,9 +1237,10 @@ public class MarketMobileController {
 	// @Transactional(rollbackFor = Exception.class)
 	public void mergeQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
-
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> list = marketService
 				.getMergeQuoteList(account.getUserId());
 		list = ListUtil.reserveList(list);
@@ -1221,6 +1261,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "market/mobile_mergeQuoteListSearch.do")
 	public void mergeQuoteListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -1235,8 +1279,6 @@ public class MarketMobileController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService.getSearchMergeQuoteList(
 				account.getUserId(), ordernumber, customername, stylename,
 				startdate, enddate, employeeIds);
@@ -1301,7 +1343,7 @@ public class MarketMobileController {
 		// marketService.verifyQuoteSubmit(quote, id, taskId, processId);
 		marketService.verifyQuoteSubmit(quote, id, taskId, processId, result,
 				comment);
-		model.addAttribute(IS_SUCCESS, true);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -1312,8 +1354,10 @@ public class MarketMobileController {
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
 		int id = Integer.parseInt(s_id);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		Map<String, Object> orderModel = marketService.getVerifyQuoteDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
@@ -1325,8 +1369,10 @@ public class MarketMobileController {
 	// @Transactional(rollbackFor = Exception.class)
 	public void verifyQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> list = marketService
 				.getVerifyQuoteList(account.getUserId());
 		list = ListUtil.reserveList(list);
@@ -1343,6 +1389,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "market/mobile_verifyQuoteListSearch.do")
 	public void verifyQuoteListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -1357,8 +1407,6 @@ public class MarketMobileController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSearchVerifyQuoteList(account.getUserId(), ordernumber,
 						customername, stylename, startdate, enddate,
@@ -1379,8 +1427,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "market/mobile_modifyOrderList.do", method = RequestMethod.GET)
 	public void modifyOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> orderModelList = marketService
 				.getModifyOrderList(account.getUserId());
 		orderModelList = ListUtil.reserveList(orderModelList);
@@ -1400,6 +1450,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/market/mobile_modifyOrderListSearch.do")
 	public void modifyOrderSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -1414,8 +1468,6 @@ public class MarketMobileController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 		List<Map<String, Object>> list = null;
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
 		Integer userId = account.getUserId();
 		list = marketService.getSearchModifyOrderList(userId, ordernumber,
 				customername, stylename, startdate, enddate, employeeIds);
@@ -1452,8 +1504,10 @@ public class MarketMobileController {
 		String s_id = request.getParameter("orderId");
 		int id = Integer.parseInt(s_id);
 		// 修改
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		Map<String, Object> orderModel = marketService.getModifyOrderDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderModel", orderModel);
@@ -1476,6 +1530,11 @@ public class MarketMobileController {
 	public void modifyOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
+		
 		String s_id = request.getParameter("id");
 		String s_task_id = request.getParameter("task_id");
 		int id = Integer.parseInt(s_id);
@@ -1809,14 +1868,12 @@ public class MarketMobileController {
 					"reference_picture");
 		}
 
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
 		boolean editok = request.getParameter("editok").equals("true") ? true
 				: false;
 		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, sample_produces, versions, cad, editok, task_id,
 				account.getUserId());
-		model.addAttribute(IS_SUCCESS, true);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -1837,8 +1894,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/market/mobile_confirmQuoteList.do")
 	public void confirmQuoteList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> list = marketService
 				.getConfirmQuoteList(account.getUserId() + "");
 		list = ListUtil.reserveList(list);
@@ -1853,6 +1912,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/market/mobile_confirmQuoteListSearch.do")
 	public void confirmQuoteListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -1866,8 +1929,6 @@ public class MarketMobileController {
 		for (int i = 0; i < employeeIds.length; i++) {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSearchConfirmQuoteList(account.getUserId() + "",
 						ordernumber, customername, stylename, startdate,
@@ -1886,8 +1947,10 @@ public class MarketMobileController {
 			HttpServletResponse response, ModelMap model) {
 		String s_id = request.getParameter("orderId");
 		int id = Integer.parseInt(s_id);
-		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		Map<String, Object> orderModel = marketService.getConfirmQuoteDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderInfo", orderModel);
@@ -1897,7 +1960,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/market/mobile_confirmQuoteSubmit.do")
 	public void confirmQuoteSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String result = request.getParameter("result");
 		String taskId = request.getParameter("taskId");
 		String orderId = request.getParameter("orderId");
@@ -1926,8 +1992,6 @@ public class MarketMobileController {
 
 			url = CONFIRM_SAMPLEMONEY_URL + orderId + "/" + filename;// 保存在数据库里的相对路径
 		}
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
 		String actorId = account.getUserId() + "";
 		// marketService.confirmQuoteSubmit(actorId,
 		// String.parseString(taskId),result);
@@ -1940,7 +2004,7 @@ public class MarketMobileController {
 		} else {
 			model.addAttribute("result", "cancelOrder");
 		}
-		model.addAttribute(IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -1959,8 +2023,10 @@ public class MarketMobileController {
 	public void confirmProduceOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String actorId = account.getUserId() + "";
 		List<Map<String, Object>> orderList = marketService
 				.getConfirmProductList(actorId);
@@ -1996,8 +2062,10 @@ public class MarketMobileController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String actorId = account.getUserId() + "";
 		List<Map<String, Object>> orderList = marketService
 				.getSearchConfirmProductList(actorId, ordernumber,
@@ -2031,8 +2099,10 @@ public class MarketMobileController {
 	public void confirmProduceOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("taskId");
@@ -2133,7 +2203,7 @@ public class MarketMobileController {
 
 		boolean isSuccess = marketService.confirmProduceOrderSubmit(account.getUserId() + "",
 				orderId_request, taskId, processId, comfirmworksheet, produces);
-		model.addAttribute(IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -2149,8 +2219,10 @@ public class MarketMobileController {
 	public void confirmProduceOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String s_orderId_request = (String) request.getParameter("orderId");
 		int id = Integer.parseInt(s_orderId_request);
 		// String s_taskId = request.getParameter("taskId");
@@ -2173,9 +2245,10 @@ public class MarketMobileController {
 	public void cancelSample(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		System.out.println("cancel product ===============");
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String s_orderId_request = (String) request.getParameter("id");
 		int orderId_request = Integer.parseInt(s_orderId_request);
 		String s_taskId = request.getParameter("task_id");
@@ -2185,7 +2258,7 @@ public class MarketMobileController {
 		boolean comfirmworksheet = false;
 		boolean isSuccess = marketService.confirmProduceOrderSubmit(account.getUserId() + "",
 				orderId_request, taskId, processId, comfirmworksheet, null);
-		model.addAttribute(IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -2194,8 +2267,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/market/mobile_getPushRestOrderList.do")
 	public void getPushRestOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> list = marketService
 				.getPushRestOrderList(account.getUserId() + "");
 		list = ListUtil.reserveList(list);
@@ -2223,8 +2298,10 @@ public class MarketMobileController {
 		for (int i = 0; i < employeeIds.length; i++) {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> list = marketService
 				.getSearchPushRestOrderList(account.getUserId() + "",
 						ordernumber, customername, stylename, startdate,
@@ -2257,8 +2334,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/market/mobile_getPushRestOrderDetail.do")
 	public void getPushRestOrderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String orderId = request.getParameter("orderId");
 		Map<String, Object> orderInfo = marketService.getPushRestOrderDetail(
 				account.getUserId() + "", Integer.parseInt(orderId));
@@ -2270,6 +2349,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/market/mobile_confirmFinalPaymentFileSubmit.do")
 	public void confirmFinalPaymentFileSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String orderId = request.getParameter("orderId");
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile confirmFinalPaymentFile = multipartRequest
@@ -2298,8 +2381,6 @@ public class MarketMobileController {
 		marketService.signConfirmFinalPaymentFileSubmit(
 				Integer.parseInt(orderId), confirmFinalPaymentFileUrl,
 				moneyremark);
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
 		Map<String, Object> orderInfo = marketService.getPushRestOrderDetail(
 				account.getUserId() + "", Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
@@ -2311,7 +2392,10 @@ public class MarketMobileController {
 	// @Transactional(rollbackFor = Exception.class)
 	public void getPushRestOrderSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String orderId_string = request.getParameter("orderId");
 		String taskId_string = request.getParameter("taskId");
 		String taskId = taskId_string;
@@ -2346,13 +2430,11 @@ public class MarketMobileController {
 					Integer.parseInt(orderId_string),
 					confirmFinalPaymentFileUrl, moneyremark);
 		}
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
 		String actorId = account.getUserId() + "";
 
 		boolean isSuccess = marketService.getPushRestOrderSubmit(actorId, taskId, result,
 				orderId_string);
-		model.addAttribute(IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -2360,8 +2442,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/market/mobile_signContractList.do")
 	public void signContractList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> list = marketService
 				.getSignContractList(account.getUserId() + "");
 		list = ListUtil.reserveList(list);
@@ -2381,7 +2465,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/market/mobile_signContractListSearch.do")
 	public void signContractListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -2396,8 +2483,6 @@ public class MarketMobileController {
 			employeeIds[i] = employees.get(i).getEmployeeId();
 		}
 
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
 		List<Map<String, Object>> list = marketService
 				.getSearchSignContractList(account.getUserId() + "",
 						ordernumber, customername, stylename, startdate,
@@ -2421,8 +2506,10 @@ public class MarketMobileController {
 	// @Transactional(rollbackFor = Exception.class)
 	public void signContractDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String orderId = request.getParameter("orderId");
 		Map<String, Object> orderInfo = marketService.getSignContractDetail(
 				account.getUserId() + "", Integer.parseInt(orderId));
@@ -2433,6 +2520,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "market/mobile_signContractSubmit.do", method = RequestMethod.POST)
 	public void signContractSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String discount = request.getParameter("discount");
 		String total = request.getParameter("totalmoney");
 		String orderId = request.getParameter("orderId");
@@ -2468,8 +2559,6 @@ public class MarketMobileController {
 		String confirmDepositFileUrl = CONFIRM_DEPOSIT_URL + orderId + "/"
 				+ confirmDepositFileName;
 
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
 		String actorId = account.getUserId() + "";
 		// 上传合同，上传首定金收据，一般是截图，
 		marketService.signContractSubmit(actorId, taskId,
@@ -2487,8 +2576,10 @@ public class MarketMobileController {
 	public void orderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> list = null;
 
 		// 客户和市场专员只能看到与自己相关的订单
@@ -2525,8 +2616,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/order/mobile_orderSearch.do")
 	public void orderSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -2584,8 +2677,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/order/mobile_orderDetail.do")
 	public void orderDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String orderStateName = "";
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		ArrayList<String> orderProcessStateNames = marketService
@@ -2612,8 +2707,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/order/mobile_orderListDoing.do")
 	public void orderListDoing(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> list = null;
 
 		// 客户和市场专员只能看到与自己相关的进行中的订单
@@ -2649,8 +2746,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/order/mobile_orderListDoingSearch.do")
 	public void orderListDoingSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
 		String stylename = request.getParameter("stylename");
@@ -2697,8 +2796,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/order/mobile_orderListDone.do")
 	public void orderListDone(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> list = null;
 
 		// 客户和市场专员只能看到与自己相关的已经完成的订单
@@ -2734,8 +2835,10 @@ public class MarketMobileController {
 	public void orderListDoneSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		// 获取当前登录用户
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -2882,8 +2985,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/market/mobile_applyForAlterMarketStaff.do")
 	public void applyForAlterMarketStaff(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		List<Map<String, Object>> list = null;
 
 		// 客户和市场专员只能看到与自己相关的订单
@@ -2918,8 +3023,10 @@ public class MarketMobileController {
 	@RequestMapping(value = "/market/mobile_showApplyForAlterMarketStaff.do")
 	public void showApplyForAlterMarketStaff(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Account account = (Account) request.getSession().getAttribute(
-				"cur_user");
+		Account account = commonService.getCurAccount(request, response);
+		if (account == null) {
+			return;
+		}
 		String orderStateName = "";
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		ArrayList<String> orderProcessStateNames = marketService
@@ -3088,7 +3195,7 @@ public class MarketMobileController {
 		marketService.verifyAlterSubmit(Alter, taskId, processId, result,
 				suggestion);
 		model.addAttribute("result", result);
-		model.addAttribute(IS_SUCCESS, true);
+		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 
 	}
@@ -3226,14 +3333,12 @@ public class MarketMobileController {
 			order.setEmployeeId(employeeId);
 			order.setOrderState("A");
 			marketService.assignCustomerOrder(order);
-			model.addAttribute(IS_SUCCESS, true);
+			model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
 		}
 		//搜索 需要分配的订单
 		@RequestMapping(value = "/market/mobile_allocateOrderSearch.do")
 		public void allocateOrderSearch(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
-			Account account = (Account) request.getSession().getAttribute(
-					"cur_user");
 
 			String ordernumber = request.getParameter("ordernumber");
 			String customername = request.getParameter("customername");
@@ -3285,5 +3390,5 @@ public class MarketMobileController {
 
 			jsonUtil.sendJson(response, model);
 		}
-
+		
 }

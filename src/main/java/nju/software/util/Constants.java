@@ -17,4 +17,23 @@ public class Constants {
 
 	public final static String SAVE_DIRECTORY = System.getProperty("web.root")
 			+ "document" + File.separatorChar + "excels";
+	
+	/**当前登录用户*/
+	public final static String PARAM_CUR_ACCOUNT = "cur_user";
+	//json返回数据参数说明
+	public final static String PARAM_IS_SUCCESS = "isSuccess";
+	public final static String PARAM_ACCOUNT = "account";
+	/**客户列表*/
+	public final static String PARAM_CUSTOMERS = "customers";
+	/**单个客户*/
+	public final static String PARAM_CUSTOMER = "customer";
+	/**消息*/
+	public final static String PARAM_NOTIFY = "notify";
+	/**员工列表*/
+	public final static String PARAM_EMPLOYEE_LIST = "employeeList";
+	
+	public final static String PARAM_EMPLOYEE_NAME = "employee_name";
+	//request参数说明
+	public final static String PARAM_SESSION_ID = "jsessionId";
+	
 }

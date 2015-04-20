@@ -12,7 +12,9 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.TreeNode;
 import nju.software.service.AccountService;
 import nju.software.service.SystemService;
+import nju.software.util.Constants;
 import nju.software.util.JSONUtil;
+import nju.software.util.SessionUtil;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @Controller
 public class MainMobileController {
@@ -75,11 +78,12 @@ public class MainMobileController {
 		Account account = accountService.vertifyAccount(user_name, user_password);		
 		if (account != null) {
 			session.setAttribute("cur_user", account);
-			jsonUtil.sendJson(response, account);
+			model.put(Constants.PARAM_IS_SUCCESS, true);
+			model.put(Constants.PARAM_SESSION_ID, session.getId());
 		} else {
-			model.addAttribute("state", "wrong");
-			jsonUtil.sendJson(response, model);
+			model.addAttribute("isSuccess", false);
 		}
+		jsonUtil.sendJson(response, model);
 	}
 	
 	@RequestMapping(value = "mobile_default.do", method= RequestMethod.GET)
@@ -90,30 +94,13 @@ public class MainMobileController {
 		 */
 		/*
 		 */
-		HttpSession session = request.getSession();
+		String jsessionId = request.getParameter(Constants.PARAM_SESSION_ID);
+		HttpSession session = SessionUtil.getSession(request, jsessionId);
 		Account account = (Account) session.getAttribute("cur_user");
 		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
 		session.setAttribute("treeNodeList", list);
 		Map<String, Object> map = new HashMap<>();
-		map.put("account", account);
+		map.put(Constants.PARAM_ACCOUNT, account);
 		jsonUtil.sendJson(response, map);
-	}
-
-	@RequestMapping(value = "mobile_defaultContent.do", method= RequestMethod.GET)
-	//@Transactional(rollbackFor = Exception.class)
-	public void getDefaultPageContent(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		
-		HttpSession session = request.getSession();
-		Account account = (Account)session.getAttribute("cur_user");
-		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
-		session.setAttribute("treeNodeList", list);
-	}
-	
-	@RequestMapping(value = "mobile_overtime.do", method= RequestMethod.GET)
-	//@Transactional(rollbackFor = Exception.class)
-	public void getOverTimePageContent(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
-		
 	}
 }

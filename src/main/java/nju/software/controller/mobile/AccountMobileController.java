@@ -15,12 +15,14 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Employee;
 import nju.software.service.AccountService;
+import nju.software.service.CommonService;
 import nju.software.service.CustomerService;
 import nju.software.service.EmployeeService;
 import nju.software.util.Constants;
 import nju.software.util.DateUtil;
 import nju.software.util.JSONUtil;
 import nju.software.util.SecurityUtil;
+import nju.software.util.SessionUtil;
 import nju.software.util.mail.*;
 
 import org.drools.core.util.StringUtils;
@@ -149,10 +151,14 @@ public class AccountMobileController {
 		@RequestMapping(value = "/account/mobile_modifyEmployeeDetail.do")
 		public void modifyEmployeeDetail(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
-			HttpSession session = request.getSession();
-			Account account = (Account) session.getAttribute("cur_user");
+			Account account = commonService.getCurAccount(request, response);
+			if (account == null) {
+				return;
+			}
 			int employeeId = account.getUserId();
 			Employee employee = employeeService.getEmployeeById(employeeId);
+			String jsessionId = request.getParameter(Constants.PARAM_SESSION_ID);
+			HttpSession session = SessionUtil.getSession(request, jsessionId);
 			session.setAttribute("cur_employee", employee);
 
 			// 将要修改的用户放入model中
@@ -177,7 +183,10 @@ public class AccountMobileController {
 		@RequestMapping(value = "/account/mobile_modifyEmployeeSubmit.do", method = RequestMethod.POST)
 		public void modifyEmployeeSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
-			HttpSession session = request.getSession();
+			Account account = commonService.getCurAccount(request, response);
+			if (account == null) {
+				return;
+			}
 			String username = request.getParameter("employee_id");
 			String password1 = request.getParameter("password");
 			String employeeName = request.getParameter("employee_name");
@@ -216,14 +225,8 @@ public class AccountMobileController {
 			String qq = request.getParameter("qq");
 
 			boolean success = false;
-			Account account = (Account) session.getAttribute("cur_user");
 			// Account account = accountService.getAccountByUsername(username);
-			if (account == null) {
-				// 用户不存在，无法修改
-				model.addAttribute("notify", "用户不存在！");
-				System.out.println("no user");
-				success = false;
-			} else if (!account.getUserName().equals(username)
+			if (!account.getUserName().equals(username)
 					&& !account.getUserRole().equals("ADMIN")) {
 				// 当前用户不是管理员，且修改的不是当前用户，无法修改
 				model.addAttribute("notify", "用户名与当前用户不同！");
@@ -753,6 +756,8 @@ public class AccountMobileController {
 		private EmployeeService employeeService;
 		@Autowired
 		private CustomerService customerService;
+		@Autowired
+		private CommonService commonService;
 		@Autowired
 		private JSONUtil jsonUtil;
 	}
