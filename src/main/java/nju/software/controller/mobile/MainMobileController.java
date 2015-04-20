@@ -35,7 +35,6 @@ public class MainMobileController {
 	@RequestMapping(value = "mobile_login.do")
 	public String login(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		
 		HttpSession session = request.getSession();
 		Account cur_user = (Account) session.getAttribute("cur_user");
 		 
