@@ -59,7 +59,7 @@
                              			</select>  
                              		</td>
 								</c:if>
-								<c:if test="${ROlE_addOrder!=true}">
+								<c:if test="${ROLE_IS_MARKET_STAFF_OR_ADMIN==true}">
 									<td>${employee_name}</td>
 								</c:if>
 								<td>否</td>

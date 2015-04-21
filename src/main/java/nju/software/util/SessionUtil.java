@@ -13,7 +13,6 @@ public class SessionUtil {
 	
 	public static HttpSession getSession(HttpServletRequest request, String jsessionId){
 		ServletContext context = request.getSession().getServletContext();
-		System.err.println("sessionId in sessionUtil:" + jsessionId);
 		if (jsessionId == null || jsessionId.equals("")) {
 			return null;
 		}
