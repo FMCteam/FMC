@@ -29,6 +29,9 @@ public class AccountServiceImpl implements AccountService {
 		Account account = new Account();
 		String pwd = SecurityUtil.md5hex(accountPassword);
 
+		if (accountName == null || accountName.equals("")) {
+			return null;
+		}
 		account.setUserName(accountName);
 		account.setUserPassword(pwd);
 

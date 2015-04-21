@@ -15,6 +15,7 @@ import nju.software.dataobject.Account;
 import nju.software.dataobject.Customer;
 import nju.software.dataobject.Employee;
 import nju.software.service.AccountService;
+import nju.software.service.CommonService;
 import nju.software.service.CustomerService;
 import nju.software.service.EmployeeService;
 import nju.software.util.Constants;
@@ -332,11 +333,10 @@ public class AccountController {
 	 * @return
 	 */
 	@RequestMapping(value = "/account/sendResetPassMail.do", method = RequestMethod.POST)
-	
 	public String sendResetPassMail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		System.out.println("---------------开始发送邮件----------------");
-		String username = request.getParameter("username");
+		String username = request.getParameter("user_name");
 		Account account = accountService.getAccountByUsername(username);
 
 		if (null == account) { // 登录名不存在
@@ -471,7 +471,6 @@ public class AccountController {
 	 * @return
 	 */
 	@RequestMapping(value = "/account/deleteEmployeeSubmit.do", method = RequestMethod.GET)
-	
 	public String deleteEmployeeSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		boolean success = false;

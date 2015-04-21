@@ -129,6 +129,8 @@ public class CommonController {
 				SweaterMakeServiceImpl.ACTOR_SWEATER_MANAGER);
 	}
 
+	@RequestMapping(value = "/common/getTaskNumber.do")
+	@ResponseBody
 	public void getTaskNumber(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String actorId = getActorId(request);
@@ -195,6 +197,7 @@ public class CommonController {
 		sendJson(response, jsonobj);
 	}
 
+	@RequestMapping(value = "/common/getPic.do")
 	public void getPic(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		response.setContentType("image/jpg"); // 设置返回的文件类型

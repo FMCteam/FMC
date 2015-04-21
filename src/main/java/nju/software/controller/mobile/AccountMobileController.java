@@ -407,7 +407,7 @@ public class AccountMobileController {
 				return;
 			}
 
-			request.getSession().setAttribute("cur_user", account);
+			request.getSession().setAttribute(Constants.PARAM_CUR_ACCOUNT, account);
 			isSuccess = true;
 			model.addAttribute(IS_SUCCESS, isSuccess);
 			jsonUtil.sendJson(response, model);
@@ -424,8 +424,10 @@ public class AccountMobileController {
 		@RequestMapping(value = "/account/mobile_resetPassword.do", method = RequestMethod.POST)
 		public void resetPassword(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
-			Account account = (Account) request.getSession().getAttribute(
-					"cur_user");
+			Account account = commonService.getCurAccount(request, response);
+			if (account == null) {
+				return;
+			}
 			boolean isSuccess = false;
 			if (null != account) {
 				String password1 = request.getParameter("new_pass");
@@ -464,8 +466,10 @@ public class AccountMobileController {
 		public void deleteEmployeeSubmit(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			boolean success = false;
-			HttpSession session = request.getSession();
-			Account account = (Account) session.getAttribute("cur_user");
+			Account account = commonService.getCurAccount(request, response);
+			if (account == null) {
+				return;
+			}
 			if (account.getUserRole().equals("ADMIN")) {
 				String id = request.getParameter("id");
 				int employeeId = Integer.parseInt(id);
@@ -588,8 +592,10 @@ public class AccountMobileController {
 				c.setBossName(bossName);
 				c.setBossPhone(bossPhone);
 				c.setRegisterDate(registerDate);
-				HttpSession session = request.getSession();
-				Account registerId = (Account) session.getAttribute("cur_user");
+				Account registerId = commonService.getCurAccount(request, response);
+				if (registerId == null) {
+					return;
+				}
 				if (registerId != null) {
 					c.setRegisterEmployeeId(registerId.getUserId());
 					Account account = new Account();

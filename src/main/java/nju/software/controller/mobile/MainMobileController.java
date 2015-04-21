@@ -77,11 +77,12 @@ public class MainMobileController {
 		HttpSession session = request.getSession();
 		Account account = accountService.vertifyAccount(user_name, user_password);		
 		if (account != null) {
-			session.setAttribute("cur_user", account);
+			session.setAttribute(Constants.PARAM_CUR_ACCOUNT, account);
+			model.put(Constants.PARAM_ACCOUNT, account);
 			model.put(Constants.PARAM_IS_SUCCESS, true);
 			model.put(Constants.PARAM_SESSION_ID, session.getId());
 		} else {
-			model.addAttribute("isSuccess", false);
+			model.addAttribute(Constants.PARAM_IS_SUCCESS, false);
 		}
 		jsonUtil.sendJson(response, model);
 	}
