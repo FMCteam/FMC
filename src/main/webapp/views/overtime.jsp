@@ -24,9 +24,15 @@
 		time--;
 		$("span.time").text(time);
 		if (time<=0) {
-			window.parent.location="${ctx}/login.do";
+			parent.location.href="${ctx}/login.do";
 		}
 	}
+	
+	$(function(){
+		$("#relogin").click(function(){
+			window.parent.location="${ctx}/login.do";
+		});
+	});
 </script>
 </head>
 
@@ -38,7 +44,7 @@
 			<span class="animate1 bounceIn">4</span> <span
 				class="animate2 bounceIn">0</span> <span class="animate3 bounceIn">1</span>
 			<div class="errorbtns animate4 fadeInUp">
-				<a id="relogin" href="${ctx}/login.do" class="btn btn-large">重新登陆</a>
+				<a id="relogin" class="btn btn-large">重新登陆</a>
 			</div>
 			<div class="errorbtns animate4 fadeInUp">
 				将在倒计时 <span class="time"
