@@ -132,12 +132,11 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public boolean saveAccount(Customer c, String password1,String customerName) {
-		// TODO Auto-generated method stub
 		List<Account> a = this.accountDAO.findByUserIdAndUserName(
 				Constants.USER_TYPE_CUSTOMER, c.getCustomerId());
 		if (a != null && a.size() >= 1) {
 			Account ac = a.get(0);
-			if (password1 != null && password1.equals("")) {
+			if (password1 != null && !password1.equals("")) {
 				ac.setUserPassword(SecurityUtil.md5hex(password1));
 			}
 			ac.setNickName(customerName);
