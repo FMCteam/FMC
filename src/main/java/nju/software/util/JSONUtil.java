@@ -9,6 +9,8 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.drools.lang.DRLExpressions.literal_return;
+
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
@@ -63,6 +65,8 @@ public class JSONUtil {
 		}
 		
 		private Object process(Object value){
+			if (value == null) 
+				return "";
 			return dateFormat.format((Date)value);
 		}
 	}
