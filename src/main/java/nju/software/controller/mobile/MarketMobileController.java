@@ -108,7 +108,7 @@ public class MarketMobileController {
 		Customer customer = marketService
 				.getAddOrderDetail(account.getUserId());
 		customers.add(customer);
-		model.addAttribute(Constants.PARAM_CUSTOMERS, customers);
+		model.addAttribute(Constants.JSON_CUSTOMERS, customers);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -131,7 +131,7 @@ public class MarketMobileController {
 		else {
 			customers = marketService.getAddOrderList();
 		}
-		model.addAttribute(Constants.PARAM_CUSTOMERS, customers);
+		model.addAttribute(Constants.JSON_CUSTOMERS, customers);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -141,7 +141,7 @@ public class MarketMobileController {
 		String cid = request.getParameter("cid");
 		Customer customer = marketService.getAddOrderDetail(Integer
 				.parseInt(cid));
-		model.addAttribute(Constants.PARAM_CUSTOMER, customer);
+		model.addAttribute(Constants.JSON_CUSTOMER, customer);
 		Account account = commonService.getCurAccount(request, response);
 		if (account == null) {
 			return;
@@ -153,10 +153,10 @@ public class MarketMobileController {
 			defaultNoEmployee.setEmployeeId(-1);
 			defaultNoEmployee.setEmployeeName("不指定专员");
 			employeeList.add(0, defaultNoEmployee);
-			model.addAttribute(Constants.PARAM_EMPLOYEE_LIST, employeeList);
+			model.addAttribute(Constants.JSON_EMPLOYEE_LIST, employeeList);
 		}
 		else
-			model.addAttribute(Constants.PARAM_EMPLOYEE_NAME, account.getNickName());
+			model.addAttribute(Constants.JSON_EMPLOYEE_NAME, account.getNickName());
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -481,7 +481,7 @@ public class MarketMobileController {
 			// 给客户手机发送订单信息
 			marketService.sendOrderInfoViaPhone(order, customer);
 		}
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 
 	}
@@ -494,13 +494,13 @@ public class MarketMobileController {
 		String notify = "";
 		if (result != null) {
 			notify = "该订单为好多衣客户所下订单，暂时无法进行翻单！";
-			request.setAttribute(Constants.PARAM_NOTIFY, notify);
+			request.setAttribute(Constants.JSON_NOTIFY, notify);
 		}
 		List<Map<String, Object>> list = marketService
 				.getAddMoreOrderList(Integer.parseInt(cid));
 		list = ListUtil.reserveList(list);
 		model.put("list", list);
-		model.addAttribute(Constants.PARAM_NOTIFY, notify);
+		model.addAttribute(Constants.JSON_NOTIFY, notify);
 		model.addAttribute("taskName", "下翻单");
 		model.addAttribute("url", "/market/mobile_addMoreOrderDetail.do");
 		model.addAttribute("searchurl", "/market/mobile_addMoreOrderListSearch.do");
@@ -559,8 +559,8 @@ public class MarketMobileController {
 				.getAddMoreOrderDetail(id);
 		boolean isSuccess = false; 
 		if (orderModel == null) {
-			model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
-			model.addAttribute(Constants.PARAM_NOTIFY, "该订单未签订过大货合同，无法进行翻单！");
+			model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
+			model.addAttribute(Constants.JSON_NOTIFY, "该订单未签订过大货合同，无法进行翻单！");
 			// 若无法进行翻单，返回翻单列表
 			jsonUtil.sendJson(response, model);
 		}
@@ -570,7 +570,7 @@ public class MarketMobileController {
 		if (account == null) {
 			return;
 		}
-		model.addAttribute(Constants.PARAM_EMPLOYEE_NAME, account.getNickName());
+		model.addAttribute(Constants.JSON_EMPLOYEE_NAME, account.getNickName());
 		jsonUtil.sendJson(response, model);
 
 	}
@@ -826,7 +826,7 @@ public class MarketMobileController {
 		marketService.sendOrderInfoViaEmail(order, customer);
 		// 给客户手机发送订单信息
 		marketService.sendOrderInfoViaPhone(order, customer);
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 	}
 	
@@ -888,7 +888,7 @@ public class MarketMobileController {
 			return;
 		}
 		boolean isSuccess = marketService.claimCustomerOrder(orderId, account.getUserId());
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 	}
 
 	// test precondition
@@ -945,7 +945,7 @@ public class MarketMobileController {
 		}
 		marketService.modifyQuoteSubmit(quote, id, taskId, processId,
 				account.getUserId());
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -1163,7 +1163,7 @@ public class MarketMobileController {
 
 		boolean isSuccess = marketService.modifyProductSubmit(account.getUserId() + "",
 				orderId_request, taskId, processId, editworksheetok, produces);
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -1207,7 +1207,7 @@ public class MarketMobileController {
 		
 		marketService.mergeQuoteSubmit(account.getUserId(), quote, id, taskId,
 				processId);
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -1343,7 +1343,7 @@ public class MarketMobileController {
 		// marketService.verifyQuoteSubmit(quote, id, taskId, processId);
 		marketService.verifyQuoteSubmit(quote, id, taskId, processId, result,
 				comment);
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -1873,7 +1873,7 @@ public class MarketMobileController {
 		marketService.modifyOrderSubmit(order, fabrics, accessorys, logistics,
 				produces, sample_produces, versions, cad, editok, task_id,
 				account.getUserId());
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -2004,7 +2004,7 @@ public class MarketMobileController {
 		} else {
 			model.addAttribute("result", "cancelOrder");
 		}
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -2203,7 +2203,7 @@ public class MarketMobileController {
 
 		boolean isSuccess = marketService.confirmProduceOrderSubmit(account.getUserId() + "",
 				orderId_request, taskId, processId, comfirmworksheet, produces);
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -2258,7 +2258,7 @@ public class MarketMobileController {
 		boolean comfirmworksheet = false;
 		boolean isSuccess = marketService.confirmProduceOrderSubmit(account.getUserId() + "",
 				orderId_request, taskId, processId, comfirmworksheet, null);
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -2434,7 +2434,7 @@ public class MarketMobileController {
 
 		boolean isSuccess = marketService.getPushRestOrderSubmit(actorId, taskId, result,
 				orderId_string);
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -3195,7 +3195,7 @@ public class MarketMobileController {
 		marketService.verifyAlterSubmit(Alter, taskId, processId, result,
 				suggestion);
 		model.addAttribute("result", result);
-		model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 
 	}
@@ -3333,7 +3333,7 @@ public class MarketMobileController {
 			order.setEmployeeId(employeeId);
 			order.setOrderState("A");
 			marketService.assignCustomerOrder(order);
-			model.addAttribute(Constants.PARAM_IS_SUCCESS, true);
+			model.addAttribute(Constants.JSON_IS_SUCCESS, true);
 		}
 		//搜索 需要分配的订单
 		@RequestMapping(value = "/market/mobile_allocateOrderSearch.do")

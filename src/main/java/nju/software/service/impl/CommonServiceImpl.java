@@ -97,8 +97,8 @@ public class CommonServiceImpl implements CommonService {
 		Map<String, Object> result = new HashMap<>();
 		//session不存在，则通知session过期，操作失败
 		if (session == null) {
-			result.put(Constants.PARAM_IS_SUCCESS, false);
-			result.put(Constants.PARAM_NOTIFY, "session overdue");
+			result.put(Constants.JSON_IS_SUCCESS, false);
+			result.put(Constants.JSON_NOTIFY, "session overdue");
 			jsonUtil.sendJson(response, result);
 			return null;
 		}

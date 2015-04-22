@@ -188,7 +188,8 @@ public class AccountMobileController {
 				return;
 			}
 			String username = request.getParameter("employee_id");
-			String password1 = request.getParameter("password");
+			String password1 = request.getParameter("password1");
+			String password2 = request.getParameter("password2");
 			String employeeName = request.getParameter("employee_name");
 			Short employeeSex = Short
 					.parseShort(request.getParameter("radiofield"));

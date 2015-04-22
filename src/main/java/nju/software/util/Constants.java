@@ -21,19 +21,22 @@ public class Constants {
 	/**当前登录用户*/
 	public final static String PARAM_CUR_ACCOUNT = "cur_user";
 	//json返回数据参数说明
-	public final static String PARAM_IS_SUCCESS = "isSuccess";
-	public final static String PARAM_ACCOUNT = "account";
+	public final static String JSON_IS_SUCCESS = "isSuccess";
+	public final static String JSON_ACCOUNT = "account";
 	/**客户列表*/
-	public final static String PARAM_CUSTOMERS = "customers";
+	public final static String JSON_CUSTOMERS = "customers";
 	/**单个客户*/
-	public final static String PARAM_CUSTOMER = "customer";
+	public final static String JSON_CUSTOMER = "customer";
 	/**消息*/
-	public final static String PARAM_NOTIFY = "notify";
+	public final static String JSON_NOTIFY = "notify";
 	/**员工列表*/
-	public final static String PARAM_EMPLOYEE_LIST = "employeeList";
+	public final static String JSON_EMPLOYEE_LIST = "employeeList";
+	/**员工名字*/
+	public final static String JSON_EMPLOYEE_NAME = "employee_name";
 	
-	public final static String PARAM_EMPLOYEE_NAME = "employee_name";
 	//request参数说明
+	/**sessionId*/
 	public final static String PARAM_SESSION_ID = "jsessionId";
+	public final static String PARAM_PAGE = "page";
 	
 }

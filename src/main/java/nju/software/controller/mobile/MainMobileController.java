@@ -78,11 +78,11 @@ public class MainMobileController {
 		Account account = accountService.vertifyAccount(user_name, user_password);		
 		if (account != null) {
 			session.setAttribute(Constants.PARAM_CUR_ACCOUNT, account);
-			model.put(Constants.PARAM_ACCOUNT, account);
-			model.put(Constants.PARAM_IS_SUCCESS, true);
+			model.put(Constants.JSON_ACCOUNT, account);
+			model.put(Constants.JSON_IS_SUCCESS, true);
 			model.put(Constants.PARAM_SESSION_ID, session.getId());
 		} else {
-			model.addAttribute(Constants.PARAM_IS_SUCCESS, false);
+			model.addAttribute(Constants.JSON_IS_SUCCESS, false);
 		}
 		jsonUtil.sendJson(response, model);
 	}
@@ -101,7 +101,7 @@ public class MainMobileController {
 		List<TreeNode> list= systemService.findLeftMenuByLogin(account);
 		session.setAttribute("treeNodeList", list);
 		Map<String, Object> map = new HashMap<>();
-		map.put(Constants.PARAM_ACCOUNT, account);
+		map.put(Constants.JSON_ACCOUNT, account);
 		jsonUtil.sendJson(response, map);
 	}
 }

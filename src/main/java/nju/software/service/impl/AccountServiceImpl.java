@@ -137,7 +137,9 @@ public class AccountServiceImpl implements AccountService {
 				Constants.USER_TYPE_CUSTOMER, c.getCustomerId());
 		if (a != null && a.size() >= 1) {
 			Account ac = a.get(0);
-			ac.setUserPassword(SecurityUtil.md5hex(password1));
+			if (password1 != null && password1.equals("")) {
+				ac.setUserPassword(SecurityUtil.md5hex(password1));
+			}
 			ac.setNickName(customerName);
 			this.accountDAO.merge(ac);
 			return true;

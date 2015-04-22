@@ -48,7 +48,7 @@ public class AccountController {
 				numberPerPage);
 		int pageNumber = (employeeService.getcount() - 1) / numberPerPage + 1;
 		model.addAttribute("employee_list", list);
-		ModelMap addAttribute = model.addAttribute("page_number", pageNumber);
+		model.addAttribute("page_number", pageNumber);
 		model.addAttribute("page", page);
 		// model.addAttribute("notify", page);
 		return "/account/employeeList";
@@ -190,7 +190,6 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/account/modifyEmployeeSubmit.do", method = RequestMethod.POST)
-	
 	public String modifyEmployeeSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		HttpSession session = request.getSession();
