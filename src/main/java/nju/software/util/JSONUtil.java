@@ -65,9 +65,11 @@ public class JSONUtil {
 		}
 		
 		private Object process(Object value){
-			if (value == null) 
-				return "";
-			return dateFormat.format((Date)value);
+			if (value instanceof Timestamp) 
+				return dateFormat.format((Timestamp)value);
+			if (value instanceof java.sql.Date) 
+				return dateFormat.format((Date)value);
+			return "";
 		}
 	}
 }
