@@ -41,7 +41,7 @@
 						<tr>
 							<td class="title">上传工艺文件</td>
 							<td colspan="6">
-				                <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+				                <input type="hidden" name="processId" value="${orderInfo.processInstanceId}" />
 								<input name="craftFile" id="craftFile" type="file" required="required"/> 
 								<input class="btn btn-primary btn-rounded" type="submit" value="上传工艺制作图"  onclick="return check()"/>						
 								<a style="color: red;">点击后，上传图片生效！</a>
@@ -59,7 +59,7 @@
 		            </table>
 	            </form>
 			
-				<form action="${ctx}/design/needCraftSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}" method="post"
+				<form action="${ctx}/design/needCraftSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.taskId}" method="post"
 						onsubmit="return confirm('确认完成工艺制作？')">
 					<table class="table table-striped table-bordered table-hover detail">
 					    <tr>

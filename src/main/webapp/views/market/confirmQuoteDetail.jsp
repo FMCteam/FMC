@@ -47,7 +47,7 @@
 										<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
 										<input type="hidden" name="taskId" value="${orderInfo.taskId }" />
 								 		-->
-				                		<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+				                		<input type="hidden" name="processId" value="${orderInfo.processInstanceId}" />
 										<input name="confirmSampleMoneyFile" id="confirmSampleMoneyFile" type="file" required="required"/> 
 									</td>
 								</tr>
@@ -72,9 +72,9 @@
 							<input id="confirm_price" type="button" value="确认报价" class="btn btn-primary btn-rounded"  style="float: right;"/>
 						</div>
 						<button class="btn btn-primary" style="float:left" onclick="history.back();">返回</button>
-						<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
+						<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
 						<input type="hidden" name="orderId" value="${orderInfo.quote.orderId }" />
-						<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+						<input type="hidden" name="processId" value="${orderInfo.processInstanceId}" />
 						<!-- 隐藏标签，判断确认或修改报价，还是取消订单 -->
 						<input id="result"  type="hidden" name="result" value="0" />
  					</form>

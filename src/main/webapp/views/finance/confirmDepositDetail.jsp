@@ -157,7 +157,7 @@
 	                        </tr>
 						</table>
 						
-						<a href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
+						<a href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.taskId}&result=0"
 								onclick="return confirm('确认未收到汇款？')"
 								class="btn btn-danger btn-rounded"
 								style="color: white"><i class="icon-remove icon-white"></i>未收到汇款</a>

@@ -39,7 +39,7 @@
 					<div class="tab-pane" id="quote">
 						<%@include file="/views/common/quote.jsp"%>
 					</div>
-				<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
+				<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
 				<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
 				<input type="hidden" name="orderInfoQuoteOuterPrice" value="${orderInfo.quote.outerPrice}"/>
 				<input type="hidden" name="orderInfoOrderAskAmount" value="${orderInfo.order.askAmount }"/>
@@ -73,7 +73,7 @@
 				<input type="hidden" name="taskId" value="${orderInfo.taskId}" /> <input
 					type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
 				<input type="hidden" name="processId"
-					value="${orderInfo.task.processInstanceId}" /> <input
+					value="${orderInfo.processInstanceId}" /> <input
 					id="produce_color" type="hidden" name="produce_color" /> <input
 					id="produce_xs" type="hidden" name="produce_xs" /> <input
 					id="produce_s" type="hidden" name="produce_s" /> <input

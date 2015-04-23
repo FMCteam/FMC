@@ -37,7 +37,7 @@
 			</div>
 		</div>
 		<form action="${ctx}/market/signContractSubmit.do" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
+				<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
 				<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" />
 				<input type="hidden" name="orderInfoQuoteOuterPrice" value="${orderInfo.quote.outerPrice}"/>
 				<input type="hidden" name="orderInfoOrderAskAmount" value="${orderInfo.order.askAmount }"/>

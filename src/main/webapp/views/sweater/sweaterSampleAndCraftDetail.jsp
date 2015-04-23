@@ -37,7 +37,7 @@
 				<div class="tab-pane active" id="sweater">
 
 					<form method="post" 
-						action="${ctx}/sweater/sweaterSampleAndCraftSubmit.do?taskId=${orderInfo.task.id}&orderId=${orderInfo.order.orderId}">
+						action="${ctx}/sweater/sweaterSampleAndCraftSubmit.do?taskId=${orderInfo.taskId}&orderId=${orderInfo.order.orderId}">
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import nju.software.dao.impl.AccessoryCostDAO;
 import nju.software.dao.impl.AccessoryDAO;
@@ -31,6 +32,7 @@ import nju.software.dataobject.AccessoryCost;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Craft;
 import nju.software.dataobject.DesignCad;
+import nju.software.dataobject.Employee;
 import nju.software.dataobject.FabricCost;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Package;
@@ -67,12 +69,29 @@ public class ServiceUtil {
 			Order order = orderDAO.findById(orderId);
 			System.out.println(orderId);
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
-			model.put("task", task);
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else {
+				model.put("employee", employeeDAO.findById(employeeId));
+			}
+//			model.put("task", task); //task对象在前端没有用到，并且解析为json数据时会出现nullpointer问题，故注释掉了
 			model.put("taskTime", getTaskTime(task.getCreateTime()));
 			model.put("orderId", getOrderId(order));
 			list.add(model);
 		}
+		
 		return list;
 	}
 	public List<Map<String, Object>> getSearchOrderList(String actorId,
@@ -103,7 +122,7 @@ public class ServiceUtil {
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("order", order);
 				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
-				model.put("task", task);
+//				model.put("task", task);
 				model.put("taskTime", getTaskTime(task.getCreateTime()));
 				model.put("orderId", getOrderId(order));
 				list.add(model);
@@ -116,7 +135,8 @@ public class ServiceUtil {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Task task = mainProcessService.getTaskOfUserByTaskNameWithSpecificOrderId(actorId, taskName, orderId);
 		Order order = orderDAO.findById(orderId);
-		model.put("task", task);
+//		model.put("task", task);
+		model.put("processInstanceId", task.getProcessInstanceId());
  		model.put("taskId", task.getId());
 		model.put("order", order);
 		model.put("orderSampleAmount", order.getSampleAmount());

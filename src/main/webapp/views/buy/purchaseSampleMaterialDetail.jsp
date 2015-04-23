@@ -4,7 +4,7 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<form onsubmit="return confirm('确认操作？')" method="post"
-			action="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.task.id}&processId=${orderInfo.task.processInstanceId}&orderId=${orderInfo.order.orderId}"
+			action="${ctx}/buy/purchaseSampleMaterialSubmit.do?taskId=${orderInfo.taskId}&processId=${orderInfo.processInstanceId}&orderId=${orderInfo.order.orderId}"
 			enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
 			<!--  如果是其它页面，这里是填充具体的内容。 -->

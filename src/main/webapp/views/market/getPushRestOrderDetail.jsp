@@ -83,7 +83,7 @@
 						        <td class="title" style="color:red; ">选择尾金截图文件</td>
 						        <td colspan="3">
 							       <a style="color: red;">*</a>
-			                       <input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+			                       <input type="hidden" name="processId" value="${orderInfo.processInstanceId}" />
 							       <input name="confirmFinalPaymentFile" id="confirmFinalPaymentFile" type="file" required="required"/> 
 							       <!-- 
 							       <input  class="btn btn-primary btn-rounded" type="submit" value="上传尾金截图" onclick="return confirm('确认上传？')" />						
@@ -128,7 +128,7 @@
 								</c:forEach>
 							</c:if>
 						</table>
-						<a href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0" 
+						<a href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.taskId}&result=0" 
 						   class="btn btn-danger btn-rounded"
 						   onclick="return confirmFinanceSubmit()"
 						   style="color: white">

@@ -39,10 +39,10 @@
 				</div>
 			</div>
 			<div class="action">
-				<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
+				<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
 				<input type="hidden" name="orderId"
 					value="${orderInfo.order.orderId }" /> <input type="hidden"
-					name="processId" value="${orderInfo.task.processInstanceId}" /> <input
+					name="processId" value="${orderInfo.processInstanceId}" /> <input
 					type="hidden" name="tof"> <button
 					class="btn btn-primary btn-rounded"><i
 					class="icon-ok icon-white"></i>确定</button> <a

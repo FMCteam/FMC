@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -230,7 +231,6 @@ public class DesignController {
 		model.addAttribute("taskName", "样衣版型录入及生产");
 		model.addAttribute("url", "/design/getUploadDesignDetail.do");
 		model.addAttribute("searchurl", "/design/getUploadDesignListSearch.do");
-
 		return "/design/getUploadDesignList";
 	}
 

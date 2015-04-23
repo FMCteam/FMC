@@ -1969,9 +1969,10 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public String getComment(Object task, String variableName) {
+	public String getComment(Object taskId, String variableName) {
+		Task task = mainProcessService.getTask((String)taskId);
 		return (String) mainProcessService.getProcessVariable(
-				((Task) task).getProcessInstanceId(), variableName);
+				task.getProcessInstanceId(), variableName);
 	}
 
 	/*

@@ -50,9 +50,9 @@
 						</table>
 					</div>
 			<div class="action">
-				<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
+				<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
 				<input type="hidden" name="order_id" value="${orderInfo.quote.orderId }" /> 
-				<input type="hidden" name="processId" value="${orderInfo.task.processInstanceId}" />
+				<input type="hidden" name="processId" value="${orderInfo.processInstanceId}" />
 				<button class="btn btn-primary btn-rounded">
 					<i class="icon-ok icon-white"></i>确定
 				</button>

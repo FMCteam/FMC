@@ -75,7 +75,7 @@
 	                  	<div class="action" style="float:right"> 
 							<input id="agree" class="btn btn-primary" type="button" value="同意" /> 
 							<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
-							<input type="hidden" name="taskId" value="${orderInfo.task.id}" />
+							<input type="hidden" name="taskId" value="${orderInfo.taskId}" />
 							<input id="verify_val" type="hidden" name="result" value="false" />
 					  	</div>
 					  	<br>

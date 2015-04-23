@@ -4,7 +4,7 @@
 <div class="maincontent">
 	<div class="maincontentinner">
 		<form method="post"
-				action="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.task.id}&orderId=${orderInfo.order.orderId}&processId=${orderInfo.task.processInstanceId}"
+				action="${ctx}/buy/purchaseMaterialSubmit.do?taskId=${orderInfo.taskId}&orderId=${orderInfo.order.orderId}&processId=${orderInfo.processInstanceId}"
 				enctype="multipart/form-data">
 			<div class="row-fluid" style="min-height:300px;">
 				<!--  如果是其它页面，这里是填充具体的内容。 -->

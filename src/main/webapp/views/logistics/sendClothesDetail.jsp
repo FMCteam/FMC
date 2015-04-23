@@ -27,7 +27,7 @@
 						onsubmit="return confirm('确认操作？');">
 						<input type="hidden" name="orderId"
 							value="${orderInfo.order.orderId}" /> <input type="hidden"
-							name="taskId" value="${orderInfo.task.id}" />
+							name="taskId" value="${orderInfo.taskId}" />
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>

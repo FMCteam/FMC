@@ -26,7 +26,7 @@
 			</div>
 			<div class="tab-pane active" id="sweater">
 				<form onsubmit="return confirm('确认操作？')" method="post"
-					action="${ctx}/buy/purchaseSweaterMaterialSubmit.do?taskId=${orderInfo.task.id}&orderId=${orderInfo.order.orderId}">
+					action="${ctx}/buy/purchaseSweaterMaterialSubmit.do?taskId=${orderInfo.taskId}&orderId=${orderInfo.order.orderId}">
 					<table
 						class="table table-striped table-bordered table-hover detail">
 						<tr>

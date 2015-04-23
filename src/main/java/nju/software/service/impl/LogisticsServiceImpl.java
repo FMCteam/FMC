@@ -49,7 +49,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Order order = orderDAO.findById(orderId);
 			model.put("order",order);
 			model.put("logistics", logisticsDAO.findById(orderId));
-			model.put("task", task);
+//			model.put("task", task);
 			model.put("taskTime", service.getTaskTime(task.getCreateTime()));
 			model.put("orderId", service.getOrderId(order));
 			list.add(model);
@@ -80,7 +80,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Order order = orderDAO.findById(orderId);
 			model.put("order",order);
 			model.put("logistics", logisticsDAO.findById(orderId));
-			model.put("task", task);
+//			model.put("task", task);
 			model.put("taskTime", service.getTaskTime(task.getCreateTime()));
 			model.put("orderId", service.getOrderId(order));
 			list.add(model);
@@ -434,7 +434,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			Order order = orderDAO.findById(orderId);
 			if (order.getLogisticsState() == 2) {
 				model.put("order", order);
-				model.put("task", task);
+//				model.put("task", task);
 				model.put("taskTime", service.getTaskTime(task.getCreateTime()));
 				model.put("orderId", service.getOrderId(order));
 				list.add(model);

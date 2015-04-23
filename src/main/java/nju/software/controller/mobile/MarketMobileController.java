@@ -1227,7 +1227,7 @@ public class MarketMobileController {
 		model.addAttribute("orderInfo", orderModel);
 		model.addAttribute("merge_w", true);
 		String verifyQuoteComment = marketService.getComment(
-				orderModel.get("task"), MarketServiceImpl.VERIFY_QUOTE_COMMENT);
+				orderModel.get("taskId"), MarketServiceImpl.VERIFY_QUOTE_COMMENT);
 		model.addAttribute("verifyQuoteComment", verifyQuoteComment);
 		jsonUtil.sendJson(response, model);
 	}
@@ -1511,12 +1511,12 @@ public class MarketMobileController {
 		Map<String, Object> orderModel = marketService.getModifyOrderDetail(
 				account.getUserId(), id);
 		model.addAttribute("orderModel", orderModel);
-		Object task = orderModel.get("task");
-		String purchaseComment = marketService.getComment(task,
+		Object taskId = orderModel.get("taskId");
+		String purchaseComment = marketService.getComment(taskId,
 				BuyServiceImpl.RESULT_PURCHASE_COMMENT);
-		String designComment = marketService.getComment(task,
+		String designComment = marketService.getComment(taskId,
 				DesignServiceImpl.RESULT_DESIGN_COMMENT);
-		String produceComment = marketService.getComment(task,
+		String produceComment = marketService.getComment(taskId,
 				ProduceServiceImpl.RESULT_PRODUCE_COMMENT);
 
 		model.addAttribute("purchaseComment", purchaseComment);

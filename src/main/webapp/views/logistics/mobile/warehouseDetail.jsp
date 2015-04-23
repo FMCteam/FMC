@@ -122,7 +122,7 @@
 	<div>
 		<form action="${ctx}/logistics/mobile/warehouseSubmit.do" onsubmit="return check();"
 			method="post">
-			<input type="hidden" value="${orderInfo.task.id}" name="taskId" />
+			<input type="hidden" value="${orderInfo.taskId}" name="taskId" />
 			<input type="hidden" value="${orderInfo.order.orderId }" name="orderId" />
 			
 			<input class="span12 btn btn-primary" type="submit" value="完成入库"

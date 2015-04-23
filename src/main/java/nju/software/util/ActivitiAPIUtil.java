@@ -159,6 +159,9 @@ public class ActivitiAPIUtil {
 		return null;
 	}
 	
+	public Task getTask(String taskId){
+		return taskService.createTaskQuery().taskId(taskId).singleResult();
+	}
 
 	/**
 	 * 根据用户ID和任务名，以及特定参数获取任务

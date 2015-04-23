@@ -36,7 +36,7 @@
 					<%@include file="/views/common/quote.jsp"%>
 				</div>
 			<div class="tab-pane active" id="craft">
-				<form action="${ctx}/design/needCraftProductSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}"
+				<form action="${ctx}/design/needCraftProductSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.taskId}"
 	 			method="post" enctype="multipart/form-data" onsubmit="return confirm('确认完成大货工艺制作？')">
 						<table class="table table-striped table-bordered table-hover detail">
 						    <tr>
@@ -133,7 +133,7 @@ $(document).ready(function() {
 function doPost(){
 	var crafsManName=$("#crafsManName").val();
 	var crafsProduceDate=$("#input_day").val();
-    window.location.href="${ctx}/design/needCraftProductSubmit.do?orderId="+${orderInfo.order.orderId}+"&taskId="+${orderInfo.task.id}
+    window.location.href="${ctx}/design/needCraftProductSubmit.do?orderId="+${orderInfo.order.orderId}+"&taskId="+${orderInfo.taskId}
 	 +"&crafsManName="+crafsManName+"&crafsProduceDate="+crafsProduceDate;
 }
 </script>

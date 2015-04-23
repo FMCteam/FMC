@@ -598,7 +598,7 @@
 					value="${orderModel.order.customerId}" /> <input type="hidden"
 					name="id" value="${orderModel.order.orderId}" /> <input
 					id="verify_val" type="hidden" name="editok" value="" /> <input
-					type="hidden" name="task_id" value="${orderModel.task.id}" />
+					type="hidden" name="task_id" value="${orderModel.taskId}" />
 
 				<!--widgetcontent-->
 				<!--row-fluid-->

@@ -58,7 +58,7 @@
 								<td>操作</td>
 								<td colspan="12">
 								<input type="hidden" name="orderId" value="${orderInfo.order.orderId}" /> 
-							    <input type="hidden" name="taskId" value="${orderInfo.task.id}" /> 
+							    <input type="hidden" name="taskId" value="${orderInfo.taskId}" /> 
 								<input type="submit" value="完成排版切片 "  class="btn btn-primary btn-rounded"   />
 								</td>
 							</tr>

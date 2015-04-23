@@ -27,7 +27,7 @@
 					onSubmit="return confirmSendSampleSubmit();">
 						<input type="hidden" name="orderId"
 							value="${orderInfo.order.orderId}" /> <input type="hidden"
-							name="taskId" value="${orderInfo.task.id}" />
+							name="taskId" value="${orderInfo.taskId}" />
 						<table
 							class="table table-striped table-bordered table-hover detail">
 							<tr>
@@ -133,7 +133,7 @@
 							<input id="complete_final_send" class="btn btn-primary" type="submit" value="完成最终发货" />
 							-->
 							
-							<a href="${ctx}/logistics/sendSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&isFinal=true"
+							<a href="${ctx}/logistics/sendSampleSubmit.do?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.taskId}&isFinal=true"
 							   onclick="return confirmSendSampleSubmit();"
 							   class="btn btn-primary">完成最终发货</a>
 							

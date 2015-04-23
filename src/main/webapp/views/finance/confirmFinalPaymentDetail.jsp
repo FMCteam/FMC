@@ -162,7 +162,7 @@
 								</c:forEach>
 							</c:if>
 						</table>
-						<a 	href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
+						<a 	href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.taskId}&result=0"
 							class="btn btn-danger btn-rounded"
 							onclick="return confirmFinanceSubmit()"
 							style="color: white"><i

@@ -42,6 +42,10 @@ public class BasicProcessService {
 		return activitiAPIUtil.isProcessInstanceExist(processId);
 	}
 	
+	public Task getTask(String taskId){
+		return activitiAPIUtil.getTask(taskId);
+	}
+	
 	/**
 	 * 
 	 * @param userId

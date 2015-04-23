@@ -69,7 +69,7 @@
 	</table>
 	<div>
 	 <a  class="btn btn-danger btn-rounded"  style="float: left;color: white"
-			href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.task.id}&result=0"
+			href="${ctx}${orderInfo.url}?orderId=${orderInfo.order.orderId}&taskId=${orderInfo.taskId}&result=0"
 			onclick="return confirmFinanceSubmit()"><i
 			class="icon-remove icon-white"></i>未收到汇款</a>
 	</div>
