@@ -382,13 +382,14 @@ public class MarketServiceImpl implements MarketService {
 
 		Integer orderId = order.getOrderId();
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-
+		
 		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
 			// String filedir = request.getSession().getServletContext()
 			// .getRealPath("/upload/sample/" + orderId);
 
 			String curPath = request.getSession().getServletContext()
 					.getRealPath("/");
+			System.err.println("================cur_path:" + curPath);
 			String fatherPath = new File(curPath).getParent();
 			String relativePath = File.separator + UPLOAD_DIR + File.separator
 					+ "sample" + File.separator + orderId;
@@ -490,7 +491,7 @@ public class MarketServiceImpl implements MarketService {
 		if (!multipartRequest.getFile("sample_clothes_picture").isEmpty()) {
 			// String filedir = request.getSession().getServletContext()
 			// .getRealPath("/upload/sample/" + orderId);
-
+			
 			String curPath = request.getSession().getServletContext()
 					.getRealPath("/");
 			String fatherPath = new File(curPath).getParent();

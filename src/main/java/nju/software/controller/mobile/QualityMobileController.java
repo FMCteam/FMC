@@ -44,8 +44,7 @@ public class QualityMobileController {
 
 	//质检列表
 	@RequestMapping(value = "/quality/mobile_checkQualityList.do", method = RequestMethod.GET)
-	//@Transactional(rollbackFor = Exception.class)
-	public String qualityCheckList(HttpServletRequest request,
+	public void qualityCheckList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		List<Map<String,Object>> orderList = qualityService.getCheckQualityList();
@@ -55,12 +54,10 @@ public class QualityMobileController {
 		model.addAttribute("url", "/quality/mobile_checkQualityDetail.do");
 		model.addAttribute("searchurl", "/quality/mobile_checkQualityListSearch.do");
 		jsonUtil.sendJson(response,model);
-		return "/quality/mobile_checkQualityList";
 	}
 
 	@RequestMapping(value = "/quality/mobile_checkQualityListSearch.do" )
-	//@Transactional(rollbackFor = Exception.class)
-	public String checkQualityListSearch(HttpServletRequest request,
+	public void checkQualityListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -83,20 +80,17 @@ public class QualityMobileController {
 
 		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		jsonUtil.sendJson(response,model);
-		return "/quality/mobile_checkQualityList";
 	}
 	
 	//质检详情
 	@RequestMapping(value = "/quality/mobile_checkQualityDetail.do", method = RequestMethod.GET)
-	//@Transactional(rollbackFor = Exception.class)
-	public String modifyProductDetail(HttpServletRequest request,
+	public void modifyProductDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		int id = Integer.parseInt(orderId);
 		Map<String,Object> oi = qualityService.getCheckQualityDetail(id);
 		model.addAttribute("orderInfo", oi);
 		jsonUtil.sendJson(response,model);
-		return "/quality/mobile_checkQualityDetail";
 	}
 	
 
@@ -111,7 +105,7 @@ public class QualityMobileController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/quality/mobile_checkQualitySubmit.do", method = RequestMethod.POST)
-	public String modifyProduct(HttpServletRequest request,
+	public void modifyProduct(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model)throws Exception {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String s_taskId = request.getParameter("taskId");
@@ -171,14 +165,13 @@ public class QualityMobileController {
 		if (msg.equals("")) {
 			// 如果成功保存本次质检，返回质检列表页面
 			jsonUtil.sendJson(response,model);
-			return "redirect:/quality/checkQualityList.do";
+			return;
 		} else {
 			// 否则还是保持在本页面
 			Map<String,Object> oi = qualityService.getCheckQualityDetail(orderId);
 			model.addAttribute("orderInfo", oi);
 			model.addAttribute("notify", msg);
 			jsonUtil.sendJson(response,model);
-			return "/quality/mobile_checkQualityDetail";
 		}
 		
 		// marketService.modifyProduct(account.getUserId(),id,taskId,processId,null);

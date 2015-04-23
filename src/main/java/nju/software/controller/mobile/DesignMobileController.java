@@ -35,16 +35,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class DesignMobileController {
 	@Autowired
          private JSONUtil jsonUtil ;
-//	private final static String CAD_URL = "C:/fmc/cad/";
-//	private final static String CRAFT_FILE_URL = "C:/fmc/craft/";
 	private final static String UPLOAD_DIR = "upload_new";
 	private final static String CAD_URL = "/upload_new/cad/";
 	private final static String CRAFT_FILE_URL = "/upload_new/craft/";
 	
 	// ===========================设计验证=================================
 	@RequestMapping(value = "/design/mobile_verifyDesignList.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String verifyDesignList(HttpServletRequest request,
+	public void verifyDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> orderList = designService
 				.getVerifyDesignList();
@@ -54,14 +51,12 @@ public class DesignMobileController {
 		model.addAttribute("url", "/design/mobile_verifyDesignDetail.do");
 		model.addAttribute("searchurl", "/design/mobile_verifyDesignListSearch.do");
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_verifyDesignList";
 	}
 	@Autowired
 	private EmployeeService employeeService;
 	// ===========================设计验证订单搜索=================================
 	@RequestMapping(value = "/design/mobile_verifyDesignListSearch.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String verifyDesignListSearch(HttpServletRequest request,
+	public void verifyDesignListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -86,25 +81,21 @@ public class DesignMobileController {
 		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		jsonUtil.sendJson(response, model);
 		
-		return "/design/mobile_verifyDesignList";
 	}
 	
 	
 	@RequestMapping(value = "/design/mobile_verifyDesignDetail.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String verifyDesignDetail(HttpServletRequest request,
+	public void verifyDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		Map<String, Object> orderInfo = designService
 				.getVerifyDesignDetail(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_verifyDesignDetail";
 	}
 
 	@RequestMapping(value = "/design/mobile_verifyDesignSubmit.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String verifyDesignSubmit(HttpServletRequest request,
+	public void verifyDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String taskId = request.getParameter("taskId");
 		boolean result = Boolean
@@ -113,14 +104,12 @@ public class DesignMobileController {
 		boolean isSuccess =designService.verifyDesignSubmit(taskId, result, comment);
 		model.addAttribute("isSuccess", isSuccess);
 		jsonUtil.sendJson(response, model);
-		return "forward:/design/mobile_verifyDesignList.do";
 	}
 	
 	// =========================设计工艺验证===============================
 	
 	@RequestMapping(value = "/design/mobile_computeDesignCostList.do", method= RequestMethod.GET)
-	//@Transactional(rollbackFor = Exception.class)
-	public String computeDesignCostList(HttpServletRequest request,
+	public void computeDesignCostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		List<Map<String,Object>> list = designService.getComputeDesignCostList();
@@ -130,12 +119,10 @@ public class DesignMobileController {
 		model.addAttribute("url", "/design/mobile_computeDesignCostDetail.do");
 		model.addAttribute("searchurl", "/design/mobile_computeDesignCostListSearch.do");
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_computeDesignCostList";
 	}
 	
 	@RequestMapping(value = "/design/mobile_computeDesignCostListSearch.do" )
-	//@Transactional(rollbackFor = Exception.class)
-	public String computeProduceCostListSearch(HttpServletRequest request,
+	public void computeProduceCostListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -157,23 +144,19 @@ public class DesignMobileController {
 		model.addAttribute("searchurl", "/design/mobile_computeDesignCostListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_computeDesignCostList";
 	}
 	
 	@RequestMapping(value = "/design/mobile_computeDesignCostDetail.do", method= RequestMethod.GET)
-	//@Transactional(rollbackFor = Exception.class)
-	public String computeDesignCostDetail(HttpServletRequest request,
+	public void computeDesignCostDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId=Integer.parseInt(request.getParameter("orderId"));
 		Map<String,Object> orderInfo = designService.getComputeDesignCostInfo(orderId);
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_computeCraftCostDetail";
 	}
 	
 	@RequestMapping(value = "/design/mobile_computeDesignCostSubmit.do", method= RequestMethod.POST)
-	//@Transactional(rollbackFor = Exception.class)
-	public String computeDesignCostSubmit(HttpServletRequest request,
+	public void computeDesignCostSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		String taskId = request.getParameter("taskId");
@@ -185,7 +168,7 @@ public class DesignMobileController {
 			boolean isSuccess=designService.verifyDesignSubmit(taskId, result, comment);
 			model.addAttribute("isSuccess", isSuccess);
 			jsonUtil.sendJson(response, model);
-			return "redirect:/design/mobile_computeDesignCostList.do";
+			return;
 		}
 		
 		//是否需要工艺
@@ -228,14 +211,12 @@ public class DesignMobileController {
 				);
 		
 		jsonUtil.sendJson(response, model);
-		return "redirect:/design/mobile_computeDesignCostList.do";
 	}
 	
 
 	// ===========================上传版型=================================
 	@RequestMapping(value = "/design/mobile_getUploadDesignList.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getUploadDesignList(HttpServletRequest request,
+	public void getUploadDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getUploadDesignList();
 		list = ListUtil.reserveList(list);
@@ -245,13 +226,11 @@ public class DesignMobileController {
 		model.addAttribute("url", "/design/mobile_getUploadDesignDetail.do");
 		model.addAttribute("searchurl", "/design/mobile_getUploadDesignListSearch.do");
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getUploadDesignList";
 	}
 
 	// ===========================上传版型搜索=================================
 	@RequestMapping(value = "/design/mobile_getUploadDesignListSearch.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getUploadDesignListSearch(HttpServletRequest request,
+	public void getUploadDesignListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -274,12 +253,10 @@ public class DesignMobileController {
 
 		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getUploadDesignList";
 	}
 	
 	@RequestMapping(value = "/design/mobile_getUploadDesignDetail.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getUploadDesignDetail(HttpServletRequest request,
+	public void getUploadDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		Map<String, Object> orderInfo = designService
@@ -291,13 +268,11 @@ public class DesignMobileController {
 		//4.样衣原料工艺已完成，请根据样衣到印花设计部领取面料
 		model.addAttribute("orderSampleStatus",orderSampleStatus);
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getUploadDesignDetail";
 	}
 
 	//录入版型数据
 	@RequestMapping(value = "/design/mobile_uploadDesignSubmit.do", method = RequestMethod.POST)
-	//@Transactional(rollbackFor = Exception.class)
-	public String uploadDesignSubmit(HttpServletRequest request,
+	public void uploadDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
@@ -330,8 +305,6 @@ public class DesignMobileController {
 		model.addAttribute("orderInfo", orderInfo);
 		model.addAttribute("orderSampleStatus",orderSampleStatus);
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getUploadDesignDetail";
-//		return "forward:/design/mobile_getUploadDesignList.do";
 	}
 	/** 
 	* @Title: uploadDesignSubmit_all 
@@ -344,8 +317,7 @@ public class DesignMobileController {
 	* @throws 
 	*/
 	@RequestMapping(value = "/design/mobile_uploadDesignSubmit_all.do", method = RequestMethod.POST)
-	//@Transactional(rollbackFor = Exception.class)
-	public String uploadDesignSubmit_all(HttpServletRequest request,
+	public void uploadDesignSubmit_all(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String cadSide = request.getParameter("cadSide");//制版人
@@ -375,13 +347,11 @@ public class DesignMobileController {
 		model.addAttribute("orderInfo", orderInfo);
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response, model);
-		return "/market/orderDetail";
 	}
  
     //生产样衣
 	@RequestMapping(value = "/design/mobile_produceSampleSubmit.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String produceSampleSubmit(HttpServletRequest request,
+	public void produceSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		boolean result =request.getParameter("result").equals("1");
@@ -390,14 +360,12 @@ public class DesignMobileController {
 		boolean isSuccess=designService.produceSampleSubmit(taskId, result,orderId);
 		model.addAttribute("isSuccess", isSuccess);
 		jsonUtil.sendJson(response, model);
-		return "forward:/design/mobile_getUploadDesignList.do";
 	}
 	
 	
 	// ===========================修改版型=================================
 	@RequestMapping(value = "/design/mobile_getModifyDesignList.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getModifyDesignList(HttpServletRequest request,
+	public void getModifyDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getModifyDesignList();
 		list = ListUtil.reserveList(list);
@@ -406,13 +374,11 @@ public class DesignMobileController {
 		model.addAttribute("url", "/design/mobile_getModifyDesignDetail.do");
 		model.addAttribute("searchurl", "/design/mobile_getModifyDesignListSearch.do");
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getModifyDesignList";
 	}
 
 	// ===========================修改版型=================================
 	@RequestMapping(value = "/design/mobile_getModifyDesignListSearch.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getModifyDesignListSearch(HttpServletRequest request,
+	public void getModifyDesignListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -434,24 +400,20 @@ public class DesignMobileController {
 		model.addAttribute("searchurl", "/design/mobile_getModifyDesignListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getModifyDesignList";
 	}
 	
 	@RequestMapping(value = "/design/mobile_getModifyDesignDetail.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getModifyDesignDetail(HttpServletRequest request,
+	public void getModifyDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		Map<String, Object> orderInfo = designService
 				.getModifyDesignDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getModifyDesignDetail";
 	}
 
 	@RequestMapping(value = "/design/mobile_modifyDesignSubmit.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String modifyDesignSubmit(HttpServletRequest request,
+	public void modifyDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
@@ -477,13 +439,11 @@ public class DesignMobileController {
 				taskId, url, uploadTime);
 		model.addAttribute("isSuccess", isSuccess);
 		jsonUtil.sendJson(response, model);
-		return "forward:/design/mobile_getModifyDesignList.do";
 	}
 	
 	
 	@RequestMapping(value = "/design/mobile_needCraftSampleSubmit.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String needCraftSampleSubmit(HttpServletRequest request,
+	public void needCraftSampleSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String s_taskId = request.getParameter("taskId");
@@ -492,13 +452,11 @@ public class DesignMobileController {
 		
         designService.needCraftSampleSubmit(orderId, s_taskId, craftLeader, completeTime);
         jsonUtil.sendJson(response, model);
-        return "redirect:/design/mobile_getNeedCraftSampleList.do";
 	}	
 	
     //上传工艺制作图
 	@RequestMapping(value = "/design/mobile_uploadCraftFileSubmit.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String uploadCraftFileSubmit(HttpServletRequest request,
+	public void uploadCraftFileSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -525,26 +483,22 @@ public class DesignMobileController {
 				.getNeedCraftSampleDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_needCraftSampleDetail";
 	}
 
 	// ===========================获取需要工艺制作的样衣=================================
 	@RequestMapping(value = "/design/mobile_needCraftSampleDetail.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String needCraftSampleDetail(HttpServletRequest request,
+	public void needCraftSampleDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		Map<String, Object> orderInfo = designService
 				.getNeedCraftSampleDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_needCraftSampleDetail";
 	}
 	
 	// ===========================样衣工艺制作列表=================================
 	@RequestMapping(value = "/design/mobile_getNeedCraftSampleList.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getNeedCraftSampleList(HttpServletRequest request,
+	public void getNeedCraftSampleList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 //		List<Map<String, Object>> list = designService.getNeedCraftList();
 		List<Map<String, Object>> list = designService.getNeedCraftSampleList();
@@ -554,12 +508,10 @@ public class DesignMobileController {
 		model.addAttribute("url", "/design/mobile_needCraftSampleDetail.do");
 		model.addAttribute("searchurl", "/design/mobile_getNeedCraftSampleListSearch.do");
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getNeedCraftSampleList";
 	}
     
 	@RequestMapping(value="/design/mobile_getNeedCraftSampleListSearch.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getNeedCraftSampleListSearch(HttpServletRequest request,
+	public void getNeedCraftSampleListSearch(HttpServletRequest request,
 			HttpServletResponse response,ModelMap model){
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -581,14 +533,12 @@ public class DesignMobileController {
 		model.addAttribute("searchurl", "/design/mobile_getNeedCraftSampleListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getNeedCraftSampleList";
 	
 	    
 	}
 	
 	@RequestMapping(value = "/design/mobile_needCraftProductSubmit.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String needCraftProductSubmit(HttpServletRequest request,
+	public void needCraftProductSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws UnsupportedEncodingException {
 		String crafsManName= new String( request.getParameter("crafsManName").getBytes("iso-8859-1"), "UTF-8");
 		String crafsProduceDate =request.getParameter("crafsProduceDate");
@@ -597,26 +547,22 @@ public class DesignMobileController {
 		String s_taskId = request.getParameter("taskId");
         designService.needCraftProductSubmit(orderId,s_taskId,crafsManName,timeProduceDate);
         jsonUtil.sendJson(response, model);
-        return "redirect:/design/mobile_getNeedCraftProductList.do";
 	}	
 	
 	// ===========================获取需要工艺制作的大货订单=================================
 	@RequestMapping(value = "/design/mobile_needCraftProductDetail.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String needCraftProductDetail(HttpServletRequest request,
+	public void needCraftProductDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		Map<String, Object> orderInfo = designService
 				.getNeedCraftProductDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_needCraftProductDetail";
 	}
 	
 	// ===========================大货生产工艺制作列表=================================
 	@RequestMapping(value = "/design/mobile_getNeedCraftProductList.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getNeedCraftList(HttpServletRequest request,
+	public void getNeedCraftList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getNeedCraftList();
 		list = ListUtil.reserveList(list);
@@ -625,13 +571,11 @@ public class DesignMobileController {
 		model.addAttribute("url", "/design/mobile_needCraftProductDetail.do");
 		model.addAttribute("searchurl", "/design/mobile_getNeedCraftProductListSearch.do");
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getNeedCraftProductList";
 	}
 
 	// ===========================大货生产工艺制作列表查询=================================
 	@RequestMapping(value = "/design/mobile_getNeedCraftProductListSearch.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getNeedCraftListSearch(HttpServletRequest request,
+	public void getNeedCraftListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -654,25 +598,21 @@ public class DesignMobileController {
 
 		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getNeedCraftProductList";
 	}
 	
 	@RequestMapping(value = "/design/mobile_getTypeSettingSliceSubmit.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getTypeSettingSliceSubmit(HttpServletRequest request,
+	public void getTypeSettingSliceSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		String cadding_side = request.getParameter("cadding_side");
 		String s_taskId = request.getParameter("taskId");
         designService.getTypeSettingSliceSubmit(orderId,cadding_side,s_taskId);
         jsonUtil.sendJson(response, model);
-        return "redirect:/design/mobile_getTypeSettingSliceList.do";
 	}	
 	
 	// ===========================获取需要排版切片的大货订单=================================
 	@RequestMapping(value = "/design/mobile_getTypeSettingSliceDetail.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getTypeSettingSliceDetail(HttpServletRequest request,
+	public void getTypeSettingSliceDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		Map<String, Object> orderInfo = designService
@@ -681,13 +621,11 @@ public class DesignMobileController {
 		String  orderSampleStatus=designService.getCraftInfo(Integer.parseInt(orderId));
 		model.addAttribute("orderSampleStatus",orderSampleStatus);
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getTypeSettingSliceDetail";
 	}
 	
 	//=============================获取需要大货生产排版切片的任务   =============================
 	@RequestMapping(value = "/design/mobile_getTypeSettingSliceList.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getTypeSettingSliceList(HttpServletRequest request,
+	public void getTypeSettingSliceList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getTypeSettingSliceList();
 		list = ListUtil.reserveList(list);
@@ -696,13 +634,11 @@ public class DesignMobileController {
 		model.addAttribute("url", "/design/mobile_getTypeSettingSliceDetail.do");
 		model.addAttribute("searchurl", "/design/mobile_getTypeSettingSliceListSearch.do");
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getTypeSettingSliceList";
 	}
 	
 	//=============================获取需要大货生产排版切片的任务搜索   =============================
 	@RequestMapping(value = "/design/mobile_getTypeSettingSliceListSearch.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getTypeSettingSliceListSearch(HttpServletRequest request,
+	public void getTypeSettingSliceListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -725,13 +661,11 @@ public class DesignMobileController {
 
 		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getTypeSettingSliceList";
 	}
 	
 	// ===========================确认版型=================================
 	@RequestMapping(value = "/design/mobile_getConfirmDesignList.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getConfirmDesignList(HttpServletRequest request,
+	public void getConfirmDesignList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getConfirmDesignList();
 		list = ListUtil.reserveList(list);
@@ -740,12 +674,10 @@ public class DesignMobileController {
 		model.addAttribute("url", "/design/mobile_getConfirmDesignDetail.do");
 		model.addAttribute("searchurl", "/design/mobile_getConfirmDesignListSearch.do");
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getConfirmDesignList";
 	}
 	
 	@RequestMapping(value = "/design/mobile_getConfirmDesignListSearch.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getConfirmDesignListSearch(HttpServletRequest request,
+	public void getConfirmDesignListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -767,24 +699,20 @@ public class DesignMobileController {
 		model.addAttribute("searchurl", "/design/mobile_getConfirmDesignListSearch.do");
 		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getConfirmDesignList";
 	}
 	
 	@RequestMapping(value = "/design/mobile_getConfirmDesignDetail.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getConfirmDesignDetail(HttpServletRequest request,
+	public void getConfirmDesignDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		Map<String, Object> orderInfo = designService
 				.getConfirmDesignDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getConfirmDesignDetail";
 	}
 
 	@RequestMapping(value = "/design/mobile_confirmDesignSubmit.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String confirmDesignSubmit(HttpServletRequest request,
+	public void confirmDesignSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
@@ -809,13 +737,11 @@ public class DesignMobileController {
 		designService.uploadDesignSubmit(Integer.parseInt(orderId),
 				taskId, url, uploadTime);
 		jsonUtil.sendJson(response, model);
-		return "forward:/design/mobile_getConfirmDesignList.do";
 	}
 
 	
 	@RequestMapping(value = "/mobile_downloadCadSubmit.do", method = RequestMethod.POST)
 	@ResponseBody
-	//@Transactional(rollbackFor = Exception.class)
 	public void downloadCadSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String url = request.getParameter("cadUrl");
@@ -833,8 +759,7 @@ public class DesignMobileController {
 	
 	// ===========================在排版切片之前确认最终版型=================================
 	@RequestMapping(value = "/design/mobile_getConfirmCadList.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getConfirmCadList(HttpServletRequest request,
+	public void getConfirmCadList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String, Object>> list = designService.getConfirmCadList();
 		list = ListUtil.reserveList(list);
@@ -843,13 +768,11 @@ public class DesignMobileController {
 		model.addAttribute("url", "/design/mobile_getConfirmCadDetail.do");
 		model.addAttribute("searchurl", "/design/mobile_getConfirmCadListSearch.do");
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getConfirmCadList";
 	}
 	
 	// ===========================在排版切片之前确认最终版型搜索=================================
 	@RequestMapping(value = "/design/mobile_getConfirmCadListSearch.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getConfirmCadListSearch(HttpServletRequest request,
+	public void getConfirmCadListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -873,23 +796,20 @@ public class DesignMobileController {
 
 		model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getConfirmCadList";
 	}
 	
 	@RequestMapping(value = "/design/mobile_getConfirmCadDetail.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getConfirmCadDetail(HttpServletRequest request,
+	public void getConfirmCadDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		Map<String, Object> orderInfo = designService
 				.getConfirmCadDetail(Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response, model);
-		return "/design/mobile_getConfirmCadDetail";
 	}
+	
 	@RequestMapping(value = "/design/mobile_confirmCadSubmit.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String confirmCadSubmit(HttpServletRequest request,
+	public void confirmCadSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId = request.getParameter("orderId");
 		String taskId = request.getParameter("taskId");
@@ -915,7 +835,6 @@ public class DesignMobileController {
 				taskId, url, uploadTime);
 		model.addAttribute("isSuccess", isSuccess);
 		jsonUtil.sendJson(response, model);
-		return "forward:/design/mobile_getConfirmCadList.do";
 	}
 	
 	private Timestamp getTime(String time) {

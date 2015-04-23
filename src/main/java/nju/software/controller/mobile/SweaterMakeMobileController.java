@@ -55,8 +55,7 @@ public class SweaterMakeMobileController {
 
 	//=====================毛衣样衣确认和工艺制作======================
 	@RequestMapping(value = "/sweater/mobile_sweaterSampleAndCraftList.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String sweaterSampleAndCraftList(HttpServletRequest request,
+	public void sweaterSampleAndCraftList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=sweaterMakeService.getSweaterSampleAndCraftList();
 		list = ListUtil.reserveList(list);
@@ -65,12 +64,10 @@ public class SweaterMakeMobileController {
 		model.addAttribute("url", "/sweater/mobile_sweaterSampleAndCraftDetail.do");
 		model.addAttribute("searchurl", "/sweater/mobile_sweaterSampleAndCraftListSearch.do");
 		jsonUtil.sendJson(response,model);
-		return "/sweater/mobile_sweaterSampleAndCraftList";
 	}
 
 	@RequestMapping(value = "/sweater/mobile_sweaterSampleAndCraftListSearch.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String sweaterSampleAndCraftListSearch(HttpServletRequest request,
+	public void sweaterSampleAndCraftListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -92,12 +89,10 @@ public class SweaterMakeMobileController {
 		model.addAttribute("url", "/sweater/mobile_sweaterSampleAndCraftDetail.do");
 		model.addAttribute("searchurl", "/sweater/mobile_sweaterSampleAndCraftListSearch.do");
 		jsonUtil.sendJson(response,model);
-		return "/sweater/mobile_sweaterSampleAndCraftList";
 	}
 	
 	@RequestMapping(value = "/sweater/mobile_sweaterSampleAndCraftDetail.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getSweaterSampleAndCraftDetail(HttpServletRequest request,
+	public void getSweaterSampleAndCraftDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
 		String orderId=request.getParameter("orderId");
@@ -112,17 +107,15 @@ public class SweaterMakeMobileController {
 		//从session中取默认责任人
 		Account account = commonService.getCurAccount(request, response);
 		if (account == null) {
-			return "";
+			return;
 		}
 		model.addAttribute("employee_name", account.getUserName());
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response,model);
-		return "/sweater/mobile_sweaterSampleAndCraftDetail";
 	}
 	
 	@RequestMapping(value = "/sweater/mobile_sweaterSampleAndCraftSubmit.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String sweaterSampleAndCraftSubmit(HttpServletRequest request,
+	public void sweaterSampleAndCraftSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws IOException {	
 		
  		String taskId =  request.getParameter("taskId");
@@ -147,17 +140,14 @@ public class SweaterMakeMobileController {
 		if(isfinalconfirm){//保存记录和确认完成跳转不同的方法
 			jsonUtil.sendJson(response,model);
 
-			return "forward:/sweater/sweaterSampleAndCraftList.do";
 		}else{
 			jsonUtil.sendJson(response,model);
-			return "forward:/sweater/mobile_sweaterSampleAndCraftDetail.do";
 		}
 	}
 	
 	//=====================毛衣外发======================
 	@RequestMapping(value = "/sweater/mobile_sendSweaterList.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String sendSweaterList(HttpServletRequest request,
+	public void sendSweaterList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		List<Map<String,Object>> list=sweaterMakeService.getSendSweaterList();
 		list = ListUtil.reserveList(list);
@@ -166,12 +156,10 @@ public class SweaterMakeMobileController {
 		model.addAttribute("url", "/sweater/mobile_sendSweaterDetail.do");
 		model.addAttribute("searchurl", "/sweater/mobile_sendSweaterListSearch.do");
 		jsonUtil.sendJson(response,model);
-		return "/sweater/mobile_sendSweaterList";
 	}
 
 	@RequestMapping(value = "/sweater/mobile_sendSweaterListSearch.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String sendSweaterListSearch(HttpServletRequest request,
+	public void sendSweaterListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String ordernumber = request.getParameter("ordernumber");
 		String customername = request.getParameter("customername");
@@ -193,29 +181,25 @@ public class SweaterMakeMobileController {
 		model.addAttribute("url", "/sweater/mobile_sendSweaterDetail.do");
 		model.addAttribute("searchurl", "/sweater/mobile_sendSweaterListSearch.do");
 		jsonUtil.sendJson(response,model);
-		return "/sweater/mobile_sendSweaterList";
 	}
 	
 	@RequestMapping(value = "/sweater/mobile_sendSweaterDetail.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String getSendSweaterDetail(HttpServletRequest request,
+	public void getSendSweaterDetail(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderId=request.getParameter("orderId");
 		Map<String,Object> orderInfo=sweaterMakeService.getSendSweaterDetail(Integer.parseInt(orderId));
 		//从session中取默认责任人
 		Account account = commonService.getCurAccount(request, response);
 		if (account == null) {
-			return "";
+			return ;
 		}
 		model.addAttribute("employee_name", account.getUserName());
 		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response,model);
-		return "/sweater/mobile_sendSweaterDetail";
 	}
 	
 	@RequestMapping(value = "/sweater/mobile_sendSweaterSubmit.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String sendSweaterSubmit(HttpServletRequest request,
+	public void sendSweaterSubmit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {	
 		boolean result = Boolean.parseBoolean(request.getParameter("result"));
 		String taskId =  request.getParameter("taskId");
@@ -258,7 +242,6 @@ public class SweaterMakeMobileController {
 		boolean isSuccess =sweaterMakeService.sendSweaterSubmit(taskId,result,produceList, orderId);
 		model.addAttribute("isSuccess", isSuccess);
 		jsonUtil.sendJson(response,model);
-		return "forward:/sweater/mobile_sendSweaterList.do";
 	}
 	
 	public static Timestamp getDateTime(String time) {
@@ -276,7 +259,7 @@ public class SweaterMakeMobileController {
 	 */
 	@RequestMapping(value = "/sweater/mobile_sweaterOrderList.do")
 	//@Transactional(rollbackFor = Exception.class)
-	public String sweaterOrderList(HttpServletRequest request,
+	public void sweaterOrderList(HttpServletRequest request,
 				HttpServletResponse response, ModelMap model) {
 			List<Map<String, Object>> list = sweaterMakeService.getOrders();//查询所有订单
 			list = ListUtil.reserveList(list);
@@ -286,19 +269,17 @@ public class SweaterMakeMobileController {
 			model.addAttribute("searchurl", "/sweater/mobile_sweaterOrderListSearch.do");
 			jsonUtil.sendJson(response,model);
 
-			return "/sweater/mobile_sweaterSearchList";
 		}
 	
 	@RequestMapping(value = "/sweater/mobile_sweaterOrderListSearch.do")
-	//@Transactional(rollbackFor = Exception.class)
-	public String sweaterOrderListSearch(HttpServletRequest request,
+	public void sweaterOrderListSearch(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String orderState = request.getParameter("orderState");
 				
 		List<Map<String, Object>> list = null;
 		if("0".equals(orderState)||orderState == null){
 			jsonUtil.sendJson(response,model);
-			return "forward:/sweater/mobile_sweaterOrderList.do";
+			return;
 		}else{
 			list = sweaterMakeService.getSerachOrders(orderState);;
 		}
@@ -309,6 +290,5 @@ public class SweaterMakeMobileController {
 		model.addAttribute("url", "/order/orderDetail.do");
 		model.addAttribute("searchurl", "/sweater/mobile_sweaterOrderListSearch.do");
 		jsonUtil.sendJson(response,model);
-		return "/sweater/mobile_sweaterSearchList";
 	}
 }
