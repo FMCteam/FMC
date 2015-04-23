@@ -74,7 +74,7 @@ public class ServiceUtil {
 			if (employeeDAO.findById(employeeId) == null) {
 				List<Account> accounts = accountDAO.findByUserId(employeeId);
 				Account account = null;
-				if (accounts != null) {
+				if (accounts != null && accounts.size() >0) {
 					account = accounts.get(0);
 				}
 				if (account != null) {
@@ -121,8 +121,23 @@ public class ServiceUtil {
 				
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("order", order);
-				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
-//				model.put("task", task);
+				Integer employeeId = order.getEmployeeId();
+				//如果是管理员下的订单，其userId不在employee表里
+				if (employeeDAO.findById(employeeId) == null) {
+					List<Account> accounts = accountDAO.findByUserId(employeeId);
+					Account account = null;
+					if (accounts != null && accounts.size() >0) {
+						account = accounts.get(0);
+					}
+					if (account != null) {
+						Employee employee = new Employee();
+						employee.setEmployeeName(account.getNickName());
+						model.put("employee",employee);
+					}
+				}
+				else{
+					model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+				}
 				model.put("taskTime", getTaskTime(task.getCreateTime()));
 				model.put("orderId", getOrderId(order));
 				list.add(model);
@@ -135,13 +150,28 @@ public class ServiceUtil {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Task task = mainProcessService.getTaskOfUserByTaskNameWithSpecificOrderId(actorId, taskName, orderId);
 		Order order = orderDAO.findById(orderId);
-//		model.put("task", task);
 		model.put("processInstanceId", task.getProcessInstanceId());
  		model.put("taskId", task.getId());
 		model.put("order", order);
 		model.put("orderSampleAmount", order.getSampleAmount());
 		model.put("customer",customerDAO.findById(order.getCustomerId()));
-		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+		Integer employeeId = order.getEmployeeId();
+		//如果是管理员下的订单，其userId不在employee表里
+		if (employeeDAO.findById(employeeId) == null) {
+			List<Account> accounts = accountDAO.findByUserId(employeeId);
+			Account account = null;
+			if (accounts != null && accounts.size() >0) {
+				account = accounts.get(0);
+			}
+			if (account != null) {
+				Employee employee = new Employee();
+				employee.setEmployeeName(account.getNickName());
+				model.put("employee",employee);
+			}
+		}
+		else{
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+		}
 		model.put("logistics", logisticsDAO.findById(orderId));
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));
 		model.put("accessorys", accessoryDAO.findByOrderId(orderId));

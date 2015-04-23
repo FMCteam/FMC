@@ -1406,7 +1406,23 @@ public class MarketServiceImpl implements MarketService {
 		for (Order order : orders) {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size()>0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("orderId", service.getOrderId(order));
 			model.put("pages", pages);
 			list.add(model);
@@ -1448,7 +1464,23 @@ public class MarketServiceImpl implements MarketService {
 			}
 			
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size()>0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("orderId", service.getOrderId(order));
 			model.put("pages", pages);
 			list.add(model);
@@ -1488,7 +1520,23 @@ public class MarketServiceImpl implements MarketService {
 			}
 			
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size() > 0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("orderId", service.getOrderId(order));
 			model.put("pages", pages);
 			list.add(model);
@@ -1520,7 +1568,23 @@ public class MarketServiceImpl implements MarketService {
 			}
 			
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size() > 0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("orderId", service.getOrderId(order));
 			list.add(model);
 		}
@@ -1564,7 +1628,23 @@ public class MarketServiceImpl implements MarketService {
 			}
 			
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size() > 0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("orderId", service.getOrderId(order));
 			list.add(model);
 		}
@@ -1587,7 +1667,23 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size() > 0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("orderId", service.getOrderId(order));
 			list.add(model);
 		}
@@ -1624,7 +1720,23 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size() > 0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("orderId", service.getOrderId(order));
 			list.add(model);
 		}
@@ -1700,7 +1812,23 @@ public class MarketServiceImpl implements MarketService {
 			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size() > 0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("taskTime", order.getOrderTime());
 			model.put("orderId", service.getOrderId(order));
 			list.add(model);
@@ -1734,7 +1862,23 @@ public class MarketServiceImpl implements MarketService {
 			}
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size() > 0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("taskTime", order.getOrderTime());
 			model.put("orderId", service.getOrderId(order));
 			list.add(model);
@@ -1750,7 +1894,23 @@ public class MarketServiceImpl implements MarketService {
 		if (order.getIsHaoDuoYi() == 1) {
 			return null;
 		}
-		model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+		Integer employeeId = order.getEmployeeId();
+		//如果是管理员下的订单，其userId不在employee表里
+		if (employeeDAO.findById(employeeId) == null) {
+			List<Account> accounts = accountDAO.findByUserId(employeeId);
+			Account account = null;
+			if (accounts != null && accounts.size() > 0) {
+				account = accounts.get(0);
+			}
+			if (account != null) {
+				Employee employee = new Employee();
+				employee.setEmployeeName(account.getNickName());
+				model.put("employee",employee);
+			}
+		}
+		else{
+			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+		}
 		model.put("logistics", logisticsDAO.findById(orderId));// 物流信息
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));// 面料信息
 		model.put("accessorys", accessoryDAO.findByOrderId(orderId));// 辅料信息
@@ -1849,7 +2009,23 @@ public class MarketServiceImpl implements MarketService {
 			
 			
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size() > 0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("orderId", service.getOrderId(order));
 			model.put("pages", pages);
 			model.put("taskTime", getTaskTime(order.getOrderTime()));
@@ -1890,7 +2066,23 @@ public class MarketServiceImpl implements MarketService {
 			}
 			
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size() > 0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("orderId", service.getOrderId(order));
 			model.put("taskTime", getTaskTime(order.getOrderTime()));
 			list.add(model);
@@ -1919,7 +2111,23 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
-			model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			Integer employeeId = order.getEmployeeId();
+			//如果是管理员下的订单，其userId不在employee表里
+			if (employeeDAO.findById(employeeId) == null) {
+				List<Account> accounts = accountDAO.findByUserId(employeeId);
+				Account account = null;
+				if (accounts != null && accounts.size() > 0) {
+					account = accounts.get(0);
+				}
+				if (account != null) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(account.getNickName());
+					model.put("employee",employee);
+				}
+			}
+			else{
+				model.put("employee", employeeDAO.findById(order.getEmployeeId()));
+			}
 			model.put("orderId", service.getOrderId(order));
 			model.put("taskTime", getTaskTime(order.getOrderTime()));
 			list.add(model);
