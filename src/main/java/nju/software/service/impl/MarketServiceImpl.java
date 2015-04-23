@@ -1666,6 +1666,11 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("Done")) order.setOrderProcessStateName("已完成");
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", OrderSource.SOURCE_SELF);
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
 			model.put("order", order);
 			Integer employeeId = order.getEmployeeId();
 			//如果是管理员下的订单，其userId不在employee表里
@@ -1720,6 +1725,11 @@ public class MarketServiceImpl implements MarketService {
 			if (order.getOrderState().equals("1")) order.setOrderProcessStateName("被终止");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("order", order);
+			OrderSource orderSource=orderSourceDAO.findByOrderId(order.getOrderId());
+			model.put("orderSource", OrderSource.SOURCE_SELF);
+			if (orderSource!=null){
+				model.put("orderSource", orderSource.getSource());
+			}
 			Integer employeeId = order.getEmployeeId();
 			//如果是管理员下的订单，其userId不在employee表里
 			if (employeeDAO.findById(employeeId) == null) {
@@ -1747,20 +1757,32 @@ public class MarketServiceImpl implements MarketService {
 	public Map<String, Object> getOrderDetail(Integer orderId) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Order order = orderDAO.findById(orderId);
-		Employee employee=employeeDAO.findById(order.getEmployeeId());
+		Integer employeeId = order.getEmployeeId();
+		Employee employee=employeeDAO.findById(employeeId);
 		if (employee==null){
-			employee=new Employee();
-			employee.setEmployeeName("暂无");
-			employee.setEmail("");
-			employee.setPhone1("");
-			employee.setPhone2("");
-			employee.setQq("");
+			List<Account> accounts = accountDAO.findByUserId(employeeId);
+			Account account = null;
+			if (accounts != null && accounts.size() > 0) {
+				account = accounts.get(0);
+			}
+			if (account != null) {
+				employee = new Employee();
+				employee.setEmployeeName(account.getNickName());
+			}
+			else{
+				employee=new Employee();
+				employee.setEmployeeName("暂无");
+				employee.setEmail("");
+				employee.setPhone1("");
+				employee.setPhone2("");
+				employee.setQq("");
+			}
 			
 		}
 		model.put("order", order);
 		model.put("orderProcessId", order.getProcessId());
 		model.put("orderId", service.getOrderId(order));
-		model.put("employee",employee);
+		model.put("employee", employee);
 		model.put("logistics", logisticsDAO.findById(orderId));
 		model.put("fabrics", fabricDAO.findByOrderId(orderId));
 		model.put("accessorys", accessoryDAO.findByOrderId(orderId));
