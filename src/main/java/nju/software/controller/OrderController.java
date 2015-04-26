@@ -564,7 +564,7 @@ public class OrderController {
 			Account account = (Account) request.getSession().getAttribute("cur_user");
 			List<Map<String, Object>> list = null;
 			if ("CUSTOMER".equals(account.getUserRole())) {
-				// TODO list 
+				list = marketService.getOrdersTodo(account.getUserId());
 			}
 			else {
 				list = marketService.getOrdersTodo();
