@@ -821,7 +821,7 @@ public class MarketController {
 	//认领客户新单
 	@RequestMapping(value="/market/claimCustomerOrderList.do", method = RequestMethod.GET)
 	public String claimCustomerOrderList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
-		List<Map<String, Object>> list = marketService.getTodoOrders();
+		List<Map<String, Object>> list = marketService.getOrdersTodo();
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "客户新单列表");
 		model.addAttribute("url", "/market/claimCustomerOrderDetail.do");
@@ -3199,7 +3199,7 @@ public class MarketController {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("cur_user");
 		
-		List<Map<String, Object>> orderModelList = marketService.getTodoOrders();
+		List<Map<String, Object>> orderModelList = marketService.getOrdersTodo();
 		
 		
 		

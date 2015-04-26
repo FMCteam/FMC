@@ -567,7 +567,7 @@ public class OrderController {
 				// TODO list 
 			}
 			else {
-				list = marketService.getTodoOrders();
+				list = marketService.getOrdersTodo();
 			}
 			model.put("list", list);
 			model.addAttribute("taskName", "尚未处理订单列表");

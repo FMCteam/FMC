@@ -833,7 +833,7 @@ public class MarketMobileController {
 	//认领客户新单
 	@RequestMapping(value="/market/mobile_claimCustomerOrderList.do", method = RequestMethod.GET)
 	public void claimCustomerOrderList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
-		List<Map<String, Object>> list = marketService.getTodoOrders();
+		List<Map<String, Object>> list = marketService.getOrdersTodo();
 		model.addAttribute("list", list);
 		model.addAttribute("taskName", "客户新单列表");
 		model.addAttribute("url", "/market/mobile_claimCustomerOrderDetail.do");
@@ -3263,7 +3263,7 @@ public class MarketMobileController {
 	public void allocateOrderList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		
-		List<Map<String, Object>> orderModelList = marketService.getTodoOrders();
+		List<Map<String, Object>> orderModelList = marketService.getOrdersTodo();
 		
 		
 		

@@ -83,7 +83,7 @@ public class CommonServiceImpl implements CommonService {
 	
 	@Override
 	public Integer getMarketSecrtaryTaskNumber() {
-		List<Map<String, Object>> orders = marketService.getTodoOrders();
+		List<Map<String, Object>> orders = marketService.getOrdersTodo();
 		if (orders!=null) {
 			return orders.size();
 		}
