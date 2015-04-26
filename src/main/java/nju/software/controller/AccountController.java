@@ -310,7 +310,7 @@ public class AccountController {
 		}
 
 		if (success) {
-			return "index";
+			return "index_new";
 		} else {
 			return "redirect:/account/modifyEmployeeDetail.do";
 		}
