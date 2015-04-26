@@ -45,6 +45,7 @@ import nju.software.util.mail.SimpleMailSender;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -557,6 +558,55 @@ public class OrderController {
 			return "redirect:/account/modify/";
 		}
 
+		//未被接单列表
+		@RequestMapping(value = "/order/orderListTodo.do")
+		public String todoList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+			Account account = (Account) request.getSession().getAttribute("cur_user");
+			List<Map<String, Object>> list = null;
+			if ("CUSTOMER".equals(account.getUserRole())) {
+				// TODO list 
+			}
+			else {
+				list = marketService.getTodoOrders();
+			}
+			model.put("list", list);
+			model.addAttribute("taskName", "尚未处理订单列表");
+			model.addAttribute("url", "/order/orderDetail.do");
+			return "order/todoList";
+		}
+		
+		@RequestMapping(value = "/order/todoListSearch.do")
+		public String todoListSearch(HttpServletRequest request, HttpServletResponse response , ModelMap model){
+			Account account = (Account) request.getSession().getAttribute("cur_user");
+			String ordernumber = request.getParameter("ordernumber");
+			String customername = request.getParameter("customername");
+			String stylename = request.getParameter("stylename");
+			String employeename = request.getParameter("employeename");
+			String startdate = request.getParameter("startdate");
+			String enddate = request.getParameter("enddate");
+			//将用户输入的employeeName转化为employeeId,因为order表中没有employeeName属性
+		    List<Employee> employees = employeeService.getEmployeeByName(employeename);
+			Integer[] employeeIds = new Integer[employees.size()];
+			for(int i=0;i<employeeIds.length;i++){
+				employeeIds[i] = employees.get(i).getEmployeeId();
+			}
+			List<Map<String, Object>> list = marketService.getSearchOrderList(ordernumber,customername,stylename,startdate,enddate,employeeIds,account.getUserRole(),account.getUserId());
+			List<Map<String,Object>> resultlist =  new ArrayList<>();
+			for(int i =0;i<list.size();i++){
+				Map<String, Object> model1  = list.get(i);
+				Order order = (Order) model1.get("order");
+				if(order.getOrderState().equals("TODO") && order.getCustomerId().equals(account.getUserId())){
+					resultlist.add(model1);
+				}
+			}
+ 
+//			List<Map<String,Object>>list=orderService.findByProperty("orderState","1");
+			model.put("list", resultlist);
+			model.addAttribute("taskName", "尚未处理订单列表");
+			model.addAttribute("url", "/order/orderDetail.do");
+			model.addAttribute("info", new SearchInfo(ordernumber, customername, stylename, employeename, startdate, enddate));//将查询条件传回页面  hcj
+			return "/order/todoList";
+		}
 		// =======================被终止订单列表=================================
 		@RequestMapping(value = "/order/endList.do")
 		@Transactional(rollbackFor = Exception.class)

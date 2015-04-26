@@ -156,6 +156,7 @@ table.tablesorter thead tr .headerSortDown {
 							    <li><a href="${ctx}/market/addOrder.do" target="maincontent">客户下单</a></li></c:if>
 								<li><a href="${ctx}/order/orderList.do" target="maincontent">查看所有订单</a></li>
 								<li><a href="${ctx}/order/orderListDoing.do" target="maincontent">查看正在进行订单</a></li>
+								<li><a href="${ctx}/order/orderListTodo.do" target="maincontent">尚未处理订单</a></li>
 								<li><a href="${ctx}/order/orderListDone.do" target="maincontent">已经完成订单</a></li>
 								<li><a href="${ctx}/order/endList.do" target="maincontent">被终止订单</a></li>
 								<c:if test="${USER_user_name eq 'admin'}">
