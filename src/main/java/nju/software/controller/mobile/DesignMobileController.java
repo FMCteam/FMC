@@ -345,7 +345,6 @@ public class DesignMobileController {
 				taskId, url, uploadTime, cadSide, completeTime);
  		Map<String, Object> orderInfo = marketService.getOrderDetail(Integer.valueOf(orderId));
 		model.addAttribute("orderInfo", orderInfo);
-		model.addAttribute("orderInfo", orderInfo);
 		jsonUtil.sendJson(response, model);
 	}
  

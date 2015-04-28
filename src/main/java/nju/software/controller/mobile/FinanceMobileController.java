@@ -15,6 +15,7 @@ import nju.software.service.EmployeeService;
 import nju.software.service.FinanceService;
 import nju.software.service.MarketService;
 import nju.software.service.impl.FinanceServiceImpl;
+import nju.software.util.Constants;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JSONUtil;
@@ -132,7 +133,7 @@ public class FinanceMobileController {
 		// money);
 		boolean isSuccess = financeService.confirmSampleMoneySubmit(actorId, taskId, result, money,
 				orderId);
-		model.addAttribute("isSuccess", isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -272,7 +273,7 @@ public class FinanceMobileController {
 
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
 		boolean isSuccess = financeService.returnDepositSubmit(actorId, taskId, orderId);
-		model.addAttribute("isSuccess", isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -296,7 +297,7 @@ public class FinanceMobileController {
 		// financeService.confirmDepositSubmit(actorId, taskId, result, money);
 		boolean isSuccess = financeService.confirmDepositSubmit(actorId, taskId, result, money,
 				orderId);
-		model.addAttribute("isSuccess", isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -398,7 +399,7 @@ public class FinanceMobileController {
 				.getConfirmFinalPaymentDetail(actorId,
 						Integer.parseInt(orderId));
 		model.addAttribute("orderInfo", orderInfo);
-		model.addAttribute("isSuccess", isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -422,7 +423,7 @@ public class FinanceMobileController {
 		String actorId = FinanceServiceImpl.ACTOR_FINANCE_MANAGER;
 		boolean isSuccess = financeService.confirmFinalPaymentSubmit(actorId, taskId, result,
 				money, orderId);
-		model.addAttribute("isSucess", isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 

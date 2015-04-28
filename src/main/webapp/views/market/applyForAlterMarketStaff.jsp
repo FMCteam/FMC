@@ -32,38 +32,6 @@
 					<%@include file="/views/market/changeMarketStaff.jsp"%>
 				</div>
 			</div>
-			<c:if test="${role=='designManager'}">
-			<div>
-					<form action="${ctx}/design/uploadDesignSubmit_all.do" method="post"
-				          onsubmit="return check()" enctype="multipart/form-data">
-				    	<table class="table table-striped table-bordered table-hover detail">
-							<tr>
-								<td class="title">版型文件<span style="color:red">*</span></td>
-								<td>
-									<a style="color: red;">*</a>
-									<input name="CADFile" id="CADFile" type="file" required="required"/> 
-									<input type="hidden" name="orderId" value="${orderInfo.order.orderId }" /> 
-								</td>
-								<td rowspan="3"><input type="submit" value="录入版型数据"
-									class="btn btn-primary btn-rounded">
-								</td>
-							</tr>
-							<tr>
-								<td class="title">制版人<span style="color:red">*</span></td>
-								<td>
-									<input name="cadSide" id="cad_side" type="text" required="required"/> 
-								</td>
-							</tr>
-							<tr>
-								<td class="title">制版完成时间<span style="color:red">*</span></td>
-								<td>
-									<input name="completeTime" id="input_day"  type="text"  required="required"  readonly="readonly"/> 
-								</td>
-							</tr>
-				    	</table>
-			       </form>
-			</div>
-			</c:if>
 			<c:if test="${orderInfo.order.orderState!='1'}">
 			<div class="push-order" style="float:left">
 				
