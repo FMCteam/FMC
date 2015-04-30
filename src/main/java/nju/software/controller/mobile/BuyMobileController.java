@@ -175,8 +175,9 @@ public class BuyMobileController {
 		if (result == false) {
 			boolean isSuccess=buyService.verifyPurchaseSubmit(taskId, result, comment);
 			model.addAttribute(ISSUCCESS, isSuccess);
-			jsonUtil.sendJson(response, model);		
-			}
+			jsonUtil.sendJson(response, model);	
+			return;
+		}
 
 		// 面料数据
 		String fabric_name = request.getParameter("fabric_name");

@@ -16,6 +16,7 @@ import nju.software.service.CommonService;
 import nju.software.service.DesignService;
 import nju.software.service.EmployeeService;
 import nju.software.service.MarketService;
+import nju.software.util.Constants;
 import nju.software.util.DateUtil;
 import nju.software.util.FileOperateUtil;
 import nju.software.util.JSONUtil;
@@ -209,7 +210,7 @@ public class DesignMobileController {
 				Float.parseFloat(crumpleMoney),
 				Float.parseFloat(openVersionMoney)
 				);
-		
+		model.addAttribute(Constants.JSON_IS_SUCCESS, true);
 		jsonUtil.sendJson(response, model);
 	}
 	
