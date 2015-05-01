@@ -203,41 +203,15 @@ public class SweaterMakeController {
 		String taskId =  request.getParameter("taskId");
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 	    List<Produce> produceList = new ArrayList<Produce>();
+	    String processing_side = request.getParameter("processing_side");
+	    String sendTime = request.getParameter("sendTime");
+	    String purchase_director = request.getParameter("Purchase_director");
 		if (result) {
-			String produceColor = request.getParameter("produce_color");
-			int produceXS = Integer.parseInt(request.getParameter("produce_xs"));
-			int produceS = Integer.parseInt(request.getParameter("produce_s"));
-			int produceM = Integer.parseInt(request.getParameter("produce_m"));
-			int produceL = Integer.parseInt(request.getParameter("produce_l"));
-			int produceXL = Integer.parseInt(request.getParameter("produce_xl"));
-			int produceXXL = Integer.parseInt(request.getParameter("produce_xxl"));
-			int produceJ = Integer.parseInt(request.getParameter("produce_j"));
-			String processing_side = request.getParameter("processing_side");
-			String Purchase_director = request.getParameter("Purchase_director");
-			String sendTime = request.getParameter("sendTime");
 			Order torder = orderService.findByOrderId(orderId+"");
 			torder.setPayAccountInfo(processing_side);
 			orderService.updateOrder(torder);
-			Produce Produce = new Produce();
-			int total = produceXS + produceS + produceM + produceL +
-					produceXL + produceXXL + produceJ;
-			Produce.setProduceAmount(total);
-			Produce.setType(nju.software.dataobject.Produce.TYPE_PRODUCED);
-			Produce.setSendTime(sendTime);
-			Produce.setColor(produceColor);
-			Produce.setXs(produceXS);
-			Produce.setS(produceS);
-			Produce.setM(produceM);
-			Produce.setL(produceL);
-			Produce.setXl(produceXL);
-			Produce.setXxl(produceXXL);
-			Produce.setJ(produceJ);
-			Produce.setProcessing_side(processing_side);
-			Produce.setPurchase_director(Purchase_director);
-			Produce.setOid(orderId);
-			produceList.add(Produce);
 		}
-		sweaterMakeService.sendSweaterSubmit(taskId,result,produceList, orderId);
+		sweaterMakeService.sendSweaterSubmit(taskId,result, processing_side, sendTime, purchase_director, orderId);
 		return "forward:/sweater/sendSweaterList.do";
 	}
 	

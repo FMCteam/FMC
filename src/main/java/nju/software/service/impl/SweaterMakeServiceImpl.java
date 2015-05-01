@@ -107,11 +107,16 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
         }
 	}
 	@Override
-	public boolean sendSweaterSubmit(String taskId, boolean result,List<Produce> produceList, Integer orderId) {
+	public boolean sendSweaterSubmit(String taskId, boolean result,String processing_side, String sendTime, String purchase_director, Integer orderId) {
  		Order order = orderDAO.findById(orderId);
  		if (result) {
+ 			List<Produce> produceList = ProduceDAO.findByOid(orderId);
 			for (int i = 0; i < produceList.size(); i++) {
-				ProduceDAO.save(produceList.get(i));
+				Produce produce = produceList.get(i);
+				produce.setProcessing_side(processing_side);
+				produce.setPurchase_director(purchase_director);
+				produce.setSendTime(sendTime);
+				ProduceDAO.attachDirty(produce);
 			}
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
