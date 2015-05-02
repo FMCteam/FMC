@@ -113,6 +113,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
  			List<Produce> produceList = ProduceDAO.findByOid(orderId);
 			for (int i = 0; i < produceList.size(); i++) {
 				Produce produce = produceList.get(i);
+				produce.setType(Produce.TYPE_PRODUCED);
 				produce.setProcessing_side(processing_side);
 				produce.setPurchase_director(purchase_director);
 				produce.setSendTime(sendTime);
