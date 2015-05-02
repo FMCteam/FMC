@@ -268,8 +268,8 @@
 	<bean id="BasicProcessService"
 		class="nju.software.process.service.BasicProcessService">
 	</bean>
-	<bean id="MainProcessService"
-		class="nju.software.process.service.MainProcessService">
+	<bean id="FMCProcessService"
+		class="nju.software.process.service.FMCProcessService">
 	</bean>
 	<bean id="MarketstaffAlterProcessService"
 		class="nju.software.process.service.MarketstaffAlterProcessService">
