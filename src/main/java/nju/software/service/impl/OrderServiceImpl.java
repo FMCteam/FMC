@@ -38,7 +38,7 @@ import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderModel;
 import nju.software.model.QuoteModel;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 import nju.software.service.FinanceService;
 import nju.software.service.OrderService;
 
@@ -521,7 +521,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired

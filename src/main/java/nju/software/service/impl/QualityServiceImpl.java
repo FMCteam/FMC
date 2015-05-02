@@ -14,7 +14,7 @@ import nju.software.dataobject.CheckDetail;
 import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 import nju.software.service.QualityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class QualityServiceImpl implements QualityService  {
 	@Autowired
 	private CustomerDAO customerDAO;
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	@Autowired
 	private ServiceUtil service;
 	@Autowired

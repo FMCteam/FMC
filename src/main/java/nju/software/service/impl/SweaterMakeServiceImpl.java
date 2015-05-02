@@ -14,7 +14,7 @@ import nju.software.dao.impl.ProduceDAO;
 import nju.software.dataobject.OperateRecord;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 import nju.software.service.SweaterMakeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,7 +169,7 @@ public class SweaterMakeServiceImpl implements SweaterMakeService {
 	@Autowired
 	private ProduceDAO ProduceDAO;
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	@Autowired
 	private EmployeeDAO employeeDAO;
 	@Autowired

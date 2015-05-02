@@ -27,7 +27,7 @@ import nju.software.dataobject.Order;
 import nju.software.dataobject.Package;
 import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Produce;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 import nju.software.service.LogisticsService;
 import nju.software.util.DateUtil;
 
@@ -556,7 +556,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 	}
 
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired

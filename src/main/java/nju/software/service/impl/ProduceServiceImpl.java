@@ -20,7 +20,7 @@ import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 import nju.software.service.ProduceService;
 
 @Service("produceServiceImpl")
@@ -301,7 +301,7 @@ public class ProduceServiceImpl implements ProduceService {
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	@Autowired
 	private LogisticsDAO logisticsDAO;
 	@Autowired

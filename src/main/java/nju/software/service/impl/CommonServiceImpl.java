@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import nju.software.dao.impl.AccountDAO;
 import nju.software.dataobject.Account;
 import nju.software.dataobject.Order;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 import nju.software.process.service.MarketstaffAlterProcessService;
 import nju.software.service.CommonService;
 import nju.software.service.MarketService;
@@ -118,7 +118,7 @@ public class CommonServiceImpl implements CommonService {
 			SweaterMakeServiceImpl.ACTOR_SWEATER_MANAGER };
 
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	
 	@Autowired
 	private MarketstaffAlterProcessService marketstaffAlterProcessService;

@@ -55,7 +55,7 @@ import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.process.service.BasicProcessService;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 import nju.software.process.service.MarketstaffAlterProcessService;
 import nju.software.service.FinanceService;
 import nju.software.service.MarketService;
@@ -132,7 +132,7 @@ public class MarketServiceImpl implements MarketService {
 	@Autowired
 	private QuoteDAO quoteDAO;
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	@Autowired
 	private AccessoryDAO accessoryDAO;
 	@Autowired
@@ -1792,6 +1792,7 @@ public class MarketServiceImpl implements MarketService {
 		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
 		model.put("sample", produceDAO.findByExample(produce));
 
+		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_PRODUCE);
 		model.put("produce", produceDAO.findByExample(produce));
 

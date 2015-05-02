@@ -16,7 +16,7 @@ import nju.software.service.impl.SweaterMakeServiceImpl;
 import org.activiti.engine.task.Task;
 
 
-public class MainProcessService extends BasicProcessService{
+public class FMCProcessService extends BasicProcessService{
 	public static final String PROCESS_NAME = "nju.software.fmc.bpmn";
 	private static final String KEY_ORDER_ID = "orderId";
 
