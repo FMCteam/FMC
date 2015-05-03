@@ -1132,8 +1132,13 @@ public class MarketServiceImpl implements MarketService {
 		Money money = new Money();
 		money.setOrderId(orderId);
 		money.setMoneyType("大货定金");
-		model.put("deposit", moneyDAO.findByExample(money).get(0)
-				.getMoneyAmount());
+		List<Money> moneys  = moneyDAO.findByExample(money);
+		if (moneys != null && moneys.size() > 0) {
+			model.put("deposit", moneyDAO.findByExample(money).get(0)
+					.getMoneyAmount());
+		}
+		else
+			model.put("deposit", 0);
 		Float samplePrice = (float) 0;
 		if (order.getStyleSeason().equals("春夏")) {
 			samplePrice = (float) 200;

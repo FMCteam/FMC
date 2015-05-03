@@ -235,6 +235,7 @@ public class QualityServiceImpl implements QualityService  {
 		// 计算历次质检的合格数和报废数之和 hcj
 		int checkRecordAmount = 0;
 		List<CheckRecord> list = checkRecordDAO.findByOrderId(orderId);
+		int i = 0;
 		for (CheckRecord cr : list) {
 			checkRecordAmount += cr.getQualifiedAmount()
 					+ cr.getInvalidAmount();
@@ -244,7 +245,7 @@ public class QualityServiceImpl implements QualityService  {
 		List<Produce> produces = produceDAO.findByExample(produce);
 		for (Produce pd : produces) {
 			producesAmount += pd.getL() + pd.getM() + pd.getS() + pd.getXl()
-					+ pd.getXs() + pd.getXxl();
+					+ pd.getXs() + pd.getXxl() + pd.getJ();
 
 		}
 		if (producesAmount > checkRecordAmount) {
