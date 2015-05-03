@@ -3334,7 +3334,9 @@ public class MarketMobileController {
 			order.setOrderState("A");
 			marketService.assignCustomerOrder(order);
 			model.addAttribute(Constants.JSON_IS_SUCCESS, true);
+			jsonUtil.sendJson(response, model);
 		}
+		
 		//搜索 需要分配的订单
 		@RequestMapping(value = "/market/mobile_allocateOrderSearch.do")
 		public void allocateOrderSearch(HttpServletRequest request,
