@@ -336,7 +336,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		
 		model.put("order", order);
 		model.put("packs", packageDAO.findByOrderId(orderId));
-		model.put("task", task);
+		model.put("taskId", task.getId());
 		model.put(
 				"orderId",
 				dateFormat2.format(order.getOrderTime())
@@ -451,7 +451,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		Order order = orderDAO.findById(orderId);
 		model.put("order", order);
 		model.put("packs", packageDAO.findByOrderId(orderId));
-		model.put("task", task);
+		model.put("taskId", task.getId());
 		model.put(
 				"orderId",
 				dateFormat2.format(order.getOrderTime())
