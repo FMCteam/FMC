@@ -26,7 +26,7 @@ public interface SweaterMakeService {
 			String orderId,OperateRecord oprecord);
 	
 	@Transactional(rollbackFor = Exception.class)
-	public boolean sendSweaterSubmit(String taskId, boolean result,List<Produce> produceList,
+	public boolean sendSweaterSubmit(String taskId, boolean result, String processing_side, String sendTime, String Purchase_director,
 			Integer orderId);
 	
 	@Transactional(rollbackFor = Exception.class)

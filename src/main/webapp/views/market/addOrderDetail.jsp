@@ -51,6 +51,7 @@
 									required="required" /></td>
 								<!-- 如果是客户下单 -->
 								<c:if test="${ROlE_addOrder==true}">
+								<c:if test="${USER_user_name != 'admin'}">
 									<td>
 										<select name="marketStaffId" id="marketStaffId">
                              				<c:forEach var="employee" items="${employeeList}">       
@@ -58,6 +59,7 @@
                              			 	</c:forEach>     
                              			</select>  
                              		</td>
+                             	</c:if>
 								</c:if>
 								<c:if test="${ROLE_IS_MARKET_STAFF_OR_ADMIN==true}">
 									<td>${employee_name}</td>

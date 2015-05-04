@@ -632,8 +632,17 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
         }else if ("marketStaff".equals(userRole)){
         	criteria.add(Restrictions.eq("employeeId", userId));
         }
-  		if(!StringUtils.isEmpty(ordernumber))
- 			criteria.add(Restrictions.eq("	",Integer.parseInt(ordernumber) ));
+  		if(!StringUtils.isEmpty(ordernumber) && StringUtils.isNumeric(ordernumber)){
+  			Integer orderNumber_new = -1;
+  			if (ordernumber.length() == 14) {
+  				int dateEndIndex = 7;
+  				orderNumber_new = Integer.parseInt(ordernumber.substring(dateEndIndex +1));
+			}
+  			else {
+  				orderNumber_new = Integer.parseInt(ordernumber);
+  			}
+ 			criteria.add(Restrictions.eq("orderId",orderNumber_new));
+  		}
  	 	if(!"CUSTOMER".equals(userRole)&&!StringUtils.isEmpty(customername))
 			criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
  		if(!StringUtils.isEmpty(stylename))
@@ -694,8 +703,17 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Order.class);
 
-  		if(!StringUtils.isEmpty(ordernumber) && StringUtils.isNumeric(ordernumber))
- 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
+  		if(!StringUtils.isEmpty(ordernumber) && StringUtils.isNumeric(ordernumber)){
+  			Integer orderNumber_new = -1;
+			if (ordernumber.length() == 14) {
+				int dateEndIndex = 7;
+				orderNumber_new = Integer.parseInt(ordernumber.substring(dateEndIndex +1));
+		}
+			else {
+				orderNumber_new = Integer.parseInt(ordernumber);
+			}
+			criteria.add(Restrictions.eq("orderId",orderNumber_new));
+  		}
  	 	if(!StringUtils.isEmpty(customername))
 			criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
  		if(!StringUtils.isEmpty(stylename))
@@ -761,9 +779,17 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	        	criteria.add(Restrictions.eq("employeeId", userId));
 	        }
 //	 		if (ordernumber != null)
-	 		if(!StringUtils.isEmpty(ordernumber))
-	 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber)));
-	 		
+	 		if(!StringUtils.isEmpty(ordernumber) && StringUtils.isNumeric(ordernumber)){
+	 			Integer orderNumber_new = -1;
+	  			if (ordernumber.length() == 14) {
+	  				int dateEndIndex = 7;
+	  				orderNumber_new = Integer.parseInt(ordernumber.substring(dateEndIndex +1));
+				}
+	  			else {
+	  				orderNumber_new = Integer.parseInt(ordernumber);
+	  			}
+	 			criteria.add(Restrictions.eq("orderId",orderNumber_new));
+	 		}
 	 		if(!StringUtils.isEmpty(orderProcessStateName))
 	 			criteria.add(Restrictions.like("orderProcessStateName","%" + orderProcessStateName + "%"));
 //			if (customername != null)
@@ -837,8 +863,17 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 	        	criteria.add(Restrictions.eq("employeeId", userId));
 	        }
 //	 		if (ordernumber != null)
-	 		if(!StringUtils.isEmpty(ordernumber))
-	 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber) ));
+	 		if(!StringUtils.isEmpty(ordernumber) && StringUtils.isNumeric(ordernumber)){
+	 			Integer orderNumber_new = -1;
+	  			if (ordernumber.length() == 14) {
+	  				int dateEndIndex = 7;
+	  				orderNumber_new = Integer.parseInt(ordernumber.substring(dateEndIndex +1));
+				}
+	  			else {
+	  				orderNumber_new = Integer.parseInt(ordernumber);
+	  			}
+	 			criteria.add(Restrictions.eq("orderId",orderNumber_new));
+	 		}
 //			if (customername != null)
 		 	if(!"CUSTOMER".equals(userRole) && !StringUtils.isEmpty(customername))
 				criteria.add(Restrictions.like("customerName", "%" + customername + "%"));
@@ -957,8 +992,17 @@ public class OrderDAO extends HibernateDaoSupport implements IOrderDAO {
 		Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Order.class);
         criteria.add(Restrictions.eq("orderState", "TODO"));      
- 		if(!StringUtils.isEmpty(ordernumber))
- 			criteria.add(Restrictions.eq("orderId",Integer.parseInt(ordernumber)));	 
+ 		if(!StringUtils.isEmpty(ordernumber) && StringUtils.isNumeric(ordernumber)){
+ 			Integer orderNumber_new = -1;
+  			if (ordernumber.length() == 14) {
+  				int dateEndIndex = 7;
+  				orderNumber_new = Integer.parseInt(ordernumber.substring(dateEndIndex +1));
+			}
+  			else {
+  				orderNumber_new = Integer.parseInt(ordernumber);
+  			}
+ 			criteria.add(Restrictions.eq("orderId",orderNumber_new));
+ 		}
 		if(!StringUtils.isEmpty(stylename))
 
 			criteria.add(Restrictions.like("styleName", "%" + stylename + "%"));

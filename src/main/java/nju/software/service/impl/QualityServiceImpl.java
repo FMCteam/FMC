@@ -14,7 +14,7 @@ import nju.software.dataobject.CheckDetail;
 import nju.software.dataobject.CheckRecord;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Produce;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 import nju.software.service.QualityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class QualityServiceImpl implements QualityService  {
 	@Autowired
 	private CustomerDAO customerDAO;
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	@Autowired
 	private ServiceUtil service;
 	@Autowired
@@ -235,6 +235,7 @@ public class QualityServiceImpl implements QualityService  {
 		// 计算历次质检的合格数和报废数之和 hcj
 		int checkRecordAmount = 0;
 		List<CheckRecord> list = checkRecordDAO.findByOrderId(orderId);
+		int i = 0;
 		for (CheckRecord cr : list) {
 			checkRecordAmount += cr.getQualifiedAmount()
 					+ cr.getInvalidAmount();
@@ -244,7 +245,7 @@ public class QualityServiceImpl implements QualityService  {
 		List<Produce> produces = produceDAO.findByExample(produce);
 		for (Produce pd : produces) {
 			producesAmount += pd.getL() + pd.getM() + pd.getS() + pd.getXl()
-					+ pd.getXs() + pd.getXxl();
+					+ pd.getXs() + pd.getXxl() + pd.getJ();
 
 		}
 		if (producesAmount > checkRecordAmount) {

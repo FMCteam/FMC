@@ -13,7 +13,7 @@ import nju.software.dataobject.Craft;
 import nju.software.dataobject.DesignCad;
 import nju.software.dataobject.Order;
 import nju.software.dataobject.Quote;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 import nju.software.service.DesignService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -559,7 +559,7 @@ public class DesignServiceImpl implements DesignService {
 	public final static String RESULT_PRODUCE = "produce";
 
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	@Autowired
 	private ServiceUtil service;
 	@Autowired

@@ -15,6 +15,7 @@ import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.SearchInfo;
 import nju.software.service.EmployeeService;
 import nju.software.service.LogisticsService;
+import nju.software.util.Constants;
 import nju.software.util.JSONUtil;
 import nju.software.util.ListUtil;
 
@@ -59,7 +60,7 @@ public class LogisticsMobileController {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		Short result = Short.parseShort(request.getParameter("result"));
 		boolean isSucess = logisticsService.receiveSampleSubmit(taskId, orderId, result);
-		model.addAttribute("isSucess", isSucess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSucess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -157,12 +158,12 @@ public class LogisticsMobileController {
 		boolean success = logisticsService.sendSampleSubmit(map);
 		
 		if(success){
-			model.addAttribute("isSucess", success);
+			model.addAttribute(Constants.JSON_IS_SUCCESS, success);
 		}else{
 			Map<String, Object> orderInfo = logisticsService.getSendSampleDetail(orderId);
 			model.addAttribute("orderInfo", orderInfo);
 			model.addAttribute("notify", "没有样衣发货记录，不能完成最终发货");
-			model.addAttribute("isSucess", success);
+			model.addAttribute(Constants.JSON_IS_SUCCESS, success);
 		}
 		jsonUtil.sendJson(response, model);
 	}
@@ -236,7 +237,7 @@ public class LogisticsMobileController {
 			HttpServletResponse response, ModelMap model) {
 		String packageId = request.getParameter("packageId");
 		boolean isSuccess = logisticsService.removePackage(Integer.parseInt(packageId));
-		model.addAttribute("isSucess", isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -246,7 +247,7 @@ public class LogisticsMobileController {
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		boolean isSucess = logisticsService.packageSubmit(orderId);
-		model.addAttribute("isSucess", isSucess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSucess);
 		jsonUtil.sendJson(response, model);
 		
 	}
@@ -309,7 +310,7 @@ public class LogisticsMobileController {
 		String shelf = request.getParameter("shelfId");
 		String location = request.getParameter("location");
 		boolean isSuccess = logisticsService.updatePackage(packageId, warehouse, shelf, location);
-		model.addAttribute("isSucess", isSuccess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSuccess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -320,7 +321,7 @@ public class LogisticsMobileController {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		String taskId = request.getParameter("taskId");
 		boolean isSucess = logisticsService.mobileWarehouseSubmit(taskId, orderId);
-		model.addAttribute("isSucess", isSucess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSucess);
 		jsonUtil.sendJson(response, model);
 	}
 
@@ -385,7 +386,7 @@ public class LogisticsMobileController {
 			HttpServletResponse response, ModelMap model) {
 		Integer orderId = Integer.parseInt(request.getParameter("orderId"));
 		boolean isSucess = logisticsService.mobileSendClothesSubmit(orderId);
-		model.addAttribute("isSucess",isSucess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS,isSucess);
 		jsonUtil.sendJson(response, model);
 	}
 //==============================发货完成，整个流程结束=========================================================
@@ -403,7 +404,7 @@ public class LogisticsMobileController {
 		String isFinal = request.getParameter("isFinal");//判断是否最终发货
 		boolean isSucess = logisticsService.sendClothesSubmit(orderId, taskId, price, name, time,
 				number, remark, isFinal);
-		model.addAttribute("isSucess", isSucess);
+		model.addAttribute(Constants.JSON_IS_SUCCESS, isSucess);
 		jsonUtil.sendJson(response, model);
 	}
 

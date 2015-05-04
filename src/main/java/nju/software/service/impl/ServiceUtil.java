@@ -40,7 +40,7 @@ import nju.software.dataobject.PackageDetail;
 import nju.software.dataobject.Produce;
 import nju.software.dataobject.Quote;
 import nju.software.dataobject.TreeNode;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -308,7 +308,7 @@ public class ServiceUtil {
 	 }
 
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	@Autowired
 	private AccountDAO accountDAO;
 	@Autowired

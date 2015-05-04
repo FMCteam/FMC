@@ -55,7 +55,7 @@ import nju.software.dataobject.Quote;
 import nju.software.dataobject.VersionData;
 import nju.software.model.OrderInfo;
 import nju.software.process.service.BasicProcessService;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 import nju.software.process.service.MarketstaffAlterProcessService;
 import nju.software.service.FinanceService;
 import nju.software.service.MarketService;
@@ -132,7 +132,7 @@ public class MarketServiceImpl implements MarketService {
 	@Autowired
 	private QuoteDAO quoteDAO;
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	@Autowired
 	private AccessoryDAO accessoryDAO;
 	@Autowired
@@ -1132,8 +1132,13 @@ public class MarketServiceImpl implements MarketService {
 		Money money = new Money();
 		money.setOrderId(orderId);
 		money.setMoneyType("大货定金");
-		model.put("deposit", moneyDAO.findByExample(money).get(0)
-				.getMoneyAmount());
+		List<Money> moneys  = moneyDAO.findByExample(money);
+		if (moneys != null && moneys.size() > 0) {
+			model.put("deposit", moneyDAO.findByExample(money).get(0)
+					.getMoneyAmount());
+		}
+		else
+			model.put("deposit", 0);
 		Float samplePrice = (float) 0;
 		if (order.getStyleSeason().equals("春夏")) {
 			samplePrice = (float) 200;
@@ -1792,6 +1797,7 @@ public class MarketServiceImpl implements MarketService {
 		produce.setType(Produce.TYPE_SAMPLE_PRODUCE);
 		model.put("sample", produceDAO.findByExample(produce));
 
+		produce.setOid(orderId);
 		produce.setType(Produce.TYPE_PRODUCE);
 		model.put("produce", produceDAO.findByExample(produce));
 
@@ -2179,6 +2185,7 @@ public class MarketServiceImpl implements MarketService {
 		mailSenderInfo.setToAddress(customer.getEmail());
 		SimpleMailSender.sendHtmlMail(mailSenderInfo);
 	}
+	
 
 	@Override
 	public void sendOrderInfoViaPhone(Order order, Customer customer) {
@@ -2265,7 +2272,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public List<Map<String,Object>> getTodoOrders() {
+	public List<Map<String,Object>> getOrdersTodo() {
 		Order instance = new Order();
 		instance.setOrderState("TODO");
 		List<Order> orderlist = orderDAO.findByExample(instance);
@@ -2352,7 +2359,71 @@ public class MarketServiceImpl implements MarketService {
 		mailSenderInfo.setToAddress(customer.getEmail());
 		SimpleMailSender.sendHtmlMail(mailSenderInfo);
 	}
+	
+	private void mailCustomerClaimed(Order order, Customer customer) {
+		if (StringUtil.isEmpty(customer.getEmail()))
+			return;
 
+		String emailTitle = "智造链 - 下单信息";
+		String emailContent = "尊敬的客户，您下的订单已经被认领：<br/>"
+				+ "<table border='1px' bordercolor='#000000' cellspacing='0px' style='border-collapse:collapse'>"
+				+ "<thead>" + "<tr>" + "<th>订单号</th>" + "<th>款型</th>"
+				+ "<th>件数</th>" + "<th>预期交付日期</th>" + "</tr>" + "</thead>"
+				+ "<tbody>" + "<tr>" + "<td>" + service.getOrderId(order)
+				+ "</td>" + "<td>" + order.getStyleName() + "</td>" + "<td>"
+				+ order.getAskAmount() + "</td>" + "<td>"
+				+ order.getAskDeliverDate() + "</td>" + "</tr>" + "</tbody>"
+				+ "</table>";
+
+		MailSenderInfo mailSenderInfo = new MailSenderInfo();
+		mailSenderInfo.setSubject(emailTitle);
+		mailSenderInfo.setContent(emailContent);
+		mailSenderInfo.setToAddress(customer.getEmail());
+		SimpleMailSender.sendHtmlMail(mailSenderInfo);
+	}
+	private void mailCustomerAllocated(Order order, Customer customer) {
+		if (StringUtil.isEmpty(customer.getEmail()))
+			return;
+
+		String emailTitle = "智造链 - 下单信息"; 
+		String emailContent = "尊敬的客户，您下的订单已经被分配给指定专员 ：<br/>"
+				+ "<table border='1px' bordercolor='#000000' cellspacing='0px' style='border-collapse:collapse'>"
+				+ "<thead>" + "<tr>" + "<th>订单号</th>" + "<th>款型</th>"
+				+ "<th>件数</th>" + "<th>预期交付日期</th>" + "</tr>" + "</thead>"
+				+ "<tbody>" + "<tr>" + "<td>" + service.getOrderId(order)
+				+ "</td>" + "<td>" + order.getStyleName() + "</td>" + "<td>"
+				+ order.getAskAmount() + "</td>" + "<td>"
+				+ order.getAskDeliverDate() + "</td>" + "</tr>" + "</tbody>"
+				+ "</table>";
+
+		MailSenderInfo mailSenderInfo = new MailSenderInfo();
+		mailSenderInfo.setSubject(emailTitle);
+		mailSenderInfo.setContent(emailContent);
+		mailSenderInfo.setToAddress(customer.getEmail());
+		SimpleMailSender.sendHtmlMail(mailSenderInfo);
+	}
+
+	private void mailStaffAllocated(Order order, Employee e) {
+		if (StringUtil.isEmpty(e.getEmail()))
+			return;
+
+		String emailTitle = "智造链 - 下单信息";
+		String emailContent = "你分配到的订单如下：<br/>"
+				+ "<table border='1px' bordercolor='#000000' cellspacing='0px' style='border-collapse:collapse'>"
+				+ "<thead>" + "<tr>" + "<th>订单号</th>" + "<th>款型</th>"
+				+ "<th>件数</th>" + "<th>预期交付日期</th>" + "</tr>" + "</thead>"
+				+ "<tbody>" + "<tr>" + "<td>" + service.getOrderId(order)
+				+ "</td>" + "<td>" + order.getStyleName() + "</td>" + "<td>"
+				+ order.getAskAmount() + "</td>" + "<td>"
+				+ order.getAskDeliverDate() + "</td>" + "</tr>" + "</tbody>"
+				+ "</table>";
+
+		MailSenderInfo mailSenderInfo = new MailSenderInfo();
+		mailSenderInfo.setSubject(emailTitle);
+		mailSenderInfo.setContent(emailContent);
+		mailSenderInfo.setToAddress(e.getEmail());
+		SimpleMailSender.sendHtmlMail(mailSenderInfo);
+	}
 	@Override
 	public boolean claimCustomerOrder(Integer orderId, Integer employeeId) {
 		//认领客户订单，启动流程；
@@ -2367,6 +2438,7 @@ public class MarketServiceImpl implements MarketService {
 		orderSource.setOrderId(order.getOrderId());
 		orderSource.setSource(OrderSource.SOURCE_CALIM);
 		orderSourceDAO.save(orderSource);
+		mailCustomerClaimed(order, customerDAO.findById(order.getCustomerId()));
 		return true;
 	}
 
@@ -2381,6 +2453,10 @@ public class MarketServiceImpl implements MarketService {
 		orderSource.setOrderId(order.getOrderId());
 		orderSource.setSource(OrderSource.SOURCE_ALLOCATE);
 		orderSourceDAO.save(orderSource);
+		Customer customer=customerDAO.findById(order.getCustomerId());
+		mailCustomerAllocated(order, customer);
+		Employee employee=employeeDAO.findById(order.getEmployeeId());
+		mailStaffAllocated(order, employee);
 	}
 
 	@Override
@@ -2563,6 +2639,30 @@ public class MarketServiceImpl implements MarketService {
 			list.add(model);
 		}
 		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> getOrdersTodo(Integer customerId) {
+		Order instance = new Order();
+		instance.setOrderState("TODO");
+		instance.setCustomerId(customerId);
+		List<Order> orderlist = orderDAO.findByExample(instance);
+		List<Map<String,Object>> mapList=new ArrayList<>();
+		for(Order order:orderlist){
+			Customer customer=customerDAO.findById(order.getCustomerId());
+			//客户自主下单，还未有专员
+			Employee employee = new Employee();
+			employee.setEmployeeName("暂无");
+			Map<String , Object> map=new HashMap<>();
+			map.put("order", order);
+			map.put("orderId", service.getOrderId(order));
+			map.put("employee", employee);
+			map.put("customerName", customer.getCustomerName());
+			map.put("customerCompany", customer.getCompanyName());
+			mapList.add(map);		
+		}
+
+		return mapList;
 	}
 
 }

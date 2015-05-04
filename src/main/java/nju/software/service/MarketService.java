@@ -428,7 +428,7 @@ public interface MarketService {
 	 * @return
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public List<Map<String, Object>> getTodoOrders();
+	public List<Map<String, Object>> getOrdersTodo();
 	
 	/**
 	 * 用户自主下翻单提交订单
@@ -447,5 +447,12 @@ public interface MarketService {
 			List<Produce> produces, List<VersionData> versions, DesignCad cad,
 			HttpServletRequest request);
 
+	/**
+	 * 根据客户id返回该用户未被认领的订单
+	 * @param customerId 客户id
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public List<Map<String, Object>> getOrdersTodo(Integer customerId);
 
 }

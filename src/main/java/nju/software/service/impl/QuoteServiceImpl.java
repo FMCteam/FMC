@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import nju.software.dao.impl.QuoteDAO;
 import nju.software.dataobject.Quote;
-import nju.software.process.service.MainProcessService;
+import nju.software.process.service.FMCProcessService;
 import nju.software.service.QuoteService;
 
 @Service("quoteServiceImpl")
@@ -18,7 +18,7 @@ public class QuoteServiceImpl implements QuoteService {
 	@Autowired
 	private QuoteDAO quoteDAO;
 	@Autowired
-	private MainProcessService mainProcessService;
+	private FMCProcessService mainProcessService;
 	
 	@Override
 	public Quote findByOrderId(String orderId) {
